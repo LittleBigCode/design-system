@@ -1,0 +1,158 @@
+<div align="center">
+
+# Diametral Design System
+
+> A minimal, flat, **buildless** design system — CSS + design tokens + Web Components.
+> **Welcome to (the real).**
+
+**Minimal · Enduring · Elegant**
+
+</div>
+
+---
+
+Diametral is a flat, sharp visual language: **1px rules, no shadows, no border-radius**,
+white / whitesmoke surfaces, black ink, **Ufficio** Light 300 titles over **Geist** body,
+uppercase labels at `0.08em`, tabular numerals. It is deliberately away from the typical
+color codes of tech and consulting — refined and structured.
+
+It ships as:
+
+- **CSS + design tokens** — a framework-agnostic stylesheet you add with one `<link>`.
+- **`tokens.json`** — the single source of truth, plus generated **Tailwind preset** and **SCSS** variables.
+- **Web Components** — an optional custom-element layer that needs no build.
+
+There is **no build step required to use it**.
+
+## Quick start
+
+**1 · Drop-in (the buildless path)**
+
+```html
+<!-- body font -->
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<!-- the design system -->
+<link rel="stylesheet" href="css/diametral.css">
+<!-- optional: Ufficio titles (commercial license required — see below) -->
+<link rel="stylesheet" href="assets/fonts/ufficio.css">
+```
+
+```html
+<button class="ds-button ds-button--primary">Save</button>
+```
+
+**2 · `@import` from your stylesheet**
+
+```css
+@import url("css/diametral.css");
+```
+
+**3 · npm** *(optional)*
+
+```bash
+npm i @diametral/design-system
+```
+
+```js
+import "@diametral/design-system/css/diametral.css";
+import "@diametral/design-system/components"; // optional Web Components
+```
+
+**Web Components** (optional layer):
+
+```html
+<link rel="stylesheet" href="css/diametral.css">
+<script type="module" src="components/index.js"></script>
+
+<ds-button variant="primary">Save</ds-button>
+<ds-status status="success" heading="Approved"></ds-status>
+```
+
+> The system is pure CSS + fonts + SVG + a sprinkle of vanilla JS for the Web Components.
+> **No bundler, transpiler, or framework is needed to consume it.**
+
+## What's inside
+
+| Foundations | Components |
+|---|---|
+| [Color](docs/foundations.md#color) · [Typography](docs/foundations.md#typography) | [Status panel](docs/components.md#status-panel) (signature) · [Buttons](docs/components.md#buttons) |
+| [Spacing](docs/foundations.md#spacing) · [Layout](docs/foundations.md#layout) | [Toggle](docs/components.md#toggle-switch) · [Badges](docs/components.md#badges) · [Tabs](docs/components.md#tabs) |
+| [Borders](docs/foundations.md#borders--rules) · [Motion](docs/foundations.md#motion) · [No radius](docs/no-radius.md) | [Form fields](docs/components.md#form-fields) · [Chips](docs/components.md#chips) · [Banner](docs/components.md#banner) |
+| [Logo](docs/foundations.md#logo) · [Iconography](docs/foundations.md#iconography) · [Photography](docs/foundations.md#photography) | [Callout](docs/components.md#callout) · [Panel](docs/components.md#panel) · [Segmented](docs/components.md#segmented) |
+| | [Metrics](docs/components.md#metrics) · [Modal](docs/components.md#modal) · [Table](docs/components.md#table) · [Dividers](docs/components.md#dividers) |
+
+## Live showcase
+
+A buildless, multi-page showcase that dogfoods the system lives in [`examples/`](examples/).
+
+```bash
+# from the repo root
+python3 -m http.server 8080
+# then open http://localhost:8080/examples/
+```
+
+It also works straight from the filesystem — open `examples/index.html` in a browser.
+`examples/kitchen-sink.html` renders every component on one page.
+
+## Token model
+
+Three tiers, all `--ds-*` custom properties, defined in [`css/tokens.css`](css/tokens.css)
+and sourced from [`tokens/tokens.json`](tokens/tokens.json):
+
+1. **Primitives** — raw brand / neutral / functional values (`--ds-noir`, `--ds-rouge`, …).
+2. **Semantic** — role aliases that components read and themes override (`--ds-ink`, `--ds-accent`, `--ds-success`, …).
+3. **Scale** — spacing, type, layout, motion (`--ds-space-*`, `--ds-text-*`, `--ds-radius-none`, …).
+
+See [`docs/tokens`](tokens/README.md). Theming overrides the **semantic** tier only — see
+[`docs/theming.md`](docs/theming.md). A dark theme ships in [`css/themes/dark.css`](css/themes/dark.css).
+
+## Optional build
+
+The `css/` tree and `components/` modules work with no build. An optional script
+produces convenience artifacts in `dist/` (gitignored):
+
+```bash
+npm run build          # tokens + bundled CSS + WC bundle
+npm run build:tokens   # dist/tokens.css, dist/tokens.scss, dist/tailwind-preset.cjs
+npm run build:css      # dist/diametral.css + dist/diametral.min.css
+```
+
+No third-party dependencies — the build uses Node built-ins only.
+
+## Versioning & contributing
+
+Semantic Versioning for a CSS system: token renames / class removals are **major**,
+new tokens or components are **minor**, fixes are **patch**. See
+[`CHANGELOG.md`](CHANGELOG.md), [`docs/versioning.md`](docs/versioning.md), and
+[`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+> ⚠️ **Font licensing.** **Ufficio is a commercial font.** It ships here for **internal
+> use only**, pending license verification — verify your rights before any external
+> distribution. If you don't hold a license, simply don't import `ufficio.css`: titles
+> fall back to the free **Fraunces** stack automatically. See
+> [`docs/fonts-and-licensing.md`](docs/fonts-and-licensing.md). Geist (body) is free (OFL).
+
+## Directory layout
+
+```
+design-system/
+├── css/                  Hand-authored, zero-build CSS
+│   ├── diametral.css      Bundle entrypoint (@imports the rest)
+│   ├── tokens.css         Tiers 1–3 tokens
+│   ├── base/              reset · typography
+│   ├── components/        one partial per .ds-* component
+│   ├── themes/            dark · per-brand example (opt-in)
+│   └── compat/            legacy aliases (opt-in migration shim)
+├── components/           Web Components (vanilla ES modules)
+├── tokens/tokens.json    Single source of truth
+├── assets/               fonts (Ufficio + license) · logo · photography
+├── docs/                 English documentation
+├── examples/             Live showcase (static HTML)
+├── scripts/              Zero-dependency build scripts
+└── dist/                 Generated (gitignored)
+```
+
+## License
+
+The design system's **code** is [MIT](LICENSE). Fonts are licensed separately — see
+[`docs/fonts-and-licensing.md`](docs/fonts-and-licensing.md).
