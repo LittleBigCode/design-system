@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modal · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+  <script type="module" src="../../components/index.js"></script>
+</head>
+<body data-page="components/modal">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Modal</h1>
+        <p class="docs-lede">A centered dialog over a dimmed overlay: a bordered head with a title and a close button, a scrollable body, and a footer of actions. A <code>__spacer</code> pushes the primary action to the right.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Static dialog</h2>
+        <p class="docs-note">The dialog box on its own (the fixed <code>.ds-overlay</code> backdrop is omitted here so it renders in flow). Head, body, and footer with a <code>.ds-modal__spacer</code> separating the destructive action.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Dialog</span>
+            <button class="ds-button" data-copy-target="#c-static">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-modal" style="position:static;max-height:none">
+              <div class="ds-modal__head">
+                <h2 class="ds-modal__title">Reference settings</h2>
+                <button class="ds-button ds-modal__close">Close</button>
+              </div>
+              <div class="ds-modal__body"><p>Body content…</p></div>
+              <div class="ds-modal__foot">
+                <button class="ds-button">Export</button>
+                <span class="ds-modal__spacer"></span>
+                <button class="ds-button ds-button--danger">Reset</button>
+                <button class="ds-button ds-button--primary">Save</button>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-static">&lt;div class="ds-modal"&gt;
+  &lt;div class="ds-modal__head"&gt;
+    &lt;h2 class="ds-modal__title"&gt;Reference settings&lt;/h2&gt;
+    &lt;button class="ds-button ds-modal__close"&gt;Close&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="ds-modal__body"&gt;&lt;p&gt;Body content…&lt;/p&gt;&lt;/div&gt;
+  &lt;div class="ds-modal__foot"&gt;
+    &lt;button class="ds-button"&gt;Export&lt;/button&gt;
+    &lt;span class="ds-modal__spacer"&gt;&lt;/span&gt;
+    &lt;button class="ds-button ds-button--danger"&gt;Reset&lt;/button&gt;
+    &lt;button class="ds-button ds-button--primary"&gt;Save&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Web Component</h2>
+        <p class="docs-note">The <code>&lt;ds-modal&gt;</code> element builds the overlay and dialog from its <code>heading</code> attribute; footer actions go in a <code>data-foot</code> slot. A <code>[data-open]</code> trigger calls its <code>.open()</code> method. Click below to open it live.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;ds-modal&gt;</span>
+            <button class="ds-button" data-copy-target="#c-wc">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <button class="ds-button ds-button--primary" data-open="#demoModal">Open modal</button>
+            <ds-modal id="demoModal" heading="Reference settings">
+              <p>Body…</p>
+              <div data-foot>
+                <button class="ds-button">Cancel</button>
+                <span class="ds-modal__spacer"></span>
+                <button class="ds-button ds-button--primary">Save</button>
+              </div>
+            </ds-modal>
+          </div>
+          <pre class="ds-example__code"><code id="c-wc">&lt;button class="ds-button ds-button--primary" data-open="#demoModal"&gt;Open modal&lt;/button&gt;
+&lt;ds-modal id="demoModal" heading="Reference settings"&gt;
+  &lt;p&gt;Body…&lt;/p&gt;
+  &lt;div data-foot&gt;
+    &lt;button class="ds-button"&gt;Cancel&lt;/button&gt;
+    &lt;span class="ds-modal__spacer"&gt;&lt;/span&gt;
+    &lt;button class="ds-button ds-button--primary"&gt;Save&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/ds-modal&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.1.0</span>
+        <a href="metrics.html">← Metrics</a>
+        <a href="table.html">Table →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

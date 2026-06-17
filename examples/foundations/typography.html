@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Typography · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="foundations/typography">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Foundations</p>
+        <h1 class="ds-title ds-title--xl">Typography</h1>
+        <p class="docs-lede">Ufficio Light 300 carries every title; Geist carries the body. Labels are uppercase with wide tracking, and numerals are tabular so columns of figures align.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Type scale</h2>
+        <div class="specimen">
+          <div class="specimen__row">
+            <span class="specimen__meta">ds-title--xl · 32px</span>
+            <span class="ds-title ds-title--xl">Aa Diametral</span>
+          </div>
+          <div class="specimen__row">
+            <span class="specimen__meta">ds-title--lg · 24px</span>
+            <span class="ds-title ds-title--lg">Aa Diametral</span>
+          </div>
+          <div class="specimen__row">
+            <span class="specimen__meta">ds-title--md · 22px</span>
+            <span class="ds-title ds-title--md">Aa Diametral</span>
+          </div>
+          <div class="specimen__row">
+            <span class="specimen__meta">ds-title--sm · 19px</span>
+            <span class="ds-title ds-title--sm">Aa Diametral</span>
+          </div>
+          <div class="specimen__row">
+            <span class="specimen__meta">body · 14px</span>
+            <span>The quick brown fox jumps over the lazy dog 1234567890</span>
+          </div>
+          <div class="specimen__row">
+            <span class="specimen__meta">ds-label · 12px</span>
+            <span class="ds-label">Section label</span>
+          </div>
+          <div class="specimen__row">
+            <span class="specimen__meta">ds-kicker · 11px</span>
+            <span class="ds-kicker">Kicker</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Families</h2>
+        <p class="docs-note"><strong>Title</strong> — <code>var(--ds-font-title)</code>: Ufficio Light 300, with Fraunces as the free fallback when the licensed face is absent.</p>
+        <p class="docs-note"><strong>Body</strong> — <code>var(--ds-font-sans)</code>: Geist at weights 300 / 400 / 500 / 600, falling back to the system sans stack.</p>
+      </section>
+
+      <section class="docs-section">
+        <h2>Tabular numerals</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">font-variant-numeric: tabular-nums</span>
+            <button class="ds-button" data-copy-target="#c-numeric">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-numeric" style="text-align:right;width:160px">1 234,00</div>
+            <div class="ds-numeric" style="text-align:right;width:160px">999 999,99</div>
+          </div>
+          <pre class="ds-example__code"><code id="c-numeric">&lt;span class="ds-numeric"&gt;1 234,00&lt;/span&gt;
+&lt;span class="ds-numeric"&gt;999 999,99&lt;/span&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.1.0</span>
+        <a href="color.html">← Color</a>
+        <a href="spacing.html">Spacing →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

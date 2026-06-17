@@ -1,0 +1,21 @@
+/* Callout — .ds-callout (bordered alert box; semantic variants)
+   Default tone is warning (the app's orange notice). */
+.ds-callout {
+  border: 1px solid var(--ds-warning);
+  background: var(--ds-warning-bg);
+  padding: 22px;
+  font-size: var(--ds-text-base);
+  color: var(--ds-ink);
+  border-radius: var(--ds-radius-none);
+}
+.ds-callout b,
+.ds-callout strong { font-weight: 500; }
+.ds-callout__title {
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.ds-callout--info    { border-color: var(--ds-info);    background: var(--ds-info-bg); }
+.ds-callout--success { border-color: var(--ds-success); background: var(--ds-success-bg); }
+.ds-callout--warning { border-color: var(--ds-warning); background: var(--ds-warning-bg); }
+.ds-callout--danger  { border-color: var(--ds-danger);  background: var(--ds-danger-bg); }

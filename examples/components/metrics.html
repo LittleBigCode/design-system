@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Metrics · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/metrics">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Metrics</h1>
+        <p class="docs-lede">Stat rows pairing a label with a tabular value, separated by hairlines. Use <code>--hero</code> for the headline figure, <code>--sub</code> for an indented secondary line, and <code>.is-pos</code> / <code>.is-neg</code> to color the value.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Metric rows</h2>
+        <p class="docs-note">The same <code>.ds-metric</code> rows are used inside the <a href="status-panel.html">status panel</a> body. Here they sit in a plain bordered box.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Hero · default · sub</span>
+            <button class="ds-button" data-copy-target="#c-metrics">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div style="width:360px;max-width:100%;background:var(--ds-surface);border:1px solid var(--ds-rule);padding:0 18px">
+              <div class="ds-metric ds-metric--hero"><span class="ds-metric__k">Margin</span><span class="ds-metric__v is-pos">38 %</span></div>
+              <div class="ds-metric"><span class="ds-metric__k">Margin / day</span><span class="ds-metric__v">€342</span></div>
+              <div class="ds-metric ds-metric--sub"><span class="ds-metric__k">Salary cost</span><span class="ds-metric__v">€420</span></div>
+              <div class="ds-metric"><span class="ds-metric__k">Loss</span><span class="ds-metric__v is-neg">−4 %</span></div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-metrics">&lt;div class="ds-metric ds-metric--hero"&gt;&lt;span class="ds-metric__k"&gt;Margin&lt;/span&gt;&lt;span class="ds-metric__v is-pos"&gt;38 %&lt;/span&gt;&lt;/div&gt;
+&lt;div class="ds-metric"&gt;&lt;span class="ds-metric__k"&gt;Margin / day&lt;/span&gt;&lt;span class="ds-metric__v"&gt;€342&lt;/span&gt;&lt;/div&gt;
+&lt;div class="ds-metric ds-metric--sub"&gt;&lt;span class="ds-metric__k"&gt;Salary cost&lt;/span&gt;&lt;span class="ds-metric__v"&gt;€420&lt;/span&gt;&lt;/div&gt;
+&lt;div class="ds-metric"&gt;&lt;span class="ds-metric__k"&gt;Loss&lt;/span&gt;&lt;span class="ds-metric__v is-neg"&gt;−4 %&lt;/span&gt;&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.1.0</span>
+        <a href="segmented.html">← Segmented</a>
+        <a href="modal.html">Modal →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toggle switch · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/toggle">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Toggle switch</h1>
+        <p class="docs-lede">A sharp, flat on/off switch built from a real checkbox so it stays keyboard-accessible and form-bound. The track squares off with the rest of the system — no radius, a single sliding knob.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>States</h2>
+        <p class="docs-note">Toggle <code>checked</code> on the input for the on state, and <code>disabled</code> to lock it. The label text sits beside the track and is part of the clickable area.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Off</span>
+            <button class="ds-button" data-copy-target="#c-off">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <label class="ds-switch"><input type="checkbox"><span class="ds-switch__track"></span><span>Detail mode</span></label>
+          </div>
+          <pre class="ds-example__code"><code id="c-off">&lt;label class="ds-switch"&gt;&lt;input type="checkbox"&gt;&lt;span class="ds-switch__track"&gt;&lt;/span&gt;&lt;span&gt;Detail mode&lt;/span&gt;&lt;/label&gt;</code></pre>
+        </section>
+
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">On</span>
+            <button class="ds-button" data-copy-target="#c-on">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <label class="ds-switch"><input type="checkbox" checked><span class="ds-switch__track"></span><span>Detail mode</span></label>
+          </div>
+          <pre class="ds-example__code"><code id="c-on">&lt;label class="ds-switch"&gt;&lt;input type="checkbox" checked&gt;&lt;span class="ds-switch__track"&gt;&lt;/span&gt;&lt;span&gt;Detail mode&lt;/span&gt;&lt;/label&gt;</code></pre>
+        </section>
+
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Disabled</span>
+            <button class="ds-button" data-copy-target="#c-disabled">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <label class="ds-switch"><input type="checkbox" disabled><span class="ds-switch__track"></span><span>Detail mode</span></label>
+          </div>
+          <pre class="ds-example__code"><code id="c-disabled">&lt;label class="ds-switch"&gt;&lt;input type="checkbox" disabled&gt;&lt;span class="ds-switch__track"&gt;&lt;/span&gt;&lt;span&gt;Detail mode&lt;/span&gt;&lt;/label&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Web Component</h2>
+        <p class="docs-note">The <code>&lt;ds-switch&gt;</code> element builds the checkbox, track and label for you. Pass <code>checked</code> and <code>disabled</code> as attributes; the label is the element's text.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;ds-switch&gt;</span>
+            <button class="ds-button" data-copy-target="#c-wc">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-wc">&lt;ds-switch checked&gt;Detail mode&lt;/ds-switch&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.1.0</span>
+        <a href="buttons.html">← Buttons</a>
+        <a href="badges.html">Badges →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

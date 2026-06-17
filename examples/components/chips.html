@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chips · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/chips">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Chips</h1>
+        <p class="docs-lede">Compact labeled pills for read-only facts and parameters. A bold value sits beside its label; the <code>ds-chip--warn</code> variant flags an incomplete or invalid state.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Chip row</h2>
+        <p class="docs-note">Group chips in a <code>ds-chips</code> wrapper. Wrap the value in <code>&lt;b&gt;</code> to emphasize it; add <code>ds-chip--warn</code> for the warning tone.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Facts · warning</span>
+            <button class="ds-button" data-copy-target="#c-chips">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <div class="ds-chips"><span class="ds-chip">Overhead <b>18 %</b></span><span class="ds-chip">Days <b>218</b></span><span class="ds-chip ds-chip--warn">Incomplete setup</span></div>
+          </div>
+          <pre class="ds-example__code"><code id="c-chips">&lt;div class="ds-chips"&gt;
+  &lt;span class="ds-chip"&gt;Overhead &lt;b&gt;18 %&lt;/b&gt;&lt;/span&gt;
+  &lt;span class="ds-chip"&gt;Days &lt;b&gt;218&lt;/b&gt;&lt;/span&gt;
+  &lt;span class="ds-chip ds-chip--warn"&gt;Incomplete setup&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.1.0</span>
+        <a href="forms.html">← Form fields</a>
+        <a href="banner.html">Banner →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

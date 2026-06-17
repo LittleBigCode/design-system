@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Status panel · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/status-panel">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components · signature</p>
+        <h1 class="ds-title ds-title--xl">Status panel</h1>
+        <p class="docs-lede">A result / status / scoring panel: a solid colored head whose background switches with the semantic status, an optional key (legend) strip, metric rows, and a note footer. This is the system's hero component — de-domained from the original signature card.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Full panel</h2>
+        <p class="docs-note">Head (<code>kicker</code> / <code>title</code> / <code>subtitle</code>) + a 4-step <code>__key</code> legend with <code>.is-on</code> highlighting the active step + <code>.ds-metric</code> rows + a <code>__note</code> footer.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Success — full delegation</span>
+            <button class="ds-button" data-copy-target="#c-full">Copy</button>
+          </header>
+          <div class="ds-example__preview">
+            <div style="width:360px;max-width:100%">
+              <div class="ds-status ds-status--success">
+                <div class="ds-status__head">
+                  <div class="ds-status__kicker">Approval level</div>
+                  <div class="ds-status__title">Full delegation</div>
+                  <div class="ds-status__subtitle">Approve without arbitration</div>
+                </div>
+                <div class="ds-status__key">
+                  <span class="is-success is-on">Full</span>
+                  <span class="is-warning">Manager</span>
+                  <span class="is-danger">Director</span>
+                  <span class="is-critical">Blocked</span>
+                </div>
+                <div class="ds-status__body">
+                  <div class="ds-metric ds-metric--hero"><span class="ds-metric__k">Margin</span><span class="ds-metric__v is-pos">38.0&nbsp;%</span></div>
+                  <div class="ds-metric"><span class="ds-metric__k">Margin / day</span><span class="ds-metric__v">€342</span></div>
+                  <div class="ds-metric"><span class="ds-metric__k">Day rate</span><span class="ds-metric__v">€900</span></div>
+                  <div class="ds-metric ds-metric--sub"><span class="ds-metric__k">Salary cost</span><span class="ds-metric__v">€420</span></div>
+                </div>
+                <div class="ds-status__note">Thresholds: ≥ 35 % full · 20–35 % manager · 0–20 % director · &lt; 0 % blocked.</div>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-full">&lt;div class="ds-status ds-status--success"&gt;
+  &lt;div class="ds-status__head"&gt;
+    &lt;div class="ds-status__kicker"&gt;Approval level&lt;/div&gt;
+    &lt;div class="ds-status__title"&gt;Full delegation&lt;/div&gt;
+    &lt;div class="ds-status__subtitle"&gt;Approve without arbitration&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="ds-status__key"&gt;
+    &lt;span class="is-success is-on"&gt;Full&lt;/span&gt;
+    &lt;span class="is-warning"&gt;Manager&lt;/span&gt;
+    &lt;span class="is-danger"&gt;Director&lt;/span&gt;
+    &lt;span class="is-critical"&gt;Blocked&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="ds-status__body"&gt;
+    &lt;div class="ds-metric ds-metric--hero"&gt;&lt;span class="ds-metric__k"&gt;Margin&lt;/span&gt;&lt;span class="ds-metric__v is-pos"&gt;38.0 %&lt;/span&gt;&lt;/div&gt;
+    &lt;div class="ds-metric"&gt;&lt;span class="ds-metric__k"&gt;Margin / day&lt;/span&gt;&lt;span class="ds-metric__v"&gt;€342&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="ds-status__note"&gt;Thresholds: ≥ 35 % full · …&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Head variants</h2>
+        <p class="docs-note">The head background follows the status modifier: <code>--success</code>, <code>--warning</code>, <code>--danger</code>, <code>--critical</code>, <code>--neutral</code>, <code>--info</code>. Text stays white (<code>--ds-on-status</code>).</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">All statuses</span>
+            <button class="ds-button" data-copy-target="#c-variants">Copy</button>
+          </header>
+          <div class="ds-example__preview">
+            <div class="ds-status ds-status--success" style="width:170px"><div class="ds-status__head"><div class="ds-status__kicker">Status</div><div class="ds-status__title" style="font-size:22px">Success</div></div></div>
+            <div class="ds-status ds-status--warning" style="width:170px"><div class="ds-status__head"><div class="ds-status__kicker">Status</div><div class="ds-status__title" style="font-size:22px">Warning</div></div></div>
+            <div class="ds-status ds-status--danger" style="width:170px"><div class="ds-status__head"><div class="ds-status__kicker">Status</div><div class="ds-status__title" style="font-size:22px">Danger</div></div></div>
+            <div class="ds-status ds-status--critical" style="width:170px"><div class="ds-status__head"><div class="ds-status__kicker">Status</div><div class="ds-status__title" style="font-size:22px">Critical</div></div></div>
+            <div class="ds-status ds-status--neutral" style="width:170px"><div class="ds-status__head"><div class="ds-status__kicker">Status</div><div class="ds-status__title" style="font-size:22px">Neutral</div></div></div>
+            <div class="ds-status ds-status--info" style="width:170px"><div class="ds-status__head"><div class="ds-status__kicker">Status</div><div class="ds-status__title" style="font-size:22px">Info</div></div></div>
+          </div>
+          <pre class="ds-example__code"><code id="c-variants">&lt;div class="ds-status ds-status--warning"&gt;
+  &lt;div class="ds-status__head"&gt;
+    &lt;div class="ds-status__kicker"&gt;Status&lt;/div&gt;
+    &lt;div class="ds-status__title"&gt;Warning&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- swap --warning for --success / --danger / --critical / --neutral / --info --&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Web Component</h2>
+        <p class="docs-note">The <code>&lt;ds-status&gt;</code> element builds the head from attributes and keeps the body in light DOM. See the <a href="web-components.html">Web Components</a> page.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;ds-status&gt;</span>
+            <button class="ds-button" data-copy-target="#c-wc">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-wc">&lt;ds-status status="warning" kicker="Approval level" heading="Manager review" subtitle="Needs sign-off"&gt;
+  &lt;div class="ds-status__body"&gt;
+    &lt;div class="ds-metric ds-metric--hero"&gt;&lt;span class="ds-metric__k"&gt;Margin&lt;/span&gt;&lt;span class="ds-metric__v"&gt;28 %&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/ds-status&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.1.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="buttons.html">Buttons →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

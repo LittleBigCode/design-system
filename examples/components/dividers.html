@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dividers · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/dividers">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Dividers</h1>
+        <p class="docs-lede">An uppercase <code>.ds-section-heading</code> with a trailing hairline that runs to the edge — the system's way of separating regions of a page. Wrap content in <code>.ds-section</code> for consistent vertical rhythm between groups.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Section headings</h2>
+        <p class="docs-note">Each heading draws a label plus a 1px rule. <code>.ds-section</code> adds the vertical spacing between the two groups below.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Section heading</span>
+            <button class="ds-button" data-copy-target="#c-dividers">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-section">
+              <h3 class="ds-section-heading">Delegation thresholds</h3>
+              <p>Margin bands that set who may approve a deal without arbitration.</p>
+            </div>
+            <div class="ds-section">
+              <h3 class="ds-section-heading">Reference data</h3>
+              <p>Day rates, overheads and salary costs used across the model.</p>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-dividers">&lt;div class="ds-section"&gt;
+  &lt;h3 class="ds-section-heading"&gt;Delegation thresholds&lt;/h3&gt;
+  &lt;p&gt;Margin bands that set who may approve a deal without arbitration.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="ds-section"&gt;
+  &lt;h3 class="ds-section-heading"&gt;Reference data&lt;/h3&gt;
+  &lt;p&gt;Day rates, overheads and salary costs used across the model.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.1.0</span>
+        <a href="table.html">← Table</a>
+        <a href="web-components.html">Web Components →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

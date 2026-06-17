@@ -1,0 +1,22 @@
+/* Badge — .ds-badge (bordered uppercase pill) */
+.ds-badge {
+  display: inline-block;
+  font-size: var(--ds-text-2xs);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ds-ink-soft);
+  border: 1px solid var(--ds-rule);
+  padding: 6px 10px;
+  white-space: nowrap;
+  border-radius: var(--ds-radius-none);
+}
+.ds-badge--solid {
+  background: var(--ds-ink);
+  border-color: var(--ds-ink);
+  color: var(--ds-on-accent);
+}
+.ds-badge--accent {
+  color: var(--ds-accent);
+  border-color: var(--ds-accent);
+}

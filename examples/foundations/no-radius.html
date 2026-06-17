@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>No radius · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="foundations/no-radius">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Foundations</p>
+        <h1 class="ds-title ds-title--xl">No radius</h1>
+        <p class="docs-lede">The single most distinctive rule of the system: <code>border-radius: 0</code> everywhere. Corners are sharp by parti pris, exposed through one token — <code>--ds-radius-none</code>.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Right vs wrong</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">--ds-radius-none</span>
+            <button class="ds-button" data-copy-target="#c-radius">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <div style="padding:24px;background:var(--ds-bg-alt);border:1px solid var(--ds-ink)">Sharp — correct</div>
+            <div style="padding:24px;background:var(--ds-bg-alt);border:1px solid var(--ds-ink);border-radius:10px"><s>Rounded — never</s></div>
+          </div>
+          <pre class="ds-example__code"><code id="c-radius">border-radius: var(--ds-radius-none); /* 0 */</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>One knob</h2>
+        <p class="docs-note">Every corner reads from <code>--ds-radius-none</code>. Override that single token if a downstream brand truly requires rounding, and the whole system softens at once — no component edits needed.</p>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.1.0</span>
+        <a href="motion.html">← Motion</a>
+        <a href="logo.html">Logo →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

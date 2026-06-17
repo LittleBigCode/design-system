@@ -1,0 +1,43 @@
+/* Toggle switch — .ds-switch */
+.ds-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  font-size: var(--ds-text-sm);
+  font-weight: 400;
+  color: var(--ds-ink-soft);
+}
+.ds-switch input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.ds-switch__track {
+  width: 38px;
+  height: 20px;
+  background: var(--ds-grey);
+  position: relative;
+  transition: background var(--ds-transition);
+  flex: none;
+}
+.ds-switch__track::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  background: var(--ds-blanc);
+  transition: transform var(--ds-transition);
+}
+.ds-switch input:checked + .ds-switch__track { background: var(--ds-ink); }
+.ds-switch input:checked + .ds-switch__track::after { transform: translateX(18px); }
+.ds-switch input:focus-visible + .ds-switch__track {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: 2px;
+}
+.ds-switch input:disabled + .ds-switch__track { opacity: .5; }
+.ds-switch:has(input:disabled) { cursor: not-allowed; color: var(--ds-ink-faint); }

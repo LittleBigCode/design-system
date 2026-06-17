@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Callout · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/callout">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Callout</h1>
+        <p class="docs-lede">A bordered alert box for inline messages. The default tone is warning; semantic variants cover info, success and danger. Add a <code>ds-callout__title</code> for an optional heading.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Variants</h2>
+        <p class="docs-note">The base <code>ds-callout</code> is a warning. Add <code>ds-callout--info</code>, <code>ds-callout--success</code> or <code>ds-callout--danger</code> to switch the tone.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Default · info · success · danger</span>
+            <button class="ds-button" data-copy-target="#c-variants">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-callout">Default (warning tone). Incomplete configuration for this entity.</div>
+            <div class="ds-callout ds-callout--info"><div class="ds-callout__title">Heads up</div>This is an informational callout.</div>
+            <div class="ds-callout ds-callout--success">Saved successfully.</div>
+            <div class="ds-callout ds-callout--danger">This action cannot be undone.</div>
+          </div>
+          <pre class="ds-example__code"><code id="c-variants">&lt;div class="ds-callout"&gt;Default (warning tone). Incomplete configuration for this entity.&lt;/div&gt;
+&lt;div class="ds-callout ds-callout--info"&gt;&lt;div class="ds-callout__title"&gt;Heads up&lt;/div&gt;This is an informational callout.&lt;/div&gt;
+&lt;div class="ds-callout ds-callout--success"&gt;Saved successfully.&lt;/div&gt;
+&lt;div class="ds-callout ds-callout--danger"&gt;This action cannot be undone.&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Web Component</h2>
+        <p class="docs-note">The <code>&lt;ds-callout&gt;</code> element self-classes from a <code>type</code> attribute and prepends a <code>ds-callout__title</code> from the <code>heading</code> attribute.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;ds-callout&gt;</span>
+            <button class="ds-button" data-copy-target="#c-wc">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-wc">&lt;ds-callout type="info" heading="Heads up"&gt;This is an informational callout.&lt;/ds-callout&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.1.0</span>
+        <a href="banner.html">← Banner</a>
+        <a href="panel.html">Panel →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layout · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="foundations/layout">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Foundations</p>
+        <h1 class="ds-title ds-title--xl">Layout</h1>
+        <p class="docs-lede">Fixed max-width containers, a two-column working grid, and sticky chrome — collapsing to a single column at one deliberate breakpoint.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Max-widths</h2>
+        <p class="docs-note">Three container ceilings keep line lengths and surfaces composed: <code>--ds-maxw-page</code> (1440px) for the outer shell, <code>--ds-maxw-content</code> (1180px) for reading and dense content, and <code>--ds-maxw-modal</code> (860px) for dialogs.</p>
+      </section>
+
+      <section class="docs-section">
+        <h2>Two-column grid</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Main 1fr · aside 380px</span>
+            <button class="ds-button" data-copy-target="#c-grid">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div style="display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:40px">
+              <div style="background:var(--ds-bg-alt);padding:24px">Main (1fr)</div>
+              <div style="background:var(--ds-bg-alt);padding:24px">Aside (380px)</div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-grid">&lt;div style="display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:40px"&gt;
+  &lt;div&gt;Main (1fr)&lt;/div&gt;
+  &lt;div&gt;Aside (380px)&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Sticky &amp; responsive</h2>
+        <p class="docs-note">The application header is sticky at <code>top:0</code> with <code>z-index:var(--ds-z-header)</code> (40); the aside column sticks alongside the scrolling main. A single breakpoint at <code>--ds-bp-md</code> (940px) collapses the two-column grid down to one column.</p>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.1.0</span>
+        <a href="spacing.html">← Spacing</a>
+        <a href="borders.html">Borders &amp; rules →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

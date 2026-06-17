@@ -1,0 +1,14 @@
+/* Banner — .ds-banner (full-width notice, yellow by default) */
+.ds-banner {
+  /* Fixed-identity notice: stays pale-yellow with dark ink in every theme,
+     so it uses the noir/jaune primitives rather than the flipping ink token. */
+  border: 1px solid var(--ds-noir);
+  background: var(--ds-jaune);
+  color: var(--ds-noir);
+  padding: 14px 18px;
+  font-size: 13.5px;
+  border-radius: var(--ds-radius-none);
+}
+.ds-banner b,
+.ds-banner strong { font-weight: 500; }
+.ds-banner[hidden] { display: none; }

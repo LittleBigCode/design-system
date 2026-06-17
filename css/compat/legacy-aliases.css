@@ -1,0 +1,57 @@
+/* ============================================================================
+   Legacy aliases (OPT-IN compatibility shim)
+   ----------------------------------------------------------------------------
+   For apps migrating off the original pricing_matrix stylesheet. Import this
+   AFTER css/diametral.css to keep the app's old CSS-variable names and a few
+   bare class names resolving against the new tokens — so you can swap the inline
+   <style> for a <link> without rewriting every var()/class at once.
+
+   The full old-class -> .ds-* mapping is in docs/migration.md. Prefer renaming
+   to .ds-* over relying on this shim long-term; it exists to make the cutover
+   incremental, not permanent.
+   ============================================================================ */
+
+/* ---- CSS custom-property aliases (the app's unprefixed names) ------------- */
+:root {
+  --bg:        var(--ds-bg);
+  --bg-alt:    var(--ds-bg-alt);
+  --card:      var(--ds-surface);
+  --ink:       var(--ds-ink);
+  --ink-soft:  var(--ds-ink-soft);
+  --ink-faint: var(--ds-ink-faint);
+  --rule:      var(--ds-rule);
+  --rule-soft: var(--ds-rule-soft);
+  --accent:    var(--ds-accent);
+
+  --green:     var(--ds-success);  --green-bg:  var(--ds-success-bg);
+  --orange:    var(--ds-warning);  --orange-bg: var(--ds-warning-bg);
+  --red:       var(--ds-danger);   --red-bg:    var(--ds-danger-bg);
+  --black:     var(--ds-critical); --black-bg:  var(--ds-critical-bg);
+
+  --title:     var(--ds-font-title);
+  --sans:      var(--ds-font-sans);
+}
+
+/* ---- Generic class aliases (non-domain components) ------------------------ */
+/* Buttons */
+.btn { /* maps to .ds-button */
+  font-family: var(--ds-font-sans); font-size: var(--ds-text-base); font-weight: 400; letter-spacing: -0.14px;
+  height: 40px; padding: 0 16px; gap: 8px; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--ds-ink); background: var(--ds-surface); color: var(--ds-ink);
+  border-radius: var(--ds-radius-none);
+  transition: background-color var(--ds-transition), color var(--ds-transition);
+}
+.btn:hover { background: var(--ds-bg-alt); }
+.btn.primary { background: var(--ds-ink); border-color: var(--ds-ink); color: var(--ds-on-accent); }
+.btn.primary:hover { background: var(--ds-grey-dark); }
+.btn.danger { color: var(--ds-danger); border-color: var(--ds-danger); }
+.btn.danger:hover { background: var(--ds-danger-bg); }
+
+/* Chip / banner / overlay+modal — the most commonly shared bare names */
+.chip { display: inline-flex; gap: 8px; align-items: baseline; font-size: var(--ds-text-xs); font-variant-numeric: tabular-nums; color: var(--ds-ink-soft); background: var(--ds-bg-alt); padding: 7px 12px; }
+.chip.warn { background: var(--ds-warning-bg); color: var(--ds-warning); font-weight: 500; }
+.banner { border: 1px solid var(--ds-noir); background: var(--ds-jaune); color: var(--ds-noir); padding: 14px 18px; font-size: 13.5px; }
+.overlay { position: fixed; inset: 0; background: var(--ds-overlay-scrim); z-index: var(--ds-z-overlay); display: none; align-items: flex-start; justify-content: center; padding: 5vh 18px; }
+.overlay.show { display: flex; }
+.modal { background: var(--ds-bg); border: 1px solid var(--ds-ink); max-width: var(--ds-maxw-modal); width: 100%; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; }

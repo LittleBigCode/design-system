@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Borders &amp; rules · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="foundations/borders">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Foundations</p>
+        <h1 class="ds-title ds-title--xl">Borders &amp; rules</h1>
+        <p class="docs-lede">Structure comes from a single 1px rule system in two weights — never from shadows. Depth is drawn, not faked.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Rules</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">--ds-rule · --ds-rule-soft</span>
+            <button class="ds-button" data-copy-target="#c-rules">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <div style="padding:24px;border:1px solid var(--ds-rule)">Rule (1px)</div>
+            <div style="padding:24px;border:1px solid var(--ds-rule-soft)">Rule soft (1px)</div>
+          </div>
+          <pre class="ds-example__code"><code id="c-rules">&lt;div style="border:1px solid var(--ds-rule)"&gt;Rule&lt;/div&gt;
+&lt;div style="border:1px solid var(--ds-rule-soft)"&gt;Rule soft&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>No shadows</h2>
+        <p class="docs-note">The system ships no <code>box-shadow</code>. Elevation, separation and grouping are expressed entirely through 1px rules and flat <code>--ds-bg-alt</code> fills. The result reads as drafted and architectural rather than soft and floating — a deliberate, load-bearing constraint, not an omission.</p>
+      </section>
+
+      <section class="docs-section">
+        <h2>Selection</h2>
+        <p class="docs-note">Text selection paints accent orange (<code>--ds-accent</code> on <code>--ds-on-accent</code>) via <code>::selection</code>. Select this sentence to see it.</p>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.1.0</span>
+        <a href="layout.html">← Layout</a>
+        <a href="motion.html">Motion →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

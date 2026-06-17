@@ -1,0 +1,34 @@
+/* ============================================================================
+   Diametral Design System — bundle entrypoint
+   Import this one file to get tokens + reset + typography + all components:
+
+       <link rel="stylesheet" href="css/diametral.css">
+       @import url("@diametral/design-system/css/diametral.css");
+
+   Themes (css/themes/*.css) and compat aliases (css/compat/*.css) are opt-in
+   and intentionally NOT imported here. See docs/theming.md and docs/migration.md.
+   ============================================================================ */
+
+/* Tier 1+2+3 tokens */
+@import url("./tokens.css");
+
+/* Base */
+@import url("./base/reset.css");
+@import url("./base/typography.css");
+
+/* Components */
+@import url("./components/app-bar.css");
+@import url("./components/button.css");
+@import url("./components/switch.css");
+@import url("./components/badge.css");
+@import url("./components/tabs.css");
+@import url("./components/field.css");
+@import url("./components/chip.css");
+@import url("./components/banner.css");
+@import url("./components/callout.css");
+@import url("./components/panel.css");
+@import url("./components/status-panel.css");
+@import url("./components/segmented.css");
+@import url("./components/table.css");
+@import url("./components/modal.css");
+@import url("./components/section-heading.css");

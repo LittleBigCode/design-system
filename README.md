@@ -2,10 +2,12 @@
 
 # Diametral Design System
 
-> A minimal, flat, **buildless** design system — CSS + design tokens + Web Components.
+> A minimal, flat, **buildless** design system — CSS + design tokens + Web Components + React.
 > **Welcome to (the real).**
 
 **Minimal · Enduring · Elegant**
+
+🔗 **Live showcase:** https://littlebigcode.github.io/design-system/
 
 </div>
 
@@ -21,6 +23,7 @@ It ships as:
 - **CSS + design tokens** — a framework-agnostic stylesheet you add with one `<link>`.
 - **`tokens.json`** — the single source of truth, plus generated **Tailwind preset** and **SCSS** variables.
 - **Web Components** — an optional custom-element layer that needs no build.
+- **React components** — real, typed React components ([`react/`](react/)), also buildless.
 
 There is **no build step required to use it**.
 
@@ -67,6 +70,18 @@ import "@diametral/design-system/components"; // optional Web Components
 <ds-button variant="primary">Save</ds-button>
 <ds-status status="success" heading="Approved"></ds-status>
 ```
+
+**React** (optional layer — real, typed components):
+
+```jsx
+import "@diametral/design-system/css/diametral.css";
+import { Button, Status, Metric } from "@diametral/design-system/react";
+
+<Button variant="primary">Save</Button>
+```
+
+See [`docs/react.md`](docs/react.md) and the live, buildless demo in
+[`examples/react.html`](examples/react.html).
 
 > The system is pure CSS + fonts + SVG + a sprinkle of vanilla JS for the Web Components.
 > **No bundler, transpiler, or framework is needed to consume it.**
@@ -126,11 +141,12 @@ new tokens or components are **minor**, fixes are **patch**. See
 [`CHANGELOG.md`](CHANGELOG.md), [`docs/versioning.md`](docs/versioning.md), and
 [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
-> ⚠️ **Font licensing.** **Ufficio is a commercial font.** It ships here for **internal
-> use only**, pending license verification — verify your rights before any external
-> distribution. If you don't hold a license, simply don't import `ufficio.css`: titles
-> fall back to the free **Fraunces** stack automatically. See
-> [`docs/fonts-and-licensing.md`](docs/fonts-and-licensing.md). Geist (body) is free (OFL).
+> ⚠️ **Font licensing.** **Ufficio is a commercial font**, bundled and served under
+> Diametral's own font license (see [`NOTICE.md`](NOTICE.md)). This repository grants no
+> rights to it — **third parties must obtain their own license**. If you don't hold one,
+> simply don't import `ufficio.css`: titles fall back to the free **Fraunces** stack
+> automatically. Geist (body) and Fraunces are free (SIL OFL 1.1). Details in
+> [`docs/fonts-and-licensing.md`](docs/fonts-and-licensing.md).
 
 ## Directory layout
 

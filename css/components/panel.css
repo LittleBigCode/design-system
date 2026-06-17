@@ -1,0 +1,18 @@
+/* Panel — .ds-panel (sunken content panel with an uppercase title) */
+.ds-panel {
+  background: var(--ds-bg-alt);
+  padding: 24px;
+  border-radius: var(--ds-radius-none);
+}
+/* Use --rows when the panel hosts .ds-input-row items (they carry their own
+   bottom spacing), to match the app's tighter bottom padding. */
+.ds-panel--rows { padding-bottom: 12px; }
+
+.ds-panel__title {
+  font-size: var(--ds-text-xs);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ds-ink-faint);
+  margin-bottom: 14px;
+}

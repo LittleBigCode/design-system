@@ -1,0 +1,137 @@
+/* ============================================================================
+   Diametral Design System — Design tokens
+   ----------------------------------------------------------------------------
+   Three tiers, all prefixed --ds-* :
+     1. PRIMITIVES   raw brand/neutral/functional values. Never used directly
+                     by components — they reference Tier 2.
+     2. SEMANTIC     role-based aliases. The ONLY tier components and apps read.
+                     This is also the override surface for theming (see themes/).
+     3. SCALE        spacing, type, layout, motion knobs.
+
+   Source of truth: tokens/tokens.json (this file can be regenerated from it via
+   `npm run build:tokens`). Hand-edits here should be mirrored back to the JSON.
+   ============================================================================ */
+
+:root {
+  /* ===== TIER 1 — PRIMITIVES ============================================== */
+
+  /* Brand · primary palette (charter-canonical) */
+  --ds-noir:      #161616;
+  --ds-blanc:     #ffffff;
+  --ds-gris:      #767884;
+  --ds-marron:    #9f8667;
+  --ds-kaki:      #aab0a6;
+  --ds-beige:     #d5d3c4;
+  --ds-jaune:     #f4fbda;
+
+  /* Brand · secondary palette (accent / illustration) */
+  --ds-rouge:     #ff2a00;  /* signal red — charter canonical */
+  --ds-vert:      #89fc79;  /* sampled from charter PNG (label is a known typo) — confirm before 1.0 */
+  --ds-bleu:      #23e2ff;
+  --ds-jaune-vif: #fff73b;
+
+  /* Neutral UI ramp (greys the brand palette doesn't cover; from the app) */
+  --ds-grey-light: #f5f5f5;
+  --ds-grey-faint: #e4e4e6;
+  --ds-grey:       #cdced0;
+  --ds-grey-dark:  #434649;
+  /* mid grey = --ds-gris (#767884) · darkest = --ds-noir (#161616) */
+
+  /* Functional hues (muted for legibility; from the app) */
+  --ds-green:    #2e7d4f;  --ds-green-bg:  #eef4ef;
+  --ds-orange:   #ff5500;  --ds-orange-bg: #fff0e8;  /* the app's signal orange */
+  --ds-red:      #c0392b;  --ds-red-bg:    #f9ebe9;
+  --ds-info:     #1488a6;  --ds-info-bg:   #eafaff;  /* DS-introduced, harmonized with --ds-bleu */
+  --ds-grey-bg:  #ececec;
+
+  /* ===== TIER 2 — SEMANTIC (the override surface) ========================= */
+
+  /* Surfaces & text */
+  --ds-bg:            var(--ds-blanc);
+  --ds-bg-alt:        var(--ds-grey-light);
+  --ds-surface:       var(--ds-blanc);
+  --ds-overlay-scrim: rgba(22, 22, 22, .5);
+  --ds-ink:           var(--ds-noir);
+  --ds-ink-soft:      var(--ds-grey-dark);
+  --ds-ink-faint:     var(--ds-gris);
+  --ds-on-accent:     var(--ds-blanc);
+  --ds-on-status:     var(--ds-blanc);   /* text on solid status heads */
+
+  /* Lines */
+  --ds-rule:      var(--ds-grey);
+  --ds-rule-soft: var(--ds-grey-faint);
+
+  /* Accent (brand signal) */
+  --ds-accent:        var(--ds-rouge);
+  --ds-accent-bg:     var(--ds-orange-bg);
+  --ds-accent-legacy: var(--ds-orange);  /* #ff5500 — pre-charter accent, for pixel-frozen migration */
+  --ds-focus-ring:    var(--ds-ink);
+
+  /* Status families (success / warning / danger / critical / neutral / info) */
+  --ds-success:    var(--ds-green);     --ds-success-bg:  var(--ds-green-bg);
+  --ds-warning:    var(--ds-orange);    --ds-warning-bg:  var(--ds-orange-bg);
+  --ds-danger:     var(--ds-red);       --ds-danger-bg:   var(--ds-red-bg);
+  --ds-critical:   var(--ds-noir);      --ds-critical-bg: var(--ds-grey-bg);
+  --ds-neutral:    var(--ds-gris);      --ds-neutral-bg:  var(--ds-grey-bg);
+  --ds-info-fg:    var(--ds-info);      /* --ds-info / --ds-info-bg defined as primitives above */
+
+  /* ===== TIER 3 — SCALE =================================================== */
+
+  /* Spacing scale (px values lifted from the app) */
+  --ds-space-1: 4px;
+  --ds-space-2: 8px;
+  --ds-space-3: 12px;
+  --ds-space-4: 16px;
+  --ds-space-5: 24px;
+  --ds-space-6: 32px;
+  --ds-space-7: 40px;
+  --ds-space-8: 80px;
+
+  /* The flat parti pris — one knob. Override to round the whole system. */
+  --ds-radius-none: 0;
+
+  /* Type scale */
+  --ds-text-2xs:  11px;
+  --ds-text-xs:   12px;
+  --ds-text-sm:   13px;
+  --ds-text-base: 14px;
+  --ds-text-md:   19px;
+  --ds-text-lg:   22px;
+  --ds-text-xl:   24px;
+  --ds-text-2xl:  32px;
+  --ds-leading-tight:  110%;
+  --ds-leading-normal: 130%;
+
+  /* Type families. Ufficio renders only if you import assets/fonts/ufficio.css
+     (license required); otherwise the stack falls back to free Fraunces. */
+  --ds-font-title: "Ufficio", "Fraunces", "PP Editorial New", Georgia, "Times New Roman", serif;
+  --ds-font-sans:  "Geist", system-ui, "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  --ds-font-weight-title: 300;
+
+  /* Layout */
+  --ds-maxw-page:    1440px;
+  --ds-maxw-content: 1180px;
+  --ds-maxw-modal:   860px;
+
+  /* Elevation (z-index) */
+  --ds-z-header:  40;
+  --ds-z-overlay: 80;
+
+  /* Motion */
+  --ds-transition:      .2s ease;
+  --ds-transition-slow: .25s ease;
+
+  /* Breakpoint — mirrored by hard-coded media queries (CSS vars can't drive @media) */
+  --ds-bp-md: 940px;
+
+  /* ===== Backward-compat primitive aliases (the app's --ds-color-* names) === */
+  --ds-color-black:       var(--ds-noir);
+  --ds-color-white:       var(--ds-blanc);
+  --ds-color-grey-light:  var(--ds-grey-light);
+  --ds-color-grey:        var(--ds-grey);
+  --ds-color-grey-medium: var(--ds-gris);
+  --ds-color-grey-dark:   var(--ds-grey-dark);
+  --ds-color-beige:       var(--ds-beige);
+  --ds-color-yellow:      var(--ds-jaune);
+  --ds-color-red:         var(--ds-accent-legacy);
+}

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diametral Design System</title>
+  <link rel="icon" href="../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../css/diametral.css">
+  <link rel="stylesheet" href="./shell.css">
+  <script type="module" src="./showcase.js"></script>
+  <style>
+    .hero { padding: 24px 0 8px; }
+    .hero__mark { width: 84px; height: 84px; color: var(--ds-ink); }
+    .hero__name { font-size: 64px; line-height: 1; margin: 22px 0 12px; }
+    .hero__tag { font-size: var(--ds-text-sm); letter-spacing: 0.18em; text-transform: uppercase; color: var(--ds-accent); }
+    .hero__dna { margin: 28px 0 0; font-size: var(--ds-text-md); letter-spacing: 0.06em; }
+    .hero__dna b { font-weight: 400; }
+    .hero__lede { margin-top: 12px; max-width: 56ch; color: var(--ds-ink-soft); line-height: 1.5; }
+    .palette-strip { display: grid; grid-template-columns: repeat(6, 1fr); border: 1px solid var(--ds-ink); margin: 40px 0; }
+    .palette-strip > div { padding: 64px 12px 12px; border-right: 1px solid rgba(0,0,0,.08); }
+    .palette-strip > div:last-child { border-right: none; }
+    .palette-strip .n { font-size: 12px; }
+    .palette-strip .h { font-size: 11px; opacity: .7; font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<body data-page="index">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+
+      <section class="hero">
+        <svg class="hero__mark" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <circle cx="28" cy="28" r="24"/><rect x="12" y="12" width="32" height="32"/><line x1="12" y1="44" x2="44" y2="12"/>
+        </svg>
+        <h1 class="hero__name ds-title">Diametral</h1>
+        <p class="hero__tag">Design System — Welcome to (the real)</p>
+        <p class="hero__dna"><b>Minimal</b> · <b>Enduring</b> · <b>Elegant</b></p>
+        <p class="hero__lede">A flat, buildless design system extracted from the Diametral brand: 1px rules, no shadows, no border-radius, Ufficio headings over Geist body. Refined and structured — deliberately away from tech and consulting clichés.</p>
+      </section>
+
+      <section class="palette-strip" aria-label="Primary palette">
+        <div style="background:#161616;color:#fff"><div class="n">Noir</div><div class="h">#161616</div></div>
+        <div style="background:#767884;color:#fff"><div class="n">Gris</div><div class="h">#767884</div></div>
+        <div style="background:#9f8667;color:#fff"><div class="n">Marron</div><div class="h">#9F8667</div></div>
+        <div style="background:#aab0a6"><div class="n">Kaki</div><div class="h">#AAB0A6</div></div>
+        <div style="background:#d5d3c4"><div class="n">Beige</div><div class="h">#D5D3C4</div></div>
+        <div style="background:#f4fbda"><div class="n">Jaune</div><div class="h">#F4FBDA</div></div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Foundations</h2>
+        <div class="docs-cards">
+          <a class="docs-card" href="foundations/color.html"><div class="docs-card__name">Color</div><div class="docs-card__desc">Brand, semantic & status tokens</div></a>
+          <a class="docs-card" href="foundations/typography.html"><div class="docs-card__name">Typography</div><div class="docs-card__desc">Ufficio + Geist, the type scale</div></a>
+          <a class="docs-card" href="foundations/spacing.html"><div class="docs-card__name">Spacing</div><div class="docs-card__desc">The spacing scale</div></a>
+          <a class="docs-card" href="foundations/layout.html"><div class="docs-card__name">Layout</div><div class="docs-card__desc">Containers, grid, sticky patterns</div></a>
+          <a class="docs-card" href="foundations/borders.html"><div class="docs-card__name">Borders &amp; rules</div><div class="docs-card__desc">1px lines, no shadows</div></a>
+          <a class="docs-card" href="foundations/motion.html"><div class="docs-card__name">Motion</div><div class="docs-card__desc">Transitions & the fade-in</div></a>
+          <a class="docs-card" href="foundations/no-radius.html"><div class="docs-card__name">No radius</div><div class="docs-card__desc">The flat parti pris</div></a>
+          <a class="docs-card" href="foundations/logo.html"><div class="docs-card__name">Logo</div><div class="docs-card__desc">The mark, construction & usage</div></a>
+          <a class="docs-card" href="foundations/iconography.html"><div class="docs-card__name">Iconography</div><div class="docs-card__desc">Line icons, 1.5 stroke</div></a>
+          <a class="docs-card" href="foundations/photography.html"><div class="docs-card__name">Photography</div><div class="docs-card__desc">Natural macro textures</div></a>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Components</h2>
+        <div class="docs-cards">
+          <a class="docs-card" href="components/status-panel.html"><div class="docs-card__name">Status panel</div><div class="docs-card__desc">The signature result card</div></a>
+          <a class="docs-card" href="components/buttons.html"><div class="docs-card__name">Buttons</div><div class="docs-card__desc">Ghost · primary · danger</div></a>
+          <a class="docs-card" href="components/toggle.html"><div class="docs-card__name">Toggle switch</div><div class="docs-card__desc">On / off / disabled</div></a>
+          <a class="docs-card" href="components/badges.html"><div class="docs-card__name">Badges</div><div class="docs-card__desc">Uppercase pills</div></a>
+          <a class="docs-card" href="components/tabs.html"><div class="docs-card__name">Tabs</div><div class="docs-card__desc">Accent underline + sublabel</div></a>
+          <a class="docs-card" href="components/forms.html"><div class="docs-card__name">Form fields</div><div class="docs-card__desc">Labels, inputs, rows</div></a>
+          <a class="docs-card" href="components/chips.html"><div class="docs-card__name">Chips</div><div class="docs-card__desc">Compact labeled pills</div></a>
+          <a class="docs-card" href="components/banner.html"><div class="docs-card__name">Banner</div><div class="docs-card__desc">Full-width notice</div></a>
+          <a class="docs-card" href="components/callout.html"><div class="docs-card__name">Callout</div><div class="docs-card__desc">Semantic alert box</div></a>
+          <a class="docs-card" href="components/panel.html"><div class="docs-card__name">Panel</div><div class="docs-card__desc">Sunken content panel</div></a>
+          <a class="docs-card" href="components/segmented.html"><div class="docs-card__name">Segmented</div><div class="docs-card__desc">Filter pills</div></a>
+          <a class="docs-card" href="components/metrics.html"><div class="docs-card__name">Metrics</div><div class="docs-card__desc">Stat rows</div></a>
+          <a class="docs-card" href="components/modal.html"><div class="docs-card__name">Modal</div><div class="docs-card__desc">Overlay + dialog</div></a>
+          <a class="docs-card" href="components/table.html"><div class="docs-card__name">Table</div><div class="docs-card__desc">Data table</div></a>
+          <a class="docs-card" href="components/dividers.html"><div class="docs-card__name">Dividers</div><div class="docs-card__desc">Section headings</div></a>
+          <a class="docs-card" href="components/web-components.html"><div class="docs-card__name">Web Components</div><div class="docs-card__desc">The custom-element layer</div></a>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Principles</h2>
+        <p class="docs-note">Flat &amp; sharp — 1px borders, no shadows, no border-radius. &nbsp;·&nbsp; White / whitesmoke surfaces, black ink. &nbsp;·&nbsp; Ufficio titles over Geist body, uppercase labels at 0.08em, tabular numerals. Read more in the repository's <code>docs/principles.md</code>.</p>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.1.0</span>
+        <a href="kitchen-sink.html">Kitchen sink →</a>
+        <span>Ufficio is a commercial font — see docs/fonts-and-licensing.md.</span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

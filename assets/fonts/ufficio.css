@@ -1,0 +1,19 @@
+/* ============================================================
+   Ufficio — title typeface (COMMERCIAL, opt-in)
+   ------------------------------------------------------------
+   Import this file ONLY if your project holds a valid Ufficio
+   license. See ./LICENSE-FONTS.md. Then point the title token
+   at it:
+
+     :root { --ds-font-title: "Ufficio", "Fraunces", serif; }
+
+   Without this import the system renders headings in the free
+   fallback stack (Fraunces / PP Editorial New / Georgia).
+   ============================================================ */
+@font-face {
+  font-family: "Ufficio";
+  src: url("./Ufficio-300.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}

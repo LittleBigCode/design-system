@@ -1,0 +1,32 @@
+/* Segmented control — .ds-segmented (filter pills / segmented selector) */
+.ds-segmented { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.ds-segmented__item {
+  font-family: var(--ds-font-sans);
+  font-size: 12.5px;
+  font-weight: 400;
+  padding: 8px 14px;
+  border: 1px solid var(--ds-rule);
+  background: var(--ds-surface);
+  color: var(--ds-ink-soft);
+  cursor: pointer;
+  border-radius: var(--ds-radius-none);
+  transition: background-color var(--ds-transition), color var(--ds-transition);
+}
+.ds-segmented__item[aria-pressed="true"],
+.ds-segmented__item[aria-selected="true"],
+.ds-segmented__item.is-active {
+  background: var(--ds-ink);
+  border-color: var(--ds-ink);
+  color: var(--ds-on-accent);
+}
+.ds-segmented__item:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: 2px; }
+
+.ds-segmented__dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 7px;
+}
+.ds-segmented__dot--ok { background: var(--ds-success); }
+.ds-segmented__dot--ko { background: var(--ds-warning); }

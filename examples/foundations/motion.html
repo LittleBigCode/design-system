@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Motion · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="foundations/motion">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Foundations</p>
+        <h1 class="ds-title ds-title--xl">Motion</h1>
+        <p class="docs-lede">Motion is restrained — short .2–.25s ease transitions on state changes, and a single subtle fade-in for entering content. Nothing bounces, nothing lingers.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Transitions</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">--ds-transition · .2s ease</span>
+            <button class="ds-button" data-copy-target="#c-transition">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <button class="ds-button">Hover me</button>
+          </div>
+          <pre class="ds-example__code"><code id="c-transition">transition: background-color var(--ds-transition), color var(--ds-transition);</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Fade-in</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">.ds-fade-in · ds-fadein keyframe</span>
+            <button class="ds-button" onclick="this.closest('.ds-example__preview').querySelector('.demo-fade').classList.remove('ds-fade-in');void this.closest('.ds-example__preview').querySelector('.demo-fade').offsetWidth;this.closest('.ds-example__preview').querySelector('.demo-fade').classList.add('ds-fade-in')">Replay</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="demo-fade ds-fade-in" style="margin-top:14px;padding:18px;background:var(--ds-bg-alt)">Fades in (ds-fadein keyframe)</div>
+          </div>
+          <pre class="ds-example__code"><code id="c-fade">&lt;div class="ds-fade-in"&gt;Fades in&lt;/div&gt;</code></pre>
+        </section>
+        <p class="docs-note">All motion honours <code>prefers-reduced-motion</code>: when reduced, transitions and the fade-in collapse to a near-instant duration.</p>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.1.0</span>
+        <a href="borders.html">← Borders &amp; rules</a>
+        <a href="no-radius.html">No radius →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

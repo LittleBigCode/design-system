@@ -1,0 +1,23 @@
+/* Chip — .ds-chip (compact labeled pill) */
+.ds-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.ds-chip {
+  display: inline-flex;
+  gap: 8px;
+  align-items: baseline;
+  font-size: var(--ds-text-xs);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  color: var(--ds-ink-soft);
+  background: var(--ds-bg-alt);
+  padding: 7px 12px;
+  border-radius: var(--ds-radius-none);
+}
+.ds-chip b,
+.ds-chip strong { color: var(--ds-ink); font-weight: 500; }
+
+.ds-chip--warn {
+  background: var(--ds-warning-bg);
+  color: var(--ds-warning);
+  font-weight: 500;
+}

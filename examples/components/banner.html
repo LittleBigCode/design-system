@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banner · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/banner">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Banner</h1>
+        <p class="docs-lede">A full-width, fixed-identity notice. It stays pale yellow with dark ink in every theme, making it the right home for a persistent, machine-level message. Emphasize key words with <code>&lt;b&gt;</code>.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Default</h2>
+        <p class="docs-note">A single <code>ds-banner</code> spans the width of its container; add the <code>hidden</code> attribute to dismiss it.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Notice</span>
+            <button class="ds-button" data-copy-target="#c-banner">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-banner">Settings <b>modified locally</b> on this machine — values differ from the shared reference. Use Settings → Reset to restore.</div>
+          </div>
+          <pre class="ds-example__code"><code id="c-banner">&lt;div class="ds-banner"&gt;Settings &lt;b&gt;modified locally&lt;/b&gt; on this machine — values differ from the shared reference. Use Settings → Reset to restore.&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.1.0</span>
+        <a href="chips.html">← Chips</a>
+        <a href="callout.html">Callout →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+/* Form fields — .ds-field, .ds-input, .ds-input-row, .ds-context-bar
+   Apply .ds-input to a control, or wrap controls in .ds-field to style them by
+   descent. Resets are scoped — they never touch bare inputs outside the system. */
+
+.ds-field { display: flex; flex-direction: column; gap: 6px; }
+.ds-field > label,
+.ds-field__label {
+  font-size: var(--ds-text-xs);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ds-ink-faint);
+}
+
+.ds-input,
+.ds-field select,
+.ds-field textarea,
+.ds-field input[type="text"],
+.ds-field input[type="number"],
+.ds-field input[type="email"],
+.ds-field input[type="password"],
+.ds-field input[type="search"],
+.ds-field input[type="tel"],
+.ds-field input[type="url"] {
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-base);
+  font-weight: 400;
+  color: var(--ds-ink);
+  font-variant-numeric: tabular-nums;
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-rule);
+  border-radius: var(--ds-radius-none);
+  padding: 10px 12px;
+  outline: none;
+}
+select.ds-input,
+.ds-field select { cursor: pointer; min-width: 200px; }
+
+.ds-input:focus,
+.ds-field :is(select, input, textarea):focus {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: -2px;
+}
+
+.ds-input--number,
+.ds-field input[type="number"] { width: 130px; text-align: right; }
+.ds-input--number::-webkit-outer-spin-button,
+.ds-input--number::-webkit-inner-spin-button,
+.ds-field input[type="number"]::-webkit-outer-spin-button,
+.ds-field input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.ds-input--number,
+.ds-field input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
+
+.ds-input:disabled,
+.ds-field :is(select, input, textarea):disabled { opacity: .55; cursor: not-allowed; }
+
+/* Context bar — a row of fields above content. */
+.ds-context-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--ds-rule);
+}
+
+/* Labeled row — a label on the left, a control/value on the right. */
+.ds-input-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--ds-rule-soft);
+}
+.ds-input-row:last-child { border-bottom: none; }
+.ds-input-row > label { font-size: var(--ds-text-base); color: var(--ds-ink-soft); }
+.ds-input-row__unit { font-size: var(--ds-text-xs); color: var(--ds-ink-faint); margin-left: 6px; }

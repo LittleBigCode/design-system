@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buttons · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/buttons">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Buttons</h1>
+        <p class="docs-lede">Flat, sharp buttons with a 1px border and no radius. Three variants — ghost (default), primary (ink fill), and danger — plus hover, focus and disabled states.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Variants</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Ghost · primary · danger</span>
+            <button class="ds-button" data-copy-target="#c-variants">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <button class="ds-button">Settings</button>
+            <button class="ds-button ds-button--primary">Save</button>
+            <button class="ds-button ds-button--danger">Reset</button>
+          </div>
+          <pre class="ds-example__code"><code id="c-variants">&lt;button class="ds-button"&gt;Settings&lt;/button&gt;
+&lt;button class="ds-button ds-button--primary"&gt;Save&lt;/button&gt;
+&lt;button class="ds-button ds-button--danger"&gt;Reset&lt;/button&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>States</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Hover · focus · disabled</span>
+            <button class="ds-button" data-copy-target="#c-states">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <button class="ds-button">Hover me</button>
+            <button class="ds-button" autofocus>Focus ring</button>
+            <button class="ds-button" disabled>Disabled</button>
+            <button class="ds-button ds-button--primary" disabled>Disabled</button>
+          </div>
+          <pre class="ds-example__code"><code id="c-states">&lt;button class="ds-button"&gt;Hover me&lt;/button&gt;
+&lt;button class="ds-button" disabled&gt;Disabled&lt;/button&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Web Component</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;ds-button&gt;</span>
+            <button class="ds-button" data-copy-target="#c-wc">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-wc">&lt;ds-button&gt;Settings&lt;/ds-button&gt;
+&lt;ds-button variant="primary"&gt;Save&lt;/ds-button&gt;
+&lt;ds-button variant="danger" disabled&gt;Reset&lt;/ds-button&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.1.0</span>
+        <a href="status-panel.html">← Status panel</a>
+        <a href="toggle.html">Toggle switch →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

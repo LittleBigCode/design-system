@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kitchen sink · Diametral Design System</title>
+  <link rel="icon" href="../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../css/diametral.css">
+  <link rel="stylesheet" href="./shell.css">
+  <script type="module" src="./showcase.js"></script>
+  <script type="module" src="../components/index.js"></script>
+</head>
+<body data-page="kitchen-sink">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Kitchen sink</h1>
+        <p class="docs-lede">Every component on one page — the visual regression view.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Buttons</h2>
+        <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center">
+          <button class="ds-button">Settings</button>
+          <button class="ds-button ds-button--primary">Save</button>
+          <button class="ds-button ds-button--danger">Reset</button>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Switch</h2>
+        <label class="ds-switch"><input type="checkbox" checked><span class="ds-switch__track"></span><span>Detail mode</span></label>
+      </section>
+
+      <section class="docs-section">
+        <h2>Badges</h2>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+          <span class="ds-badge">Draft</span>
+          <span class="ds-badge ds-badge--solid">Admin</span>
+          <span class="ds-badge ds-badge--accent">Beta</span>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Tabs</h2>
+        <div class="ds-tabs">
+          <button class="ds-tabs__tab is-active">Pricing<span class="ds-tabs__sublabel">Day rates</span></button>
+          <button class="ds-tabs__tab">Thresholds<span class="ds-tabs__sublabel">Delegation</span></button>
+          <button class="ds-tabs__tab">Reference<span class="ds-tabs__sublabel">Constants</span></button>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Form field &amp; input row</h2>
+        <div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-end">
+          <div class="ds-field" style="min-width:240px">
+            <label>Entity</label>
+            <select class="ds-input"><option>LBC_FR</option><option>LBC_BE</option><option>LBC_US</option></select>
+          </div>
+          <div style="width:320px;max-width:100%">
+            <div class="ds-input-row"><label>Day rate <span class="ds-input-row__unit">€</span></label><input class="ds-input ds-input--number" type="number" value="900"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Chips</h2>
+        <div class="ds-chips">
+          <span class="ds-chip">Margin <b>38 %</b></span>
+          <span class="ds-chip">Days <b>218</b></span>
+          <span class="ds-chip ds-chip--warn">Below threshold</span>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Banner</h2>
+        <div class="ds-banner"><b>Heads up</b> — reference data was last updated three months ago.</div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Callout</h2>
+        <div style="display:grid;gap:16px">
+          <div class="ds-callout ds-callout--info"><div class="ds-callout__title">Info</div>Informational notice.</div>
+          <div class="ds-callout ds-callout--success"><div class="ds-callout__title">Success</div>Everything checks out.</div>
+          <div class="ds-callout ds-callout--warning"><div class="ds-callout__title">Warning</div>Needs manager sign-off.</div>
+          <div class="ds-callout ds-callout--danger"><div class="ds-callout__title">Danger</div>This deal is blocked.</div>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Panel</h2>
+        <div class="ds-panel ds-panel--rows" style="max-width:360px">
+          <div class="ds-panel__title">Sale</div>
+          <div class="ds-input-row"><label>Day rate <span class="ds-input-row__unit">€</span></label><input class="ds-input ds-input--number" type="number" value="900"></div>
+          <div class="ds-input-row"><label>Rebilled expenses <span class="ds-input-row__unit">€</span></label><input class="ds-input ds-input--number" type="number" value="0"></div>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Status panel</h2>
+        <div style="width:360px;max-width:100%">
+          <div class="ds-status ds-status--success">
+            <div class="ds-status__head">
+              <div class="ds-status__kicker">Approval level</div>
+              <div class="ds-status__title">Full delegation</div>
+              <div class="ds-status__subtitle">Approve without arbitration</div>
+            </div>
+            <div class="ds-status__key">
+              <span class="is-success is-on">Full</span>
+              <span class="is-warning">Manager</span>
+              <span class="is-danger">Director</span>
+              <span class="is-critical">Blocked</span>
+            </div>
+            <div class="ds-status__body">
+              <div class="ds-metric ds-metric--hero"><span class="ds-metric__k">Margin</span><span class="ds-metric__v is-pos">38.0&nbsp;%</span></div>
+              <div class="ds-metric"><span class="ds-metric__k">Margin / day</span><span class="ds-metric__v">€342</span></div>
+              <div class="ds-metric"><span class="ds-metric__k">Day rate</span><span class="ds-metric__v">€900</span></div>
+              <div class="ds-metric ds-metric--sub"><span class="ds-metric__k">Salary cost</span><span class="ds-metric__v">€420</span></div>
+            </div>
+            <div class="ds-status__note">Thresholds: ≥ 35 % full · 20–35 % manager · 0–20 % director · &lt; 0 % blocked.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Metrics</h2>
+        <div style="width:360px;max-width:100%;background:var(--ds-surface);border:1px solid var(--ds-rule);padding:0 18px">
+          <div class="ds-metric ds-metric--hero"><span class="ds-metric__k">Margin</span><span class="ds-metric__v is-pos">38 %</span></div>
+          <div class="ds-metric"><span class="ds-metric__k">Margin / day</span><span class="ds-metric__v">€342</span></div>
+          <div class="ds-metric ds-metric--sub"><span class="ds-metric__k">Salary cost</span><span class="ds-metric__v">€420</span></div>
+          <div class="ds-metric"><span class="ds-metric__k">Loss</span><span class="ds-metric__v is-neg">−4 %</span></div>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Segmented</h2>
+        <div class="ds-segmented">
+          <button class="ds-segmented__item is-active">LBC_FR</button>
+          <button class="ds-segmented__item"><span class="ds-segmented__dot ds-segmented__dot--ok"></span>LBC_BE</button>
+          <button class="ds-segmented__item"><span class="ds-segmented__dot ds-segmented__dot--ko"></span>LBC_US</button>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Table</h2>
+        <table class="ds-table ds-table--hover">
+          <thead>
+            <tr><th>Grade</th><th class="ds-table__num">Overhead</th><th class="ds-table__num">Days</th><th></th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="ds-table__name">Consultant</td><td class="ds-table__num">18 %</td><td class="ds-table__num">218</td><td><button class="ds-table__row-action" aria-label="Delete">✕</button></td></tr>
+            <tr><td class="ds-table__name">Senior</td><td class="ds-table__num">16 %</td><td class="ds-table__num">216</td><td><button class="ds-table__row-action" aria-label="Delete">✕</button></td></tr>
+            <tr><td class="ds-table__name">Manager</td><td class="ds-table__num">14 %</td><td class="ds-table__num">214</td><td><button class="ds-table__row-action" aria-label="Delete">✕</button></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="docs-section">
+        <h2>Section heading</h2>
+        <div class="ds-section">
+          <h3 class="ds-section-heading">Delegation thresholds</h3>
+          <p>Margin bands that set who may approve a deal without arbitration.</p>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Modal</h2>
+        <div class="ds-modal" style="position:static;max-height:none;max-width:480px">
+          <div class="ds-modal__head">
+            <h2 class="ds-modal__title">Reference settings</h2>
+            <button class="ds-button ds-modal__close">Close</button>
+          </div>
+          <div class="ds-modal__body"><p>Body content…</p></div>
+          <div class="ds-modal__foot">
+            <button class="ds-button">Export</button>
+            <span class="ds-modal__spacer"></span>
+            <button class="ds-button ds-button--danger">Reset</button>
+            <button class="ds-button ds-button--primary">Save</button>
+          </div>
+        </div>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.1.0</span>
+        <a href="index.html">← Overview</a>
+        <a href="foundations/color.html">Color →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

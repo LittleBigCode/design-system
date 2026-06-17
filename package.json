@@ -1,0 +1,62 @@
+{
+  "name": "@diametral/design-system",
+  "version": "0.1.0",
+  "description": "Diametral Design System — a minimal, flat, buildless CSS + tokens + Web Components design system. Welcome to (the real).",
+  "license": "MIT",
+  "type": "module",
+  "keywords": ["design-system", "css", "design-tokens", "web-components", "diametral"],
+  "sideEffects": [
+    "**/*.css",
+    "./components/*.js",
+    "./dist/components/*.js"
+  ],
+  "files": [
+    "css",
+    "components",
+    "react",
+    "tokens",
+    "assets",
+    "dist",
+    "docs",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "NOTICE.md"
+  ],
+  "exports": {
+    ".": {
+      "style": "./css/diametral.css",
+      "default": "./css/diametral.css"
+    },
+    "./css/diametral.css": "./css/diametral.css",
+    "./css/*": "./css/*",
+    "./tokens.json": "./tokens/tokens.json",
+    "./components": "./components/index.js",
+    "./components/*": "./components/*",
+    "./react": {
+      "types": "./react/index.d.ts",
+      "default": "./react/index.js"
+    },
+    "./tailwind-preset": "./dist/tailwind-preset.cjs",
+    "./dist/*": "./dist/*",
+    "./assets/*": "./assets/*"
+  },
+  "scripts": {
+    "build": "node scripts/build-tokens.mjs && node scripts/build-css.mjs && node scripts/build-components.mjs",
+    "build:tokens": "node scripts/build-tokens.mjs",
+    "build:css": "node scripts/build-css.mjs",
+    "build:components": "node scripts/build-components.mjs",
+    "serve": "python3 -m http.server 8080"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": { "optional": true },
+    "react-dom": { "optional": true }
+  }
+}

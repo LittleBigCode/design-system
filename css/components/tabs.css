@@ -1,0 +1,47 @@
+/* Tabs — .ds-tabs (title-voiced tabs with accent underline + optional sublabel) */
+.ds-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--ds-rule);
+}
+.ds-tabs__tab {
+  font-family: var(--ds-font-title);
+  font-size: var(--ds-text-md);
+  font-weight: var(--ds-font-weight-title);
+  letter-spacing: -0.2px;
+  padding: 10px 22px 14px;
+  color: var(--ds-ink-faint);
+  cursor: pointer;
+  border: none;
+  background: none;
+  position: relative;
+  transition: color var(--ds-transition);
+}
+.ds-tabs__tab:hover { color: var(--ds-ink-soft); }
+.ds-tabs__tab[aria-selected="true"],
+.ds-tabs__tab.is-active { color: var(--ds-ink); }
+.ds-tabs__tab[aria-selected="true"]::after,
+.ds-tabs__tab.is-active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--ds-accent);
+}
+.ds-tabs__tab:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: -4px; }
+.ds-tabs__sublabel {
+  display: block;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-2xs);
+  font-weight: 300;
+  color: var(--ds-ink-faint);
+  letter-spacing: 0.02em;
+  margin-top: 2px;
+}
+
+/* Tab panes */
+.ds-tabpane { display: none; }
+.ds-tabpane.is-active,
+.ds-tabpane[aria-hidden="false"] { display: block; animation: ds-fadein var(--ds-transition-slow); }

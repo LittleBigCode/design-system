@@ -1,0 +1,41 @@
+/* App bar + wordmark — .ds-app-bar / .ds-wordmark (sticky application header) */
+.ds-app-bar {
+  border-bottom: 1px solid var(--ds-ink);
+  background: var(--ds-bg);
+  position: sticky;
+  top: 0;
+  z-index: var(--ds-z-header);
+}
+.ds-app-bar__inner {
+  max-width: var(--ds-maxw-page);
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.ds-app-bar__actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ds-wordmark { display: flex; align-items: center; gap: 14px; }
+.ds-wordmark__mark { width: 34px; height: 34px; color: var(--ds-ink); flex: none; }
+.ds-wordmark__name {
+  font-family: var(--ds-font-title);
+  font-weight: var(--ds-font-weight-title);
+  font-size: var(--ds-text-lg);
+  letter-spacing: -0.4px;
+  line-height: var(--ds-leading-tight);
+}
+.ds-wordmark__sub {
+  font-size: var(--ds-text-xs);
+  color: var(--ds-ink-faint);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-left: 1px solid var(--ds-rule);
+  padding-left: 14px;
+  margin-left: 2px;
+}

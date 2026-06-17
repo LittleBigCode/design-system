@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/panel">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Panel</h1>
+        <p class="docs-lede">A sunken content panel on the whitesmoke surface with an uppercase title. Holds grouped inputs, notes, or any arbitrary content. Add <code>--rows</code> when it hosts <code>.ds-input-row</code> items, which carry their own spacing.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Input rows</h2>
+        <p class="docs-note">A titled panel of labeled rows. The <code>--rows</code> modifier tightens the bottom padding so the last row's hairline sits cleanly.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Panel · rows</span>
+            <button class="ds-button" data-copy-target="#c-rows">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-panel ds-panel--rows">
+              <div class="ds-panel__title">Sale</div>
+              <div class="ds-input-row"><label>Day rate <span class="ds-input-row__unit">€</span></label><input class="ds-input ds-input--number" type="number" value="900"></div>
+              <div class="ds-input-row"><label>Rebilled expenses <span class="ds-input-row__unit">€</span></label><input class="ds-input ds-input--number" type="number" value="0"></div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-rows">&lt;div class="ds-panel ds-panel--rows"&gt;
+  &lt;div class="ds-panel__title"&gt;Sale&lt;/div&gt;
+  &lt;div class="ds-input-row"&gt;
+    &lt;label&gt;Day rate &lt;span class="ds-input-row__unit"&gt;€&lt;/span&gt;&lt;/label&gt;
+    &lt;input class="ds-input ds-input--number" type="number" value="900"&gt;
+  &lt;/div&gt;
+  &lt;div class="ds-input-row"&gt;
+    &lt;label&gt;Rebilled expenses &lt;span class="ds-input-row__unit"&gt;€&lt;/span&gt;&lt;/label&gt;
+    &lt;input class="ds-input ds-input--number" type="number" value="0"&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Plain content</h2>
+        <p class="docs-note">Without <code>--rows</code> the panel is a plain titled container for any content.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Panel</span>
+            <button class="ds-button" data-copy-target="#c-plain">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-panel">
+              <div class="ds-panel__title">Notes</div>
+              <p>Arbitrary content…</p>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-plain">&lt;div class="ds-panel"&gt;
+  &lt;div class="ds-panel__title"&gt;Notes&lt;/div&gt;
+  &lt;p&gt;Arbitrary content…&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.1.0</span>
+        <a href="callout.html">← Callout</a>
+        <a href="segmented.html">Segmented →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

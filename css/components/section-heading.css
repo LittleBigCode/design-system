@@ -1,0 +1,21 @@
+/* Section heading — .ds-section-heading (uppercase label + trailing hairline) */
+.ds-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: var(--ds-text-xs);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ds-ink-faint);
+  margin-bottom: 14px;
+}
+.ds-section-heading::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--ds-rule);
+}
+
+/* Optional section wrapper for vertical rhythm. */
+.ds-section { margin-bottom: 36px; }

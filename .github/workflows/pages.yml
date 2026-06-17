@@ -1,0 +1,61 @@
+name: Deploy showcase to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment; let an in-progress run finish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Assemble _site
+        run: |
+          set -euo pipefail
+          mkdir -p _site
+          cp -r css assets components react examples _site/
+
+          # The Ufficio title font is served here under Diametral's own font license
+          # (see NOTICE.md). To publish a license-safe build that excludes it instead,
+          # uncomment the two lines below — titles then fall back to free Fraunces:
+          #   rm -f _site/assets/fonts/Ufficio-300.woff2 _site/assets/fonts/ufficio.css
+          #   grep -rl "assets/fonts/ufficio.css" _site --include='*.html' | xargs -r sed -i 's#assets/fonts/ufficio.css#assets/fonts/fallback.css#g'
+
+          # Landing redirect at the site root -> the showcase.
+          cp deploy/pages-redirect.html _site/index.html
+
+          # Disable Jekyll processing.
+          touch _site/.nojekyll
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

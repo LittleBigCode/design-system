@@ -1,0 +1,163 @@
+/* ============================================================================
+   Showcase chrome — NOT part of the product.
+   Only the documentation shell lives here: the nav rail, the repeating example
+   panel frame, and the code block. It is built from DS tokens so it stays on
+   brand, but a downstream app ships none of this. If a component looks right
+   only because of shell.css, that is a bug in the component CSS.
+   ============================================================================ */
+
+/* Layout: fixed nav rail + fluid content */
+.docs {
+  display: grid;
+  grid-template-columns: 256px minmax(0, 1fr);
+  align-items: start;
+}
+
+.docs-rail {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  border-right: 1px solid var(--ds-ink);
+  padding: 24px 0 40px;
+  background: var(--ds-bg);
+}
+.docs-rail__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 22px 22px;
+}
+.docs-rail__brand .ds-wordmark__name { font-size: var(--ds-text-lg); }
+
+.docs-nav__group { padding: 14px 22px 4px; }
+.docs-nav__group + .docs-nav__group { margin-top: 6px; }
+.docs-nav__label {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 8px;
+}
+.docs-nav__label::after { content: ""; flex: 1; height: 1px; background: var(--ds-rule); }
+.docs-nav a {
+  display: block;
+  padding: 6px 22px 6px 22px;
+  margin: 0 -22px;
+  font-size: 13.5px;
+  color: var(--ds-ink-soft);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: background-color var(--ds-transition), color var(--ds-transition);
+}
+.docs-nav a:hover { background: var(--ds-bg-alt); color: var(--ds-ink); }
+.docs-nav a[aria-current="page"] {
+  color: var(--ds-ink);
+  font-weight: 500;
+  border-left-color: var(--ds-accent);
+  background: var(--ds-bg-alt);
+}
+
+/* Content column */
+.docs-main { max-width: 1080px; padding: 40px 48px 96px; }
+.docs-head { margin-bottom: 40px; }
+.docs-head .ds-kicker { margin-bottom: 10px; }
+.docs-head h1 { margin-bottom: 14px; }
+.docs-lede {
+  font-size: var(--ds-text-md);
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--ds-ink-soft);
+  max-width: 60ch;
+}
+.docs-section { margin: 48px 0 0; }
+.docs-section > h2 {
+  display: flex; align-items: center; gap: 12px;
+  font-size: var(--ds-text-xs); font-weight: 400; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ds-ink-faint); margin-bottom: 18px;
+}
+.docs-section > h2::after { content: ""; flex: 1; height: 1px; background: var(--ds-rule); }
+.docs-note { font-size: 13.5px; color: var(--ds-ink-soft); margin: 0 0 18px; max-width: 70ch; }
+.docs-note code, .docs-lede code {
+  font-family: ui-monospace, "SF Mono", "Geist Mono", Menlo, Consolas, monospace;
+  font-size: 0.9em; background: var(--ds-bg-alt); padding: 1px 5px;
+}
+
+/* ---- The repeating example panel ----------------------------------------- */
+.ds-example {
+  border: 1px solid var(--ds-rule);
+  background: var(--ds-surface);
+  margin: 0 0 28px;
+}
+.ds-example__bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--ds-rule);
+}
+.ds-example__bar .ds-button {   /* compact copy button — still a real .ds-button */
+  height: 28px; padding: 0 10px; font-size: 12px;
+}
+.ds-example__preview {
+  display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start;
+  padding: 32px 24px;
+  background: var(--ds-bg-alt);
+}
+.ds-example__preview--block { display: block; }
+.ds-example__preview--center { align-items: center; justify-content: center; }
+.ds-example__preview--dark { background: var(--ds-noir); }
+.ds-example__code {
+  margin: 0;
+  background: var(--ds-noir);
+  color: #e9e9e6;
+  padding: 16px 18px;
+  font-family: ui-monospace, "SF Mono", "Geist Mono", Menlo, Consolas, monospace;
+  font-size: 12.5px;
+  line-height: 1.65;
+  overflow-x: auto;
+  border-top: 1px solid var(--ds-rule);
+}
+.ds-example__code code { white-space: pre; display: block; }
+
+/* ---- Doc helpers (swatches, specimens, cards) ---------------------------- */
+.docs-swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0; border: 1px solid var(--ds-rule); }
+.swatch { border-right: 1px solid var(--ds-rule); border-bottom: 1px solid var(--ds-rule); }
+.swatch__chip { height: 96px; }
+.swatch__meta { padding: 10px 12px; }
+.swatch__name { font-size: var(--ds-text-sm); color: var(--ds-ink); }
+.swatch__hex { font-size: var(--ds-text-xs); color: var(--ds-ink-faint); font-variant-numeric: tabular-nums; }
+.swatch__var { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 11px; color: var(--ds-ink-faint); margin-top: 2px; }
+
+.docs-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+.docs-card {
+  display: block; border: 1px solid var(--ds-rule); padding: 18px 18px 20px;
+  text-decoration: none; color: var(--ds-ink); background: var(--ds-surface);
+  transition: background-color var(--ds-transition);
+}
+.docs-card:hover { background: var(--ds-bg-alt); }
+.docs-card__name { font-family: var(--ds-font-title); font-weight: 300; font-size: var(--ds-text-lg); letter-spacing: -0.3px; }
+.docs-card__desc { font-size: 13px; color: var(--ds-ink-faint); margin-top: 4px; }
+
+.specimen { border: 1px solid var(--ds-rule); }
+.specimen__row { display: flex; align-items: baseline; gap: 20px; padding: 16px 20px; border-bottom: 1px solid var(--ds-rule-soft); }
+.specimen__row:last-child { border-bottom: none; }
+.specimen__meta { width: 150px; flex: none; font-size: 12px; color: var(--ds-ink-faint); font-variant-numeric: tabular-nums; }
+
+.docs-foot {
+  margin-top: 80px; padding-top: 24px; border-top: 1px solid var(--ds-rule);
+  font-size: var(--ds-text-xs); color: var(--ds-ink-faint);
+  display: flex; flex-wrap: wrap; gap: 16px; align-items: center;
+}
+.docs-foot a { color: var(--ds-ink-soft); }
+
+/* ---- Mobile ------------------------------------------------------------- */
+.docs-menu-btn { display: none; }
+@media (max-width: 940px) {
+  .docs { grid-template-columns: 1fr; }
+  .docs-rail {
+    position: static; height: auto; border-right: none;
+    border-bottom: 1px solid var(--ds-ink);
+  }
+  .docs-rail__nav { display: none; }
+  .docs-rail.is-open .docs-rail__nav { display: block; }
+  .docs-menu-btn {
+    display: inline-flex; margin: 0 22px;
+  }
+  .docs-main { padding: 32px 24px 80px; }
+}

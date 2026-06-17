@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Table · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/table">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Table</h1>
+        <p class="docs-lede">A flat data table: uppercase headers over a 1px rule, hairline row separators, and tabular numerals. Use <code>.ds-table__num</code> to right-align figures, <code>.ds-table__name</code> for the row label, and add <code>--hover</code> for a row highlight.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Data table</h2>
+        <p class="docs-note">A <code>.ds-table__row-action</code> sits in a trailing cell for per-row controls.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Table · hover</span>
+            <button class="ds-button" data-copy-target="#c-table">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <table class="ds-table ds-table--hover">
+              <thead>
+                <tr><th>Grade</th><th class="ds-table__num">Overhead</th><th class="ds-table__num">Days</th><th></th></tr>
+              </thead>
+              <tbody>
+                <tr><td class="ds-table__name">Consultant</td><td class="ds-table__num">18 %</td><td class="ds-table__num">218</td><td><button class="ds-table__row-action" aria-label="Delete">✕</button></td></tr>
+                <tr><td class="ds-table__name">Senior</td><td class="ds-table__num">16 %</td><td class="ds-table__num">216</td><td><button class="ds-table__row-action" aria-label="Delete">✕</button></td></tr>
+                <tr><td class="ds-table__name">Manager</td><td class="ds-table__num">14 %</td><td class="ds-table__num">214</td><td><button class="ds-table__row-action" aria-label="Delete">✕</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <pre class="ds-example__code"><code id="c-table">&lt;table class="ds-table ds-table--hover"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th&gt;Grade&lt;/th&gt;&lt;th class="ds-table__num"&gt;Overhead&lt;/th&gt;&lt;th class="ds-table__num"&gt;Days&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td class="ds-table__name"&gt;Consultant&lt;/td&gt;&lt;td class="ds-table__num"&gt;18 %&lt;/td&gt;&lt;td class="ds-table__num"&gt;218&lt;/td&gt;&lt;td&gt;&lt;button class="ds-table__row-action" aria-label="Delete"&gt;✕&lt;/button&gt;&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td class="ds-table__name"&gt;Senior&lt;/td&gt;&lt;td class="ds-table__num"&gt;16 %&lt;/td&gt;&lt;td class="ds-table__num"&gt;216&lt;/td&gt;&lt;td&gt;&lt;button class="ds-table__row-action" aria-label="Delete"&gt;✕&lt;/button&gt;&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td class="ds-table__name"&gt;Manager&lt;/td&gt;&lt;td class="ds-table__num"&gt;14 %&lt;/td&gt;&lt;td class="ds-table__num"&gt;214&lt;/td&gt;&lt;td&gt;&lt;button class="ds-table__row-action" aria-label="Delete"&gt;✕&lt;/button&gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.1.0</span>
+        <a href="modal.html">← Modal</a>
+        <a href="dividers.html">Dividers →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

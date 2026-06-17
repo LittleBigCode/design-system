@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Segmented · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/segmented">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Segmented</h1>
+        <p class="docs-lede">A row of square filter pills for selecting between a small set of options. The active item fills with ink; an optional status dot prefixes each label.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>With status dots</h2>
+        <p class="docs-note">Mark the selected item with <code>.is-active</code>. A <code>.ds-segmented__dot</code> with <code>--ok</code> or <code>--ko</code> sits before the label.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Active · ok · ko</span>
+            <button class="ds-button" data-copy-target="#c-seg">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-segmented">
+              <button class="ds-segmented__item is-active">LBC_FR</button>
+              <button class="ds-segmented__item"><span class="ds-segmented__dot ds-segmented__dot--ok"></span>LBC_BE</button>
+              <button class="ds-segmented__item"><span class="ds-segmented__dot ds-segmented__dot--ko"></span>LBC_US</button>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-seg">&lt;div class="ds-segmented"&gt;
+  &lt;button class="ds-segmented__item is-active"&gt;LBC_FR&lt;/button&gt;
+  &lt;button class="ds-segmented__item"&gt;&lt;span class="ds-segmented__dot ds-segmented__dot--ok"&gt;&lt;/span&gt;LBC_BE&lt;/button&gt;
+  &lt;button class="ds-segmented__item"&gt;&lt;span class="ds-segmented__dot ds-segmented__dot--ko"&gt;&lt;/span&gt;LBC_US&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Web Component</h2>
+        <p class="docs-note">The <code>&lt;ds-segmented&gt;</code> element wraps <code>.ds-segmented__item</code> buttons, toggles the active state, and emits <code>change</code>. Set <code>mode="multi"</code> for multi-select.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;ds-segmented&gt;</span>
+            <button class="ds-button" data-copy-target="#c-wc">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-wc">&lt;ds-segmented&gt;
+  &lt;button class="ds-segmented__item is-active"&gt;LBC_FR&lt;/button&gt;
+  &lt;button class="ds-segmented__item"&gt;LBC_BE&lt;/button&gt;
+  &lt;button class="ds-segmented__item"&gt;LBC_US&lt;/button&gt;
+&lt;/ds-segmented&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.1.0</span>
+        <a href="panel.html">← Panel</a>
+        <a href="metrics.html">Metrics →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

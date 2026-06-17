@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form fields · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/forms">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Form fields</h1>
+        <p class="docs-lede">Flat, bordered inputs with uppercase labels and tabular numerics. Wrap a control in <code>ds-field</code> to style it by descent, or apply <code>ds-input</code> directly. Numeric inputs right-align with <code>ds-input--number</code>.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Fields</h2>
+        <p class="docs-note">A <code>ds-field</code> stacks an uppercase label over a control. Use <code>ds-input--number</code> for compact, right-aligned numeric entry.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Select · number</span>
+            <button class="ds-button" data-copy-target="#c-fields">Copy</button>
+          </header>
+          <div class="ds-example__preview">
+            <div class="ds-field"><label>Entity</label><select class="ds-input"><option>LBC_FR</option><option>LBC_US</option></select></div>
+            <div class="ds-field"><label>Day rate</label><input class="ds-input ds-input--number" type="number" value="900"></div>
+          </div>
+          <pre class="ds-example__code"><code id="c-fields">&lt;div class="ds-field"&gt;
+  &lt;label&gt;Entity&lt;/label&gt;
+  &lt;select class="ds-input"&gt;&lt;option&gt;LBC_FR&lt;/option&gt;&lt;option&gt;LBC_US&lt;/option&gt;&lt;/select&gt;
+&lt;/div&gt;
+&lt;div class="ds-field"&gt;
+  &lt;label&gt;Day rate&lt;/label&gt;
+  &lt;input class="ds-input ds-input--number" type="number" value="900"&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Context bar</h2>
+        <p class="docs-note">A <code>ds-context-bar</code> lays a row of fields above the content they scope, bottom-aligned with a rule beneath.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Row of fields</span>
+            <button class="ds-button" data-copy-target="#c-context">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-context-bar">
+              <div class="ds-field"><label>Entity</label><select class="ds-input"><option>LBC_FR</option><option>LBC_US</option></select></div>
+              <div class="ds-field"><label>Day rate</label><input class="ds-input ds-input--number" type="number" value="900"></div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-context">&lt;div class="ds-context-bar"&gt;
+  &lt;div class="ds-field"&gt;
+    &lt;label&gt;Entity&lt;/label&gt;
+    &lt;select class="ds-input"&gt;&lt;option&gt;LBC_FR&lt;/option&gt;&lt;option&gt;LBC_US&lt;/option&gt;&lt;/select&gt;
+  &lt;/div&gt;
+  &lt;div class="ds-field"&gt;
+    &lt;label&gt;Day rate&lt;/label&gt;
+    &lt;input class="ds-input ds-input--number" type="number" value="900"&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Labeled rows</h2>
+        <p class="docs-note">A <code>ds-input-row</code> sets a label on the left and a control on the right, separated by a soft rule. Add a <code>ds-input-row__unit</code> for a trailing unit.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Label · value</span>
+            <button class="ds-button" data-copy-target="#c-rows">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-input-row"><label>Day rate <span class="ds-input-row__unit">€</span></label><input class="ds-input ds-input--number" type="number" value="900"></div>
+            <div class="ds-input-row"><label>Salary cost <span class="ds-input-row__unit">€</span></label><input class="ds-input ds-input--number" type="number" value="420"></div>
+          </div>
+          <pre class="ds-example__code"><code id="c-rows">&lt;div class="ds-input-row"&gt;
+  &lt;label&gt;Day rate &lt;span class="ds-input-row__unit"&gt;€&lt;/span&gt;&lt;/label&gt;
+  &lt;input class="ds-input ds-input--number" type="number" value="900"&gt;
+&lt;/div&gt;
+&lt;div class="ds-input-row"&gt;
+  &lt;label&gt;Salary cost &lt;span class="ds-input-row__unit"&gt;€&lt;/span&gt;&lt;/label&gt;
+  &lt;input class="ds-input ds-input--number" type="number" value="420"&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.1.0</span>
+        <a href="tabs.html">← Tabs</a>
+        <a href="chips.html">Chips →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

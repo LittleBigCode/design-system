@@ -1,0 +1,10 @@
+# Generated convenience build (run `npm run build` to produce). The hand-authored
+# css/ and components/ work with no build, so dist/ is not committed.
+dist/
+
+# Dependencies (the system itself has none)
+node_modules/
+
+# OS / editor
+.DS_Store
+*.log

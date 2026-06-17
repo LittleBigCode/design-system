@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="foundations/color">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Foundations</p>
+        <h1 class="ds-title ds-title--xl">Color</h1>
+        <p class="docs-lede">Three tiers: brand primitives (the charter palette), the neutral UI ramp, and semantic tokens that components actually read. The brand palette is charter-canonical; the muted status hues come from the original app.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Brand · primary</h2>
+        <div class="docs-swatches">
+          <div class="swatch"><div class="swatch__chip" style="background:#161616"></div><div class="swatch__meta"><div class="swatch__name">Noir</div><div class="swatch__hex">#161616</div><div class="swatch__var">--ds-noir</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:#767884"></div><div class="swatch__meta"><div class="swatch__name">Gris</div><div class="swatch__hex">#767884</div><div class="swatch__var">--ds-gris</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:#9f8667"></div><div class="swatch__meta"><div class="swatch__name">Marron</div><div class="swatch__hex">#9F8667</div><div class="swatch__var">--ds-marron</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:#aab0a6"></div><div class="swatch__meta"><div class="swatch__name">Kaki</div><div class="swatch__hex">#AAB0A6</div><div class="swatch__var">--ds-kaki</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:#d5d3c4"></div><div class="swatch__meta"><div class="swatch__name">Beige</div><div class="swatch__hex">#D5D3C4</div><div class="swatch__var">--ds-beige</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:#f4fbda"></div><div class="swatch__meta"><div class="swatch__name">Jaune</div><div class="swatch__hex">#F4FBDA</div><div class="swatch__var">--ds-jaune</div></div></div>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Brand · secondary</h2>
+        <p class="docs-note">Accent / illustration colors. <code>--ds-vert</code> is sampled from the charter (its swatch label was a typo) and should be confirmed with the brand owner before 1.0.</p>
+        <div class="docs-swatches">
+          <div class="swatch"><div class="swatch__chip" style="background:#ff2a00"></div><div class="swatch__meta"><div class="swatch__name">Rouge (signal)</div><div class="swatch__hex">#FF2A00</div><div class="swatch__var">--ds-rouge</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:#89fc79"></div><div class="swatch__meta"><div class="swatch__name">Vert</div><div class="swatch__hex">#89FC79</div><div class="swatch__var">--ds-vert</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:#23e2ff"></div><div class="swatch__meta"><div class="swatch__name">Bleu</div><div class="swatch__hex">#23E2FF</div><div class="swatch__var">--ds-bleu</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:#fff73b"></div><div class="swatch__meta"><div class="swatch__name">Jaune vif</div><div class="swatch__hex">#FFF73B</div><div class="swatch__var">--ds-jaune-vif</div></div></div>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Semantic</h2>
+        <p class="docs-note">The only tier components read. Override these to theme the system (see <code>docs/theming.md</code>).</p>
+        <div class="docs-swatches">
+          <div class="swatch"><div class="swatch__chip" style="background:var(--ds-ink)"></div><div class="swatch__meta"><div class="swatch__name">Ink</div><div class="swatch__hex">text primary</div><div class="swatch__var">--ds-ink</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:var(--ds-ink-soft)"></div><div class="swatch__meta"><div class="swatch__name">Ink soft</div><div class="swatch__hex">text secondary</div><div class="swatch__var">--ds-ink-soft</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:var(--ds-ink-faint)"></div><div class="swatch__meta"><div class="swatch__name">Ink faint</div><div class="swatch__hex">labels</div><div class="swatch__var">--ds-ink-faint</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:var(--ds-bg-alt);border-bottom:1px solid var(--ds-rule)"></div><div class="swatch__meta"><div class="swatch__name">Bg alt</div><div class="swatch__hex">#f5f5f5</div><div class="swatch__var">--ds-bg-alt</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:var(--ds-rule)"></div><div class="swatch__meta"><div class="swatch__name">Rule</div><div class="swatch__hex">#cdced0</div><div class="swatch__var">--ds-rule</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:var(--ds-accent)"></div><div class="swatch__meta"><div class="swatch__name">Accent</div><div class="swatch__hex">#FF2A00</div><div class="swatch__var">--ds-accent</div></div></div>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Status</h2>
+        <div class="docs-swatches">
+          <div class="swatch"><div class="swatch__chip" style="background:var(--ds-success)"></div><div class="swatch__meta"><div class="swatch__name">Success</div><div class="swatch__hex">#2E7D4F</div><div class="swatch__var">--ds-success</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:var(--ds-warning)"></div><div class="swatch__meta"><div class="swatch__name">Warning</div><div class="swatch__hex">#FF5500</div><div class="swatch__var">--ds-warning</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:var(--ds-danger)"></div><div class="swatch__meta"><div class="swatch__name">Danger</div><div class="swatch__hex">#C0392B</div><div class="swatch__var">--ds-danger</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:var(--ds-critical)"></div><div class="swatch__meta"><div class="swatch__name">Critical</div><div class="swatch__hex">#161616</div><div class="swatch__var">--ds-critical</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:var(--ds-neutral)"></div><div class="swatch__meta"><div class="swatch__name">Neutral</div><div class="swatch__hex">#767884</div><div class="swatch__var">--ds-neutral</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:var(--ds-info)"></div><div class="swatch__meta"><div class="swatch__name">Info</div><div class="swatch__hex">#1488A6</div><div class="swatch__var">--ds-info</div></div></div>
+        </div>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.1.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="typography.html">Typography →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

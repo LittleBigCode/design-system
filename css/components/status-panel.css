@@ -1,0 +1,100 @@
+/* ============================================================================
+   Status panel — .ds-status   ★ the signature component
+   ----------------------------------------------------------------------------
+   A result / status / scoring panel: a solid colored head whose background
+   switches with the semantic status modifier, an optional key (legend) strip,
+   metric rows, and a note footer. De-domained from the app's "verdict" card.
+   ============================================================================ */
+.ds-status {
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-ink);
+  border-radius: var(--ds-radius-none);
+}
+
+/* Head — solid color, white text. Neutral by default. */
+.ds-status__head {
+  padding: 32px 28px 28px;
+  color: var(--ds-on-status);
+  background: var(--ds-neutral);
+  transition: background-color var(--ds-transition-slow);
+}
+.ds-status--success  .ds-status__head { background: var(--ds-success); }
+.ds-status--warning  .ds-status__head { background: var(--ds-warning); }
+.ds-status--danger   .ds-status__head { background: var(--ds-danger); }
+.ds-status--critical .ds-status__head { background: var(--ds-critical); }
+.ds-status--neutral  .ds-status__head { background: var(--ds-neutral); }
+.ds-status--info     .ds-status__head { background: var(--ds-info); }
+
+.ds-status__kicker {
+  font-size: var(--ds-text-2xs);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: .8;
+}
+.ds-status__title {
+  font-family: var(--ds-font-title);
+  font-size: var(--ds-text-2xl);
+  font-weight: var(--ds-font-weight-title);
+  letter-spacing: -0.5px;
+  line-height: var(--ds-leading-tight);
+  margin: 10px 0 8px;
+}
+.ds-status__subtitle { font-size: 13.5px; opacity: .92; }
+
+/* Key — a 4-up legend strip with colored top borders; .is-on highlights the
+   active step. */
+.ds-status__key {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-bottom: 1px solid var(--ds-rule-soft);
+}
+.ds-status__key > * {
+  font-size: 10.5px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-align: center;
+  padding: 8px 2px 7px;
+  color: var(--ds-ink-faint);
+  border-top: 3px solid transparent;
+}
+.ds-status__key .is-success  { border-top-color: var(--ds-success); }
+.ds-status__key .is-warning  { border-top-color: var(--ds-warning); }
+.ds-status__key .is-danger   { border-top-color: var(--ds-danger); }
+.ds-status__key .is-critical { border-top-color: var(--ds-critical); }
+.ds-status__key .is-on { background: var(--ds-bg-alt); color: var(--ds-ink); font-weight: 500; }
+
+.ds-status__body { padding: 20px 28px 24px; }
+.ds-status__note {
+  padding: 14px 28px 20px;
+  font-size: var(--ds-text-xs);
+  color: var(--ds-ink-faint);
+  border-top: 1px solid var(--ds-rule-soft);
+}
+
+/* ----------------------------------------------------------------------------
+   Metric rows — .ds-metric (usable inside the status body or standalone)
+   ---------------------------------------------------------------------------- */
+.ds-metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--ds-rule-soft);
+}
+.ds-metric:last-child { border-bottom: none; }
+.ds-metric__k { font-size: var(--ds-text-sm); color: var(--ds-ink-soft); }
+.ds-metric__v { font-size: 14.5px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.ds-metric__v.is-pos { color: var(--ds-success); }
+.ds-metric__v.is-neg { color: var(--ds-danger); }
+
+.ds-metric--hero .ds-metric__k { font-size: 13.5px; }
+.ds-metric--hero .ds-metric__v {
+  font-family: var(--ds-font-title);
+  font-size: var(--ds-text-lg);
+  font-weight: var(--ds-font-weight-title);
+  letter-spacing: -0.3px;
+}
+.ds-metric--sub .ds-metric__k { padding-left: 14px; font-size: 12.5px; color: var(--ds-ink-faint); }
+.ds-metric--sub .ds-metric__v { font-size: 12.5px; font-weight: 300; color: var(--ds-ink-soft); }

@@ -1,0 +1,28 @@
+/* ============================================================================
+   Per-brand theme — worked example
+   ----------------------------------------------------------------------------
+   Copy this file, rename the data-theme value, and override only the Tier-2
+   SEMANTIC tokens (and optionally the font tokens). Never touch primitives or
+   component rules. This is exactly how a downstream brand (or an app like
+   recrutauto) plugs its identity into the system while staying on the DS.
+
+   Usage:  <html data-theme="acme">  +  import this file.
+   ============================================================================ */
+[data-theme="acme"] {
+  /* Recolor the accent and its tint */
+  --ds-accent:    #0057ff;
+  --ds-accent-bg: #e8f0ff;
+
+  /* Optionally re-point surfaces / ink for a warmer or cooler base */
+  --ds-bg-alt: #f3f5f8;
+  --ds-rule:   #d7dbe2;
+
+  /* Swap the type voice (still a single-line change) */
+  --ds-font-title: "Fraunces", Georgia, serif;
+  --ds-font-sans:  "Inter", system-ui, sans-serif;
+
+  /* Status families can be retinted per brand without touching components */
+  --ds-success: #1f9d55;
+  --ds-warning: #e8740c;
+  --ds-danger:  #d64545;
+}

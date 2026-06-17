@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iconography · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="foundations/iconography">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Foundations</p>
+        <h1 class="ds-title ds-title--xl">Iconography</h1>
+        <p class="docs-lede">Line icons, drawn to match the mark: a 1.5 stroke in <code>currentColor</code>, on a square 24 viewBox, with sharp ends and no fills.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Sample set</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">viewBox 0 0 24 24 · stroke 1.5</span>
+            <button class="ds-button" data-copy-target="#c-icons">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28" style="color:var(--ds-ink)"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28" style="color:var(--ds-ink)"><polyline points="4 12 10 18 20 6"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28" style="color:var(--ds-ink)"><line x1="4" y1="12" x2="20" y2="12"/><polyline points="13 5 20 12 13 19"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28" style="color:var(--ds-ink)"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28" style="color:var(--ds-ink)"><circle cx="12" cy="12" r="8"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28" style="color:var(--ds-ink)"><rect x="4" y="4" width="16" height="16"/></svg>
+          </div>
+          <pre class="ds-example__code"><code id="c-icons">&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28"&gt;
+  &lt;line x1="12" y1="5" x2="12" y2="19"/&gt;&lt;line x1="5" y1="12" x2="19" y2="12"/&gt;
+&lt;/svg&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Guidelines</h2>
+        <p class="docs-note">Draw on the 24-unit grid with a single 1.5 stroke, square caps and joins, and no fills. Inherit colour via <code>currentColor</code> so icons follow surrounding ink, and keep optical weight even with the wordmark. Avoid solid glyphs, two-tone treatments and rounded corners — the line language must echo the mark.</p>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.1.0</span>
+        <a href="logo.html">← Logo</a>
+        <a href="photography.html">Photography →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

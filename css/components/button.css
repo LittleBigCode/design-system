@@ -1,0 +1,42 @@
+/* Button — .ds-button (default ghost · --primary · --danger) */
+.ds-button {
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-base);
+  font-weight: 400;
+  letter-spacing: -0.14px;
+  height: 40px;
+  padding: 0 16px;
+  gap: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--ds-ink);
+  background: var(--ds-surface);
+  color: var(--ds-ink);
+  border-radius: var(--ds-radius-none);
+  transition: background-color var(--ds-transition), color var(--ds-transition);
+}
+.ds-button:hover { background: var(--ds-bg-alt); }
+.ds-button:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: 2px; }
+
+.ds-button--primary {
+  background: var(--ds-ink);
+  border-color: var(--ds-ink);
+  color: var(--ds-on-accent);
+}
+.ds-button--primary:hover { background: var(--ds-grey-dark); }
+
+.ds-button--danger {
+  color: var(--ds-danger);
+  border-color: var(--ds-danger);
+  background: var(--ds-surface);
+}
+.ds-button--danger:hover { background: var(--ds-danger-bg); }
+
+.ds-button:disabled,
+.ds-button[disabled],
+.ds-button[aria-disabled="true"] {
+  opacity: .45;
+  cursor: not-allowed;
+}

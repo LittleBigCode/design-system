@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabs · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+  <script type="module" src="../../components/index.js"></script>
+</head>
+<body data-page="components/tabs">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Tabs</h1>
+        <p class="docs-lede">Title-voiced tabs with an accent underline on the active tab and an optional sublabel for context. Mark the active tab with <code>is-active</code>.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Tab row</h2>
+        <p class="docs-note">Each <code>ds-tabs__tab</code> can carry a <code>ds-tabs__sublabel</code> for a one-line hint under the title.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">With sublabels</span>
+            <button class="ds-button" data-copy-target="#c-tabs">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-tabs"><button class="ds-tabs__tab is-active">Check a margin<small class="ds-tabs__sublabel">rate + salary known</small></button><button class="ds-tabs__tab">Target rate<small class="ds-tabs__sublabel">from a salary</small></button><button class="ds-tabs__tab">Max salary<small class="ds-tabs__sublabel">from a rate</small></button></div>
+          </div>
+          <pre class="ds-example__code"><code id="c-tabs">&lt;div class="ds-tabs"&gt;
+  &lt;button class="ds-tabs__tab is-active"&gt;Check a margin&lt;small class="ds-tabs__sublabel"&gt;rate + salary known&lt;/small&gt;&lt;/button&gt;
+  &lt;button class="ds-tabs__tab"&gt;Target rate&lt;small class="ds-tabs__sublabel"&gt;from a salary&lt;/small&gt;&lt;/button&gt;
+  &lt;button class="ds-tabs__tab"&gt;Max salary&lt;small class="ds-tabs__sublabel"&gt;from a rate&lt;/small&gt;&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Web Component</h2>
+        <p class="docs-note">Wrap a <code>ds-tabs</code> row of <code>ds-tabs__tab[data-pane]</code> buttons and matching <code>ds-tabpane[data-pane]</code> panes in a <code>&lt;ds-tabs&gt;</code> element to wire activation and ARIA. The active pane is the one whose <code>data-pane</code> matches the selected tab.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;ds-tabs&gt;</span>
+            <button class="ds-button" data-copy-target="#c-wc">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <ds-tabs>
+              <div class="ds-tabs">
+                <button class="ds-tabs__tab" data-pane="margin">Check a margin</button>
+                <button class="ds-tabs__tab" data-pane="rate">Target rate</button>
+                <button class="ds-tabs__tab" data-pane="salary">Max salary</button>
+              </div>
+              <div class="ds-tabpane" data-pane="margin">Margin from a known rate and salary.</div>
+              <div class="ds-tabpane" data-pane="rate">Target rate from a salary.</div>
+              <div class="ds-tabpane" data-pane="salary">Maximum salary from a rate.</div>
+            </ds-tabs>
+          </div>
+          <pre class="ds-example__code"><code id="c-wc">&lt;ds-tabs&gt;
+  &lt;div class="ds-tabs"&gt;
+    &lt;button class="ds-tabs__tab" data-pane="margin"&gt;Check a margin&lt;/button&gt;
+    &lt;button class="ds-tabs__tab" data-pane="rate"&gt;Target rate&lt;/button&gt;
+    &lt;button class="ds-tabs__tab" data-pane="salary"&gt;Max salary&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="ds-tabpane" data-pane="margin"&gt;Margin from a known rate and salary.&lt;/div&gt;
+  &lt;div class="ds-tabpane" data-pane="rate"&gt;Target rate from a salary.&lt;/div&gt;
+  &lt;div class="ds-tabpane" data-pane="salary"&gt;Maximum salary from a rate.&lt;/div&gt;
+&lt;/ds-tabs&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.1.0</span>
+        <a href="badges.html">← Badges</a>
+        <a href="forms.html">Form fields →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

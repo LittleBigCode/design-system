@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React · Diametral Design System</title>
+  <link rel="icon" href="../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../css/diametral.css">
+  <link rel="stylesheet" href="../css/themes/dark.css">
+  <link rel="stylesheet" href="./shell.css">
+  <script type="module" src="./showcase.js"></script>
+  <!-- React from a CDN; the import map keeps a single React instance via ?external=react -->
+  <script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@18.3.1",
+      "react-dom": "https://esm.sh/react-dom@18.3.1?external=react",
+      "react-dom/client": "https://esm.sh/react-dom@18.3.1/client?external=react"
+    }
+  }
+  </script>
+</head>
+<body data-page="react">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Frameworks</p>
+        <h1 class="ds-title ds-title--xl">React</h1>
+        <p class="docs-lede">Real React components that wrap the same <code>.ds-*</code> markup — typed, tree-shakeable, and buildless. The live demo below is rendered by React loaded straight from a CDN: no bundler, no transpiler.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Live demo</h2>
+        <p class="docs-note">Everything below is a React tree. Toggle <b>Dark theme</b> to see the design tokens re-theme the whole page live. Open the modal to see a portaled <code>&lt;Modal&gt;</code>.</p>
+        <div class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">Rendered by React</span></header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div id="react-demo">Loading React from the CDN…</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Setup</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">Install &amp; import</span><button class="ds-button" data-copy-target="#c-setup">Copy</button></header>
+          <pre class="ds-example__code"><code id="c-setup">npm i @diametral/design-system react react-dom
+
+// once, at your app root:
+import "@diametral/design-system/css/diametral.css";
+
+import { Button, Status, Metric } from "@diametral/design-system/react";</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Usage</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">JSX</span><button class="ds-button" data-copy-target="#c-usage">Copy</button></header>
+          <pre class="ds-example__code"><code id="c-usage">function Verdict() {
+  const [open, setOpen] = React.useState(false);
+  return (
+    &lt;&gt;
+      &lt;Button variant="primary" onClick={() =&gt; setOpen(true)}&gt;Open&lt;/Button&gt;
+
+      &lt;Status status="success" kicker="Approval level"
+              heading="Full delegation" subtitle="Approve without arbitration"&gt;
+        &lt;div className="ds-status__body"&gt;
+          &lt;Metric label="Margin" value="38 %" variant="hero" sign={1} /&gt;
+          &lt;Metric label="Day rate" value="€900" /&gt;
+        &lt;/div&gt;
+      &lt;/Status&gt;
+
+      &lt;Modal open={open} onClose={() =&gt; setOpen(false)} heading="Settings"
+             footer={&lt;Button variant="primary"&gt;Save&lt;/Button&gt;}&gt;
+        &lt;p&gt;Body content…&lt;/p&gt;
+      &lt;/Modal&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+        </section>
+        <p class="docs-note">Full component list and props: <a href="../react/README.md">react/README.md</a>. TypeScript types ship in <code>react/index.d.ts</code>.</p>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.1.0</span>
+        <a href="kitchen-sink.html">← Kitchen sink</a>
+        <a href="components/web-components.html">Web Components →</a>
+      </footer>
+    </main>
+  </div>
+
+  <script type="module">
+    import React from "react";
+    import { createRoot } from "react-dom/client";
+    import {
+      Button, Badge, Switch, Status, Metric, Callout, Tabs, Segmented, Modal,
+    } from "../react/index.js";
+
+    const h = React.createElement;
+
+    function Demo() {
+      const [open, setOpen] = React.useState(false);
+      const [dark, setDark] = React.useState(false);
+      const [entity, setEntity] = React.useState("fr");
+
+      React.useEffect(() => {
+        const el = document.documentElement;
+        if (dark) el.setAttribute("data-theme", "dark");
+        else el.removeAttribute("data-theme");
+      }, [dark]);
+
+      return h("div", { style: { display: "grid", gap: "24px" } },
+        h("div", { style: { display: "flex", gap: "12px", flexWrap: "wrap", alignItems: "center" } },
+          h(Button, { variant: "primary", onClick: () => setOpen(true) }, "Open modal"),
+          h(Button, null, "Ghost"),
+          h(Button, { variant: "danger" }, "Reset"),
+          h(Badge, { variant: "solid" }, "React"),
+          h(Switch, { checked: dark, onChange: setDark }, "Dark theme (live)")
+        ),
+        h(Segmented, {
+          value: entity, onChange: setEntity,
+          items: [
+            { value: "fr", label: "LBC_FR" },
+            { value: "be", label: "LBC_BE", dot: "ok" },
+            { value: "us", label: "LBC_US", dot: "ko" },
+          ],
+        }),
+        h("div", { style: { maxWidth: "360px" } },
+          h(Status, {
+            status: "success", kicker: "Approval level",
+            heading: "Full delegation", subtitle: "Approve without arbitration",
+          },
+            h("div", { className: "ds-status__body" },
+              h(Metric, { label: "Margin", value: "38 %", variant: "hero", sign: 1 }),
+              h(Metric, { label: "Day rate", value: "€900" }),
+              h(Metric, { label: "Salary cost", value: "€420", variant: "sub" })
+            )
+          )
+        ),
+        h(Callout, { type: "info", heading: "Live React" },
+          "This whole demo is rendered by React loaded from esm.sh — no build step."),
+        h(Tabs, {
+          items: [
+            { id: "a", label: "Check a margin", sublabel: "rate + salary", content: h("p", { style: { paddingTop: "16px" } }, "Pane A — rendered when the first tab is active.") },
+            { id: "b", label: "Target rate", sublabel: "from a salary", content: h("p", { style: { paddingTop: "16px" } }, "Pane B — rendered when the second tab is active.") },
+          ],
+        }),
+        h(Modal, {
+          open, onClose: () => setOpen(false), heading: "Reference settings",
+          footer: h(React.Fragment, null,
+            h(Button, { onClick: () => setOpen(false) }, "Cancel"),
+            h("span", { className: "ds-modal__spacer" }),
+            h(Button, { variant: "primary", onClick: () => setOpen(false) }, "Save")
+          ),
+        }, h("p", null, "A Diametral ", h("code", null, "<Modal>"), " portaled to <body>, closing on Esc or backdrop click."))
+      );
+    }
+
+    createRoot(document.getElementById("react-demo")).render(h(Demo));
+  </script>
+</body>
+</html>

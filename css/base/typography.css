@@ -1,0 +1,65 @@
+/* ============================================================================
+   Base · typography
+   Type utilities and prose defaults. Font FACES are not declared here — the
+   Ufficio @font-face is license-gated in assets/fonts/ufficio.css, and Geist
+   loads via Google Fonts (see docs/getting-started.md). This file only wires
+   the type TOKENS to usable classes.
+   ============================================================================ */
+
+/* Display / heading utility — the Ufficio (title) voice. Size is set by the
+   modifier or by the surrounding component. */
+.ds-title {
+  font-family: var(--ds-font-title);
+  font-weight: var(--ds-font-weight-title);
+  line-height: var(--ds-leading-tight);
+  letter-spacing: -0.3px;
+}
+.ds-title--xl  { font-size: var(--ds-text-2xl); letter-spacing: -0.5px; }  /* 32 */
+.ds-title--lg  { font-size: var(--ds-text-xl); }                            /* 24 */
+.ds-title--md  { font-size: var(--ds-text-lg); letter-spacing: -0.4px; }    /* 22 */
+.ds-title--sm  { font-size: var(--ds-text-md); letter-spacing: -0.2px; }    /* 19 */
+
+/* Uppercase label — the signature small-caps label treatment. */
+.ds-label {
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-xs);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ds-ink-faint);
+}
+
+/* Kicker — an even smaller eyebrow label (wider tracking). */
+.ds-kicker {
+  font-size: var(--ds-text-2xs);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ds-ink-faint);
+}
+
+/* Tabular figures — align columns of numbers. */
+.ds-numeric { font-variant-numeric: tabular-nums; }
+
+/* Prose — sensible defaults for a block of rich/markdown content. */
+.ds-prose { color: var(--ds-ink); line-height: var(--ds-leading-normal); }
+.ds-prose h1,
+.ds-prose h2,
+.ds-prose h3 {
+  font-family: var(--ds-font-title);
+  font-weight: var(--ds-font-weight-title);
+  line-height: var(--ds-leading-tight);
+  letter-spacing: -0.3px;
+}
+.ds-prose h1 { font-size: var(--ds-text-2xl); margin: 0 0 16px; }
+.ds-prose h2 { font-size: var(--ds-text-xl); margin: 32px 0 12px; }
+.ds-prose h3 { font-size: var(--ds-text-lg); margin: 24px 0 10px; }
+.ds-prose p  { margin: 0 0 14px; }
+.ds-prose a  { color: var(--ds-ink); text-decoration-color: var(--ds-accent); text-underline-offset: 3px; }
+.ds-prose a:hover { color: var(--ds-accent); }
+.ds-prose code {
+  font-family: ui-monospace, "SF Mono", "Geist Mono", Menlo, Consolas, monospace;
+  font-size: 0.92em;
+  background: var(--ds-bg-alt);
+  padding: 1px 5px;
+}

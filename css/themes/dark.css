@@ -1,0 +1,56 @@
+/* ============================================================================
+   Dark theme
+   Overrides Tier-2 SEMANTIC tokens only — primitives and component rules are
+   untouched. Activates under any of the three conventions found in the wild,
+   so it is drop-in for apps using [data-theme], .dark, or :root.dark-theme.
+
+   Opt-in: import this file, then set the attribute/class on a root element.
+   For automatic OS-driven dark mode, see the prefers-color-scheme block below
+   (also opt-in: it only applies when .ds-auto-dark is present on <html>).
+   ============================================================================ */
+[data-theme="dark"],
+.dark,
+:root.dark-theme {
+  --ds-bg:            #0e0e10;
+  --ds-bg-alt:        #1b1c1f;
+  --ds-surface:       #161618;
+  --ds-overlay-scrim: rgba(0, 0, 0, .62);
+
+  --ds-ink:       #f3f3f1;
+  --ds-ink-soft:  #c7c8cc;
+  --ds-ink-faint: #8b8d97;
+
+  --ds-rule:      #2c2d31;
+  --ds-rule-soft: #232428;
+
+  /* Accent stays the brand red — it pops on dark. */
+  --ds-accent-bg: rgba(255, 42, 0, .16);
+
+  --ds-success-bg:  rgba(46, 125, 79, .20);
+  --ds-warning-bg:  rgba(255, 85, 0, .16);
+  --ds-danger-bg:   rgba(192, 57, 43, .20);
+  --ds-info-bg:     rgba(20, 136, 166, .20);
+  --ds-neutral-bg:  rgba(255, 255, 255, .08);
+  --ds-critical-bg: rgba(255, 255, 255, .08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root.ds-auto-dark {
+    --ds-bg:            #0e0e10;
+    --ds-bg-alt:        #1b1c1f;
+    --ds-surface:       #161618;
+    --ds-overlay-scrim: rgba(0, 0, 0, .62);
+    --ds-ink:       #f3f3f1;
+    --ds-ink-soft:  #c7c8cc;
+    --ds-ink-faint: #8b8d97;
+    --ds-rule:      #2c2d31;
+    --ds-rule-soft: #232428;
+    --ds-accent-bg: rgba(255, 42, 0, .16);
+    --ds-success-bg:  rgba(46, 125, 79, .20);
+    --ds-warning-bg:  rgba(255, 85, 0, .16);
+    --ds-danger-bg:   rgba(192, 57, 43, .20);
+    --ds-info-bg:     rgba(20, 136, 166, .20);
+    --ds-neutral-bg:  rgba(255, 255, 255, .08);
+    --ds-critical-bg: rgba(255, 255, 255, .08);
+  }
+}
