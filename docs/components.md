@@ -1371,3 +1371,363 @@ paragraph tail), `--line` (full-width bar), `--circle` (kept square per the no-r
 ```
 
 Live: [../examples/components/skeleton.html](../examples/components/skeleton.html)
+
+---
+
+# Layout & advanced inputs
+
+The wave-two additions: richer form controls (a typeahead, token field, number stepper, date
+picker, and file dropzone) plus the page-level layout primitives (a toolbar, an application shell,
+and a multi-step wizard). Same parti pris — 1px borders, no radius, no shadow — and each ships a
+`.ds-*` class set, a React component (`@diametral/design-system/react`), and a showcase page.
+
+## Combobox
+
+A typeahead — an `.ds-input`-styled field with a filtered popover list. Type to narrow the options,
+ArrowUp / ArrowDown to move the active row, Enter to select, Escape or an outside-click to close.
+
+```html
+<div class="ds-combobox">
+  <input class="ds-combobox__input" type="text" role="combobox"
+         aria-expanded="true" aria-controls="cb-list" aria-autocomplete="list" autocomplete="off">
+  <ul class="ds-combobox__list" id="cb-list" role="listbox">
+    <li class="ds-combobox__option is-active" role="option" aria-selected="true">EUR — Euro</li>
+    <li class="ds-combobox__option" role="option">USD — US Dollar</li>
+    <li class="ds-combobox__option" role="option">GBP — Pound Sterling</li>
+  </ul>
+</div>
+```
+
+**Parts / state:** `.ds-combobox` (relative anchor; `--block` for full-width), `.ds-combobox__input`
+(the field), `.ds-combobox__list` (bordered popover at `--ds-z-popover`), `.ds-combobox__option`
+(`.is-active` on keyboard focus, `[aria-selected="true"]` on the current value, `[aria-disabled]` to
+lock), and `.ds-combobox__empty` for the no-match row.
+
+**React** — `<Combobox>`. Props: `options` (a `(string | { value, label?, disabled? })[]`), `value`
+/ `defaultValue`, `onChange(value)`, `placeholder`, `allowCustom` (commit free text via Enter),
+`disabled`; forwards a ref to the input and `<div>` attributes.
+
+```jsx
+<Combobox
+  placeholder="Search currency…"
+  defaultValue="EUR"
+  options={[
+    { value: "EUR", label: "EUR — Euro" },
+    { value: "USD", label: "USD — US Dollar" },
+    { value: "GBP", label: "GBP — Pound Sterling" },
+  ]}
+  onChange={(value) => setCurrency(value)}
+/>
+```
+
+Live: [../examples/components/combobox.html](../examples/components/combobox.html)
+
+## Tag input
+
+A token field — a flex-wrap box styled like `.ds-input` that holds removable tokens followed by a
+text entry. Enter or a comma adds a token, Backspace on the empty field removes the last, and each
+token's × removes it.
+
+```html
+<div class="ds-tag-input">
+  <span class="ds-tag-input__token">Pricing
+    <button class="ds-tag-input__remove" type="button" aria-label="Remove Pricing" tabindex="-1">×</button>
+  </span>
+  <span class="ds-tag-input__token">Margin
+    <button class="ds-tag-input__remove" type="button" aria-label="Remove Margin" tabindex="-1">×</button>
+  </span>
+  <input class="ds-tag-input__field" type="text" placeholder="Add tag…">
+</div>
+```
+
+**Parts / state:** `.ds-tag-input` (the box; owns the focus ring via `:focus-within`, `--block` for
+full-width), `.ds-tag-input__token` (a `.ds-tag`-style pill) with a trailing `.ds-tag-input__remove`
+×, and the borderless `.ds-tag-input__field` text entry. Add `.is-disabled` (or disable the field)
+to lock it.
+
+**React** — `<TagInput>`. Props: `value` / `defaultValue` (a `string[]`), `onChange(value)`,
+`placeholder`, `disabled`; forwards a ref to the input and `<div>` attributes.
+
+```jsx
+<TagInput
+  placeholder="Add tag…"
+  defaultValue={["Pricing", "Margin"]}
+  onChange={(tags) => setTags(tags)}
+/>
+```
+
+Live: [../examples/components/tag-input.html](../examples/components/tag-input.html)
+
+## Number input
+
+A numeric field flanked by −/+ stepper buttons that share borders like an input group. The buttons
+step by `step`, clamp to `min` / `max`, and disable themselves at the bounds.
+
+```html
+<div class="ds-number-input">
+  <button class="ds-number-input__step" type="button" aria-label="Decrement" tabindex="-1">−</button>
+  <input class="ds-number-input__field" type="number" value="3" aria-label="Quantity">
+  <button class="ds-number-input__step" type="button" aria-label="Increment" tabindex="-1">+</button>
+</div>
+```
+
+**Parts / state / variants:** `.ds-number-input` (the group; `--block` for full-width),
+`.ds-number-input__step` (the ± buttons; `disabled` at a bound), and the centered
+`.ds-number-input__field` (native spinners stripped). The shared borders collapse so it reads as one
+unit; disable the field to lock the whole control.
+
+**React** — `<NumberInput>`. Props: `value` / `defaultValue` (a `number | null`),
+`onChange(value)` (null when cleared), `min`, `max`, `step` (default 1), `disabled`; forwards a ref
+to the input and `<div>` attributes.
+
+```jsx
+<NumberInput
+  defaultValue={1}
+  min={0}
+  max={10}
+  step={1}
+  onChange={(value) => setQty(value)}
+/>
+```
+
+Live: [../examples/components/number-input.html](../examples/components/number-input.html)
+
+## Date picker
+
+A `.ds-input` that opens a flat `.ds-calendar` popover — a bordered surface with a month label
+between prev / next icon buttons and a 7-column grid of square day cells. No radius, no shadow.
+
+```html
+<div class="ds-datepicker">
+  <input class="ds-input" type="text" readonly value="2026-06-18"
+         aria-haspopup="dialog" aria-expanded="false" autocomplete="off">
+  <div class="ds-calendar" role="dialog" aria-label="Choose date">
+    <div class="ds-calendar__head">
+      <button class="ds-button ds-button--icon ds-button--sm" type="button" aria-label="Previous month">…</button>
+      <div class="ds-calendar__label">June 2026</div>
+      <button class="ds-button ds-button--icon ds-button--sm" type="button" aria-label="Next month">…</button>
+    </div>
+    <div class="ds-calendar__grid" role="grid">
+      <div class="ds-calendar__weekday" aria-hidden="true">Su</div> … <div class="ds-calendar__weekday" aria-hidden="true">Sa</div>
+      <button class="ds-calendar__day is-outside" type="button">31</button>
+      <button class="ds-calendar__day" type="button">1</button> …
+      <button class="ds-calendar__day is-today" type="button">17</button>
+      <button class="ds-calendar__day is-selected" type="button" aria-pressed="true">18</button> …
+    </div>
+  </div>
+</div>
+```
+
+**Parts / state:** `.ds-datepicker` (relative anchor) holds the `.ds-input` and the `.ds-calendar`
+surface (position it yourself — absolute / portal). The calendar carries `.ds-calendar__head` (label
++ `.ds-button--icon` steppers), `.ds-calendar__grid`, `.ds-calendar__weekday` labels, and
+`.ds-calendar__day` cells: `.is-today` (accent ring), `.is-selected` (ink fill), `.is-outside` (faint
+neighbour month), and `:disabled` (out of range).
+
+**React** — `<DatePicker>`. Props: `value` / `defaultValue` (a `Date` or ISO `yyyy-mm-dd` string,
+nullable), `onChange(date, iso)`, `min`, `max` (inclusive bounds), `format(date)`, `placeholder`
+(default `yyyy-mm-dd`), `disabled`, `name`.
+
+```jsx
+<DatePicker
+  defaultValue="2026-06-18"
+  min="2026-01-01"
+  max="2026-12-31"
+  onChange={(date, iso) => console.log(iso, date)}
+/>
+```
+
+Live: [../examples/components/date-picker.html](../examples/components/date-picker.html)
+
+## File upload
+
+A flat `.ds-dropzone` — a dashed-bordered click / keyboard / drag-and-drop target. On `.is-dragover`
+the border and background shift to the accent. Selected files list below in a `.ds-filelist`.
+
+```html
+<div class="ds-file-upload">
+  <div class="ds-dropzone" role="button" tabindex="0">
+    <input type="file" multiple hidden>
+    <div class="ds-dropzone__hint"><strong>Click to upload</strong> or drag and drop</div>
+  </div>
+  <ul class="ds-filelist">
+    <li class="ds-filelist__item">
+      <span class="ds-filelist__name">margin-report-q2.pdf</span>
+      <span class="ds-filelist__size">248 KB</span>
+      <button class="ds-filelist__remove" type="button" aria-label="Remove margin-report-q2.pdf">×</button>
+    </li>
+    <li class="ds-filelist__item">
+      <span class="ds-filelist__name">price-matrix-export.csv</span>
+      <span class="ds-filelist__size">1.4 MB</span>
+      <div class="ds-progress" role="progressbar" aria-valuenow="62">
+        <div class="ds-progress__bar" style="width:62%"></div>
+      </div>
+      <button class="ds-filelist__remove" type="button" aria-label="Remove price-matrix-export.csv">×</button>
+    </li>
+  </ul>
+</div>
+```
+
+**Parts / state:** `.ds-file-upload` (root wrapper), `.ds-dropzone` (dashed target; `.is-dragover`
+for the accent drop state) with a `.ds-dropzone__hint`, and `.ds-filelist` rows of
+`.ds-filelist__item` carrying a `.ds-filelist__name`, a tabular `.ds-filelist__size`, an optional
+reused `.ds-progress` bar, and a `.ds-filelist__remove` × button.
+
+**React** — `<FileUpload>`. Props: `accept`, `multiple`, `onFiles(files)`, `value` (a `File[]` for
+controlled use), `hint`, `disabled`, `name`.
+
+```jsx
+<FileUpload
+  accept=".pdf,.csv"
+  multiple
+  onFiles={(files) => console.log(files)}
+/>
+```
+
+Live: [../examples/components/file-upload.html](../examples/components/file-upload.html)
+
+## Toolbar
+
+A horizontal bar that aligns controls on one row — buttons, a segmented control, a search field.
+Cluster related controls with `.ds-toolbar__group` and push the rest to the far edge with a flexible
+`.ds-toolbar__spacer`.
+
+```html
+<div class="ds-toolbar" role="toolbar">
+  <div class="ds-toolbar__group">
+    <button class="ds-button ds-button--primary">New</button>
+    <button class="ds-button">Import</button>
+  </div>
+  <div class="ds-toolbar__spacer" aria-hidden="true"></div>
+  <div class="ds-toolbar__group">
+    <button class="ds-button">Export</button>
+    <button class="ds-button ds-button--danger">Delete</button>
+  </div>
+</div>
+```
+
+**Parts / variants:** `.ds-toolbar` (the row; a 1px bottom rule by default), `.ds-toolbar__group`
+(a tight cluster of controls), `.ds-toolbar__spacer` (eats the free space, pushing what follows to
+the opposite edge). The `--bordered` modifier boxes the bar in a 1px rule all around; drop a search
+`.ds-input` or a `.ds-segmented` control inline.
+
+```html
+<div class="ds-toolbar ds-toolbar--bordered" role="toolbar">
+  <input class="ds-input" type="search" placeholder="Search rows…" aria-label="Search">
+  <div class="ds-toolbar__spacer" aria-hidden="true"></div>
+  <button class="ds-button">Filters</button>
+</div>
+```
+
+**React** — compose `<Toolbar>` (prop: `bordered`) with `<ToolbarGroup>` and `<ToolbarSpacer>`; drop
+any controls (`Button`, `Segmented`, `Input`) inside. All forward a ref and `<div>` attributes.
+
+```jsx
+<Toolbar bordered>
+  <Input type="search" placeholder="Search rows…" />
+  <ToolbarSpacer />
+  <ToolbarGroup>
+    <Button>Export</Button>
+    <Button variant="primary">New</Button>
+  </ToolbarGroup>
+</Toolbar>
+```
+
+Live: [../examples/components/toolbar.html](../examples/components/toolbar.html)
+
+## App shell
+
+A full application scaffold on a CSS grid: a full-width header reusing the app-bar look, a left
+sidebar (1px right rule) holding a vertical nav, and a scrolling main content area. At `--ds-bp-md`
+the sidebar collapses behind a `☰` toggle.
+
+```html
+<div class="ds-shell">
+  <header class="ds-shell__header">
+    <button class="ds-shell__toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <span class="ds-wordmark">…</span>
+  </header>
+  <aside class="ds-shell__sidebar">
+    <nav class="ds-vnav" aria-label="Sidebar">
+      <a class="ds-vnav__item is-active" href="#" aria-current="page">Dashboard</a>
+      <a class="ds-vnav__item" href="#">Pricing matrix</a>
+    </nav>
+  </aside>
+  <main class="ds-shell__main">…</main>
+</div>
+```
+
+**Parts / state:** `.ds-shell` (the grid with named `header` / `sidebar` / `main` areas),
+`.ds-shell__header` (sticky, full-width), `.ds-shell__sidebar` (scrolls independently),
+`.ds-shell__main` (the scrolling content), and the `.ds-shell__toggle` ghost button (shown below
+940px). Add `.is-sidebar-open` to the shell to band the sidebar back in on narrow screens.
+
+**React** — `<AppShell>`. Props: `header`, `sidebar` (omit for a header + main only), `children`
+(the main area), `collapsed` / `defaultCollapsed` (narrow-screen sidebar state, default collapsed),
+`onToggle(collapsed)`; forwards a ref and `<div>` attributes.
+
+```jsx
+<AppShell
+  header={<Wordmark sub="Console" />}
+  sidebar={
+    <VerticalNav
+      items={[
+        { label: "Dashboard", href: "/", active: true },
+        { label: "Pricing matrix", href: "/matrix" },
+      ]}
+    />
+  }
+>
+  <h1 className="ds-title">Dashboard</h1>
+</AppShell>
+```
+
+Live: [../examples/components/app-shell.html](../examples/components/app-shell.html)
+
+## Wizard
+
+A multi-step flow built on the stepper. A `.ds-stepper` trail heads the card, the active step's
+content fills the `.ds-wizard__panel`, and a footer set off by a top rule carries Back on the left
+with Next / Finish on the right.
+
+```html
+<div class="ds-wizard">
+  <div class="ds-wizard__steps">
+    <ol class="ds-stepper">
+      <li class="ds-stepper__step is-active" aria-current="step"><span class="ds-stepper__marker">1</span><span class="ds-stepper__label">Profile</span></li>
+      <li class="ds-stepper__step"><span class="ds-stepper__marker">2</span><span class="ds-stepper__label">Rates</span></li>
+      <li class="ds-stepper__step"><span class="ds-stepper__marker">3</span><span class="ds-stepper__label">Review</span></li>
+    </ol>
+  </div>
+  <div class="ds-wizard__panel">Step 1 — capture the consultant profile…</div>
+  <div class="ds-wizard__footer">
+    <button class="ds-button" type="button" disabled>Back</button>
+    <div class="ds-wizard__footer-actions">
+      <button class="ds-button ds-button--primary" type="button">Next</button>
+    </div>
+  </div>
+</div>
+```
+
+**Parts:** `.ds-wizard` (the bordered column), `.ds-wizard__steps` (wraps a [`.ds-stepper`](#stepper)
+trail; prior markers flip to `.is-complete`, the current to `.is-active`), `.ds-wizard__panel` (the
+active step's content), and `.ds-wizard__footer` (Back on the left, `.ds-wizard__footer-actions`
+keeps Next / Finish grouped at the end). On the last step the trailing action reads Finish.
+
+**React** — `<Wizard>`. Props: `steps` (a `{ label, content?, disableNext? }[]`), `active` /
+`defaultActive` (the active step index), `onStepChange(index)`, `onFinish()`; forwards a ref and
+`<div>` attributes.
+
+```jsx
+<Wizard
+  defaultActive={0}
+  onFinish={() => publish()}
+  steps={[
+    { label: "Profile", content: <ProfileForm /> },
+    { label: "Rates",   content: <RatesForm />, disableNext: !ratesValid },
+    { label: "Review",  content: <ReviewPanel /> },
+  ]}
+/>
+```
+
+Live: [../examples/components/wizard.html](../examples/components/wizard.html)

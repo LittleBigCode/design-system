@@ -531,6 +531,183 @@
         <p class="docs-note">The sortable, lazy-loading data grid is React-driven — see the <a href="components/datagrid.html">live Data grid demo</a>.</p>
       </section>
 
+      <section class="docs-section">
+        <h2>Number input</h2>
+        <div class="ds-number-input">
+          <button class="ds-number-input__step" type="button" aria-label="Decrement" tabindex="-1">−</button>
+          <input class="ds-number-input__field" type="number" value="3" aria-label="Quantity">
+          <button class="ds-number-input__step" type="button" aria-label="Increment" tabindex="-1">+</button>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Tag input</h2>
+        <div class="ds-tag-input" style="max-width:420px">
+          <span class="ds-tag-input__token">Pricing<button class="ds-tag-input__remove" type="button" aria-label="Remove Pricing" tabindex="-1">×</button></span>
+          <span class="ds-tag-input__token">Margin<button class="ds-tag-input__remove" type="button" aria-label="Remove Margin" tabindex="-1">×</button></span>
+          <span class="ds-tag-input__token">Discount<button class="ds-tag-input__remove" type="button" aria-label="Remove Discount" tabindex="-1">×</button></span>
+          <input class="ds-tag-input__field" type="text" placeholder="Add tag…">
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Combobox</h2>
+        <div class="ds-combobox" style="max-width:280px">
+          <input class="ds-combobox__input" type="text" role="combobox" aria-expanded="true" aria-controls="ks-cb-list" aria-autocomplete="list" value="Eur" autocomplete="off">
+          <ul class="ds-combobox__list" id="ks-cb-list" role="listbox">
+            <li class="ds-combobox__option is-active" role="option" aria-selected="true">EUR — Euro</li>
+            <li class="ds-combobox__option" role="option">USD — US Dollar</li>
+            <li class="ds-combobox__option" role="option">GBP — Pound Sterling</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Date picker</h2>
+        <div class="ds-calendar" role="dialog" aria-label="Choose date" style="position:static">
+          <div class="ds-calendar__head">
+            <button class="ds-button ds-button--icon ds-button--sm" type="button" aria-label="Previous month">
+              <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M11 4 6 9l5 5"/></svg>
+            </button>
+            <div class="ds-calendar__label">June 2026</div>
+            <button class="ds-button ds-button--icon ds-button--sm" type="button" aria-label="Next month">
+              <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 4l5 5-5 5"/></svg>
+            </button>
+          </div>
+          <div class="ds-calendar__grid" role="grid">
+            <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Su</div>
+            <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Mo</div>
+            <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Tu</div>
+            <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">We</div>
+            <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Th</div>
+            <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Fr</div>
+            <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Sa</div>
+            <button class="ds-calendar__day is-outside" type="button" role="gridcell">31</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">1</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">2</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">3</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">4</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">5</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">6</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">7</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">8</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">9</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">10</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">11</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">12</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">13</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">14</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">15</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">16</button>
+            <button class="ds-calendar__day is-today" type="button" role="gridcell" aria-label="2026-06-17">17</button>
+            <button class="ds-calendar__day is-selected" type="button" role="gridcell" aria-pressed="true" aria-label="2026-06-18">18</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">19</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">20</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">21</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">22</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">23</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">24</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">25</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">26</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">27</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">28</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">29</button>
+            <button class="ds-calendar__day" type="button" role="gridcell">30</button>
+            <button class="ds-calendar__day is-outside" type="button" role="gridcell">1</button>
+            <button class="ds-calendar__day is-outside" type="button" role="gridcell">2</button>
+            <button class="ds-calendar__day is-outside" type="button" role="gridcell">3</button>
+            <button class="ds-calendar__day is-outside" type="button" role="gridcell">4</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>File upload</h2>
+        <div class="ds-file-upload" style="max-width:480px">
+          <div class="ds-dropzone" role="button" tabindex="0">
+            <input type="file" multiple hidden style="display:none">
+            <div class="ds-dropzone__hint"><strong>Click to upload</strong> or drag and drop</div>
+          </div>
+          <ul class="ds-filelist">
+            <li class="ds-filelist__item">
+              <span class="ds-filelist__name" title="margin-report-q2.pdf">margin-report-q2.pdf</span>
+              <span class="ds-filelist__size">248 KB</span>
+              <button class="ds-filelist__remove" type="button" aria-label="Remove margin-report-q2.pdf">×</button>
+            </li>
+            <li class="ds-filelist__item">
+              <span class="ds-filelist__name" title="price-matrix-export.csv">price-matrix-export.csv</span>
+              <span class="ds-filelist__size">1.4 MB</span>
+              <div class="ds-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="62">
+                <div class="ds-progress__bar" style="width:62%"></div>
+              </div>
+              <button class="ds-filelist__remove" type="button" aria-label="Remove price-matrix-export.csv">×</button>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Toolbar</h2>
+        <div class="ds-toolbar ds-toolbar--bordered" role="toolbar">
+          <div class="ds-toolbar__group">
+            <button class="ds-button ds-button--primary">New</button>
+            <button class="ds-button">Import</button>
+          </div>
+          <div class="ds-toolbar__spacer" aria-hidden="true"></div>
+          <input class="ds-input" type="search" placeholder="Search rows…" aria-label="Search">
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>App shell</h2>
+        <div style="height:320px;border:1px solid var(--ds-rule)">
+          <div class="ds-shell" style="min-height:0;height:100%">
+            <header class="ds-shell__header" style="position:static;padding:12px 16px">
+              <button class="ds-shell__toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+              <span class="ds-wordmark">
+                <svg class="ds-wordmark__mark" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="28" cy="28" r="24"></circle><rect x="12" y="12" width="32" height="32"></rect><line x1="12" y1="44" x2="44" y2="12"></line></svg>
+                <span class="ds-wordmark__name">Diametral</span>
+                <span class="ds-wordmark__sub">Console</span>
+              </span>
+              <span style="margin-left:auto;"><button class="ds-button ds-button--primary">New</button></span>
+            </header>
+            <aside class="ds-shell__sidebar">
+              <nav class="ds-vnav" aria-label="Sidebar">
+                <a class="ds-vnav__item is-active" href="#" aria-current="page">Dashboard</a>
+                <a class="ds-vnav__item" href="#">Pricing matrix</a>
+                <a class="ds-vnav__item" href="#">Entities</a>
+                <a class="ds-vnav__item" href="#">Reports</a>
+                <a class="ds-vnav__item" href="#">Settings</a>
+              </nav>
+            </aside>
+            <main class="ds-shell__main">
+              <h2 class="ds-title">Dashboard</h2>
+              <p class="docs-note">Main content scrolls independently of the header and sidebar.</p>
+            </main>
+          </div>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Wizard</h2>
+        <div class="ds-wizard">
+          <div class="ds-wizard__steps">
+            <ol class="ds-stepper">
+              <li class="ds-stepper__step is-complete"><span class="ds-stepper__marker">1</span><span class="ds-stepper__label">Profile</span></li>
+              <li class="ds-stepper__step is-active" aria-current="step"><span class="ds-stepper__marker">2</span><span class="ds-stepper__label">Rates</span></li>
+              <li class="ds-stepper__step"><span class="ds-stepper__marker">3</span><span class="ds-stepper__label">Review</span></li>
+            </ol>
+          </div>
+          <div class="ds-wizard__panel">Step 2 — set the day rates and target margin per the pricing matrix.</div>
+          <div class="ds-wizard__footer">
+            <button class="ds-button" type="button">Back</button>
+            <div class="ds-wizard__footer-actions">
+              <button class="ds-button ds-button--primary" type="button">Next</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <footer class="docs-foot">
         <span>Diametral Design System · v0.2.0</span>
         <a href="index.html">← Overview</a>
