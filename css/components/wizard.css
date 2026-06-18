@@ -1,0 +1,47 @@
+/* ============================================================================
+   Wizard — .ds-wizard (multi-step flow built on the stepper)
+   ----------------------------------------------------------------------------
+   A vertical flow: a stepper header showing progress, the active step's content
+   panel, and a footer carrying Back / Next / Finish actions. The header leans on
+   the .ds-stepper look (drop a .ds-stepper inside .ds-wizard__steps); this file
+   only frames the surrounding column, the panel padding, and the footer rule.
+   ============================================================================ */
+.ds-wizard {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--ds-rule);
+  background: var(--ds-surface);
+  border-radius: var(--ds-radius-none);
+  font-family: var(--ds-font-sans);
+}
+
+/* Steps header — wraps the stepper trail; a soft bottom rule sets it off from
+   the panel. */
+.ds-wizard__steps {
+  padding: var(--ds-space-5) var(--ds-space-5) var(--ds-space-4);
+  border-bottom: 1px solid var(--ds-rule-soft);
+}
+
+/* Panel — the active step's content. */
+.ds-wizard__panel {
+  padding: var(--ds-space-5);
+  color: var(--ds-ink);
+  flex: 1;
+}
+
+/* Footer — Back on the left, Next / Finish on the right, with a top rule. */
+.ds-wizard__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ds-space-3);
+  padding: var(--ds-space-4) var(--ds-space-5);
+  border-top: 1px solid var(--ds-rule);
+}
+/* Trailing cluster — keep Next / Finish (and any siblings) grouped at the end. */
+.ds-wizard__footer-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+  margin-left: auto;
+}

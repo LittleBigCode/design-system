@@ -1,0 +1,111 @@
+/* ============================================================================
+   Date picker — .ds-datepicker (a .ds-input that opens a calendar popover)
+   ----------------------------------------------------------------------------
+   The wrapper is a relative anchor holding the text input; the .ds-calendar is a
+   flat bordered surface (1px border, no radius, no shadow) positioned beneath it.
+   The grid is 7 columns of square day cells: faint uppercase weekday labels, a
+   hover bg-alt, an accent ring for today, an ink fill for the selection, faint
+   outside-month days, and dimmed disabled days. Position the .ds-calendar
+   yourself (absolute / portal); the wrapper gives the relative anchor.
+   ============================================================================ */
+.ds-datepicker {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+}
+.ds-datepicker > .ds-input { min-width: 200px; }
+
+/* The calendar surface — a flat bordered box. */
+.ds-calendar {
+  width: 252px;
+  padding: var(--ds-space-3);
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-ink);
+  border-radius: var(--ds-radius-none);
+  z-index: var(--ds-z-popover);
+  font-family: var(--ds-font-sans);
+}
+
+/* Head — the month/year label flanked by prev / next icon buttons. */
+.ds-calendar__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ds-space-2);
+  margin-bottom: var(--ds-space-3);
+}
+.ds-calendar__label {
+  font-size: var(--ds-text-sm);
+  font-weight: 500;
+  letter-spacing: -0.1px;
+  color: var(--ds-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Grid — 7 equal columns for the weekday header and the day cells. */
+.ds-calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+}
+
+/* Weekday labels — small, uppercase, faint, centered above their column. */
+.ds-calendar__weekday {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  font-size: var(--ds-text-2xs);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ds-ink-faint);
+}
+
+/* Day cell — a square button, no radius. Hover shifts to bg-alt. */
+.ds-calendar__day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  padding: 0;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-sm);
+  font-weight: 400;
+  color: var(--ds-ink);
+  font-variant-numeric: tabular-nums;
+  background: var(--ds-surface);
+  border: 1px solid transparent;
+  border-radius: var(--ds-radius-none);
+  cursor: pointer;
+  transition: background-color var(--ds-transition), color var(--ds-transition), border-color var(--ds-transition);
+}
+.ds-calendar__day:hover { background: var(--ds-bg-alt); }
+.ds-calendar__day:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: -2px;
+}
+
+/* Today — an accent ring (1px border) without a fill. */
+.ds-calendar__day.is-today { border-color: var(--ds-accent); }
+
+/* Outside-month days — faint, to recede behind the current month. */
+.ds-calendar__day.is-outside { color: var(--ds-ink-faint); }
+
+/* Selected — ink fill with on-accent text; wins over today + hover. */
+.ds-calendar__day.is-selected,
+.ds-calendar__day.is-selected:hover {
+  background: var(--ds-ink);
+  border-color: var(--ds-ink);
+  color: var(--ds-on-accent);
+}
+
+/* Disabled (out of min/max range) — dimmed, not interactive. */
+.ds-calendar__day:disabled,
+.ds-calendar__day[disabled] {
+  opacity: .35;
+  cursor: not-allowed;
+}
+.ds-calendar__day:disabled:hover,
+.ds-calendar__day[disabled]:hover { background: var(--ds-surface); }

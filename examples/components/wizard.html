@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wizard · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/wizard">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Wizard</h1>
+        <p class="docs-lede">A multi-step flow built on the stepper. A <code>.ds-stepper</code> trail heads the card, the active step's content fills the <code>.ds-wizard__panel</code>, and a footer set off by a top rule carries Back on the left with Next / Finish on the right.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Interactive</h2>
+        <p class="docs-note">Use Back / Next to move through the steps — earlier markers flip to <code>is-complete</code>, the current one to <code>is-active</code>, and Next becomes Finish on the last step.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Live</span>
+            <button class="ds-button" data-copy-target="#c-wizard">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-wizard" id="demoWizard">
+              <div class="ds-wizard__steps">
+                <ol class="ds-stepper">
+                  <li class="ds-stepper__step is-active" data-step="0" aria-current="step"><span class="ds-stepper__marker">1</span><span class="ds-stepper__label">Profile</span></li>
+                  <li class="ds-stepper__step" data-step="1"><span class="ds-stepper__marker">2</span><span class="ds-stepper__label">Rates</span></li>
+                  <li class="ds-stepper__step" data-step="2"><span class="ds-stepper__marker">3</span><span class="ds-stepper__label">Review</span></li>
+                </ol>
+              </div>
+              <div class="ds-wizard__panel">
+                <div data-panel="0">Step 1 — capture the consultant profile: name, grade and home entity.</div>
+                <div data-panel="1" hidden>Step 2 — set the day rates and target margin per the pricing matrix.</div>
+                <div data-panel="2" hidden>Step 3 — review the figures, then finish to publish the grid.</div>
+              </div>
+              <div class="ds-wizard__footer">
+                <button class="ds-button" type="button" data-act="back" disabled>Back</button>
+                <div class="ds-wizard__footer-actions">
+                  <button class="ds-button ds-button--primary" type="button" data-act="next">Next</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-wizard">&lt;div class="ds-wizard"&gt;
+  &lt;div class="ds-wizard__steps"&gt;
+    &lt;ol class="ds-stepper"&gt;
+      &lt;li class="ds-stepper__step is-active" aria-current="step"&gt;&lt;span class="ds-stepper__marker"&gt;1&lt;/span&gt;&lt;span class="ds-stepper__label"&gt;Profile&lt;/span&gt;&lt;/li&gt;
+      &lt;li class="ds-stepper__step"&gt;&lt;span class="ds-stepper__marker"&gt;2&lt;/span&gt;&lt;span class="ds-stepper__label"&gt;Rates&lt;/span&gt;&lt;/li&gt;
+      &lt;li class="ds-stepper__step"&gt;&lt;span class="ds-stepper__marker"&gt;3&lt;/span&gt;&lt;span class="ds-stepper__label"&gt;Review&lt;/span&gt;&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/div&gt;
+  &lt;div class="ds-wizard__panel"&gt;Step 1 — capture the consultant profile…&lt;/div&gt;
+  &lt;div class="ds-wizard__footer"&gt;
+    &lt;button class="ds-button" type="button" disabled&gt;Back&lt;/button&gt;
+    &lt;div class="ds-wizard__footer-actions"&gt;
+      &lt;button class="ds-button ds-button--primary" type="button"&gt;Next&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Last step · Finish</h2>
+        <p class="docs-note">On the final step every prior marker is <code>is-complete</code> and the trailing action reads Finish.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Final step</span>
+            <button class="ds-button" data-copy-target="#c-finish">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-wizard">
+              <div class="ds-wizard__steps">
+                <ol class="ds-stepper">
+                  <li class="ds-stepper__step is-complete"><span class="ds-stepper__marker">1</span><span class="ds-stepper__label">Profile</span></li>
+                  <li class="ds-stepper__step is-complete"><span class="ds-stepper__marker">2</span><span class="ds-stepper__label">Rates</span></li>
+                  <li class="ds-stepper__step is-active" aria-current="step"><span class="ds-stepper__marker">3</span><span class="ds-stepper__label">Review</span></li>
+                </ol>
+              </div>
+              <div class="ds-wizard__panel">Everything checks out — finish to publish the grid.</div>
+              <div class="ds-wizard__footer">
+                <button class="ds-button" type="button">Back</button>
+                <div class="ds-wizard__footer-actions">
+                  <button class="ds-button ds-button--primary" type="button">Finish</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-finish">&lt;div class="ds-wizard__footer"&gt;
+  &lt;button class="ds-button" type="button"&gt;Back&lt;/button&gt;
+  &lt;div class="ds-wizard__footer-actions"&gt;
+    &lt;button class="ds-button ds-button--primary" type="button"&gt;Finish&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <p class="docs-note">Pass <code>steps</code> (<code>{ label, content }</code>); the component renders the stepper, the active panel and the footer. It works controlled (<code>active</code>/<code>onStepChange</code>) or uncontrolled (<code>defaultActive</code>); set <code>disableNext</code> on a step to gate Next, and pass <code>onFinish</code> for the last step.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;Wizard /&gt;</span>
+            <button class="ds-button" data-copy-target="#c-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-react">import { Wizard } from "@diametral/design-system/react";
+
+&lt;Wizard
+  defaultActive={0}
+  onFinish={() =&gt; publish()}
+  steps={[
+    { label: "Profile", content: &lt;ProfileForm /&gt; },
+    { label: "Rates",   content: &lt;RatesForm /&gt;, disableNext: !ratesValid },
+    { label: "Review",  content: &lt;ReviewPanel /&gt; },
+  ]}
+/&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Tiny vanilla demo mirroring the Wizard component: Back/Next move through
+    // steps, prior markers complete, and Next becomes Finish on the last step.
+    (function () {
+      var wiz = document.getElementById("demoWizard");
+      if (!wiz) return;
+      var steps = Array.prototype.slice.call(wiz.querySelectorAll(".ds-stepper__step"));
+      var panels = Array.prototype.slice.call(wiz.querySelectorAll("[data-panel]"));
+      var back = wiz.querySelector('[data-act="back"]');
+      var next = wiz.querySelector('[data-act="next"]');
+      var active = 0;
+      var last = steps.length - 1;
+
+      function render() {
+        steps.forEach(function (step, i) {
+          step.classList.toggle("is-active", i === active);
+          step.classList.toggle("is-complete", i < active);
+          if (i === active) step.setAttribute("aria-current", "step");
+          else step.removeAttribute("aria-current");
+        });
+        panels.forEach(function (panel, i) { panel.hidden = i !== active; });
+        back.disabled = active === 0;
+        next.textContent = active === last ? "Finish" : "Next";
+      }
+
+      back.addEventListener("click", function () {
+        if (active > 0) { active--; render(); }
+      });
+      next.addEventListener("click", function () {
+        if (active === last) { next.textContent = "Done ✓"; return; }
+        active++; render();
+      });
+      render();
+    })();
+  </script>
+</body>
+</html>

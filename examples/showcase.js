@@ -32,6 +32,11 @@ const NAV = [
   { label: "Forms", items: [
     { k: "components/forms", t: "Form fields" },
     { k: "components/form-controls", t: "Form controls" },
+    { k: "components/combobox", t: "Combobox" },
+    { k: "components/tag-input", t: "Tag input" },
+    { k: "components/number-input", t: "Number input" },
+    { k: "components/date-picker", t: "Date picker" },
+    { k: "components/file-upload", t: "File upload" },
   ]},
   { label: "Data display", items: [
     { k: "components/datagrid", t: "Data grid" },
@@ -64,7 +69,12 @@ const NAV = [
     { k: "components/pagination", t: "Pagination" },
     { k: "components/vertical-nav", t: "Vertical nav" },
     { k: "components/stepper", t: "Stepper" },
+    { k: "components/wizard", t: "Wizard" },
     { k: "components/dividers", t: "Dividers" },
+  ]},
+  { label: "Layout", items: [
+    { k: "components/app-shell", t: "App shell" },
+    { k: "components/toolbar", t: "Toolbar" },
   ]},
   { label: "Overlays", items: [
     { k: "components/modal", t: "Modal" },

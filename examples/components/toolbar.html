@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toolbar · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/toolbar">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Toolbar</h1>
+        <p class="docs-lede">A horizontal bar that aligns controls on one row — buttons, a segmented control, a search field. Cluster related controls with <code>.ds-toolbar__group</code> and push the rest to the far edge with a flexible <code>.ds-toolbar__spacer</code>. The default bar carries a 1px bottom rule; <code>--bordered</code> boxes it fully.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Groups and spacer</h2>
+        <p class="docs-note">A left group of actions, a <code>.ds-toolbar__spacer</code> that eats the free space, and a right group — the spacer pushes the two clusters to opposite edges.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Group · spacer · group</span>
+            <button class="ds-button" data-copy-target="#c-groups">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-toolbar" role="toolbar">
+              <div class="ds-toolbar__group">
+                <button class="ds-button ds-button--primary">New</button>
+                <button class="ds-button">Import</button>
+              </div>
+              <div class="ds-toolbar__spacer" aria-hidden="true"></div>
+              <div class="ds-toolbar__group">
+                <button class="ds-button">Export</button>
+                <button class="ds-button ds-button--danger">Delete</button>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-groups">&lt;div class="ds-toolbar" role="toolbar"&gt;
+  &lt;div class="ds-toolbar__group"&gt;
+    &lt;button class="ds-button ds-button--primary"&gt;New&lt;/button&gt;
+    &lt;button class="ds-button"&gt;Import&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="ds-toolbar__spacer" aria-hidden="true"&gt;&lt;/div&gt;
+  &lt;div class="ds-toolbar__group"&gt;
+    &lt;button class="ds-button"&gt;Export&lt;/button&gt;
+    &lt;button class="ds-button ds-button--danger"&gt;Delete&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Bordered · search · segmented</h2>
+        <p class="docs-note">The <code>--bordered</code> variant boxes the bar in a 1px rule. It mixes a search <code>.ds-input</code>, a <code>.ds-segmented</code> control and buttons on the same row.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">ds-toolbar--bordered</span>
+            <button class="ds-button" data-copy-target="#c-bordered">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-toolbar ds-toolbar--bordered" role="toolbar">
+              <input class="ds-input" type="search" placeholder="Search rows…" aria-label="Search">
+              <div class="ds-segmented">
+                <button class="ds-segmented__item is-active" aria-pressed="true">All</button>
+                <button class="ds-segmented__item" aria-pressed="false">Active</button>
+                <button class="ds-segmented__item" aria-pressed="false">Archived</button>
+              </div>
+              <div class="ds-toolbar__spacer" aria-hidden="true"></div>
+              <button class="ds-button">Filters</button>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-bordered">&lt;div class="ds-toolbar ds-toolbar--bordered" role="toolbar"&gt;
+  &lt;input class="ds-input" type="search" placeholder="Search rows…" aria-label="Search"&gt;
+  &lt;div class="ds-segmented"&gt;
+    &lt;button class="ds-segmented__item is-active" aria-pressed="true"&gt;All&lt;/button&gt;
+    &lt;button class="ds-segmented__item" aria-pressed="false"&gt;Active&lt;/button&gt;
+    &lt;button class="ds-segmented__item" aria-pressed="false"&gt;Archived&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="ds-toolbar__spacer" aria-hidden="true"&gt;&lt;/div&gt;
+  &lt;button class="ds-button"&gt;Filters&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <p class="docs-note">Compose <code>Toolbar</code> with <code>ToolbarGroup</code> and <code>ToolbarSpacer</code>; drop any controls (Button, Segmented, Input) inside. Pass <code>bordered</code> for the boxed variant.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;Toolbar /&gt;</span>
+            <button class="ds-button" data-copy-target="#c-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-react">import { Toolbar, ToolbarGroup, ToolbarSpacer, Button, Input } from "@diametral/design-system/react";
+
+&lt;Toolbar bordered&gt;
+  &lt;Input type="search" placeholder="Search rows…" /&gt;
+  &lt;ToolbarSpacer /&gt;
+  &lt;ToolbarGroup&gt;
+    &lt;Button&gt;Export&lt;/Button&gt;
+    &lt;Button variant="primary"&gt;New&lt;/Button&gt;
+  &lt;/ToolbarGroup&gt;
+&lt;/Toolbar&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

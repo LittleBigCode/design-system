@@ -1,0 +1,101 @@
+/* ============================================================================
+   App shell — .ds-shell (full application scaffold)
+   ----------------------------------------------------------------------------
+   A CSS-grid layout that frames a whole app: a full-width header reusing the
+   app-bar look, a left sidebar (1px right rule) holding a vertical nav, and a
+   scrolling main content area. Uses named grid areas so the regions stay legible.
+   At --ds-bp-md (940px) the sidebar drops out of the grid and the header +
+   main stack into a single column; pass `is-sidebar-open` to reveal it again.
+   ============================================================================ */
+.ds-shell {
+  display: grid;
+  grid-template-columns: 264px 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "header header"
+    "sidebar main";
+  min-height: 100vh;
+  background: var(--ds-bg);
+  color: var(--ds-ink);
+}
+
+/* Header — full width across the top, reuses the app-bar separation (bottom
+   ink rule, bg surface, sticky header z so it floats over scrolling main). */
+.ds-shell__header {
+  grid-area: header;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--ds-ink);
+  background: var(--ds-bg);
+  position: sticky;
+  top: 0;
+  z-index: var(--ds-z-header);
+}
+
+/* Sidebar — left column with a 1px right rule, holds a .ds-vnav. Scrolls on
+   its own so the nav stays put while main content scrolls. */
+.ds-shell__sidebar {
+  grid-area: sidebar;
+  border-right: 1px solid var(--ds-rule);
+  background: var(--ds-bg);
+  padding: var(--ds-space-4) var(--ds-space-3);
+  overflow-y: auto;
+}
+
+/* Main — the scrolling content area. */
+.ds-shell__main {
+  grid-area: main;
+  padding: var(--ds-space-6);
+  overflow-y: auto;
+  min-width: 0;
+}
+
+/* Sidebar toggle — a ghost icon button shown in the header on narrow screens.
+   Hidden on wide screens where the sidebar is always part of the grid. */
+.ds-shell__toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  flex: none;
+  cursor: pointer;
+  border: 1px solid var(--ds-ink);
+  background: var(--ds-surface);
+  color: var(--ds-ink);
+  border-radius: var(--ds-radius-none);
+  transition: background-color var(--ds-transition);
+}
+.ds-shell__toggle:hover { background: var(--ds-bg-alt); }
+.ds-shell__toggle:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: 2px; }
+
+/* ----------------------------------------------------------------------------
+   Responsive — at --ds-bp-md the sidebar collapses: the grid becomes a single
+   column and the sidebar is hidden until toggled open. (CSS vars can't drive
+   @media, so the 940px breakpoint is mirrored as a literal — see tokens.css.)
+   ---------------------------------------------------------------------------- */
+@media (max-width: 940px) {
+  .ds-shell {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "main";
+  }
+  .ds-shell__toggle { display: inline-flex; }
+  .ds-shell__sidebar {
+    display: none;
+    border-right: none;
+    border-bottom: 1px solid var(--ds-rule);
+  }
+  /* Open state — drop the sidebar back in as a full-width band above main. */
+  .ds-shell.is-sidebar-open {
+    grid-template-areas:
+      "header"
+      "sidebar"
+      "main";
+  }
+  .ds-shell.is-sidebar-open .ds-shell__sidebar { display: block; }
+}

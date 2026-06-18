@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Number input · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/number-input">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Number input</h1>
+        <p class="docs-lede">A numeric field with −/+ stepper buttons. The buttons share borders with the centered input like an input group; they step by <code>step</code>, clamp to <code>min</code>/<code>max</code>, and disable themselves at the bounds.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Anatomy</h2>
+        <p class="docs-note">A <code>.ds-number-input</code> group joins a <code>.ds-number-input__step</code> minus, a centered <code>.ds-number-input__field</code>, and a plus — collapsing the shared borders so it reads as one unit.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Stepper group</span>
+            <button class="ds-button" data-copy-target="#c-anatomy">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <div class="ds-number-input">
+              <button class="ds-number-input__step" type="button" aria-label="Decrement" tabindex="-1">−</button>
+              <input class="ds-number-input__field" type="number" value="3" aria-label="Quantity">
+              <button class="ds-number-input__step" type="button" aria-label="Increment" tabindex="-1">+</button>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-anatomy">&lt;div class="ds-number-input"&gt;
+  &lt;button class="ds-number-input__step" type="button" aria-label="Decrement" tabindex="-1"&gt;−&lt;/button&gt;
+  &lt;input class="ds-number-input__field" type="number" value="3" aria-label="Quantity"&gt;
+  &lt;button class="ds-number-input__step" type="button" aria-label="Increment" tabindex="-1"&gt;+&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Interactive</h2>
+        <p class="docs-note">The − / + buttons step the value and clamp it to the range (0–10 here), disabling at the bounds. The small inline script below wires this demo (no dependencies).</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Clamped 0–10</span>
+            <button class="ds-button" data-copy-target="#c-live">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <div class="ds-number-input" data-number-input data-min="0" data-max="10" data-step="1">
+              <button class="ds-number-input__step" type="button" aria-label="Decrement" tabindex="-1" data-number-dec>−</button>
+              <input class="ds-number-input__field" type="number" value="0" min="0" max="10" step="1" aria-label="Quantity" data-number-field>
+              <button class="ds-number-input__step" type="button" aria-label="Increment" tabindex="-1" data-number-inc>+</button>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-live">&lt;div class="ds-number-input" data-number-input data-min="0" data-max="10" data-step="1"&gt;
+  &lt;button class="ds-number-input__step" type="button" aria-label="Decrement" tabindex="-1" data-number-dec&gt;−&lt;/button&gt;
+  &lt;input class="ds-number-input__field" type="number" value="0" min="0" max="10" step="1" data-number-field&gt;
+  &lt;button class="ds-number-input__step" type="button" aria-label="Increment" tabindex="-1" data-number-inc&gt;+&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>States</h2>
+        <p class="docs-note">A button disables at its bound; the whole control can be disabled too.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">At min · disabled</span>
+            <button class="ds-button" data-copy-target="#c-states">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <div class="ds-number-input">
+              <button class="ds-number-input__step" type="button" aria-label="Decrement" tabindex="-1" disabled>−</button>
+              <input class="ds-number-input__field" type="number" value="0" aria-label="At minimum">
+              <button class="ds-number-input__step" type="button" aria-label="Increment" tabindex="-1">+</button>
+            </div>
+            <div class="ds-number-input">
+              <button class="ds-number-input__step" type="button" aria-label="Decrement" tabindex="-1" disabled>−</button>
+              <input class="ds-number-input__field" type="number" value="5" aria-label="Disabled" disabled>
+              <button class="ds-number-input__step" type="button" aria-label="Increment" tabindex="-1" disabled>+</button>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-states">&lt;div class="ds-number-input"&gt;
+  &lt;button class="ds-number-input__step" type="button" aria-label="Decrement" tabindex="-1" disabled&gt;−&lt;/button&gt;
+  &lt;input class="ds-number-input__field" type="number" value="0"&gt;
+  &lt;button class="ds-number-input__step" type="button" aria-label="Increment" tabindex="-1"&gt;+&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <p class="docs-note">The <code>NumberInput</code> steps the value clamped to <code>min</code>/<code>max</code> by <code>step</code>, disabling each button at its bound. Controlled (<code>value</code>) or uncontrolled (<code>defaultValue</code>).</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;NumberInput&gt;</span>
+            <button class="ds-button" data-copy-target="#c-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-react">import { NumberInput } from "@diametral/design-system/react";
+
+&lt;NumberInput
+  defaultValue={1}
+  min={0}
+  max={10}
+  step={1}
+  onChange={(value) =&gt; setQty(value)}
+/&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Minimal vanilla wiring for the interactive .ds-number-input demo (no dependencies).
+    document.querySelectorAll("[data-number-input]").forEach(function (root) {
+      var field = root.querySelector("[data-number-field]");
+      var dec = root.querySelector("[data-number-dec]");
+      var inc = root.querySelector("[data-number-inc]");
+      if (!field) return;
+      var min = root.dataset.min === undefined ? null : Number(root.dataset.min);
+      var max = root.dataset.max === undefined ? null : Number(root.dataset.max);
+      var step = Number(root.dataset.step || 1);
+
+      function clamp(n) {
+        if (min !== null && n < min) n = min;
+        if (max !== null && n > max) n = max;
+        return n;
+      }
+      function paint() {
+        var n = field.value === "" ? clamp(0) : Number(field.value);
+        if (dec) dec.disabled = min !== null && n <= min;
+        if (inc) inc.disabled = max !== null && n >= max;
+      }
+      function stepBy(dir) {
+        var base = field.value === "" ? clamp(0) : Number(field.value);
+        field.value = String(clamp(base + dir * step));
+        paint();
+      }
+      if (dec) dec.addEventListener("click", function () { stepBy(-1); });
+      if (inc) inc.addEventListener("click", function () { stepBy(1); });
+      field.addEventListener("input", paint);
+      field.addEventListener("blur", function () {
+        if (field.value !== "") { field.value = String(clamp(Number(field.value))); paint(); }
+      });
+      paint();
+    });
+  </script>
+</body>
+</html>

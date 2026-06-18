@@ -57,3 +57,13 @@
 @import url("./components/timeline.css");
 @import url("./components/tree.css");
 @import url("./components/datagrid.css");
+
+/* Wave 2 — advanced inputs, layout & flows */
+@import url("./components/combobox.css");
+@import url("./components/tag-input.css");
+@import url("./components/number-input.css");
+@import url("./components/date-picker.css");
+@import url("./components/file-upload.css");
+@import url("./components/toolbar.css");
+@import url("./components/app-shell.css");
+@import url("./components/wizard.css");

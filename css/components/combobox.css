@@ -1,0 +1,97 @@
+/* Combobox / typeahead — .ds-combobox (an .ds-input field + a filtered popover)
+   The wrapper is relative so the list anchors to the field. The field reuses the
+   .ds-input look (1px border, no radius). The list is a bordered popover like
+   .ds-menu (border on --ds-ink, no shadow) sitting at --ds-z-popover; options
+   shift to bg-alt on hover or when active (keyboard), and the selected option is
+   marked via [aria-selected]. Companion to field.css / menu.css — never edits them. */
+.ds-combobox {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  min-width: 240px;
+}
+.ds-combobox--block { display: flex; }
+
+/* The text field — same look as .ds-input. */
+.ds-combobox__input {
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-base);
+  font-weight: 400;
+  color: var(--ds-ink);
+  font-variant-numeric: tabular-nums;
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-rule);
+  border-radius: var(--ds-radius-none);
+  padding: 10px 12px;
+  width: 100%;
+  outline: none;
+}
+.ds-combobox__input:focus,
+.ds-combobox__input:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: -2px;
+}
+.ds-combobox__input:disabled { opacity: .55; cursor: not-allowed; }
+
+/* The popover list — bordered surface like .ds-menu, no radius, no shadow. */
+.ds-combobox__list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: var(--ds-z-popover);
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+  max-height: 260px;
+  overflow-y: auto;
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-ink);
+  border-radius: var(--ds-radius-none);
+  font-family: var(--ds-font-sans);
+}
+
+/* An option row — full width, hover/active shift to bg-alt. */
+.ds-combobox__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 14px;
+  font-size: var(--ds-text-sm);
+  font-weight: 400;
+  letter-spacing: -0.1px;
+  text-align: left;
+  color: var(--ds-ink);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--ds-transition), color var(--ds-transition);
+}
+.ds-combobox__option:hover,
+.ds-combobox__option.is-active { background: var(--ds-bg-alt); }
+
+/* The current value reads with a faint check on the right. */
+.ds-combobox__option[aria-selected="true"] { color: var(--ds-ink); font-weight: 500; }
+.ds-combobox__option[aria-selected="true"]::after {
+  content: "";
+  width: 12px;
+  height: 9px;
+  flex: none;
+  background-color: var(--ds-ink);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='9' viewBox='0 0 12 9' fill='none' stroke='black' stroke-width='1.5'%3E%3Cpath d='M1 4.5 4.5 8 11 1'/%3E%3C/svg%3E") no-repeat center / contain;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='9' viewBox='0 0 12 9' fill='none' stroke='black' stroke-width='1.5'%3E%3Cpath d='M1 4.5 4.5 8 11 1'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+
+.ds-combobox__option:disabled,
+.ds-combobox__option[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
+.ds-combobox__option:disabled:hover,
+.ds-combobox__option[aria-disabled="true"]:hover { background: none; }
+
+/* Empty state — shown when nothing matches the query. */
+.ds-combobox__empty {
+  padding: 8px 14px;
+  font-size: var(--ds-text-sm);
+  color: var(--ds-ink-faint);
+}

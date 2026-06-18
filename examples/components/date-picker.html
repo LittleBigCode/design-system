@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Date picker · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/date-picker">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Date picker</h1>
+        <p class="docs-lede">A <code>.ds-input</code> that opens a flat <code>.ds-calendar</code> popover — a bordered surface holding a month label, prev / next icon buttons and a 7-column grid of square day cells. Faint outside-month days, an accent ring for today, an ink fill for the selection. No radius, no shadow.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Calendar</h2>
+        <p class="docs-note">The open <code>.ds-calendar</code> surface: a <code>__head</code> with the month label between two <code>.ds-button--icon</code> steppers, then a <code>__grid</code> of faint <code>__weekday</code> labels over <code>__day</code> cells. <code>.is-today</code> draws an accent ring, <code>.is-selected</code> fills with ink, <code>.is-outside</code> fades neighbour days.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Open calendar</span>
+            <button class="ds-button" data-copy-target="#c-calendar">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <div class="ds-calendar" role="dialog" aria-label="Choose date" style="position:static">
+              <div class="ds-calendar__head">
+                <button class="ds-button ds-button--icon ds-button--sm" type="button" aria-label="Previous month">
+                  <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M11 4 6 9l5 5"/></svg>
+                </button>
+                <div class="ds-calendar__label">June 2026</div>
+                <button class="ds-button ds-button--icon ds-button--sm" type="button" aria-label="Next month">
+                  <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 4l5 5-5 5"/></svg>
+                </button>
+              </div>
+              <div class="ds-calendar__grid" role="grid">
+                <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Su</div>
+                <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Mo</div>
+                <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Tu</div>
+                <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">We</div>
+                <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Th</div>
+                <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Fr</div>
+                <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Sa</div>
+                <button class="ds-calendar__day is-outside" type="button" role="gridcell">31</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">1</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">2</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">3</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">4</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">5</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">6</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">7</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">8</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">9</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">10</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">11</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">12</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">13</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">14</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">15</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">16</button>
+                <button class="ds-calendar__day is-today" type="button" role="gridcell" aria-label="2026-06-17">17</button>
+                <button class="ds-calendar__day is-selected" type="button" role="gridcell" aria-pressed="true" aria-label="2026-06-18">18</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">19</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">20</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">21</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">22</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">23</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">24</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">25</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">26</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">27</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">28</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">29</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">30</button>
+                <button class="ds-calendar__day is-outside" type="button" role="gridcell">1</button>
+                <button class="ds-calendar__day is-outside" type="button" role="gridcell">2</button>
+                <button class="ds-calendar__day is-outside" type="button" role="gridcell">3</button>
+                <button class="ds-calendar__day is-outside" type="button" role="gridcell">4</button>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-calendar">&lt;div class="ds-calendar" role="dialog" aria-label="Choose date"&gt;
+  &lt;div class="ds-calendar__head"&gt;
+    &lt;button class="ds-button ds-button--icon ds-button--sm" aria-label="Previous month"&gt;…&lt;/button&gt;
+    &lt;div class="ds-calendar__label"&gt;June 2026&lt;/div&gt;
+    &lt;button class="ds-button ds-button--icon ds-button--sm" aria-label="Next month"&gt;…&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="ds-calendar__grid" role="grid"&gt;
+    &lt;div class="ds-calendar__weekday"&gt;Su&lt;/div&gt; … &lt;div class="ds-calendar__weekday"&gt;Sa&lt;/div&gt;
+    &lt;button class="ds-calendar__day is-outside"&gt;31&lt;/button&gt;
+    &lt;button class="ds-calendar__day"&gt;1&lt;/button&gt; …
+    &lt;button class="ds-calendar__day is-today"&gt;17&lt;/button&gt;
+    &lt;button class="ds-calendar__day is-selected" aria-pressed="true"&gt;18&lt;/button&gt; …
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Interactive</h2>
+        <p class="docs-note">The input toggles the calendar; it closes on outside-click or Escape. Picking a day writes the ISO date into the field. The small inline script below wires this demo (no dependencies).</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Input opens calendar</span>
+            <button class="ds-button" data-copy-target="#c-live">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-datepicker" data-datepicker>
+              <input class="ds-input" type="text" readonly placeholder="yyyy-mm-dd" value="2026-06-18" aria-haspopup="dialog" aria-expanded="false" autocomplete="off" data-datepicker-input>
+              <div class="ds-calendar" role="dialog" aria-label="Choose date" hidden data-datepicker-panel style="position:absolute;top:calc(100% + 6px);left:0">
+                <div class="ds-calendar__head">
+                  <button class="ds-button ds-button--icon ds-button--sm" type="button" aria-label="Previous month">
+                    <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M11 4 6 9l5 5"/></svg>
+                  </button>
+                  <div class="ds-calendar__label">June 2026</div>
+                  <button class="ds-button ds-button--icon ds-button--sm" type="button" aria-label="Next month">
+                    <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 4l5 5-5 5"/></svg>
+                  </button>
+                </div>
+                <div class="ds-calendar__grid" role="grid">
+                  <div class="ds-calendar__weekday" aria-hidden="true">Su</div>
+                  <div class="ds-calendar__weekday" aria-hidden="true">Mo</div>
+                  <div class="ds-calendar__weekday" aria-hidden="true">Tu</div>
+                  <div class="ds-calendar__weekday" aria-hidden="true">We</div>
+                  <div class="ds-calendar__weekday" aria-hidden="true">Th</div>
+                  <div class="ds-calendar__weekday" aria-hidden="true">Fr</div>
+                  <div class="ds-calendar__weekday" aria-hidden="true">Sa</div>
+                  <button class="ds-calendar__day is-outside" type="button" data-day="2026-05-31">31</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-01">1</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-02">2</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-03">3</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-04">4</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-05">5</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-06">6</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-07">7</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-08">8</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-09">9</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-10">10</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-11">11</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-12">12</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-13">13</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-14">14</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-15">15</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-16">16</button>
+                  <button class="ds-calendar__day is-today" type="button" data-day="2026-06-17">17</button>
+                  <button class="ds-calendar__day is-selected" type="button" aria-pressed="true" data-day="2026-06-18">18</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-19">19</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-20">20</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-21">21</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-22">22</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-23">23</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-24">24</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-25">25</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-26">26</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-27">27</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-28">28</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-29">29</button>
+                  <button class="ds-calendar__day" type="button" data-day="2026-06-30">30</button>
+                  <button class="ds-calendar__day is-outside" type="button" data-day="2026-07-01">1</button>
+                  <button class="ds-calendar__day is-outside" type="button" data-day="2026-07-02">2</button>
+                  <button class="ds-calendar__day is-outside" type="button" data-day="2026-07-03">3</button>
+                  <button class="ds-calendar__day is-outside" type="button" data-day="2026-07-04">4</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-live">&lt;div class="ds-datepicker"&gt;
+  &lt;input class="ds-input" type="text" readonly value="2026-06-18"
+         aria-haspopup="dialog" aria-expanded="false"&gt;
+  &lt;div class="ds-calendar" role="dialog" hidden&gt;
+    &lt;!-- __head + __grid as above --&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <p class="docs-note">The <code>DatePicker</code> renders a <code>.ds-input</code> that opens the calendar, computes the month grid with pure JS date math, navigates months and picks a day — closing on select, outside-click and Escape. Works controlled (<code>value</code>/<code>onChange</code>) or uncontrolled (<code>defaultValue</code>). <code>value</code> is a Date or ISO string; the input shows ISO <code>yyyy-mm-dd</code> by default.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;DatePicker&gt;</span>
+            <button class="ds-button" data-copy-target="#c-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-react">import { DatePicker } from "@diametral/design-system/react";
+
+&lt;DatePicker
+  defaultValue="2026-06-18"
+  min="2026-01-01"
+  max="2026-12-31"
+  onChange={(date, iso) =&gt; console.log(iso, date)}
+/&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Minimal vanilla wiring for the interactive .ds-calendar demo (no dependencies).
+    document.querySelectorAll("[data-datepicker]").forEach(function (root) {
+      var input = root.querySelector("[data-datepicker-input]");
+      var panel = root.querySelector("[data-datepicker-panel]");
+      if (!input || !panel) return;
+      function setOpen(open) {
+        panel.hidden = !open;
+        input.setAttribute("aria-expanded", String(open));
+      }
+      input.addEventListener("click", function () { setOpen(panel.hidden); });
+      panel.querySelectorAll("[data-day]").forEach(function (cell) {
+        cell.addEventListener("click", function () {
+          panel.querySelectorAll(".ds-calendar__day.is-selected").forEach(function (el) {
+            el.classList.remove("is-selected");
+            el.removeAttribute("aria-pressed");
+          });
+          cell.classList.add("is-selected");
+          cell.setAttribute("aria-pressed", "true");
+          input.value = cell.getAttribute("data-day");
+          setOpen(false);
+          input.focus();
+        });
+      });
+      document.addEventListener("mousedown", function (e) {
+        if (!root.contains(e.target)) setOpen(false);
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && !panel.hidden) { setOpen(false); input.focus(); }
+      });
+    });
+  </script>
+</body>
+</html>

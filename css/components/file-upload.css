@@ -1,0 +1,115 @@
+/* ============================================================================
+   File upload / dropzone — .ds-dropzone (a dashed drop target) + .ds-filelist
+   ----------------------------------------------------------------------------
+   A flat dashed-bordered surface that accepts clicks, keyboard activation and
+   drag-and-drop. On .is-dragover the border + background shift to the accent.
+   Selected files render in a .ds-filelist below: each .ds-filelist__item is a
+   1px-ruled row with a name, a tabular size, an optional .ds-progress bar (reused
+   from progress.css) and a remove × button. No radius, no shadow.
+   ============================================================================ */
+/* Component root wrapper (dropzone + file list). */
+.ds-file-upload { display: block; }
+
+.ds-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-space-2);
+  width: 100%;
+  padding: var(--ds-space-6) var(--ds-space-5);
+  text-align: center;
+  color: var(--ds-ink-soft);
+  background: var(--ds-surface);
+  border: 1px dashed var(--ds-rule);
+  border-radius: var(--ds-radius-none);
+  cursor: pointer;
+  transition: background-color var(--ds-transition), border-color var(--ds-transition), color var(--ds-transition);
+}
+.ds-dropzone:hover { background: var(--ds-bg-alt); }
+.ds-dropzone:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Drag-over — accent border + accent background to signal the drop target. */
+.ds-dropzone.is-dragover {
+  border-color: var(--ds-accent);
+  background: var(--ds-accent-bg);
+  color: var(--ds-ink);
+}
+
+.ds-dropzone__hint {
+  font-size: var(--ds-text-sm);
+  line-height: var(--ds-leading-normal);
+  color: var(--ds-ink-faint);
+}
+.ds-dropzone__hint strong {
+  font-weight: 500;
+  color: var(--ds-ink);
+}
+
+/* ----------------------------------------------------------------------------
+   File list — .ds-filelist  (rows of selected files under the dropzone)
+   ---------------------------------------------------------------------------- */
+.ds-filelist {
+  list-style: none;
+  margin: var(--ds-space-3) 0 0;
+  padding: 0;
+}
+
+.ds-filelist__item {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-3);
+  padding: var(--ds-space-2) 0;
+  border-bottom: 1px solid var(--ds-rule-soft);
+}
+.ds-filelist__item:last-child { border-bottom: none; }
+
+.ds-filelist__name {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: var(--ds-text-sm);
+  color: var(--ds-ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ds-filelist__size {
+  flex: none;
+  font-size: var(--ds-text-xs);
+  color: var(--ds-ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The per-file progress bar sits in the row, taking a fixed slice of width. */
+.ds-filelist__item .ds-progress {
+  flex: none;
+  width: 80px;
+}
+
+/* Remove × — a small square ghost button, no radius. */
+.ds-filelist__remove {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  font-size: var(--ds-text-md);
+  line-height: 1;
+  color: var(--ds-ink-faint);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--ds-radius-none);
+  cursor: pointer;
+  transition: background-color var(--ds-transition), color var(--ds-transition);
+}
+.ds-filelist__remove:hover { background: var(--ds-bg-alt); color: var(--ds-ink); }
+.ds-filelist__remove:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: 2px;
+}

@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App shell · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+  <style>
+    /* Demo-only: constrain the live shell so it reads as a compact, scaled-down
+       app frame inside the preview rather than taking the whole viewport. */
+    .shell-demo .ds-shell { min-height: 0; height: 360px; width: 100%; border: 1px solid var(--ds-rule); }
+    .shell-demo .ds-shell__header { position: static; padding: 12px 16px; }
+    .shell-demo .ds-shell__sidebar { padding: var(--ds-space-3) var(--ds-space-2); }
+    .shell-demo .ds-shell__main { padding: var(--ds-space-4); }
+  </style>
+</head>
+<body data-page="components/app-shell">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">App shell</h1>
+        <p class="docs-lede">A full application scaffold on a CSS grid: a full-width header that reuses the app-bar look, a left sidebar (1px right rule) holding a vertical nav, and a scrolling main content area. Named grid areas keep the regions legible; at <code>--ds-bp-md</code> the sidebar collapses behind a toggle.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Layout</h2>
+        <p class="docs-note">The grid uses <code>grid-template-areas</code> for <code>header</code> / <code>sidebar</code> / <code>main</code>. This preview is height-constrained to read as a compact frame — in an app the shell fills the viewport. Narrow the window below 940px to see the sidebar drop out and the header gain a <code>☰</code> toggle.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Header · sidebar · main</span>
+            <button class="ds-button" data-copy-target="#c-shell">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block shell-demo">
+            <div class="ds-shell" id="demoShell">
+              <header class="ds-shell__header">
+                <button class="ds-shell__toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+                <span class="ds-wordmark">
+                  <svg class="ds-wordmark__mark" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="28" cy="28" r="24"></circle><rect x="12" y="12" width="32" height="32"></rect><line x1="12" y1="44" x2="44" y2="12"></line></svg>
+                  <span class="ds-wordmark__name">Diametral</span>
+                  <span class="ds-wordmark__sub">Console</span>
+                </span>
+                <span style="margin-left:auto;"><button class="ds-button ds-button--primary">New</button></span>
+              </header>
+              <aside class="ds-shell__sidebar">
+                <nav class="ds-vnav" aria-label="Sidebar">
+                  <a class="ds-vnav__item is-active" href="#" aria-current="page">Dashboard</a>
+                  <a class="ds-vnav__item" href="#">Pricing matrix</a>
+                  <a class="ds-vnav__item" href="#">Entities</a>
+                  <a class="ds-vnav__item" href="#">Reports</a>
+                  <a class="ds-vnav__item" href="#">Settings</a>
+                </nav>
+              </aside>
+              <main class="ds-shell__main">
+                <h2 class="ds-title">Dashboard</h2>
+                <p class="docs-note">Main content scrolls independently of the header and sidebar. Drop any components in here — tables, status panels, cards.</p>
+              </main>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-shell">&lt;div class="ds-shell"&gt;
+  &lt;header class="ds-shell__header"&gt;
+    &lt;button class="ds-shell__toggle" type="button" aria-label="Toggle navigation"&gt;☰&lt;/button&gt;
+    &lt;span class="ds-wordmark"&gt;…&lt;/span&gt;
+  &lt;/header&gt;
+  &lt;aside class="ds-shell__sidebar"&gt;
+    &lt;nav class="ds-vnav" aria-label="Sidebar"&gt;
+      &lt;a class="ds-vnav__item is-active" href="#" aria-current="page"&gt;Dashboard&lt;/a&gt;
+      &lt;a class="ds-vnav__item" href="#"&gt;Pricing matrix&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/aside&gt;
+  &lt;main class="ds-shell__main"&gt;…&lt;/main&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Collapsed sidebar</h2>
+        <p class="docs-note">Below <code>--ds-bp-md</code> the sidebar is hidden by default; add <code>is-sidebar-open</code> to the <code>.ds-shell</code> to band it back in above the main area. The header's <code>☰</code> toggle drives this — click it in the demo above when the window is narrow.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">is-sidebar-open</span>
+            <button class="ds-button" data-copy-target="#c-shell-open">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-shell-open">&lt;!-- narrow screens: this modifier reveals the sidebar band --&gt;
+&lt;div class="ds-shell is-sidebar-open"&gt;
+  &lt;header class="ds-shell__header"&gt;…&lt;/header&gt;
+  &lt;aside class="ds-shell__sidebar"&gt;…&lt;/aside&gt;
+  &lt;main class="ds-shell__main"&gt;…&lt;/main&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <p class="docs-note">Pass the three regions as props: <code>header</code>, <code>sidebar</code>, and <code>children</code> (the main area). The narrow-screen toggle works controlled (<code>collapsed</code>/<code>onToggle</code>) or uncontrolled (<code>defaultCollapsed</code>).</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;AppShell /&gt;</span>
+            <button class="ds-button" data-copy-target="#c-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-react">import { AppShell, Wordmark, VerticalNav } from "@diametral/design-system/react";
+
+&lt;AppShell
+  header={&lt;Wordmark sub="Console" /&gt;}
+  sidebar={
+    &lt;VerticalNav
+      items={[
+        { label: "Dashboard", href: "/", active: true },
+        { label: "Pricing matrix", href: "/matrix" },
+        { label: "Entities", href: "/entities" },
+      ]}
+    /&gt;
+  }
+&gt;
+  &lt;h1 className="ds-title"&gt;Dashboard&lt;/h1&gt;
+&lt;/AppShell&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Tiny vanilla demo: the header toggle flips the sidebar band open/closed.
+    // (Mirrors the AppShell `collapsed` prop; visible effect appears below 940px.)
+    (function () {
+      var shell = document.getElementById("demoShell");
+      if (!shell) return;
+      var toggle = shell.querySelector(".ds-shell__toggle");
+      toggle.addEventListener("click", function () {
+        var open = shell.classList.toggle("is-sidebar-open");
+        toggle.setAttribute("aria-expanded", String(open));
+      });
+    })();
+  </script>
+</body>
+</html>

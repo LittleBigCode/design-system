@@ -1,0 +1,38 @@
+/* ============================================================================
+   Toolbar — .ds-toolbar (horizontal action bar)
+   ----------------------------------------------------------------------------
+   A horizontal strip that aligns controls — buttons, segmented controls, a
+   search field — on a single row. By default it's a borderless flex row with a
+   1px bottom rule; the --bordered modifier turns it into a fully boxed bar.
+   Group related controls with .ds-toolbar__group and push the rest to the far
+   edge with a flexible .ds-toolbar__spacer.
+   ============================================================================ */
+.ds-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-3);
+  padding: var(--ds-space-2) var(--ds-space-3);
+  border-bottom: 1px solid var(--ds-rule);
+  background: var(--ds-bg);
+  font-family: var(--ds-font-sans);
+}
+
+/* Group — a cluster of controls kept together with a tighter gap. */
+.ds-toolbar__group {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+}
+
+/* Spacer — eats the free space, pushing what follows to the opposite edge. */
+.ds-toolbar__spacer {
+  flex: 1;
+}
+
+/* Bordered — a fully boxed bar (1px all around) instead of just a bottom rule. */
+.ds-toolbar--bordered {
+  border: 1px solid var(--ds-rule);
+}
+
+/* Search controls inside the toolbar stretch to a comfortable width. */
+.ds-toolbar .ds-input { min-width: 200px; }
