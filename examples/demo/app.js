@@ -1,11 +1,9 @@
-/* The Diametral Console demo app: login → shell with grouped nav + ⌘K palette.
-   demo.html is a thin loader that calls mount(). Views live in ./views/*.js. */
+/* The Diametral Console demo app: login → ConsoleLayout shell with grouped nav,
+   ⌘K palette and a Light/Dark/Sepia switcher. demo.html is a thin loader that
+   calls mount(); views live in ./views/*.js. Dogfoods <ConsoleLayout>. */
 import React from "react";
 import { createRoot } from "react-dom/client";
-import {
-  Wordmark, Button, Input, Badge, Avatar, Tooltip, Card, Field, Kbd, Segmented,
-  ToastProvider, CommandPalette,
-} from "../../react/index.js";
+import { Wordmark, Button, Input, Badge, Card, Field, ToastProvider, ConsoleLayout } from "../../react/index.js";
 import { h, F } from "./ui.js";
 import { Overview, Inbox, Settings } from "./views/core.js";
 import { Projects, Board } from "./views/work.js";
@@ -17,7 +15,7 @@ import { CalendarView } from "./views/calendar.js";
 import { Invoices } from "./views/invoices.js";
 import { Knowledge } from "./views/knowledge.js";
 import { Files } from "./views/files.js";
-const { useState, useEffect } = React;
+const { useState } = React;
 
 const NAV = [
   { group: "Work", items: [
@@ -48,54 +46,25 @@ const ACTIVE_FOR = { cv: "candidates", project: "projects", person: "team" };
 function Shell({ onSignOut }) {
   const [view, setView] = useState("overview");
   const [sel, setSel] = useState({});
-  const [cmdOpen, setCmdOpen] = useState(false);
-  const [theme, setTheme] = useState("light");
   const go = (v) => setView(v);
   const select = (o) => setSel((s) => ({ ...s, ...o }));
   const activeId = ACTIVE_FOR[view] || view;
   const Body = HIDDEN[view] || (FLAT.find((n) => n.id === view) || {}).view || Overview;
-
-  useEffect(() => {
-    const onKey = (e) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); setCmdOpen((o) => !o); }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, []);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    if (theme === "light") root.removeAttribute("data-theme");
-    else root.setAttribute("data-theme", theme);
-  }, [theme]);
-
   const commands = [
     ...FLAT.map((n) => ({ id: n.id, label: n.label, group: "Go to", onRun: () => go(n.id) })),
     { id: "new-project", label: "New project", group: "Actions", hint: "C", onRun: () => go("projects") },
     { id: "signout", label: "Sign out", group: "Actions", onRun: onSignOut },
   ];
-
-  return h("div", { className: "ap" },
-    h("header", { className: "ds-app-bar ap__bar" }, h("div", { className: "ds-app-bar__inner" },
-      h(Wordmark, { sub: "Console" }),
-      h("button", { className: "ap__search", onClick: () => setCmdOpen(true) },
-        h("span", null, "Search projects, people…"),
-        h(Kbd, null, "⌘K")),
-      h("div", { className: "ds-app-bar__actions" },
-        h(Segmented, { items: [{ value: "light", label: "Light" }, { value: "dark", label: "Dark" }, { value: "sepia", label: "Sepia" }], value: theme, onChange: setTheme }),
-        h(Badge, { variant: "accent" }, "Production"),
-        h(Button, { variant: "primary", onClick: () => go("projects") }, "New"),
-        h(Tooltip, { label: "Sign out" }, h("span", { onClick: onSignOut, style: { cursor: "pointer" } }, h(Avatar, { initials: "VD", size: "sm" })))))),
-    h("aside", { className: "ap__side" }, h("nav", { className: "ds-vnav" },
-      NAV.map((g) => h("div", { key: g.group, className: "ds-vnav__group" },
-        h("p", { className: "ds-label ap__navlabel" }, g.group),
-        g.items.map((n) => h("button", {
-          key: n.id,
-          className: "ds-vnav__item ap__navitem" + (activeId === n.id ? " is-active" : ""),
-          onClick: () => go(n.id),
-        }, h("span", null, n.label), n.badge ? h(Badge, null, n.badge) : null)))))),
-    h("main", { className: "ap__main" }, h("div", { className: "ap__wrap" }, h(Body, { go, sel, select }))),
-    h(CommandPalette, { open: cmdOpen, onClose: () => setCmdOpen(false), commands, placeholder: "Jump to a page or run a command…" }));
+  return h(ConsoleLayout, {
+    brand: { name: "Diametral", sub: "Console" },
+    nav: NAV, active: activeId, onNavigate: go, commands,
+    user: { initials: "VD", onSignOut },
+    themes: true,
+    searchPlaceholder: "Search projects, people…",
+    actions: h(F, null,
+      h(Badge, { variant: "accent" }, "Production"),
+      h(Button, { variant: "primary", onClick: () => go("projects") }, "New")),
+  }, h(Body, { go, sel, select }));
 }
 
 function Login({ onSignIn }) {
@@ -120,6 +89,6 @@ function App() {
 
 export function mount() {
   const el = document.getElementById("app");
-  el.removeAttribute("style"); // drop the loading-state grid centering so .ap fills the width
+  el.removeAttribute("style"); // drop the loading-state grid centering
   createRoot(el).render(h(App));
 }

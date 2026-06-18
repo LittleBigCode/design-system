@@ -1,0 +1,59 @@
+/* Console layout — .ds-console (turnkey app chrome: app bar + sidebar + content).
+   A higher-level layout than .ds-app-shell: data-driven sidebar nav, a ⌘K search
+   trigger, and one centered content column shared by every view. */
+.ds-console {
+  display: grid;
+  grid-template-columns: var(--ds-console-side, 232px) minmax(0, 1fr);
+  min-height: 100vh;
+}
+.ds-console__bar { grid-column: 1 / -1; }
+.ds-console__side {
+  border-right: 1px solid var(--ds-rule);
+  background: var(--ds-bg);
+  position: sticky;
+  top: var(--ds-console-bar-h, 57px);
+  height: calc(100vh - var(--ds-console-bar-h, 57px));
+  overflow: auto;
+  padding: 8px 0 24px;
+}
+.ds-console__main { min-width: 0; background: var(--ds-bg-alt); }
+.ds-console__wrap {
+  max-width: var(--ds-console-maxw, 1180px);
+  margin: 0 auto;
+  padding: 28px 32px 80px;
+}
+.ds-console__navlabel { padding: 16px 18px 6px; margin: 0; color: var(--ds-ink-faint); }
+.ds-console__navitem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+.ds-console__search {
+  flex: 1;
+  max-width: 340px;
+  margin-left: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: var(--ds-bg);
+  border: 1px solid var(--ds-rule);
+  color: var(--ds-ink-faint);
+  font: inherit;
+  font-size: 13px;
+  padding: 7px 10px;
+  cursor: pointer;
+  text-align: left;
+}
+.ds-console__search:hover { background: var(--ds-bg-alt); }
+@media (max-width: 820px) {
+  .ds-console { grid-template-columns: 1fr; }
+  .ds-console__side { display: none; }
+  .ds-console__search { display: none; }
+}
