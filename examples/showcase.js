@@ -49,6 +49,7 @@ const NAV = [
   ]},
   { label: "Data display", items: [
     { k: "components/datagrid", t: "Data grid" },
+    { k: "components/kanban", t: "Kanban" },
     { k: "components/table", t: "Table" },
     { k: "components/status-panel", t: "Status panel" },
     { k: "components/metrics", t: "Metrics" },

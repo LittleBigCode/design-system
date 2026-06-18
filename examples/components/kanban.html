@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanban · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/kanban">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components · data</p>
+        <h1 class="ds-title ds-title--xl">Kanban</h1>
+        <p class="docs-lede">A board of columns holding draggable cards. The React <code>&lt;Kanban&gt;</code> wires HTML5 drag-and-drop and fires <code>onMove(itemId, toColumnId)</code>; drag a card live in the <a href="../demo.html">demo app</a>.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Board</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">.ds-kanban</span><button class="ds-button" data-copy-target="#c-kb">Copy</button></header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-kanban">
+              <div class="ds-kanban__col">
+                <div class="ds-kanban__col-head"><span>To do</span><span class="ds-kanban__count">2</span></div>
+                <div class="ds-kanban__list">
+                  <div class="ds-kanban__card" draggable="true"><div class="ds-kanban__card-title">Define delegation thresholds</div><div class="ds-kanban__card-meta"><span class="ds-tag">pricing</span><span class="ds-avatar ds-avatar--sm">CR</span></div></div>
+                  <div class="ds-kanban__card" draggable="true"><div class="ds-kanban__card-title">Acme staffing plan</div><div class="ds-kanban__card-meta"><span class="ds-tag">staffing</span><span class="ds-avatar ds-avatar--sm">IF</span></div></div>
+                </div>
+              </div>
+              <div class="ds-kanban__col">
+                <div class="ds-kanban__col-head"><span>In progress</span><span class="ds-kanban__count">1</span></div>
+                <div class="ds-kanban__list">
+                  <div class="ds-kanban__card" draggable="true"><div class="ds-kanban__card-title">Margin calculator v2</div><div class="ds-kanban__card-meta"><span class="ds-tag">build</span><span class="ds-avatar ds-avatar--sm">VD</span></div></div>
+                </div>
+              </div>
+              <div class="ds-kanban__col">
+                <div class="ds-kanban__col-head"><span>Done</span><span class="ds-kanban__count">1</span></div>
+                <div class="ds-kanban__list">
+                  <div class="ds-kanban__card" draggable="true"><div class="ds-kanban__card-title">Q1 reporting</div><div class="ds-kanban__card-meta"><span class="ds-tag ds-tag--success">reporting</span><span class="ds-avatar ds-avatar--sm">AB</span></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-kb">&lt;div class="ds-kanban"&gt;
+  &lt;div class="ds-kanban__col"&gt;
+    &lt;div class="ds-kanban__col-head"&gt;&lt;span&gt;To do&lt;/span&gt;&lt;span class="ds-kanban__count"&gt;2&lt;/span&gt;&lt;/div&gt;
+    &lt;div class="ds-kanban__list"&gt;
+      &lt;div class="ds-kanban__card" draggable="true"&gt;
+        &lt;div class="ds-kanban__card-title"&gt;Define delegation thresholds&lt;/div&gt;
+        &lt;div class="ds-kanban__card-meta"&gt;&lt;span class="ds-tag"&gt;pricing&lt;/span&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">&lt;Kanban&gt;</span><button class="ds-button" data-copy-target="#c-kb-react">Copy</button></header>
+          <pre class="ds-example__code"><code id="c-kb-react">import { Kanban } from "@diametral/design-system/react";
+
+&lt;Kanban
+  columns={[{ id: "todo", title: "To do" }, { id: "doing", title: "In progress" }, { id: "done", title: "Done" }]}
+  items={[{ id: "t1", column: "todo", title: "Define thresholds" }, { id: "t2", column: "doing", title: "Calculator v2" }]}
+  renderCard={(t) =&gt; &lt;div className="ds-kanban__card-title"&gt;{t.title}&lt;/div&gt;}
+  onMove={(id, col) =&gt; save(id, col)}
+/&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.1</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../demo.html">Demo app →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
