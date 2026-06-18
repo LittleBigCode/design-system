@@ -15,6 +15,11 @@ export type Status =
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** Visual variant. Omit for the default ghost button. */
   variant?: "primary" | "danger";
+  size?: "sm" | "lg";
+  /** Shows a spinner and disables the button. */
+  loading?: boolean;
+  /** Full-width. */
+  block?: boolean;
 }
 export declare const Button: ForwardRefExoticComponent<
   ButtonProps & RefAttributes<HTMLButtonElement>
@@ -140,3 +145,34 @@ export interface WordmarkProps {
   className?: string;
 }
 export declare function Wordmark(props: WordmarkProps): JSX.Element;
+
+/* ---- Extended component library (separate modules) ----------------------- */
+export * from "./components/Accordion.js";
+export * from "./components/Alert.js";
+export * from "./components/Avatar.js";
+export * from "./components/Breadcrumb.js";
+export * from "./components/ButtonExtras.js";
+export * from "./components/Card.js";
+export * from "./components/Checkbox.js";
+export * from "./components/DataGrid.js";
+export * from "./components/DescriptionList.js";
+export * from "./components/Dropdown.js";
+export * from "./components/EmptyState.js";
+export * from "./components/FieldHint.js";
+export * from "./components/InputGroup.js";
+export * from "./components/Pagination.js";
+export * from "./components/Popover.js";
+export * from "./components/Progress.js";
+export * from "./components/Radio.js";
+export * from "./components/Range.js";
+export * from "./components/Select.js";
+export * from "./components/Skeleton.js";
+export * from "./components/Spinner.js";
+export * from "./components/Stepper.js";
+export * from "./components/Tag.js";
+export * from "./components/Textarea.js";
+export * from "./components/Timeline.js";
+export * from "./components/ToastProvider.js";
+export * from "./components/Tooltip.js";
+export * from "./components/Tree.js";
+export * from "./components/VerticalNav.js";

@@ -1,0 +1,71 @@
+/* Timeline — .ds-timeline (vertical event list with a left rail + status dots)
+   A flat, sharp activity/history feed: a 1px rule runs down the left as the
+   rail, each item hangs a small square dot on it, and stacks time / title /
+   body. Status families recolor the dot. No radius, no shadow. */
+.ds-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  font-family: var(--ds-font-sans);
+}
+
+/* The rail — a 1px vertical line sitting at the dot's center (4px in). */
+.ds-timeline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 4px;
+  width: 1px;
+  background: var(--ds-rule);
+}
+
+.ds-timeline__item {
+  position: relative;
+  padding-left: var(--ds-space-5);
+  padding-bottom: var(--ds-space-4);
+}
+.ds-timeline__item:last-child { padding-bottom: 0; }
+
+/* The marker — a small square on the rail. A surface ring lifts it clear of
+   the line. Kept square by the flat parti pris (radius token = none). */
+.ds-timeline__dot {
+  position: absolute;
+  left: 0;
+  top: 3px;
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--ds-rule);
+  background: var(--ds-rule);
+  box-sizing: border-box;
+  border-radius: var(--ds-radius-none);
+  box-shadow: 0 0 0 3px var(--ds-surface);
+}
+.ds-timeline__dot.is-success { background: var(--ds-success); border-color: var(--ds-success); }
+.ds-timeline__dot.is-warning { background: var(--ds-warning); border-color: var(--ds-warning); }
+.ds-timeline__dot.is-danger  { background: var(--ds-danger);  border-color: var(--ds-danger); }
+.ds-timeline__dot.is-info    { background: var(--ds-info);    border-color: var(--ds-info); }
+.ds-timeline__dot.is-neutral { background: var(--ds-neutral); border-color: var(--ds-neutral); }
+
+.ds-timeline__time {
+  font-size: var(--ds-text-xs);
+  color: var(--ds-ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ds-timeline__title {
+  font-size: var(--ds-text-base);
+  font-weight: 500;
+  color: var(--ds-ink);
+  margin-top: var(--ds-space-1);
+}
+
+.ds-timeline__body {
+  font-size: var(--ds-text-sm);
+  color: var(--ds-ink-soft);
+  margin-top: var(--ds-space-1);
+  line-height: var(--ds-leading-normal);
+}

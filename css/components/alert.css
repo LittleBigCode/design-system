@@ -1,0 +1,113 @@
+/* ============================================================================
+   Alert — .ds-alert
+   ----------------------------------------------------------------------------
+   An inline alert: a 1px-bordered surface with a 3px accent bar on the left
+   (drawn with a thicker border-left in the status color) and a status-tinted
+   background. Holds an icon, content, optional actions, and a dismiss button.
+   The --app modifier turns it into a full-width, solid-status banner with
+   white text (for app-level / page-top messages).
+   ============================================================================ */
+.ds-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ds-space-3);
+  padding: var(--ds-space-3) var(--ds-space-4);
+  border: 1px solid var(--ds-info);
+  border-left-width: 3px;
+  border-left-color: var(--ds-info);
+  background: var(--ds-info-bg);
+  color: var(--ds-ink);
+  font-size: var(--ds-text-base);
+  line-height: var(--ds-leading-normal);
+  border-radius: var(--ds-radius-none);
+}
+
+.ds-alert__icon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  color: var(--ds-info);
+}
+.ds-alert__icon svg { width: 100%; height: 100%; display: block; }
+
+.ds-alert__content { flex: 1 1 auto; min-width: 0; }
+.ds-alert__title { font-weight: 500; margin-bottom: var(--ds-space-1); }
+
+.ds-alert__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+  margin-top: var(--ds-space-2);
+}
+
+/* Borderless × dismiss button */
+.ds-alert__close {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin: -2px -4px 0 0;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--ds-ink-faint);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: var(--ds-radius-none);
+  transition: color var(--ds-transition);
+}
+.ds-alert__close:hover { color: var(--ds-ink); }
+.ds-alert__close:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: 2px; }
+
+/* ---- Status variants ----------------------------------------------------- */
+.ds-alert--info {
+  border-color: var(--ds-info);
+  border-left-color: var(--ds-info);
+  background: var(--ds-info-bg);
+}
+.ds-alert--info .ds-alert__icon { color: var(--ds-info); }
+
+.ds-alert--success {
+  border-color: var(--ds-success);
+  border-left-color: var(--ds-success);
+  background: var(--ds-success-bg);
+}
+.ds-alert--success .ds-alert__icon { color: var(--ds-success); }
+
+.ds-alert--warning {
+  border-color: var(--ds-warning);
+  border-left-color: var(--ds-warning);
+  background: var(--ds-warning-bg);
+}
+.ds-alert--warning .ds-alert__icon { color: var(--ds-warning); }
+
+.ds-alert--danger {
+  border-color: var(--ds-danger);
+  border-left-color: var(--ds-danger);
+  background: var(--ds-danger-bg);
+}
+.ds-alert--danger .ds-alert__icon { color: var(--ds-danger); }
+
+/* ---- App-level: full width, solid status background, white text ---------- */
+.ds-alert--app {
+  width: 100%;
+  border-color: transparent;
+  border-left-color: transparent;
+  background: var(--ds-info);
+  color: var(--ds-on-status);
+}
+.ds-alert--app .ds-alert__icon,
+.ds-alert--app .ds-alert__close { color: var(--ds-on-status); }
+.ds-alert--app .ds-alert__close:hover { color: var(--ds-on-status); opacity: .8; }
+
+.ds-alert--app.ds-alert--info    { background: var(--ds-info); }
+.ds-alert--app.ds-alert--success { background: var(--ds-success); }
+.ds-alert--app.ds-alert--warning { background: var(--ds-warning); }
+.ds-alert--app.ds-alert--danger  { background: var(--ds-danger); }

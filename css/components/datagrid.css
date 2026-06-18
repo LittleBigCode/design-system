@@ -1,0 +1,97 @@
+/* Data grid — .ds-datagrid (sortable, filterable, selectable, expandable,
+   paginated, lazy-loadable). Reuses .ds-skeleton for loading rows. */
+.ds-datagrid {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--ds-rule);
+  background: var(--ds-surface);
+}
+
+/* Toolbar */
+.ds-datagrid__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--ds-rule);
+}
+.ds-datagrid__title { font-family: var(--ds-font-title); font-weight: var(--ds-font-weight-title); font-size: var(--ds-text-lg); letter-spacing: -0.3px; }
+.ds-datagrid__spacer { flex: 1; }
+.ds-datagrid__cols { position: relative; }
+.ds-datagrid__cols-menu {
+  position: absolute; right: 0; top: calc(100% + 4px);
+  z-index: var(--ds-z-popover);
+  min-width: 180px;
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-ink);
+}
+.ds-datagrid__cols-item { display: flex; align-items: center; gap: 8px; padding: 7px 12px; font-size: 13px; cursor: pointer; }
+.ds-datagrid__cols-item:hover { background: var(--ds-bg-alt); }
+
+/* Table */
+.ds-datagrid__scroll { overflow: auto; }
+.ds-datagrid__table { width: 100%; border-collapse: collapse; }
+.ds-datagrid__table th {
+  font-size: var(--ds-text-2xs); font-weight: 400; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ds-ink-faint); text-align: left;
+  padding: 10px 12px; border-bottom: 1px solid var(--ds-ink);
+  white-space: nowrap; background: var(--ds-surface);
+  position: sticky; top: 0; z-index: 1;
+}
+.ds-datagrid__table td { padding: 8px 12px; border-bottom: 1px solid var(--ds-rule-soft); font-size: 13.5px; vertical-align: middle; }
+.ds-datagrid__th--num, .ds-datagrid__td--num { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* Sort */
+.ds-datagrid__sort {
+  background: none; border: none; cursor: pointer; font: inherit; color: inherit;
+  letter-spacing: inherit; text-transform: inherit;
+  display: inline-flex; align-items: center; gap: 6px; padding: 0;
+}
+.ds-datagrid__sort-ind { font-size: 9px; color: var(--ds-ink-faint); }
+.ds-datagrid__th.is-sorted { color: var(--ds-ink); }
+.ds-datagrid__th.is-sorted .ds-datagrid__sort-ind { color: var(--ds-accent); }
+.ds-datagrid__sort:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: 2px; }
+
+/* Filter row */
+.ds-datagrid__filters th { padding: 6px 12px; border-bottom: 1px solid var(--ds-rule); background: var(--ds-bg-alt); }
+.ds-datagrid__filter-input {
+  width: 100%; font-family: var(--ds-font-sans); font-size: 12px;
+  padding: 5px 8px; border: 1px solid var(--ds-rule);
+  border-radius: var(--ds-radius-none); background: var(--ds-surface); outline: none;
+}
+.ds-datagrid__filter-input:focus { outline: 2px solid var(--ds-focus-ring); outline-offset: -2px; }
+
+/* Rows */
+.ds-datagrid__row:hover { background: var(--ds-bg-alt); }
+.ds-datagrid__row.is-selected { background: var(--ds-accent-bg); }
+.ds-datagrid__select { width: 36px; text-align: center; }
+.ds-datagrid__expandcell { width: 32px; text-align: center; }
+.ds-datagrid__expand {
+  background: none; border: none; cursor: pointer; color: var(--ds-ink-faint);
+  padding: 2px 4px; font-size: 12px;
+}
+.ds-datagrid__chevron { display: inline-block; transition: transform var(--ds-transition); }
+.ds-datagrid__row.is-expanded .ds-datagrid__chevron { transform: rotate(90deg); }
+.ds-datagrid__detail > td { background: var(--ds-bg-alt); padding: 16px; }
+
+/* Loading / empty */
+.ds-datagrid__empty { padding: 48px 16px; text-align: center; color: var(--ds-ink-faint); }
+.ds-datagrid__loadbar { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px; color: var(--ds-ink-faint); font-size: 13px; }
+
+/* Footer */
+.ds-datagrid__footer {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px; border-top: 1px solid var(--ds-rule);
+  font-size: 13px; color: var(--ds-ink-soft);
+}
+.ds-datagrid__count { color: var(--ds-ink-faint); }
+.ds-datagrid__pager { margin-left: auto; display: flex; align-items: center; gap: 6px; }
+.ds-datagrid__pagebtn {
+  min-width: 30px; height: 30px; padding: 0 8px;
+  border: 1px solid var(--ds-rule); background: var(--ds-surface);
+  cursor: pointer; font: inherit; font-size: 13px;
+  border-radius: var(--ds-radius-none);
+}
+.ds-datagrid__pagebtn:hover:not(:disabled) { background: var(--ds-bg-alt); }
+.ds-datagrid__pagebtn:disabled { opacity: .45; cursor: not-allowed; }
+.ds-datagrid__pagebtn.is-active { background: var(--ds-ink); border-color: var(--ds-ink); color: var(--ds-on-accent); }

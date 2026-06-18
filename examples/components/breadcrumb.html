@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Breadcrumb · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/breadcrumb">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Breadcrumb</h1>
+        <p class="docs-lede">A compact path trail rendered as an ordered list. Links are soft ink, a faint <code>/</code> separates the items, and the current page — marked <code>aria-current="page"</code> — sits in full ink.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Trail</h2>
+        <p class="docs-note">Each step is a <code>ds-breadcrumb__item</code>; intermediate steps wrap a <code>ds-breadcrumb__link</code>. The separator is drawn with <code>::after</code> and hidden on the last item.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Three levels</span>
+            <button class="ds-button" data-copy-target="#c-trail">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <nav aria-label="Breadcrumb"><ol class="ds-breadcrumb"><li class="ds-breadcrumb__item"><a class="ds-breadcrumb__link" href="#">Home</a></li><li class="ds-breadcrumb__item"><a class="ds-breadcrumb__link" href="#">Pricing</a></li><li class="ds-breadcrumb__item" aria-current="page">Matrix</li></ol></nav>
+          </div>
+          <pre class="ds-example__code"><code id="c-trail">&lt;nav aria-label="Breadcrumb"&gt;
+  &lt;ol class="ds-breadcrumb"&gt;
+    &lt;li class="ds-breadcrumb__item"&gt;&lt;a class="ds-breadcrumb__link" href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li class="ds-breadcrumb__item"&gt;&lt;a class="ds-breadcrumb__link" href="#"&gt;Pricing&lt;/a&gt;&lt;/li&gt;
+    &lt;li class="ds-breadcrumb__item" aria-current="page"&gt;Matrix&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/nav&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Deep trail</h2>
+        <p class="docs-note">The list wraps when it runs out of room, so deeper trails stay legible on narrow screens.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Wrapping</span>
+            <button class="ds-button" data-copy-target="#c-deep">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <nav aria-label="Breadcrumb"><ol class="ds-breadcrumb"><li class="ds-breadcrumb__item"><a class="ds-breadcrumb__link" href="#">Home</a></li><li class="ds-breadcrumb__item"><a class="ds-breadcrumb__link" href="#">Catalog</a></li><li class="ds-breadcrumb__item"><a class="ds-breadcrumb__link" href="#">Profiles</a></li><li class="ds-breadcrumb__item"><a class="ds-breadcrumb__link" href="#">Senior</a></li><li class="ds-breadcrumb__item" aria-current="page">Daily rate</li></ol></nav>
+          </div>
+          <pre class="ds-example__code"><code id="c-deep">&lt;nav aria-label="Breadcrumb"&gt;
+  &lt;ol class="ds-breadcrumb"&gt;
+    &lt;li class="ds-breadcrumb__item"&gt;&lt;a class="ds-breadcrumb__link" href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li class="ds-breadcrumb__item"&gt;&lt;a class="ds-breadcrumb__link" href="#"&gt;Catalog&lt;/a&gt;&lt;/li&gt;
+    &lt;li class="ds-breadcrumb__item"&gt;&lt;a class="ds-breadcrumb__link" href="#"&gt;Profiles&lt;/a&gt;&lt;/li&gt;
+    &lt;li class="ds-breadcrumb__item"&gt;&lt;a class="ds-breadcrumb__link" href="#"&gt;Senior&lt;/a&gt;&lt;/li&gt;
+    &lt;li class="ds-breadcrumb__item" aria-current="page"&gt;Daily rate&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/nav&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <p class="docs-note">Pass an ordered <code>items</code> array of <code>{ label, href }</code>; the last item becomes the current page automatically.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;Breadcrumb /&gt;</span>
+            <button class="ds-button" data-copy-target="#c-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-react">import { Breadcrumb } from "@diametral/design-system/react";
+
+&lt;Breadcrumb
+  items={[
+    { label: "Home", href: "/" },
+    { label: "Pricing", href: "/pricing" },
+    { label: "Matrix" },
+  ]}
+/&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

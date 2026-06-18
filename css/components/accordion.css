@@ -1,0 +1,62 @@
+/* Accordion — .ds-accordion (stacked disclosure rows separated by 1px rules)
+   Each item is a full-width header button (title + chevron) over a collapsible
+   panel. The chevron rotates when the header is expanded ([aria-expanded="true"]).
+   Works with native <details>/<summary> too — see the showcase. */
+.ds-accordion {
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-ink);
+  border-radius: var(--ds-radius-none);
+}
+
+.ds-accordion__item { border-top: 1px solid var(--ds-rule-soft); }
+.ds-accordion__item:first-child { border-top: none; }
+
+.ds-accordion__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  width: 100%;
+  padding: 14px 18px;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-base);
+  font-weight: 500;
+  letter-spacing: -0.14px;
+  text-align: left;
+  color: var(--ds-ink);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--ds-transition);
+}
+.ds-accordion__header:hover { background: var(--ds-bg-alt); }
+.ds-accordion__header:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: -2px; }
+
+/* Chevron — a CSS caret that rotates from ▸ (collapsed) to ▾ (expanded). */
+.ds-accordion__chevron {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-right: 1px solid var(--ds-ink-soft);
+  border-bottom: 1px solid var(--ds-ink-soft);
+  transform: rotate(-45deg);
+  transition: transform var(--ds-transition);
+}
+.ds-accordion__header[aria-expanded="true"] .ds-accordion__chevron {
+  transform: rotate(45deg);
+}
+
+.ds-accordion__panel {
+  padding: 4px 18px 18px;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-sm);
+  line-height: var(--ds-leading-normal);
+  color: var(--ds-ink-soft);
+}
+.ds-accordion__panel[hidden] { display: none; }
+
+/* Native <details>/<summary> styling so the CSS demos without JS. */
+.ds-accordion__item > summary { list-style: none; }
+.ds-accordion__item > summary::-webkit-details-marker { display: none; }
+.ds-accordion__item > summary > .ds-accordion__chevron { transform: rotate(-45deg); }
+.ds-accordion__item[open] > summary > .ds-accordion__chevron { transform: rotate(45deg); }

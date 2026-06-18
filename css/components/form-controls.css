@@ -1,0 +1,315 @@
+/* ============================================================================
+   Form controls — .ds-checkbox, .ds-radio, .ds-select, .ds-textarea, .ds-range,
+   .ds-input-group, plus field validation (.ds-field--error / --success and
+   .ds-field__hint). Flat & sharp: 1px borders, no radius (radius is only ever
+   relaxed for the round radio dot). Companion to field.css — never edits it. */
+
+/* ----------------------------------------------------------------------------
+   Checkbox — .ds-checkbox  (label flex, native input hidden, custom box)
+   ---------------------------------------------------------------------------- */
+.ds-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  font-size: var(--ds-text-sm);
+  font-weight: 400;
+  color: var(--ds-ink-soft);
+}
+.ds-checkbox input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.ds-checkbox__box {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-rule);
+  border-radius: var(--ds-radius-none);
+  position: relative;
+  transition: background-color var(--ds-transition), border-color var(--ds-transition);
+}
+/* The check — a rotated bottom+right border, hidden until checked. */
+.ds-checkbox__box::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: 5px;
+  width: 4px;
+  height: 8px;
+  border: 2px solid var(--ds-on-accent);
+  border-top: 0;
+  border-left: 0;
+  transform: rotate(45deg);
+  opacity: 0;
+}
+.ds-checkbox input:checked + .ds-checkbox__box {
+  background: var(--ds-ink);
+  border-color: var(--ds-ink);
+}
+.ds-checkbox input:checked + .ds-checkbox__box::after { opacity: 1; }
+.ds-checkbox input:focus-visible + .ds-checkbox__box {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: 2px;
+}
+.ds-checkbox input:disabled + .ds-checkbox__box { opacity: .5; }
+.ds-checkbox:has(input:disabled) { cursor: not-allowed; color: var(--ds-ink-faint); }
+
+/* ----------------------------------------------------------------------------
+   Radio — .ds-radio  (like the checkbox, but a round dot)
+   ---------------------------------------------------------------------------- */
+.ds-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  font-size: var(--ds-text-sm);
+  font-weight: 400;
+  color: var(--ds-ink-soft);
+}
+.ds-radio input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.ds-radio__dot {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-rule);
+  border-radius: 50%; /* the only rounded control — a radio reads as a circle */
+  position: relative;
+  transition: border-color var(--ds-transition);
+}
+.ds-radio__dot::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: var(--ds-ink);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform var(--ds-transition);
+}
+.ds-radio input:checked + .ds-radio__dot { border-color: var(--ds-ink); }
+.ds-radio input:checked + .ds-radio__dot::after { transform: translate(-50%, -50%) scale(1); }
+.ds-radio input:focus-visible + .ds-radio__dot {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: 2px;
+}
+.ds-radio input:disabled + .ds-radio__dot { opacity: .5; }
+.ds-radio:has(input:disabled) { cursor: not-allowed; color: var(--ds-ink-faint); }
+
+/* A row of radios — .ds-radio-group. */
+.ds-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ----------------------------------------------------------------------------
+   Select — .ds-select  (wraps a native <select> to add a custom chevron)
+   Reuses the .ds-input look: 1px border, no radius, padding. The chevron is a
+   background SVG so the wrapper has no extra markup; .ds-select__chevron is an
+   optional explicit element with the same glyph.
+   ---------------------------------------------------------------------------- */
+.ds-select {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+}
+.ds-select select {
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-base);
+  font-weight: 400;
+  color: var(--ds-ink);
+  font-variant-numeric: tabular-nums;
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-rule);
+  border-radius: var(--ds-radius-none);
+  padding: 10px 36px 10px 12px;
+  min-width: 200px;
+  cursor: pointer;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+/* Custom chevron — a masked glyph painted with a token (no hard-coded color:
+   the SVG carries geometry only, the color comes from --ds-ink-faint). */
+.ds-select::after {
+  content: "";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 8px;
+  pointer-events: none;
+  background-color: var(--ds-ink-faint);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none' stroke='black' stroke-width='1.5'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5'/%3E%3C/svg%3E") no-repeat center / contain;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none' stroke='black' stroke-width='1.5'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+.ds-select select:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: -2px;
+}
+.ds-select select:disabled { opacity: .55; cursor: not-allowed; }
+/* Optional explicit chevron element (purely decorative; the select handles it). */
+.ds-select__chevron {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 8px;
+  pointer-events: none;
+  color: var(--ds-ink-faint);
+}
+/* If an explicit chevron element is provided, suppress the default ::after. */
+.ds-select:has(.ds-select__chevron)::after { content: none; }
+.ds-select--block { display: flex; }
+.ds-select--block select { width: 100%; min-width: 0; }
+
+/* ----------------------------------------------------------------------------
+   Textarea — .ds-textarea  (same border/padding as .ds-input)
+   ---------------------------------------------------------------------------- */
+.ds-textarea {
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-base);
+  font-weight: 400;
+  color: var(--ds-ink);
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-rule);
+  border-radius: var(--ds-radius-none);
+  padding: 10px 12px;
+  width: 100%;
+  min-height: 96px;
+  resize: vertical;
+  outline: none;
+}
+.ds-textarea:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: -2px;
+}
+.ds-textarea:disabled { opacity: .55; cursor: not-allowed; }
+
+/* ----------------------------------------------------------------------------
+   Range — .ds-range  (flat track, square thumb)
+   ---------------------------------------------------------------------------- */
+.ds-range {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 14px; /* room for the thumb */
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+}
+/* Track */
+.ds-range::-webkit-slider-runnable-track {
+  height: 4px;
+  background: var(--ds-rule);
+  border: 0;
+  border-radius: var(--ds-radius-none);
+}
+.ds-range::-moz-range-track {
+  height: 4px;
+  background: var(--ds-rule);
+  border: 0;
+  border-radius: var(--ds-radius-none);
+}
+/* Thumb — square, ink-filled, no radius. -5px centers 14px thumb on 4px track. */
+.ds-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--ds-ink);
+  border: 0;
+  border-radius: var(--ds-radius-none);
+  margin-top: -5px;
+}
+.ds-range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--ds-ink);
+  border: 0;
+  border-radius: var(--ds-radius-none);
+}
+.ds-range:focus-visible::-webkit-slider-thumb {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: 2px;
+}
+.ds-range:focus-visible::-moz-range-thumb {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: 2px;
+}
+.ds-range:disabled { opacity: .55; cursor: not-allowed; }
+
+/* ----------------------------------------------------------------------------
+   Input group — .ds-input-group  (addons + a control sharing borders)
+   Children sit flush (no gap); collapse the double border between them so the
+   group reads as one bordered unit.
+   ---------------------------------------------------------------------------- */
+.ds-input-group {
+  display: inline-flex;
+  align-items: stretch;
+}
+.ds-input-group__addon {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 12px;
+  font-size: var(--ds-text-sm);
+  color: var(--ds-ink-soft);
+  background: var(--ds-bg-alt);
+  border: 1px solid var(--ds-rule);
+  border-radius: var(--ds-radius-none);
+  white-space: nowrap;
+}
+/* Collapse shared borders so neighbours don't double up. */
+.ds-input-group > * + * { margin-left: -1px; }
+/* The control inside fills the remaining space and keeps the flat look. */
+.ds-input-group > .ds-input,
+.ds-input-group > input,
+.ds-input-group > select {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+/* Bring the focused control's border above its neighbours. */
+.ds-input-group > :focus-within,
+.ds-input-group > :focus { position: relative; z-index: 1; }
+
+/* ----------------------------------------------------------------------------
+   Validation — .ds-field--error / --success (color the inner control) and
+   .ds-field__hint helper text. Targets controls by descent so it works with the
+   field.css inputs as well as the controls above.
+   ---------------------------------------------------------------------------- */
+.ds-field--error :is(.ds-input, .ds-textarea, .ds-checkbox__box, .ds-radio__dot, input, select, textarea),
+.ds-field--error .ds-select select,
+.ds-field--error .ds-input-group__addon {
+  border-color: var(--ds-danger);
+}
+.ds-field--success :is(.ds-input, .ds-textarea, .ds-checkbox__box, .ds-radio__dot, input, select, textarea),
+.ds-field--success .ds-select select,
+.ds-field--success .ds-input-group__addon {
+  border-color: var(--ds-success);
+}
+
+.ds-field__hint {
+  font-size: var(--ds-text-xs);
+  color: var(--ds-ink-faint);
+  font-weight: 400;
+}
+.ds-field__hint--error { color: var(--ds-danger); }
+.ds-field__hint--success { color: var(--ds-success); }

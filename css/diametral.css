@@ -32,3 +32,28 @@
 @import url("./components/table.css");
 @import url("./components/modal.css");
 @import url("./components/section-heading.css");
+
+/* Extended components */
+@import url("./components/button-extras.css");
+@import url("./components/card.css");
+@import url("./components/description-list.css");
+@import url("./components/empty-state.css");
+@import url("./components/skeleton.css");
+@import url("./components/alert.css");
+@import url("./components/spinner.css");
+@import url("./components/progress.css");
+@import url("./components/toast.css");
+@import url("./components/form-controls.css");
+@import url("./components/breadcrumb.css");
+@import url("./components/pagination.css");
+@import url("./components/vertical-nav.css");
+@import url("./components/stepper.css");
+@import url("./components/tooltip.css");
+@import url("./components/menu.css");
+@import url("./components/accordion.css");
+@import url("./components/popover.css");
+@import url("./components/avatar.css");
+@import url("./components/tag.css");
+@import url("./components/timeline.css");
+@import url("./components/tree.css");
+@import url("./components/datagrid.css");

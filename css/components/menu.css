@@ -1,0 +1,66 @@
+/* Dropdown menu — .ds-menu (bordered surface list of actions)
+   A flat popover list: bordered surface, no radius, no shadow. Items are full-width
+   buttons/links that shift to bg-alt on hover; a danger modifier, a 1px divider, and
+   an uppercase header round it out. Position the .ds-menu yourself (absolute/portal). */
+/* Dropdown wrapper — anchors the menu to its trigger. */
+.ds-dropdown { position: relative; display: inline-flex; }
+
+.ds-menu {
+  min-width: 180px;
+  padding: 4px 0;
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-ink);
+  border-radius: var(--ds-radius-none);
+  z-index: var(--ds-z-popover);
+  font-family: var(--ds-font-sans);
+}
+
+.ds-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 14px;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-sm);
+  font-weight: 400;
+  letter-spacing: -0.1px;
+  text-align: left;
+  text-decoration: none;
+  color: var(--ds-ink);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--ds-transition), color var(--ds-transition);
+}
+.ds-menu__item:hover { background: var(--ds-bg-alt); }
+.ds-menu__item:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: -2px; }
+
+.ds-menu__item--danger { color: var(--ds-danger); }
+.ds-menu__item--danger:hover { background: var(--ds-danger-bg); }
+
+.ds-menu__item:disabled,
+.ds-menu__item[disabled],
+.ds-menu__item[aria-disabled="true"] {
+  opacity: .45;
+  cursor: not-allowed;
+}
+.ds-menu__item:disabled:hover,
+.ds-menu__item[disabled]:hover,
+.ds-menu__item[aria-disabled="true"]:hover { background: none; }
+
+.ds-menu__divider {
+  height: 1px;
+  margin: 4px 0;
+  background: var(--ds-rule-soft);
+  border: none;
+}
+
+.ds-menu__header {
+  padding: 8px 14px 4px;
+  font-size: var(--ds-text-2xs);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ds-ink-faint);
+}

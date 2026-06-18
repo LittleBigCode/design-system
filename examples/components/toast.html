@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toast · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/toast">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Toast</h1>
+        <p class="docs-lede">A transient, floating notification: a bordered surface card with a 3px status bar on the left — like an alert, but it sits on its own surface and stacks in a fixed top-right viewport. In React, a <code>ToastProvider</code> + <code>useToast()</code> hook handle queueing and auto-dismiss.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Card</h2>
+        <p class="docs-note">A single toast on its own (the fixed <code>.ds-toasts</code> viewport is omitted here so it renders in flow). A title, a softer message line, and the borderless × dismiss.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">.ds-toast</span>
+            <button class="ds-button" data-copy-target="#c-card">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-toast ds-toast--success" role="status" id="demoToast">
+              <div class="ds-toast__content">
+                <div class="ds-toast__title">Saved</div>
+                <div class="ds-toast__message">Your pricing matrix has been published.</div>
+              </div>
+              <button class="ds-toast__close" type="button" aria-label="Dismiss" onclick="document.getElementById('demoToast').remove()">×</button>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-card">&lt;div class="ds-toast ds-toast--success" role="status"&gt;
+  &lt;div class="ds-toast__content"&gt;
+    &lt;div class="ds-toast__title"&gt;Saved&lt;/div&gt;
+    &lt;div class="ds-toast__message"&gt;Your pricing matrix has been published.&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;button class="ds-toast__close" type="button" aria-label="Dismiss"&gt;×&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Stacked variants</h2>
+        <p class="docs-note">The <code>.ds-toasts</code> container stacks cards with a gap; status modifiers recolor each left bar. Shown here in flow (its <code>position: fixed</code> is overridden for the demo).</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">.ds-toasts</span>
+            <button class="ds-button" data-copy-target="#c-stack">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-toasts" style="position:static;width:100%;max-width:none">
+              <div class="ds-toast ds-toast--info" role="status">
+                <div class="ds-toast__content"><div class="ds-toast__title">Synced</div><div class="ds-toast__message">Rates refreshed from the server.</div></div>
+                <button class="ds-toast__close" type="button" aria-label="Dismiss">×</button>
+              </div>
+              <div class="ds-toast ds-toast--warning" role="alert">
+                <div class="ds-toast__content"><div class="ds-toast__title">Heads up</div><div class="ds-toast__message">3 rates are missing a currency.</div></div>
+                <button class="ds-toast__close" type="button" aria-label="Dismiss">×</button>
+              </div>
+              <div class="ds-toast ds-toast--danger" role="alert">
+                <div class="ds-toast__content"><div class="ds-toast__title">Export failed</div><div class="ds-toast__message">The server returned a 500.</div></div>
+                <button class="ds-toast__close" type="button" aria-label="Dismiss">×</button>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-stack">&lt;div class="ds-toasts"&gt;
+  &lt;div class="ds-toast ds-toast--info" role="status"&gt;…&lt;/div&gt;
+  &lt;div class="ds-toast ds-toast--warning" role="alert"&gt;…&lt;/div&gt;
+  &lt;div class="ds-toast ds-toast--danger" role="alert"&gt;…&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <p class="docs-note">Wrap the app in a <code>ToastProvider</code> (it portals a fixed viewport to <code>&lt;body&gt;</code>), then call <code>show()</code> from the <code>useToast()</code> hook. Toasts auto-dismiss after <code>duration</code> (default 4000ms).</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">ToastProvider · useToast</span>
+            <button class="ds-button" data-copy-target="#c-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-react">import { ToastProvider, useToast } from "@diametral/design-system/react";
+
+function App() {
+  return (
+    &lt;ToastProvider&gt;
+      &lt;Toolbar /&gt;
+    &lt;/ToastProvider&gt;
+  );
+}
+
+function Toolbar() {
+  const { show } = useToast();
+  return (
+    &lt;button
+      className="ds-button"
+      onClick={() =&gt; show({
+        type: "success",
+        title: "Saved",
+        message: "Your pricing matrix has been published.",
+        duration: 4000,
+      })}
+    &gt;
+      Publish
+    &lt;/button&gt;
+  );
+}</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

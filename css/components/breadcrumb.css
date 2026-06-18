@@ -1,0 +1,43 @@
+/* Breadcrumb — .ds-breadcrumb (compact path trail; "/" separators)
+   An ordered list of links ending in the current page. Links are soft ink,
+   the current page is full ink, and a faint "/" separates the items. */
+.ds-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-sm);
+  line-height: var(--ds-leading-tight);
+}
+
+.ds-breadcrumb__item {
+  display: inline-flex;
+  align-items: center;
+  color: var(--ds-ink-soft);
+}
+.ds-breadcrumb__item::after {
+  content: "/";
+  margin: 0 var(--ds-space-2);
+  color: var(--ds-ink-faint);
+}
+.ds-breadcrumb__item:last-child::after { content: none; }
+
+/* Links — soft ink, ink on hover, sharp focus ring */
+.ds-breadcrumb__link {
+  color: var(--ds-ink-soft);
+  text-decoration: none;
+  border-radius: var(--ds-radius-none);
+  transition: color var(--ds-transition);
+}
+.ds-breadcrumb__link:hover { color: var(--ds-ink); }
+.ds-breadcrumb__link:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: 2px; }
+
+/* Current page — full ink, not a link */
+.ds-breadcrumb__item[aria-current="page"] {
+  color: var(--ds-ink);
+  font-weight: 500;
+}

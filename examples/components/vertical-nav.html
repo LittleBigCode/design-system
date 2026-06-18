@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vertical nav · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/vertical-nav">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Vertical nav</h1>
+        <p class="docs-lede">A stacked sidebar navigation column. Items hover to an alt background; the active item carries <code>is-active</code> for full-ink text and an accent left bar. Group links under an uppercase <code>ds-vnav__label</code>.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Grouped</h2>
+        <p class="docs-note">Wrap related links in a <code>ds-vnav__group</code> with a <code>ds-vnav__label</code>. Mark the current link with <code>is-active</code>.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">With labels</span>
+            <button class="ds-button" data-copy-target="#c-grouped">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <nav class="ds-vnav" aria-label="Sidebar" style="max-width:240px">
+              <div class="ds-vnav__group">
+                <span class="ds-vnav__label">Pricing</span>
+                <a class="ds-vnav__item is-active" href="#" aria-current="page">Matrix</a>
+                <a class="ds-vnav__item" href="#">Profiles</a>
+                <a class="ds-vnav__item" href="#">Rate cards</a>
+              </div>
+              <div class="ds-vnav__group">
+                <span class="ds-vnav__label">Settings</span>
+                <a class="ds-vnav__item" href="#">Entities</a>
+                <a class="ds-vnav__item" href="#">Members</a>
+              </div>
+            </nav>
+          </div>
+          <pre class="ds-example__code"><code id="c-grouped">&lt;nav class="ds-vnav" aria-label="Sidebar"&gt;
+  &lt;div class="ds-vnav__group"&gt;
+    &lt;span class="ds-vnav__label"&gt;Pricing&lt;/span&gt;
+    &lt;a class="ds-vnav__item is-active" href="#" aria-current="page"&gt;Matrix&lt;/a&gt;
+    &lt;a class="ds-vnav__item" href="#"&gt;Profiles&lt;/a&gt;
+    &lt;a class="ds-vnav__item" href="#"&gt;Rate cards&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div class="ds-vnav__group"&gt;
+    &lt;span class="ds-vnav__label"&gt;Settings&lt;/span&gt;
+    &lt;a class="ds-vnav__item" href="#"&gt;Entities&lt;/a&gt;
+    &lt;a class="ds-vnav__item" href="#"&gt;Members&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Collapsible</h2>
+        <p class="docs-note">A <code>ds-vnav__item--collapsible</code> button toggles <code>aria-expanded</code> to reveal an indented <code>ds-vnav__children</code> list. Click the parent to expand it.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Nested · live</span>
+            <button class="ds-button" data-copy-target="#c-collapsible">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <nav class="ds-vnav" aria-label="Sidebar" style="max-width:240px">
+              <a class="ds-vnav__item" href="#">Overview</a>
+              <button type="button" class="ds-vnav__item ds-vnav__item--collapsible" aria-expanded="true" data-vnav-toggle>
+                <span>Reports</span>
+                <span class="ds-vnav__caret" aria-hidden="true">›</span>
+              </button>
+              <div class="ds-vnav__children">
+                <a class="ds-vnav__item is-active" href="#" aria-current="page">Margins</a>
+                <a class="ds-vnav__item" href="#">Utilisation</a>
+                <a class="ds-vnav__item" href="#">Export</a>
+              </div>
+              <a class="ds-vnav__item" href="#">Audit log</a>
+            </nav>
+          </div>
+          <pre class="ds-example__code"><code id="c-collapsible">&lt;nav class="ds-vnav" aria-label="Sidebar"&gt;
+  &lt;a class="ds-vnav__item" href="#"&gt;Overview&lt;/a&gt;
+  &lt;button class="ds-vnav__item ds-vnav__item--collapsible" aria-expanded="true"&gt;
+    &lt;span&gt;Reports&lt;/span&gt;
+    &lt;span class="ds-vnav__caret" aria-hidden="true"&gt;›&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;div class="ds-vnav__children"&gt;
+    &lt;a class="ds-vnav__item is-active" href="#" aria-current="page"&gt;Margins&lt;/a&gt;
+    &lt;a class="ds-vnav__item" href="#"&gt;Utilisation&lt;/a&gt;
+    &lt;a class="ds-vnav__item" href="#"&gt;Export&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;a class="ds-vnav__item" href="#"&gt;Audit log&lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <p class="docs-note">Pass an <code>items</code> tree; an item with a <code>children</code> array renders as a collapsible group, open by default when it holds the active link.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;VerticalNav /&gt;</span>
+            <button class="ds-button" data-copy-target="#c-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-react">import { VerticalNav } from "@diametral/design-system/react";
+
+&lt;VerticalNav
+  items={[
+    { label: "Overview", href: "/" },
+    {
+      label: "Reports",
+      children: [
+        { label: "Margins", href: "/reports/margins", active: true },
+        { label: "Utilisation", href: "/reports/utilisation" },
+      ],
+    },
+    { label: "Audit log", href: "/audit" },
+  ]}
+/&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Toggle aria-expanded on collapsible vnav triggers for the live demo.
+    document.querySelectorAll("[data-vnav-toggle]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var open = btn.getAttribute("aria-expanded") === "true";
+        btn.setAttribute("aria-expanded", String(!open));
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avatar · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/avatar">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Avatar</h1>
+        <p class="docs-lede">A flat, sharp square showing uppercase initials or a cover-fit image clipped to a 1px bordered tile. Three sizes, plus an overlapping group with a "+N" overflow count.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Sizes</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Small · default · large</span>
+            <button class="ds-button" data-copy-target="#c-sizes">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <span class="ds-avatar ds-avatar--sm">VD</span>
+            <span class="ds-avatar">VD</span>
+            <span class="ds-avatar ds-avatar--lg">VD</span>
+          </div>
+          <pre class="ds-example__code"><code id="c-sizes">&lt;span class="ds-avatar ds-avatar--sm"&gt;VD&lt;/span&gt;
+&lt;span class="ds-avatar"&gt;VD&lt;/span&gt;
+&lt;span class="ds-avatar ds-avatar--lg"&gt;VD&lt;/span&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Image</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Cover-fit image</span>
+            <button class="ds-button" data-copy-target="#c-image">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <span class="ds-avatar ds-avatar--sm"><img class="ds-avatar__img" src="https://i.pravatar.cc/96?img=12" alt="Maria Vance"></span>
+            <span class="ds-avatar"><img class="ds-avatar__img" src="https://i.pravatar.cc/96?img=32" alt="Leo Marsh"></span>
+            <span class="ds-avatar ds-avatar--lg"><img class="ds-avatar__img" src="https://i.pravatar.cc/96?img=5" alt="Ada Okafor"></span>
+          </div>
+          <pre class="ds-example__code"><code id="c-image">&lt;span class="ds-avatar"&gt;
+  &lt;img class="ds-avatar__img" src="https://i.pravatar.cc/96?img=32" alt="Leo Marsh"&gt;
+&lt;/span&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Group</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Overlap with +N overflow</span>
+            <button class="ds-button" data-copy-target="#c-group">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <div class="ds-avatar-group">
+              <span class="ds-avatar"><img class="ds-avatar__img" src="https://i.pravatar.cc/96?img=12" alt="Maria Vance"></span>
+              <span class="ds-avatar"><img class="ds-avatar__img" src="https://i.pravatar.cc/96?img=32" alt="Leo Marsh"></span>
+              <span class="ds-avatar">JL</span>
+              <span class="ds-avatar ds-avatar--count" aria-label="3 more">+3</span>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-group">&lt;div class="ds-avatar-group"&gt;
+  &lt;span class="ds-avatar"&gt;&lt;img class="ds-avatar__img" src="…?img=12" alt="Maria Vance"&gt;&lt;/span&gt;
+  &lt;span class="ds-avatar"&gt;&lt;img class="ds-avatar__img" src="…?img=32" alt="Leo Marsh"&gt;&lt;/span&gt;
+  &lt;span class="ds-avatar"&gt;JL&lt;/span&gt;
+  &lt;span class="ds-avatar ds-avatar--count" aria-label="3 more"&gt;+3&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Avatar · AvatarGroup</span>
+            <button class="ds-button" data-copy-target="#c-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-react">import { Avatar, AvatarGroup } from "@diametral/design-system/react";
+
+&lt;Avatar initials="VD" size="lg" /&gt;
+&lt;Avatar src="https://i.pravatar.cc/96?img=32" alt="Leo Marsh" /&gt;
+
+&lt;AvatarGroup max={3}&gt;
+  &lt;Avatar src="https://i.pravatar.cc/96?img=12" alt="Maria Vance" /&gt;
+  &lt;Avatar src="https://i.pravatar.cc/96?img=32" alt="Leo Marsh" /&gt;
+  &lt;Avatar initials="JL" /&gt;
+  &lt;Avatar initials="AO" /&gt;
+  &lt;Avatar initials="RK" /&gt;
+  &lt;Avatar initials="TM" /&gt;
+&lt;/AvatarGroup&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

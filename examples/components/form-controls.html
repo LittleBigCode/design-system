@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form controls · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/form-controls">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Form controls</h1>
+        <p class="docs-lede">The rest of the form kit — checkboxes, radios, a custom-chevron select, textarea, range slider, input groups and field validation. Each is flat and sharp with a 1px border and no radius (only the radio dot is round), built from real form elements so they stay keyboard-accessible and form-bound.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Checkbox &amp; radio</h2>
+        <p class="docs-note">Both hide the native control and draw a custom indicator: a rotated-border check on <code>ds-checkbox</code>, an inner dot on <code>ds-radio</code>. The label text is part of the clickable area. Add <code>checked</code> on the input for the on state and <code>disabled</code> to lock it.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Checkbox · states</span>
+            <button class="ds-button" data-copy-target="#c-checkbox">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <label class="ds-checkbox"><input type="checkbox"><span class="ds-checkbox__box"></span><span>Apply margin floor</span></label>
+            <label class="ds-checkbox"><input type="checkbox" checked><span class="ds-checkbox__box"></span><span>Round to nearest €10</span></label>
+            <label class="ds-checkbox"><input type="checkbox" checked disabled><span class="ds-checkbox__box"></span><span>Locked policy</span></label>
+          </div>
+          <pre class="ds-example__code"><code id="c-checkbox">&lt;label class="ds-checkbox"&gt;
+  &lt;input type="checkbox"&gt;
+  &lt;span class="ds-checkbox__box"&gt;&lt;/span&gt;
+  &lt;span&gt;Apply margin floor&lt;/span&gt;
+&lt;/label&gt;
+&lt;label class="ds-checkbox"&gt;
+  &lt;input type="checkbox" checked&gt;
+  &lt;span class="ds-checkbox__box"&gt;&lt;/span&gt;
+  &lt;span&gt;Round to nearest €10&lt;/span&gt;
+&lt;/label&gt;
+&lt;label class="ds-checkbox"&gt;
+  &lt;input type="checkbox" checked disabled&gt;
+  &lt;span class="ds-checkbox__box"&gt;&lt;/span&gt;
+  &lt;span&gt;Locked policy&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+        </section>
+
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Radio · group</span>
+            <button class="ds-button" data-copy-target="#c-radio">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-radio-group">
+              <label class="ds-radio"><input type="radio" name="rounding" checked><span class="ds-radio__dot"></span><span>No rounding</span></label>
+              <label class="ds-radio"><input type="radio" name="rounding"><span class="ds-radio__dot"></span><span>Nearest €1</span></label>
+              <label class="ds-radio"><input type="radio" name="rounding" disabled><span class="ds-radio__dot"></span><span>Nearest €10 (locked)</span></label>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-radio">&lt;div class="ds-radio-group"&gt;
+  &lt;label class="ds-radio"&gt;
+    &lt;input type="radio" name="rounding" checked&gt;
+    &lt;span class="ds-radio__dot"&gt;&lt;/span&gt;
+    &lt;span&gt;No rounding&lt;/span&gt;
+  &lt;/label&gt;
+  &lt;label class="ds-radio"&gt;
+    &lt;input type="radio" name="rounding"&gt;
+    &lt;span class="ds-radio__dot"&gt;&lt;/span&gt;
+    &lt;span&gt;Nearest €1&lt;/span&gt;
+  &lt;/label&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">React</span>
+            <button class="ds-button" data-copy-target="#c-checkbox-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-checkbox-react">import { Checkbox } from "@diametral/design-system/react/components/Checkbox.js";
+import { Radio, RadioGroup } from "@diametral/design-system/react/components/Radio.js";
+
+&lt;Checkbox defaultChecked onChange={(on) =&gt; console.log(on)}&gt;
+  Round to nearest €10
+&lt;/Checkbox&gt;
+
+&lt;RadioGroup
+  name="rounding"
+  defaultValue="none"
+  options={[
+    { value: "none", label: "No rounding" },
+    { value: "one", label: "Nearest €1" },
+    { value: "ten", label: "Nearest €10", disabled: true },
+  ]}
+  onChange={(v) =&gt; console.log(v)}
+/&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Select</h2>
+        <p class="docs-note">A native <code>&lt;select&gt;</code> wrapped in <code>ds-select</code> picks up the flat <code>ds-input</code> look and a custom chevron drawn as a background SVG. Add <code>ds-select--block</code> for a full-width control.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Default · full width</span>
+            <button class="ds-button" data-copy-target="#c-select">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-select">
+              <select>
+                <option>LBC_FR</option>
+                <option>LBC_US</option>
+                <option>LBC_UK</option>
+              </select>
+            </div>
+            <div class="ds-select ds-select--block">
+              <select>
+                <option>Standard rate card</option>
+                <option>Strategic accounts</option>
+                <option>Pilot pricing</option>
+              </select>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-select">&lt;div class="ds-select"&gt;
+  &lt;select&gt;
+    &lt;option&gt;LBC_FR&lt;/option&gt;
+    &lt;option&gt;LBC_US&lt;/option&gt;
+    &lt;option&gt;LBC_UK&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/div&gt;
+
+&lt;div class="ds-select ds-select--block"&gt;
+  &lt;select&gt;
+    &lt;option&gt;Standard rate card&lt;/option&gt;
+    &lt;option&gt;Strategic accounts&lt;/option&gt;
+    &lt;option&gt;Pilot pricing&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">React</span>
+            <button class="ds-button" data-copy-target="#c-select-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-select-react">import { Select } from "@diametral/design-system/react/components/Select.js";
+
+&lt;Select
+  block
+  defaultValue="fr"
+  options={[
+    { value: "fr", label: "LBC_FR" },
+    { value: "us", label: "LBC_US" },
+    { value: "uk", label: "LBC_UK" },
+  ]}
+  onChange={(e) =&gt; console.log(e.target.value)}
+/&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Textarea</h2>
+        <p class="docs-note">A <code>ds-textarea</code> shares the input border and padding, sets a comfortable min-height and resizes vertically only.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Textarea</span>
+            <button class="ds-button" data-copy-target="#c-textarea">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-field">
+              <label>Pricing note</label>
+              <textarea class="ds-textarea" placeholder="Explain the override…">Holds the floor margin for strategic accounts in EMEA.</textarea>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-textarea">&lt;div class="ds-field"&gt;
+  &lt;label&gt;Pricing note&lt;/label&gt;
+  &lt;textarea class="ds-textarea" placeholder="Explain the override…"&gt;&lt;/textarea&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">React</span>
+            <button class="ds-button" data-copy-target="#c-textarea-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-textarea-react">import { Textarea } from "@diametral/design-system/react/components/Textarea.js";
+
+&lt;Textarea rows={4} placeholder="Explain the override…" /&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Range</h2>
+        <p class="docs-note">A styled <code>input[type=range]</code> with a 4px flat track and a 14px square ink thumb, in WebKit and Firefox.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Range slider</span>
+            <button class="ds-button" data-copy-target="#c-range">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-field">
+              <label>Discount ceiling</label>
+              <input class="ds-range" type="range" min="0" max="100" value="35">
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-range">&lt;div class="ds-field"&gt;
+  &lt;label&gt;Discount ceiling&lt;/label&gt;
+  &lt;input class="ds-range" type="range" min="0" max="100" value="35"&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">React</span>
+            <button class="ds-button" data-copy-target="#c-range-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-range-react">import { Range } from "@diametral/design-system/react/components/Range.js";
+
+&lt;Range min={0} max={100} defaultValue={35}
+  onChange={(v) =&gt; console.log(v)} /&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Input group</h2>
+        <p class="docs-note">An <code>ds-input-group</code> glues addons to a control so they share borders and read as one unit. Put an <code>ds-input-group__addon</code> before and/or after the input.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Prefix · suffix</span>
+            <button class="ds-button" data-copy-target="#c-group">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-input-group">
+              <span class="ds-input-group__addon">€</span>
+              <input class="ds-input ds-input--number" type="number" value="900">
+            </div>
+            <div class="ds-input-group">
+              <input class="ds-input" type="text" value="rate-card">
+              <span class="ds-input-group__addon">.csv</span>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-group">&lt;div class="ds-input-group"&gt;
+  &lt;span class="ds-input-group__addon"&gt;€&lt;/span&gt;
+  &lt;input class="ds-input ds-input--number" type="number" value="900"&gt;
+&lt;/div&gt;
+
+&lt;div class="ds-input-group"&gt;
+  &lt;input class="ds-input" type="text" value="rate-card"&gt;
+  &lt;span class="ds-input-group__addon"&gt;.csv&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">React</span>
+            <button class="ds-button" data-copy-target="#c-group-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-group-react">import { InputGroup } from "@diametral/design-system/react/components/InputGroup.js";
+import { Input } from "@diametral/design-system";
+
+&lt;InputGroup before="€"&gt;
+  &lt;Input number defaultValue={900} /&gt;
+&lt;/InputGroup&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Validation</h2>
+        <p class="docs-note">Add <code>ds-field--error</code> or <code>ds-field--success</code> to a field to color its control's border, and a <code>ds-field__hint</code> below it for helper text — use <code>ds-field__hint--error</code> / <code>ds-field__hint--success</code> for the matching tone.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Error · success · neutral hint</span>
+            <button class="ds-button" data-copy-target="#c-validation">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-field ds-field--error">
+              <label>Day rate</label>
+              <input class="ds-input ds-input--number" type="number" value="0">
+              <span class="ds-field__hint ds-field__hint--error">Day rate must be greater than zero.</span>
+            </div>
+            <div class="ds-field ds-field--success">
+              <label>Margin</label>
+              <input class="ds-input ds-input--number" type="number" value="32">
+              <span class="ds-field__hint ds-field__hint--success">Above the 30% floor.</span>
+            </div>
+            <div class="ds-field">
+              <label>Discount ceiling</label>
+              <input class="ds-input ds-input--number" type="number" value="15">
+              <span class="ds-field__hint">Maximum discount a sales rep can apply unaided.</span>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-validation">&lt;div class="ds-field ds-field--error"&gt;
+  &lt;label&gt;Day rate&lt;/label&gt;
+  &lt;input class="ds-input ds-input--number" type="number" value="0"&gt;
+  &lt;span class="ds-field__hint ds-field__hint--error"&gt;Day rate must be greater than zero.&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;div class="ds-field ds-field--success"&gt;
+  &lt;label&gt;Margin&lt;/label&gt;
+  &lt;input class="ds-input ds-input--number" type="number" value="32"&gt;
+  &lt;span class="ds-field__hint ds-field__hint--success"&gt;Above the 30% floor.&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;div class="ds-field"&gt;
+  &lt;label&gt;Discount ceiling&lt;/label&gt;
+  &lt;input class="ds-input ds-input--number" type="number" value="15"&gt;
+  &lt;span class="ds-field__hint"&gt;Maximum discount a sales rep can apply unaided.&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">React</span>
+            <button class="ds-button" data-copy-target="#c-validation-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-validation-react">import { Field, Input } from "@diametral/design-system";
+import { FieldHint } from "@diametral/design-system/react/components/FieldHint.js";
+
+&lt;div class="ds-field ds-field--error"&gt;
+  &lt;Field label="Day rate"&gt;
+    &lt;Input number defaultValue={0} /&gt;
+  &lt;/Field&gt;
+  &lt;FieldHint status="error"&gt;Day rate must be greater than zero.&lt;/FieldHint&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -114,8 +114,10 @@
   --ds-maxw-modal:   860px;
 
   /* Elevation (z-index) */
+  --ds-z-popover: 60;
   --ds-z-header:  40;
   --ds-z-overlay: 80;
+  --ds-z-toast:   90;
 
   /* Motion */
   --ds-transition:      .2s ease;

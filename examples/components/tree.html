@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tree view · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/tree">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Tree view</h1>
+        <p class="docs-lede">A nested disclosure list for hierarchies — folders, taxonomies, navigation. Flat and sharp: a chevron that rotates on expand, a faint guide rule for nesting, and an accent left border for the selected row. No radius, no shadow.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Expanded</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Fully expanded · one selected</span>
+            <button class="ds-button" data-copy-target="#c-tree-static">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <ul class="ds-tree" role="tree">
+              <li class="ds-tree__item" role="treeitem" aria-expanded="true">
+                <div class="ds-tree__row">
+                  <button class="ds-tree__toggle" type="button" aria-expanded="true" aria-label="Toggle">&rsaquo;</button>
+                  <span class="ds-tree__label">Pricing</span>
+                </div>
+                <ul class="ds-tree__children" role="group">
+                  <li class="ds-tree__item" role="treeitem" aria-expanded="true">
+                    <div class="ds-tree__row">
+                      <button class="ds-tree__toggle" type="button" aria-expanded="true" aria-label="Toggle">&rsaquo;</button>
+                      <span class="ds-tree__label">Matrices</span>
+                    </div>
+                    <ul class="ds-tree__children" role="group">
+                      <li class="ds-tree__item" role="treeitem" aria-selected="true">
+                        <div class="ds-tree__row">
+                          <span class="ds-tree__toggle ds-tree__toggle--leaf" aria-hidden="true"></span>
+                          <span class="ds-tree__label is-selected">Standard</span>
+                        </div>
+                      </li>
+                      <li class="ds-tree__item" role="treeitem">
+                        <div class="ds-tree__row">
+                          <span class="ds-tree__toggle ds-tree__toggle--leaf" aria-hidden="true"></span>
+                          <span class="ds-tree__label">Volume</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="ds-tree__item" role="treeitem">
+                    <div class="ds-tree__row">
+                      <span class="ds-tree__toggle ds-tree__toggle--leaf" aria-hidden="true"></span>
+                      <span class="ds-tree__label">Currencies</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li class="ds-tree__item" role="treeitem">
+                <div class="ds-tree__row">
+                  <span class="ds-tree__toggle ds-tree__toggle--leaf" aria-hidden="true"></span>
+                  <span class="ds-tree__label">Settings</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <pre class="ds-example__code"><code id="c-tree-static">&lt;ul class="ds-tree" role="tree"&gt;
+  &lt;li class="ds-tree__item" role="treeitem" aria-expanded="true"&gt;
+    &lt;div class="ds-tree__row"&gt;
+      &lt;button class="ds-tree__toggle" type="button" aria-expanded="true" aria-label="Toggle"&gt;&amp;rsaquo;&lt;/button&gt;
+      &lt;span class="ds-tree__label"&gt;Pricing&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;ul class="ds-tree__children" role="group"&gt;
+      &lt;li class="ds-tree__item" role="treeitem" aria-expanded="true"&gt;
+        &lt;div class="ds-tree__row"&gt;
+          &lt;button class="ds-tree__toggle" type="button" aria-expanded="true" aria-label="Toggle"&gt;&amp;rsaquo;&lt;/button&gt;
+          &lt;span class="ds-tree__label"&gt;Matrices&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;ul class="ds-tree__children" role="group"&gt;
+          &lt;li class="ds-tree__item" role="treeitem" aria-selected="true"&gt;
+            &lt;div class="ds-tree__row"&gt;
+              &lt;span class="ds-tree__toggle ds-tree__toggle--leaf" aria-hidden="true"&gt;&lt;/span&gt;
+              &lt;span class="ds-tree__label is-selected"&gt;Standard&lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/li&gt;
+          &lt;li class="ds-tree__item" role="treeitem"&gt;
+            &lt;div class="ds-tree__row"&gt;
+              &lt;span class="ds-tree__toggle ds-tree__toggle--leaf" aria-hidden="true"&gt;&lt;/span&gt;
+              &lt;span class="ds-tree__label"&gt;Volume&lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li class="ds-tree__item" role="treeitem"&gt;
+        &lt;div class="ds-tree__row"&gt;
+          &lt;span class="ds-tree__toggle ds-tree__toggle--leaf" aria-hidden="true"&gt;&lt;/span&gt;
+          &lt;span class="ds-tree__label"&gt;Currencies&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li class="ds-tree__item" role="treeitem"&gt;
+    &lt;div class="ds-tree__row"&gt;
+      &lt;span class="ds-tree__toggle ds-tree__toggle--leaf" aria-hidden="true"&gt;&lt;/span&gt;
+      &lt;span class="ds-tree__label"&gt;Settings&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Interactive</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Click chevrons to expand · click labels to select</span>
+            <button class="ds-button" data-copy-target="#c-tree-live">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <ul class="ds-tree" role="tree" id="demoTree">
+              <li class="ds-tree__item" role="treeitem" aria-expanded="true">
+                <div class="ds-tree__row">
+                  <button class="ds-tree__toggle" type="button" aria-expanded="true" aria-label="Toggle">&rsaquo;</button>
+                  <span class="ds-tree__label">Components</span>
+                </div>
+                <ul class="ds-tree__children" role="group">
+                  <li class="ds-tree__item" role="treeitem" aria-expanded="false">
+                    <div class="ds-tree__row">
+                      <button class="ds-tree__toggle" type="button" aria-expanded="false" aria-label="Toggle">&rsaquo;</button>
+                      <span class="ds-tree__label">Inputs</span>
+                    </div>
+                    <ul class="ds-tree__children is-collapsed" role="group">
+                      <li class="ds-tree__item" role="treeitem">
+                        <div class="ds-tree__row">
+                          <span class="ds-tree__toggle ds-tree__toggle--leaf" aria-hidden="true"></span>
+                          <span class="ds-tree__label">Text field</span>
+                        </div>
+                      </li>
+                      <li class="ds-tree__item" role="treeitem">
+                        <div class="ds-tree__row">
+                          <span class="ds-tree__toggle ds-tree__toggle--leaf" aria-hidden="true"></span>
+                          <span class="ds-tree__label">Select</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="ds-tree__item" role="treeitem">
+                    <div class="ds-tree__row">
+                      <span class="ds-tree__toggle ds-tree__toggle--leaf" aria-hidden="true"></span>
+                      <span class="ds-tree__label">Button</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li class="ds-tree__item" role="treeitem">
+                <div class="ds-tree__row">
+                  <span class="ds-tree__toggle ds-tree__toggle--leaf" aria-hidden="true"></span>
+                  <span class="ds-tree__label">Tokens</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <pre class="ds-example__code"><code id="c-tree-live">&lt;ul class="ds-tree" role="tree" id="demoTree"&gt;
+  &lt;li class="ds-tree__item" role="treeitem" aria-expanded="true"&gt;
+    &lt;div class="ds-tree__row"&gt;
+      &lt;button class="ds-tree__toggle" type="button" aria-expanded="true" aria-label="Toggle"&gt;&amp;rsaquo;&lt;/button&gt;
+      &lt;span class="ds-tree__label"&gt;Components&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;ul class="ds-tree__children" role="group"&gt;
+      &lt;li class="ds-tree__item" role="treeitem" aria-expanded="false"&gt;
+        &lt;div class="ds-tree__row"&gt;
+          &lt;button class="ds-tree__toggle" type="button" aria-expanded="false" aria-label="Toggle"&gt;&amp;rsaquo;&lt;/button&gt;
+          &lt;span class="ds-tree__label"&gt;Inputs&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;ul class="ds-tree__children is-collapsed" role="group"&gt;
+          &lt;li class="ds-tree__item" role="treeitem"&gt;&hellip;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+  (function () {
+    var root = document.getElementById("demoTree");
+    root.querySelectorAll(".ds-tree__toggle:not(.ds-tree__toggle--leaf)").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var open = btn.getAttribute("aria-expanded") === "true";
+        btn.setAttribute("aria-expanded", String(!open));
+        var item = btn.closest(".ds-tree__item");
+        item.setAttribute("aria-expanded", String(!open));
+        var kids = item.querySelector(".ds-tree__children");
+        if (kids) kids.classList.toggle("is-collapsed", open);
+      });
+    });
+    root.querySelectorAll(".ds-tree__label").forEach(function (label) {
+      label.addEventListener("click", function () {
+        root.querySelectorAll(".ds-tree__label.is-selected").forEach(function (s) {
+          s.classList.remove("is-selected");
+          s.closest(".ds-tree__item").removeAttribute("aria-selected");
+        });
+        label.classList.add("is-selected");
+        label.closest(".ds-tree__item").setAttribute("aria-selected", "true");
+      });
+    });
+  })();
+&lt;/script&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;Tree /&gt;</span>
+            <button class="ds-button" data-copy-target="#c-tree-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-tree-react">import { Tree } from "@diametral/design-system/react";
+
+const nodes = [
+  {
+    id: "pricing",
+    label: "Pricing",
+    children: [
+      {
+        id: "matrices",
+        label: "Matrices",
+        children: [
+          { id: "standard", label: "Standard" },
+          { id: "volume", label: "Volume" },
+        ],
+      },
+      { id: "currencies", label: "Currencies" },
+    ],
+  },
+  { id: "settings", label: "Settings" },
+];
+
+&lt;Tree
+  nodes={nodes}
+  defaultExpanded={["pricing", "matrices"]}
+  onSelect={(node) =&gt; console.log("selected", node.id)}
+/&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Tiny vanilla demo wiring for the live tree panel (scoped to #demoTree).
+    (function () {
+      var root = document.getElementById("demoTree");
+      if (!root) return;
+
+      root.querySelectorAll(".ds-tree__toggle:not(.ds-tree__toggle--leaf)").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var open = btn.getAttribute("aria-expanded") === "true";
+          btn.setAttribute("aria-expanded", String(!open));
+          var item = btn.closest(".ds-tree__item");
+          item.setAttribute("aria-expanded", String(!open));
+          var kids = item.querySelector(".ds-tree__children");
+          if (kids) kids.classList.toggle("is-collapsed", open);
+        });
+      });
+
+      root.querySelectorAll(".ds-tree__label").forEach(function (label) {
+        label.addEventListener("click", function () {
+          root.querySelectorAll(".ds-tree__label.is-selected").forEach(function (s) {
+            s.classList.remove("is-selected");
+            s.closest(".ds-tree__item").removeAttribute("aria-selected");
+          });
+          label.classList.add("is-selected");
+          label.closest(".ds-tree__item").setAttribute("aria-selected", "true");
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

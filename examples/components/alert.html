@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alert · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/alert">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Alert</h1>
+        <p class="docs-lede">An inline status message: a 1px-bordered, status-tinted surface with a 3px accent bar drawn on the left. Four status families, an optional dismiss button, and an app-level variant that fills with a solid status color and white text.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Status variants</h2>
+        <p class="docs-note">The left bar and border take the status color; the background is the matching tint.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Info · success · warning · danger</span>
+            <button class="ds-button" data-copy-target="#c-variants">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-alert ds-alert--info" role="status">
+              <div class="ds-alert__content">Pricing matrix synced 2 minutes ago.</div>
+            </div>
+            <div class="ds-alert ds-alert--success" role="status" style="margin-top:12px">
+              <div class="ds-alert__content"><div class="ds-alert__title">Saved</div>Your changes have been published.</div>
+            </div>
+            <div class="ds-alert ds-alert--warning" role="alert" style="margin-top:12px">
+              <div class="ds-alert__content">Some rates are missing a currency.</div>
+            </div>
+            <div class="ds-alert ds-alert--danger" role="alert" style="margin-top:12px">
+              <div class="ds-alert__content">The export failed — try again.</div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-variants">&lt;div class="ds-alert ds-alert--info" role="status"&gt;
+  &lt;div class="ds-alert__content"&gt;Pricing matrix synced 2 minutes ago.&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="ds-alert ds-alert--success" role="status"&gt;
+  &lt;div class="ds-alert__content"&gt;
+    &lt;div class="ds-alert__title"&gt;Saved&lt;/div&gt;Your changes have been published.
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="ds-alert ds-alert--warning" role="alert"&gt;
+  &lt;div class="ds-alert__content"&gt;Some rates are missing a currency.&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="ds-alert ds-alert--danger" role="alert"&gt;
+  &lt;div class="ds-alert__content"&gt;The export failed — try again.&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Icon, actions &amp; dismiss</h2>
+        <p class="docs-note">An <code>__icon</code> slot leads; an <code>__actions</code> row trails the content; the borderless <code>__close</code> × sits at the far right. Click × to dismiss this one live.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Dismissible</span>
+            <button class="ds-button" data-copy-target="#c-dismiss">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-alert ds-alert--warning" role="alert" id="demoAlert">
+              <span class="ds-alert__icon" aria-hidden="true">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 1.5 15 14H1L8 1.5Z"/><line x1="8" y1="6" x2="8" y2="9.5"/><circle cx="8" cy="11.6" r=".6" fill="currentColor" stroke="none"/></svg>
+              </span>
+              <div class="ds-alert__content">
+                <div class="ds-alert__title">Unsaved changes</div>
+                You have edits that haven’t been published yet.
+                <div class="ds-alert__actions">
+                  <button class="ds-button ds-button--primary">Publish</button>
+                  <button class="ds-button">Discard</button>
+                </div>
+              </div>
+              <button class="ds-alert__close" type="button" aria-label="Dismiss" onclick="document.getElementById('demoAlert').remove()">×</button>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-dismiss">&lt;div class="ds-alert ds-alert--warning" role="alert"&gt;
+  &lt;span class="ds-alert__icon" aria-hidden="true"&gt;&lt;svg&gt;…&lt;/svg&gt;&lt;/span&gt;
+  &lt;div class="ds-alert__content"&gt;
+    &lt;div class="ds-alert__title"&gt;Unsaved changes&lt;/div&gt;
+    You have edits that haven’t been published yet.
+    &lt;div class="ds-alert__actions"&gt;
+      &lt;button class="ds-button ds-button--primary"&gt;Publish&lt;/button&gt;
+      &lt;button class="ds-button"&gt;Discard&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;button class="ds-alert__close" type="button" aria-label="Dismiss"&gt;×&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>App-level</h2>
+        <p class="docs-note">The <code>--app</code> modifier fills the bar full width with a solid status color and white text — for page-top or banner messages.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">.ds-alert--app</span>
+            <button class="ds-button" data-copy-target="#c-app">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-alert ds-alert--app ds-alert--danger" role="alert">
+              <div class="ds-alert__content">Scheduled maintenance tonight at 22:00 UTC — saving will be disabled.</div>
+              <button class="ds-alert__close" type="button" aria-label="Dismiss">×</button>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-app">&lt;div class="ds-alert ds-alert--app ds-alert--danger" role="alert"&gt;
+  &lt;div class="ds-alert__content"&gt;Scheduled maintenance tonight at 22:00 UTC.&lt;/div&gt;
+  &lt;button class="ds-alert__close" type="button" aria-label="Dismiss"&gt;×&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <p class="docs-note">The <code>&lt;Alert&gt;</code> component renders the same markup and manages its own dismissed state when uncontrolled.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;Alert&gt;</span>
+            <button class="ds-button" data-copy-target="#c-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-react">import { Alert } from "@diametral/design-system/react";
+
+&lt;Alert type="success" dismissible onDismiss={() =&gt; log("closed")}&gt;
+  Your changes have been published.
+&lt;/Alert&gt;
+
+&lt;Alert type="danger" app&gt;
+  Scheduled maintenance tonight at 22:00 UTC.
+&lt;/Alert&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

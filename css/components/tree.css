@@ -1,0 +1,98 @@
+/* ============================================================================
+   Tree view — .ds-tree   (hierarchical, expand/collapse, single-select)
+   ----------------------------------------------------------------------------
+   A nested disclosure list: a root <ul role="tree"> of <li role="treeitem">
+   rows, each a toggle chevron + selectable label, with nested <ul role="group">
+   children. Flat & sharp — separation comes from indentation, a faint guide
+   rule, and a background shift on hover/selection (no radius, no shadow).
+   ============================================================================ */
+.ds-tree {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-sm);
+  color: var(--ds-ink);
+}
+
+/* Row container — one node line (the disclosure header lives in __row). */
+.ds-tree__item {
+  list-style: none;
+}
+
+/* Header row: toggle + label on one baseline. */
+.ds-tree__row {
+  display: flex;
+  align-items: center;
+}
+
+/* Chevron button — a small fixed square that rotates when expanded. */
+.ds-tree__toggle {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--ds-ink-faint);
+  font-size: var(--ds-text-sm);
+  line-height: 1;
+  border-radius: var(--ds-radius-none);
+  transition: transform var(--ds-transition), color var(--ds-transition);
+}
+.ds-tree__toggle:hover { color: var(--ds-ink); }
+.ds-tree__toggle:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: 2px; }
+
+/* Expanded state rotates the chevron a quarter turn (ARIA-driven). */
+.ds-tree__toggle[aria-expanded="true"] { transform: rotate(90deg); }
+
+/* Leaf spacer — same footprint as a toggle so labels align; non-interactive. */
+.ds-tree__toggle--leaf {
+  cursor: default;
+  visibility: hidden;
+}
+
+/* Selectable label — the click target that fires selection. */
+.ds-tree__label {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+  padding: var(--ds-space-1) var(--ds-space-2);
+  cursor: pointer;
+  color: inherit;
+  /* Reserve the selected left-border width up front so selection never shifts. */
+  border-left: 2px solid transparent;
+  border-radius: var(--ds-radius-none);
+  transition: background-color var(--ds-transition), color var(--ds-transition);
+}
+.ds-tree__label:hover { background: var(--ds-bg-alt); }
+.ds-tree__label:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: 2px; }
+
+/* Selected — accent left rule + background shift + slightly bolder weight. */
+.ds-tree__label.is-selected,
+.ds-tree__item[aria-selected="true"] > .ds-tree__row > .ds-tree__label {
+  background: var(--ds-bg-alt);
+  border-left-color: var(--ds-accent);
+  color: var(--ds-ink);
+  font-weight: 500;
+}
+
+/* Nested list — indented, with a faint guide rule to read the nesting. */
+.ds-tree__children {
+  list-style: none;
+  margin: 0;
+  padding-left: var(--ds-space-5);
+  border-left: 1px solid var(--ds-rule-soft);
+}
+
+/* Collapsed children: hidden via the `hidden` attribute (React) or .is-collapsed
+   (static / vanilla demo). [hidden] already collapses, but be explicit. */
+.ds-tree__children[hidden],
+.ds-tree__children.is-collapsed {
+  display: none;
+}

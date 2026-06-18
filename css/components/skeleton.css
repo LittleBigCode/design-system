@@ -1,0 +1,68 @@
+/* ============================================================================
+   Skeleton — .ds-skeleton
+   ----------------------------------------------------------------------------
+   A shimmering placeholder for content that is still loading. The base block is
+   a flat (no-radius) bar painted with a linear-gradient that sweeps across via
+   the ds-shimmer keyframes. Variants size it as text, a full-width line, a
+   square block, or a generic block. Honors prefers-reduced-motion by holding
+   the gradient still.
+   ============================================================================ */
+@keyframes ds-shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+.ds-skeleton {
+  display: block;
+  border-radius: var(--ds-radius-none);
+  background-color: var(--ds-bg-alt);
+  background-image: linear-gradient(
+    90deg,
+    var(--ds-bg-alt) 0%,
+    var(--ds-grey-faint) 20%,
+    var(--ds-grey) 40%,
+    var(--ds-grey-faint) 60%,
+    var(--ds-bg-alt) 80%
+  );
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: ds-shimmer 1.4s ease-in-out infinite;
+}
+
+/* Text line — a short line at roughly text height. */
+.ds-skeleton--text {
+  height: 0.8em;
+  margin: 0.25em 0;
+}
+
+/* Line — a full-width bar. */
+.ds-skeleton--line {
+  width: 100%;
+  height: 12px;
+}
+
+/* Circle — kept square per the no-radius parti pris. */
+.ds-skeleton--circle {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--ds-radius-none);
+  flex: none;
+}
+
+/* Block — a generic filling block. */
+.ds-skeleton--block {
+  width: 100%;
+  height: 96px;
+}
+
+/* When stacked via the React `count` prop, the last line is shortened to read
+   like a paragraph tail. */
+.ds-skeleton--text:last-child { width: 70%; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-skeleton {
+    animation: none;
+    background-image: none;
+    background-color: var(--ds-grey-faint);
+  }
+}

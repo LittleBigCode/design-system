@@ -1,0 +1,68 @@
+/* Tooltip — .ds-tooltip (small dark box) + .ds-tooltip-host (CSS-only hover/focus)
+   A compact, sharp label rendered on an ink-filled box. The host wrapper shows a
+   child .ds-tooltip on :hover / :focus-within, positioned above the trigger. */
+.ds-tooltip {
+  display: inline-block;
+  max-width: 240px;
+  padding: 6px 8px;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-xs);
+  font-weight: 400;
+  line-height: var(--ds-leading-normal);
+  letter-spacing: -0.1px;
+  color: var(--ds-bg);
+  background: var(--ds-ink);
+  border: 1px solid var(--ds-ink);
+  border-radius: var(--ds-radius-none);
+  z-index: var(--ds-z-popover);
+  white-space: normal;
+}
+
+/* CSS-only host: wrap a trigger + a .ds-tooltip; reveal on hover / focus-within. */
+.ds-tooltip-host {
+  position: relative;
+  display: inline-flex;
+}
+.ds-tooltip-host > .ds-tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  transform: translateX(-50%);
+  width: max-content;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--ds-transition), visibility var(--ds-transition);
+}
+.ds-tooltip-host:hover > .ds-tooltip,
+.ds-tooltip-host:focus-within > .ds-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Placement modifiers (host-positioned). Default is above (top). */
+.ds-tooltip-host > .ds-tooltip--top {
+  bottom: calc(100% + 8px);
+  top: auto;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+}
+.ds-tooltip-host > .ds-tooltip--bottom {
+  bottom: auto;
+  top: calc(100% + 8px);
+}
+.ds-tooltip-host > .ds-tooltip--left {
+  left: auto;
+  right: calc(100% + 8px);
+  bottom: auto;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.ds-tooltip-host > .ds-tooltip--right {
+  left: calc(100% + 8px);
+  right: auto;
+  bottom: auto;
+  top: 50%;
+  transform: translateY(-50%);
+}

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spinner · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/spinner">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Spinner</h1>
+        <p class="docs-lede">A circular loading indicator — a 2px ruled ring with an accent-colored top segment, rotating continuously. The one place the flat system allows a radius, because a spinner is a motion glyph, not a surface. Honors reduced-motion.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Sizes</h2>
+        <p class="docs-note">Small (14px), default (20px), and large (32px).</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">sm · default · lg</span>
+            <button class="ds-button" data-copy-target="#c-sizes">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <span class="ds-spinner ds-spinner--sm" role="status" aria-label="Loading"></span>
+            <span class="ds-spinner" role="status" aria-label="Loading"></span>
+            <span class="ds-spinner ds-spinner--lg" role="status" aria-label="Loading"></span>
+          </div>
+          <pre class="ds-example__code"><code id="c-sizes">&lt;span class="ds-spinner ds-spinner--sm" role="status" aria-label="Loading"&gt;&lt;/span&gt;
+&lt;span class="ds-spinner" role="status" aria-label="Loading"&gt;&lt;/span&gt;
+&lt;span class="ds-spinner ds-spinner--lg" role="status" aria-label="Loading"&gt;&lt;/span&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Inline with text</h2>
+        <p class="docs-note">The <code>--inline</code> modifier aligns the ring to the text baseline so it can sit beside a label or inside a button.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">.ds-spinner--inline</span>
+            <button class="ds-button" data-copy-target="#c-inline">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <span>Loading rates <span class="ds-spinner ds-spinner--sm ds-spinner--inline" role="status" aria-label="Loading"></span></span>
+            <button class="ds-button ds-button--primary">
+              <span class="ds-spinner ds-spinner--sm ds-spinner--inline" role="status" aria-label="Saving"></span>
+              Saving…
+            </button>
+          </div>
+          <pre class="ds-example__code"><code id="c-inline">Loading rates
+&lt;span class="ds-spinner ds-spinner--sm ds-spinner--inline" role="status" aria-label="Loading"&gt;&lt;/span&gt;
+
+&lt;button class="ds-button ds-button--primary"&gt;
+  &lt;span class="ds-spinner ds-spinner--sm ds-spinner--inline" role="status" aria-label="Saving"&gt;&lt;/span&gt;
+  Saving…
+&lt;/button&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <p class="docs-note">The <code>&lt;Spinner&gt;</code> component exposes <code>role="status"</code> and an accessible label.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;Spinner&gt;</span>
+            <button class="ds-button" data-copy-target="#c-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-react">import { Spinner } from "@diametral/design-system/react";
+
+&lt;Spinner /&gt;
+&lt;Spinner size="lg" label="Loading rates" /&gt;
+&lt;Spinner size="sm" inline /&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

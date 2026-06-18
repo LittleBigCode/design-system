@@ -1,0 +1,77 @@
+/* ============================================================================
+   Card — .ds-card
+   ----------------------------------------------------------------------------
+   A flat bordered surface card: optional full-bleed media at the top, a header
+   with a title-voiced heading, a body, and a footer set off by a top rule on
+   the alt background. Stack divided regions with .ds-card__block (separated by
+   a soft rule). The --clickable modifier turns the whole card into an affordance
+   (hover background shift + pointer).
+   ============================================================================ */
+.ds-card {
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-rule);
+  border-radius: var(--ds-radius-none);
+  color: var(--ds-ink);
+  overflow: hidden;
+}
+
+/* Media — full-bleed image at the top of the card. */
+.ds-card__media {
+  display: block;
+  width: 100%;
+  margin: 0;
+}
+.ds-card__media img,
+img.ds-card__media {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--ds-radius-none);
+}
+
+.ds-card__header {
+  padding: 16px 20px;
+}
+.ds-card__title {
+  font-family: var(--ds-font-title);
+  font-size: var(--ds-text-md);
+  font-weight: var(--ds-font-weight-title);
+  letter-spacing: -0.3px;
+  line-height: var(--ds-leading-tight);
+  margin: 0;
+}
+
+.ds-card__body {
+  padding: 16px 20px;
+  font-size: var(--ds-text-base);
+  color: var(--ds-ink-soft);
+}
+/* When a header sits directly above a body, drop the body's top padding so the
+   two read as one block. */
+.ds-card__header + .ds-card__body { padding-top: 0; }
+
+.ds-card__footer {
+  padding: 14px 20px;
+  background: var(--ds-bg-alt);
+  border-top: 1px solid var(--ds-rule);
+  font-size: var(--ds-text-sm);
+  color: var(--ds-ink-faint);
+}
+
+/* Divided blocks — stacked regions separated by a soft rule. */
+.ds-card__block {
+  padding: 16px 20px;
+  border-top: 1px solid var(--ds-rule-soft);
+}
+.ds-card__block:first-child { border-top: none; }
+
+/* Clickable — the whole card becomes an affordance. */
+.ds-card--clickable {
+  cursor: pointer;
+  transition: background-color var(--ds-transition);
+}
+.ds-card--clickable:hover { background: var(--ds-bg-alt); }
+.ds-card--clickable:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: 2px;
+}

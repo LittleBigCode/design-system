@@ -1,0 +1,74 @@
+/* Popover / Signpost — .ds-popover (bordered surface box anchored to a trigger)
+   A flat callout panel with a title and body, no radius, no shadow — separation by
+   a 1px border. An optional rotated-square arrow points back at the trigger.
+   Position the .ds-popover yourself (absolute / portal); the host helper below
+   gives a relative anchor. */
+.ds-popover {
+  position: relative;
+  min-width: 200px;
+  max-width: 320px;
+  padding: 16px;
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-ink);
+  border-radius: var(--ds-radius-none);
+  z-index: var(--ds-z-popover);
+  font-family: var(--ds-font-sans);
+}
+
+.ds-popover__title {
+  font-size: var(--ds-text-2xs);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ds-ink-faint);
+  margin-bottom: 8px;
+}
+.ds-popover__body {
+  font-size: var(--ds-text-sm);
+  line-height: var(--ds-leading-normal);
+  color: var(--ds-ink-soft);
+}
+
+/* Arrow — an 8px square rotated 45°, border-matched to the popover edge. Default
+   sits on the top edge (popover anchored below the trigger). */
+.ds-popover__arrow {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-ink);
+  border-right: none;
+  border-bottom: none;
+  top: -5px;
+  left: 18px;
+  transform: rotate(45deg);
+}
+.ds-popover--bottom > .ds-popover__arrow {
+  top: auto;
+  bottom: -5px;
+  border: 1px solid var(--ds-ink);
+  border-left: none;
+  border-top: none;
+}
+.ds-popover--left > .ds-popover__arrow {
+  top: 18px;
+  left: auto;
+  right: -5px;
+  border: 1px solid var(--ds-ink);
+  border-left: none;
+  border-bottom: none;
+}
+.ds-popover--right > .ds-popover__arrow {
+  top: 18px;
+  left: -5px;
+  border: 1px solid var(--ds-ink);
+  border-right: none;
+  border-top: none;
+}
+
+/* Host helper — a relative anchor so an absolutely positioned .ds-popover can be
+   placed next to an inline trigger. */
+.ds-popover-host {
+  position: relative;
+  display: inline-flex;
+}

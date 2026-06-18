@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accordion · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/accordion">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Accordion</h1>
+        <p class="docs-lede">Stacked disclosure rows separated by 1px rules. Each <code>.ds-accordion__header</code> is a full-width button with a chevron that rotates when the row is open. The native <code>&lt;details&gt;</code> markup below demos the CSS with no JavaScript.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Buildless (details/summary)</h2>
+        <p class="docs-note">Using native <code>&lt;details&gt;</code> / <code>&lt;summary&gt;</code> elements styled as accordion rows. The chevron rotates via the <code>[open]</code> attribute — open a couple at once.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Native disclosure</span>
+            <button class="ds-button" data-copy-target="#c-details">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-accordion">
+              <details class="ds-accordion__item" open>
+                <summary class="ds-accordion__header">
+                  <span>How is the day rate computed?</span>
+                  <span class="ds-accordion__chevron" aria-hidden="true"></span>
+                </summary>
+                <div class="ds-accordion__panel">The rate is derived from the loaded salary, the target margin, and the billable-days assumption for the entity.</div>
+              </details>
+              <details class="ds-accordion__item">
+                <summary class="ds-accordion__header">
+                  <span>Which currency applies?</span>
+                  <span class="ds-accordion__chevron" aria-hidden="true"></span>
+                </summary>
+                <div class="ds-accordion__panel">Currency follows the selected entity; figures are shown with tabular numerals.</div>
+              </details>
+              <details class="ds-accordion__item">
+                <summary class="ds-accordion__header">
+                  <span>Can I override the matrix?</span>
+                  <span class="ds-accordion__chevron" aria-hidden="true"></span>
+                </summary>
+                <div class="ds-accordion__panel">Yes — per-cell overrides are allowed and flagged so reviewers can see where the grid was adjusted.</div>
+              </details>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-details">&lt;div class="ds-accordion"&gt;
+  &lt;details class="ds-accordion__item" open&gt;
+    &lt;summary class="ds-accordion__header"&gt;
+      &lt;span&gt;How is the day rate computed?&lt;/span&gt;
+      &lt;span class="ds-accordion__chevron" aria-hidden="true"&gt;&lt;/span&gt;
+    &lt;/summary&gt;
+    &lt;div class="ds-accordion__panel"&gt;The rate is derived from the loaded salary…&lt;/div&gt;
+  &lt;/details&gt;
+  &lt;details class="ds-accordion__item"&gt;
+    &lt;summary class="ds-accordion__header"&gt;
+      &lt;span&gt;Which currency applies?&lt;/span&gt;
+      &lt;span class="ds-accordion__chevron" aria-hidden="true"&gt;&lt;/span&gt;
+    &lt;/summary&gt;
+    &lt;div class="ds-accordion__panel"&gt;Currency follows the selected entity…&lt;/div&gt;
+  &lt;/details&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Button markup</h2>
+        <p class="docs-note">The form the React component renders: a <code>&lt;button&gt;</code> header carrying <code>aria-expanded</code> over a <code>.ds-accordion__panel</code>. Collapsed panels get the <code>hidden</code> attribute.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">aria-expanded + panel</span>
+            <button class="ds-button" data-copy-target="#c-button">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-accordion">
+              <div class="ds-accordion__item">
+                <button class="ds-accordion__header" type="button" aria-expanded="true" aria-controls="p-open">
+                  <span>Open row</span>
+                  <span class="ds-accordion__chevron" aria-hidden="true"></span>
+                </button>
+                <div class="ds-accordion__panel" id="p-open" role="region">This panel is expanded; its chevron points down.</div>
+              </div>
+              <div class="ds-accordion__item">
+                <button class="ds-accordion__header" type="button" aria-expanded="false" aria-controls="p-closed">
+                  <span>Collapsed row</span>
+                  <span class="ds-accordion__chevron" aria-hidden="true"></span>
+                </button>
+                <div class="ds-accordion__panel" id="p-closed" role="region" hidden>Hidden until expanded.</div>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-button">&lt;div class="ds-accordion__item"&gt;
+  &lt;button class="ds-accordion__header" type="button" aria-expanded="true" aria-controls="p-open"&gt;
+    &lt;span&gt;Open row&lt;/span&gt;
+    &lt;span class="ds-accordion__chevron" aria-hidden="true"&gt;&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;div class="ds-accordion__panel" id="p-open" role="region"&gt;This panel is expanded.&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <p class="docs-note">The <code>Accordion</code> takes an <code>items</code> array and works controlled (<code>value</code>/<code>onChange</code>) or uncontrolled (<code>defaultOpen</code>). Set <code>multiple</code> to allow several panels open at once.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;Accordion&gt;</span>
+            <button class="ds-button" data-copy-target="#c-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-react">import { Accordion } from "@diametral/design-system/react";
+
+const items = [
+  { id: "rate",     title: "How is the day rate computed?", content: "Derived from loaded salary…" },
+  { id: "currency", title: "Which currency applies?",       content: "Follows the selected entity." },
+];
+
+&lt;Accordion items={items} multiple defaultOpen={["rate"]} /&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

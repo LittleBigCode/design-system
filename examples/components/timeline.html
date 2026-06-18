@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timeline · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../../css/components/timeline.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/timeline">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Timeline</h1>
+        <p class="docs-lede">A vertical event list: a 1px rule runs down the left as a rail, each item hangs a small square dot on it, and stacks a faint timestamp, a title, and supporting body text. Status families recolor the dot — no radius, no shadow.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Basic</h2>
+        <p class="docs-note">Items align to the right of the rail; the last item drops its bottom spacing.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Activity feed</span>
+            <button class="ds-button" data-copy-target="#c-basic">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <ol class="ds-timeline">
+              <li class="ds-timeline__item">
+                <span class="ds-timeline__dot is-success"></span>
+                <div class="ds-timeline__time">09:42</div>
+                <div class="ds-timeline__title">Matrix published</div>
+                <div class="ds-timeline__body">All 1,204 rates synced to production.</div>
+              </li>
+              <li class="ds-timeline__item">
+                <span class="ds-timeline__dot is-info"></span>
+                <div class="ds-timeline__time">09:30</div>
+                <div class="ds-timeline__title">Review requested</div>
+                <div class="ds-timeline__body">Sent to the Director for sign-off.</div>
+              </li>
+              <li class="ds-timeline__item">
+                <span class="ds-timeline__dot is-warning"></span>
+                <div class="ds-timeline__time">08:15</div>
+                <div class="ds-timeline__title">Missing currency</div>
+                <div class="ds-timeline__body">12 rows have no currency set.</div>
+              </li>
+              <li class="ds-timeline__item">
+                <span class="ds-timeline__dot"></span>
+                <div class="ds-timeline__time">Yesterday</div>
+                <div class="ds-timeline__title">Draft created</div>
+                <div class="ds-timeline__body">Imported from the Q3 template.</div>
+              </li>
+            </ol>
+          </div>
+          <pre class="ds-example__code"><code id="c-basic">&lt;ol class="ds-timeline"&gt;
+  &lt;li class="ds-timeline__item"&gt;
+    &lt;span class="ds-timeline__dot is-success"&gt;&lt;/span&gt;
+    &lt;div class="ds-timeline__time"&gt;09:42&lt;/div&gt;
+    &lt;div class="ds-timeline__title"&gt;Matrix published&lt;/div&gt;
+    &lt;div class="ds-timeline__body"&gt;All 1,204 rates synced to production.&lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li class="ds-timeline__item"&gt;
+    &lt;span class="ds-timeline__dot is-info"&gt;&lt;/span&gt;
+    &lt;div class="ds-timeline__time"&gt;09:30&lt;/div&gt;
+    &lt;div class="ds-timeline__title"&gt;Review requested&lt;/div&gt;
+    &lt;div class="ds-timeline__body"&gt;Sent to the Director for sign-off.&lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li class="ds-timeline__item"&gt;
+    &lt;span class="ds-timeline__dot"&gt;&lt;/span&gt;
+    &lt;div class="ds-timeline__time"&gt;Yesterday&lt;/div&gt;
+    &lt;div class="ds-timeline__title"&gt;Draft created&lt;/div&gt;
+    &lt;div class="ds-timeline__body"&gt;Imported from the Q3 template.&lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Status dots</h2>
+        <p class="docs-note">Five families recolor the dot via <code>is-*</code>; the default (no modifier) uses the neutral rule color.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Default · success · warning · danger · info · neutral</span>
+            <button class="ds-button" data-copy-target="#c-status">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <ol class="ds-timeline">
+              <li class="ds-timeline__item">
+                <span class="ds-timeline__dot"></span>
+                <div class="ds-timeline__title">Default</div>
+              </li>
+              <li class="ds-timeline__item">
+                <span class="ds-timeline__dot is-success"></span>
+                <div class="ds-timeline__title">Success</div>
+              </li>
+              <li class="ds-timeline__item">
+                <span class="ds-timeline__dot is-warning"></span>
+                <div class="ds-timeline__title">Warning</div>
+              </li>
+              <li class="ds-timeline__item">
+                <span class="ds-timeline__dot is-danger"></span>
+                <div class="ds-timeline__title">Danger</div>
+              </li>
+              <li class="ds-timeline__item">
+                <span class="ds-timeline__dot is-info"></span>
+                <div class="ds-timeline__title">Info</div>
+              </li>
+              <li class="ds-timeline__item">
+                <span class="ds-timeline__dot is-neutral"></span>
+                <div class="ds-timeline__title">Neutral</div>
+              </li>
+            </ol>
+          </div>
+          <pre class="ds-example__code"><code id="c-status">&lt;li class="ds-timeline__item"&gt;
+  &lt;span class="ds-timeline__dot is-success"&gt;&lt;/span&gt;
+  &lt;div class="ds-timeline__title"&gt;Success&lt;/div&gt;
+&lt;/li&gt;
+&lt;li class="ds-timeline__item"&gt;
+  &lt;span class="ds-timeline__dot is-danger"&gt;&lt;/span&gt;
+  &lt;div class="ds-timeline__title"&gt;Danger&lt;/div&gt;
+&lt;/li&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <p class="docs-note">The <code>&lt;Timeline&gt;</code> component renders the same markup from an <code>items</code> array; <code>status</code> maps to the dot's <code>is-*</code> class.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;Timeline&gt;</span>
+            <button class="ds-button" data-copy-target="#c-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-react">import { Timeline } from "@diametral/design-system/react";
+
+&lt;Timeline
+  items={[
+    { time: "09:42", title: "Matrix published", body: "All 1,204 rates synced.", status: "success" },
+    { time: "09:30", title: "Review requested", body: "Sent to the Director.", status: "info" },
+    { time: "08:15", title: "Missing currency", body: "12 rows have no currency set.", status: "warning" },
+    { time: "Yesterday", title: "Draft created", body: "Imported from the Q3 template." },
+  ]}
+/&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

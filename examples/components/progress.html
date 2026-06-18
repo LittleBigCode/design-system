@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Progress · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/progress">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Progress</h1>
+        <p class="docs-lede">A flat progress bar: a thin track holding an accent-colored fill whose width is set inline. Status modifiers recolor the bar, an indeterminate mode animates a sliding segment, and an optional label row carries a tabular percentage.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Determinate</h2>
+        <p class="docs-note">The fill width is set with an inline <code>style="width: …%"</code> on the bar.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Track + bar</span>
+            <button class="ds-button" data-copy-target="#c-basic">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="35">
+              <div class="ds-progress__bar" style="width:35%"></div>
+            </div>
+            <div class="ds-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="70" style="margin-top:16px">
+              <div class="ds-progress__bar" style="width:70%"></div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-basic">&lt;div class="ds-progress" role="progressbar"
+     aria-valuemin="0" aria-valuemax="100" aria-valuenow="35"&gt;
+  &lt;div class="ds-progress__bar" style="width:35%"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>With label &amp; status</h2>
+        <p class="docs-note">A <code>__label</code> row above pairs a caption with a tabular <code>__value</code>. Status modifiers recolor the bar.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Label + success / warning / danger</span>
+            <button class="ds-button" data-copy-target="#c-status">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-progress__label">
+              <span>Uploading export</span><span class="ds-progress__value">62%</span>
+            </div>
+            <div class="ds-progress ds-progress--success" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="62">
+              <div class="ds-progress__bar" style="width:62%"></div>
+            </div>
+            <div class="ds-progress ds-progress--warning" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80" style="margin-top:16px">
+              <div class="ds-progress__bar" style="width:80%"></div>
+            </div>
+            <div class="ds-progress ds-progress--danger" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="95" style="margin-top:16px">
+              <div class="ds-progress__bar" style="width:95%"></div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-status">&lt;div class="ds-progress__label"&gt;
+  &lt;span&gt;Uploading export&lt;/span&gt;&lt;span class="ds-progress__value"&gt;62%&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class="ds-progress ds-progress--success" role="progressbar"
+     aria-valuemin="0" aria-valuemax="100" aria-valuenow="62"&gt;
+  &lt;div class="ds-progress__bar" style="width:62%"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Indeterminate</h2>
+        <p class="docs-note">When the total isn’t known, <code>--indeterminate</code> animates a segment sliding across the track (slows under reduced-motion).</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">.ds-progress--indeterminate</span>
+            <button class="ds-button" data-copy-target="#c-indet">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-progress ds-progress--indeterminate" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Loading">
+              <div class="ds-progress__bar"></div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-indet">&lt;div class="ds-progress ds-progress--indeterminate" role="progressbar"
+     aria-valuemin="0" aria-valuemax="100" aria-label="Loading"&gt;
+  &lt;div class="ds-progress__bar"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <p class="docs-note">The <code>&lt;Progress&gt;</code> component derives the percentage and ARIA values from <code>value</code>/<code>max</code>.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;Progress&gt;</span>
+            <button class="ds-button" data-copy-target="#c-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-react">import { Progress } from "@diametral/design-system/react";
+
+&lt;Progress value={62} label="Uploading export" status="success" /&gt;
+&lt;Progress value={3} max={5} /&gt;
+&lt;Progress indeterminate label="Syncing" /&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

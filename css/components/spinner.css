@@ -1,0 +1,32 @@
+/* ============================================================================
+   Spinner — .ds-spinner
+   ----------------------------------------------------------------------------
+   A circular loading indicator: a 2px ruled ring whose top segment is the
+   accent color, rotating continuously. A spinner is a motion glyph, not a
+   surface, so border-radius:50% is the one sanctioned exception to the flat
+   parti pris. Honors prefers-reduced-motion.
+   ============================================================================ */
+@keyframes ds-spin {
+  to { transform: rotate(360deg); }
+}
+
+.ds-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--ds-rule);
+  border-top-color: var(--ds-accent);
+  border-radius: 50%; /* sanctioned exception: the spinner is a circle, not a box */
+  animation: ds-spin .7s linear infinite;
+}
+
+/* ---- Sizes --------------------------------------------------------------- */
+.ds-spinner--sm { width: 14px; height: 14px; border-width: 2px; }
+.ds-spinner--lg { width: 32px; height: 32px; border-width: 3px; }
+
+/* ---- Inline alignment (sits on the text baseline next to a label) -------- */
+.ds-spinner--inline { vertical-align: -0.2em; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-spinner { animation-duration: 1.6s; }
+}

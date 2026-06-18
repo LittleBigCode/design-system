@@ -1,0 +1,44 @@
+/* Button extras — sizes, block, icon-only, loading, groups, split
+   (extends css/components/button.css; never edits it) */
+
+/* Sizes */
+.ds-button--sm { height: 30px; padding: 0 12px; font-size: var(--ds-text-sm); }
+.ds-button--lg { height: 48px; padding: 0 22px; font-size: 15px; }
+
+/* Full-width */
+.ds-button--block { width: 100%; }
+
+/* Icon-only (square) — pair with an aria-label */
+.ds-button--icon { width: 40px; padding: 0; }
+.ds-button--icon.ds-button--sm { width: 30px; }
+.ds-button--icon.ds-button--lg { width: 48px; }
+.ds-button--icon svg { width: 18px; height: 18px; }
+
+/* Loading — hides the label and shows a centered spinner */
+.ds-button--loading { position: relative; color: transparent !important; pointer-events: none; }
+.ds-button--loading > * { visibility: hidden; }
+.ds-button--loading::after {
+  content: "";
+  position: absolute;
+  width: 16px; height: 16px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;            /* spinner circle — the one sanctioned radius */
+  color: var(--ds-ink);
+  animation: ds-spin .6s linear infinite;
+}
+.ds-button--primary.ds-button--loading::after { color: var(--ds-on-accent); }
+@keyframes ds-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .ds-button--loading::after { animation-duration: 1.6s; } }
+
+/* Button group — joined buttons sharing borders */
+.ds-button-group { display: inline-flex; }
+.ds-button-group > .ds-button { border-radius: var(--ds-radius-none); }
+.ds-button-group > .ds-button:not(:first-child) { margin-left: -1px; }
+.ds-button-group > .ds-button:hover,
+.ds-button-group > .ds-button:focus-visible { position: relative; z-index: 1; }
+
+/* Split button — a main action joined to a caret */
+.ds-split { display: inline-flex; position: relative; }
+.ds-split > .ds-button:not(:first-child) { margin-left: -1px; }
+.ds-split__menu { position: absolute; top: calc(100% + 4px); right: 0; z-index: var(--ds-z-popover); }

@@ -1,0 +1,47 @@
+/* Tag / Label — .ds-tag (small inline uppercase pill; status + removable) */
+.ds-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-1);
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-2xs);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--ds-ink-soft);
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-rule);
+  padding: 2px 8px;
+  border-radius: var(--ds-radius-none);
+}
+
+/* Status variants — colored border + matching text + tinted background */
+.ds-tag--info    { color: var(--ds-info);    border-color: var(--ds-info);    background: var(--ds-info-bg); }
+.ds-tag--success { color: var(--ds-success); border-color: var(--ds-success); background: var(--ds-success-bg); }
+.ds-tag--warning { color: var(--ds-warning); border-color: var(--ds-warning); background: var(--ds-warning-bg); }
+.ds-tag--danger  { color: var(--ds-danger);  border-color: var(--ds-danger);  background: var(--ds-danger-bg); }
+
+/* Removable — room for the trailing × button */
+.ds-tag--removable { padding-right: var(--ds-space-1); }
+
+.ds-tag__remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0 2px;
+  cursor: pointer;
+  color: inherit;
+  font-size: var(--ds-text-sm);
+  line-height: 1;
+  transition: color var(--ds-transition);
+}
+.ds-tag__remove:hover { color: var(--ds-ink); }
+.ds-tag--info .ds-tag__remove:hover    { color: var(--ds-info); }
+.ds-tag--success .ds-tag__remove:hover { color: var(--ds-success); }
+.ds-tag--warning .ds-tag__remove:hover { color: var(--ds-warning); }
+.ds-tag--danger .ds-tag__remove:hover  { color: var(--ds-danger); }
+.ds-tag__remove:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: 2px; }

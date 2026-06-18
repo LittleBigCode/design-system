@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dropdown menu · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/menu">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Dropdown menu</h1>
+        <p class="docs-lede">A flat, bordered list of actions anchored to a trigger. Full-width <code>.ds-menu__item</code> buttons shift to the alt surface on hover; a danger modifier, 1px dividers, and uppercase headers organise longer menus.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Anatomy</h2>
+        <p class="docs-note">A <code>.ds-menu</code> surface holds <code>.ds-menu__item</code> rows. Use <code>.ds-menu__header</code> for an uppercase group label, <code>.ds-menu__divider</code> for a 1px rule, and <code>.ds-menu__item--danger</code> for a destructive action.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Menu surface</span>
+            <button class="ds-button" data-copy-target="#c-anatomy">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <div class="ds-menu" role="menu">
+              <div class="ds-menu__header">Reference</div>
+              <button class="ds-menu__item" role="menuitem">Edit grid</button>
+              <button class="ds-menu__item" role="menuitem">Duplicate</button>
+              <a class="ds-menu__item" role="menuitem" href="#">Export CSV</a>
+              <div class="ds-menu__divider" role="separator"></div>
+              <button class="ds-menu__item ds-menu__item--danger" role="menuitem">Delete</button>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-anatomy">&lt;div class="ds-menu" role="menu"&gt;
+  &lt;div class="ds-menu__header"&gt;Reference&lt;/div&gt;
+  &lt;button class="ds-menu__item" role="menuitem"&gt;Edit grid&lt;/button&gt;
+  &lt;button class="ds-menu__item" role="menuitem"&gt;Duplicate&lt;/button&gt;
+  &lt;a class="ds-menu__item" role="menuitem" href="#"&gt;Export CSV&lt;/a&gt;
+  &lt;div class="ds-menu__divider" role="separator"&gt;&lt;/div&gt;
+  &lt;button class="ds-menu__item ds-menu__item--danger" role="menuitem"&gt;Delete&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Interactive</h2>
+        <p class="docs-note">A trigger toggles the menu; it closes on outside-click or Escape. The small inline script below wires this demo (no dependencies).</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Toggle on click</span>
+            <button class="ds-button" data-copy-target="#c-live">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <div class="ds-dropdown" data-dropdown style="position:relative;display:inline-flex">
+              <button class="ds-button" type="button" data-dropdown-trigger aria-haspopup="menu" aria-expanded="false">Actions</button>
+              <div class="ds-menu" role="menu" data-dropdown-menu hidden style="position:absolute;top:calc(100% + 6px);left:0">
+                <button class="ds-menu__item" role="menuitem">Edit grid</button>
+                <button class="ds-menu__item" role="menuitem">Duplicate</button>
+                <div class="ds-menu__divider" role="separator"></div>
+                <button class="ds-menu__item ds-menu__item--danger" role="menuitem">Delete</button>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-live">&lt;div class="ds-dropdown" data-dropdown&gt;
+  &lt;button class="ds-button" data-dropdown-trigger aria-haspopup="menu" aria-expanded="false"&gt;Actions&lt;/button&gt;
+  &lt;div class="ds-menu" role="menu" data-dropdown-menu hidden&gt;
+    &lt;button class="ds-menu__item" role="menuitem"&gt;Edit grid&lt;/button&gt;
+    &lt;button class="ds-menu__item" role="menuitem"&gt;Duplicate&lt;/button&gt;
+    &lt;div class="ds-menu__divider" role="separator"&gt;&lt;/div&gt;
+    &lt;button class="ds-menu__item ds-menu__item--danger" role="menuitem"&gt;Delete&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <p class="docs-note">The <code>Dropdown</code> manages open state, closes on outside-click / Escape, and moves focus between items with the arrow keys. Pass a <code>trigger</code> and render <code>MenuItem</code> children.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;Dropdown&gt;</span>
+            <button class="ds-button" data-copy-target="#c-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-react">import { Dropdown, MenuItem, MenuDivider, Button } from "@diametral/design-system/react";
+
+&lt;Dropdown align="start" trigger={&lt;Button&gt;Actions&lt;/Button&gt;}&gt;
+  &lt;MenuItem onClick={editGrid}&gt;Edit grid&lt;/MenuItem&gt;
+  &lt;MenuItem onClick={duplicate}&gt;Duplicate&lt;/MenuItem&gt;
+  &lt;MenuDivider /&gt;
+  &lt;MenuItem danger onClick={remove}&gt;Delete&lt;/MenuItem&gt;
+&lt;/Dropdown&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Minimal vanilla wiring for the interactive .ds-menu demo (no dependencies).
+    document.querySelectorAll("[data-dropdown]").forEach(function (root) {
+      var trigger = root.querySelector("[data-dropdown-trigger]");
+      var menu = root.querySelector("[data-dropdown-menu]");
+      if (!trigger || !menu) return;
+      function setOpen(open) {
+        menu.hidden = !open;
+        trigger.setAttribute("aria-expanded", String(open));
+        if (open) {
+          var first = menu.querySelector('[role="menuitem"]');
+          if (first) first.focus();
+        }
+      }
+      trigger.addEventListener("click", function () { setOpen(menu.hidden); });
+      document.addEventListener("mousedown", function (e) {
+        if (!root.contains(e.target)) setOpen(false);
+      });
+      menu.addEventListener("keydown", function (e) {
+        if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+        e.preventDefault();
+        var items = Array.prototype.slice.call(menu.querySelectorAll('[role="menuitem"]'));
+        var i = items.indexOf(document.activeElement);
+        var next = e.key === "ArrowDown" ? (i + 1) % items.length : (i - 1 + items.length) % items.length;
+        items[next].focus();
+      });
+      root.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { setOpen(false); trigger.focus(); }
+      });
+    });
+  </script>
+</body>
+</html>

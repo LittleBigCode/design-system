@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagination · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/pagination">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Pagination</h1>
+        <p class="docs-lede">A flat strip of square, 1px-bordered page buttons with prev/next controls and an ellipsis where the run is collapsed. The active page fills with ink; the nav buttons dim when there is nowhere to go.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Interactive</h2>
+        <p class="docs-note">Click a page or the prev/next buttons. The active page carries <code>is-active</code>, and the nav buttons take <code>disabled</code> at the ends of the range.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Live</span>
+            <button class="ds-button" data-copy-target="#c-live">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <nav class="ds-pagination" aria-label="Pagination" id="demoPager">
+              <button type="button" class="ds-pagination__nav" data-rel="prev" aria-label="Previous page" disabled>Prev</button>
+              <button type="button" class="ds-pagination__item is-active" aria-current="page" data-page="1">1</button>
+              <button type="button" class="ds-pagination__item" data-page="2">2</button>
+              <button type="button" class="ds-pagination__item" data-page="3">3</button>
+              <button type="button" class="ds-pagination__item" data-page="4">4</button>
+              <button type="button" class="ds-pagination__item" data-page="5">5</button>
+              <button type="button" class="ds-pagination__nav" data-rel="next" aria-label="Next page">Next</button>
+            </nav>
+          </div>
+          <pre class="ds-example__code"><code id="c-live">&lt;nav class="ds-pagination" aria-label="Pagination"&gt;
+  &lt;button class="ds-pagination__nav" aria-label="Previous page" disabled&gt;Prev&lt;/button&gt;
+  &lt;button class="ds-pagination__item is-active" aria-current="page"&gt;1&lt;/button&gt;
+  &lt;button class="ds-pagination__item"&gt;2&lt;/button&gt;
+  &lt;button class="ds-pagination__item"&gt;3&lt;/button&gt;
+  &lt;button class="ds-pagination__item"&gt;4&lt;/button&gt;
+  &lt;button class="ds-pagination__item"&gt;5&lt;/button&gt;
+  &lt;button class="ds-pagination__nav" aria-label="Next page"&gt;Next&lt;/button&gt;
+&lt;/nav&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Collapsed run</h2>
+        <p class="docs-note">For long ranges, keep the first and last page and drop a <code>ds-pagination__ellipsis</code> where the middle is hidden.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">With ellipsis</span>
+            <button class="ds-button" data-copy-target="#c-ellipsis">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <nav class="ds-pagination" aria-label="Pagination">
+              <button type="button" class="ds-pagination__nav" aria-label="Previous page">Prev</button>
+              <button type="button" class="ds-pagination__item">1</button>
+              <span class="ds-pagination__ellipsis" aria-hidden="true">…</span>
+              <button type="button" class="ds-pagination__item">5</button>
+              <button type="button" class="ds-pagination__item is-active" aria-current="page">6</button>
+              <button type="button" class="ds-pagination__item">7</button>
+              <span class="ds-pagination__ellipsis" aria-hidden="true">…</span>
+              <button type="button" class="ds-pagination__item">24</button>
+              <button type="button" class="ds-pagination__nav" aria-label="Next page">Next</button>
+            </nav>
+          </div>
+          <pre class="ds-example__code"><code id="c-ellipsis">&lt;nav class="ds-pagination" aria-label="Pagination"&gt;
+  &lt;button class="ds-pagination__nav" aria-label="Previous page"&gt;Prev&lt;/button&gt;
+  &lt;button class="ds-pagination__item"&gt;1&lt;/button&gt;
+  &lt;span class="ds-pagination__ellipsis" aria-hidden="true"&gt;…&lt;/span&gt;
+  &lt;button class="ds-pagination__item"&gt;5&lt;/button&gt;
+  &lt;button class="ds-pagination__item is-active" aria-current="page"&gt;6&lt;/button&gt;
+  &lt;button class="ds-pagination__item"&gt;7&lt;/button&gt;
+  &lt;span class="ds-pagination__ellipsis" aria-hidden="true"&gt;…&lt;/span&gt;
+  &lt;button class="ds-pagination__item"&gt;24&lt;/button&gt;
+  &lt;button class="ds-pagination__nav" aria-label="Next page"&gt;Next&lt;/button&gt;
+&lt;/nav&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <p class="docs-note">Controlled: hold <code>page</code> in state and update it from <code>onChange</code>. The component computes the window and ellipses from <code>pageCount</code> and <code>siblingCount</code>.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;Pagination /&gt;</span>
+            <button class="ds-button" data-copy-target="#c-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-react">import { useState } from "react";
+import { Pagination } from "@diametral/design-system/react";
+
+const [page, setPage] = useState(6);
+
+&lt;Pagination
+  page={page}
+  pageCount={24}
+  siblingCount={1}
+  onChange={setPage}
+/&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Tiny vanilla demo wiring for the live pagination panel.
+    (function () {
+      var pager = document.getElementById("demoPager");
+      if (!pager) return;
+      var pages = Array.prototype.slice.call(pager.querySelectorAll(".ds-pagination__item"));
+      var prev = pager.querySelector('[data-rel="prev"]');
+      var next = pager.querySelector('[data-rel="next"]');
+      var current = 1;
+
+      function render() {
+        pages.forEach(function (btn) {
+          var n = Number(btn.getAttribute("data-page"));
+          var on = n === current;
+          btn.classList.toggle("is-active", on);
+          if (on) btn.setAttribute("aria-current", "page");
+          else btn.removeAttribute("aria-current");
+        });
+        prev.disabled = current <= 1;
+        next.disabled = current >= pages.length;
+      }
+
+      pages.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          current = Number(btn.getAttribute("data-page"));
+          render();
+        });
+      });
+      prev.addEventListener("click", function () { if (current > 1) { current -= 1; render(); } });
+      next.addEventListener("click", function () { if (current < pages.length) { current += 1; render(); } });
+      render();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+/* Avatar — .ds-avatar (square initials/image) + .ds-avatar-group (overlap stack)
+   A flat, sharp square: a 1px bordered tile showing uppercase initials on the
+   alt surface, or a cover-fit image clipped to the square. Sizes sm/default/lg. */
+.ds-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex: none;
+  overflow: hidden;
+  border: 1px solid var(--ds-rule);
+  background: var(--ds-bg-alt);
+  color: var(--ds-ink-soft);
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-sm);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  user-select: none;
+  border-radius: var(--ds-radius-none);
+}
+
+.ds-avatar__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Sizes — default is 36px (no modifier) */
+.ds-avatar--sm {
+  width: 24px;
+  height: 24px;
+  font-size: var(--ds-text-2xs);
+}
+.ds-avatar--lg {
+  width: 56px;
+  height: 56px;
+  font-size: var(--ds-text-base);
+}
+
+/* Focusable avatars (e.g. clickable / link) */
+.ds-avatar:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: 2px;
+}
+
+/* ----------------------------------------------------------------------------
+   Group — overlapping stack. Each avatar carries a 2px surface outline so the
+   overlaps read as crisp separations (no box-shadow), and later tiles sit on
+   top of earlier ones.
+   ---------------------------------------------------------------------------- */
+.ds-avatar-group {
+  display: inline-flex;
+  align-items: center;
+}
+.ds-avatar-group .ds-avatar {
+  outline: 2px solid var(--ds-surface);
+  position: relative;
+  z-index: 1;
+}
+.ds-avatar-group .ds-avatar + .ds-avatar {
+  margin-left: -8px;
+}
+.ds-avatar-group--sm .ds-avatar + .ds-avatar {
+  margin-left: -6px;
+}
+.ds-avatar-group--lg .ds-avatar + .ds-avatar {
+  margin-left: -12px;
+}
+
+/* Overflow count chip — reuses .ds-avatar styling, set off as a count tile. */
+.ds-avatar-group .ds-avatar--count {
+  background: var(--ds-surface);
+  color: var(--ds-ink-faint);
+  z-index: 0;
+}

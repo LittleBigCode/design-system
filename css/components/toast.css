@@ -1,0 +1,67 @@
+/* ============================================================================
+   Toast — .ds-toast (+ .ds-toasts viewport)
+   ----------------------------------------------------------------------------
+   A transient, floating notification: a bordered surface card with a 3px
+   status bar on the left (like .ds-alert, but it floats and sits on a surface
+   rather than a tint). Stacks in a fixed top-right viewport (.ds-toasts).
+   Flat parti pris: 1px borders, no radius, no shadow — separation by rule.
+   ============================================================================ */
+.ds-toasts {
+  position: fixed;
+  top: var(--ds-space-4);
+  right: var(--ds-space-4);
+  z-index: var(--ds-z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-2);
+  width: 360px;
+  max-width: calc(100vw - var(--ds-space-7));
+  pointer-events: none; /* let clicks fall through the gaps; cards re-enable */
+}
+
+.ds-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ds-space-3);
+  padding: var(--ds-space-3) var(--ds-space-4);
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-rule);
+  border-left: 3px solid var(--ds-accent);
+  color: var(--ds-ink);
+  font-size: var(--ds-text-base);
+  line-height: var(--ds-leading-normal);
+  border-radius: var(--ds-radius-none);
+  pointer-events: auto;
+}
+
+.ds-toast__content { flex: 1 1 auto; min-width: 0; }
+.ds-toast__title { font-weight: 500; margin-bottom: var(--ds-space-1); }
+.ds-toast__message { color: var(--ds-ink-soft); font-size: var(--ds-text-sm); }
+
+/* Borderless × dismiss button */
+.ds-toast__close {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin: -2px -4px 0 0;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--ds-ink-faint);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: var(--ds-radius-none);
+  transition: color var(--ds-transition);
+}
+.ds-toast__close:hover { color: var(--ds-ink); }
+.ds-toast__close:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: 2px; }
+
+/* ---- Status variants (recolor the left bar) ------------------------------ */
+.ds-toast--info    { border-left-color: var(--ds-info); }
+.ds-toast--success { border-left-color: var(--ds-success); }
+.ds-toast--warning { border-left-color: var(--ds-warning); }
+.ds-toast--danger  { border-left-color: var(--ds-danger); }

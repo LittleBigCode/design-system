@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/card">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Card</h1>
+        <p class="docs-lede">A flat bordered surface with no shadow. Compose an optional full-bleed <code>ds-card__media</code> image, a title-voiced <code>ds-card__header</code>, a <code>ds-card__body</code>, and a <code>ds-card__footer</code> set off by a top rule on the alt background. Add <code>--clickable</code> to make the whole card an affordance.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Anatomy</h2>
+        <p class="docs-note">Header, body, and a footer separated by a top rule. The footer sits on <code>--ds-bg-alt</code>.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Header · body · footer</span>
+            <button class="ds-button" data-copy-target="#c-anatomy">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-card" style="max-width:320px">
+              <div class="ds-card__header"><h3 class="ds-card__title">Senior consultant</h3></div>
+              <div class="ds-card__body">Day rate and margin for a confirmed mission, derived from the salary and the agreed billing terms.</div>
+              <div class="ds-card__footer">Updated 2 hours ago</div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-anatomy">&lt;div class="ds-card"&gt;
+  &lt;div class="ds-card__header"&gt;&lt;h3 class="ds-card__title"&gt;Senior consultant&lt;/h3&gt;&lt;/div&gt;
+  &lt;div class="ds-card__body"&gt;Day rate and margin for a confirmed mission…&lt;/div&gt;
+  &lt;div class="ds-card__footer"&gt;Updated 2 hours ago&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>With media</h2>
+        <p class="docs-note">A full-bleed <code>ds-card__media</code> image at the top, flush to the border.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Media · header · body</span>
+            <button class="ds-button" data-copy-target="#c-media">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-card" style="max-width:320px">
+              <img class="ds-card__media" src="../../assets/photography/texture-walnut.png" alt="">
+              <div class="ds-card__header"><h3 class="ds-card__title">Walnut texture</h3></div>
+              <div class="ds-card__body">A material sample card with a full-bleed image header.</div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-media">&lt;div class="ds-card"&gt;
+  &lt;img class="ds-card__media" src="walnut.png" alt=""&gt;
+  &lt;div class="ds-card__header"&gt;&lt;h3 class="ds-card__title"&gt;Walnut texture&lt;/h3&gt;&lt;/div&gt;
+  &lt;div class="ds-card__body"&gt;A material sample card…&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Divided blocks &amp; clickable</h2>
+        <p class="docs-note">Stack <code>ds-card__block</code> regions separated by a soft rule. The <code>--clickable</code> modifier adds a hover background and pointer.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Blocks · --clickable</span>
+            <button class="ds-button" data-copy-target="#c-blocks">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-card ds-card--clickable" style="max-width:320px" tabindex="0" role="button">
+              <div class="ds-card__block">First region</div>
+              <div class="ds-card__block">Second region, separated by a soft rule</div>
+              <div class="ds-card__block">Third region</div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-blocks">&lt;div class="ds-card ds-card--clickable" tabindex="0" role="button"&gt;
+  &lt;div class="ds-card__block"&gt;First region&lt;/div&gt;
+  &lt;div class="ds-card__block"&gt;Second region…&lt;/div&gt;
+  &lt;div class="ds-card__block"&gt;Third region&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <p class="docs-note">The <code>Card</code> component renders the same markup. Pass <code>media</code> as an image <code>src</code> string or any node.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;Card /&gt;</span>
+            <button class="ds-button" data-copy-target="#c-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-react">import { Card } from "@diametral/design-system/react";
+
+&lt;Card
+  title="Senior consultant"
+  media="/walnut.png"
+  footer="Updated 2 hours ago"
+  clickable
+  onClick={openMission}
+&gt;
+  Day rate and margin for a confirmed mission.
+&lt;/Card&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data grid (lazy) · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+  <script type="importmap">
+  { "imports": {
+    "react": "https://esm.sh/react@18.3.1",
+    "react-dom": "https://esm.sh/react-dom@18.3.1?external=react",
+    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client?external=react"
+  } }
+  </script>
+</head>
+<body data-page="components/datagrid">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components · data</p>
+        <h1 class="ds-title ds-title--xl">Data grid</h1>
+        <p class="docs-lede">A full data grid: sortable columns, per-column filters, row selection, expandable detail rows, column show/hide, and <b>lazy server-side loading</b> in either paginated or infinite (“load more”) mode. The two grids below are driven by React with a mock server that adds latency — watch the skeleton rows on each load.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Lazy — paginated</h2>
+        <p class="docs-note">Sorting, filtering and paging are sent to <code>loadPage()</code>; the grid renders skeleton rows while the “server” responds. Try sorting a column, typing in a filter, selecting rows, and expanding a row.</p>
+        <div class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">DataGrid · lazyMode="pagination"</span></header>
+          <div class="ds-example__preview ds-example__preview--block"><div id="grid-paginated">Loading React…</div></div>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Lazy — infinite (load more)</h2>
+        <div class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">DataGrid · lazyMode="infinite"</span></header>
+          <div class="ds-example__preview ds-example__preview--block"><div id="grid-infinite">Loading React…</div></div>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Usage</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">JSX</span><button class="ds-button" data-copy-target="#c-dg">Copy</button></header>
+          <pre class="ds-example__code"><code id="c-dg">import { DataGrid } from "@diametral/design-system/react";
+
+const columns = [
+  { key: "id", header: "ID", sortable: true, align: "right", width: "64px" },
+  { key: "name", header: "Mission", sortable: true, filterable: true },
+  { key: "entity", header: "Entity", sortable: true, filterable: true },
+  { key: "margin", header: "Margin %", sortable: true, align: "right",
+    render: (r) =&gt; &lt;span className="ds-numeric"&gt;{r.margin} %&lt;/span&gt; },
+];
+
+// lazy/server mode: called on mount and on every sort/filter/page change
+async function loadPage({ page, pageSize, sort, filters }) {
+  const res = await fetch(`/api/missions?page=${page}&size=${pageSize}` +
+    `&sort=${sort?.key ?? ""}:${sort?.dir ?? ""}`);
+  const { rows, total } = await res.json();
+  return { rows, total };
+}
+
+&lt;DataGrid
+  title="Missions"
+  columns={columns}
+  loadPage={loadPage}
+  lazyMode="pagination"   // or "infinite"
+  pageSize={8}
+  selectable filterable
+  expandable
+  renderDetail={(r) =&gt; &lt;div&gt;Full detail for {r.name}&lt;/div&gt;}
+  onSelectionChange={(keys) =&gt; console.log(keys)}
+/&gt;
+
+// Client mode: pass `rows` instead of `loadPage` for in-memory sort/filter/page.</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+
+  <script type="module">
+    import React from "react";
+    import { createRoot } from "react-dom/client";
+    import { DataGrid } from "../../react/components/DataGrid.js";
+    const h = React.createElement;
+
+    const ENTITIES = ["LBC_FR", "LBC_BE", "LBC_US", "LBC_CH"];
+    const GRADES = ["Consultant", "Senior", "Manager", "Director"];
+    const DATA = Array.from({ length: 137 }, (_, i) => ({
+      id: i + 1,
+      name: "Mission " + String(i + 1).padStart(3, "0"),
+      entity: ENTITIES[i % 4],
+      grade: GRADES[(i * 3) % 4],
+      margin: Math.round((((i * 37) % 60) - 8) * 10) / 10,
+    }));
+
+    // Mock server: filters + sorts + paginates with simulated latency.
+    function loadPage({ page, pageSize, sort, filters }) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          let d = DATA.slice();
+          for (const [k, v] of Object.entries(filters)) {
+            if (v) d = d.filter((r) => String(r[k]).toLowerCase().includes(v.toLowerCase()));
+          }
+          if (sort && sort.key) {
+            d.sort((a, b) => {
+              const av = a[sort.key], bv = b[sort.key];
+              const c = av > bv ? 1 : av < bv ? -1 : 0;
+              return sort.dir === "desc" ? -c : c;
+            });
+          }
+          const total = d.length;
+          const start = (page - 1) * pageSize;
+          resolve({ rows: d.slice(start, start + pageSize), total });
+        }, 650);
+      });
+    }
+
+    const marginCell = (r) =>
+      h("span", { className: cxLocal("ds-numeric", r.margin < 0 ? "neg" : null),
+        style: { color: r.margin < 0 ? "var(--ds-danger)" : "var(--ds-success)" } }, r.margin + " %");
+    function cxLocal(...a) { return a.filter(Boolean).join(" "); }
+
+    const columns = [
+      { key: "id", header: "ID", sortable: true, align: "right", width: "64px" },
+      { key: "name", header: "Mission", sortable: true, filterable: true },
+      { key: "entity", header: "Entity", sortable: true, filterable: true },
+      { key: "grade", header: "Grade", sortable: true },
+      { key: "margin", header: "Margin %", sortable: true, align: "right", render: marginCell },
+    ];
+
+    const detail = (r) => h("div", null,
+      h("div", { className: "ds-label", style: { marginBottom: "6px" } }, "Detail"),
+      h("div", null, `${r.name} — ${r.entity} · ${r.grade} · margin ${r.margin}%`));
+
+    createRoot(document.getElementById("grid-paginated")).render(
+      h(DataGrid, {
+        title: "Missions (lazy)", columns, loadPage, lazyMode: "pagination",
+        pageSize: 8, selectable: true, filterable: true, expandable: true, renderDetail: detail,
+      })
+    );
+    createRoot(document.getElementById("grid-infinite")).render(
+      h(DataGrid, {
+        title: "Missions (infinite)", columns: columns.slice(0, 4), loadPage,
+        lazyMode: "infinite", pageSize: 12, columnToggle: false,
+      })
+    );
+  </script>
+</body>
+</html>

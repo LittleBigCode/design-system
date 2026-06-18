@@ -1,0 +1,80 @@
+/* Vertical nav — .ds-vnav (sidebar navigation column)
+   A stacked list of links, optionally grouped under uppercase labels. The
+   active item gets an accent left bar, full-ink text and an alt background.
+   Collapsible items reveal a nested, indented child list. */
+.ds-vnav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-1);
+  font-family: var(--ds-font-sans);
+}
+
+/* Groups + their uppercase label */
+.ds-vnav__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-1);
+}
+.ds-vnav__group + .ds-vnav__group { margin-top: var(--ds-space-4); }
+
+.ds-vnav__label {
+  font-size: var(--ds-text-2xs);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ds-ink-faint);
+  padding: var(--ds-space-2) var(--ds-space-3) var(--ds-space-1);
+}
+
+/* Items — link with a transparent left border that the active state fills */
+.ds-vnav__item {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+  padding: var(--ds-space-2) var(--ds-space-3);
+  border-left: 2px solid transparent;
+  color: var(--ds-ink-soft);
+  font-size: var(--ds-text-sm);
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: var(--ds-radius-none);
+  transition: background-color var(--ds-transition), color var(--ds-transition), border-color var(--ds-transition);
+}
+.ds-vnav__item:hover { background: var(--ds-bg-alt); color: var(--ds-ink); }
+.ds-vnav__item:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: -2px; }
+
+.ds-vnav__item.is-active,
+.ds-vnav__item[aria-current="page"] {
+  color: var(--ds-ink);
+  font-weight: 500;
+  background: var(--ds-bg-alt);
+  border-left-color: var(--ds-accent);
+}
+
+/* Collapsible item — a trigger plus a caret that rotates when expanded */
+.ds-vnav__item--collapsible {
+  width: 100%;
+  border: none;
+  background: none;
+  border-left: 2px solid transparent;
+  text-align: left;
+  justify-content: space-between;
+  font-family: inherit;
+}
+.ds-vnav__caret {
+  flex: none;
+  margin-left: auto;
+  color: var(--ds-ink-faint);
+  transition: transform var(--ds-transition);
+}
+.ds-vnav__item--collapsible[aria-expanded="true"] .ds-vnav__caret { transform: rotate(90deg); }
+
+/* Nested children — indented, hidden until the parent is expanded */
+.ds-vnav__children {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-1);
+  padding-left: var(--ds-space-4);
+}
+.ds-vnav__item--collapsible[aria-expanded="false"] + .ds-vnav__children { display: none; }
+.ds-vnav__children .ds-vnav__item { font-size: var(--ds-text-xs); }

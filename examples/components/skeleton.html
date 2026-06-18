@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skeleton · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/skeleton">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Skeleton</h1>
+        <p class="docs-lede">A shimmering placeholder for content that is still loading. The base <code>ds-skeleton</code> sweeps a grey gradient across a flat (no-radius) bar. Variants size it as text, a full-width line, a square block, or a generic block. Animation is suppressed under <code>prefers-reduced-motion</code>.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Variants</h2>
+        <p class="docs-note">Text lines, a full-width line, and a generic block. The shimmer animates automatically.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">text · line · block</span>
+            <button class="ds-button" data-copy-target="#c-variants">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div style="max-width:420px;display:flex;flex-direction:column;gap:12px">
+              <span class="ds-skeleton ds-skeleton--text" style="width:60%"></span>
+              <span class="ds-skeleton ds-skeleton--line"></span>
+              <span class="ds-skeleton ds-skeleton--block"></span>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-variants">&lt;span class="ds-skeleton ds-skeleton--text" style="width:60%"&gt;&lt;/span&gt;
+&lt;span class="ds-skeleton ds-skeleton--line"&gt;&lt;/span&gt;
+&lt;span class="ds-skeleton ds-skeleton--block"&gt;&lt;/span&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Media row</h2>
+        <p class="docs-note">A square <code>--circle</code> (kept sharp per the no-radius parti pris) beside stacked text lines — a typical avatar-and-name loading row.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">circle · text</span>
+            <button class="ds-button" data-copy-target="#c-media">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div style="display:flex;gap:14px;align-items:center;max-width:420px">
+              <span class="ds-skeleton ds-skeleton--circle"></span>
+              <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+                <span class="ds-skeleton ds-skeleton--text" style="width:50%"></span>
+                <span class="ds-skeleton ds-skeleton--text" style="width:80%"></span>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-media">&lt;div style="display:flex;gap:14px;align-items:center"&gt;
+  &lt;span class="ds-skeleton ds-skeleton--circle"&gt;&lt;/span&gt;
+  &lt;div style="flex:1"&gt;
+    &lt;span class="ds-skeleton ds-skeleton--text" style="width:50%"&gt;&lt;/span&gt;
+    &lt;span class="ds-skeleton ds-skeleton--text" style="width:80%"&gt;&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Card placeholder</h2>
+        <p class="docs-note">A block for the media area over a few text lines — a loading stand-in for a card.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">block · text</span>
+            <button class="ds-button" data-copy-target="#c-card">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-card" style="max-width:320px">
+              <span class="ds-skeleton ds-skeleton--block" style="height:140px"></span>
+              <div class="ds-card__body" style="display:flex;flex-direction:column;gap:8px">
+                <span class="ds-skeleton ds-skeleton--text" style="width:70%"></span>
+                <span class="ds-skeleton ds-skeleton--text"></span>
+                <span class="ds-skeleton ds-skeleton--text" style="width:40%"></span>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-card">&lt;div class="ds-card"&gt;
+  &lt;span class="ds-skeleton ds-skeleton--block" style="height:140px"&gt;&lt;/span&gt;
+  &lt;div class="ds-card__body"&gt;
+    &lt;span class="ds-skeleton ds-skeleton--text" style="width:70%"&gt;&lt;/span&gt;
+    &lt;span class="ds-skeleton ds-skeleton--text"&gt;&lt;/span&gt;
+    &lt;span class="ds-skeleton ds-skeleton--text" style="width:40%"&gt;&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <p class="docs-note">The <code>Skeleton</code> component picks a <code>variant</code>, accepts inline <code>width</code>/<code>height</code>, and renders N stacked lines via <code>count</code>.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;Skeleton /&gt;</span>
+            <button class="ds-button" data-copy-target="#c-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-react">import { Skeleton } from "@diametral/design-system/react";
+
+&lt;Skeleton variant="circle" /&gt;
+&lt;Skeleton variant="line" width="60%" /&gt;
+&lt;Skeleton variant="text" count={3} /&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+/* ============================================================================
+   Description list — .ds-dl
+   ----------------------------------------------------------------------------
+   A <dl> laid out as a two-column grid: an auto-width uppercase label column
+   and a 1fr value column. Each term/description pair is one row, separated from
+   the next by a soft rule. Built for key/value detail readouts.
+   ============================================================================ */
+.ds-dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 24px;
+  margin: 0;
+}
+
+.ds-dl__term {
+  font-size: var(--ds-text-2xs);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ds-ink-faint);
+  padding: 10px 0;
+  border-top: 1px solid var(--ds-rule-soft);
+  align-self: baseline;
+  white-space: nowrap;
+}
+
+.ds-dl__desc {
+  margin: 0;
+  font-size: var(--ds-text-base);
+  color: var(--ds-ink);
+  padding: 10px 0;
+  border-top: 1px solid var(--ds-rule-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+/* First row drops the leading rule. */
+.ds-dl__term:first-of-type,
+.ds-dl__term:first-of-type + .ds-dl__desc {
+  border-top: none;
+}

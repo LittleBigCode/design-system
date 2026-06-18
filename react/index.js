@@ -18,11 +18,18 @@ export const cx = (...a) => a.filter(Boolean).join(" ");
 
 /* ---- Button -------------------------------------------------------------- */
 export const Button = React.forwardRef(function Button(
-  { variant, className, type = "button", children, ...rest }, ref
+  { variant, size, loading, block, className, type = "button", disabled, children, ...rest }, ref
 ) {
   return h("button", {
     ref, type,
-    className: cx("ds-button", variant && `ds-button--${variant}`, className),
+    disabled: disabled || loading || undefined,
+    "aria-busy": loading || undefined,
+    className: cx("ds-button",
+      variant && `ds-button--${variant}`,
+      size && `ds-button--${size}`,
+      loading && "ds-button--loading",
+      block && "ds-button--block",
+      className),
     ...rest,
   }, children);
 });
@@ -211,3 +218,34 @@ export function Wordmark({ name = "Diametral", sub, className }) {
     sub != null ? h("span", { className: "ds-wordmark__sub" }, sub) : null
   );
 }
+
+/* ---- Extended component library (separate modules) ----------------------- */
+export * from "./components/Accordion.js";
+export * from "./components/Alert.js";
+export * from "./components/Avatar.js";
+export * from "./components/Breadcrumb.js";
+export * from "./components/ButtonExtras.js";
+export * from "./components/Card.js";
+export * from "./components/Checkbox.js";
+export * from "./components/DataGrid.js";
+export * from "./components/DescriptionList.js";
+export * from "./components/Dropdown.js";
+export * from "./components/EmptyState.js";
+export * from "./components/FieldHint.js";
+export * from "./components/InputGroup.js";
+export * from "./components/Pagination.js";
+export * from "./components/Popover.js";
+export * from "./components/Progress.js";
+export * from "./components/Radio.js";
+export * from "./components/Range.js";
+export * from "./components/Select.js";
+export * from "./components/Skeleton.js";
+export * from "./components/Spinner.js";
+export * from "./components/Stepper.js";
+export * from "./components/Tag.js";
+export * from "./components/Textarea.js";
+export * from "./components/Timeline.js";
+export * from "./components/ToastProvider.js";
+export * from "./components/Tooltip.js";
+export * from "./components/Tree.js";
+export * from "./components/VerticalNav.js";
