@@ -3,7 +3,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import {
-  Wordmark, Button, Input, Badge, Avatar, Tooltip, Card, Field, Kbd,
+  Wordmark, Button, Input, Badge, Avatar, Tooltip, Card, Field, Kbd, Segmented,
   ToastProvider, CommandPalette,
 } from "../../react/index.js";
 import { h, F } from "./ui.js";
@@ -49,6 +49,7 @@ function Shell({ onSignOut }) {
   const [view, setView] = useState("overview");
   const [sel, setSel] = useState({});
   const [cmdOpen, setCmdOpen] = useState(false);
+  const [theme, setTheme] = useState("light");
   const go = (v) => setView(v);
   const select = (o) => setSel((s) => ({ ...s, ...o }));
   const activeId = ACTIVE_FOR[view] || view;
@@ -61,6 +62,12 @@ function Shell({ onSignOut }) {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === "light") root.removeAttribute("data-theme");
+    else root.setAttribute("data-theme", theme);
+  }, [theme]);
 
   const commands = [
     ...FLAT.map((n) => ({ id: n.id, label: n.label, group: "Go to", onRun: () => go(n.id) })),
@@ -75,6 +82,7 @@ function Shell({ onSignOut }) {
         h("span", null, "Search projects, people…"),
         h(Kbd, null, "⌘K")),
       h("div", { className: "ds-app-bar__actions" },
+        h(Segmented, { items: [{ value: "light", label: "Light" }, { value: "dark", label: "Dark" }, { value: "sepia", label: "Sepia" }], value: theme, onChange: setTheme }),
         h(Badge, { variant: "accent" }, "Production"),
         h(Button, { variant: "primary", onClick: () => go("projects") }, "New"),
         h(Tooltip, { label: "Sign out" }, h("span", { onClick: onSignOut, style: { cursor: "pointer" } }, h(Avatar, { initials: "VD", size: "sm" })))))),
