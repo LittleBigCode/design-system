@@ -27,9 +27,10 @@ It ships as:
 
 There is **no build step required to use it**.
 
-The library spans **~40 components** — actions, forms, **data display (including a lazy-loading
-data grid)**, feedback, navigation, and overlays — every one with a matching React component.
-Browse them all in the [live showcase](https://littlebigcode.github.io/design-system/).
+The library spans **~50 components** — actions, forms, **data display (including a lazy-loading
+data grid)**, feedback, navigation, overlays, data-viz and utilities — every one with a matching
+React component, plus ready-made **page templates** (login, dashboard, 404). Browse them all in
+the [live showcase](https://littlebigcode.github.io/design-system/).
 
 ## Quick start
 

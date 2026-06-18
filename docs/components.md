@@ -2118,3 +2118,61 @@ the element.
 ```
 
 Live: [../examples/components/kbd.html](../examples/components/kbd.html)
+
+---
+
+# Selection & date/time
+
+## Multi-select
+
+A combobox that holds multiple values as removable tokens.
+
+```html
+<div class="ds-multiselect">
+  <div class="ds-multiselect__control">
+    <span class="ds-multiselect__token">React <button class="ds-multiselect__remove" aria-label="Remove">×</button></span>
+    <input class="ds-multiselect__input" placeholder="Add…">
+  </div>
+  <div class="ds-multiselect__list" role="listbox">
+    <div class="ds-multiselect__option is-selected" role="option">React</div>
+    <div class="ds-multiselect__option" role="option">Vue</div>
+  </div>
+</div>
+```
+
+**React** — `MultiSelect({ options, value, defaultValue, onChange, placeholder })`. `value` is a
+`string[]`; type to filter, click/Enter toggles an option, Backspace removes the last, tokens are
+removable. Controlled + uncontrolled.
+
+Live: [../examples/components/multi-select.html](../examples/components/multi-select.html)
+
+## Time picker
+
+An `HH:MM` field with scrollable hour/minute columns.
+
+```html
+<div class="ds-timepicker">
+  <input class="ds-input" value="09:30">
+  <div class="ds-timepicker__popover">
+    <div class="ds-timepicker__col"><button class="ds-timepicker__opt is-selected">09</button></div>
+    <div class="ds-timepicker__col"><button class="ds-timepicker__opt is-selected">30</button></div>
+  </div>
+</div>
+```
+
+**React** — `TimePicker({ value, defaultValue, onChange, step })`. `value` is `"HH:MM"`; `step`
+controls the minute increment (default 5). Controlled + uncontrolled.
+
+Live: [../examples/components/time-picker.html](../examples/components/time-picker.html)
+
+## Date-time picker
+
+Composes the date picker and time picker into one ISO `YYYY-MM-DDTHH:MM` value.
+
+```html
+<div class="ds-datetime"><!-- a .ds-datepicker + a .ds-timepicker side by side --></div>
+```
+
+**React** — `DateTimePicker({ value, defaultValue, onChange, min, max, step })`.
+
+Live: [../examples/components/date-time.html](../examples/components/date-time.html)
