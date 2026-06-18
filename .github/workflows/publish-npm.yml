@@ -1,0 +1,36 @@
+name: Publish to npm (public)
+
+# Publishes @littlebigcode/design-system to the PUBLIC npm registry
+# (registry.npmjs.org) so anyone can `npm i @littlebigcode/design-system` with
+# no auth. Requires an NPM_TOKEN repo secret (an npm automation token for an
+# account that owns the @littlebigcode scope/org). Triggered by publishing a
+# GitHub Release, or manually. See RELEASE.md.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write   # for npm provenance
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+          scope: "@littlebigcode"
+
+      - name: Build distributable artifacts
+        run: npm run build
+
+      - name: Publish (public, with provenance)
+        run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -32,30 +32,24 @@ layer follows.
 
 ## 2. Install
 
-**With npm** (or pnpm / yarn / bun). The package is published to the **GitHub Packages** registry
-under the `@littlebigcode` scope, so point that scope at GitHub Packages once (in your project's
-`.npmrc`):
+**From npm** (public registry) — no config, no token:
+
+```bash
+npm i @littlebigcode/design-system    # or pnpm / yarn / bun
+```
+
+<details>
+<summary>Installing from GitHub Packages instead</summary>
+
+The package is also published to GitHub Packages. That registry requires auth even for public
+packages, so add a project `.npmrc` and a `read:packages` token:
 
 ```ini
 # .npmrc
 @littlebigcode:registry=https://npm.pkg.github.com
-```
-
-GitHub Packages requires authentication even for public packages — add a token with `read:packages`
-(a GitHub Personal Access Token) to your user `~/.npmrc`:
-
-```ini
 //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
 ```
-
-Then install:
-
-```bash
-npm i @littlebigcode/design-system
-```
-
-> Prefer a zero-config install? Use the **CDN / copy** path below — it needs no registry or token.
-> (If you later publish to the public npm registry, drop the `.npmrc` scope line.)
+</details>
 
 `react` and `react-dom` are **optional peer dependencies** — add them *only* if you use the React
 layer. CSS-only and Web Component consumers don't pull them in.

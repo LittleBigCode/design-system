@@ -149,7 +149,7 @@ No third-party dependencies — the build uses Node built-ins only.
 Semantic Versioning for a CSS system: token renames / class removals are **major**,
 new tokens or components are **minor**, fixes are **patch**. See
 [`CHANGELOG.md`](CHANGELOG.md), [`docs/versioning.md`](docs/versioning.md), and
-[`CONTRIBUTING.md`](CONTRIBUTING.md).
+[`CONTRIBUTING.md`](CONTRIBUTING.md). Publishing to npm / GitHub Packages: [`RELEASE.md`](RELEASE.md).
 
 > ⚠️ **Font licensing.** **Ufficio is a commercial font**, bundled and served under
 > Diametral's own font license (see [`NOTICE.md`](NOTICE.md)). This repository grants no

@@ -1,0 +1,15 @@
+# Keep the published npm package lean and license-safe.
+# (package.json "files" is the allowlist; this trims within it.)
+
+# Commercial font — must NOT be redistributed in the package (see NOTICE.md).
+# Licensed users drop Ufficio-300.woff2 into their own assets and import ufficio.css.
+assets/fonts/Ufficio-300.woff2
+
+# Heavy showcase-only imagery and raster brand exports (not needed to consume the system).
+assets/photography/
+assets/logo/diametral-wordmark.png
+assets/logo/diametral-keyvisual.png
+
+# Reference material / local scratch
+Capture*.png
+_*.mjs
