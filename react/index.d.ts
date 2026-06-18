@@ -202,3 +202,6 @@ export * from "./components/AreaChart.js";
 export * from "./components/DonutChart.js";
 export * from "./components/Calendar.js";
 export * from "./components/Agenda.js";
+export * from "./components/PieChart.js";
+export * from "./components/GaugeChart.js";
+export * from "./components/StackedBar.js";

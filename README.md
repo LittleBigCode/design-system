@@ -91,6 +91,11 @@ See [`docs/react.md`](docs/react.md) and the live, buildless demo in
 > The system is pure CSS + fonts + SVG + a sprinkle of vanilla JS for the Web Components.
 > **No bundler, transpiler, or framework is needed to consume it.**
 
+## Installation
+
+Installing in a real project (npm or no-build) and integrating with Vite, Next.js, CRA, Angular,
+Vue, Tailwind, or a CDN import map: see [`docs/installation.md`](docs/installation.md).
+
 ## What's inside
 
 | Foundations | Components |

@@ -4,11 +4,12 @@ const cx = (...a) => a.filter(Boolean).join(" ");
 
 /* A small shared series palette of --ds-* tokens. */
 const SERIES_COLORS = [
-  "var(--ds-accent)",
-  "var(--ds-bleu)",
-  "var(--ds-success)",
-  "var(--ds-warning)",
-  "var(--ds-marron)",
+  "var(--ds-chart-1)",
+  "var(--ds-chart-2)",
+  "var(--ds-chart-3)",
+  "var(--ds-chart-4)",
+  "var(--ds-chart-5)",
+  "var(--ds-chart-6)",
 ];
 
 const r2 = (n) => Math.round(n * 100) / 100;

@@ -20,7 +20,7 @@
       <header class="docs-head">
         <p class="ds-kicker">Components</p>
         <h1 class="ds-title ds-title--xl">Charts</h1>
-        <p class="docs-lede">A small set of pure-SVG charts — line, area and donut — with no chart library. Each shares the flat <code>.ds-chart</code> wrapper, faint <code>.ds-chart__grid</code> gridlines, <code>.ds-chart__axis</code> labels and a wrap-friendly <code>.ds-chart-legend</code>. Series colors come from a tiny palette of <code>--ds-*</code> tokens. Flat, sharp, no radius, no shadow.</p>
+        <p class="docs-lede">A small set of pure-SVG charts — line, area, donut, pie, gauge and stacked bar — with no chart library. Each shares the flat <code>.ds-chart</code> wrapper, faint <code>.ds-chart__grid</code> gridlines, <code>.ds-chart__axis</code> labels and a wrap-friendly <code>.ds-chart-legend</code>. Series colors come from the categorical <code>--ds-chart-1</code>…<code>--ds-chart-6</code> token palette. Flat, sharp, no radius, no shadow.</p>
       </header>
 
       <section class="docs-section">
@@ -47,15 +47,15 @@
                 <text class="ds-chart__axis" x="340.29" y="194" text-anchor="middle">Jun</text>
                 <text class="ds-chart__axis" x="407.14" y="194" text-anchor="middle">Jul</text>
                 <text class="ds-chart__axis" x="474" y="194" text-anchor="end">Aug</text>
-                <polyline class="ds-linechart__line" points="6,156.55 72.86,109.64 139.71,180 206.57,78.36 273.43,117.45 340.29,31.45 407.14,62.73 474,8" style="stroke: var(--ds-accent)" />
-                <circle class="ds-linechart__dot" cx="6" cy="156.55" r="2.5" style="fill: var(--ds-accent)" />
-                <circle class="ds-linechart__dot" cx="72.86" cy="109.64" r="2.5" style="fill: var(--ds-accent)" />
-                <circle class="ds-linechart__dot" cx="139.71" cy="180" r="2.5" style="fill: var(--ds-accent)" />
-                <circle class="ds-linechart__dot" cx="206.57" cy="78.36" r="2.5" style="fill: var(--ds-accent)" />
-                <circle class="ds-linechart__dot" cx="273.43" cy="117.45" r="2.5" style="fill: var(--ds-accent)" />
-                <circle class="ds-linechart__dot" cx="340.29" cy="31.45" r="2.5" style="fill: var(--ds-accent)" />
-                <circle class="ds-linechart__dot" cx="407.14" cy="62.73" r="2.5" style="fill: var(--ds-accent)" />
-                <circle class="ds-linechart__dot" cx="474" cy="8" r="2.5" style="fill: var(--ds-accent)" />
+                <polyline class="ds-linechart__line" points="6,156.55 72.86,109.64 139.71,180 206.57,78.36 273.43,117.45 340.29,31.45 407.14,62.73 474,8" style="stroke: var(--ds-chart-1)" />
+                <circle class="ds-linechart__dot" cx="6" cy="156.55" r="2.5" style="fill: var(--ds-chart-1)" />
+                <circle class="ds-linechart__dot" cx="72.86" cy="109.64" r="2.5" style="fill: var(--ds-chart-1)" />
+                <circle class="ds-linechart__dot" cx="139.71" cy="180" r="2.5" style="fill: var(--ds-chart-1)" />
+                <circle class="ds-linechart__dot" cx="206.57" cy="78.36" r="2.5" style="fill: var(--ds-chart-1)" />
+                <circle class="ds-linechart__dot" cx="273.43" cy="117.45" r="2.5" style="fill: var(--ds-chart-1)" />
+                <circle class="ds-linechart__dot" cx="340.29" cy="31.45" r="2.5" style="fill: var(--ds-chart-1)" />
+                <circle class="ds-linechart__dot" cx="407.14" cy="62.73" r="2.5" style="fill: var(--ds-chart-1)" />
+                <circle class="ds-linechart__dot" cx="474" cy="8" r="2.5" style="fill: var(--ds-chart-1)" />
               </svg>
             </div>
           </div>
@@ -67,9 +67,9 @@
     &lt;text class="ds-chart__axis" x="6" y="194" text-anchor="start"&gt;Jan&lt;/text&gt;
     &lt;!-- …more x labels… --&gt;
     &lt;polyline class="ds-linechart__line"
-              points="6,156.55 72.86,109.64 …" style="stroke: var(--ds-accent)" /&gt;
+              points="6,156.55 72.86,109.64 …" style="stroke: var(--ds-chart-1)" /&gt;
     &lt;circle class="ds-linechart__dot" cx="474" cy="8" r="2.5"
-            style="fill: var(--ds-accent)" /&gt;
+            style="fill: var(--ds-chart-1)" /&gt;
   &lt;/svg&gt;
 &lt;/div&gt;</code></pre>
         </section>
@@ -87,24 +87,24 @@
                 <line class="ds-chart__grid" x1="6" y1="94" x2="474" y2="94" />
                 <line class="ds-chart__grid" x1="6" y1="137" x2="474" y2="137" />
                 <line class="ds-chart__grid" x1="6" y1="180" x2="474" y2="180" />
-                <polyline class="ds-linechart__line" points="6,180 99.6,115.5 193.2,147.75 286.8,61.75 380.4,94 474,8" style="stroke: var(--ds-accent)" />
-                <polyline class="ds-linechart__line" points="6,51 99.6,94 193.2,29.5 286.8,126.25 380.4,72.5 474,137" style="stroke: var(--ds-bleu)" />
-                <circle class="ds-linechart__dot" cx="6" cy="180" r="2.5" style="fill: var(--ds-accent)" />
-                <circle class="ds-linechart__dot" cx="99.6" cy="115.5" r="2.5" style="fill: var(--ds-accent)" />
-                <circle class="ds-linechart__dot" cx="193.2" cy="147.75" r="2.5" style="fill: var(--ds-accent)" />
-                <circle class="ds-linechart__dot" cx="286.8" cy="61.75" r="2.5" style="fill: var(--ds-accent)" />
-                <circle class="ds-linechart__dot" cx="380.4" cy="94" r="2.5" style="fill: var(--ds-accent)" />
-                <circle class="ds-linechart__dot" cx="474" cy="8" r="2.5" style="fill: var(--ds-accent)" />
-                <circle class="ds-linechart__dot" cx="6" cy="51" r="2.5" style="fill: var(--ds-bleu)" />
-                <circle class="ds-linechart__dot" cx="99.6" cy="94" r="2.5" style="fill: var(--ds-bleu)" />
-                <circle class="ds-linechart__dot" cx="193.2" cy="29.5" r="2.5" style="fill: var(--ds-bleu)" />
-                <circle class="ds-linechart__dot" cx="286.8" cy="126.25" r="2.5" style="fill: var(--ds-bleu)" />
-                <circle class="ds-linechart__dot" cx="380.4" cy="72.5" r="2.5" style="fill: var(--ds-bleu)" />
-                <circle class="ds-linechart__dot" cx="474" cy="137" r="2.5" style="fill: var(--ds-bleu)" />
+                <polyline class="ds-linechart__line" points="6,180 99.6,115.5 193.2,147.75 286.8,61.75 380.4,94 474,8" style="stroke: var(--ds-chart-1)" />
+                <polyline class="ds-linechart__line" points="6,51 99.6,94 193.2,29.5 286.8,126.25 380.4,72.5 474,137" style="stroke: var(--ds-chart-2)" />
+                <circle class="ds-linechart__dot" cx="6" cy="180" r="2.5" style="fill: var(--ds-chart-1)" />
+                <circle class="ds-linechart__dot" cx="99.6" cy="115.5" r="2.5" style="fill: var(--ds-chart-1)" />
+                <circle class="ds-linechart__dot" cx="193.2" cy="147.75" r="2.5" style="fill: var(--ds-chart-1)" />
+                <circle class="ds-linechart__dot" cx="286.8" cy="61.75" r="2.5" style="fill: var(--ds-chart-1)" />
+                <circle class="ds-linechart__dot" cx="380.4" cy="94" r="2.5" style="fill: var(--ds-chart-1)" />
+                <circle class="ds-linechart__dot" cx="474" cy="8" r="2.5" style="fill: var(--ds-chart-1)" />
+                <circle class="ds-linechart__dot" cx="6" cy="51" r="2.5" style="fill: var(--ds-chart-2)" />
+                <circle class="ds-linechart__dot" cx="99.6" cy="94" r="2.5" style="fill: var(--ds-chart-2)" />
+                <circle class="ds-linechart__dot" cx="193.2" cy="29.5" r="2.5" style="fill: var(--ds-chart-2)" />
+                <circle class="ds-linechart__dot" cx="286.8" cy="126.25" r="2.5" style="fill: var(--ds-chart-2)" />
+                <circle class="ds-linechart__dot" cx="380.4" cy="72.5" r="2.5" style="fill: var(--ds-chart-2)" />
+                <circle class="ds-linechart__dot" cx="474" cy="137" r="2.5" style="fill: var(--ds-chart-2)" />
               </svg>
               <div class="ds-chart-legend">
-                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-accent)"></span>Revenue</span>
-                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-bleu)"></span>Cost</span>
+                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-1)"></span>Revenue</span>
+                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-2)"></span>Cost</span>
               </div>
             </div>
           </div>
@@ -113,16 +113,16 @@
        preserveAspectRatio="none" aria-hidden="true"&gt;
     &lt;!-- gridlines --&gt;
     &lt;polyline class="ds-linechart__line" points="6,180 99.6,115.5 …"
-              style="stroke: var(--ds-accent)" /&gt;
+              style="stroke: var(--ds-chart-1)" /&gt;
     &lt;polyline class="ds-linechart__line" points="6,51 99.6,94 …"
-              style="stroke: var(--ds-bleu)" /&gt;
+              style="stroke: var(--ds-chart-2)" /&gt;
     &lt;!-- dots per series --&gt;
   &lt;/svg&gt;
   &lt;div class="ds-chart-legend"&gt;
     &lt;span class="ds-chart-legend__item"&gt;&lt;span class="ds-chart-legend__swatch"
-          style="background: var(--ds-accent)"&gt;&lt;/span&gt;Revenue&lt;/span&gt;
+          style="background: var(--ds-chart-1)"&gt;&lt;/span&gt;Revenue&lt;/span&gt;
     &lt;span class="ds-chart-legend__item"&gt;&lt;span class="ds-chart-legend__swatch"
-          style="background: var(--ds-bleu)"&gt;&lt;/span&gt;Cost&lt;/span&gt;
+          style="background: var(--ds-chart-2)"&gt;&lt;/span&gt;Cost&lt;/span&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
         </section>
@@ -162,16 +162,16 @@
                 <line class="ds-chart__grid" x1="6" y1="94" x2="474" y2="94" />
                 <line class="ds-chart__grid" x1="6" y1="137" x2="474" y2="137" />
                 <line class="ds-chart__grid" x1="6" y1="180" x2="474" y2="180" />
-                <path class="ds-areachart__area" d="M6,180 L6,180 72.86,145.6 139.71,162.8 206.57,102.6 273.43,119.8 340.29,51 407.14,76.8 474,8 L474,180 Z" style="fill: var(--ds-accent)" />
-                <polyline class="ds-areachart__line" points="6,180 72.86,145.6 139.71,162.8 206.57,102.6 273.43,119.8 340.29,51 407.14,76.8 474,8" style="stroke: var(--ds-accent)" />
-                <circle class="ds-areachart__dot" cx="6" cy="180" r="2.5" style="fill: var(--ds-accent)" />
-                <circle class="ds-areachart__dot" cx="72.86" cy="145.6" r="2.5" style="fill: var(--ds-accent)" />
-                <circle class="ds-areachart__dot" cx="139.71" cy="162.8" r="2.5" style="fill: var(--ds-accent)" />
-                <circle class="ds-areachart__dot" cx="206.57" cy="102.6" r="2.5" style="fill: var(--ds-accent)" />
-                <circle class="ds-areachart__dot" cx="273.43" cy="119.8" r="2.5" style="fill: var(--ds-accent)" />
-                <circle class="ds-areachart__dot" cx="340.29" cy="51" r="2.5" style="fill: var(--ds-accent)" />
-                <circle class="ds-areachart__dot" cx="407.14" cy="76.8" r="2.5" style="fill: var(--ds-accent)" />
-                <circle class="ds-areachart__dot" cx="474" cy="8" r="2.5" style="fill: var(--ds-accent)" />
+                <path class="ds-areachart__area" d="M6,180 L6,180 72.86,145.6 139.71,162.8 206.57,102.6 273.43,119.8 340.29,51 407.14,76.8 474,8 L474,180 Z" style="fill: var(--ds-chart-1)" />
+                <polyline class="ds-areachart__line" points="6,180 72.86,145.6 139.71,162.8 206.57,102.6 273.43,119.8 340.29,51 407.14,76.8 474,8" style="stroke: var(--ds-chart-1)" />
+                <circle class="ds-areachart__dot" cx="6" cy="180" r="2.5" style="fill: var(--ds-chart-1)" />
+                <circle class="ds-areachart__dot" cx="72.86" cy="145.6" r="2.5" style="fill: var(--ds-chart-1)" />
+                <circle class="ds-areachart__dot" cx="139.71" cy="162.8" r="2.5" style="fill: var(--ds-chart-1)" />
+                <circle class="ds-areachart__dot" cx="206.57" cy="102.6" r="2.5" style="fill: var(--ds-chart-1)" />
+                <circle class="ds-areachart__dot" cx="273.43" cy="119.8" r="2.5" style="fill: var(--ds-chart-1)" />
+                <circle class="ds-areachart__dot" cx="340.29" cy="51" r="2.5" style="fill: var(--ds-chart-1)" />
+                <circle class="ds-areachart__dot" cx="407.14" cy="76.8" r="2.5" style="fill: var(--ds-chart-1)" />
+                <circle class="ds-areachart__dot" cx="474" cy="8" r="2.5" style="fill: var(--ds-chart-1)" />
               </svg>
             </div>
           </div>
@@ -181,9 +181,9 @@
     &lt;!-- gridlines --&gt;
     &lt;path class="ds-areachart__area"
           d="M6,180 L6,180 72.86,145.6 … 474,8 L474,180 Z"
-          style="fill: var(--ds-accent)" /&gt;
+          style="fill: var(--ds-chart-1)" /&gt;
     &lt;polyline class="ds-areachart__line"
-              points="6,180 72.86,145.6 …" style="stroke: var(--ds-accent)" /&gt;
+              points="6,180 72.86,145.6 …" style="stroke: var(--ds-chart-1)" /&gt;
     &lt;!-- dots --&gt;
   &lt;/svg&gt;
 &lt;/div&gt;</code></pre>
@@ -222,18 +222,18 @@
               <svg class="ds-donut__svg" viewBox="0 0 180 180" width="180" height="180" aria-hidden="true" focusable="false">
                 <g transform="rotate(-90 90 90)">
                   <circle class="ds-donut__track" cx="90" cy="90" r="76" stroke-width="28" />
-                  <circle class="ds-donut__segment" cx="90" cy="90" r="76" stroke-width="28" stroke-dasharray="214.88 262.64" stroke-dashoffset="0" style="stroke: var(--ds-accent)" />
-                  <circle class="ds-donut__segment" cx="90" cy="90" r="76" stroke-width="28" stroke-dasharray="119.38 358.14" stroke-dashoffset="-214.88" style="stroke: var(--ds-bleu)" />
-                  <circle class="ds-donut__segment" cx="90" cy="90" r="76" stroke-width="28" stroke-dasharray="95.5 382.02" stroke-dashoffset="-334.27" style="stroke: var(--ds-success)" />
-                  <circle class="ds-donut__segment" cx="90" cy="90" r="76" stroke-width="28" stroke-dasharray="47.75 429.77" stroke-dashoffset="-429.77" style="stroke: var(--ds-warning)" />
+                  <circle class="ds-donut__segment" cx="90" cy="90" r="76" stroke-width="28" stroke-dasharray="214.88 262.64" stroke-dashoffset="0" style="stroke: var(--ds-chart-1)" />
+                  <circle class="ds-donut__segment" cx="90" cy="90" r="76" stroke-width="28" stroke-dasharray="119.38 358.14" stroke-dashoffset="-214.88" style="stroke: var(--ds-chart-2)" />
+                  <circle class="ds-donut__segment" cx="90" cy="90" r="76" stroke-width="28" stroke-dasharray="95.5 382.02" stroke-dashoffset="-334.27" style="stroke: var(--ds-chart-3)" />
+                  <circle class="ds-donut__segment" cx="90" cy="90" r="76" stroke-width="28" stroke-dasharray="47.75 429.77" stroke-dashoffset="-429.77" style="stroke: var(--ds-chart-4)" />
                 </g>
                 <text class="ds-donut__center" x="90" y="90" dominant-baseline="central" font-size="46.8">100</text>
               </svg>
               <div class="ds-chart-legend">
-                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-accent)"></span>Direct<span class="ds-chart-legend__value">45</span></span>
-                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-bleu)"></span>Referral<span class="ds-chart-legend__value">25</span></span>
-                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-success)"></span>Organic<span class="ds-chart-legend__value">20</span></span>
-                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-warning)"></span>Social<span class="ds-chart-legend__value">10</span></span>
+                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-1)"></span>Direct<span class="ds-chart-legend__value">45</span></span>
+                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-2)"></span>Referral<span class="ds-chart-legend__value">25</span></span>
+                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-3)"></span>Organic<span class="ds-chart-legend__value">20</span></span>
+                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-4)"></span>Social<span class="ds-chart-legend__value">10</span></span>
               </div>
             </div>
           </div>
@@ -244,7 +244,7 @@
       &lt;circle class="ds-donut__track" cx="90" cy="90" r="76" stroke-width="28" /&gt;
       &lt;circle class="ds-donut__segment" cx="90" cy="90" r="76" stroke-width="28"
               stroke-dasharray="214.88 262.64" stroke-dashoffset="0"
-              style="stroke: var(--ds-accent)" /&gt;
+              style="stroke: var(--ds-chart-1)" /&gt;
       &lt;!-- …more segments… --&gt;
     &lt;/g&gt;
     &lt;text class="ds-donut__center" x="90" y="90"
@@ -252,7 +252,7 @@
   &lt;/svg&gt;
   &lt;div class="ds-chart-legend"&gt;
     &lt;span class="ds-chart-legend__item"&gt;&lt;span class="ds-chart-legend__swatch"
-          style="background: var(--ds-accent)"&gt;&lt;/span&gt;Direct&lt;span
+          style="background: var(--ds-chart-1)"&gt;&lt;/span&gt;Direct&lt;span
           class="ds-chart-legend__value"&gt;45&lt;/span&gt;&lt;/span&gt;
     &lt;!-- …more legend items… --&gt;
   &lt;/div&gt;
@@ -273,6 +273,202 @@
     { label: "Referral", value: 25 },
     { label: "Organic", value: 20 },
     { label: "Social", value: 10 },
+  ]}
+/&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Pie</h2>
+        <p class="docs-note">A <code>.ds-piechart</code> draws each slice as a <code>__slice</code> <code>&lt;path&gt;</code> arc wedge (full pie, no hole), color set inline per datum, with a native <code>&lt;title&gt;</code> hover tooltip and a <code>.ds-chart-legend</code> of label + value.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Slices · hover titles · legend</span>
+            <button class="ds-button" data-copy-target="#c-pie">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <div class="ds-chart ds-piechart" role="img" aria-label="Pie chart of 4 segments">
+              <svg class="ds-piechart__svg" viewBox="0 0 180 180" width="180" height="180" aria-hidden="true" focusable="false">
+                <path class="ds-piechart__slice" d="M 90,90 L 90,0 A 90 90 0 0 1 117.81,175.6 Z" style="fill: var(--ds-chart-1)"><title>Direct: 45</title></path>
+                <path class="ds-piechart__slice" d="M 90,90 L 117.81,175.6 A 90 90 0 0 1 4.4,117.81 Z" style="fill: var(--ds-chart-2)"><title>Referral: 25</title></path>
+                <path class="ds-piechart__slice" d="M 90,90 L 4.4,117.81 A 90 90 0 0 1 37.1,17.19 Z" style="fill: var(--ds-chart-3)"><title>Organic: 20</title></path>
+                <path class="ds-piechart__slice" d="M 90,90 L 37.1,17.19 A 90 90 0 0 1 90,0 Z" style="fill: var(--ds-chart-4)"><title>Social: 10</title></path>
+              </svg>
+              <div class="ds-chart-legend">
+                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-1)"></span>Direct<span class="ds-chart-legend__value">45</span></span>
+                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-2)"></span>Referral<span class="ds-chart-legend__value">25</span></span>
+                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-3)"></span>Organic<span class="ds-chart-legend__value">20</span></span>
+                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-4)"></span>Social<span class="ds-chart-legend__value">10</span></span>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-pie">&lt;div class="ds-chart ds-piechart" role="img" aria-label="Pie chart of 4 segments"&gt;
+  &lt;svg class="ds-piechart__svg" viewBox="0 0 180 180" width="180" height="180"
+       aria-hidden="true"&gt;
+    &lt;path class="ds-piechart__slice"
+          d="M 90,90 L 90,0 A 90 90 0 0 1 117.81,175.6 Z"
+          style="fill: var(--ds-chart-1)"&gt;&lt;title&gt;Direct: 45&lt;/title&gt;&lt;/path&gt;
+    &lt;path class="ds-piechart__slice"
+          d="M 90,90 L 117.81,175.6 A 90 90 0 0 1 4.4,117.81 Z"
+          style="fill: var(--ds-chart-2)"&gt;&lt;title&gt;Referral: 25&lt;/title&gt;&lt;/path&gt;
+    &lt;!-- …more slices… --&gt;
+  &lt;/svg&gt;
+  &lt;div class="ds-chart-legend"&gt;
+    &lt;span class="ds-chart-legend__item"&gt;&lt;span class="ds-chart-legend__swatch"
+          style="background: var(--ds-chart-1)"&gt;&lt;/span&gt;Direct&lt;span
+          class="ds-chart-legend__value"&gt;45&lt;/span&gt;&lt;/span&gt;
+    &lt;!-- …more legend items… --&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;PieChart&gt;</span>
+            <button class="ds-button" data-copy-target="#c-pie-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-pie-react">import { PieChart } from "@diametral/design-system/react";
+
+&lt;PieChart
+  data={[
+    { label: "Direct", value: 45 },
+    { label: "Referral", value: 25 },
+    { label: "Organic", value: 20 },
+    { label: "Social", value: 10 },
+  ]}
+/&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Gauge</h2>
+        <p class="docs-note">A <code>.ds-gauge</code> draws a faint 270° <code>__track</code> arc behind a colored <code>__value</code> arc (length via <code>stroke-dasharray</code>), with a big <code>__center</code> number and an optional uppercase <code>__label</code>. The arc color defaults to <code>--ds-chart-1</code>; pass a color or value→color thresholds.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Single value · center number · label</span>
+            <button class="ds-button" data-copy-target="#c-gauge">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <div class="ds-chart ds-gauge" role="img" aria-label="Utilization: 72 of 100">
+              <svg class="ds-gauge__svg" viewBox="0 0 180 180" width="180" height="180" aria-hidden="true" focusable="false">
+                <path class="ds-gauge__track" d="M 32.02,147.98 A 82 82 0 1 1 147.98,147.98" stroke-width="16" />
+                <path class="ds-gauge__value" d="M 32.02,147.98 A 82 82 0 1 1 147.98,147.98" stroke-width="16" stroke-dasharray="278.22 386.42" style="stroke: var(--ds-chart-1)"><title>Utilization: 72 of 100</title></path>
+                <text class="ds-gauge__center" x="90" y="86.4" dominant-baseline="central" font-size="43.2">72</text>
+                <text class="ds-gauge__label" x="90" y="122.4" dominant-baseline="central">Utilization</text>
+              </svg>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-gauge">&lt;div class="ds-chart ds-gauge" role="img" aria-label="Utilization: 72 of 100"&gt;
+  &lt;svg class="ds-gauge__svg" viewBox="0 0 180 180" width="180" height="180"
+       aria-hidden="true"&gt;
+    &lt;path class="ds-gauge__track" stroke-width="16"
+          d="M 32.02,147.98 A 82 82 0 1 1 147.98,147.98" /&gt;
+    &lt;path class="ds-gauge__value" stroke-width="16"
+          d="M 32.02,147.98 A 82 82 0 1 1 147.98,147.98"
+          stroke-dasharray="278.22 386.42"
+          style="stroke: var(--ds-chart-1)"&gt;&lt;title&gt;Utilization: 72 of 100&lt;/title&gt;&lt;/path&gt;
+    &lt;text class="ds-gauge__center" x="90" y="86.4"
+          dominant-baseline="central" font-size="43.2"&gt;72&lt;/text&gt;
+    &lt;text class="ds-gauge__label" x="90" y="122.4"
+          dominant-baseline="central"&gt;Utilization&lt;/text&gt;
+  &lt;/svg&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;GaugeChart&gt;</span>
+            <button class="ds-button" data-copy-target="#c-gauge-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-gauge-react">import { GaugeChart } from "@diametral/design-system/react";
+
+&lt;GaugeChart value={72} label="Utilization" /&gt;
+
+&lt;GaugeChart
+  value={88}
+  label="Capacity"
+  thresholds={[
+    { at: 0, color: "var(--ds-chart-3)" },
+    { at: 70, color: "var(--ds-chart-6)" },
+    { at: 90, color: "var(--ds-chart-1)" },
+  ]}
+/&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Stacked bar</h2>
+        <p class="docs-note">A <code>.ds-stackedbar</code> lays each datum out as a <code>__row</code>: an optional <code>__label</code> and a 100%-wide <code>__track</code> of proportional <code>__seg</code> segments (width + color set inline, with a <code>title</code> hover tooltip). A shared <code>.ds-chart-legend</code> names the segments.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Rows · proportional segments · legend</span>
+            <button class="ds-button" data-copy-target="#c-stacked">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-chart ds-stackedbar" role="img">
+              <div class="ds-stackedbar__row">
+                <span class="ds-stackedbar__label">Q1</span>
+                <div class="ds-stackedbar__track">
+                  <span class="ds-stackedbar__seg" style="width: 56.36%; background: var(--ds-chart-1)" title="Online: 62"></span>
+                  <span class="ds-stackedbar__seg" style="width: 27.27%; background: var(--ds-chart-2)" title="Retail: 30"></span>
+                  <span class="ds-stackedbar__seg" style="width: 16.36%; background: var(--ds-chart-3)" title="Wholesale: 18"></span>
+                </div>
+              </div>
+              <div class="ds-stackedbar__row">
+                <span class="ds-stackedbar__label">Q2</span>
+                <div class="ds-stackedbar__track">
+                  <span class="ds-stackedbar__seg" style="width: 60.66%; background: var(--ds-chart-1)" title="Online: 74"></span>
+                  <span class="ds-stackedbar__seg" style="width: 21.31%; background: var(--ds-chart-2)" title="Retail: 26"></span>
+                  <span class="ds-stackedbar__seg" style="width: 18.03%; background: var(--ds-chart-3)" title="Wholesale: 22"></span>
+                </div>
+              </div>
+              <div class="ds-chart-legend">
+                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-1)"></span>Online</span>
+                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-2)"></span>Retail</span>
+                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-3)"></span>Wholesale</span>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-stacked">&lt;div class="ds-chart ds-stackedbar" role="img"&gt;
+  &lt;div class="ds-stackedbar__row"&gt;
+    &lt;span class="ds-stackedbar__label"&gt;Q1&lt;/span&gt;
+    &lt;div class="ds-stackedbar__track"&gt;
+      &lt;span class="ds-stackedbar__seg" title="Online: 62"
+            style="width: 56.36%; background: var(--ds-chart-1)"&gt;&lt;/span&gt;
+      &lt;span class="ds-stackedbar__seg" title="Retail: 30"
+            style="width: 27.27%; background: var(--ds-chart-2)"&gt;&lt;/span&gt;
+      &lt;span class="ds-stackedbar__seg" title="Wholesale: 18"
+            style="width: 16.36%; background: var(--ds-chart-3)"&gt;&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- …more rows… --&gt;
+  &lt;div class="ds-chart-legend"&gt;
+    &lt;span class="ds-chart-legend__item"&gt;&lt;span class="ds-chart-legend__swatch"
+          style="background: var(--ds-chart-1)"&gt;&lt;/span&gt;Online&lt;/span&gt;
+    &lt;!-- …more legend items… --&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;StackedBar&gt;</span>
+            <button class="ds-button" data-copy-target="#c-stacked-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-stacked-react">import { StackedBar } from "@diametral/design-system/react";
+
+&lt;StackedBar
+  data={[
+    { label: "Q1", segments: [
+      { label: "Online", value: 62 },
+      { label: "Retail", value: 30 },
+      { label: "Wholesale", value: 18 },
+    ] },
+    { label: "Q2", segments: [
+      { label: "Online", value: 74 },
+      { label: "Retail", value: 26 },
+      { label: "Wholesale", value: 22 },
+    ] },
   ]}
 /&gt;</code></pre>
         </section>

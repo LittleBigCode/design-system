@@ -11,3 +11,9 @@ node_modules/
 
 # Internal build-agent contract (not part of the published system)
 AGENT_CONTRACT.md
+
+# Playwright visual regression test output (baselines in tests/__screenshots__/
+# ARE committed; these directories are generated artifacts and are not).
+test-results/
+playwright-report/
+/.playwright

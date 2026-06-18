@@ -154,3 +154,122 @@
   text-transform: uppercase;
   text-anchor: middle;
 }
+
+/* ----------------------------------------------------------------------------
+   Pie — .ds-piechart (a full pie, no hole; slices drawn as <path> arc wedges)
+   ---------------------------------------------------------------------------- */
+.ds-piechart {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ds-space-3);
+}
+
+.ds-piechart__svg {
+  display: block;
+  overflow: visible;
+}
+
+/* One wedge — color set inline per datum. A 1px surface-colored seam keeps
+   adjacent slices visually separated without a radius or shadow. */
+.ds-piechart__slice {
+  fill: var(--ds-accent);
+  stroke: var(--ds-surface);
+  stroke-width: 1;
+  stroke-linejoin: miter;
+  transition: fill var(--ds-transition);
+}
+
+/* ----------------------------------------------------------------------------
+   Gauge — .ds-gauge (a 270° radial gauge for one value)
+   ---------------------------------------------------------------------------- */
+.ds-gauge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ds-gauge__svg {
+  display: block;
+  overflow: visible;
+}
+
+/* The faint full track arc behind the value. */
+.ds-gauge__track {
+  fill: none;
+  stroke: var(--ds-rule-soft);
+  stroke-linecap: butt;
+}
+
+/* The value arc — color set inline; length via stroke-dasharray. */
+.ds-gauge__value {
+  fill: none;
+  stroke: var(--ds-accent);
+  stroke-linecap: butt;
+  transition: stroke-dasharray var(--ds-transition);
+}
+
+.ds-gauge__center {
+  fill: var(--ds-ink);
+  font-family: var(--ds-font-title);
+  font-weight: var(--ds-font-weight-title);
+  font-variant-numeric: tabular-nums;
+  text-anchor: middle;
+}
+
+.ds-gauge__label {
+  fill: var(--ds-ink-faint);
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-2xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-anchor: middle;
+}
+
+/* ----------------------------------------------------------------------------
+   Stacked bar — .ds-stackedbar (horizontal 100%-width proportional segments)
+   ---------------------------------------------------------------------------- */
+.ds-stackedbar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-3);
+}
+
+.ds-stackedbar__row {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-3);
+}
+
+/* Optional row label to the left of the track. */
+.ds-stackedbar__label {
+  flex: 0 0 auto;
+  min-width: 72px;
+  font-size: var(--ds-text-xs);
+  color: var(--ds-ink-soft);
+}
+
+/* The full-width bar; segments flex across it. A 1px rule frames the track. */
+.ds-stackedbar__track {
+  display: flex;
+  flex: 1 1 auto;
+  height: 16px;
+  overflow: hidden;
+  border: 1px solid var(--ds-rule);
+  border-radius: var(--ds-radius-none);
+  background: var(--ds-bg-alt);
+}
+
+/* One proportional segment — width and color set inline per segment. A 1px
+   surface-colored seam separates adjacent segments, flat and sharp. */
+.ds-stackedbar__seg {
+  height: 100%;
+  flex: 0 0 auto;
+  background: var(--ds-accent);
+  box-shadow: inset -1px 0 0 var(--ds-surface);
+  transition: width var(--ds-transition);
+}
+
+.ds-stackedbar__seg:last-child {
+  box-shadow: none;
+}

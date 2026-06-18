@@ -22,6 +22,13 @@ A major, Clarity-inspired component expansion with full React integration.
 - New tokens: `--ds-z-popover`, `--ds-z-toast`.
 - **More components**: Drawer (off-canvas), Command palette (⌘K), Sparkline, Bar chart, Stat
   card, Rating, Date range picker, Color picker, Code block, and Kbd.
+- **Charts**: a dedicated categorical palette (`--ds-chart-1…6`, legible & well-spaced) now drives
+  series colors (fixing the near-identical accent/warning clash); added Pie, Gauge, and Stacked-bar
+  charts with `<title>` hover tooltips.
+- **Visual regression tests**: a Playwright pipeline (`playwright.config.js`, `tests/visual.spec.js`,
+  a GitHub Actions workflow) with `npm run test:visual` / `test:visual:update`.
+- **Docs**: a full installation & integration guide (`docs/installation.md`) for npm/CDN, Vite,
+  Next.js, CRA, Angular, Vue, Tailwind, and import-map prototyping.
 - Showcase navigation reorganized into Actions / Forms / Data display / Feedback /
   Navigation / Overlays / Platform groups; new live React data-grid demo.
 

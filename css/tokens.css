@@ -44,6 +44,15 @@
   --ds-info:     #1488a6;  --ds-info-bg:   #eafaff;  /* DS-introduced, harmonized with --ds-bleu */
   --ds-grey-bg:  #ececec;
 
+  /* Categorical chart palette — 6 legible, well-spaced hues for data series.
+     (The vivid brand secondaries are kept for accents/illustration, not series.) */
+  --ds-chart-1: #ff2a00;  /* brand red */
+  --ds-chart-2: #1488a6;  /* teal */
+  --ds-chart-3: #2e7d4f;  /* green */
+  --ds-chart-4: #9f8667;  /* marron */
+  --ds-chart-5: #7b5ea7;  /* violet */
+  --ds-chart-6: #e0a32e;  /* amber */
+
   /* ===== TIER 2 — SEMANTIC (the override surface) ========================= */
 
   /* Surfaces & text */
