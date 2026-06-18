@@ -1,0 +1,160 @@
+/* Multi-select — .ds-multiselect (a combobox holding many values as tokens)
+   A relative wrapper anchors a filtered popover under the control. The control
+   is a flex-wrap box styled like .ds-input (1px border, no radius) that holds a
+   row of removable tokens followed by a borderless text input; the whole box
+   shows a focus ring via :focus-within. Tokens reuse the .ds-tag look (with a
+   trailing × remove). The list is a bordered popover like .ds-combobox__list
+   (border on --ds-ink, no shadow) at --ds-z-popover; options shift to bg-alt on
+   hover or when active (keyboard), and chosen options carry a check.
+   Companion to combobox.css / tag-input.css — never edits them. */
+.ds-multiselect {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  min-width: 240px;
+}
+.ds-multiselect--block { display: flex; }
+
+/* The control — a flex-wrap box like .ds-input holding tokens + the input. */
+.ds-multiselect__control {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ds-space-1);
+  width: 100%;
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-rule);
+  border-radius: var(--ds-radius-none);
+  padding: 6px 8px;
+  font-family: var(--ds-font-sans);
+  cursor: text;
+}
+
+/* The whole box reads as one focused control when the inner input has focus. */
+.ds-multiselect__control:focus-within {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: -2px;
+}
+
+.ds-multiselect.is-disabled .ds-multiselect__control,
+.ds-multiselect__control:has(.ds-multiselect__input:disabled) {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+/* A token — same look as .ds-tag, with room for the trailing remove button. */
+.ds-multiselect__token {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-1);
+  font-size: var(--ds-text-2xs);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--ds-ink-soft);
+  background: var(--ds-bg-alt);
+  border: 1px solid var(--ds-rule);
+  border-radius: var(--ds-radius-none);
+  padding: 2px 4px 2px 8px;
+}
+
+.ds-multiselect__remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0 2px;
+  cursor: pointer;
+  color: inherit;
+  font-size: var(--ds-text-sm);
+  line-height: 1;
+  transition: color var(--ds-transition);
+}
+.ds-multiselect__remove:hover { color: var(--ds-ink); }
+.ds-multiselect__remove:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: 2px;
+}
+
+/* The text entry — borderless; it inherits the box. The box owns the focus
+   ring, so the bare input stays outline-free. */
+.ds-multiselect__input {
+  flex: 1 1 80px;
+  min-width: 80px;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-base);
+  font-weight: 400;
+  color: var(--ds-ink);
+  background: none;
+  border: none;
+  padding: 4px 2px;
+  outline: none;
+}
+.ds-multiselect__input::placeholder { color: var(--ds-ink-faint); }
+.ds-multiselect__input:disabled { cursor: not-allowed; }
+
+/* The popover list — bordered surface like .ds-combobox__list, no radius. */
+.ds-multiselect__list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: var(--ds-z-popover);
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+  max-height: 260px;
+  overflow-y: auto;
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-ink);
+  border-radius: var(--ds-radius-none);
+  font-family: var(--ds-font-sans);
+}
+
+/* An option row — full width, hover/active shift to bg-alt. */
+.ds-multiselect__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 14px;
+  font-size: var(--ds-text-sm);
+  font-weight: 400;
+  letter-spacing: -0.1px;
+  text-align: left;
+  color: var(--ds-ink);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--ds-transition), color var(--ds-transition);
+}
+.ds-multiselect__option:hover,
+.ds-multiselect__option.is-active { background: var(--ds-bg-alt); }
+
+/* A chosen option reads with a faint check on the right. */
+.ds-multiselect__option.is-selected { color: var(--ds-ink); font-weight: 500; }
+.ds-multiselect__option.is-selected::after {
+  content: "";
+  width: 12px;
+  height: 9px;
+  flex: none;
+  background-color: var(--ds-ink);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='9' viewBox='0 0 12 9' fill='none' stroke='black' stroke-width='1.5'%3E%3Cpath d='M1 4.5 4.5 8 11 1'/%3E%3C/svg%3E") no-repeat center / contain;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='9' viewBox='0 0 12 9' fill='none' stroke='black' stroke-width='1.5'%3E%3Cpath d='M1 4.5 4.5 8 11 1'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+
+.ds-multiselect__option:disabled,
+.ds-multiselect__option[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
+.ds-multiselect__option:disabled:hover,
+.ds-multiselect__option[aria-disabled="true"]:hover { background: none; }
+
+/* Empty state — shown when nothing matches the query. */
+.ds-multiselect__empty {
+  padding: 8px 14px;
+  font-size: var(--ds-text-sm);
+  color: var(--ds-ink-faint);
+}

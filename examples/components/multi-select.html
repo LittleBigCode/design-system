@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi-select · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/multi-select">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Multi-select</h1>
+        <p class="docs-lede">A combobox that holds many chosen values as removable tokens. A flex-wrap <code>.ds-multiselect__control</code> (styled like <code>.ds-input</code>) carries the tokens plus a borderless input; typing filters a bordered <code>.ds-multiselect__list</code> popover, click or Enter toggles an option, Backspace on the empty field drops the last token.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Anatomy</h2>
+        <p class="docs-note">A relative <code>.ds-multiselect</code> wrapper anchors the popover under the control. The control shows a focus ring via <code>:focus-within</code> and holds each chosen value as a <code>.ds-multiselect__token</code> with a trailing <code>×</code>. In the open <code>.ds-multiselect__list</code> (z-index <code>--ds-z-popover</code>), an option shifts to the alt surface on hover or when <code>.is-active</code>; chosen options carry <code>.is-selected</code> and a check.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Control + list</span>
+            <button class="ds-button" data-copy-target="#c-anatomy">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-multiselect">
+              <div class="ds-multiselect__control">
+                <span class="ds-multiselect__token">EUR<button class="ds-multiselect__remove" type="button" tabindex="-1" aria-label="Remove EUR">×</button></span>
+                <span class="ds-multiselect__token">USD<button class="ds-multiselect__remove" type="button" tabindex="-1" aria-label="Remove USD">×</button></span>
+                <input class="ds-multiselect__input" type="text" role="combobox" aria-expanded="true" aria-controls="ms-anatomy-list" aria-autocomplete="list" value="g" autocomplete="off">
+              </div>
+              <ul class="ds-multiselect__list" id="ms-anatomy-list" role="listbox" aria-multiselectable="true">
+                <li class="ds-multiselect__option is-active" role="option" aria-selected="false">GBP — Pound Sterling</li>
+                <li class="ds-multiselect__option" role="option" aria-selected="false">SGD — Singapore Dollar</li>
+              </ul>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-anatomy">&lt;div class="ds-multiselect"&gt;
+  &lt;div class="ds-multiselect__control"&gt;
+    &lt;span class="ds-multiselect__token"&gt;EUR&lt;button class="ds-multiselect__remove" aria-label="Remove EUR"&gt;×&lt;/button&gt;&lt;/span&gt;
+    &lt;span class="ds-multiselect__token"&gt;USD&lt;button class="ds-multiselect__remove" aria-label="Remove USD"&gt;×&lt;/button&gt;&lt;/span&gt;
+    &lt;input class="ds-multiselect__input" type="text" role="combobox"
+           aria-expanded="true" aria-controls="ms-list" aria-autocomplete="list"&gt;
+  &lt;/div&gt;
+  &lt;ul class="ds-multiselect__list" id="ms-list" role="listbox" aria-multiselectable="true"&gt;
+    &lt;li class="ds-multiselect__option is-active" role="option" aria-selected="false"&gt;GBP — Pound Sterling&lt;/li&gt;
+    &lt;li class="ds-multiselect__option" role="option" aria-selected="false"&gt;SGD — Singapore Dollar&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Selected state</h2>
+        <p class="docs-note">A chosen <code>.ds-multiselect__option</code> carries <code>.is-selected</code> and a trailing check, so toggling stays legible inside the open list.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Checked option</span>
+            <button class="ds-button" data-copy-target="#c-selected">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-multiselect">
+              <ul class="ds-multiselect__list" role="listbox" aria-multiselectable="true" style="position:static">
+                <li class="ds-multiselect__option is-selected" role="option" aria-selected="true">EUR — Euro</li>
+                <li class="ds-multiselect__option is-selected is-active" role="option" aria-selected="true">USD — US Dollar</li>
+                <li class="ds-multiselect__option" role="option" aria-selected="false">GBP — Pound Sterling</li>
+                <li class="ds-multiselect__option" role="option" aria-disabled="true" aria-selected="false">JPY — Japanese Yen</li>
+              </ul>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-selected">&lt;ul class="ds-multiselect__list" role="listbox" aria-multiselectable="true"&gt;
+  &lt;li class="ds-multiselect__option is-selected" role="option" aria-selected="true"&gt;EUR — Euro&lt;/li&gt;
+  &lt;li class="ds-multiselect__option is-selected is-active" role="option" aria-selected="true"&gt;USD — US Dollar&lt;/li&gt;
+  &lt;li class="ds-multiselect__option" role="option" aria-selected="false"&gt;GBP — Pound Sterling&lt;/li&gt;
+  &lt;li class="ds-multiselect__option" role="option" aria-disabled="true"&gt;JPY — Japanese Yen&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Interactive</h2>
+        <p class="docs-note">Type to filter; click an option (or use ArrowUp / ArrowDown then Enter) to toggle it. Each token's <code>×</code> removes it, and Backspace on the empty field drops the last. Escape or an outside-click closes the list. The small inline script below wires this demo (no dependencies).</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Token multi-select</span>
+            <button class="ds-button" data-copy-target="#c-live">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-multiselect" data-multiselect>
+              <div class="ds-multiselect__control" data-multiselect-control>
+                <input class="ds-multiselect__input" type="text" role="combobox" placeholder="Add currencies…" aria-expanded="false" aria-controls="ms-live-list" aria-autocomplete="list" autocomplete="off" data-multiselect-input>
+              </div>
+              <ul class="ds-multiselect__list" id="ms-live-list" role="listbox" aria-multiselectable="true" hidden data-multiselect-list>
+                <li class="ds-multiselect__option" role="option" aria-selected="false" data-value="EUR">EUR — Euro</li>
+                <li class="ds-multiselect__option" role="option" aria-selected="false" data-value="USD">USD — US Dollar</li>
+                <li class="ds-multiselect__option" role="option" aria-selected="false" data-value="GBP">GBP — Pound Sterling</li>
+                <li class="ds-multiselect__option" role="option" aria-selected="false" data-value="JPY">JPY — Japanese Yen</li>
+                <li class="ds-multiselect__option" role="option" aria-selected="false" data-value="CHF">CHF — Swiss Franc</li>
+                <li class="ds-multiselect__option" role="option" aria-selected="false" data-value="CAD">CAD — Canadian Dollar</li>
+              </ul>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-live">&lt;div class="ds-multiselect" data-multiselect&gt;
+  &lt;div class="ds-multiselect__control" data-multiselect-control&gt;
+    &lt;input class="ds-multiselect__input" type="text" role="combobox"
+           placeholder="Add currencies…" aria-expanded="false"
+           aria-controls="ms-list" aria-autocomplete="list" data-multiselect-input&gt;
+  &lt;/div&gt;
+  &lt;ul class="ds-multiselect__list" id="ms-list" role="listbox" aria-multiselectable="true" hidden data-multiselect-list&gt;
+    &lt;li class="ds-multiselect__option" role="option" data-value="EUR"&gt;EUR — Euro&lt;/li&gt;
+    &lt;li class="ds-multiselect__option" role="option" data-value="USD"&gt;USD — US Dollar&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <p class="docs-note">The <code>MultiSelect</code> filters <code>options</code> as you type, renders chosen values as removable tokens, manages the active option and open state, and supports controlled (<code>value</code>) or uncontrolled (<code>defaultValue</code>). The value is a <code>string[]</code>.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;MultiSelect&gt;</span>
+            <button class="ds-button" data-copy-target="#c-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-react">import { MultiSelect } from "@diametral/design-system/react";
+
+&lt;MultiSelect
+  placeholder="Add currencies…"
+  defaultValue={["EUR", "USD"]}
+  options={[
+    { value: "EUR", label: "EUR — Euro" },
+    { value: "USD", label: "USD — US Dollar" },
+    { value: "GBP", label: "GBP — Pound Sterling" },
+    { value: "JPY", label: "JPY — Japanese Yen" },
+  ]}
+  onChange={(values) =&gt; setCurrencies(values)}
+/&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Minimal vanilla wiring for the interactive .ds-multiselect demo (no dependencies).
+    document.querySelectorAll("[data-multiselect]").forEach(function (root) {
+      var control = root.querySelector("[data-multiselect-control]");
+      var input = root.querySelector("[data-multiselect-input]");
+      var list = root.querySelector("[data-multiselect-list]");
+      if (!control || !input || !list) return;
+      var options = Array.prototype.slice.call(list.querySelectorAll(".ds-multiselect__option"));
+      var selected = [];
+      var active = -1;
+
+      function visible() { return options.filter(function (o) { return !o.hidden; }); }
+      function setOpen(open) {
+        list.hidden = !open;
+        input.setAttribute("aria-expanded", String(open));
+        if (!open) { active = -1; paint(); }
+      }
+      function paint() {
+        options.forEach(function (o) {
+          o.classList.remove("is-active");
+          var on = selected.indexOf(o.getAttribute("data-value")) !== -1;
+          o.classList.toggle("is-selected", on);
+          o.setAttribute("aria-selected", String(on));
+        });
+        var vis = visible();
+        if (active >= 0 && vis[active]) vis[active].classList.add("is-active");
+      }
+      function renderTokens() {
+        // Drop any existing tokens, then re-insert before the input.
+        control.querySelectorAll(".ds-multiselect__token").forEach(function (t) { t.remove(); });
+        selected.forEach(function (val) {
+          var opt = options.filter(function (o) { return o.getAttribute("data-value") === val; })[0];
+          var label = val;
+          var tok = document.createElement("span");
+          tok.className = "ds-multiselect__token";
+          tok.textContent = label;
+          var btn = document.createElement("button");
+          btn.className = "ds-multiselect__remove";
+          btn.type = "button";
+          btn.tabIndex = -1;
+          btn.setAttribute("aria-label", "Remove " + label);
+          btn.textContent = "×";
+          btn.addEventListener("click", function () { remove(val); });
+          tok.appendChild(btn);
+          control.insertBefore(tok, input);
+        });
+        input.placeholder = selected.length === 0 ? "Add currencies…" : "";
+      }
+      function toggle(val) {
+        var i = selected.indexOf(val);
+        if (i === -1) selected.push(val); else selected.splice(i, 1);
+        input.value = "";
+        filter();
+        renderTokens();
+        paint();
+        input.focus();
+      }
+      function remove(val) {
+        var i = selected.indexOf(val);
+        if (i !== -1) selected.splice(i, 1);
+        renderTokens();
+        paint();
+      }
+      function filter() {
+        var q = input.value.toLowerCase();
+        options.forEach(function (o) {
+          o.hidden = q !== "" && o.textContent.toLowerCase().indexOf(q) === -1;
+        });
+        active = -1;
+        paint();
+      }
+
+      control.addEventListener("mousedown", function (e) {
+        if (e.target === control) { e.preventDefault(); input.focus(); setOpen(true); }
+      });
+      input.addEventListener("input", function () { filter(); setOpen(true); });
+      input.addEventListener("focus", function () { setOpen(true); });
+      input.addEventListener("keydown", function (e) {
+        var vis = visible();
+        if (e.key === "ArrowDown") {
+          e.preventDefault(); setOpen(true);
+          active = vis.length ? (active + 1) % vis.length : -1; paint();
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault(); setOpen(true);
+          active = vis.length ? (active - 1 + vis.length) % vis.length : -1; paint();
+        } else if (e.key === "Enter") {
+          if (active >= 0 && vis[active]) { e.preventDefault(); toggle(vis[active].getAttribute("data-value")); }
+        } else if (e.key === "Escape") {
+          setOpen(false);
+        } else if (e.key === "Backspace" && input.value === "" && selected.length) {
+          e.preventDefault(); remove(selected[selected.length - 1]);
+        }
+      });
+      options.forEach(function (opt) {
+        opt.addEventListener("mousedown", function (e) { e.preventDefault(); toggle(opt.getAttribute("data-value")); });
+        opt.addEventListener("mouseenter", function () {
+          var vis = visible(); active = vis.indexOf(opt); paint();
+        });
+      });
+      document.addEventListener("mousedown", function (e) {
+        if (!root.contains(e.target)) setOpen(false);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -39,6 +39,9 @@ const NAV = [
     { k: "components/date-range", t: "Date range" },
     { k: "components/file-upload", t: "File upload" },
     { k: "components/color-picker", t: "Color picker" },
+    { k: "components/multi-select", t: "Multi-select" },
+    { k: "components/time-picker", t: "Time picker" },
+    { k: "components/date-time", t: "Date-time" },
   ]},
   { label: "Data display", items: [
     { k: "components/datagrid", t: "Data grid" },
@@ -97,6 +100,11 @@ const NAV = [
   ]},
   { label: "Platform", items: [
     { k: "components/web-components", t: "Web Components" },
+  ]},
+  { label: "Templates", items: [
+    { k: "templates/login", t: "Login" },
+    { k: "templates/dashboard", t: "Dashboard" },
+    { k: "templates/error-404", t: "404 / Error" },
   ]},
 ];
 

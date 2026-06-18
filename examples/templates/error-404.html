@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page not found · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <style>
+    /* Page-local layout only — center the empty-state in the viewport on the
+       brand background. No new component styles. */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--ds-bg);
+      color: var(--ds-ink);
+      font-family: var(--ds-font-sans);
+      padding: 24px;
+    }
+    .tpl-back {
+      position: fixed;
+      top: 20px;
+      left: 24px;
+      font-size: var(--ds-text-xs);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ds-ink-faint);
+      text-decoration: none;
+    }
+    .tpl-back:hover { color: var(--ds-ink); }
+    /* Scale the empty-state icon up for a full error page. */
+    .tpl-404 .ds-empty__icon svg { width: 72px; height: 72px; }
+    .tpl-404 .ds-empty__icon { font-size: 72px; }
+  </style>
+</head>
+<body>
+  <a class="tpl-back" href="../index.html">← Diametral Design System</a>
+
+  <div class="ds-empty tpl-404">
+    <div class="ds-empty__icon">
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="21" cy="21" r="14"></circle>
+        <line x1="31" y1="31" x2="42" y2="42"></line>
+        <line x1="15" y1="15" x2="27" y2="27"></line>
+      </svg>
+    </div>
+    <h1 class="ds-empty__title">Page not found</h1>
+    <p class="ds-empty__desc">We couldn't find the page you were looking for. It may have been moved, renamed, or never existed.</p>
+    <div class="ds-empty__actions">
+      <a class="ds-button ds-button--primary" href="../index.html">Back to home</a>
+    </div>
+  </div>
+</body>
+</html>

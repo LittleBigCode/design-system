@@ -1,0 +1,11 @@
+/* Date-time picker — .ds-datetime (a date picker beside a time picker)
+   A thin flex row that sits a .ds-datepicker next to a .ds-timepicker with a
+   consistent gap; each child owns its own field + popover. This file only lays
+   the two controls out — the calendar and time popovers are styled by
+   date-picker.css and time-picker.css. Never edits them. */
+.ds-datetime {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--ds-space-2);
+}
+.ds-datetime--block { display: flex; }

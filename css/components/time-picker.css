@@ -1,0 +1,69 @@
+/* Time picker — .ds-timepicker (a .ds-input that opens an HH:MM popover)
+   The wrapper is a relative anchor holding the text field (which reuses the
+   .ds-input look — 1px border, no radius). Beneath it sits a flat bordered
+   popover (border on --ds-ink, no shadow) at --ds-z-popover holding two
+   scrollable columns — hours and minutes. Each .ds-timepicker__opt is a full
+   bleed button; hover shifts to bg-alt and the chosen value fills with ink.
+   Companion to field.css — never edits it. */
+.ds-timepicker {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+}
+.ds-timepicker > .ds-input { min-width: 140px; }
+
+/* The popover — a flat bordered box holding the two columns. */
+.ds-timepicker__popover {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: var(--ds-z-popover);
+  display: flex;
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-ink);
+  border-radius: var(--ds-radius-none);
+  font-family: var(--ds-font-sans);
+}
+
+/* A column — scrollable list of time options; a rule splits hours / minutes. */
+.ds-timepicker__col {
+  display: flex;
+  flex-direction: column;
+  width: 64px;
+  max-height: 220px;
+  overflow-y: auto;
+  padding: 4px 0;
+}
+.ds-timepicker__col + .ds-timepicker__col {
+  border-left: 1px solid var(--ds-rule);
+}
+
+/* A time option — full-width button, hover shifts to bg-alt. */
+.ds-timepicker__opt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 6px 0;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-sm);
+  font-weight: 400;
+  color: var(--ds-ink);
+  font-variant-numeric: tabular-nums;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--ds-transition), color var(--ds-transition);
+}
+.ds-timepicker__opt:hover { background: var(--ds-bg-alt); }
+.ds-timepicker__opt:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: -2px;
+}
+
+/* Selected — ink fill with on-accent text; wins over hover. */
+.ds-timepicker__opt.is-selected,
+.ds-timepicker__opt.is-selected:hover {
+  background: var(--ds-ink);
+  color: var(--ds-on-accent);
+}

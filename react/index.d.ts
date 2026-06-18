@@ -194,3 +194,6 @@ export * from "./components/DateRangePicker.js";
 export * from "./components/ColorPicker.js";
 export * from "./components/CodeBlock.js";
 export * from "./components/Kbd.js";
+export * from "./components/MultiSelect.js";
+export * from "./components/TimePicker.js";
+export * from "./components/DateTimePicker.js";

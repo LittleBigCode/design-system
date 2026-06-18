@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <script type="importmap">
+  { "imports": {
+    "react": "https://esm.sh/react@18.3.1",
+    "react-dom": "https://esm.sh/react-dom@18.3.1?external=react",
+    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client?external=react"
+  } }
+  </script>
+  <style>
+    /* Page-local layout only — frames the standalone app page and arranges the
+       sidebar + main columns. All visuals come from existing .ds-* components. */
+    body {
+      margin: 0;
+      background: var(--ds-bg);
+      color: var(--ds-ink);
+      font-family: var(--ds-font-sans);
+    }
+    /* Sidebar + main on a constrained grid. */
+    .tpl-layout {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 248px 1fr;
+      align-items: start;
+    }
+    .tpl-sidebar {
+      border-right: 1px solid var(--ds-rule);
+      padding: var(--ds-space-5) var(--ds-space-4);
+      min-height: calc(100vh - 67px);
+    }
+    .tpl-main {
+      padding: var(--ds-space-6);
+      min-width: 0;
+    }
+    .tpl-main__head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: var(--ds-space-5);
+    }
+    .tpl-main__head p { margin: 4px 0 0; color: var(--ds-ink-soft); font-size: var(--ds-text-sm); }
+    /* KPI row + chart card grids. */
+    .tpl-kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--ds-space-4);
+      margin-bottom: var(--ds-space-5);
+    }
+    .tpl-panels {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--ds-space-5);
+    }
+    .tpl-chart-card { padding: 20px; }
+    .tpl-chart-card__head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: var(--ds-space-4);
+    }
+    .tpl-chart-card__head h2 {
+      font-family: var(--ds-font-title);
+      font-weight: var(--ds-font-weight-title);
+      font-size: var(--ds-text-md);
+      letter-spacing: -0.3px;
+      margin: 0;
+    }
+    @media (max-width: 1040px) {
+      .tpl-kpis { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 880px) {
+      .tpl-layout { grid-template-columns: 1fr; }
+      .tpl-sidebar { border-right: none; border-bottom: 1px solid var(--ds-rule); min-height: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="ds-app-bar">
+    <div class="ds-app-bar__inner">
+      <span class="ds-wordmark">
+        <svg class="ds-wordmark__mark" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="28" cy="28" r="24"></circle><rect x="12" y="12" width="32" height="32"></rect><line x1="12" y1="44" x2="44" y2="12"></line></svg>
+        <span class="ds-wordmark__name">Diametral</span>
+        <span class="ds-wordmark__sub">Console</span>
+      </span>
+      <div class="ds-app-bar__actions">
+        <span class="ds-badge ds-badge--accent">Production</span>
+        <button class="ds-button ds-button--primary" type="button">New mission</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="tpl-layout">
+    <aside class="tpl-sidebar">
+      <nav class="ds-vnav" aria-label="Primary">
+        <div class="ds-vnav__group">
+          <span class="ds-vnav__label">Overview</span>
+          <a class="ds-vnav__item is-active" href="#" aria-current="page">Dashboard</a>
+          <a class="ds-vnav__item" href="#">Activity</a>
+        </div>
+        <div class="ds-vnav__group">
+          <span class="ds-vnav__label">Pricing</span>
+          <a class="ds-vnav__item" href="#">Pricing matrix</a>
+          <a class="ds-vnav__item" href="#">Rate cards</a>
+          <a class="ds-vnav__item" href="#">Entities</a>
+        </div>
+        <div class="ds-vnav__group">
+          <span class="ds-vnav__label">Account</span>
+          <a class="ds-vnav__item" href="#">Reports</a>
+          <a class="ds-vnav__item" href="#">Settings</a>
+        </div>
+      </nav>
+      <p style="margin-top:24px;"><a href="../index.html" style="font-size:var(--ds-text-xs);letter-spacing:0.08em;text-transform:uppercase;color:var(--ds-ink-faint);text-decoration:none;">← Diametral Design System</a></p>
+    </aside>
+
+    <main class="tpl-main">
+      <div class="tpl-main__head">
+        <div>
+          <h1 class="ds-title ds-title--lg">Dashboard</h1>
+          <p>Pricing performance across all entities · Q2 2026</p>
+        </div>
+        <button class="ds-button" type="button">Export</button>
+      </div>
+
+      <div class="tpl-kpis">
+        <div class="ds-stat">
+          <div class="ds-stat__label">Active missions</div>
+          <div class="ds-stat__value">137</div>
+          <span class="ds-stat__delta is-up">8 this week</span>
+        </div>
+        <div class="ds-stat">
+          <div class="ds-stat__label">Avg. margin</div>
+          <div class="ds-stat__value">24.6 %</div>
+          <span class="ds-stat__delta is-up">2.1 pts</span>
+        </div>
+        <div class="ds-stat">
+          <div class="ds-stat__label">At-risk rate</div>
+          <div class="ds-stat__value">5.2 %</div>
+          <span class="ds-stat__delta is-down">0.4 pts</span>
+        </div>
+        <div class="ds-stat">
+          <div class="ds-stat__label">Revenue · 30d</div>
+          <div class="ds-stat__value">€4.18M</div>
+          <div class="ds-stat__spark">
+            <span class="ds-sparkline">
+              <svg class="ds-sparkline__svg" width="120" height="32" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true">
+                <polyline class="ds-sparkline__area" points="0,32 0,24 20,26 40,18 60,21 80,12 100,15 120,6 120,32"></polyline>
+                <polyline class="ds-sparkline__line" points="0,24 20,26 40,18 60,21 80,12 100,15 120,6"></polyline>
+                <circle class="ds-sparkline__dot" cx="120" cy="6" r="2"></circle>
+              </svg>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tpl-panels">
+        <section class="ds-card tpl-chart-card">
+          <div class="tpl-chart-card__head">
+            <h2>Margin by entity</h2>
+            <span class="ds-label">Q2 2026</span>
+          </div>
+          <div class="ds-barchart" role="img" aria-label="Margin by entity bar chart">
+            <div class="ds-barchart__col">
+              <div class="ds-barchart__track"><div class="ds-barchart__bar" style="height:62%;"></div></div>
+              <span class="ds-barchart__value">22%</span>
+              <span class="ds-barchart__label">LBC_FR</span>
+            </div>
+            <div class="ds-barchart__col">
+              <div class="ds-barchart__track"><div class="ds-barchart__bar is-success" style="height:84%;"></div></div>
+              <span class="ds-barchart__value">29%</span>
+              <span class="ds-barchart__label">LBC_BE</span>
+            </div>
+            <div class="ds-barchart__col">
+              <div class="ds-barchart__track"><div class="ds-barchart__bar" style="height:48%;"></div></div>
+              <span class="ds-barchart__value">17%</span>
+              <span class="ds-barchart__label">LBC_US</span>
+            </div>
+            <div class="ds-barchart__col">
+              <div class="ds-barchart__track"><div class="ds-barchart__bar is-warning" style="height:34%;"></div></div>
+              <span class="ds-barchart__value">12%</span>
+              <span class="ds-barchart__label">LBC_CH</span>
+            </div>
+            <div class="ds-barchart__col">
+              <div class="ds-barchart__track"><div class="ds-barchart__bar" style="height:71%;"></div></div>
+              <span class="ds-barchart__value">25%</span>
+              <span class="ds-barchart__label">LBC_DE</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="ds-card tpl-chart-card">
+          <div class="tpl-chart-card__head">
+            <h2>Missions</h2>
+            <span class="ds-label">Lazy · server-side</span>
+          </div>
+          <div id="grid">Loading React…</div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script type="module">
+    import React from "react";
+    import { createRoot } from "react-dom/client";
+    import { DataGrid } from "../../react/components/DataGrid.js";
+    const h = React.createElement;
+
+    const ENTITIES = ["LBC_FR", "LBC_BE", "LBC_US", "LBC_CH"];
+    const GRADES = ["Consultant", "Senior", "Manager", "Director"];
+    const DATA = Array.from({ length: 137 }, (_, i) => ({
+      id: i + 1,
+      name: "Mission " + String(i + 1).padStart(3, "0"),
+      entity: ENTITIES[i % 4],
+      grade: GRADES[(i * 3) % 4],
+      margin: Math.round((((i * 37) % 60) - 8) * 10) / 10,
+    }));
+
+    // Mock server: filters + sorts + paginates with simulated latency.
+    function loadPage({ page, pageSize, sort, filters }) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          let d = DATA.slice();
+          for (const [k, v] of Object.entries(filters)) {
+            if (v) d = d.filter((r) => String(r[k]).toLowerCase().includes(v.toLowerCase()));
+          }
+          if (sort && sort.key) {
+            d.sort((a, b) => {
+              const av = a[sort.key], bv = b[sort.key];
+              const c = av > bv ? 1 : av < bv ? -1 : 0;
+              return sort.dir === "desc" ? -c : c;
+            });
+          }
+          const total = d.length;
+          const start = (page - 1) * pageSize;
+          resolve({ rows: d.slice(start, start + pageSize), total });
+        }, 650);
+      });
+    }
+
+    function cxLocal(...a) { return a.filter(Boolean).join(" "); }
+    const marginCell = (r) =>
+      h("span", { className: cxLocal("ds-numeric", r.margin < 0 ? "neg" : null),
+        style: { color: r.margin < 0 ? "var(--ds-danger)" : "var(--ds-success)" } }, r.margin + " %");
+
+    const columns = [
+      { key: "id", header: "ID", sortable: true, align: "right", width: "64px" },
+      { key: "name", header: "Mission", sortable: true, filterable: true },
+      { key: "entity", header: "Entity", sortable: true, filterable: true },
+      { key: "grade", header: "Grade", sortable: true },
+      { key: "margin", header: "Margin %", sortable: true, align: "right", render: marginCell },
+    ];
+
+    createRoot(document.getElementById("grid")).render(
+      h(DataGrid, {
+        title: "Missions", columns, loadPage, lazyMode: "pagination",
+        pageSize: 8, selectable: true, filterable: true,
+      })
+    );
+  </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign in · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <style>
+    /* Page-local layout only — no new component styles, just centering the card
+       on the brand background and giving the standalone page its frame. */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--ds-bg);
+      color: var(--ds-ink);
+      font-family: var(--ds-font-sans);
+      padding: 24px;
+    }
+    .tpl-back {
+      position: fixed;
+      top: 20px;
+      left: 24px;
+      font-size: var(--ds-text-xs);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ds-ink-faint);
+      text-decoration: none;
+    }
+    .tpl-back:hover { color: var(--ds-ink); }
+    .tpl-login {
+      width: 100%;
+      max-width: 380px;
+    }
+    .tpl-login__head {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      padding: 32px 28px 8px;
+    }
+    .tpl-login__body {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 0 28px 28px;
+    }
+    .tpl-login__heading {
+      font-family: var(--ds-font-title);
+      font-weight: var(--ds-font-weight-title);
+      font-size: var(--ds-text-xl);
+      letter-spacing: -0.4px;
+      line-height: var(--ds-leading-tight);
+      margin: 8px 0 0;
+      text-align: center;
+    }
+    .tpl-login__meta {
+      display: flex;
+      justify-content: flex-end;
+    }
+    .tpl-login__meta a {
+      font-size: var(--ds-text-xs);
+      color: var(--ds-ink-soft);
+      text-decoration: none;
+    }
+    .tpl-login__meta a:hover { color: var(--ds-ink); text-decoration: underline; }
+    .tpl-login__divider { margin: 4px 0; }
+  </style>
+</head>
+<body>
+  <a class="tpl-back" href="../index.html">← Diametral Design System</a>
+
+  <div class="ds-card tpl-login">
+    <div class="tpl-login__head">
+      <span class="ds-wordmark">
+        <svg class="ds-wordmark__mark" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="28" cy="28" r="24"></circle><rect x="12" y="12" width="32" height="32"></rect><line x1="12" y1="44" x2="44" y2="12"></line></svg>
+        <span class="ds-wordmark__name">Diametral</span>
+      </span>
+      <h1 class="tpl-login__heading">Sign in</h1>
+    </div>
+
+    <form class="tpl-login__body" action="#" method="post">
+      <div class="ds-field">
+        <label for="email">Email</label>
+        <input class="ds-input" id="email" name="email" type="email" autocomplete="email" placeholder="you@diametral.io" required>
+      </div>
+
+      <div class="ds-field">
+        <label for="password">Password</label>
+        <input class="ds-input" id="password" name="password" type="password" autocomplete="current-password" placeholder="••••••••" required>
+      </div>
+
+      <button class="ds-button ds-button--block ds-button--primary" type="submit">Sign in</button>
+
+      <div class="tpl-login__meta">
+        <a href="#">Forgot password?</a>
+      </div>
+
+      <div class="ds-section-heading tpl-login__divider">or</div>
+
+      <button class="ds-button ds-button--block" type="button">Continue with SSO</button>
+    </form>
+  </div>
+</body>
+</html>

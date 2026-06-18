@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Date-time picker · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/date-time">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Date-time picker</h1>
+        <p class="docs-lede">A date picker beside a time picker. The <code>.ds-datetime</code> wrapper sits a <code>.ds-datepicker</code> next to a <code>.ds-timepicker</code> with a consistent gap; together they compose a single ISO datetime string <code>YYYY-MM-DDTHH:MM</code>. Each half owns its own field and popover — no new popover styling here.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Anatomy</h2>
+        <p class="docs-note">A <code>.ds-datetime</code> flex row holds the two controls. The left field opens a flat <code>.ds-calendar</code>; the right opens a two-column <code>.ds-timepicker__popover</code>. Both popovers sit at <code>--ds-z-popover</code> and reuse their own component styles.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Date + time fields</span>
+            <button class="ds-button" data-copy-target="#c-anatomy">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-datetime">
+              <div class="ds-datepicker">
+                <input class="ds-input" type="text" readonly value="2026-06-18" aria-haspopup="dialog" aria-expanded="false" autocomplete="off">
+              </div>
+              <div class="ds-timepicker">
+                <input class="ds-input" type="text" value="09:30" aria-haspopup="dialog" aria-expanded="false" autocomplete="off">
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-anatomy">&lt;div class="ds-datetime"&gt;
+  &lt;div class="ds-datepicker"&gt;
+    &lt;input class="ds-input" type="text" readonly value="2026-06-18" aria-haspopup="dialog"&gt;
+  &lt;/div&gt;
+  &lt;div class="ds-timepicker"&gt;
+    &lt;input class="ds-input" type="text" value="09:30" aria-haspopup="dialog"&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Interactive</h2>
+        <p class="docs-note">The date field opens a calendar; the time field opens the two-column popover. Picking a day and a time composes <code>YYYY-MM-DDTHH:MM</code> — shown live below the row. Both close on outside-click or Escape. The small inline script below wires this demo (no dependencies).</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Date + time → ISO</span>
+            <button class="ds-button" data-copy-target="#c-live">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div data-datetime>
+              <div class="ds-datetime">
+                <div class="ds-datepicker" data-dt-datepicker>
+                  <input class="ds-input" type="text" readonly placeholder="yyyy-mm-dd" value="2026-06-18" aria-haspopup="dialog" aria-expanded="false" autocomplete="off" data-dt-date-input>
+                  <div class="ds-calendar" role="dialog" aria-label="Choose date" hidden data-dt-date-panel style="position:absolute;top:calc(100% + 6px);left:0">
+                    <div class="ds-calendar__head">
+                      <span class="ds-calendar__label">June 2026</span>
+                    </div>
+                    <div class="ds-calendar__grid" role="grid">
+                      <div class="ds-calendar__weekday" aria-hidden="true">Su</div>
+                      <div class="ds-calendar__weekday" aria-hidden="true">Mo</div>
+                      <div class="ds-calendar__weekday" aria-hidden="true">Tu</div>
+                      <div class="ds-calendar__weekday" aria-hidden="true">We</div>
+                      <div class="ds-calendar__weekday" aria-hidden="true">Th</div>
+                      <div class="ds-calendar__weekday" aria-hidden="true">Fr</div>
+                      <div class="ds-calendar__weekday" aria-hidden="true">Sa</div>
+                      <button class="ds-calendar__day is-outside" type="button" data-day="2026-05-31">31</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-01">1</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-02">2</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-03">3</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-04">4</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-05">5</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-06">6</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-07">7</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-08">8</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-09">9</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-10">10</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-11">11</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-12">12</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-13">13</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-14">14</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-15">15</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-16">16</button>
+                      <button class="ds-calendar__day is-today" type="button" data-day="2026-06-17">17</button>
+                      <button class="ds-calendar__day is-selected" type="button" aria-pressed="true" data-day="2026-06-18">18</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-19">19</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-20">20</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-21">21</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-22">22</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-23">23</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-24">24</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-25">25</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-26">26</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-27">27</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-28">28</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-29">29</button>
+                      <button class="ds-calendar__day" type="button" data-day="2026-06-30">30</button>
+                      <button class="ds-calendar__day is-outside" type="button" data-day="2026-07-01">1</button>
+                      <button class="ds-calendar__day is-outside" type="button" data-day="2026-07-02">2</button>
+                      <button class="ds-calendar__day is-outside" type="button" data-day="2026-07-03">3</button>
+                      <button class="ds-calendar__day is-outside" type="button" data-day="2026-07-04">4</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="ds-timepicker" data-dt-timepicker>
+                  <input class="ds-input" type="text" value="09:30" placeholder="hh:mm" inputmode="numeric" aria-haspopup="dialog" aria-expanded="false" autocomplete="off" data-dt-time-input>
+                  <div class="ds-timepicker__popover" role="dialog" aria-label="Choose time" hidden data-dt-time-popover>
+                    <div class="ds-timepicker__col" role="listbox" aria-label="Hour" data-dt-hours></div>
+                    <div class="ds-timepicker__col" role="listbox" aria-label="Minute" data-dt-minutes></div>
+                  </div>
+                </div>
+              </div>
+              <p class="docs-note" style="margin-top:var(--ds-space-3)">Value: <code data-dt-output>2026-06-18T09:30</code></p>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-live">&lt;div class="ds-datetime"&gt;
+  &lt;div class="ds-datepicker"&gt;
+    &lt;input class="ds-input" type="text" readonly value="2026-06-18" aria-haspopup="dialog"&gt;
+    &lt;div class="ds-calendar" role="dialog" hidden&gt;&lt;!-- __head + __grid --&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="ds-timepicker"&gt;
+    &lt;input class="ds-input" type="text" value="09:30" aria-haspopup="dialog"&gt;
+    &lt;div class="ds-timepicker__popover" role="dialog" hidden&gt;&lt;!-- two cols --&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- combines to 2026-06-18T09:30 --&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <p class="docs-note">The <code>DateTimePicker</code> composes <code>DatePicker</code> and <code>TimePicker</code> side by side and combines their halves into an ISO <code>"YYYY-MM-DDTHH:MM"</code> string passed to <code>onChange</code>. Works controlled (<code>value</code>/<code>onChange</code>) or uncontrolled (<code>defaultValue</code>); <code>min</code> / <code>max</code> bound the calendar and <code>step</code> drives the minutes column.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;DateTimePicker&gt;</span>
+            <button class="ds-button" data-copy-target="#c-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-react">import { DateTimePicker } from "@diametral/design-system/react";
+
+&lt;DateTimePicker
+  defaultValue="2026-06-18T09:30"
+  min="2026-01-01"
+  max="2026-12-31"
+  step={15}
+  onChange={(value) =&gt; setWhen(value)}
+/&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Minimal vanilla wiring for the interactive .ds-datetime demo (no dependencies).
+    document.querySelectorAll("[data-datetime]").forEach(function (root) {
+      var dateInput = root.querySelector("[data-dt-date-input]");
+      var datePanel = root.querySelector("[data-dt-date-panel]");
+      var timeInput = root.querySelector("[data-dt-time-input]");
+      var timePopover = root.querySelector("[data-dt-time-popover]");
+      var hoursCol = root.querySelector("[data-dt-hours]");
+      var minutesCol = root.querySelector("[data-dt-minutes]");
+      var output = root.querySelector("[data-dt-output]");
+      if (!dateInput || !datePanel || !timeInput || !timePopover) return;
+      var step = 15;
+      var pad = function (n) { return String(n).padStart(2, "0"); };
+
+      function combine() {
+        var d = dateInput.value.trim();
+        var t = timeInput.value.trim();
+        output.textContent = d ? d + "T" + (t || "00:00") : "—";
+      }
+
+      // --- Date side ---
+      function setDateOpen(open) {
+        datePanel.hidden = !open;
+        dateInput.setAttribute("aria-expanded", String(open));
+      }
+      dateInput.addEventListener("click", function () { setDateOpen(datePanel.hidden); });
+      datePanel.querySelectorAll("[data-day]").forEach(function (cell) {
+        cell.addEventListener("click", function () {
+          datePanel.querySelectorAll(".ds-calendar__day.is-selected").forEach(function (el) {
+            el.classList.remove("is-selected");
+            el.removeAttribute("aria-pressed");
+          });
+          cell.classList.add("is-selected");
+          cell.setAttribute("aria-pressed", "true");
+          dateInput.value = cell.getAttribute("data-day");
+          setDateOpen(false);
+          combine();
+        });
+      });
+
+      // --- Time side ---
+      function parseTime() {
+        var m = /^(\d{1,2}):(\d{1,2})$/.exec(timeInput.value.trim());
+        if (!m) return null;
+        var hr = Number(m[1]), mn = Number(m[2]);
+        if (hr < 0 || hr > 23 || mn < 0 || mn > 59) return null;
+        return { hour: hr, minute: mn };
+      }
+      function buildCol(col, values, kind) {
+        values.forEach(function (v) {
+          var b = document.createElement("button");
+          b.type = "button";
+          b.className = "ds-timepicker__opt";
+          b.setAttribute("role", "option");
+          b.setAttribute("data-kind", kind);
+          b.setAttribute("data-value", String(v));
+          b.textContent = pad(v);
+          col.appendChild(b);
+        });
+      }
+      var hours = []; for (var i = 0; i < 24; i++) hours.push(i);
+      var minutes = []; for (var j = 0; j < 60; j += step) minutes.push(j);
+      buildCol(hoursCol, hours, "hour");
+      buildCol(minutesCol, minutes, "minute");
+
+      function paintTime() {
+        var t = parseTime();
+        timePopover.querySelectorAll(".ds-timepicker__opt").forEach(function (b) {
+          var kind = b.getAttribute("data-kind");
+          var val = Number(b.getAttribute("data-value"));
+          var on = t && ((kind === "hour" && t.hour === val) || (kind === "minute" && t.minute === val));
+          b.classList.toggle("is-selected", !!on);
+          b.setAttribute("aria-selected", String(!!on));
+        });
+      }
+      function setTimeOpen(open) {
+        timePopover.hidden = !open;
+        timeInput.setAttribute("aria-expanded", String(open));
+        if (open) {
+          paintTime();
+          var sel = timePopover.querySelector(".is-selected");
+          if (sel) sel.scrollIntoView({ block: "center" });
+        }
+      }
+      function pickTime(kind, val) {
+        var t = parseTime() || { hour: 0, minute: 0 };
+        if (kind === "hour") t.hour = val; else t.minute = val;
+        timeInput.value = pad(t.hour) + ":" + pad(t.minute);
+        paintTime();
+        combine();
+      }
+      timeInput.addEventListener("click", function () { setTimeOpen(timePopover.hidden); });
+      timeInput.addEventListener("input", function () { paintTime(); combine(); });
+      timePopover.querySelectorAll(".ds-timepicker__opt").forEach(function (b) {
+        b.addEventListener("mousedown", function (e) {
+          e.preventDefault();
+          pickTime(b.getAttribute("data-kind"), Number(b.getAttribute("data-value")));
+        });
+      });
+
+      // --- Shared dismiss ---
+      document.addEventListener("mousedown", function (e) {
+        if (!root.contains(e.target)) { setDateOpen(false); setTimeOpen(false); }
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { setDateOpen(false); setTimeOpen(false); }
+      });
+    });
+  </script>
+</body>
+</html>
