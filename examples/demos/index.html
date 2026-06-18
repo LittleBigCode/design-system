@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Examples · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <style>
+    /* Page-local layout only — the gallery shell and the large example cards.
+       Flat, 1px borders, no radius; colors are tokens only. */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--ds-bg);
+      color: var(--ds-ink);
+      font-family: var(--ds-font-sans);
+    }
+    .demo-back {
+      position: fixed;
+      top: 20px;
+      left: 24px;
+      font-size: var(--ds-text-xs);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ds-ink-faint);
+      text-decoration: none;
+      z-index: 10;
+    }
+    .demo-back:hover { color: var(--ds-ink); }
+
+    .gallery {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 88px 24px 96px;
+    }
+    .gallery__head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 8px;
+    }
+    .gallery__mark {
+      width: 40px;
+      height: 40px;
+      color: var(--ds-ink);
+      flex: none;
+    }
+    .gallery__title {
+      font-family: var(--ds-font-title);
+      font-weight: var(--ds-font-weight-title);
+      font-size: var(--ds-text-2xl);
+      letter-spacing: -0.6px;
+      line-height: var(--ds-leading-tight);
+      margin: 0;
+    }
+    .gallery__lede {
+      color: var(--ds-ink-soft);
+      font-size: var(--ds-text-base);
+      max-width: 56ch;
+      margin: 0 0 40px;
+    }
+
+    .gallery__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 620px) { .gallery__grid { grid-template-columns: 1fr; } }
+
+    .ex-card {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 28px 24px;
+      min-height: 132px;
+      background: var(--ds-surface);
+      border: 1px solid var(--ds-rule);
+      border-radius: var(--ds-radius-none);
+      text-decoration: none;
+      color: inherit;
+      transition: background 120ms ease, border-color 120ms ease;
+    }
+    .ex-card:hover {
+      background: var(--ds-bg-alt);
+      border-color: var(--ds-ink);
+    }
+    .ex-card:focus-visible {
+      outline: 2px solid var(--ds-focus-ring);
+      outline-offset: -2px;
+    }
+    .ex-card__kicker {
+      font-size: var(--ds-text-2xs);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ds-ink-faint);
+    }
+    .ex-card__name {
+      font-size: var(--ds-text-md);
+      color: var(--ds-ink);
+    }
+    .ex-card__desc {
+      font-size: var(--ds-text-sm);
+      color: var(--ds-ink-soft);
+      line-height: var(--ds-leading-normal);
+    }
+    .ex-card__go {
+      margin-top: auto;
+      padding-top: 8px;
+      font-size: var(--ds-text-xs);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ds-ink-faint);
+    }
+    .ex-card:hover .ex-card__go { color: var(--ds-ink); }
+  </style>
+</head>
+<body>
+  <a class="demo-back" href="../index.html">← Diametral</a>
+
+  <main class="gallery">
+    <header class="gallery__head">
+      <svg class="gallery__mark" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <circle cx="28" cy="28" r="24"></circle>
+        <rect x="12" y="12" width="32" height="32"></rect>
+        <line x1="12" y1="44" x2="44" y2="12"></line>
+      </svg>
+      <h1 class="gallery__title">Examples</h1>
+    </header>
+    <p class="gallery__lede">Full, live pages built from the Diametral components — real React rendered straight from a CDN, no build step. Open one to see the system at page scale.</p>
+
+    <div class="gallery__grid">
+      <a class="ex-card" href="dashboard.html">
+        <span class="ex-card__kicker">App</span>
+        <span class="ex-card__name">Dashboard</span>
+        <span class="ex-card__desc">Metrics, charts and a data table in an app shell.</span>
+        <span class="ex-card__go">Open →</span>
+      </a>
+
+      <a class="ex-card" href="inbox.html">
+        <span class="ex-card__kicker">App</span>
+        <span class="ex-card__name">Inbox</span>
+        <span class="ex-card__desc">A two-pane mail layout — list, reading view and actions.</span>
+        <span class="ex-card__go">Open →</span>
+      </a>
+
+      <a class="ex-card" href="forms.html">
+        <span class="ex-card__kicker">Form</span>
+        <span class="ex-card__name">Settings</span>
+        <span class="ex-card__desc">A tabbed profile &amp; account page with a sticky save bar.</span>
+        <span class="ex-card__go">Open →</span>
+      </a>
+
+      <a class="ex-card" href="login.html">
+        <span class="ex-card__kicker">Auth</span>
+        <span class="ex-card__name">Sign in</span>
+        <span class="ex-card__desc">A centered auth card with sign-in / create-account tabs.</span>
+        <span class="ex-card__go">Open →</span>
+      </a>
+    </div>
+  </main>
+</body>
+</html>

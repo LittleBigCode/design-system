@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Installation · Diametral Design System</title>
+  <link rel="icon" href="../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../css/diametral.css">
+  <link rel="stylesheet" href="./shell.css">
+  <script type="module" src="./showcase.js"></script>
+</head>
+<body data-page="installation">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Guide</p>
+        <h1 class="ds-title ds-title--xl">Installation</h1>
+        <p class="docs-lede">How to install the Diametral Design System in a real project — plain HTML, or any of the popular frameworks. The system is buildless: at its core it is one stylesheet plus design tokens, so most stacks need nothing more than a <code>&lt;link&gt;</code> (or one <code>import</code>) and the fonts.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>What you get</h2>
+        <p class="docs-note">The package <code>@diametral/design-system</code> ships several independent layers. Take only what you need — each works on its own, and none requires a build step to consume.</p>
+        <div class="specimen">
+          <div class="specimen__row"><span class="specimen__meta">CSS + tokens</span><span>The whole visual language as one stylesheet of <code>.ds-*</code> classes backed by <code>--ds-*</code> custom properties. → <code>@diametral/design-system/css/diametral.css</code></span></div>
+          <div class="specimen__row"><span class="specimen__meta">Design tokens</span><span>The single source of truth as JSON. → <code>@diametral/design-system/tokens.json</code></span></div>
+          <div class="specimen__row"><span class="specimen__meta">Web Components</span><span>An optional vanilla custom-element layer (<code>&lt;ds-button&gt;</code>, <code>&lt;ds-status&gt;</code>, …). → <code>@diametral/design-system/components</code></span></div>
+          <div class="specimen__row"><span class="specimen__meta">React components</span><span>Optional real, typed React components (<code>Button</code>, <code>DataGrid</code>, …). → <code>@diametral/design-system/react</code></span></div>
+          <div class="specimen__row"><span class="specimen__meta">Tailwind preset</span><span>Binds Tailwind <code>colors</code>/<code>spacing</code>/<code>fontFamily</code>/… to the <code>--ds-*</code> variables. → <code>@diametral/design-system/tailwind-preset</code></span></div>
+          <div class="specimen__row"><span class="specimen__meta">SCSS variables</span><span><code>$ds-*</code> variables, each resolving to the matching CSS var. → <code>@diametral/design-system/dist/tokens.scss</code></span></div>
+          <div class="specimen__row"><span class="specimen__meta">Assets</span><span>Bundled fonts (Ufficio + license), logo, photography. → <code>@diametral/design-system/assets/*</code></span></div>
+        </div>
+        <p class="docs-note">The CSS and the tokens are the foundation; the Web Components and React layers render the same <code>.ds-*</code> markup, so styling and theming always come from the one stylesheet. Change a token, every layer follows.</p>
+      </section>
+
+      <section class="docs-section">
+        <h2>Install</h2>
+        <p class="docs-note">With npm (or pnpm / yarn / bun):</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">npm install</span>
+            <button class="ds-button" data-copy-target="#c-install-npm">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-install-npm">npm i @diametral/design-system</code></pre>
+        </section>
+        <p class="docs-note"><code>react</code> and <code>react-dom</code> are optional peer dependencies — add them only if you use the React layer. CSS-only and Web Component consumers don't pull them in.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Optional React peers</span>
+            <button class="ds-button" data-copy-target="#c-install-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-install-react"># only if you use @diametral/design-system/react
+npm i react react-dom</code></pre>
+        </section>
+        <p class="docs-note">Without npm. The system is plain CSS + fonts + SVG + a sprinkle of vanilla JS — no bundler required. Either copy the <code>css/</code> and <code>assets/</code> folders into your project and link <code>css/diametral.css</code>, or link it straight from a CDN that serves npm packages (unpkg, jsDelivr, esm.sh):</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">CDN stylesheet</span>
+            <button class="ds-button" data-copy-target="#c-install-cdn">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-install-cdn">&lt;link rel="stylesheet" href="https://unpkg.com/@diametral/design-system/css/diametral.css"&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Load the CSS + fonts</h2>
+        <p class="docs-note">Three things to wire up once, at your app root.</p>
+        <p class="docs-note">1 · The one stylesheet. Everything is bundled behind a single entry that <code>@import</code>s the tokens, reset, typography, and every component:</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Stylesheet · bundler / npm</span>
+            <button class="ds-button" data-copy-target="#c-css-import">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-css-import">// bundler / npm
+import "@diametral/design-system/css/diametral.css";</code></pre>
+        </section>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Stylesheet · no build</span>
+            <button class="ds-button" data-copy-target="#c-css-link">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-css-link">&lt;!-- no build --&gt;
+&lt;link rel="stylesheet" href="css/diametral.css"&gt;</code></pre>
+        </section>
+        <p class="docs-note">2 · The body font — Geist (free, OFL):</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Geist · Google Fonts</span>
+            <button class="ds-button" data-copy-target="#c-font-geist">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-font-geist">&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
+&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;
+&lt;link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;display=swap" rel="stylesheet"&gt;</code></pre>
+        </section>
+        <p class="docs-note">3 · The title font — Ufficio (opt-in, commercial). The <code>--ds-font-title</code> token lists Ufficio first, but the face is declared only in <code>assets/fonts/ufficio.css</code>. Import it only if you hold an Ufficio license:</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Ufficio · no build</span>
+            <button class="ds-button" data-copy-target="#c-font-ufficio-link">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-font-ufficio-link">&lt;!-- only if you hold an Ufficio license --&gt;
+&lt;link rel="stylesheet" href="assets/fonts/ufficio.css"&gt;</code></pre>
+        </section>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Ufficio · via npm</span>
+            <button class="ds-button" data-copy-target="#c-font-ufficio-npm">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-font-ufficio-npm">// via npm
+import "@diametral/design-system/assets/fonts/ufficio.css";</code></pre>
+        </section>
+        <p class="docs-note">If you don't import it, the unknown family name is skipped and titles fall back to the free Fraunces stack automatically — no token change needed. To load the free fonts (Fraunces + Geist) explicitly in one shot, import <code>assets/fonts/fallback.css</code> instead.</p>
+        <p class="docs-note">Global reset. <code>css/diametral.css</code> includes a light global reset (<code>box-sizing</code>, zeroed margins, base body type). Every class is namespaced <code>.ds-*</code>, so it won't collide with your app's CSS or Tailwind utilities. If your app already has a reset and you want to avoid overlap, import <code>css/tokens.css</code> plus the individual <code>css/components/*.css</code> partials instead of the full bundle.</p>
+      </section>
+
+      <section class="docs-section">
+        <h2>Quick start · Plain HTML / no build</h2>
+        <p class="docs-note">Link the CSS, load the fonts, write <code>.ds-*</code> markup. Add the Web Components module if you want the custom elements.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">index.html</span>
+            <button class="ds-button" data-copy-target="#c-qs-html">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-qs-html">&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;display=swap" rel="stylesheet"&gt;
+  &lt;link rel="stylesheet" href="css/diametral.css"&gt;
+  &lt;!-- optional Web Components --&gt;
+  &lt;script type="module" src="components/index.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;!-- plain classes --&gt;
+  &lt;button class="ds-button ds-button--primary"&gt;Save&lt;/button&gt;
+
+  &lt;!-- or the optional custom elements --&gt;
+  &lt;ds-button variant="primary"&gt;Save&lt;/ds-button&gt;
+  &lt;ds-status status="success" heading="Approved"&gt;&lt;/ds-status&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Quick start · Vite (React)</h2>
+        <p class="docs-note">Import the CSS once in <code>main.jsx</code>, then import components from the React entry.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">main.jsx</span>
+            <button class="ds-button" data-copy-target="#c-vite-main">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-vite-main">// main.jsx
+import React from "react";
+import { createRoot } from "react-dom/client";
+import "@diametral/design-system/css/diametral.css";
+import App from "./App.jsx";
+
+createRoot(document.getElementById("root")).render(&lt;App /&gt;);</code></pre>
+        </section>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">App.jsx</span>
+            <button class="ds-button" data-copy-target="#c-vite-app">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-vite-app">// App.jsx
+import { Button, DataGrid } from "@diametral/design-system/react";
+
+export default function App() {
+  return &lt;Button variant="primary"&gt;Save&lt;/Button&gt;;
+}</code></pre>
+        </section>
+        <p class="docs-note">Load the Geist <code>&lt;link&gt;</code> in <code>index.html</code>'s <code>&lt;head&gt;</code> (and <code>assets/fonts/ufficio.css</code> if licensed).</p>
+      </section>
+
+      <section class="docs-section">
+        <h2>Quick start · Next.js (App Router)</h2>
+        <p class="docs-note">Import the global CSS once in <code>app/layout.tsx</code>. The React components use hooks and event handlers, so they are client components — render them inside a <code>"use client"</code> boundary.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">app/layout.tsx</span>
+            <button class="ds-button" data-copy-target="#c-next-layout">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-next-layout">// app/layout.tsx
+import "@diametral/design-system/css/diametral.css";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    &lt;html lang="en"&gt;
+      &lt;body&gt;{children}&lt;/body&gt;
+    &lt;/html&gt;
+  );
+}</code></pre>
+        </section>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">app/page.tsx</span>
+            <button class="ds-button" data-copy-target="#c-next-page">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-next-page">// app/page.tsx (or any client component)
+"use client";
+import { Button, Status } from "@diametral/design-system/react";
+
+export default function Page() {
+  return &lt;Button variant="primary"&gt;Save&lt;/Button&gt;;
+}</code></pre>
+        </section>
+        <p class="docs-note">Fonts: either load Geist via the Google <code>&lt;link&gt;</code> in <code>layout.tsx</code>'s <code>&lt;head&gt;</code>, or use <code>next/font/google</code> and map the token:</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">next/font/google</span>
+            <button class="ds-button" data-copy-target="#c-next-font">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-next-font">import { Geist } from "next/font/google";
+const geist = Geist({ subsets: ["latin"], weight: ["300", "400", "500", "600"] });
+// then apply geist.className to &lt;body&gt;, or set :root { --ds-font-sans: ... }</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Quick start · Create React App</h2>
+        <p class="docs-note">Import the CSS once in <code>index.js</code>.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">src/index.js</span>
+            <button class="ds-button" data-copy-target="#c-cra-index">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-cra-index">// src/index.js
+import React from "react";
+import { createRoot } from "react-dom/client";
+import "@diametral/design-system/css/diametral.css";
+import App from "./App";
+
+createRoot(document.getElementById("root")).render(&lt;App /&gt;);</code></pre>
+        </section>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">src/App.js</span>
+            <button class="ds-button" data-copy-target="#c-cra-app">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-cra-app">// src/App.js
+import { Button } from "@diametral/design-system/react";
+
+export default function App() {
+  return &lt;Button variant="primary"&gt;Save&lt;/Button&gt;;
+}</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Quick start · Angular</h2>
+        <p class="docs-note">Add the stylesheet to the <code>styles</code> array in <code>angular.json</code>:</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">angular.json</span>
+            <button class="ds-button" data-copy-target="#c-ng-json">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-ng-json">// angular.json → projects.&lt;app&gt;.architect.build.options
+"styles": [
+  "node_modules/@diametral/design-system/css/diametral.css",
+  "src/styles.scss"
+]</code></pre>
+        </section>
+        <p class="docs-note">…or <code>@import</code> it from <code>src/styles.scss</code>:</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">src/styles.scss</span>
+            <button class="ds-button" data-copy-target="#c-ng-scss">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-ng-scss">@import "@diametral/design-system/css/diametral.css";</code></pre>
+        </section>
+        <p class="docs-note">Then use the <code>.ds-*</code> classes directly in templates. To use the Web Components, import the module once (e.g. in <code>main.ts</code>) and allow custom elements in the modules/components that use them:</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">main.ts</span>
+            <button class="ds-button" data-copy-target="#c-ng-main">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-ng-main">// main.ts
+import "@diametral/design-system/components";</code></pre>
+        </section>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">app.component.ts</span>
+            <button class="ds-button" data-copy-target="#c-ng-component">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-ng-component">// the standalone component (or NgModule) that uses &lt;ds-*&gt; elements
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+
+@Component({
+  selector: "app-root",
+  template: `&lt;ds-button variant="primary"&gt;Save&lt;/ds-button&gt;`,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
+export class AppComponent {}</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Quick start · Vue</h2>
+        <p class="docs-note">Import the CSS once in <code>main.js</code>:</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">main.js</span>
+            <button class="ds-button" data-copy-target="#c-vue-main">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-vue-main">// main.js
+import { createApp } from "vue";
+import "@diametral/design-system/css/diametral.css";
+import App from "./App.vue";
+
+createApp(App).mount("#app");</code></pre>
+        </section>
+        <p class="docs-note">Use the <code>.ds-*</code> classes in templates, or the Web Components — register the module once and Vue will render the custom elements as-is:</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">main.js · Web Components</span>
+            <button class="ds-button" data-copy-target="#c-vue-wc">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-vue-wc">// main.js
+import "@diametral/design-system/components";</code></pre>
+        </section>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">App.vue</span>
+            <button class="ds-button" data-copy-target="#c-vue-app">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-vue-app">&lt;!-- App.vue --&gt;
+&lt;template&gt;
+  &lt;button class="ds-button ds-button--primary"&gt;Save&lt;/button&gt;
+  &lt;ds-status status="success" heading="Approved"&gt;&lt;/ds-status&gt;
+&lt;/template&gt;</code></pre>
+        </section>
+        <p class="docs-note">Vue treats any unknown hyphenated tag as a custom element by default. With Vite, if you ever need to be explicit, set <code>isCustomElement: (tag) =&gt; tag.startsWith("ds-")</code> in <code>@vitejs/plugin-vue</code>'s <code>compilerOptions</code>.</p>
+      </section>
+
+      <section class="docs-section">
+        <h2>Quick start · CDN / import map (buildless React)</h2>
+        <p class="docs-note">Because the React components have no build dependency, you can run them straight from a CDN with an import map — exactly what the live demo does. Great for a throwaway prototype or a CodePen; for a real app, prefer npm + a bundler.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Buildless React · import map</span>
+            <button class="ds-button" data-copy-target="#c-cdn-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-cdn-react">&lt;link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;display=swap" rel="stylesheet"&gt;
+&lt;link rel="stylesheet" href="https://unpkg.com/@diametral/design-system/css/diametral.css"&gt;
+
+&lt;div id="app"&gt;&lt;/div&gt;
+
+&lt;script type="importmap"&gt;
+{ "imports": {
+  "react": "https://esm.sh/react@18.3.1",
+  "react-dom": "https://esm.sh/react-dom@18.3.1?external=react",
+  "react-dom/client": "https://esm.sh/react-dom@18.3.1/client?external=react",
+  "@diametral/design-system/react": "https://esm.sh/@diametral/design-system/react"
+} }
+&lt;/script&gt;
+&lt;script type="module"&gt;
+  import React from "react";
+  import { createRoot } from "react-dom/client";
+  import { Button } from "@diametral/design-system/react";
+  createRoot(document.getElementById("app"))
+    .render(React.createElement(Button, { variant: "primary" }, "Save"));
+&lt;/script&gt;</code></pre>
+        </section>
+        <p class="docs-note">The <code>?external=react</code> query keeps a single React instance across the imports. See the full working demo in <a href="react.html">react.html</a>.</p>
+      </section>
+
+      <section class="docs-section">
+        <h2>Tailwind</h2>
+        <p class="docs-note">Add the preset to <code>presets</code> in your Tailwind config — it binds <code>colors</code>, <code>spacing</code>, <code>fontFamily</code>, and the rest to the <code>--ds-*</code> custom properties:</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">tailwind.config.js</span>
+            <button class="ds-button" data-copy-target="#c-tw-config">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-tw-config">// tailwind.config.js
+module.exports = {
+  presets: [require("@diametral/design-system/tailwind-preset")],
+  content: ["./src/**/*.{html,js,ts,jsx,tsx,vue}"],
+};</code></pre>
+        </section>
+        <p class="docs-note">Now Tailwind utilities resolve to the design tokens — e.g. <code>bg-accent</code>, <code>text-ink</code>, <code>p-4</code>, and <code>font-title</code> emit <code>var(--ds-accent)</code>, <code>var(--ds-ink)</code>, <code>var(--ds-space-4)</code>, <code>var(--ds-font-title)</code>. Because they are backed by the variables, runtime theming still works: flip <code>data-theme="dark"</code> and the Tailwind-styled elements re-theme too.</p>
+        <p class="docs-note">SCSS option. Prefer SCSS variables? <code>dist/tokens.scss</code> exposes <code>$ds-*</code> variables (each resolving to the CSS var, so theming still applies):</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">SCSS variables</span>
+            <button class="ds-button" data-copy-target="#c-tw-scss">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-tw-scss">@use "@diametral/design-system/dist/tokens.scss" as ds;
+.thing { color: ds.$ds-ink; padding: ds.$ds-space-4; }
+
+// or the legacy syntax
+@import "@diametral/design-system/dist/tokens.scss";
+.thing { color: $ds-ink; }</code></pre>
+        </section>
+        <p class="docs-note">The Tailwind preset (<code>dist/tailwind-preset.cjs</code>) and <code>dist/tokens.scss</code> are generated by the design-system repo's build. If you are working from a clone (not the npm package), run <code>npm run build</code> (or <code>npm run build:tokens</code>) once to produce <code>dist/</code>. The published package ships <code>dist/</code> already, so installed consumers need nothing.</p>
+      </section>
+
+      <section class="docs-section">
+        <h2>Theming</h2>
+        <p class="docs-note">Dark mode (and any theme) is a one-liner — import the theme stylesheet and set the selector on a root element:</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Theme import</span>
+            <button class="ds-button" data-copy-target="#c-theme-import">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-theme-import">import "@diametral/design-system/css/diametral.css";
+import "@diametral/design-system/css/themes/dark.css";</code></pre>
+        </section>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Theme selector</span>
+            <button class="ds-button" data-copy-target="#c-theme-attr">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-theme-attr">&lt;html data-theme="dark"&gt;   &lt;!-- or class="dark", or class="dark-theme" --&gt;</code></pre>
+        </section>
+        <p class="docs-note"><code>css/themes/dark.css</code> targets <code>[data-theme="dark"]</code>, <code>.dark</code>, and <code>:root.dark-theme</code>, so it drops in regardless of which convention your app uses. For OS-driven dark mode, add <code>class="ds-auto-dark"</code> to <code>&lt;html&gt;</code>. Themes override only the semantic tokens — see <a href="theming.html">Theming</a> for per-brand theming and the Tailwind/SCSS/shadcn notes.</p>
+      </section>
+
+      <section class="docs-section">
+        <h2>TypeScript</h2>
+        <p class="docs-note">No extra setup. Types ship with the React entry and are wired through the package <code>exports</code> map (<code>react/index.d.ts</code>), so the import below is fully typed out of the box — typed props, <code>children</code>, event handlers, and <code>forwardRef</code> on <code>Button</code> / <code>Input</code>.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Typed import</span>
+            <button class="ds-button" data-copy-target="#c-ts-import">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-ts-import">import { Button } from "@diametral/design-system/react";</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Troubleshooting</h2>
+        <p class="docs-note"><strong>"node_modules JSX isn't transpiled."</strong> It doesn't need to be. The React components are authored as plain ES modules with <code>React.createElement</code> (no JSX) and ship as valid JS — Vite, Next, CRA, Remix, etc. import them directly. You don't have to add <code>@diametral/design-system</code> to a <code>transpilePackages</code> / <code>transpileDependencies</code> allowlist.</p>
+        <p class="docs-note"><strong>Fonts don't load offline.</strong> Geist and Ufficio load fine over <code>file://</code>; only the Google Fonts <code>&lt;link&gt;</code> needs a network. The system still renders with system fallbacks offline. Self-host the fonts (the bundled <code>assets/fonts/ufficio.css</code> is already local) or import <code>assets/fonts/fallback.css</code> if you want the free Fraunces/Geist files under your control.</p>
+        <p class="docs-note"><strong>Titles render in a serif, not Ufficio.</strong> Expected unless you imported <code>assets/fonts/ufficio.css</code> (and hold a license). The token lists Ufficio first; without the <code>@font-face</code> it falls back to Fraunces / Georgia.</p>
+        <p class="docs-note"><strong>My app's reset and Diametral's overlap.</strong> Skip the bundle's reset: import <code>css/tokens.css</code> plus the <code>css/components/*.css</code> partials you need instead of <code>css/diametral.css</code>.</p>
+        <p class="docs-note"><strong>CSP blocks the esm.sh demo.</strong> The buildless CDN pattern pulls React from <code>https://esm.sh</code> and the CSS from a CDN. If your Content-Security-Policy is strict, allow those origins in <code>script-src</code> / <code>style-src</code> / <code>connect-src</code> — or just install from npm and bundle, which needs no external origins at runtime.</p>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="index.html">← Overview</a>
+        <a href="components/buttons.html">Components →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

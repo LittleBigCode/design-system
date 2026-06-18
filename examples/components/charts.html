@@ -12,6 +12,13 @@
   <link rel="stylesheet" href="../../css/diametral.css">
   <link rel="stylesheet" href="../shell.css">
   <script type="module" src="../showcase.js"></script>
+  <script type="importmap">
+  { "imports": {
+    "react": "https://esm.sh/react@18.3.1",
+    "react-dom": "https://esm.sh/react-dom@18.3.1?external=react",
+    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client?external=react"
+  } }
+  </script>
 </head>
 <body data-page="components/charts">
   <div class="docs">
@@ -32,32 +39,7 @@
             <button class="ds-button" data-copy-target="#c-line">Copy</button>
           </header>
           <div class="ds-example__preview ds-example__preview--block">
-            <div class="ds-chart ds-linechart" role="img" aria-label="Line chart">
-              <svg class="ds-chart__svg" viewBox="0 0 480 200" width="480" height="200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-                <line class="ds-chart__grid" x1="6" y1="8" x2="474" y2="8" />
-                <line class="ds-chart__grid" x1="6" y1="51" x2="474" y2="51" />
-                <line class="ds-chart__grid" x1="6" y1="94" x2="474" y2="94" />
-                <line class="ds-chart__grid" x1="6" y1="137" x2="474" y2="137" />
-                <line class="ds-chart__grid" x1="6" y1="180" x2="474" y2="180" />
-                <text class="ds-chart__axis" x="6" y="194" text-anchor="start">Jan</text>
-                <text class="ds-chart__axis" x="72.86" y="194" text-anchor="middle">Feb</text>
-                <text class="ds-chart__axis" x="139.71" y="194" text-anchor="middle">Mar</text>
-                <text class="ds-chart__axis" x="206.57" y="194" text-anchor="middle">Apr</text>
-                <text class="ds-chart__axis" x="273.43" y="194" text-anchor="middle">May</text>
-                <text class="ds-chart__axis" x="340.29" y="194" text-anchor="middle">Jun</text>
-                <text class="ds-chart__axis" x="407.14" y="194" text-anchor="middle">Jul</text>
-                <text class="ds-chart__axis" x="474" y="194" text-anchor="end">Aug</text>
-                <polyline class="ds-linechart__line" points="6,156.55 72.86,109.64 139.71,180 206.57,78.36 273.43,117.45 340.29,31.45 407.14,62.73 474,8" style="stroke: var(--ds-chart-1)" />
-                <circle class="ds-linechart__dot" cx="6" cy="156.55" r="2.5" style="fill: var(--ds-chart-1)" />
-                <circle class="ds-linechart__dot" cx="72.86" cy="109.64" r="2.5" style="fill: var(--ds-chart-1)" />
-                <circle class="ds-linechart__dot" cx="139.71" cy="180" r="2.5" style="fill: var(--ds-chart-1)" />
-                <circle class="ds-linechart__dot" cx="206.57" cy="78.36" r="2.5" style="fill: var(--ds-chart-1)" />
-                <circle class="ds-linechart__dot" cx="273.43" cy="117.45" r="2.5" style="fill: var(--ds-chart-1)" />
-                <circle class="ds-linechart__dot" cx="340.29" cy="31.45" r="2.5" style="fill: var(--ds-chart-1)" />
-                <circle class="ds-linechart__dot" cx="407.14" cy="62.73" r="2.5" style="fill: var(--ds-chart-1)" />
-                <circle class="ds-linechart__dot" cx="474" cy="8" r="2.5" style="fill: var(--ds-chart-1)" />
-              </svg>
-            </div>
+            <div id="demo-line">Loading React…</div>
           </div>
           <pre class="ds-example__code"><code id="c-line">&lt;div class="ds-chart ds-linechart" role="img" aria-label="Line chart"&gt;
   &lt;svg class="ds-chart__svg" viewBox="0 0 480 200" width="480" height="200"
@@ -80,33 +62,7 @@
             <button class="ds-button" data-copy-target="#c-line-multi">Copy</button>
           </header>
           <div class="ds-example__preview ds-example__preview--block">
-            <div class="ds-chart ds-linechart" role="img" aria-label="Line chart with 2 series">
-              <svg class="ds-chart__svg" viewBox="0 0 480 200" width="480" height="200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-                <line class="ds-chart__grid" x1="6" y1="8" x2="474" y2="8" />
-                <line class="ds-chart__grid" x1="6" y1="51" x2="474" y2="51" />
-                <line class="ds-chart__grid" x1="6" y1="94" x2="474" y2="94" />
-                <line class="ds-chart__grid" x1="6" y1="137" x2="474" y2="137" />
-                <line class="ds-chart__grid" x1="6" y1="180" x2="474" y2="180" />
-                <polyline class="ds-linechart__line" points="6,180 99.6,115.5 193.2,147.75 286.8,61.75 380.4,94 474,8" style="stroke: var(--ds-chart-1)" />
-                <polyline class="ds-linechart__line" points="6,51 99.6,94 193.2,29.5 286.8,126.25 380.4,72.5 474,137" style="stroke: var(--ds-chart-2)" />
-                <circle class="ds-linechart__dot" cx="6" cy="180" r="2.5" style="fill: var(--ds-chart-1)" />
-                <circle class="ds-linechart__dot" cx="99.6" cy="115.5" r="2.5" style="fill: var(--ds-chart-1)" />
-                <circle class="ds-linechart__dot" cx="193.2" cy="147.75" r="2.5" style="fill: var(--ds-chart-1)" />
-                <circle class="ds-linechart__dot" cx="286.8" cy="61.75" r="2.5" style="fill: var(--ds-chart-1)" />
-                <circle class="ds-linechart__dot" cx="380.4" cy="94" r="2.5" style="fill: var(--ds-chart-1)" />
-                <circle class="ds-linechart__dot" cx="474" cy="8" r="2.5" style="fill: var(--ds-chart-1)" />
-                <circle class="ds-linechart__dot" cx="6" cy="51" r="2.5" style="fill: var(--ds-chart-2)" />
-                <circle class="ds-linechart__dot" cx="99.6" cy="94" r="2.5" style="fill: var(--ds-chart-2)" />
-                <circle class="ds-linechart__dot" cx="193.2" cy="29.5" r="2.5" style="fill: var(--ds-chart-2)" />
-                <circle class="ds-linechart__dot" cx="286.8" cy="126.25" r="2.5" style="fill: var(--ds-chart-2)" />
-                <circle class="ds-linechart__dot" cx="380.4" cy="72.5" r="2.5" style="fill: var(--ds-chart-2)" />
-                <circle class="ds-linechart__dot" cx="474" cy="137" r="2.5" style="fill: var(--ds-chart-2)" />
-              </svg>
-              <div class="ds-chart-legend">
-                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-1)"></span>Revenue</span>
-                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-2)"></span>Cost</span>
-              </div>
-            </div>
+            <div id="demo-line-multi">Loading React…</div>
           </div>
           <pre class="ds-example__code"><code id="c-line-multi">&lt;div class="ds-chart ds-linechart" role="img" aria-label="Line chart with 2 series"&gt;
   &lt;svg class="ds-chart__svg" viewBox="0 0 480 200" width="480" height="200"
@@ -155,25 +111,7 @@
             <button class="ds-button" data-copy-target="#c-area">Copy</button>
           </header>
           <div class="ds-example__preview ds-example__preview--block">
-            <div class="ds-chart ds-areachart" role="img" aria-label="Area chart">
-              <svg class="ds-chart__svg" viewBox="0 0 480 200" width="480" height="200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-                <line class="ds-chart__grid" x1="6" y1="8" x2="474" y2="8" />
-                <line class="ds-chart__grid" x1="6" y1="51" x2="474" y2="51" />
-                <line class="ds-chart__grid" x1="6" y1="94" x2="474" y2="94" />
-                <line class="ds-chart__grid" x1="6" y1="137" x2="474" y2="137" />
-                <line class="ds-chart__grid" x1="6" y1="180" x2="474" y2="180" />
-                <path class="ds-areachart__area" d="M6,180 L6,180 72.86,145.6 139.71,162.8 206.57,102.6 273.43,119.8 340.29,51 407.14,76.8 474,8 L474,180 Z" style="fill: var(--ds-chart-1)" />
-                <polyline class="ds-areachart__line" points="6,180 72.86,145.6 139.71,162.8 206.57,102.6 273.43,119.8 340.29,51 407.14,76.8 474,8" style="stroke: var(--ds-chart-1)" />
-                <circle class="ds-areachart__dot" cx="6" cy="180" r="2.5" style="fill: var(--ds-chart-1)" />
-                <circle class="ds-areachart__dot" cx="72.86" cy="145.6" r="2.5" style="fill: var(--ds-chart-1)" />
-                <circle class="ds-areachart__dot" cx="139.71" cy="162.8" r="2.5" style="fill: var(--ds-chart-1)" />
-                <circle class="ds-areachart__dot" cx="206.57" cy="102.6" r="2.5" style="fill: var(--ds-chart-1)" />
-                <circle class="ds-areachart__dot" cx="273.43" cy="119.8" r="2.5" style="fill: var(--ds-chart-1)" />
-                <circle class="ds-areachart__dot" cx="340.29" cy="51" r="2.5" style="fill: var(--ds-chart-1)" />
-                <circle class="ds-areachart__dot" cx="407.14" cy="76.8" r="2.5" style="fill: var(--ds-chart-1)" />
-                <circle class="ds-areachart__dot" cx="474" cy="8" r="2.5" style="fill: var(--ds-chart-1)" />
-              </svg>
-            </div>
+            <div id="demo-area">Loading React…</div>
           </div>
           <pre class="ds-example__code"><code id="c-area">&lt;div class="ds-chart ds-areachart" role="img" aria-label="Area chart"&gt;
   &lt;svg class="ds-chart__svg" viewBox="0 0 480 200" width="480" height="200"
@@ -218,24 +156,7 @@
             <button class="ds-button" data-copy-target="#c-donut">Copy</button>
           </header>
           <div class="ds-example__preview ds-example__preview--center">
-            <div class="ds-chart ds-donut" role="img" aria-label="Donut chart of 4 segments">
-              <svg class="ds-donut__svg" viewBox="0 0 180 180" width="180" height="180" aria-hidden="true" focusable="false">
-                <g transform="rotate(-90 90 90)">
-                  <circle class="ds-donut__track" cx="90" cy="90" r="76" stroke-width="28" />
-                  <circle class="ds-donut__segment" cx="90" cy="90" r="76" stroke-width="28" stroke-dasharray="214.88 262.64" stroke-dashoffset="0" style="stroke: var(--ds-chart-1)" />
-                  <circle class="ds-donut__segment" cx="90" cy="90" r="76" stroke-width="28" stroke-dasharray="119.38 358.14" stroke-dashoffset="-214.88" style="stroke: var(--ds-chart-2)" />
-                  <circle class="ds-donut__segment" cx="90" cy="90" r="76" stroke-width="28" stroke-dasharray="95.5 382.02" stroke-dashoffset="-334.27" style="stroke: var(--ds-chart-3)" />
-                  <circle class="ds-donut__segment" cx="90" cy="90" r="76" stroke-width="28" stroke-dasharray="47.75 429.77" stroke-dashoffset="-429.77" style="stroke: var(--ds-chart-4)" />
-                </g>
-                <text class="ds-donut__center" x="90" y="90" dominant-baseline="central" font-size="46.8">100</text>
-              </svg>
-              <div class="ds-chart-legend">
-                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-1)"></span>Direct<span class="ds-chart-legend__value">45</span></span>
-                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-2)"></span>Referral<span class="ds-chart-legend__value">25</span></span>
-                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-3)"></span>Organic<span class="ds-chart-legend__value">20</span></span>
-                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-4)"></span>Social<span class="ds-chart-legend__value">10</span></span>
-              </div>
-            </div>
+            <div id="demo-donut">Loading React…</div>
           </div>
           <pre class="ds-example__code"><code id="c-donut">&lt;div class="ds-chart ds-donut" role="img" aria-label="Donut chart of 4 segments"&gt;
   &lt;svg class="ds-donut__svg" viewBox="0 0 180 180" width="180" height="180"
@@ -287,20 +208,7 @@
             <button class="ds-button" data-copy-target="#c-pie">Copy</button>
           </header>
           <div class="ds-example__preview ds-example__preview--center">
-            <div class="ds-chart ds-piechart" role="img" aria-label="Pie chart of 4 segments">
-              <svg class="ds-piechart__svg" viewBox="0 0 180 180" width="180" height="180" aria-hidden="true" focusable="false">
-                <path class="ds-piechart__slice" d="M 90,90 L 90,0 A 90 90 0 0 1 117.81,175.6 Z" style="fill: var(--ds-chart-1)"><title>Direct: 45</title></path>
-                <path class="ds-piechart__slice" d="M 90,90 L 117.81,175.6 A 90 90 0 0 1 4.4,117.81 Z" style="fill: var(--ds-chart-2)"><title>Referral: 25</title></path>
-                <path class="ds-piechart__slice" d="M 90,90 L 4.4,117.81 A 90 90 0 0 1 37.1,17.19 Z" style="fill: var(--ds-chart-3)"><title>Organic: 20</title></path>
-                <path class="ds-piechart__slice" d="M 90,90 L 37.1,17.19 A 90 90 0 0 1 90,0 Z" style="fill: var(--ds-chart-4)"><title>Social: 10</title></path>
-              </svg>
-              <div class="ds-chart-legend">
-                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-1)"></span>Direct<span class="ds-chart-legend__value">45</span></span>
-                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-2)"></span>Referral<span class="ds-chart-legend__value">25</span></span>
-                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-3)"></span>Organic<span class="ds-chart-legend__value">20</span></span>
-                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-4)"></span>Social<span class="ds-chart-legend__value">10</span></span>
-              </div>
-            </div>
+            <div id="demo-pie">Loading React…</div>
           </div>
           <pre class="ds-example__code"><code id="c-pie">&lt;div class="ds-chart ds-piechart" role="img" aria-label="Pie chart of 4 segments"&gt;
   &lt;svg class="ds-piechart__svg" viewBox="0 0 180 180" width="180" height="180"
@@ -349,14 +257,7 @@
             <button class="ds-button" data-copy-target="#c-gauge">Copy</button>
           </header>
           <div class="ds-example__preview ds-example__preview--center">
-            <div class="ds-chart ds-gauge" role="img" aria-label="Utilization: 72 of 100">
-              <svg class="ds-gauge__svg" viewBox="0 0 180 180" width="180" height="180" aria-hidden="true" focusable="false">
-                <path class="ds-gauge__track" d="M 32.02,147.98 A 82 82 0 1 1 147.98,147.98" stroke-width="16" />
-                <path class="ds-gauge__value" d="M 32.02,147.98 A 82 82 0 1 1 147.98,147.98" stroke-width="16" stroke-dasharray="278.22 386.42" style="stroke: var(--ds-chart-1)"><title>Utilization: 72 of 100</title></path>
-                <text class="ds-gauge__center" x="90" y="86.4" dominant-baseline="central" font-size="43.2">72</text>
-                <text class="ds-gauge__label" x="90" y="122.4" dominant-baseline="central">Utilization</text>
-              </svg>
-            </div>
+            <div id="demo-gauge">Loading React…</div>
           </div>
           <pre class="ds-example__code"><code id="c-gauge">&lt;div class="ds-chart ds-gauge" role="img" aria-label="Utilization: 72 of 100"&gt;
   &lt;svg class="ds-gauge__svg" viewBox="0 0 180 180" width="180" height="180"
@@ -405,29 +306,7 @@
             <button class="ds-button" data-copy-target="#c-stacked">Copy</button>
           </header>
           <div class="ds-example__preview ds-example__preview--block">
-            <div class="ds-chart ds-stackedbar" role="img">
-              <div class="ds-stackedbar__row">
-                <span class="ds-stackedbar__label">Q1</span>
-                <div class="ds-stackedbar__track">
-                  <span class="ds-stackedbar__seg" style="width: 56.36%; background: var(--ds-chart-1)" title="Online: 62"></span>
-                  <span class="ds-stackedbar__seg" style="width: 27.27%; background: var(--ds-chart-2)" title="Retail: 30"></span>
-                  <span class="ds-stackedbar__seg" style="width: 16.36%; background: var(--ds-chart-3)" title="Wholesale: 18"></span>
-                </div>
-              </div>
-              <div class="ds-stackedbar__row">
-                <span class="ds-stackedbar__label">Q2</span>
-                <div class="ds-stackedbar__track">
-                  <span class="ds-stackedbar__seg" style="width: 60.66%; background: var(--ds-chart-1)" title="Online: 74"></span>
-                  <span class="ds-stackedbar__seg" style="width: 21.31%; background: var(--ds-chart-2)" title="Retail: 26"></span>
-                  <span class="ds-stackedbar__seg" style="width: 18.03%; background: var(--ds-chart-3)" title="Wholesale: 22"></span>
-                </div>
-              </div>
-              <div class="ds-chart-legend">
-                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-1)"></span>Online</span>
-                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-2)"></span>Retail</span>
-                <span class="ds-chart-legend__item"><span class="ds-chart-legend__swatch" style="background: var(--ds-chart-3)"></span>Wholesale</span>
-              </div>
-            </div>
+            <div id="demo-stacked">Loading React…</div>
           </div>
           <pre class="ds-example__code"><code id="c-stacked">&lt;div class="ds-chart ds-stackedbar" role="img"&gt;
   &lt;div class="ds-stackedbar__row"&gt;
@@ -474,6 +353,49 @@
         </section>
       </section>
 
+      <section class="docs-section">
+        <h2>Bar</h2>
+        <p class="docs-note">A <code>.ds-barchart</code> lays each datum out as a <code>__col</code>: an optional <code>__label</code>, a <code>__track</code> with a proportional <code>__bar</code> (length is value/max), and a <code>__value</code>. The default orientation is vertical; <code>horizontal</code> flips it to rows. A <code>status</code> recolors a bar (<code>.is-success</code>, <code>.is-danger</code>, …).</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Columns · proportional bars · status colors</span>
+            <button class="ds-button" data-copy-target="#c-bar">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div id="demo-bar">Loading React…</div>
+          </div>
+          <pre class="ds-example__code"><code id="c-bar">&lt;div class="ds-barchart" role="img"&gt;
+  &lt;div class="ds-barchart__col"&gt;
+    &lt;span class="ds-barchart__label"&gt;Jan&lt;/span&gt;
+    &lt;div class="ds-barchart__track"&gt;
+      &lt;div class="ds-barchart__bar" style="height: 48%"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class="ds-barchart__value"&gt;12&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;!-- …more columns… --&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;BarChart&gt;</span>
+            <button class="ds-button" data-copy-target="#c-bar-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-bar-react">import { BarChart } from "@diametral/design-system/react";
+
+&lt;BarChart
+  data={[
+    { label: "Jan", value: 12 },
+    { label: "Feb", value: 19 },
+    { label: "Mar", value: 9 },
+    { label: "Apr", value: 24, status: "success" },
+    { label: "May", value: 17 },
+    { label: "Jun", value: 6, status: "danger" },
+  ]}
+/&gt;</code></pre>
+        </section>
+      </section>
+
       <footer class="docs-foot">
         <span>Diametral Design System · v0.2.0</span>
         <a href="../index.html">← Overview</a>
@@ -481,5 +403,95 @@
       </footer>
     </main>
   </div>
+
+  <script type="module">
+    import React from "react";
+    import { createRoot } from "react-dom/client";
+    import {
+      LineChart, AreaChart, DonutChart, PieChart, GaugeChart, StackedBar, BarChart,
+    } from "../../react/index.js";
+
+    const h = React.createElement;
+    const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"];
+    const mount = (id, el) => {
+      const node = document.getElementById(id);
+      if (node) createRoot(node).render(el);
+    };
+
+    // Line — single series, month labels, grid + dots.
+    mount("demo-line", h(LineChart, {
+      data: [12, 18, 9, 22, 17, 28, 24, 31],
+      labels: MONTHS,
+      grid: true,
+      dots: true,
+    }));
+
+    // Line — multi series (legend appears).
+    mount("demo-line-multi", h(LineChart, {
+      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+      series: [
+        { name: "Revenue", data: [8, 14, 11, 19, 16, 24] },
+        { name: "Cost", data: [20, 16, 22, 13, 18, 12] },
+      ],
+    }));
+
+    // Area — single filled band.
+    mount("demo-area", h(AreaChart, {
+      data: [6, 10, 8, 15, 13, 21, 18, 26],
+      labels: MONTHS,
+    }));
+
+    // Donut — 4 segments, center label, hover <title> tooltips per slice.
+    mount("demo-donut", h(DonutChart, {
+      centerLabel: "100",
+      data: [
+        { label: "Direct", value: 45 },
+        { label: "Referral", value: 25 },
+        { label: "Organic", value: 20 },
+        { label: "Social", value: 10 },
+      ],
+    }));
+
+    // Pie — full pie with hover titles + legend.
+    mount("demo-pie", h(PieChart, {
+      data: [
+        { label: "Direct", value: 45 },
+        { label: "Referral", value: 25 },
+        { label: "Organic", value: 20 },
+        { label: "Social", value: 10 },
+      ],
+    }));
+
+    // Gauge — single value with label.
+    mount("demo-gauge", h(GaugeChart, { value: 68, label: "Utilization" }));
+
+    // Stacked bar — rows of proportional segments + legend.
+    mount("demo-stacked", h(StackedBar, {
+      data: [
+        { label: "Q1", segments: [
+          { label: "Online", value: 62 },
+          { label: "Retail", value: 30 },
+          { label: "Wholesale", value: 18 },
+        ] },
+        { label: "Q2", segments: [
+          { label: "Online", value: 74 },
+          { label: "Retail", value: 26 },
+          { label: "Wholesale", value: 22 },
+        ] },
+      ],
+    }));
+
+    // Bar — vertical columns with status colors.
+    mount("demo-bar", h(BarChart, {
+      data: [
+        { label: "Jan", value: 12 },
+        { label: "Feb", value: 19 },
+        { label: "Mar", value: 9 },
+        { label: "Apr", value: 24, status: "success" },
+        { label: "May", value: 17 },
+        { label: "Jun", value: 6, status: "danger" },
+      ],
+    }));
+  </script>
 </body>
 </html>

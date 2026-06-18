@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <style>
+    /* Page-local layout only — a centered reading column + the sticky save bar.
+       No component styling here; visuals come from .ds-* classes + tokens. */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--ds-bg);
+      color: var(--ds-ink);
+      font-family: var(--ds-font-sans);
+    }
+    .demo-back {
+      position: fixed;
+      top: 20px;
+      left: 24px;
+      font-size: var(--ds-text-xs);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ds-ink-faint);
+      text-decoration: none;
+      z-index: 20;
+    }
+    .demo-back:hover { color: var(--ds-ink); }
+
+    .demo-col {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 72px 24px 120px;
+    }
+    .demo-title {
+      font-family: var(--ds-font-title);
+      font-weight: var(--ds-font-weight-title);
+      font-size: var(--ds-text-2xl);
+      letter-spacing: -0.6px;
+      line-height: var(--ds-leading-tight);
+      margin: 0 0 4px;
+    }
+    .demo-lede {
+      color: var(--ds-ink-soft);
+      font-size: var(--ds-text-base);
+      margin: 0 0 28px;
+    }
+    .demo-grid { display: grid; gap: 20px; padding-top: 24px; }
+    .demo-grid--two {
+      grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 560px) { .demo-grid--two { grid-template-columns: 1fr; } }
+
+    .demo-profile {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--ds-rule-soft);
+    }
+    .demo-rowtext { display: flex; flex-direction: column; gap: 2px; }
+    .demo-rowtext__label { font-size: var(--ds-text-base); color: var(--ds-ink); }
+    .demo-rowtext__desc { font-size: var(--ds-text-xs); color: var(--ds-ink-faint); }
+
+    /* Sticky bottom save bar pinned to the viewport. */
+    .demo-savebar {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      background: var(--ds-surface);
+      border-top: 1px solid var(--ds-rule);
+      z-index: 15;
+    }
+    .demo-savebar__inner {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .demo-savebar__spacer { flex: 1; }
+    .demo-savebar__hint { font-size: var(--ds-text-xs); color: var(--ds-ink-faint); }
+  </style>
+  <script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@18.3.1",
+      "react-dom": "https://esm.sh/react-dom@18.3.1?external=react",
+      "react-dom/client": "https://esm.sh/react-dom@18.3.1/client?external=react"
+    }
+  }
+  </script>
+</head>
+<body>
+  <a class="demo-back" href="../index.html">← Diametral</a>
+  <div id="app"></div>
+
+  <script type="module">
+    import React from "react";
+    import { createRoot } from "react-dom/client";
+    import {
+      Button, Field, Input, FieldHint, Textarea, Select, Combobox, TagInput,
+      DatePicker, NumberInput, Switch, RadioGroup, ColorPicker, FileUpload,
+      Avatar, Tabs, SectionHeading, ToastProvider, useToast,
+    } from "../../react/index.js";
+
+    const h = React.createElement;
+
+    /* A labelled row: text on the left, a control on the right (.ds-input-row). */
+    function SettingRow({ label, desc, children }) {
+      return h("div", { className: "ds-input-row" },
+        h("div", { className: "demo-rowtext" },
+          h("span", { className: "demo-rowtext__label" }, label),
+          desc ? h("span", { className: "demo-rowtext__desc" }, desc) : null
+        ),
+        children
+      );
+    }
+
+    function ProfilePanel({ state, set }) {
+      const nameEmpty = state.name.trim() === "";
+      return h("div", { className: "demo-grid" },
+        h("div", { className: "demo-profile" },
+          h(Avatar, { size: "lg", initials: "AL", alt: "Ada Lovelace" }),
+          h(FileUpload, {
+            accept: "image/*",
+            hint: h(React.Fragment, null, h("strong", null, "Change photo"), " — PNG or JPG"),
+            onFiles: () => {},
+          })
+        ),
+        h("div", { className: "demo-grid demo-grid--two" },
+          h(Field, { label: "Name", htmlFor: "pf-name" },
+            h(Input, {
+              id: "pf-name", value: state.name,
+              onChange: (e) => set({ name: e.target.value }),
+              placeholder: "Your name",
+              "aria-invalid": nameEmpty || undefined,
+            }),
+            nameEmpty ? h(FieldHint, { status: "error" }, "Name is required.") : null
+          ),
+          h(Field, { label: "Email", htmlFor: "pf-email" },
+            h(Input, {
+              id: "pf-email", type: "email", value: state.email,
+              onChange: (e) => set({ email: e.target.value }),
+              placeholder: "you@diametral.io",
+            })
+          )
+        ),
+        h(Field, { label: "Bio", htmlFor: "pf-bio" },
+          h(Textarea, {
+            id: "pf-bio", rows: 4, value: state.bio,
+            onChange: (e) => set({ bio: e.target.value }),
+            placeholder: "A short line about your work.",
+          }),
+          h(FieldHint, null, "Shown on your public profile. Markdown is not supported.")
+        ),
+        h("div", { className: "demo-grid demo-grid--two" },
+          h(Field, { label: "Role" },
+            h(Combobox, {
+              options: ["Engineer", "Designer", "Product manager", "Director", "Analyst"],
+              value: state.role, onChange: (v) => set({ role: v }),
+              placeholder: "Pick a role",
+            })
+          ),
+          h(Field, { label: "Start date" },
+            h(DatePicker, {
+              value: state.startDate,
+              onChange: (_d, iso) => set({ startDate: iso }),
+            })
+          )
+        ),
+        h(Field, { label: "Skills" },
+          h(TagInput, {
+            value: state.skills, onChange: (v) => set({ skills: v }),
+            placeholder: "Type a skill, press Enter",
+          }),
+          h(FieldHint, null, "Press Enter or comma to add. Backspace removes the last tag.")
+        )
+      );
+    }
+
+    function AccountPanel({ state, set }) {
+      return h("div", { className: "demo-grid" },
+        h("div", { className: "demo-grid demo-grid--two" },
+          h(Field, { label: "Current password", htmlFor: "ac-cur" },
+            h(Input, { id: "ac-cur", type: "password", autoComplete: "current-password", placeholder: "••••••••" })
+          ),
+          h(Field, { label: "New password", htmlFor: "ac-new" },
+            h(Input, { id: "ac-new", type: "password", autoComplete: "new-password", placeholder: "••••••••" }),
+            h(FieldHint, null, "Minimum 8 characters.")
+          )
+        ),
+        h("div", { className: "demo-grid demo-grid--two" },
+          h(Field, { label: "Language" },
+            h(Select, {
+              value: state.language, onChange: (e) => set({ language: e.target.value }), block: true,
+              options: [
+                { value: "en", label: "English" },
+                { value: "fr", label: "Français" },
+                { value: "de", label: "Deutsch" },
+                { value: "es", label: "Español" },
+              ],
+            })
+          ),
+          h(Field, { label: "Session timeout" },
+            h("div", { style: { display: "flex", alignItems: "center", gap: "8px" } },
+              h(NumberInput, {
+                value: state.timeout, min: 5, max: 120, step: 5,
+                onChange: (v) => set({ timeout: v }),
+              }),
+              h("span", { className: "ds-input-row__unit" }, "minutes")
+            )
+          )
+        )
+      );
+    }
+
+    function NotificationsPanel({ state, set }) {
+      return h("div", { className: "ds-panel ds-panel--rows", style: { marginTop: "24px" } },
+        h(SettingRow, { label: "Email notifications", desc: "Product news and account alerts." },
+          h(Switch, { checked: state.email, onChange: (v) => set({ email: v }) })
+        ),
+        h(SettingRow, { label: "Push notifications", desc: "Real-time alerts on this device." },
+          h(Switch, { checked: state.push, onChange: (v) => set({ push: v }) })
+        ),
+        h(SettingRow, { label: "Weekly digest", desc: "A Monday summary of activity." },
+          h(Switch, { checked: state.digest, onChange: (v) => set({ digest: v }) })
+        )
+      );
+    }
+
+    function AppearancePanel({ state, set }) {
+      return h("div", { className: "demo-grid" },
+        h(Field, { label: "Theme" },
+          h(RadioGroup, {
+            name: "theme", value: state.theme, onChange: (v) => set({ theme: v }),
+            options: [
+              { value: "light", label: "Light" },
+              { value: "dark", label: "Dark" },
+              { value: "system", label: "System" },
+            ],
+          })
+        ),
+        h(Field, { label: "Accent color" },
+          h(ColorPicker, { value: state.accent, onChange: (v) => set({ accent: v }) }),
+          h(FieldHint, null, "Used for highlights and the active state across the app.")
+        )
+      );
+    }
+
+    const INITIAL = {
+      name: "Ada Lovelace",
+      email: "ada@diametral.io",
+      bio: "Building reliable systems, one flat surface at a time.",
+      role: "Engineer",
+      startDate: "2024-03-01",
+      skills: ["React", "Design systems", "CSS"],
+      language: "en",
+      timeout: 30,
+      email_n: true,
+      push: false,
+      digest: true,
+      theme: "system",
+      accent: "#ff2a00",
+    };
+
+    function Settings() {
+      const toast = useToast();
+      const [state, setState] = React.useState(INITIAL);
+      const set = (patch) => setState((s) => ({ ...s, ...patch }));
+
+      const save = () => {
+        if (state.name.trim() === "") {
+          toast.show({ type: "danger", title: "Cannot save", message: "Name is required." });
+          return;
+        }
+        toast.show({ type: "success", title: "Saved", message: "Your settings were updated." });
+      };
+
+      const reset = () => setState(INITIAL);
+
+      // Notifications panel keeps its own keys to mirror the .ds-input-row labels.
+      const notifState = { email: state.email_n, push: state.push, digest: state.digest };
+      const notifSet = (patch) => {
+        if ("email" in patch) set({ email_n: patch.email });
+        if ("push" in patch) set({ push: patch.push });
+        if ("digest" in patch) set({ digest: patch.digest });
+      };
+
+      return h(React.Fragment, null,
+        h("div", { className: "demo-col" },
+          h("h1", { className: "demo-title" }, "Settings"),
+          h("p", { className: "demo-lede" }, "Manage your profile, account, notifications and appearance."),
+          h(Tabs, {
+            items: [
+              { id: "profile", label: "Profile", content: h(ProfilePanel, { state, set }) },
+              { id: "account", label: "Account", content: h(AccountPanel, { state, set }) },
+              { id: "notifications", label: "Notifications", content: h(NotificationsPanel, { state: notifState, set: notifSet }) },
+              { id: "appearance", label: "Appearance", content: h(AppearancePanel, { state, set }) },
+            ],
+          })
+        ),
+        h("div", { className: "demo-savebar" },
+          h("div", { className: "demo-savebar__inner" },
+            h("span", { className: "demo-savebar__hint" }, "Changes are saved per section."),
+            h("span", { className: "demo-savebar__spacer" }),
+            h(Button, { onClick: reset }, "Cancel"),
+            h(Button, { variant: "primary", onClick: save }, "Save changes")
+          )
+        )
+      );
+    }
+
+    createRoot(document.getElementById("app")).render(
+      h(ToastProvider, null, h(Settings))
+    );
+  </script>
+</body>
+</html>

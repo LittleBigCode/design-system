@@ -17,7 +17,9 @@
 
 .ds-chart__svg {
   display: block;
-  width: 100%;
+  max-width: 100%;   /* render at the chart's native size; shrink (not grow) to fit —
+                        scaling a 480-unit viewBox up to a wide container also blew
+                        up the SVG axis text/strokes. */
   height: auto;
   overflow: visible;
 }
@@ -83,8 +85,7 @@
 
 .ds-linechart__dot {
   fill: var(--ds-accent);
-  stroke: var(--ds-surface);
-  stroke-width: 1;
+  stroke: none;
 }
 
 /* ----------------------------------------------------------------------------
@@ -106,8 +107,7 @@
 
 .ds-areachart__dot {
   fill: var(--ds-accent);
-  stroke: var(--ds-surface);
-  stroke-width: 1;
+  stroke: none;
 }
 
 /* ----------------------------------------------------------------------------

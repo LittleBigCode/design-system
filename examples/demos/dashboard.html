@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <!-- React from a CDN; the import map keeps a single React instance via ?external=react -->
+  <script type="importmap">
+  { "imports": {
+    "react": "https://esm.sh/react@18.3.1",
+    "react-dom": "https://esm.sh/react-dom@18.3.1?external=react",
+    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client?external=react"
+  } }
+  </script>
+  <style>
+    /* Page-local layout only — frames the standalone app page and arranges the
+       sidebar + main columns. All visuals come from existing .ds-* components. */
+    html, body { margin: 0; }
+    body {
+      background: var(--ds-bg);
+      color: var(--ds-ink);
+      font-family: var(--ds-font-sans);
+      font-size: var(--ds-text-base);
+    }
+    #app { min-height: 100vh; }
+
+    /* Subtle fixed back-link, top-left. */
+    .demo-back {
+      position: fixed;
+      top: 14px;
+      left: 18px;
+      z-index: calc(var(--ds-z-header) + 10);
+      font-size: var(--ds-text-xs);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ds-ink-faint);
+      text-decoration: none;
+      opacity: 0.8;
+      transition: color var(--ds-transition), opacity var(--ds-transition);
+    }
+    .demo-back:hover { color: var(--ds-ink); opacity: 1; }
+
+    /* App bar holds the wordmark, a search field and account actions. */
+    .dash-bar__inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 14px 24px 14px 132px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .dash-search { flex: 1 1 auto; max-width: 420px; margin-left: 8px; }
+    .dash-bar__actions { margin-left: auto; display: flex; align-items: center; gap: 14px; }
+
+    /* Sidebar + main on a constrained grid; the page itself scrolls. */
+    .dash-layout {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 248px 1fr;
+      align-items: start;
+    }
+    .dash-sidebar {
+      border-right: 1px solid var(--ds-rule);
+      padding: var(--ds-space-5) var(--ds-space-4);
+      min-height: calc(100vh - 63px);
+      position: sticky;
+      top: 63px;
+    }
+    .dash-main { padding: var(--ds-space-6); min-width: 0; }
+    .dash-main__head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: var(--ds-space-5);
+    }
+    .dash-main__head p { margin: 4px 0 0; color: var(--ds-ink-soft); font-size: var(--ds-text-sm); }
+
+    /* KPI row. */
+    .dash-kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--ds-space-4);
+      margin-bottom: var(--ds-space-5);
+    }
+    /* Chart row: a wide line-chart panel beside a donut panel. */
+    .dash-charts {
+      display: grid;
+      grid-template-columns: 1.7fr 1fr;
+      gap: var(--ds-space-5);
+      margin-bottom: var(--ds-space-5);
+      align-items: stretch;
+    }
+    .dash-card { padding: 20px; height: 100%; box-sizing: border-box; }
+    .dash-card__head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: var(--ds-space-4);
+    }
+    .dash-card__head h2 {
+      font-family: var(--ds-font-title);
+      font-weight: var(--ds-font-weight-title);
+      font-size: var(--ds-text-md);
+      letter-spacing: -0.3px;
+      margin: 0;
+    }
+    .dash-donut-wrap { display: flex; justify-content: center; padding-top: var(--ds-space-2); }
+    .dash-grid-card { padding: 20px; }
+
+    @media (max-width: 1100px) {
+      .dash-kpis { grid-template-columns: repeat(2, 1fr); }
+      .dash-charts { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 880px) {
+      .dash-layout { grid-template-columns: 1fr; }
+      .dash-sidebar { border-right: none; border-bottom: 1px solid var(--ds-rule); min-height: 0; position: static; }
+      .dash-bar__inner { padding-left: 24px; }
+      .demo-back { position: static; display: inline-block; margin: 10px 0 0 18px; }
+    }
+  </style>
+</head>
+<body>
+  <a class="demo-back" href="../index.html">← Diametral</a>
+  <div id="app">Loading React…</div>
+
+  <script type="module">
+    import React from "react";
+    import { createRoot } from "react-dom/client";
+    import {
+      Wordmark, Input, Avatar, Button, IconButton, Badge, Tag,
+      VerticalNav, StatCard, Sparkline, LineChart, DonutChart,
+      DataGrid, Card,
+    } from "../../react/index.js";
+
+    const h = React.createElement;
+    const cxLocal = (...a) => a.filter(Boolean).join(" ");
+
+    /* ---- Mock data --------------------------------------------------------- */
+    const ENTITIES = ["LBC_FR", "LBC_BE", "LBC_US", "LBC_CH"];
+    const GRADES = ["Consultant", "Senior", "Manager", "Director"];
+    const NAMES = [
+      "Atlas migration", "Beacon rollout", "Cobalt audit", "Delta pricing",
+      "Echo onboarding", "Fjord redesign", "Granite ERP", "Helix support",
+      "Ionic refactor", "Juno analytics", "Kepler launch", "Lumen rebrand",
+    ];
+    const DATA = Array.from({ length: 124 }, (_, i) => ({
+      id: i + 1,
+      name: NAMES[i % NAMES.length] + " " + String(Math.floor(i / NAMES.length) + 1),
+      entity: ENTITIES[i % 4],
+      grade: GRADES[(i * 3) % 4],
+      margin: Math.round((((i * 37) % 60) - 8) * 10) / 10,
+    }));
+
+    // Mock server: filters + sorts + paginates with simulated latency.
+    function loadPage({ page, pageSize, sort, filters }) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          let d = DATA.slice();
+          for (const [k, v] of Object.entries(filters)) {
+            if (v) d = d.filter((r) => String(r[k]).toLowerCase().includes(v.toLowerCase()));
+          }
+          if (sort && sort.key) {
+            d.sort((a, b) => {
+              const av = a[sort.key], bv = b[sort.key];
+              const c = av > bv ? 1 : av < bv ? -1 : 0;
+              return sort.dir === "desc" ? -c : c;
+            });
+          }
+          const total = d.length;
+          const start = (page - 1) * pageSize;
+          resolve({ rows: d.slice(start, start + pageSize), total });
+        }, 120);
+      });
+    }
+
+    const marginCell = (r) =>
+      h("span", {
+        className: cxLocal("ds-numeric", r.margin < 0 && "neg"),
+        style: { color: r.margin < 0 ? "var(--ds-danger)" : "var(--ds-success)" },
+      }, r.margin + " %");
+
+    const gradeCell = (r) => h(Tag, null, r.grade);
+
+    const columns = [
+      { key: "id", header: "ID", sortable: true, align: "right", width: "64px" },
+      { key: "name", header: "Mission", sortable: true, filterable: true, editable: true },
+      { key: "entity", header: "Entity", sortable: true, filterable: true },
+      { key: "grade", header: "Grade", sortable: true, render: gradeCell },
+      { key: "margin", header: "Margin %", sortable: true, align: "right", render: marginCell },
+    ];
+
+    const NAV_ITEMS = [
+      { label: "Overview", href: "#overview", active: true },
+      { label: "Missions", href: "#missions" },
+      { label: "Team", href: "#team" },
+      { label: "Reports", href: "#reports" },
+      { label: "Settings", href: "#settings" },
+    ];
+
+    // Monthly Revenue vs Cost (12 points).
+    const REVENUE = [312, 298, 341, 360, 372, 355, 388, 402, 415, 398, 430, 451];
+    const COST    = [248, 240, 262, 271, 280, 276, 291, 300, 308, 305, 318, 330];
+    const MONTHS  = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    const DONUT = [
+      { label: "LBC_FR", value: 46 },
+      { label: "LBC_BE", value: 28 },
+      { label: "LBC_US", value: 19 },
+      { label: "LBC_CH", value: 11 },
+    ];
+
+    /* ---- KPI tiles --------------------------------------------------------- */
+    function Kpis() {
+      return h("div", { className: "dash-kpis" },
+        h(StatCard, { label: "Active missions", value: "124", delta: "8 this week", deltaDir: "up" }),
+        h(StatCard, { label: "Avg. margin", value: "24.6 %", delta: "2.1 pts", deltaDir: "up" }),
+        h(StatCard, { label: "At-risk rate", value: "5.2 %", delta: "0.4 pts", deltaDir: "down" }),
+        h(StatCard, { label: "Revenue · 30d", value: "€4.51M" },
+          h(Sparkline, {
+            data: [24, 26, 18, 21, 17, 23, 19, 28, 25, 31, 27, 36],
+            width: 140, height: 34, fill: true, showDot: true,
+            "aria-label": "Revenue trend, last 12 weeks",
+          })
+        )
+      );
+    }
+
+    /* ---- Charts ------------------------------------------------------------ */
+    function Charts() {
+      return h("div", { className: "dash-charts" },
+        h(Card, { className: "dash-card" },
+          h("div", { className: "dash-card__head" },
+            h("h2", null, "Revenue vs Cost"),
+            h("span", { className: "ds-label" }, "Monthly · 2026")
+          ),
+          h(LineChart, {
+            width: 620, height: 240, labels: MONTHS, grid: true, dots: true,
+            series: [
+              { name: "Revenue", data: REVENUE },
+              { name: "Cost", data: COST },
+            ],
+            "aria-label": "Monthly revenue versus cost",
+          })
+        ),
+        h(Card, { className: "dash-card" },
+          h("div", { className: "dash-card__head" },
+            h("h2", null, "Revenue by entity"),
+            h("span", { className: "ds-label" }, "Share")
+          ),
+          h("div", { className: "dash-donut-wrap" },
+            h(DonutChart, { data: DONUT, size: 196, thickness: 30, centerLabel: "104" })
+          )
+        )
+      );
+    }
+
+    /* ---- Grid card --------------------------------------------------------- */
+    function GridCard() {
+      return h(Card, { className: "dash-grid-card" },
+        h("div", { className: "dash-card__head" },
+          h("h2", null, "Missions"),
+          h("span", { className: "ds-label" }, "Lazy · server-side")
+        ),
+        h(DataGrid, {
+          columns, loadPage, lazyMode: "pagination", pageSize: 8,
+          selectable: true, filterable: true, editable: true,
+          rowKey: (r) => r.id,
+          onCellEdit: (row, key, value) => { row[key] = value; },
+        })
+      );
+    }
+
+    /* ---- App --------------------------------------------------------------- */
+    function App() {
+      const [q, setQ] = React.useState("");
+
+      return h(React.Fragment, null,
+        // Sticky app bar
+        h("header", { className: "ds-app-bar" },
+          h("div", { className: "dash-bar__inner" },
+            h(Wordmark, { name: "Diametral", sub: "Console" }),
+            h("div", { className: "dash-search" },
+              h(Input, {
+                type: "search", placeholder: "Search missions, people, reports…",
+                value: q, onChange: (e) => setQ(e.target.value),
+                "aria-label": "Search",
+              })
+            ),
+            h("div", { className: "dash-bar__actions" },
+              h(Badge, { variant: "accent" }, "Production"),
+              h(Button, { variant: "primary" }, "New mission"),
+              h(Avatar, { initials: "VD", "aria-label": "Vincent Devillers" })
+            )
+          )
+        ),
+
+        // Sidebar + main
+        h("div", { className: "dash-layout" },
+          h("aside", { className: "dash-sidebar" },
+            h(VerticalNav, { items: NAV_ITEMS })
+          ),
+          h("main", { className: "dash-main" },
+            h("div", { className: "dash-main__head" },
+              h("div", null,
+                h("h1", { className: "ds-title ds-title--lg" }, "Overview"),
+                h("p", null, "Pricing performance across all entities · Q2 2026")
+              ),
+              h(Button, null, "Export")
+            ),
+            h(Kpis),
+            h(Charts),
+            h(GridCard)
+          )
+        )
+      );
+    }
+
+    createRoot(document.getElementById("app")).render(h(App));
+  </script>
+</body>
+</html>

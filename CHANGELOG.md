@@ -28,7 +28,12 @@ A major, Clarity-inspired component expansion with full React integration.
 - **Visual regression tests**: a Playwright pipeline (`playwright.config.js`, `tests/visual.spec.js`,
   a GitHub Actions workflow) with `npm run test:visual` / `test:visual:update`.
 - **Docs**: a full installation & integration guide (`docs/installation.md`) for npm/CDN, Vite,
-  Next.js, CRA, Angular, Vue, Tailwind, and import-map prototyping.
+  Next.js, CRA, Angular, Vue, Tailwind, and import-map prototyping — also as an in-showcase
+  page (`examples/installation.html`).
+- **Live React example apps** (shadcn-style, buildless) under `examples/demos/`: a Dashboard, an
+  Inbox/mail app, a tabbed Forms/settings page, and a Login screen. The Charts showcase now mounts
+  the real React chart components live (interactive hover tooltips); axis labels no longer upscale
+  and point markers dropped the white halo.
 - Showcase navigation reorganized into Actions / Forms / Data display / Feedback /
   Navigation / Overlays / Platform groups; new live React data-grid demo.
 
