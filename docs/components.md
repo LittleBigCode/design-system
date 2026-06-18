@@ -1731,3 +1731,390 @@ keeps Next / Finish grouped at the end). On the last step the trailing action re
 ```
 
 Live: [../examples/components/wizard.html](../examples/components/wizard.html)
+
+---
+
+# Data viz & utilities
+
+The wave-three additions: two overlays (an off-canvas drawer and a ⌘K command palette), a small set
+of data-viz primitives (a sparkline, a bar chart, and a KPI stat card), a few more inputs (a rating,
+a date-range picker, and a color picker), and two utilities (a dark code block and an inline keycap).
+Same parti pris — 1px borders, no radius, no shadow — and each ships a `.ds-*` class set, a React
+component (`@diametral/design-system/react`), and a showcase page.
+
+## Drawer
+
+An off-canvas panel anchored to an edge of the viewport over a dimmed scrim: a bordered head with a
+title and close button, a scrollable body, and an optional footer. Slides in via a transform.
+
+```html
+<div class="ds-drawer-overlay is-open">
+  <div class="ds-drawer ds-drawer--right" role="dialog" aria-modal="true">
+    <div class="ds-drawer__head">
+      <h2 class="ds-drawer__title">Filters</h2>
+      <button class="ds-button ds-drawer__close">Close</button>
+    </div>
+    <div class="ds-drawer__body"><p>Body content…</p></div>
+    <div class="ds-drawer__foot">
+      <button class="ds-button">Clear</button>
+      <span class="ds-drawer__spacer"></span>
+      <button class="ds-button ds-button--primary">Apply</button>
+    </div>
+  </div>
+</div>
+```
+
+**Parts / state:** `.ds-drawer-overlay` (the fixed backdrop scrim; opened with `.is-open` or
+`[data-open="true"]`) wraps the `.ds-drawer` panel, which carries `.ds-drawer__head`
+(`.ds-drawer__title` + `.ds-drawer__close`), a scrolling `.ds-drawer__body`, and an optional
+`.ds-drawer__foot`; `.ds-drawer__spacer` pushes the trailing action to the right. **Placement
+modifiers** dock the panel to an edge: `--right` (default), `--left`, `--top`, `--bottom`. Motion is
+held still under `prefers-reduced-motion`.
+
+**React** — `<Drawer>` portals to `<body>` and is controlled via `open`; it closes on Escape and a
+backdrop click. Props: `open` (required), `onClose`, `placement` (`"right" | "left" | "top" |
+"bottom"`, default `right`), `heading`, `footer`, `className`, `children`.
+
+```jsx
+<Drawer open={open} onClose={() => setOpen(false)} placement="right" heading="Filters"
+  footer={<Button variant="primary" onClick={() => setOpen(false)}>Apply</Button>}>
+  <p>Body content…</p>
+</Drawer>
+```
+
+Live: [../examples/components/drawer.html](../examples/components/drawer.html)
+
+## Command palette
+
+A ⌘K-style command surface: a borderless search input over a scrollable list of grouped, selectable
+rows. Filter as you type, move the active row with the arrows, and run it with Enter. Reuses the
+shared `.ds-overlay` scrim.
+
+```html
+<div class="ds-cmdk" role="dialog" aria-modal="true" aria-label="Command palette">
+  <input class="ds-cmdk__input" type="text" placeholder="Type a command or search…">
+  <div class="ds-cmdk__list" role="listbox">
+    <div class="ds-cmdk__group-label">Navigation</div>
+    <button class="ds-cmdk__item is-active" role="option" aria-selected="true">
+      <span class="ds-cmdk__label">Go to dashboard</span>
+      <span class="ds-cmdk__kbd">G D</span>
+    </button>
+    <button class="ds-cmdk__item" role="option">
+      <span class="ds-cmdk__label">Go to settings</span>
+      <span class="ds-cmdk__kbd">G S</span>
+    </button>
+    <div class="ds-cmdk__group-label">Actions</div>
+    <button class="ds-cmdk__item" role="option">
+      <span class="ds-cmdk__label">Create reference</span>
+      <span class="ds-cmdk__hint">⌘ N</span>
+    </button>
+  </div>
+</div>
+```
+
+**Parts / state:** `.ds-cmdk` (the surface; drop it inside a `.ds-overlay` aligned to `flex-start`),
+`.ds-cmdk__input` (borderless, bottom rule), `.ds-cmdk__list`, `.ds-cmdk__group-label` (faint
+uppercase cluster heading), `.ds-cmdk__item` (a row; `.is-active` shifts it to the alt background)
+holding a `.ds-cmdk__label` and an optional right-aligned `.ds-cmdk__hint` or boxed `.ds-cmdk__kbd`.
+When the query matches nothing, the list shows a single centered `.ds-cmdk__empty`.
+
+**React** — `<CommandPalette>` portals to `<body>` and is controlled via `open`; filtering, arrow
+navigation, and Enter-to-run are built in. Props: `open` (required), `onClose`, `commands` (a
+`{ id, label, group?, hint?, onRun? }[]`), `placeholder`, `className`. Wire a global ⌘K listener to
+flip `open`.
+
+```jsx
+<CommandPalette open={open} onClose={() => setOpen(false)}
+  placeholder="Type a command or search…"
+  commands={[
+    { id: "dash", label: "Go to dashboard", group: "Navigation", hint: "G D", onRun: () => navigate("/") },
+    { id: "new",  label: "Create reference", group: "Actions", hint: "⌘ N", onRun: createReference },
+  ]} />
+```
+
+Live: [../examples/components/command-palette.html](../examples/components/command-palette.html)
+
+## Sparkline
+
+An inline SVG mini line chart — no axes, no grid, no library. The line is a single polyline scaled to
+fit its box and drawn with `currentColor` (accent by default), so setting `color` recolors it.
+
+```html
+<span class="ds-sparkline">
+  <svg class="ds-sparkline__svg" width="120" height="32" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true">
+    <path class="ds-sparkline__area" d="M2,30 L2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2 L118,30 Z" />
+    <polyline class="ds-sparkline__line" points="2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2" />
+    <circle class="ds-sparkline__dot" cx="118" cy="2" r="2" />
+  </svg>
+</span>
+```
+
+**Parts:** `.ds-sparkline` (inline-block wrapper; set `color` to recolor), `.ds-sparkline__svg`, the
+`.ds-sparkline__line` polyline, an optional faint `.ds-sparkline__area` fill under it, and an optional
+`.ds-sparkline__dot` on the last point. All inherit the line color via `currentColor`.
+
+**React** — `<Sparkline>`. Props: `data` (a `number[]`, scaled to fit), `width` (default 120),
+`height` (default 32), `stroke` (line color), `fill` (`boolean | string` — a faint area under the
+line), `showDot`; forwards a ref and `<span>` attributes.
+
+```jsx
+<Sparkline data={[4, 8, 6, 14, 11, 20]} fill showDot />
+<Sparkline data={[2, 5, 4, 9, 11, 16]} stroke="var(--ds-success)" width={160} />
+```
+
+Live: [../examples/components/sparkline.html](../examples/components/sparkline.html)
+
+## Bar chart
+
+A minimal flat bar chart — no library. The default is vertical: a flex-end row of columns whose
+heights are set inline as a percent of the max. The `--horizontal` modifier lays the same data out as
+rows. Bars fill with the accent or a status color.
+
+```html
+<div class="ds-barchart" role="img" aria-label="Status by region">
+  <div class="ds-barchart__col">
+    <span class="ds-barchart__label">EMEA</span>
+    <div class="ds-barchart__track"><div class="ds-barchart__bar is-success" style="height:80%"></div></div>
+    <span class="ds-barchart__value">80</span>
+  </div>
+  <!-- …more columns… -->
+</div>
+```
+
+**Parts / variants:** `.ds-barchart` (vertical row of columns) holds `.ds-barchart__col`s, each an
+optional `.ds-barchart__label`, a `.ds-barchart__track` wrapping a `.ds-barchart__bar` (height set
+inline), and a tabular `.ds-barchart__value`. The bar takes a status color via `.is-success` /
+`.is-warning` / `.is-danger` / `.is-critical` / `.is-neutral` / `.is-info`. The `--horizontal`
+modifier turns the chart into `label · track · value` rows with the bar `width` as the data dimension.
+
+**React** — `<BarChart>`. Props: `data` (a `{ label?, value, status? }[]`; `status` is one of the
+families above), `max` (value mapped to a full-length bar; defaults to the largest), `horizontal`;
+forwards a ref and `<div>` attributes.
+
+```jsx
+<BarChart data={[
+  { label: "EMEA", value: 80, status: "success" },
+  { label: "AMER", value: 55, status: "warning" },
+  { label: "APAC", value: 30, status: "danger" },
+]} />
+
+<BarChart horizontal max={100} data={[
+  { label: "Design", value: 72 },
+  { label: "Engineering", value: 98 },
+]} />
+```
+
+Live: [../examples/components/bar-chart.html](../examples/components/bar-chart.html)
+
+## Stat card
+
+A dashboard KPI tile: a flat bordered surface carrying an uppercase faint label, a large title-voiced
+figure with tabular numerals, an optional up/down delta, and a slot for an inline chart (e.g. a
+sparkline) under the value.
+
+```html
+<div class="ds-stat">
+  <div class="ds-stat__label">Sessions</div>
+  <div class="ds-stat__value">9,201</div>
+  <div class="ds-stat__delta is-up">12%</div>
+  <div class="ds-stat__spark">
+    <span class="ds-sparkline">…</span>
+  </div>
+</div>
+```
+
+**Parts / state:** `.ds-stat` (the tile), `.ds-stat__label` (uppercase faint eyebrow),
+`.ds-stat__value` (the headline figure in the title face), an optional `.ds-stat__delta` (`.is-up`
+reads success and prepends a ▲, `.is-down` reads danger and prepends a ▼), and an optional
+`.ds-stat__spark` slot for an inline chart under the value.
+
+**React** — `<StatCard>`. Props: `label`, `value`, `delta`, `deltaDir` (`"up" | "down"` — colors the
+delta and prepends the arrow); `children` render in the spark slot. Forwards a ref and `<div>`
+attributes.
+
+```jsx
+<StatCard label="Active users" value="12,840" delta="8.2% vs last week" deltaDir="up" />
+
+<StatCard label="Sessions" value="9,201" delta="12%" deltaDir="up">
+  <Sparkline data={[13, 17, 15, 22, 26, 30]} fill showDot width={160} />
+</StatCard>
+```
+
+Live: [../examples/components/stat-card.html](../examples/components/stat-card.html)
+
+## Rating
+
+A 5-star rating: an inline row of star buttons drawn as inline SVG with `currentColor`. Filled stars
+read accent, empty stars read the rule color. Click a star, or focus the group and use the arrow keys
+then Enter to set the value.
+
+```html
+<div class="ds-rating" role="group" aria-label="Rating">
+  <button type="button" class="ds-rating__star is-on" aria-label="1 star" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.18 5.68.72-4.2 3.87 1.1 5.63L10 14.98 4.95 17.9l1.1-5.63-4.2-3.87 5.68-.72L10 1.5z"/></svg></button>
+  <!-- …stars 2–3 .is-on, 4–5 empty… -->
+</div>
+```
+
+**Parts / state / variants:** `.ds-rating` (the inline row), `.ds-rating__star` (one star; add
+`.is-on` to fill it with the accent). The `--readonly` modifier drops the pointer affordance for
+display-only ratings (render the stars as `<span>`s, with `role="img"` on the row).
+
+**React** — `<Rating>`. Props: `value` (controlled) / `defaultValue` (uncontrolled), `max` (default
+5), `onChange(value)`, `readOnly`; forwards `<div>` attributes (sans `onChange` / `defaultValue`).
+
+```jsx
+<Rating defaultValue={3} onChange={(v) => console.log(v)} />
+<Rating value={4} readOnly />
+```
+
+Live: [../examples/components/rating.html](../examples/components/rating.html)
+
+## Date range picker
+
+A `.ds-input` that opens a flat `.ds-daterange__popover` laying two `.ds-calendar` month grids side by
+side. Click to set the start, click again for the end — the span fills with a soft accent and the
+endpoints fill with ink. Reuses the `.ds-calendar*` look from the [date picker](#date-picker).
+
+```html
+<div class="ds-daterange">
+  <input class="ds-input" type="text" readonly value="2026-06-12 — 2026-07-03"
+         aria-haspopup="dialog" aria-expanded="false" autocomplete="off">
+  <!-- .ds-daterange__popover (hidden until open) -->
+</div>
+
+<div class="ds-daterange__popover" role="dialog" aria-label="Choose date range">
+  <div class="ds-calendar__head">
+    <button class="ds-button ds-button--icon ds-button--sm" aria-label="Previous month">…</button>
+    <button class="ds-button ds-button--icon ds-button--sm" aria-label="Next month">…</button>
+  </div>
+  <div class="ds-daterange__months">
+    <div class="ds-calendar" role="grid" aria-label="June 2026">
+      <div class="ds-calendar__head"><div class="ds-calendar__label">June 2026</div></div>
+      <div class="ds-calendar__grid">
+        <button class="ds-calendar__day is-range-start" aria-pressed="true">12</button>
+        <button class="ds-calendar__day is-in-range">13</button> …
+      </div>
+    </div>
+    <div class="ds-calendar" role="grid" aria-label="July 2026">
+      <button class="ds-calendar__day is-range-end" aria-pressed="true">3</button> …
+    </div>
+  </div>
+</div>
+```
+
+**Parts / state:** `.ds-daterange` (the relative anchor holding the `.ds-input`),
+`.ds-daterange__popover` (the bordered surface), and `.ds-daterange__months` (two borderless
+`.ds-calendar` grids side by side). The grids reuse `.ds-calendar__head` / `.ds-calendar__label` /
+`.ds-calendar__grid` / `.ds-calendar__weekday` / `.ds-calendar__day`, and the range adds three day
+states: `.is-range-start` / `.is-range-end` (the endpoints — ink fill) and `.is-in-range` (the span
+between them — a soft `var(--ds-accent-bg)` band).
+
+**React** — `<DateRangePicker>` renders the input and two-month popover and selects a range (first
+click sets the start, the next the end). Props: `value` (`{ start, end }` of Dates or ISO strings) /
+`defaultValue`, `onChange(range, iso)`, `min`, `max` (inclusive), `format(date)`, `placeholder`,
+`disabled`, `name`.
+
+```jsx
+<DateRangePicker
+  defaultValue={{ start: "2026-06-12", end: "2026-07-03" }}
+  min="2026-01-01" max="2026-12-31"
+  onChange={(range, iso) => console.log(iso.start, iso.end, range)}
+/>
+```
+
+Live: [../examples/components/date-range.html](../examples/components/date-range.html)
+
+## Color picker
+
+A flat `.ds-colorpicker` column: a grid of square swatch cells over a row pairing a hex `.ds-input`
+with a native `<input type=color>`. Selecting a swatch, editing the hex field, or moving the native
+input all converge on one value. The selected swatch takes a 2px ink ring.
+
+```html
+<div class="ds-colorpicker">
+  <div class="ds-colorpicker__swatches" role="group" aria-label="Color swatches">
+    <button class="ds-colorpicker__swatch is-selected" type="button" aria-pressed="true"
+            aria-label="#161616" style="background:#161616"></button>
+    <button class="ds-colorpicker__swatch" type="button" aria-pressed="false"
+            aria-label="#ff2a00" style="background:#ff2a00"></button>
+    <!-- …more swatches… -->
+  </div>
+  <div class="ds-colorpicker__row">
+    <input class="ds-input" type="text" value="#161616" aria-label="Hex color">
+    <input class="ds-colorpicker__native" type="color" value="#161616" aria-label="Pick a color">
+  </div>
+</div>
+```
+
+**Parts / state:** `.ds-colorpicker` (the column), `.ds-colorpicker__swatches` (the auto-fill grid)
+holding `.ds-colorpicker__swatch` buttons (fill set inline; `.is-selected` draws the 2px ink ring),
+and `.ds-colorpicker__row` pairing a hex `.ds-input` with the native `.ds-colorpicker__native` chip.
+
+**React** — `<ColorPicker>` wires the swatches, hex field, and native input to one value. Props:
+`value` (a hex string) / `defaultValue` (default `#161616`), `onChange(value)`, `swatches` (defaults
+to the exported `BRAND_SWATCHES`), `disabled`, `name`.
+
+```jsx
+<ColorPicker defaultValue="#ff2a00" onChange={(hex) => console.log(hex)} />
+```
+
+Live: [../examples/components/color-picker.html](../examples/components/color-picker.html)
+
+## Code block
+
+A near-black `.ds-code` panel: a head with the filename on the left and a small Copy button on the
+right, divided by a 1px rule from a scrolling body. Mono type, light text on `var(--ds-noir)`, no
+radius and no shadow.
+
+```html
+<div class="ds-code" data-language="js">
+  <div class="ds-code__head">
+    <span class="ds-code__filename">format.js</span>
+    <button class="ds-button ds-button--sm" type="button" aria-label="Copy code">Copy</button>
+  </div>
+  <pre class="ds-code__body"><code>export function toISO(d) { … }</code></pre>
+</div>
+```
+
+**Parts:** `.ds-code` (the dark panel; an optional `data-language` label), `.ds-code__head` pairing a
+faint uppercase `.ds-code__filename` with a `.ds-button--sm` (restyled to read on the dark head), and
+`.ds-code__body` (a `<pre>` that scrolls horizontally when a line overflows).
+
+**React** — `<CodeBlock>` renders the code as text content (never `dangerouslySetInnerHTML`), so any
+`<` `>` `&` shows verbatim, and its Copy button writes to the clipboard. Props: `code` (the source),
+`language` (label shown when no filename is given; also `data-language`), `filename`; forwards a ref
+and `<div>` attributes.
+
+```jsx
+<CodeBlock
+  filename="format.js"
+  language="js"
+  code={`export function toISO(d) {\n  return d.toISOString().slice(0, 10);\n}`}
+/>
+```
+
+Live: [../examples/components/code-block.html](../examples/components/code-block.html)
+
+## Kbd
+
+An inline keycap for keyboard shortcuts — a small mono token on `var(--ds-bg-alt)` with a 1px rule and
+no radius. The flat take on a keycap; combine them with a plain `+` separator for chords.
+
+```html
+<kbd class="ds-kbd">Esc</kbd>
+<kbd class="ds-kbd">⌘</kbd>
+
+<p>Press <kbd class="ds-kbd">⌘</kbd> + <kbd class="ds-kbd">K</kbd> to open the command palette.</p>
+```
+
+**Parts:** a single `.ds-kbd` per key (it sits on the text baseline so it reads inline within a
+sentence); join keys with a literal `+` for a chord.
+
+**React** — `<Kbd>` renders a `<kbd class="ds-kbd">`, forwards a ref, and spreads any extra props onto
+the element.
+
+```jsx
+<p>Press <Kbd>⌘</Kbd> + <Kbd>K</Kbd> to search.</p>
+```
+
+Live: [../examples/components/kbd.html](../examples/components/kbd.html)

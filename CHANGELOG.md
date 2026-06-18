@@ -20,6 +20,8 @@ A major, Clarity-inspired component expansion with full React integration.
   loading, block, button group, split button).
 - `Button` React component gained `size`, `loading`, and `block` props.
 - New tokens: `--ds-z-popover`, `--ds-z-toast`.
+- **More components**: Drawer (off-canvas), Command palette (⌘K), Sparkline, Bar chart, Stat
+  card, Rating, Date range picker, Color picker, Code block, and Kbd.
 - Showcase navigation reorganized into Actions / Forms / Data display / Feedback /
   Navigation / Overlays / Platform groups; new live React data-grid demo.
 

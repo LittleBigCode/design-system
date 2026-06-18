@@ -708,6 +708,315 @@
         </div>
       </section>
 
+      <section class="docs-section">
+        <h2>Stat card</h2>
+        <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start">
+          <div class="ds-stat" style="min-width:200px">
+            <div class="ds-stat__label">Active users</div>
+            <div class="ds-stat__value">12,840</div>
+            <div class="ds-stat__delta is-up">8.2% vs last week</div>
+          </div>
+          <div class="ds-stat" style="min-width:200px">
+            <div class="ds-stat__label">Sessions</div>
+            <div class="ds-stat__value">9,201</div>
+            <div class="ds-stat__delta is-up">12%</div>
+            <div class="ds-stat__spark">
+              <span class="ds-sparkline" style="color: var(--ds-success)">
+                <svg class="ds-sparkline__svg" width="160" height="32" viewBox="0 0 160 32" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                  <path class="ds-sparkline__area" d="M2,30 L2,26 33.6,22 65.2,24 96.8,14 128.4,10 158,4 L158,30 Z" />
+                  <polyline class="ds-sparkline__line" points="2,26 33.6,22 65.2,24 96.8,14 128.4,10 158,4" />
+                  <circle class="ds-sparkline__dot" cx="158" cy="4" r="2" />
+                </svg>
+              </span>
+            </div>
+          </div>
+          <div class="ds-stat" style="min-width:200px">
+            <div class="ds-stat__label">Churn</div>
+            <div class="ds-stat__value">3.1%</div>
+            <div class="ds-stat__delta is-down">0.4 pts</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Sparkline</h2>
+        <div style="display:flex;flex-wrap:wrap;gap:32px;align-items:center">
+          <span class="ds-sparkline">
+            <svg class="ds-sparkline__svg" width="120" height="32" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+              <polyline class="ds-sparkline__line" points="2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2" />
+            </svg>
+          </span>
+          <span class="ds-sparkline">
+            <svg class="ds-sparkline__svg" width="120" height="32" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+              <path class="ds-sparkline__area" d="M2,30 L2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2 L118,30 Z" />
+              <polyline class="ds-sparkline__line" points="2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2" />
+              <circle class="ds-sparkline__dot" cx="118" cy="2" r="2" />
+            </svg>
+          </span>
+          <span class="ds-sparkline" style="color: var(--ds-success)">
+            <svg class="ds-sparkline__svg" width="120" height="32" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+              <polyline class="ds-sparkline__line" points="2,28 25.6,22 49.2,24 72.8,14 96.4,10 118,4" />
+            </svg>
+          </span>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Bar chart</h2>
+        <div style="display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start">
+          <div class="ds-barchart" role="img" aria-label="Status by region" style="max-width:320px">
+            <div class="ds-barchart__col">
+              <span class="ds-barchart__label">EMEA</span>
+              <div class="ds-barchart__track"><div class="ds-barchart__bar is-success" style="height:80%"></div></div>
+              <span class="ds-barchart__value">80</span>
+            </div>
+            <div class="ds-barchart__col">
+              <span class="ds-barchart__label">AMER</span>
+              <div class="ds-barchart__track"><div class="ds-barchart__bar is-warning" style="height:55%"></div></div>
+              <span class="ds-barchart__value">55</span>
+            </div>
+            <div class="ds-barchart__col">
+              <span class="ds-barchart__label">APAC</span>
+              <div class="ds-barchart__track"><div class="ds-barchart__bar is-danger" style="height:30%"></div></div>
+              <span class="ds-barchart__value">30</span>
+            </div>
+            <div class="ds-barchart__col">
+              <span class="ds-barchart__label">LATAM</span>
+              <div class="ds-barchart__track"><div class="ds-barchart__bar" style="height:65%"></div></div>
+              <span class="ds-barchart__value">65</span>
+            </div>
+          </div>
+          <div class="ds-barchart ds-barchart--horizontal" role="img" aria-label="Spend by team" style="max-width:360px">
+            <div class="ds-barchart__col">
+              <span class="ds-barchart__label">Design</span>
+              <div class="ds-barchart__track"><div class="ds-barchart__bar" style="width:72%"></div></div>
+              <span class="ds-barchart__value">72</span>
+            </div>
+            <div class="ds-barchart__col">
+              <span class="ds-barchart__label">Engineering</span>
+              <div class="ds-barchart__track"><div class="ds-barchart__bar" style="width:100%"></div></div>
+              <span class="ds-barchart__value">98</span>
+            </div>
+            <div class="ds-barchart__col">
+              <span class="ds-barchart__label">Sales</span>
+              <div class="ds-barchart__track"><div class="ds-barchart__bar is-warning" style="width:44%"></div></div>
+              <span class="ds-barchart__value">44</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Rating</h2>
+        <div class="ds-rating ds-rating--readonly" role="img" aria-label="Rating: 4 of 5">
+          <span class="ds-rating__star is-on"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 1.5l2.47 5.18 5.68.72-4.2 3.87 1.1 5.63L10 14.98 4.95 17.9l1.1-5.63-4.2-3.87 5.68-.72L10 1.5z"/></svg></span>
+          <span class="ds-rating__star is-on"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 1.5l2.47 5.18 5.68.72-4.2 3.87 1.1 5.63L10 14.98 4.95 17.9l1.1-5.63-4.2-3.87 5.68-.72L10 1.5z"/></svg></span>
+          <span class="ds-rating__star is-on"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 1.5l2.47 5.18 5.68.72-4.2 3.87 1.1 5.63L10 14.98 4.95 17.9l1.1-5.63-4.2-3.87 5.68-.72L10 1.5z"/></svg></span>
+          <span class="ds-rating__star is-on"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 1.5l2.47 5.18 5.68.72-4.2 3.87 1.1 5.63L10 14.98 4.95 17.9l1.1-5.63-4.2-3.87 5.68-.72L10 1.5z"/></svg></span>
+          <span class="ds-rating__star"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 1.5l2.47 5.18 5.68.72-4.2 3.87 1.1 5.63L10 14.98 4.95 17.9l1.1-5.63-4.2-3.87 5.68-.72L10 1.5z"/></svg></span>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Date range</h2>
+        <div class="ds-daterange__popover" role="dialog" aria-label="Choose date range" style="max-width:max-content">
+          <div class="ds-calendar__head">
+            <button class="ds-button ds-button--icon ds-button--sm" type="button" aria-label="Previous month">
+              <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M11 4 6 9l5 5"/></svg>
+            </button>
+            <button class="ds-button ds-button--icon ds-button--sm" type="button" aria-label="Next month">
+              <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 4l5 5-5 5"/></svg>
+            </button>
+          </div>
+          <div class="ds-daterange__months">
+            <div class="ds-calendar" role="grid" aria-label="June 2026">
+              <div class="ds-calendar__head"><div class="ds-calendar__label">June 2026</div></div>
+              <div class="ds-calendar__grid">
+                <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Su</div>
+                <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Mo</div>
+                <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Tu</div>
+                <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">We</div>
+                <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Th</div>
+                <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Fr</div>
+                <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Sa</div>
+                <button class="ds-calendar__day is-outside" type="button" role="gridcell">31</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">1</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">2</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">3</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">4</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">5</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">6</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">7</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">8</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">9</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">10</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">11</button>
+                <button class="ds-calendar__day is-range-start" type="button" role="gridcell" aria-pressed="true">12</button>
+                <button class="ds-calendar__day is-in-range" type="button" role="gridcell">13</button>
+                <button class="ds-calendar__day is-in-range" type="button" role="gridcell">14</button>
+                <button class="ds-calendar__day is-in-range" type="button" role="gridcell">15</button>
+                <button class="ds-calendar__day is-in-range" type="button" role="gridcell">16</button>
+                <button class="ds-calendar__day is-in-range" type="button" role="gridcell">17</button>
+                <button class="ds-calendar__day is-today is-in-range" type="button" role="gridcell">18</button>
+                <button class="ds-calendar__day is-in-range" type="button" role="gridcell">19</button>
+                <button class="ds-calendar__day is-in-range" type="button" role="gridcell">20</button>
+                <button class="ds-calendar__day is-in-range" type="button" role="gridcell">21</button>
+                <button class="ds-calendar__day is-in-range" type="button" role="gridcell">22</button>
+                <button class="ds-calendar__day is-in-range" type="button" role="gridcell">23</button>
+                <button class="ds-calendar__day is-in-range" type="button" role="gridcell">24</button>
+                <button class="ds-calendar__day is-in-range" type="button" role="gridcell">25</button>
+                <button class="ds-calendar__day is-in-range" type="button" role="gridcell">26</button>
+                <button class="ds-calendar__day is-in-range" type="button" role="gridcell">27</button>
+                <button class="ds-calendar__day is-in-range" type="button" role="gridcell">28</button>
+                <button class="ds-calendar__day is-in-range" type="button" role="gridcell">29</button>
+                <button class="ds-calendar__day is-in-range" type="button" role="gridcell">30</button>
+                <button class="ds-calendar__day is-outside is-in-range" type="button" role="gridcell">1</button>
+                <button class="ds-calendar__day is-outside is-in-range" type="button" role="gridcell">2</button>
+                <button class="ds-calendar__day is-outside is-range-end" type="button" role="gridcell" aria-pressed="true">3</button>
+                <button class="ds-calendar__day is-outside" type="button" role="gridcell">4</button>
+                <button class="ds-calendar__day is-outside" type="button" role="gridcell">5</button>
+              </div>
+            </div>
+            <div class="ds-calendar" role="grid" aria-label="July 2026">
+              <div class="ds-calendar__head"><div class="ds-calendar__label">July 2026</div></div>
+              <div class="ds-calendar__grid">
+                <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Su</div>
+                <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Mo</div>
+                <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Tu</div>
+                <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">We</div>
+                <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Th</div>
+                <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Fr</div>
+                <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Sa</div>
+                <button class="ds-calendar__day is-outside is-in-range" type="button" role="gridcell">28</button>
+                <button class="ds-calendar__day is-outside is-in-range" type="button" role="gridcell">29</button>
+                <button class="ds-calendar__day is-outside is-in-range" type="button" role="gridcell">30</button>
+                <button class="ds-calendar__day is-in-range" type="button" role="gridcell">1</button>
+                <button class="ds-calendar__day is-in-range" type="button" role="gridcell">2</button>
+                <button class="ds-calendar__day is-range-end" type="button" role="gridcell" aria-pressed="true">3</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">4</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">5</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">6</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">7</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">8</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">9</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">10</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">11</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">12</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">13</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">14</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">15</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">16</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">17</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">18</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">19</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">20</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">21</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">22</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">23</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">24</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">25</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">26</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">27</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">28</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">29</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">30</button>
+                <button class="ds-calendar__day" type="button" role="gridcell">31</button>
+                <button class="ds-calendar__day is-outside" type="button" role="gridcell">1</button>
+                <button class="ds-calendar__day is-outside" type="button" role="gridcell">2</button>
+                <button class="ds-calendar__day is-outside" type="button" role="gridcell">3</button>
+                <button class="ds-calendar__day is-outside" type="button" role="gridcell">4</button>
+                <button class="ds-calendar__day is-outside" type="button" role="gridcell">5</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Color picker</h2>
+        <div class="ds-colorpicker" style="max-width:320px">
+          <div class="ds-colorpicker__swatches" role="group" aria-label="Color swatches">
+            <button class="ds-colorpicker__swatch is-selected" type="button" aria-pressed="true" aria-label="#161616" title="#161616" style="background:#161616"></button>
+            <button class="ds-colorpicker__swatch" type="button" aria-pressed="false" aria-label="#767884" title="#767884" style="background:#767884"></button>
+            <button class="ds-colorpicker__swatch" type="button" aria-pressed="false" aria-label="#9f8667" title="#9f8667" style="background:#9f8667"></button>
+            <button class="ds-colorpicker__swatch" type="button" aria-pressed="false" aria-label="#aab0a6" title="#aab0a6" style="background:#aab0a6"></button>
+            <button class="ds-colorpicker__swatch" type="button" aria-pressed="false" aria-label="#d5d3c4" title="#d5d3c4" style="background:#d5d3c4"></button>
+            <button class="ds-colorpicker__swatch" type="button" aria-pressed="false" aria-label="#f4fbda" title="#f4fbda" style="background:#f4fbda"></button>
+            <button class="ds-colorpicker__swatch" type="button" aria-pressed="false" aria-label="#ffffff" title="#ffffff" style="background:#ffffff"></button>
+          </div>
+          <div class="ds-colorpicker__row">
+            <input class="ds-input" type="text" value="#161616" placeholder="#000000" spellcheck="false" autocomplete="off" aria-label="Hex color">
+            <input class="ds-colorpicker__native" type="color" value="#161616" aria-label="Pick a color">
+          </div>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Code block</h2>
+        <div class="ds-code" data-language="js" style="max-width:520px">
+          <div class="ds-code__head">
+            <span class="ds-code__filename">format.js</span>
+            <button class="ds-button ds-button--sm" type="button" aria-label="Copy code">Copy</button>
+          </div>
+          <pre class="ds-code__body"><code>export function toISO(d) {
+  const pad = (n) =&gt; String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}</code></pre>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Kbd</h2>
+        <p style="margin:0;color:var(--ds-ink-soft);font-size:var(--ds-text-base)">
+          Press <kbd class="ds-kbd">⌘</kbd> + <kbd class="ds-kbd">K</kbd> to open the command palette, or <kbd class="ds-kbd">Ctrl</kbd> + <kbd class="ds-kbd">Shift</kbd> + <kbd class="ds-kbd">P</kbd> on Windows.
+        </p>
+      </section>
+
+      <section class="docs-section">
+        <h2>Drawer</h2>
+        <p class="docs-note">The drawer panel on its own (the fixed <code>.ds-drawer-overlay</code> scrim is omitted so it renders in flow).</p>
+        <div style="position:relative;height:320px;border:1px solid var(--ds-rule);overflow:hidden">
+          <div class="ds-drawer ds-drawer--right" role="dialog" aria-modal="true" style="position:absolute;transform:none;width:320px;max-width:100%">
+            <div class="ds-drawer__head">
+              <h2 class="ds-drawer__title">Filters</h2>
+              <button class="ds-button ds-drawer__close">Close</button>
+            </div>
+            <div class="ds-drawer__body"><p>Body content goes here. The body scrolls when it overflows.</p></div>
+            <div class="ds-drawer__foot">
+              <button class="ds-button">Clear</button>
+              <span class="ds-drawer__spacer"></span>
+              <button class="ds-button ds-button--primary">Apply</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="docs-section">
+        <h2>Command palette</h2>
+        <div class="ds-cmdk" style="max-height:none;max-width:520px">
+          <input class="ds-cmdk__input" type="text" placeholder="Type a command or search…" value="">
+          <div class="ds-cmdk__list" role="listbox">
+            <div class="ds-cmdk__group-label">Navigation</div>
+            <button class="ds-cmdk__item is-active" role="option" aria-selected="true">
+              <span class="ds-cmdk__label">Go to dashboard</span>
+              <span class="ds-cmdk__kbd">G D</span>
+            </button>
+            <button class="ds-cmdk__item" role="option">
+              <span class="ds-cmdk__label">Go to settings</span>
+              <span class="ds-cmdk__kbd">G S</span>
+            </button>
+            <div class="ds-cmdk__group-label">Actions</div>
+            <button class="ds-cmdk__item" role="option">
+              <span class="ds-cmdk__label">Create reference</span>
+              <span class="ds-cmdk__hint">⌘ N</span>
+            </button>
+            <button class="ds-cmdk__item" role="option">
+              <span class="ds-cmdk__label">Export matrix</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
       <footer class="docs-foot">
         <span>Diametral Design System · v0.2.0</span>
         <a href="index.html">← Overview</a>
