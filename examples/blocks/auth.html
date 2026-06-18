@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auth · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="blocks/auth">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Blocks</p>
+        <h1 class="ds-title ds-title--xl">Auth</h1>
+        <p class="docs-lede">Self-contained authentication cards built only from <code>ds-card</code>, <code>ds-field</code>, and <code>ds-button</code>. Each one is a flat <code>ds-card</code> capped at ~360px, with stacked <code>ds-field</code> inputs and a full-width <code>ds-button--block ds-button--primary</code> as the commit action. Drop one onto the brand background — flat, 1px, no radius, no shadow.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Sign in</h2>
+        <p class="docs-note">Email and password, a full-width primary commit, a ghost SSO fallback, and a small forgot-password link aligned to the end.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Sign in</span>
+            <button class="ds-button" data-copy-target="#c-signin">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <div class="ds-card" style="max-width:360px;margin:0 auto">
+              <div class="ds-card__header" style="display:flex;flex-direction:column;align-items:center;gap:14px">
+                <span class="ds-wordmark">
+                  <svg class="ds-wordmark__mark" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="28" cy="28" r="24"/><rect x="12" y="12" width="32" height="32"/><line x1="12" y1="44" x2="44" y2="12"/></svg>
+                  <span class="ds-wordmark__name">Diametral</span>
+                </span>
+                <h2 class="ds-card__title">Sign in</h2>
+              </div>
+              <div class="ds-card__body" style="display:flex;flex-direction:column;gap:16px">
+                <div class="ds-field">
+                  <label for="si-email">Email</label>
+                  <input class="ds-input" id="si-email" type="email" autocomplete="email" placeholder="you@diametral.io">
+                </div>
+                <div class="ds-field">
+                  <label for="si-pass">Password</label>
+                  <input class="ds-input" id="si-pass" type="password" autocomplete="current-password" placeholder="••••••••">
+                </div>
+                <button class="ds-button ds-button--block ds-button--primary" type="button">Sign in</button>
+                <button class="ds-button ds-button--block" type="button">Continue with SSO</button>
+                <div style="display:flex;justify-content:flex-end">
+                  <a href="#" class="ds-field__hint">Forgot?</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-signin">&lt;div class="ds-card" style="max-width:360px;margin:0 auto"&gt;
+  &lt;div class="ds-card__header" style="display:flex;flex-direction:column;align-items:center;gap:14px"&gt;
+    &lt;span class="ds-wordmark"&gt;
+      &lt;svg class="ds-wordmark__mark" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"&gt;&lt;circle cx="28" cy="28" r="24"/&gt;&lt;rect x="12" y="12" width="32" height="32"/&gt;&lt;line x1="12" y1="44" x2="44" y2="12"/&gt;&lt;/svg&gt;
+      &lt;span class="ds-wordmark__name"&gt;Diametral&lt;/span&gt;
+    &lt;/span&gt;
+    &lt;h2 class="ds-card__title"&gt;Sign in&lt;/h2&gt;
+  &lt;/div&gt;
+  &lt;div class="ds-card__body" style="display:flex;flex-direction:column;gap:16px"&gt;
+    &lt;div class="ds-field"&gt;
+      &lt;label for="si-email"&gt;Email&lt;/label&gt;
+      &lt;input class="ds-input" id="si-email" type="email" autocomplete="email" placeholder="you@diametral.io"&gt;
+    &lt;/div&gt;
+    &lt;div class="ds-field"&gt;
+      &lt;label for="si-pass"&gt;Password&lt;/label&gt;
+      &lt;input class="ds-input" id="si-pass" type="password" autocomplete="current-password" placeholder="••••••••"&gt;
+    &lt;/div&gt;
+    &lt;button class="ds-button ds-button--block ds-button--primary" type="button"&gt;Sign in&lt;/button&gt;
+    &lt;button class="ds-button ds-button--block" type="button"&gt;Continue with SSO&lt;/button&gt;
+    &lt;div style="display:flex;justify-content:flex-end"&gt;
+      &lt;a href="#" class="ds-field__hint"&gt;Forgot?&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Sign up</h2>
+        <p class="docs-note">Name, email, and password stacked above a full-width primary <code>Create account</code>.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Sign up</span>
+            <button class="ds-button" data-copy-target="#c-signup">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <div class="ds-card" style="max-width:360px;margin:0 auto">
+              <div class="ds-card__header"><h2 class="ds-card__title">Create your account</h2></div>
+              <div class="ds-card__body" style="display:flex;flex-direction:column;gap:16px">
+                <div class="ds-field">
+                  <label for="su-name">Name</label>
+                  <input class="ds-input" id="su-name" type="text" autocomplete="name" placeholder="Ada Lovelace">
+                </div>
+                <div class="ds-field">
+                  <label for="su-email">Email</label>
+                  <input class="ds-input" id="su-email" type="email" autocomplete="email" placeholder="you@diametral.io">
+                </div>
+                <div class="ds-field">
+                  <label for="su-pass">Password</label>
+                  <input class="ds-input" id="su-pass" type="password" autocomplete="new-password" placeholder="••••••••">
+                </div>
+                <button class="ds-button ds-button--block ds-button--primary" type="button">Create account</button>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-signup">&lt;div class="ds-card" style="max-width:360px;margin:0 auto"&gt;
+  &lt;div class="ds-card__header"&gt;&lt;h2 class="ds-card__title"&gt;Create your account&lt;/h2&gt;&lt;/div&gt;
+  &lt;div class="ds-card__body" style="display:flex;flex-direction:column;gap:16px"&gt;
+    &lt;div class="ds-field"&gt;
+      &lt;label for="su-name"&gt;Name&lt;/label&gt;
+      &lt;input class="ds-input" id="su-name" type="text" autocomplete="name" placeholder="Ada Lovelace"&gt;
+    &lt;/div&gt;
+    &lt;div class="ds-field"&gt;
+      &lt;label for="su-email"&gt;Email&lt;/label&gt;
+      &lt;input class="ds-input" id="su-email" type="email" autocomplete="email" placeholder="you@diametral.io"&gt;
+    &lt;/div&gt;
+    &lt;div class="ds-field"&gt;
+      &lt;label for="su-pass"&gt;Password&lt;/label&gt;
+      &lt;input class="ds-input" id="su-pass" type="password" autocomplete="new-password" placeholder="••••••••"&gt;
+    &lt;/div&gt;
+    &lt;button class="ds-button ds-button--block ds-button--primary" type="button"&gt;Create account&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Forgot password</h2>
+        <p class="docs-note">A single email field, a full-width <code>Send reset link</code>, and a back link to sign in.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Forgot password</span>
+            <button class="ds-button" data-copy-target="#c-forgot">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <div class="ds-card" style="max-width:360px;margin:0 auto">
+              <div class="ds-card__header"><h2 class="ds-card__title">Reset password</h2></div>
+              <div class="ds-card__body" style="display:flex;flex-direction:column;gap:16px">
+                <p class="ds-field__hint">Enter your email and we'll send a reset link.</p>
+                <div class="ds-field">
+                  <label for="fp-email">Email</label>
+                  <input class="ds-input" id="fp-email" type="email" autocomplete="email" placeholder="you@diametral.io">
+                </div>
+                <button class="ds-button ds-button--block ds-button--primary" type="button">Send reset link</button>
+                <div style="display:flex;justify-content:center">
+                  <a href="#" class="ds-field__hint">← Back to sign in</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-forgot">&lt;div class="ds-card" style="max-width:360px;margin:0 auto"&gt;
+  &lt;div class="ds-card__header"&gt;&lt;h2 class="ds-card__title"&gt;Reset password&lt;/h2&gt;&lt;/div&gt;
+  &lt;div class="ds-card__body" style="display:flex;flex-direction:column;gap:16px"&gt;
+    &lt;p class="ds-field__hint"&gt;Enter your email and we'll send a reset link.&lt;/p&gt;
+    &lt;div class="ds-field"&gt;
+      &lt;label for="fp-email"&gt;Email&lt;/label&gt;
+      &lt;input class="ds-input" id="fp-email" type="email" autocomplete="email" placeholder="you@diametral.io"&gt;
+    &lt;/div&gt;
+    &lt;button class="ds-button ds-button--block ds-button--primary" type="button"&gt;Send reset link&lt;/button&gt;
+    &lt;div style="display:flex;justify-content:center"&gt;
+      &lt;a href="#" class="ds-field__hint"&gt;← Back to sign in&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Two-factor</h2>
+        <p class="docs-note">A six-digit code entered across six small <code>ds-input</code>s in a row, above a full-width <code>Verify</code>.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Two-factor</span>
+            <button class="ds-button" data-copy-target="#c-2fa">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <div class="ds-card" style="max-width:360px;margin:0 auto">
+              <div class="ds-card__header"><h2 class="ds-card__title">Verify it's you</h2></div>
+              <div class="ds-card__body" style="display:flex;flex-direction:column;gap:16px">
+                <p class="ds-field__hint">Enter the 6-digit code from your authenticator app.</p>
+                <div class="ds-field">
+                  <label>Code</label>
+                  <div style="display:flex;gap:8px">
+                    <input class="ds-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 1" style="width:100%;text-align:center;padding-left:0;padding-right:0">
+                    <input class="ds-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 2" style="width:100%;text-align:center;padding-left:0;padding-right:0">
+                    <input class="ds-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 3" style="width:100%;text-align:center;padding-left:0;padding-right:0">
+                    <input class="ds-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 4" style="width:100%;text-align:center;padding-left:0;padding-right:0">
+                    <input class="ds-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 5" style="width:100%;text-align:center;padding-left:0;padding-right:0">
+                    <input class="ds-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 6" style="width:100%;text-align:center;padding-left:0;padding-right:0">
+                  </div>
+                </div>
+                <button class="ds-button ds-button--block ds-button--primary" type="button">Verify</button>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-2fa">&lt;div class="ds-card" style="max-width:360px;margin:0 auto"&gt;
+  &lt;div class="ds-card__header"&gt;&lt;h2 class="ds-card__title"&gt;Verify it's you&lt;/h2&gt;&lt;/div&gt;
+  &lt;div class="ds-card__body" style="display:flex;flex-direction:column;gap:16px"&gt;
+    &lt;p class="ds-field__hint"&gt;Enter the 6-digit code from your authenticator app.&lt;/p&gt;
+    &lt;div class="ds-field"&gt;
+      &lt;label&gt;Code&lt;/label&gt;
+      &lt;div style="display:flex;gap:8px"&gt;
+        &lt;input class="ds-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 1" style="width:100%;text-align:center;padding-left:0;padding-right:0"&gt;
+        &lt;input class="ds-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 2" style="width:100%;text-align:center;padding-left:0;padding-right:0"&gt;
+        &lt;input class="ds-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 3" style="width:100%;text-align:center;padding-left:0;padding-right:0"&gt;
+        &lt;input class="ds-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 4" style="width:100%;text-align:center;padding-left:0;padding-right:0"&gt;
+        &lt;input class="ds-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 5" style="width:100%;text-align:center;padding-left:0;padding-right:0"&gt;
+        &lt;input class="ds-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 6" style="width:100%;text-align:center;padding-left:0;padding-right:0"&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;button class="ds-button ds-button--block ds-button--primary" type="button"&gt;Verify&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.1</span>
+        <a href="index.html">← Blocks</a>
+        <a href="../demo.html">Demo app →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

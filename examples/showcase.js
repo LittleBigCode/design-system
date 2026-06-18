@@ -92,6 +92,7 @@ const NAV = [
   { label: "Layout", items: [
     { k: "components/app-shell", t: "App shell" },
     { k: "components/toolbar", t: "Toolbar" },
+    { k: "components/page-header", t: "Page header" },
   ]},
   { label: "Overlays", items: [
     { k: "components/modal", t: "Modal" },
@@ -113,6 +114,13 @@ const NAV = [
     { k: "templates/login", t: "Login" },
     { k: "templates/dashboard", t: "Dashboard" },
     { k: "templates/error-404", t: "404 / Error" },
+  ]},
+  { label: "Blocks", items: [
+    { k: "blocks/index", t: "Overview" },
+    { k: "blocks/app-chrome", t: "App chrome" },
+    { k: "blocks/auth", t: "Auth" },
+    { k: "blocks/marketing", t: "Marketing" },
+    { k: "blocks/data-detail", t: "Data & detail" },
   ]},
 ];
 

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blocks · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+  <style>
+    .bk-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    @media (max-width: 720px) { .bk-grid { grid-template-columns: 1fr; } }
+    .bk-card { display: block; border: 1px solid var(--ds-rule); padding: 22px 24px; text-decoration: none; color: inherit; background: var(--ds-surface); }
+    .bk-card:hover { border-color: var(--ds-accent); }
+    .bk-card h3 { font-family: var(--ds-font-title); font-weight: 300; font-size: 20px; margin: 0 0 6px; }
+    .bk-card p { color: var(--ds-ink-soft); margin: 0; }
+  </style>
+</head>
+<body data-page="blocks/index">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Blocks</p>
+        <h1 class="ds-title ds-title--xl">Blocks</h1>
+        <p class="docs-lede">Composed, copy-paste sections built from the component library and the visible grid system — the larger building units between components and a full page. See them assembled live in the <a href="../demo.html">demo app</a>.</p>
+      </header>
+
+      <section class="docs-section">
+        <div class="bk-grid">
+          <a class="bk-card" href="app-chrome.html"><h3>App chrome</h3><p>Page header, toolbar, filter bar and stat band — the frame around an application screen.</p></a>
+          <a class="bk-card" href="auth.html"><h3>Auth</h3><p>Sign in, sign up, forgot-password and two-factor cards.</p></a>
+          <a class="bk-card" href="marketing.html"><h3>Marketing</h3><p>Hero, feature grid, pricing, stat band and footer — built on the visible grid system.</p></a>
+          <a class="bk-card" href="data-detail.html"><h3>Data &amp; detail</h3><p>Detail layout, empty state, faceted filter, activity feed and a confirmation dialog.</p></a>
+        </div>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.3.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../demo.html">Demo app →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

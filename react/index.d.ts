@@ -206,3 +206,4 @@ export * from "./components/PieChart.js";
 export * from "./components/GaugeChart.js";
 export * from "./components/StackedBar.js";
 export * from "./components/Kanban.js";
+export * from "./components/PageHeader.js";

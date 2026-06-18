@@ -4,6 +4,21 @@ All notable changes to the Diametral Design System are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/), and the project
 adheres to [Semantic Versioning](https://semver.org/) — see [docs/versioning.md](docs/versioning.md).
 
+## [0.3.0] — 2026-06-18
+
+### Added
+- **PageHeader** component (`.ds-page-header` + React `<PageHeader>`): breadcrumb + title + actions
+  + optional tabs row.
+- **Blocks** — a new showcase area of composed, copy-paste sections: App chrome, Auth, Marketing
+  (on the visible grid system), and Data & detail (`examples/blocks/`).
+
+### Changed
+- The live demo app (`examples/demo.html`) is refactored into ES modules (`examples/demo/`) and
+  expanded to **14 views**: Overview, Projects (+ project detail with stepper, burn-down, risks),
+  Board, Reports (funnel/trend/pie/gauge), Invoices, Candidates → CV, Team → profile, Training,
+  Calendar, Knowledge base, Files, Inbox, Settings — with a ⌘K command palette and one consistent
+  content width across every view.
+
 ## [0.2.1] — 2026-06-18
 
 ### Changed

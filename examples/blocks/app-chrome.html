@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App chrome · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+  <style>
+    /* Page-local layout glue only — every visible element uses real .ds-* classes. */
+    .bk-filterbar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 14px 16px; border: 1px solid var(--ds-rule); }
+    .bk-filterbar__spacer { flex: 1; }
+  </style>
+</head>
+<body data-page="blocks/app-chrome">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Blocks</p>
+        <h1 class="ds-title ds-title--xl">App chrome</h1>
+        <p class="docs-lede">The framing furniture of an application screen — composed sections built only from existing <code>.ds-*</code> components. Stack a page header, a toolbar, a filter bar and a stat band to assemble the top of a working view.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Page header</h2>
+        <p class="docs-note">A <code>.ds-page-header</code> stacks a <code>.ds-breadcrumb</code>, a <code>.ds-page-header__top</code> (title + actions) and a <code>.ds-page-header__tabs</code> row of <code>.ds-tabs</code>.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">.ds-page-header</span><button class="ds-button" data-copy-target="#c-header">Copy</button></header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <header class="ds-page-header">
+              <nav aria-label="Breadcrumb"><ol class="ds-breadcrumb"><li class="ds-breadcrumb__item"><a class="ds-breadcrumb__link" href="#">Home</a></li><li class="ds-breadcrumb__item"><a class="ds-breadcrumb__link" href="#">Pricing</a></li><li class="ds-breadcrumb__item" aria-current="page">Matrix</li></ol></nav>
+              <div class="ds-page-header__top">
+                <h1 class="ds-page-header__title">Pricing matrix</h1>
+                <div class="ds-page-header__actions">
+                  <button class="ds-button">Export</button>
+                  <button class="ds-button ds-button--primary">New rate</button>
+                </div>
+              </div>
+              <div class="ds-page-header__tabs">
+                <div class="ds-tabs">
+                  <button class="ds-tabs__tab is-active">Rates</button>
+                  <button class="ds-tabs__tab">Profiles</button>
+                  <button class="ds-tabs__tab">History</button>
+                </div>
+              </div>
+            </header>
+          </div>
+          <pre class="ds-example__code"><code id="c-header">&lt;header class="ds-page-header"&gt;
+  &lt;nav aria-label="Breadcrumb"&gt;
+    &lt;ol class="ds-breadcrumb"&gt;
+      &lt;li class="ds-breadcrumb__item"&gt;&lt;a class="ds-breadcrumb__link" href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
+      &lt;li class="ds-breadcrumb__item"&gt;&lt;a class="ds-breadcrumb__link" href="#"&gt;Pricing&lt;/a&gt;&lt;/li&gt;
+      &lt;li class="ds-breadcrumb__item" aria-current="page"&gt;Matrix&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/nav&gt;
+  &lt;div class="ds-page-header__top"&gt;
+    &lt;h1 class="ds-page-header__title"&gt;Pricing matrix&lt;/h1&gt;
+    &lt;div class="ds-page-header__actions"&gt;
+      &lt;button class="ds-button"&gt;Export&lt;/button&gt;
+      &lt;button class="ds-button ds-button--primary"&gt;New rate&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="ds-page-header__tabs"&gt;
+    &lt;div class="ds-tabs"&gt;
+      &lt;button class="ds-tabs__tab is-active"&gt;Rates&lt;/button&gt;
+      &lt;button class="ds-tabs__tab"&gt;Profiles&lt;/button&gt;
+      &lt;button class="ds-tabs__tab"&gt;History&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/header&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Toolbar</h2>
+        <p class="docs-note">A <code>.ds-toolbar</code> with a search <code>.ds-input</code> on the left, a <code>.ds-toolbar__spacer</code>, and a right <code>.ds-toolbar__group</code> of actions ending in a <code>.ds-button--primary</code>.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">.ds-toolbar</span><button class="ds-button" data-copy-target="#c-toolbar">Copy</button></header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-toolbar ds-toolbar--bordered" role="toolbar">
+              <input class="ds-input" type="search" placeholder="Search rates…" aria-label="Search">
+              <div class="ds-toolbar__spacer" aria-hidden="true"></div>
+              <div class="ds-toolbar__group">
+                <button class="ds-button">Columns</button>
+                <button class="ds-button">Export</button>
+                <button class="ds-button ds-button--primary">New rate</button>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-toolbar">&lt;div class="ds-toolbar ds-toolbar--bordered" role="toolbar"&gt;
+  &lt;input class="ds-input" type="search" placeholder="Search rates…" aria-label="Search"&gt;
+  &lt;div class="ds-toolbar__spacer" aria-hidden="true"&gt;&lt;/div&gt;
+  &lt;div class="ds-toolbar__group"&gt;
+    &lt;button class="ds-button"&gt;Columns&lt;/button&gt;
+    &lt;button class="ds-button"&gt;Export&lt;/button&gt;
+    &lt;button class="ds-button ds-button--primary"&gt;New rate&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Filter bar</h2>
+        <p class="docs-note">A row of active filters as removable <code>.ds-tag</code>s and a <code>.ds-chip</code>, followed by <code>.ds-select</code> refinements and a ghost <code>.ds-button</code> to clear them.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">Filter bar</span><button class="ds-button" data-copy-target="#c-filter">Copy</button></header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="bk-filterbar">
+              <span class="ds-tag ds-tag--removable">Region: EU<button class="ds-tag__remove" type="button" aria-label="Remove">×</button></span>
+              <span class="ds-tag ds-tag--removable">Active<button class="ds-tag__remove" type="button" aria-label="Remove">×</button></span>
+              <span class="ds-chip"><b>24</b> results</span>
+              <div class="bk-filterbar__spacer" aria-hidden="true"></div>
+              <span class="ds-select">
+                <select aria-label="Profile">
+                  <option>All profiles</option>
+                  <option>Junior</option>
+                  <option>Senior</option>
+                </select>
+              </span>
+              <span class="ds-select">
+                <select aria-label="Sort">
+                  <option>Sort: rate ↑</option>
+                  <option>Sort: rate ↓</option>
+                </select>
+              </span>
+              <button class="ds-button ds-button--sm" type="button">Clear</button>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-filter">&lt;div class="bk-filterbar"&gt;
+  &lt;span class="ds-tag ds-tag--removable"&gt;Region: EU&lt;button class="ds-tag__remove" type="button" aria-label="Remove"&gt;×&lt;/button&gt;&lt;/span&gt;
+  &lt;span class="ds-tag ds-tag--removable"&gt;Active&lt;button class="ds-tag__remove" type="button" aria-label="Remove"&gt;×&lt;/button&gt;&lt;/span&gt;
+  &lt;span class="ds-chip"&gt;&lt;b&gt;24&lt;/b&gt; results&lt;/span&gt;
+  &lt;div class="bk-filterbar__spacer" aria-hidden="true"&gt;&lt;/div&gt;
+  &lt;span class="ds-select"&gt;
+    &lt;select aria-label="Profile"&gt;
+      &lt;option&gt;All profiles&lt;/option&gt;
+      &lt;option&gt;Junior&lt;/option&gt;
+      &lt;option&gt;Senior&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/span&gt;
+  &lt;span class="ds-select"&gt;
+    &lt;select aria-label="Sort"&gt;
+      &lt;option&gt;Sort: rate ↑&lt;/option&gt;
+      &lt;option&gt;Sort: rate ↓&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/span&gt;
+  &lt;button class="ds-button ds-button--sm" type="button"&gt;Clear&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Stat band</h2>
+        <p class="docs-note">A <code>.ds-statgrid</code> of four <code>.ds-statgrid__cell</code>s, each pairing an accent-ticked <code>.ds-statgrid__label</code> with a large display <code>.ds-statgrid__value</code>.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">.ds-statgrid</span><button class="ds-button" data-copy-target="#c-stats">Copy</button></header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-statgrid">
+              <div class="ds-statgrid__cell">
+                <div class="ds-statgrid__label">Active rates</div>
+                <div class="ds-statgrid__value">128</div>
+              </div>
+              <div class="ds-statgrid__cell">
+                <div class="ds-statgrid__label">Avg. margin</div>
+                <div class="ds-statgrid__value">31<small>%</small></div>
+              </div>
+              <div class="ds-statgrid__cell">
+                <div class="ds-statgrid__label">Profiles</div>
+                <div class="ds-statgrid__value">42</div>
+              </div>
+              <div class="ds-statgrid__cell">
+                <div class="ds-statgrid__label">Updated</div>
+                <div class="ds-statgrid__value">2<small> days ago</small></div>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-stats">&lt;div class="ds-statgrid"&gt;
+  &lt;div class="ds-statgrid__cell"&gt;
+    &lt;div class="ds-statgrid__label"&gt;Active rates&lt;/div&gt;
+    &lt;div class="ds-statgrid__value"&gt;128&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="ds-statgrid__cell"&gt;
+    &lt;div class="ds-statgrid__label"&gt;Avg. margin&lt;/div&gt;
+    &lt;div class="ds-statgrid__value"&gt;31&lt;small&gt;%&lt;/small&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="ds-statgrid__cell"&gt;
+    &lt;div class="ds-statgrid__label"&gt;Profiles&lt;/div&gt;
+    &lt;div class="ds-statgrid__value"&gt;42&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="ds-statgrid__cell"&gt;
+    &lt;div class="ds-statgrid__label"&gt;Updated&lt;/div&gt;
+    &lt;div class="ds-statgrid__value"&gt;2&lt;small&gt; days ago&lt;/small&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <a href="index.html">← Blocks</a>
+        <a href="../demo.html">Demo app →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

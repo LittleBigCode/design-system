@@ -1,0 +1,27 @@
+/* Page header — .ds-page-header (breadcrumb + title + actions + optional tabs) */
+.ds-page-header {
+  border-bottom: 1px solid var(--ds-rule);
+  margin-bottom: 22px;
+}
+.ds-page-header__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 16px;
+}
+.ds-page-header--flush .ds-page-header__top { padding-bottom: 0; }
+.ds-page-header__title {
+  font-family: var(--ds-font-title);
+  font-weight: var(--ds-font-weight-title);
+  font-size: 26px;
+  line-height: 1.1;
+  letter-spacing: -0.4px;
+}
+.ds-page-header__subtitle { color: var(--ds-ink-soft); margin-top: 4px; }
+.ds-page-header__actions { display: flex; gap: 10px; flex: none; align-items: center; }
+.ds-page-header__tabs { margin-bottom: -1px; }
+@media (max-width: 680px) {
+  .ds-page-header__top { flex-direction: column; }
+  .ds-page-header__actions { width: 100%; }
+}

@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marketing · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+  <style>
+    /* Page-local layout glue only — no new component styling. */
+    .bk-hero { padding: 56px 32px; border: 1px solid var(--ds-rule); }
+    .bk-hero__head { font-size: 52px; line-height: 1.02; margin: 16px 0 0; max-width: 16ch; }
+    .bk-hero__lede { margin: 18px 0 0; max-width: 52ch; color: var(--ds-ink-soft); line-height: 1.5; }
+    .bk-hero__actions { margin-top: 28px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .bk-sub { font-family: var(--ds-font-title); font-weight: var(--ds-font-weight-title); letter-spacing: -0.3px; font-size: var(--ds-text-md); margin: 12px 0 6px; }
+    .bk-copy { color: var(--ds-ink-soft); line-height: 1.5; margin: 0; }
+    .bk-pricing { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .bk-pricing > .ds-card { border-left: none; }
+    .bk-pricing > .ds-card:first-child { border-left: 1px solid var(--ds-rule); }
+    .bk-pricing > .ds-card.ds-frame--accent { border-left: 1px solid var(--ds-accent); }
+    .bk-price { font-family: var(--ds-font-title); font-weight: var(--ds-font-weight-title); font-size: 40px; line-height: 1; letter-spacing: -1px; margin: 4px 0 0; }
+    .bk-price small { font-size: 15px; letter-spacing: 0; color: var(--ds-ink-soft); }
+    .bk-feats { list-style: none; margin: 16px 0 0; padding: 0; }
+    .bk-feats li { padding: 9px 0; border-top: 1px solid var(--ds-rule-soft); color: var(--ds-ink-soft); font-size: var(--ds-text-sm); }
+    .bk-feats li:first-child { border-top: none; }
+    .bk-card-foot { padding: 16px 20px; }
+    .bk-cta { text-align: center; padding: 56px 32px; border: 1px solid var(--ds-rule); }
+    .bk-cta__head { font-size: 40px; line-height: 1.05; margin: 14px 0 0; }
+    .bk-cta__lede { margin: 14px auto 24px; max-width: 46ch; color: var(--ds-ink-soft); line-height: 1.5; }
+    .bk-footcols { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; padding: 28px 4px 4px; }
+    .bk-footcols h4 { font-size: var(--ds-text-2xs); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ds-ink-faint); margin: 0 0 12px; font-weight: 400; }
+    .bk-footcols ul { list-style: none; margin: 0; padding: 0; }
+    .bk-footcols li { padding: 5px 0; }
+    .bk-footcols a { color: var(--ds-ink-soft); text-decoration: none; font-size: var(--ds-text-sm); }
+    .bk-footcols a:hover { color: var(--ds-accent); }
+    .bk-foot-brand { font-family: var(--ds-font-title); font-weight: var(--ds-font-weight-title); font-size: var(--ds-text-lg); letter-spacing: -0.4px; }
+    @media (max-width: 760px) {
+      .bk-pricing { grid-template-columns: 1fr; }
+      .bk-pricing > .ds-card { border-left: 1px solid var(--ds-rule); border-top: none; }
+      .bk-footcols { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body data-page="blocks/marketing">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Blocks</p>
+        <h1 class="ds-title ds-title--xl">Marketing</h1>
+        <p class="docs-lede">On-brand marketing sections assembled from existing <code>.ds-*</code> primitives, built on the <b>visible grid system</b> — thin 1px rules, ruled columns, registration ticks and the accent edge. Flat, no radius, no shadow.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Hero</h2>
+        <p class="docs-note">A measured-grid band (<code>.ds-gridlines</code> with <code>--ds-grid-cols:6</code>) carrying a kicker, an Ufficio headline, a lede and two buttons.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">Hero band</span><button class="ds-button" data-copy-target="#c-hero">Copy</button></header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-gridlines bk-hero" style="--ds-grid-cols:6">
+              <p class="ds-kicker">Pricing intelligence</p>
+              <h2 class="ds-title bk-hero__head">Price every mission with confidence.</h2>
+              <p class="bk-hero__lede">A flat, structured pricing matrix that turns delegation thresholds, staffing and margin into one defensible number — visible structure, no black boxes.</p>
+              <div class="bk-hero__actions">
+                <a class="ds-button ds-button--primary ds-button--lg" href="../demo.html" style="text-decoration:none">Open the demo</a>
+                <a class="ds-button ds-button--lg" href="../index.html" style="text-decoration:none">Read the docs</a>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-hero">&lt;div class="ds-gridlines bk-hero" style="--ds-grid-cols:6"&gt;
+  &lt;p class="ds-kicker"&gt;Pricing intelligence&lt;/p&gt;
+  &lt;h2 class="ds-title bk-hero__head"&gt;Price every mission with confidence.&lt;/h2&gt;
+  &lt;p class="bk-hero__lede"&gt;A flat, structured pricing matrix…&lt;/p&gt;
+  &lt;div class="bk-hero__actions"&gt;
+    &lt;a class="ds-button ds-button--primary ds-button--lg" href="#"&gt;Open the demo&lt;/a&gt;
+    &lt;a class="ds-button ds-button--lg" href="#"&gt;Read the docs&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Feature grid</h2>
+        <p class="docs-note">Three ruled columns (<code>.ds-ruled</code> / <code>.ds-ruled__col</code>), each led by a ticked label (<code>.ds-gridlabel</code>) over an Ufficio sub-title and copy.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">.ds-ruled · .ds-gridlabel</span><button class="ds-button" data-copy-target="#c-feat">Copy</button></header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-ruled">
+              <div class="ds-ruled__col">
+                <span class="ds-gridlabel">Map</span>
+                <h3 class="bk-sub">Delegation matrix</h3>
+                <p class="bk-copy">Encode thresholds and approval rules so every quote follows the same defensible path.</p>
+              </div>
+              <div class="ds-ruled__col">
+                <span class="ds-gridlabel">Build</span>
+                <h3 class="bk-sub">Margin engine</h3>
+                <p class="bk-copy">Compose cost, staffing and risk into a live margin you can inspect line by line.</p>
+              </div>
+              <div class="ds-ruled__col">
+                <span class="ds-gridlabel">Run</span>
+                <h3 class="bk-sub">Audit trail</h3>
+                <p class="bk-copy">Every change is recorded and reportable — pricing decisions stay traceable over time.</p>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-feat">&lt;div class="ds-ruled"&gt;
+  &lt;div class="ds-ruled__col"&gt;
+    &lt;span class="ds-gridlabel"&gt;Map&lt;/span&gt;
+    &lt;h3 class="bk-sub"&gt;Delegation matrix&lt;/h3&gt;
+    &lt;p class="bk-copy"&gt;Encode thresholds and approval rules…&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;!-- …more columns… --&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Pricing</h2>
+        <p class="docs-note">Three <code>.ds-card</code> columns; the middle one is featured with <code>.ds-frame--accent</code> and a <code>.ds-badge--accent</code>. Each carries an Ufficio price, a feature list and a primary button.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">.ds-card · .ds-frame--accent</span><button class="ds-button" data-copy-target="#c-price">Copy</button></header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="bk-pricing">
+              <div class="ds-card">
+                <div class="ds-card__header">
+                  <span class="ds-gridlabel">Starter</span>
+                  <p class="bk-price">€0<small> / mo</small></p>
+                </div>
+                <div class="ds-card__body">
+                  <ul class="bk-feats">
+                    <li>1 pricing matrix</li>
+                    <li>3 seats</li>
+                    <li>Manual export</li>
+                  </ul>
+                </div>
+                <div class="bk-card-foot"><a class="ds-button ds-button--primary" href="#" style="text-decoration:none;width:100%">Start free</a></div>
+              </div>
+              <div class="ds-card ds-frame--accent">
+                <div class="ds-card__header">
+                  <span class="ds-badge ds-badge--accent">Most popular</span>
+                  <p class="bk-price" style="margin-top:12px">€49<small> / mo</small></p>
+                </div>
+                <div class="ds-card__body">
+                  <ul class="bk-feats">
+                    <li>Unlimited matrices</li>
+                    <li>20 seats</li>
+                    <li>Live margin engine</li>
+                    <li>API access</li>
+                  </ul>
+                </div>
+                <div class="bk-card-foot"><a class="ds-button ds-button--primary" href="#" style="text-decoration:none;width:100%">Choose Growth</a></div>
+              </div>
+              <div class="ds-card">
+                <div class="ds-card__header">
+                  <span class="ds-gridlabel">Scale</span>
+                  <p class="bk-price">€199<small> / mo</small></p>
+                </div>
+                <div class="ds-card__body">
+                  <ul class="bk-feats">
+                    <li>Everything in Growth</li>
+                    <li>Unlimited seats</li>
+                    <li>SSO &amp; audit log</li>
+                    <li>Dedicated support</li>
+                  </ul>
+                </div>
+                <div class="bk-card-foot"><a class="ds-button ds-button--primary" href="#" style="text-decoration:none;width:100%">Contact sales</a></div>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-price">&lt;div class="bk-pricing"&gt;
+  &lt;div class="ds-card"&gt;…Starter…&lt;/div&gt;
+
+  &lt;div class="ds-card ds-frame--accent"&gt;
+    &lt;div class="ds-card__header"&gt;
+      &lt;span class="ds-badge ds-badge--accent"&gt;Most popular&lt;/span&gt;
+      &lt;p class="bk-price"&gt;€49&lt;small&gt; / mo&lt;/small&gt;&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="ds-card__body"&gt;
+      &lt;ul class="bk-feats"&gt;&lt;li&gt;Unlimited matrices&lt;/li&gt;…&lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div class="bk-card-foot"&gt;&lt;a class="ds-button ds-button--primary" href="#"&gt;Choose Growth&lt;/a&gt;&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class="ds-card"&gt;…Scale…&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Stat band</h2>
+        <p class="docs-note">The “impact in numbers” band (<code>.ds-statgrid</code>) — four ruled cells with a ticked label and a large display figure.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">.ds-statgrid</span><button class="ds-button" data-copy-target="#c-stat">Copy</button></header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-statgrid">
+              <div class="ds-statgrid__cell"><div class="ds-statgrid__label">Quotes priced</div><div class="ds-statgrid__value">12<small> k</small></div></div>
+              <div class="ds-statgrid__cell"><div class="ds-statgrid__label">Avg. margin lift</div><div class="ds-statgrid__value">8<small> pts</small></div></div>
+              <div class="ds-statgrid__cell"><div class="ds-statgrid__label">Teams</div><div class="ds-statgrid__value">240<small> +</small></div></div>
+              <div class="ds-statgrid__cell"><div class="ds-statgrid__label">Uptime</div><div class="ds-statgrid__value">99.9<small> %</small></div></div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-stat">&lt;div class="ds-statgrid"&gt;
+  &lt;div class="ds-statgrid__cell"&gt;
+    &lt;div class="ds-statgrid__label"&gt;Quotes priced&lt;/div&gt;
+    &lt;div class="ds-statgrid__value"&gt;12&lt;small&gt; k&lt;/small&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- …three more cells… --&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>CTA + footer</h2>
+        <p class="docs-note">A centered call-to-action over a multi-column link footer, framed with a horizontal accent rule (<code>.ds-rule-x</code>) and corner registration marks (<code>.ds-marks</code>).</p>
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">.ds-rule-x · .ds-marks</span><button class="ds-button" data-copy-target="#c-cta">Copy</button></header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-marks bk-cta">
+              <p class="ds-kicker">Get started</p>
+              <h2 class="ds-title bk-cta__head">Bring structure to your pricing.</h2>
+              <p class="bk-cta__lede">Stand up your first pricing matrix in minutes — no build step, no black box.</p>
+              <a class="ds-button ds-button--primary ds-button--lg" href="../demo.html" style="text-decoration:none">Open the demo app</a>
+            </div>
+            <hr class="ds-rule-x ds-rule-x--accent">
+            <div class="bk-footcols">
+              <div>
+                <div class="bk-foot-brand ds-title">Diametral</div>
+                <p class="bk-copy" style="margin-top:8px;max-width:34ch">Minimal · Enduring · Elegant. Pricing intelligence on a visible grid.</p>
+              </div>
+              <div>
+                <h4>Product</h4>
+                <ul><li><a href="#">Matrix</a></li><li><a href="#">Margin engine</a></li><li><a href="#">Reporting</a></li></ul>
+              </div>
+              <div>
+                <h4>Company</h4>
+                <ul><li><a href="#">About</a></li><li><a href="#">Careers</a></li><li><a href="#">Contact</a></li></ul>
+              </div>
+              <div>
+                <h4>Resources</h4>
+                <ul><li><a href="../index.html">Docs</a></li><li><a href="#">Changelog</a></li><li><a href="#">Status</a></li></ul>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-cta">&lt;div class="ds-marks bk-cta"&gt;
+  &lt;p class="ds-kicker"&gt;Get started&lt;/p&gt;
+  &lt;h2 class="ds-title bk-cta__head"&gt;Bring structure to your pricing.&lt;/h2&gt;
+  &lt;a class="ds-button ds-button--primary ds-button--lg" href="#"&gt;Open the demo app&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;hr class="ds-rule-x ds-rule-x--accent"&gt;
+
+&lt;div class="bk-footcols"&gt;
+  &lt;div&gt;&lt;div class="bk-foot-brand ds-title"&gt;Diametral&lt;/div&gt;…&lt;/div&gt;
+  &lt;div&gt;&lt;h4&gt;Product&lt;/h4&gt;&lt;ul&gt;&lt;li&gt;&lt;a href="#"&gt;Matrix&lt;/a&gt;&lt;/li&gt;…&lt;/ul&gt;&lt;/div&gt;
+  &lt;!-- …more columns… --&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.1</span>
+        <a href="index.html">← Blocks</a>
+        <a href="../demo.html">Demo app →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
