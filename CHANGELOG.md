@@ -4,6 +4,31 @@ All notable changes to the Diametral Design System are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/), and the project
 adheres to [Semantic Versioning](https://semver.org/) — see [docs/versioning.md](docs/versioning.md).
 
+## [0.4.0] — 2026-06-18
+
+App-acceleration kit — everything a team needs to stand up an app fast.
+
+### Added
+- **ConsoleLayout** (`<ConsoleLayout>` + `.ds-console`): turnkey app chrome — app bar, data-driven
+  grouped sidebar nav, optional ⌘K command palette, and an optional Light/Dark/Sepia theme switcher
+  around your page content. The demo app is rebuilt on it.
+- **Form layer**: `useForm` hook (values/errors/touched/validation/submit) + `<FormField>` wired to
+  the DS `Field`/`FieldHint`. See `docs/forms.md`.
+- **Data layer**: `useResource(fetcher, deps)` for loading/empty/error/data state, and
+  `restLoadPage(baseUrl)` — a `<DataGrid loadPage>` factory for REST endpoints. See `docs/data.md`.
+- **Theme generator**: `scripts/make-theme.mjs --name --accent …` writes a `[data-theme]` override
+  file; an example `css/themes/ocean.css` ships. See `docs/theme-generator.md`.
+- **Vite + React + TS starter** (`starters/vite-react/`): clone-and-go app pre-wired with the DS +
+  ConsoleLayout + routing + example pages (`npm run build` verified).
+- **Shared DX configs** (`configs/`): flat ESLint, Prettier, base tsconfig, and VS Code snippets,
+  consumable via `@diametral/design-system/configs/*`.
+- **Recipes** (`docs/recipes.md`): end-to-end page patterns (app shell, CRUD, dashboard, auth,
+  loading/empty/error) and a Console layout showcase page.
+- A **theme switcher** in the demo app bar (Light / Dark / Sepia).
+
+### Changed
+- Exports add `./react/*` (deep imports) and `./configs/*`.
+
 ## [0.3.0] — 2026-06-18
 
 ### Added

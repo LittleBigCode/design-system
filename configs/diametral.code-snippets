@@ -1,0 +1,115 @@
+{
+  "// Diametral Design System snippets": "Drop this file into .vscode/ as diametral.code-snippets, or copy entries into your global User Snippets. Scoped to JS/TS/React + CSS via the 'scope' field.",
+
+  "DS Button": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "dsbtn",
+    "body": ["<Button variant=\"${1|primary,secondary,ghost,danger|}\">${2:Label}</Button>$0"],
+    "description": "Diametral <Button> with a variant"
+  },
+
+  "DS Card": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "dscard",
+    "body": [
+      "<Card title=\"${1:Title}\">",
+      "\t${2:Body content}",
+      "</Card>$0"
+    ],
+    "description": "Diametral <Card> with a title"
+  },
+
+  "DS Field": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "dsfield",
+    "body": [
+      "<Field label=\"${1:Label}\" htmlFor=\"${2:id}\">",
+      "\t<Input id=\"${2:id}\" value={${3:value}} onChange={${4:onChange}} />",
+      "</Field>$0"
+    ],
+    "description": "Diametral <Field> wrapping a labelled <Input>"
+  },
+
+  "DS PageHeader": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "dspageheader",
+    "body": [
+      "<PageHeader",
+      "\ttitle=\"${1:Page title}\"",
+      "\tsubtitle=\"${2:Short description}\"",
+      "\tactions={<Button variant=\"primary\">${3:Action}</Button>}",
+      "/>$0"
+    ],
+    "description": "Diametral <PageHeader> with title, subtitle and an action"
+  },
+
+  "DS ConsoleLayout": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "dsconsole",
+    "body": [
+      "const [view, setView] = useState(\"${1:overview}\");",
+      "",
+      "<ConsoleLayout",
+      "\tbrand={{ name: \"${2:App name}\" }}",
+      "\tactive={view}",
+      "\tonNavigate={setView}",
+      "\tnav={[",
+      "\t\t{",
+      "\t\t\tgroup: \"${3:Main}\",",
+      "\t\t\titems: [",
+      "\t\t\t\t{ id: \"${1:overview}\", label: \"${4:Overview}\" },",
+      "\t\t\t\t{ id: \"${5:settings}\", label: \"${6:Settings}\" },",
+      "\t\t\t],",
+      "\t\t},",
+      "\t]}",
+      "\tuser={{ initials: \"${7:AB}\", name: \"${8:Ada B.}\", onSignOut: ${9:signOut} }}",
+      ">",
+      "\t${10:/* page content */}",
+      "</ConsoleLayout>$0"
+    ],
+    "description": "Diametral <ConsoleLayout> app shell skeleton (grouped nav + user + command palette)"
+  },
+
+  "DS import (React)": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "dsimport",
+    "body": [
+      "import { ${1:Button, Card, Field, Input} } from \"@diametral/design-system/react\";",
+      "import \"@diametral/design-system/css/diametral.css\";$0"
+    ],
+    "description": "Import Diametral React components + the global stylesheet"
+  },
+
+  "DS StatCard": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "dsstat",
+    "body": ["<StatCard label=\"${1:Revenue}\" value=\"${2:\\u20ac128k}\" delta=\"${3:+12%}\" />$0"],
+    "description": "Diametral <StatCard> KPI tile"
+  },
+
+  "DS Frame (CSS)": {
+    "scope": "css,scss,less",
+    "prefix": "dsframe",
+    "body": [
+      ".ds-frame {",
+      "\tposition: relative;",
+      "\tmax-width: var(--ds-maxw-content);",
+      "\tmargin-inline: auto;",
+      "\tpadding-inline: 32px;",
+      "\tborder-inline: 1px solid var(--ds-rule);",
+      "}$0"
+    ],
+    "description": "Diametral .ds-frame — centered content column with ruled edges"
+  },
+
+  "DS tokens (CSS)": {
+    "scope": "css,scss,less",
+    "prefix": "dstokens",
+    "body": [
+      "color: var(--ds-${1:fg});",
+      "background: var(--ds-${2:bg});",
+      "border: 1px solid var(--ds-${3:rule});$0"
+    ],
+    "description": "Reference common Diametral --ds-* tokens"
+  }
+}

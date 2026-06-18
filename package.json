@@ -20,6 +20,7 @@
     "tokens",
     "dist",
     "docs",
+    "configs",
     "assets/fonts/ufficio.css",
     "assets/fonts/fallback.css",
     "assets/fonts/LICENSE-FONTS.md",
@@ -46,6 +47,8 @@
       "types": "./react/index.d.ts",
       "default": "./react/index.js"
     },
+    "./react/*": "./react/*",
+    "./configs/*": "./configs/*",
     "./tailwind-preset": "./dist/tailwind-preset.cjs",
     "./dist/*": "./dist/*",
     "./assets/*": "./assets/*"

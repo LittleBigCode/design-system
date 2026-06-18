@@ -96,6 +96,20 @@ See [`docs/react.md`](docs/react.md) and the live, buildless demo in
 Installing in a real project (npm or no-build) and integrating with Vite, Next.js, CRA, Angular,
 Vue, Tailwind, or a CDN import map: see [`docs/installation.md`](docs/installation.md).
 
+## Building applications
+
+A kit to stand up an app fast on top of the components:
+
+- **`<ConsoleLayout>`** — turnkey app chrome (app bar + data-driven sidebar nav + ⌘K palette +
+  Light/Dark/Sepia switcher). Wrap a router and go.
+- **Starter** — a clone-and-go **Vite + React + TS** app in [`starters/vite-react/`](starters/vite-react/).
+- **Recipes** — end-to-end page patterns (app shell, CRUD, dashboard, auth, loading/empty/error) in
+  [`docs/recipes.md`](docs/recipes.md).
+- **Forms & data** — `useForm` + `<FormField>` ([`docs/forms.md`](docs/forms.md)) and
+  `useResource` + `restLoadPage` ([`docs/data.md`](docs/data.md)).
+- **Theme generator** — turn a brand color into a `data-theme` ([`docs/theme-generator.md`](docs/theme-generator.md)).
+- **Shared configs** — ESLint, Prettier, base tsconfig and VS Code snippets in [`configs/`](configs/).
+
 ## What's inside
 
 | Foundations | Components |

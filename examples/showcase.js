@@ -93,6 +93,7 @@ const NAV = [
     { k: "components/app-shell", t: "App shell" },
     { k: "components/toolbar", t: "Toolbar" },
     { k: "components/page-header", t: "Page header" },
+    { k: "components/console-layout", t: "Console layout" },
   ]},
   { label: "Overlays", items: [
     { k: "components/modal", t: "Modal" },

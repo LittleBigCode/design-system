@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Console layout · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/console-layout">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components · layout</p>
+        <h1 class="ds-title ds-title--xl">Console layout</h1>
+        <p class="docs-lede">The full-page application shell: a grouped sidebar nav, a ⌘K command palette, an optional Light/Dark/Sepia theme switcher, and a user avatar with sign-out. The React <code>&lt;ConsoleLayout&gt;</code> takes one <em>nav config</em> and drives the sidebar, the active highlight, and — by default — the palette from it; your routed content is the <code>children</code>.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Live demo</h2>
+        <p class="docs-note">Because <code>&lt;ConsoleLayout&gt;</code> owns the whole viewport, there is no in-page preview here — the entire demo app <em>is</em> a console layout. Open it to drive the sidebar, ⌘K palette, and theme switcher live.</p>
+        <p><a class="ds-button ds-button--primary" href="../demo.html">Open the live demo (built on ConsoleLayout) →</a></p>
+      </section>
+
+      <section class="docs-section">
+        <h2>Props</h2>
+        <p class="docs-note">All props are optional. <code>nav</code> is the single source of truth: the sidebar buttons, the <code>active</code> highlight, and the default ⌘K commands are all derived from it.</p>
+        <table class="ds-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="ds-table__name"><code>brand</code></td>
+              <td><code>ReactNode | { name?, sub? }</code></td>
+              <td>Wordmark element, or <code>{ name, sub }</code> to build one.</td>
+            </tr>
+            <tr>
+              <td class="ds-table__name"><code>nav</code></td>
+              <td><code>ConsoleNavGroup[]</code></td>
+              <td>Grouped sidebar navigation. Each group is <code>{ group?, items }</code>; each item is <code>{ id, label, badge? }</code>.</td>
+            </tr>
+            <tr>
+              <td class="ds-table__name"><code>active</code></td>
+              <td><code>string</code></td>
+              <td>Active item id — highlights the matching nav button.</td>
+            </tr>
+            <tr>
+              <td class="ds-table__name"><code>onNavigate</code></td>
+              <td><code>(id: string) =&gt; void</code></td>
+              <td>Fired with the chosen item id. Point it at your router.</td>
+            </tr>
+            <tr>
+              <td class="ds-table__name"><code>commands</code></td>
+              <td><code>Command[]</code></td>
+              <td>⌘K commands. Defaults to one “Go to” entry per nav item.</td>
+            </tr>
+            <tr>
+              <td class="ds-table__name"><code>user</code></td>
+              <td><code>ConsoleUser</code></td>
+              <td>Right-aligned avatar + sign-out: <code>{ initials?, name?, onSignOut?, signOutLabel? }</code>.</td>
+            </tr>
+            <tr>
+              <td class="ds-table__name"><code>actions</code></td>
+              <td><code>ReactNode</code></td>
+              <td>Extra app-bar action elements (e.g. a primary button, a status badge).</td>
+            </tr>
+            <tr>
+              <td class="ds-table__name"><code>search</code></td>
+              <td><code>boolean</code></td>
+              <td>Show the ⌘K search trigger + command palette. Defaults to <code>true</code>. Pair with <code>searchPlaceholder</code>.</td>
+            </tr>
+            <tr>
+              <td class="ds-table__name"><code>themes</code></td>
+              <td><code>boolean</code></td>
+              <td>Render a Light/Dark/Sepia switcher that drives <code>data-theme</code> on <code>&lt;html&gt;</code>.</td>
+            </tr>
+            <tr>
+              <td class="ds-table__name"><code>children</code></td>
+              <td><code>ReactNode</code></td>
+              <td>The routed page content rendered in the main column.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="docs-note"><code>className</code> and <code>searchPlaceholder</code> round out the props — see <code>react/components/ConsoleLayout.d.ts</code> for the full types.</p>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <p class="docs-note">Define a grouped <code>nav</code> once, then derive the ⌘K <code>commands</code> from its flattened items (plus any app actions). Wire <code>active</code>/<code>onNavigate</code> to your router.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;ConsoleLayout&gt;</span>
+            <button class="ds-button" data-copy-target="#c-cl">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-cl">import { ConsoleLayout, Badge, Button } from "@diametral/design-system/react";
+
+const NAV = [
+  { group: "Work", items: [
+    { id: "overview", label: "Overview" },
+    { id: "projects", label: "Projects" },
+    { id: "reports",  label: "Reports" },
+  ] },
+  { group: "Talent", items: [
+    { id: "candidates", label: "Candidates", badge: 7 },
+    { id: "team",       label: "Team" },
+  ] },
+];
+
+const FLAT = NAV.flatMap((g) =&gt; g.items);
+
+function Shell({ route, navigate, onSignOut, children }) {
+  const commands = [
+    ...FLAT.map((n) =&gt; ({ id: n.id, label: n.label, group: "Go to", onRun: () =&gt; navigate(n.id) })),
+    { id: "signout", label: "Sign out", group: "Actions", onRun: onSignOut },
+  ];
+  return (
+    &lt;ConsoleLayout
+      brand={{ name: "Diametral", sub: "Console" }}
+      nav={NAV}
+      active={route}
+      onNavigate={navigate}
+      commands={commands}
+      user={{ initials: "VD", name: "Vincent", onSignOut }}
+      themes
+      searchPlaceholder="Search projects, people…"
+      actions={&lt;&gt;&lt;Badge variant="accent"&gt;Production&lt;/Badge&gt;
+                 &lt;Button variant="primary" onClick={() =&gt; navigate("projects")}&gt;New&lt;/Button&gt;&lt;/&gt;}
+    &gt;
+      {children}
+    &lt;/ConsoleLayout&gt;
+  );
+}</code></pre>
+        </section>
+        <p class="docs-note"><code>ConsoleLayout</code> is a full-page shell — render exactly one, at the root of the authenticated app. Leave <code>commands</code> off to get the default “Go to” palette for free. See the <a href="../../docs/recipes.md">App shell recipe</a> for the end-to-end pattern.</p>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.1</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../demo.html">Demo app →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

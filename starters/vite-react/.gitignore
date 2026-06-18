@@ -1,0 +1,9 @@
+node_modules
+dist
+*.local
+.DS_Store
+
+# TypeScript build-info + emitted config (from `tsc -b` on the node project)
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts
