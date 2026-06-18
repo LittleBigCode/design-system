@@ -62,7 +62,11 @@
   --ds-overlay-scrim: rgba(22, 22, 22, .5);
   --ds-ink:           var(--ds-noir);
   --ds-ink-soft:      var(--ds-grey-dark);
-  --ds-ink-faint:     var(--ds-gris);
+  /* Faint ink: a touch deeper than the raw Gris primitive (#767884) so muted
+     text/labels clear WCAG AA (4.5:1) on both white and --ds-bg-alt (#f5f5f5).
+     Decoupled from --ds-gris on purpose — Gris stays charter-canonical for the
+     brand swatch and the neutral status family. */
+  --ds-ink-faint:     #6c6f7d;
   --ds-on-accent:     var(--ds-blanc);
   --ds-on-status:     var(--ds-blanc);   /* text on solid status heads */
 
@@ -74,6 +78,11 @@
   --ds-accent:        var(--ds-rouge);
   --ds-accent-bg:     var(--ds-orange-bg);
   --ds-accent-legacy: var(--ds-orange);  /* #ff5500 — pre-charter accent, for pixel-frozen migration */
+  /* Accent INK: a marginally deeper signal red for accent TEXT/icons on light
+     surfaces. The pure --ds-accent (#ff2a00) only reaches 3.76:1 on white, so
+     small-text uses fail WCAG AA; this clears 4.5:1 on white and #f5f5f5 while
+     still reading as the brand red. Use --ds-accent for fills/borders. */
+  --ds-accent-ink:    #db2400;
   --ds-focus-ring:    var(--ds-ink);
 
   /* Status families (success / warning / danger / critical / neutral / info) */
@@ -83,6 +92,15 @@
   --ds-critical:   var(--ds-noir);      --ds-critical-bg: var(--ds-grey-bg);
   --ds-neutral:    var(--ds-gris);      --ds-neutral-bg:  var(--ds-grey-bg);
   --ds-info-fg:    var(--ds-info);      /* --ds-info / --ds-info-bg defined as primitives above */
+  /* Status INK — darker foregrounds for status TEXT on the soft tinted bgs.
+     The solid status hues above are tuned as fills (white text on them); used as
+     small text on their own *-bg tints, warning (#ff5500) and info (#1488a6)
+     fall below WCAG AA. These deeper shades clear 4.5:1 on the tints and white.
+     success/danger already pass on their tints, so they alias the base hue. */
+  --ds-success-ink: var(--ds-success);
+  --ds-warning-ink: #b8400b;
+  --ds-danger-ink:  var(--ds-danger);
+  --ds-info-ink:    #0e6a82;
 
   /* ===== TIER 3 — SCALE =================================================== */
 

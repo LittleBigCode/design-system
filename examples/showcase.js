@@ -105,6 +105,7 @@ const NAV = [
     { k: "components/command-palette", t: "Command palette" },
   ]},
   { label: "Utilities", items: [
+    { k: "components/icons", t: "Icons" },
     { k: "components/code-block", t: "Code block" },
     { k: "components/kbd", t: "Keyboard key" },
   ]},

@@ -49,6 +49,12 @@
   gap: 1px;
 }
 
+/* ARIA row wrappers — a grid (role="grid") must contain rows of cells. The row
+   element carries role="row" for assistive tech but lays out nothing itself
+   (display: contents), so its day/weekday children remain direct items of the
+   7-column grid and the visual layout is unchanged. */
+.ds-calendar__row { display: contents; }
+
 /* Weekday labels — small, uppercase, faint, centered above their column. */
 .ds-calendar__weekday {
   display: flex;

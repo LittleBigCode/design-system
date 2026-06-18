@@ -16,15 +16,17 @@
     .hero { padding: 24px 0 8px; }
     .hero__mark { width: 84px; height: 84px; color: var(--ds-ink); }
     .hero__name { font-size: 64px; line-height: 1; margin: 22px 0 12px; }
-    .hero__tag { font-size: var(--ds-text-sm); letter-spacing: 0.18em; text-transform: uppercase; color: var(--ds-accent); }
+    .hero__tag { font-size: var(--ds-text-sm); letter-spacing: 0.18em; text-transform: uppercase; color: var(--ds-accent-ink); }
     .hero__dna { margin: 28px 0 0; font-size: var(--ds-text-md); letter-spacing: 0.06em; }
     .hero__dna b { font-weight: 400; }
     .hero__lede { margin-top: 12px; max-width: 56ch; color: var(--ds-ink-soft); line-height: 1.5; }
     .palette-strip { display: grid; grid-template-columns: repeat(6, 1fr); border: 1px solid var(--ds-ink); margin: 40px 0; }
-    .palette-strip > div { padding: 64px 12px 12px; border-right: 1px solid rgba(0,0,0,.08); }
+    .palette-strip > div { border-right: 1px solid var(--ds-rule); background: var(--ds-surface); }
     .palette-strip > div:last-child { border-right: none; }
-    .palette-strip .n { font-size: 12px; }
-    .palette-strip .h { font-size: 11px; opacity: .7; font-variant-numeric: tabular-nums; }
+    .palette-strip .chip { height: 96px; }
+    .palette-strip .meta { padding: 10px 12px; }
+    .palette-strip .n { font-size: 12px; color: var(--ds-ink); }
+    .palette-strip .h { font-size: 11px; color: var(--ds-ink-faint); font-variant-numeric: tabular-nums; margin-top: 2px; }
   </style>
 </head>
 <body data-page="index">
@@ -47,12 +49,12 @@
       </section>
 
       <section class="palette-strip" aria-label="Primary palette">
-        <div style="background:#161616;color:#fff"><div class="n">Noir</div><div class="h">#161616</div></div>
-        <div style="background:#767884;color:#fff"><div class="n">Gris</div><div class="h">#767884</div></div>
-        <div style="background:#9f8667;color:#fff"><div class="n">Marron</div><div class="h">#9F8667</div></div>
-        <div style="background:#aab0a6"><div class="n">Kaki</div><div class="h">#AAB0A6</div></div>
-        <div style="background:#d5d3c4"><div class="n">Beige</div><div class="h">#D5D3C4</div></div>
-        <div style="background:#f4fbda"><div class="n">Jaune</div><div class="h">#F4FBDA</div></div>
+        <div><div class="chip" style="background:#161616"></div><div class="meta"><div class="n">Noir</div><div class="h">#161616</div></div></div>
+        <div><div class="chip" style="background:#767884"></div><div class="meta"><div class="n">Gris</div><div class="h">#767884</div></div></div>
+        <div><div class="chip" style="background:#9f8667"></div><div class="meta"><div class="n">Marron</div><div class="h">#9F8667</div></div></div>
+        <div><div class="chip" style="background:#aab0a6"></div><div class="meta"><div class="n">Kaki</div><div class="h">#AAB0A6</div></div></div>
+        <div><div class="chip" style="background:#d5d3c4"></div><div class="meta"><div class="n">Beige</div><div class="h">#D5D3C4</div></div></div>
+        <div><div class="chip" style="background:#f4fbda"></div><div class="meta"><div class="n">Jaune</div><div class="h">#F4FBDA</div></div></div>
       </section>
 
       <section class="docs-section">

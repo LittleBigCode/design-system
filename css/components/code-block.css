@@ -31,7 +31,10 @@
   font-size: var(--ds-text-xs);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--ds-ink-faint);
+  /* A muted LIGHT grey: --ds-ink-faint is tuned for light surfaces and falls
+     below AA on the near-black head, so use a dim light grey that reads as a
+     secondary filename while clearing 4.5:1 on --ds-noir. */
+  color: #8e9099;
 }
 
 /* The Copy button sits on the dark head — invert its borders/text to read on

@@ -69,7 +69,8 @@ export function CodeBlock({
         onClick: onCopy,
       }, copied ? "Copied" : "Copy")
     ),
-    // Code as TEXT content — never dangerouslySetInnerHTML.
-    h("pre", { className: "ds-code__body" }, h("code", null, code))
+    // Code as TEXT content — never dangerouslySetInnerHTML. tabIndex makes the
+    // scrollable region keyboard-focusable (scrollable-region-focusable).
+    h("pre", { className: "ds-code__body", tabIndex: 0 }, h("code", null, code))
   );
 }

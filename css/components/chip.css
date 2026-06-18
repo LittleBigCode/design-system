@@ -18,6 +18,6 @@
 
 .ds-chip--warn {
   background: var(--ds-warning-bg);
-  color: var(--ds-warning);
+  color: var(--ds-warning-ink);   /* deeper warning shade clears AA on the tint */
   font-weight: 500;
 }

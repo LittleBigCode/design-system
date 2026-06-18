@@ -32,16 +32,16 @@
             <button class="ds-button" data-copy-target="#c-fields">Copy</button>
           </header>
           <div class="ds-example__preview">
-            <div class="ds-field"><label>Entity</label><select class="ds-input"><option>LBC_FR</option><option>LBC_US</option></select></div>
-            <div class="ds-field"><label>Day rate</label><input class="ds-input ds-input--number" type="number" value="900"></div>
+            <div class="ds-field"><label for="f-entity">Entity</label><select class="ds-input" id="f-entity"><option>LBC_FR</option><option>LBC_US</option></select></div>
+            <div class="ds-field"><label for="f-rate">Day rate</label><input class="ds-input ds-input--number" id="f-rate" type="number" value="900"></div>
           </div>
-          <pre class="ds-example__code"><code id="c-fields">&lt;div class="ds-field"&gt;
-  &lt;label&gt;Entity&lt;/label&gt;
-  &lt;select class="ds-input"&gt;&lt;option&gt;LBC_FR&lt;/option&gt;&lt;option&gt;LBC_US&lt;/option&gt;&lt;/select&gt;
+          <pre class="ds-example__code" tabindex="0"><code id="c-fields">&lt;div class="ds-field"&gt;
+  &lt;label for="entity"&gt;Entity&lt;/label&gt;
+  &lt;select class="ds-input" id="entity"&gt;&lt;option&gt;LBC_FR&lt;/option&gt;&lt;option&gt;LBC_US&lt;/option&gt;&lt;/select&gt;
 &lt;/div&gt;
 &lt;div class="ds-field"&gt;
-  &lt;label&gt;Day rate&lt;/label&gt;
-  &lt;input class="ds-input ds-input--number" type="number" value="900"&gt;
+  &lt;label for="rate"&gt;Day rate&lt;/label&gt;
+  &lt;input class="ds-input ds-input--number" id="rate" type="number" value="900"&gt;
 &lt;/div&gt;</code></pre>
         </section>
       </section>
@@ -56,18 +56,18 @@
           </header>
           <div class="ds-example__preview ds-example__preview--block">
             <div class="ds-context-bar">
-              <div class="ds-field"><label>Entity</label><select class="ds-input"><option>LBC_FR</option><option>LBC_US</option></select></div>
-              <div class="ds-field"><label>Day rate</label><input class="ds-input ds-input--number" type="number" value="900"></div>
+              <div class="ds-field"><label for="cb-entity">Entity</label><select class="ds-input" id="cb-entity"><option>LBC_FR</option><option>LBC_US</option></select></div>
+              <div class="ds-field"><label for="cb-rate">Day rate</label><input class="ds-input ds-input--number" id="cb-rate" type="number" value="900"></div>
             </div>
           </div>
-          <pre class="ds-example__code"><code id="c-context">&lt;div class="ds-context-bar"&gt;
+          <pre class="ds-example__code" tabindex="0"><code id="c-context">&lt;div class="ds-context-bar"&gt;
   &lt;div class="ds-field"&gt;
-    &lt;label&gt;Entity&lt;/label&gt;
-    &lt;select class="ds-input"&gt;&lt;option&gt;LBC_FR&lt;/option&gt;&lt;option&gt;LBC_US&lt;/option&gt;&lt;/select&gt;
+    &lt;label for="entity"&gt;Entity&lt;/label&gt;
+    &lt;select class="ds-input" id="entity"&gt;&lt;option&gt;LBC_FR&lt;/option&gt;&lt;option&gt;LBC_US&lt;/option&gt;&lt;/select&gt;
   &lt;/div&gt;
   &lt;div class="ds-field"&gt;
-    &lt;label&gt;Day rate&lt;/label&gt;
-    &lt;input class="ds-input ds-input--number" type="number" value="900"&gt;
+    &lt;label for="rate"&gt;Day rate&lt;/label&gt;
+    &lt;input class="ds-input ds-input--number" id="rate" type="number" value="900"&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
         </section>
@@ -82,16 +82,16 @@
             <button class="ds-button" data-copy-target="#c-rows">Copy</button>
           </header>
           <div class="ds-example__preview ds-example__preview--block">
-            <div class="ds-input-row"><label>Day rate <span class="ds-input-row__unit">€</span></label><input class="ds-input ds-input--number" type="number" value="900"></div>
-            <div class="ds-input-row"><label>Salary cost <span class="ds-input-row__unit">€</span></label><input class="ds-input ds-input--number" type="number" value="420"></div>
+            <div class="ds-input-row"><label for="r-rate">Day rate <span class="ds-input-row__unit">€</span></label><input class="ds-input ds-input--number" id="r-rate" type="number" value="900"></div>
+            <div class="ds-input-row"><label for="r-salary">Salary cost <span class="ds-input-row__unit">€</span></label><input class="ds-input ds-input--number" id="r-salary" type="number" value="420"></div>
           </div>
-          <pre class="ds-example__code"><code id="c-rows">&lt;div class="ds-input-row"&gt;
-  &lt;label&gt;Day rate &lt;span class="ds-input-row__unit"&gt;€&lt;/span&gt;&lt;/label&gt;
-  &lt;input class="ds-input ds-input--number" type="number" value="900"&gt;
+          <pre class="ds-example__code" tabindex="0"><code id="c-rows">&lt;div class="ds-input-row"&gt;
+  &lt;label for="rate"&gt;Day rate &lt;span class="ds-input-row__unit"&gt;€&lt;/span&gt;&lt;/label&gt;
+  &lt;input class="ds-input ds-input--number" id="rate" type="number" value="900"&gt;
 &lt;/div&gt;
 &lt;div class="ds-input-row"&gt;
-  &lt;label&gt;Salary cost &lt;span class="ds-input-row__unit"&gt;€&lt;/span&gt;&lt;/label&gt;
-  &lt;input class="ds-input ds-input--number" type="number" value="420"&gt;
+  &lt;label for="salary"&gt;Salary cost &lt;span class="ds-input-row__unit"&gt;€&lt;/span&gt;&lt;/label&gt;
+  &lt;input class="ds-input ds-input--number" id="salary" type="number" value="420"&gt;
 &lt;/div&gt;</code></pre>
         </section>
       </section>

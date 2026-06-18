@@ -30,7 +30,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run visual regression tests
-        run: npx playwright test
+        run: npx playwright test tests/visual.spec.js
 
       # On failure, publish the HTML report and any generated diff images so the
       # visual delta can be inspected from the workflow run.

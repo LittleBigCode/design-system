@@ -140,6 +140,10 @@ export function Calendar({
     ),
     h("div", { className: "ds-monthview__grid", role: "grid" },
       weeks.map((row, wi) =>
+        // A role="row" wrapper per week so the grid has valid row > gridcell
+        // structure. display:contents (see calendar-view.css) keeps the day
+        // buttons as direct items of the 7-column grid.
+        h("div", { key: `r-${wi}`, className: "ds-monthview__row", role: "row" },
         row.map((cell, ci) => {
           const outside = cell.getMonth() !== view.month;
           const isSel = sameDay(cell, selected);
@@ -152,7 +156,8 @@ export function Calendar({
             type: "button",
             role: "gridcell",
             "aria-label": toISO(cell),
-            "aria-pressed": isSel,
+            // aria-selected is allowed on gridcell (aria-pressed is not).
+            "aria-selected": isSel,
             className: cx(
               "ds-monthview__day",
               outside && "is-outside",
@@ -174,6 +179,7 @@ export function Calendar({
               : null
           );
         })
+        )
       )
     )
   );

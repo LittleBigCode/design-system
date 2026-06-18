@@ -30,7 +30,9 @@
   font-weight: 400;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  opacity: .8;
+  /* Kept lightly muted, but opaque enough that the white kicker clears AA on the
+     colored heads (the old .8 dropped it below 4.5:1 on the lighter fills). */
+  opacity: .95;
 }
 .ds-status__title {
   font-family: var(--ds-font-title);

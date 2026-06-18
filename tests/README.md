@@ -75,3 +75,41 @@ npx playwright show-report
 
 Both `test-results/` and `playwright-report/` are git-ignored;
 `tests/__screenshots__/` is committed.
+
+## Accessibility
+
+`tests/a11y.spec.js` runs [axe-core](https://github.com/dequelabs/axe-core) (via
+[`@axe-core/playwright`](https://www.npmjs.com/package/@axe-core/playwright))
+against a set of key showcase pages and **fails on any violation of impact
+`critical` or `serious`**. Less severe findings (`moderate`/`minor`) are still
+reported by axe but do not fail the suite, so the gate flags only genuinely
+blocking issues — handy given the deliberately flat, low-chrome aesthetic.
+
+It reuses the same setup as the visual suite (the shared `playwright.config.js`
+static server + Chromium), so no extra config is needed. The audited pages are:
+
+- `examples/index.html`
+- `examples/kitchen-sink.html`
+- `examples/components/buttons.html`
+- `examples/components/forms.html`
+- `examples/demo.html` — the live React console. The spec signs in first
+  (clicks the **Sign in** button and waits for the `.ds-console` shell to
+  mount), then audits the signed-in app chrome. Like the charts/datagrid/React
+  pages, this **requires network access** because it loads React from `esm.sh`.
+
+On failure the error message names, for each blocking violation, the rule id,
+the affected page, and a representative node selector, so the report points
+straight at the offending element.
+
+```bash
+# Install the extra devDependency once (the test:a11y npm script runs the spec):
+npm i
+npx playwright install --with-deps chromium
+
+# Run only the accessibility suite:
+npx playwright test tests/a11y.spec.js
+```
+
+The accessibility suite also runs in CI via the `a11y` workflow
+(`.github/workflows/a11y.yml`) on pull requests, and uploads the Playwright
+report as an artifact when it fails.

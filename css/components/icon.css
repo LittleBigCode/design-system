@@ -1,0 +1,14 @@
+/* Icon — .ds-icon (Lucide-compatible 24×24 stroked line icon)
+   Sized via font-size by default (1em square); pass a width/height or set
+   font-size on a parent to scale. Strokes follow currentColor so an icon takes
+   the text color of wherever it sits. flex:none keeps it from being squashed
+   inside flex rows (buttons, toolbars, list items). */
+.ds-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+  fill: none;
+  stroke: currentColor;
+  flex: none;
+}

@@ -4,6 +4,22 @@ All notable changes to the Diametral Design System are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/), and the project
 adheres to [Semantic Versioning](https://semver.org/) — see [docs/versioning.md](docs/versioning.md).
 
+## [0.5.0] — 2026-06-19
+
+### Added
+- **Icons**: a Lucide-compatible line-icon set (~34 icons) with a React `<Icon name>`, a
+  `<ds-icon>` web component, `.ds-icon` CSS, and a showcase page. Any 24×24 stroke-2 SVG (e.g.
+  Lucide) drops in unchanged.
+- **Figma tokens**: `scripts/build-figma.mjs` (wired into `npm run build`) emits
+  `dist/figma-tokens.json` in Tokens Studio format for designer handoff. See `docs/figma.md`.
+- **Accessibility tests**: `tests/a11y.spec.js` (axe via `@axe-core/playwright`) gates key pages on
+  no critical/serious violations, with a `a11y.yml` CI workflow and a `test:a11y` script.
+
+### Fixed
+- Accessibility issues surfaced by the new axe gate: low-contrast nav labels, unlabeled form
+  controls, and ARIA on the calendar grid, popover, command palette, progress bar and scrollable
+  code blocks.
+
 ## [0.4.0] — 2026-06-18
 
 App-acceleration kit — everything a team needs to stand up an app fast.

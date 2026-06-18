@@ -109,13 +109,17 @@ export function CommandPalette({ open, onClose, commands = [], placeholder = "Ty
         className: "ds-cmdk__input",
         type: "text",
         role: "combobox",
+        // A combobox needs an accessible name (placeholder is not one) and a
+        // pointer to the listbox it controls.
+        "aria-label": "Search commands",
+        "aria-controls": "ds-cmdk-list",
         "aria-expanded": true,
         "aria-autocomplete": "list",
         placeholder,
         value: query,
         onChange: (e) => setQuery(e.target.value),
       }),
-      h("div", { ref: listRef, className: "ds-cmdk__list", role: "listbox" },
+      h("div", { ref: listRef, id: "ds-cmdk-list", className: "ds-cmdk__list", role: "listbox", "aria-label": "Commands" },
         filtered.length
           ? rows
           : h("div", { className: "ds-cmdk__empty" }, "No results.")

@@ -17,6 +17,6 @@
   color: var(--ds-on-accent);
 }
 .ds-badge--accent {
-  color: var(--ds-accent);
+  color: var(--ds-accent-ink);   /* deeper red so the pill label clears AA on white */
   border-color: var(--ds-accent);
 }

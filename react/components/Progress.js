@@ -21,6 +21,12 @@ export const Progress = React.forwardRef(function Progress(
         "aria-valuenow": value,
       };
   if (label != null) aria["aria-label"] = typeof label === "string" ? label : undefined;
+  // A role="progressbar" needs an accessible name. If none is supplied (no
+  // string label, no caller aria-label/aria-labelledby), fall back to a generic
+  // one so assistive tech announces it.
+  if (aria["aria-label"] == null && rest["aria-label"] == null && rest["aria-labelledby"] == null) {
+    aria["aria-label"] = "Progress";
+  }
 
   return h(React.Fragment, null,
     label != null

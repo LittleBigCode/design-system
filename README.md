@@ -109,6 +109,9 @@ A kit to stand up an app fast on top of the components:
   `useResource` + `restLoadPage` ([`docs/data.md`](docs/data.md)).
 - **Theme generator** — turn a brand color into a `data-theme` ([`docs/theme-generator.md`](docs/theme-generator.md)).
 - **Shared configs** — ESLint, Prettier, base tsconfig and VS Code snippets in [`configs/`](configs/).
+- **Icons** — a Lucide-compatible `<Icon>` / `<ds-icon>` line-icon set; any 24×24 stroke SVG drops in.
+- **Designer handoff** — `npm run build` emits Tokens Studio tokens for Figma ([`docs/figma.md`](docs/figma.md)).
+- **Tested** — visual-regression + axe accessibility checks in CI (`npm run test:visual` / `npm run test:a11y`).
 
 ## What's inside
 

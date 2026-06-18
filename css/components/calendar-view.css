@@ -61,6 +61,11 @@
   grid-template-columns: repeat(7, 1fr);
 }
 
+/* ARIA row wrappers — a grid (role="grid") must contain rows of gridcells. The
+   row carries role="row" but generates no box (display: contents), so its day
+   children stay direct items of the 7-column grid; layout is unchanged. */
+.ds-monthview__row { display: contents; }
+
 /* Day cell — date number top-left, then a stack of event chips. The right +
    bottom borders draw the 1px rules; the last column / last row drop theirs so
    the outer frame stays single-weight. */
@@ -83,7 +88,9 @@
   transition: background-color var(--ds-transition);
 }
 .ds-monthview__day:nth-child(7n) { border-right: none; }
-.ds-monthview__grid > .ds-monthview__day:nth-last-child(-n + 7) { border-bottom: none; }
+/* Last week drops its bottom border so the outer frame stays single-weight.
+   Days live inside role="row" wrappers, so target the last row's cells. */
+.ds-monthview__row:last-child > .ds-monthview__day { border-bottom: none; }
 .ds-monthview__day:hover { background: var(--ds-bg-alt); }
 .ds-monthview__day:focus-visible {
   outline: 2px solid var(--ds-focus-ring);
@@ -104,10 +111,11 @@
   color: var(--ds-ink);
 }
 
-/* Today — an accent ring around the date number (no fill). */
+/* Today — an accent ring around the date number (no fill). Uses the deeper
+   accent-ink so the small date number clears AA as text on the white cell. */
 .ds-monthview__day.is-today .ds-monthview__date {
-  border: 1px solid var(--ds-accent);
-  color: var(--ds-accent);
+  border: 1px solid var(--ds-accent-ink);
+  color: var(--ds-accent-ink);
 }
 
 /* Outside-month days — faint, to recede behind the current month. */
@@ -121,8 +129,10 @@
   background: var(--ds-accent-bg);
 }
 .ds-monthview__day.is-selected .ds-monthview__date {
-  background: var(--ds-accent);
-  border-color: var(--ds-accent);
+  /* Deeper accent-ink fill so the white date number clears AA (the pure accent
+     #ff2a00 only reaches 3.76:1 behind white text). */
+  background: var(--ds-accent-ink);
+  border-color: var(--ds-accent-ink);
   color: var(--ds-on-accent);
 }
 

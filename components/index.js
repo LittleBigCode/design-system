@@ -17,3 +17,4 @@ export { DsSwitch } from "./ds-switch.js";
 export { DsTabs } from "./ds-tabs.js";
 export { DsSegmented } from "./ds-segmented.js";
 export { DsModal } from "./ds-modal.js";
+export { DsIcon } from "./ds-icon.js";

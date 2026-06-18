@@ -1,0 +1,43 @@
+name: Accessibility tests
+
+# Runs axe-core (via @axe-core/playwright) against the showcase and fails on any
+# critical/serious WCAG violation. Mirrors the visual-tests workflow: same
+# static server (started by playwright.config.js) and the same Chromium setup,
+# but runs only the a11y spec.
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  a11y:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci || npm i
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run accessibility tests
+        run: npx playwright test tests/a11y.spec.js
+
+      # On failure, publish the HTML report so the violations can be inspected
+      # from the workflow run.
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: a11y-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 14
+          if-no-files-found: ignore

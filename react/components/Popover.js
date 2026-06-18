@@ -36,6 +36,18 @@ export function Popover({
   const [internal, setInternal] = React.useState(defaultOpen);
   const isOpen = controlled ? open : internal;
 
+  // A role="dialog" must have an accessible name. Prefer a string title; if the
+  // caller passes aria-label / aria-labelledby through, honour that; otherwise
+  // fall back to a generic label so assistive tech still announces the dialog.
+  const ariaLabelledByRest = rest["aria-labelledby"];
+  const ariaLabelRest = rest["aria-label"];
+  const dialogName =
+    ariaLabelledByRest != null
+      ? { "aria-labelledby": ariaLabelledByRest }
+      : { "aria-label": ariaLabelRest != null ? ariaLabelRest : (typeof title === "string" ? title : "Popover") };
+  // Don't also leak the naming attrs onto the host span.
+  const { ["aria-label"]: _al, ["aria-labelledby"]: _alb, ...hostRest } = rest;
+
   const rootRef = React.useRef(null);
   const triggerRef = React.useRef(null);
 
@@ -83,13 +95,14 @@ export function Popover({
     ref: rootRef,
     className: cx("ds-popover-host", className),
     style: { position: "relative", display: "inline-flex" },
-    ...rest,
+    ...hostRest,
   },
     renderedTrigger,
     isOpen
       ? h("div", {
           className: cx("ds-popover", `ds-popover--${placement}`),
           role: "dialog",
+          ...dialogName,
           style: { position: "absolute", ...POS[placement] },
         },
           arrow ? h("span", { className: "ds-popover__arrow", "aria-hidden": "true" }) : null,

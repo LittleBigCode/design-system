@@ -285,3 +285,5 @@ export * from "./components/FormField.js";
 export * from "./hooks/useForm.js";
 export * from "./hooks/useResource.js";
 export * from "./hooks/restLoadPage.js";
+export * from "./components/Icon.js";
+export * from "./components/icons.js";
