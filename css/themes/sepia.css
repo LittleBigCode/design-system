@@ -1,0 +1,34 @@
+/* ============================================================================
+   "Sepia" — a worked alternate brand theme.
+   A warm, editorial variant built entirely from the Diametral brand palette
+   (marron / beige / kaki). It demonstrates that a full re-skin is just a set of
+   Tier-2 SEMANTIC token overrides — primitives and component rules are untouched.
+
+   Opt-in: import this file, then set data-theme="sepia" on a root element.
+   ============================================================================ */
+[data-theme="sepia"] {
+  /* Surfaces & text — warm whites and ink */
+  --ds-bg:            #faf8f2;
+  --ds-bg-alt:        #f0ece0;
+  --ds-surface:       #fffdf8;
+  --ds-overlay-scrim: rgba(42, 36, 32, .5);
+  --ds-ink:           #2a2420;
+  --ds-ink-soft:      #5c5246;
+  --ds-ink-faint:     #8a7f6f;
+
+  /* Lines */
+  --ds-rule:      #ddd5c4;
+  --ds-rule-soft: #ebe5d8;
+
+  /* Accent — the brand marron */
+  --ds-accent:    var(--ds-marron);
+  --ds-accent-bg: #efe9dd;
+
+  /* Status tints warmed to sit on the beige base (hues kept for legibility) */
+  --ds-success-bg:  #e8efe6;
+  --ds-warning-bg:  #f6ebdd;
+  --ds-danger-bg:   #f3e3df;
+  --ds-info-bg:     #e3eef0;
+  --ds-neutral-bg:  #ece7da;
+  --ds-critical-bg: #ece7da;
+}

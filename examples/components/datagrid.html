@@ -32,7 +32,7 @@
 
       <section class="docs-section">
         <h2>Lazy — paginated</h2>
-        <p class="docs-note">Sorting, filtering and paging are sent to <code>loadPage()</code>; the grid renders skeleton rows while the “server” responds. Try sorting a column, typing in a filter, selecting rows, and expanding a row.</p>
+        <p class="docs-note">Sorting, filtering and paging are sent to <code>loadPage()</code>; the grid renders skeleton rows while the “server” responds. Try sorting a column, typing in a filter, selecting rows, and expanding a row. <b>Double-click a Mission or Grade cell to edit inline</b>, and <b>drag a column header to reorder</b>.</p>
         <div class="ds-example">
           <header class="ds-example__bar"><span class="ds-label">DataGrid · lazyMode="pagination"</span></header>
           <div class="ds-example__preview ds-example__preview--block"><div id="grid-paginated">Loading React…</div></div>
@@ -138,9 +138,9 @@ async function loadPage({ page, pageSize, sort, filters }) {
 
     const columns = [
       { key: "id", header: "ID", sortable: true, align: "right", width: "64px" },
-      { key: "name", header: "Mission", sortable: true, filterable: true },
+      { key: "name", header: "Mission", sortable: true, filterable: true, editable: true },
       { key: "entity", header: "Entity", sortable: true, filterable: true },
-      { key: "grade", header: "Grade", sortable: true },
+      { key: "grade", header: "Grade", sortable: true, editable: true },
       { key: "margin", header: "Margin %", sortable: true, align: "right", render: marginCell },
     ];
 
@@ -152,6 +152,8 @@ async function loadPage({ page, pageSize, sort, filters }) {
       h(DataGrid, {
         title: "Missions (lazy)", columns, loadPage, lazyMode: "pagination",
         pageSize: 8, selectable: true, filterable: true, expandable: true, renderDetail: detail,
+        editable: true, reorderable: true,
+        onCellEdit: (row, key, value) => { row[key] = value; },
       })
     );
     createRoot(document.getElementById("grid-infinite")).render(

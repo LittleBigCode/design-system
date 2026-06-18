@@ -10,6 +10,7 @@ const NAV = [
     { k: "index", t: "Overview" },
     { k: "kitchen-sink", t: "Kitchen sink" },
     { k: "react", t: "React demo" },
+    { k: "theming", t: "Theming" },
   ]},
   { label: "Foundations", items: [
     { k: "foundations/color", t: "Color" },

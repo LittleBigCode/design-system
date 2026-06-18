@@ -8,6 +8,8 @@ export interface DataGridColumn<Row = any> {
   align?: "left" | "right";
   width?: string | number;
   hidden?: boolean;
+  /** Allow inline editing of this column's cells (requires grid `editable`). */
+  editable?: boolean;
   render?: (row: Row) => ReactNode;
 }
 
@@ -43,6 +45,11 @@ export interface DataGridProps<Row = any> {
   title?: ReactNode;
   toolbar?: ReactNode;
   columnToggle?: boolean;
+  /** Enable inline cell editing (double-click) for columns marked `editable`. */
+  editable?: boolean;
+  onCellEdit?: (row: Row, columnKey: string, value: string) => void;
+  /** Allow reordering columns by dragging their headers. */
+  reorderable?: boolean;
   emptyMessage?: ReactNode;
   className?: string;
 }

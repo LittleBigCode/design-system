@@ -95,3 +95,13 @@
 .ds-datagrid__pagebtn:hover:not(:disabled) { background: var(--ds-bg-alt); }
 .ds-datagrid__pagebtn:disabled { opacity: .45; cursor: not-allowed; }
 .ds-datagrid__pagebtn.is-active { background: var(--ds-ink); border-color: var(--ds-ink); color: var(--ds-on-accent); }
+
+/* Inline editing */
+.ds-datagrid__td--editable { cursor: text; }
+.ds-datagrid__td--editable:hover { background: var(--ds-bg-alt); outline: 1px solid var(--ds-rule); outline-offset: -1px; }
+.ds-datagrid__edit { width: 100%; padding: 4px 6px; font-size: 13.5px; }
+
+/* Column reordering (drag headers) */
+.ds-datagrid__th--draggable { cursor: grab; }
+.ds-datagrid__th--draggable:active { cursor: grabbing; }
+.ds-datagrid__th--draggable.is-dragging { opacity: .45; }

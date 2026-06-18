@@ -32,6 +32,9 @@ export function DataGrid({
   title,
   toolbar,
   columnToggle = true,
+  editable = false,
+  onCellEdit,
+  reorderable = false,
   emptyMessage = "No data",
   className,
 }) {
@@ -44,6 +47,9 @@ export function DataGrid({
   const [expanded, setExpanded] = React.useState(() => new Set());
   const [hidden, setHidden] = React.useState(() => new Set(columns.filter((c) => c.hidden).map((c) => c.key)));
   const [colsOpen, setColsOpen] = React.useState(false);
+  const [colOrder, setColOrder] = React.useState(() => columns.map((c) => c.key));
+  const [dragCol, setDragCol] = React.useState(null);
+  const [editing, setEditing] = React.useState(null); // { rowKey, colKey }
 
   // Lazy data state
   const [lazyRows, setLazyRows] = React.useState([]);
@@ -69,7 +75,12 @@ export function DataGrid({
     return () => { cancelled = true; };
   }, [lazy, page, pageSize, sort, filters, lazyMode]);
 
-  const visibleCols = columns.filter((c) => !hidden.has(c.key));
+  // Columns in their (possibly reordered) order; newly-added columns append.
+  const orderedColumns = colOrder
+    .map((k) => columns.find((c) => c.key === k))
+    .filter(Boolean)
+    .concat(columns.filter((c) => !colOrder.includes(c.key)));
+  const visibleCols = orderedColumns.filter((c) => !hidden.has(c.key));
 
   // Client-side processing
   const processed = React.useMemo(() => {
@@ -123,6 +134,17 @@ export function DataGrid({
   };
   const toggleExpand = (k) => setExpanded((e) => { const n = new Set(e); n.has(k) ? n.delete(k) : n.add(k); return n; });
   const toggleCol = (key) => setHidden((hd) => { const n = new Set(hd); n.has(key) ? n.delete(key) : n.add(key); return n; });
+  const moveColumn = (from, to) => {
+    if (from === to) return;
+    setColOrder((order) => {
+      const arr = order.slice();
+      const fi = arr.indexOf(from), ti = arr.indexOf(to);
+      if (fi < 0 || ti < 0) return order;
+      arr.splice(ti, 0, arr.splice(fi, 1)[0]);
+      return arr;
+    });
+  };
+  const commitEdit = (row, colKey, value) => { setEditing(null); onCellEdit && onCellEdit(row, colKey, value); };
 
   const colSpan = visibleCols.length + (selectable ? 1 : 0) + (expandable ? 1 : 0);
   const anyFilter = filterable && visibleCols.some((c) => c.filterable);
@@ -137,8 +159,14 @@ export function DataGrid({
         const sorted = sort && sort.key === c.key;
         return h("th", {
           key: c.key,
-          className: cx(c.align === "right" && "ds-datagrid__th--num", sorted && "ds-datagrid__th is-sorted"),
+          className: cx("ds-datagrid__th", c.align === "right" && "ds-datagrid__th--num", sorted && "is-sorted",
+            reorderable && "ds-datagrid__th--draggable", dragCol === c.key && "is-dragging"),
           style: c.width ? { width: c.width } : undefined,
+          draggable: reorderable || undefined,
+          onDragStart: reorderable ? () => setDragCol(c.key) : undefined,
+          onDragOver: reorderable ? (e) => e.preventDefault() : undefined,
+          onDrop: reorderable ? (e) => { e.preventDefault(); if (dragCol) moveColumn(dragCol, c.key); setDragCol(null); } : undefined,
+          onDragEnd: reorderable ? () => setDragCol(null) : undefined,
         },
           c.sortable
             ? h("button", { type: "button", className: "ds-datagrid__sort", onClick: () => toggleSort(c.key) },
@@ -179,8 +207,28 @@ export function DataGrid({
           h("span", { className: "ds-datagrid__chevron" }, "▶")) : null) : null,
       selectable ? h("td", { className: "ds-datagrid__select" },
         h("input", { type: "checkbox", "aria-label": "Select row", checked: isSel, onChange: () => toggleRow(k) })) : null,
-      visibleCols.map((c) => h("td", { key: c.key, className: c.align === "right" ? "ds-datagrid__td--num" : undefined },
-        c.render ? c.render(row) : getVal(row, c.key)))
+      visibleCols.map((c) => {
+        const editingThis = editing && editing.rowKey === k && editing.colKey === c.key;
+        if (editingThis) {
+          return h("td", { key: c.key, className: c.align === "right" ? "ds-datagrid__td--num" : undefined },
+            h("input", {
+              className: "ds-input ds-datagrid__edit", autoFocus: true,
+              defaultValue: getVal(row, c.key),
+              onKeyDown: (e) => {
+                if (e.key === "Enter") commitEdit(row, c.key, e.target.value);
+                else if (e.key === "Escape") setEditing(null);
+              },
+              onBlur: (e) => commitEdit(row, c.key, e.target.value),
+            }));
+        }
+        const cellEditable = editable && c.editable;
+        return h("td", {
+          key: c.key,
+          className: cx(c.align === "right" && "ds-datagrid__td--num", cellEditable && "ds-datagrid__td--editable"),
+          onDoubleClick: cellEditable ? () => setEditing({ rowKey: k, colKey: c.key }) : undefined,
+          title: cellEditable ? "Double-click to edit" : undefined,
+        }, c.render ? c.render(row) : getVal(row, c.key));
+      })
     );
     if (isExp && detail != null) {
       return [main, h("tr", { key: `${k}__d`, className: "ds-datagrid__detail" }, h("td", { colSpan }, detail))];
