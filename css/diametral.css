@@ -3,7 +3,7 @@
    Import this one file to get tokens + reset + typography + all components:
 
        <link rel="stylesheet" href="css/diametral.css">
-       @import url("@littlebigcode/design-system/css/diametral.css");
+       @import url("@diametral/design-system/css/diametral.css");
 
    Themes (css/themes/*.css) and compat aliases (css/compat/*.css) are opt-in
    and intentionally NOT imported here. See docs/theming.md and docs/migration.md.

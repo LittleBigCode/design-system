@@ -1,9 +1,9 @@
 name: Publish to npm (public)
 
-# Publishes @littlebigcode/design-system to the PUBLIC npm registry
-# (registry.npmjs.org) so anyone can `npm i @littlebigcode/design-system` with
+# Publishes @diametral/design-system to the PUBLIC npm registry
+# (registry.npmjs.org) so anyone can `npm i @diametral/design-system` with
 # no auth. Requires an NPM_TOKEN repo secret (an npm automation token for an
-# account that owns the @littlebigcode scope/org). Triggered by publishing a
+# account that owns the @diametral scope/org). Triggered by publishing a
 # GitHub Release, or manually. See RELEASE.md.
 
 on:
@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"
-          scope: "@littlebigcode"
+          scope: "@diametral"
 
       - name: Build distributable artifacts
         run: npm run build

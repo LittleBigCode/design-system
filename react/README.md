@@ -7,7 +7,7 @@ both from npm in any React app and directly in the browser via an import map.
 Styling comes from the global stylesheet — load it once:
 
 ```js
-import "@littlebigcode/design-system/css/diametral.css";
+import "@diametral/design-system/css/diametral.css";
 ```
 
 `react` and `react-dom` (>=18) are peer dependencies.
@@ -15,7 +15,7 @@ import "@littlebigcode/design-system/css/diametral.css";
 ## Usage
 
 ```jsx
-import { Button, Status, Metric, Callout, Switch, Modal } from "@littlebigcode/design-system/react";
+import { Button, Status, Metric, Callout, Switch, Modal } from "@diametral/design-system/react";
 
 function Example() {
   const [open, setOpen] = React.useState(false);

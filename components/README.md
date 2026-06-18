@@ -15,11 +15,11 @@ no duplicated CSS). There is **no build step** required to use them.
 Or via npm:
 
 ```js
-import "@littlebigcode/design-system/css/diametral.css";
-import "@littlebigcode/design-system/components"; // registers all elements
+import "@diametral/design-system/css/diametral.css";
+import "@diametral/design-system/components"; // registers all elements
 ```
 
-You can also import a single element: `import "@littlebigcode/design-system/components/ds-modal.js"`.
+You can also import a single element: `import "@diametral/design-system/components/ds-modal.js"`.
 
 ## Elements
 

@@ -6,7 +6,7 @@
    any React app, AND directly in the browser via an import map + esm.sh.
 
    Styling comes from the global stylesheet — make sure it is loaded:
-       import "@littlebigcode/design-system/css/diametral.css";
+       import "@diametral/design-system/css/diametral.css";
 
    Peer dependencies: react, react-dom (>=18).
    ============================================================================ */

@@ -1,5 +1,5 @@
 {
-  "name": "@littlebigcode/design-system",
+  "name": "@diametral/design-system",
   "version": "0.2.0",
   "description": "Diametral Design System — a minimal, flat, buildless CSS + tokens + Web Components design system. Welcome to (the real).",
   "license": "MIT",

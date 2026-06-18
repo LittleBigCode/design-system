@@ -1,11 +1,11 @@
 # Releasing & publishing
 
-`@littlebigcode/design-system` can be published to **two registries**. Nothing publishes
+`@diametral/design-system` can be published to **two registries**. Nothing publishes
 automatically without the steps below.
 
 | Registry | Install friction | Trigger | Auth |
 |---|---|---|---|
-| **Public npm** (recommended) | none — `npm i @littlebigcode/design-system`, no token | a published **GitHub Release** | repo secret `NPM_TOKEN` |
+| **Public npm** (recommended) | none — `npm i @diametral/design-system`, no token | a published **GitHub Release** | repo secret `NPM_TOKEN` |
 | **GitHub Packages** | needs an `.npmrc` scope + a `read:packages` token to install | pushing a **`v*` git tag** | built-in `GITHUB_TOKEN` (no secret) |
 
 ## One-time setup for public npm
@@ -25,7 +25,7 @@ automatically without the steps below.
    ```
    This triggers `.github/workflows/publish-npm.yml`, which builds and runs
    `npm publish --access public --provenance`. (Or run that workflow via **workflow_dispatch**.)
-3. Verify: `npm view @littlebigcode/design-system version`.
+3. Verify: `npm view @diametral/design-system version`.
 
 > The package installs with **no auth** for consumers once it is public on npm. Provenance is
 > attached automatically (the workflow has `id-token: write`).
@@ -38,7 +38,7 @@ Pushing a tag publishes to GitHub Packages via `.github/workflows/publish.yml`:
 git tag v0.2.1 && git push origin v0.2.1
 ```
 
-Consumers then need a project `.npmrc` (`@littlebigcode:registry=https://npm.pkg.github.com`) and a
+Consumers then need a project `.npmrc` (`@diametral:registry=https://npm.pkg.github.com`) and a
 `read:packages` token — see [docs/installation.md](docs/installation.md).
 
 ## Different name (optional)

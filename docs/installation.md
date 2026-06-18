@@ -11,18 +11,18 @@ tokens, so most stacks need nothing more than a `<link>` (or one `import`) and t
 
 ## 1. What you get
 
-The package `@littlebigcode/design-system` ships several independent layers. Take only what you need —
+The package `@diametral/design-system` ships several independent layers. Take only what you need —
 each works on its own, and **none requires a build step to consume**.
 
 | Layer | What it is | Entry |
 |---|---|---|
-| **CSS + tokens** (framework-agnostic) | The whole visual language as one stylesheet of `.ds-*` classes backed by `--ds-*` custom properties. | `@littlebigcode/design-system/css/diametral.css` |
-| **Design tokens** | The single source of truth as JSON. | `@littlebigcode/design-system/tokens.json` |
-| **Web Components** (optional) | A vanilla custom-element layer (`<ds-button>`, `<ds-status>`, …). | `@littlebigcode/design-system/components` |
-| **React components** (optional) | Real, typed React components (`Button`, `DataGrid`, …). | `@littlebigcode/design-system/react` |
-| **Tailwind preset** | Binds Tailwind `colors`/`spacing`/`fontFamily`/… to the `--ds-*` variables. | `@littlebigcode/design-system/tailwind-preset` |
-| **SCSS variables** | `$ds-*` variables, each resolving to the matching CSS var. | `@littlebigcode/design-system/dist/tokens.scss` |
-| **Assets** | Bundled fonts (Ufficio + license), logo, photography. | `@littlebigcode/design-system/assets/*` |
+| **CSS + tokens** (framework-agnostic) | The whole visual language as one stylesheet of `.ds-*` classes backed by `--ds-*` custom properties. | `@diametral/design-system/css/diametral.css` |
+| **Design tokens** | The single source of truth as JSON. | `@diametral/design-system/tokens.json` |
+| **Web Components** (optional) | A vanilla custom-element layer (`<ds-button>`, `<ds-status>`, …). | `@diametral/design-system/components` |
+| **React components** (optional) | Real, typed React components (`Button`, `DataGrid`, …). | `@diametral/design-system/react` |
+| **Tailwind preset** | Binds Tailwind `colors`/`spacing`/`fontFamily`/… to the `--ds-*` variables. | `@diametral/design-system/tailwind-preset` |
+| **SCSS variables** | `$ds-*` variables, each resolving to the matching CSS var. | `@diametral/design-system/dist/tokens.scss` |
+| **Assets** | Bundled fonts (Ufficio + license), logo, photography. | `@diametral/design-system/assets/*` |
 
 The CSS and the tokens are the foundation; the Web Components and React layers render the **same**
 `.ds-*` markup, so styling and theming always come from the one stylesheet. Change a token, every
@@ -35,7 +35,7 @@ layer follows.
 **From npm** (public registry) — no config, no token:
 
 ```bash
-npm i @littlebigcode/design-system    # or pnpm / yarn / bun
+npm i @diametral/design-system    # or pnpm / yarn / bun
 ```
 
 <details>
@@ -46,7 +46,7 @@ packages, so add a project `.npmrc` and a `read:packages` token:
 
 ```ini
 # .npmrc
-@littlebigcode:registry=https://npm.pkg.github.com
+@diametral:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
 ```
 </details>
@@ -55,7 +55,7 @@ packages, so add a project `.npmrc` and a `read:packages` token:
 layer. CSS-only and Web Component consumers don't pull them in.
 
 ```bash
-# only if you use @littlebigcode/design-system/react
+# only if you use @diametral/design-system/react
 npm i react react-dom
 ```
 
@@ -66,7 +66,7 @@ required. Either:
 - Link it straight from a **CDN** that serves npm packages (unpkg, jsDelivr, esm.sh):
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/@littlebigcode/design-system/css/diametral.css">
+<link rel="stylesheet" href="https://unpkg.com/@diametral/design-system/css/diametral.css">
 ```
 
 ---
@@ -80,7 +80,7 @@ reset, typography, and every component:
 
 ```js
 // bundler / npm
-import "@littlebigcode/design-system/css/diametral.css";
+import "@diametral/design-system/css/diametral.css";
 ```
 
 ```html
@@ -107,7 +107,7 @@ an Ufficio license*:
 
 ```js
 // via npm
-import "@littlebigcode/design-system/assets/fonts/ufficio.css";
+import "@diametral/design-system/assets/fonts/ufficio.css";
 ```
 
 If you **don't** import it, the unknown family name is skipped and titles fall back to the free
@@ -158,7 +158,7 @@ Import the CSS once in `main.jsx`, then import components from the React entry.
 // main.jsx
 import React from "react";
 import { createRoot } from "react-dom/client";
-import "@littlebigcode/design-system/css/diametral.css";
+import "@diametral/design-system/css/diametral.css";
 import App from "./App.jsx";
 
 createRoot(document.getElementById("root")).render(<App />);
@@ -166,7 +166,7 @@ createRoot(document.getElementById("root")).render(<App />);
 
 ```jsx
 // App.jsx
-import { Button, DataGrid } from "@littlebigcode/design-system/react";
+import { Button, DataGrid } from "@diametral/design-system/react";
 
 export default function App() {
   return <Button variant="primary">Save</Button>;
@@ -182,7 +182,7 @@ so they are **client components** — render them inside a `"use client"` bounda
 
 ```tsx
 // app/layout.tsx
-import "@littlebigcode/design-system/css/diametral.css";
+import "@diametral/design-system/css/diametral.css";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -196,7 +196,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 ```tsx
 // app/page.tsx (or any client component)
 "use client";
-import { Button, Status } from "@littlebigcode/design-system/react";
+import { Button, Status } from "@diametral/design-system/react";
 
 export default function Page() {
   return <Button variant="primary">Save</Button>;
@@ -221,7 +221,7 @@ Import the CSS once in `index.js`.
 // src/index.js
 import React from "react";
 import { createRoot } from "react-dom/client";
-import "@littlebigcode/design-system/css/diametral.css";
+import "@diametral/design-system/css/diametral.css";
 import App from "./App";
 
 createRoot(document.getElementById("root")).render(<App />);
@@ -229,7 +229,7 @@ createRoot(document.getElementById("root")).render(<App />);
 
 ```jsx
 // src/App.js
-import { Button } from "@littlebigcode/design-system/react";
+import { Button } from "@diametral/design-system/react";
 
 export default function App() {
   return <Button variant="primary">Save</Button>;
@@ -243,7 +243,7 @@ Add the stylesheet to the `styles` array in `angular.json`:
 ```json
 // angular.json → projects.<app>.architect.build.options
 "styles": [
-  "node_modules/@littlebigcode/design-system/css/diametral.css",
+  "node_modules/@diametral/design-system/css/diametral.css",
   "src/styles.scss"
 ]
 ```
@@ -251,7 +251,7 @@ Add the stylesheet to the `styles` array in `angular.json`:
 …or `@import` it from `src/styles.scss`:
 
 ```scss
-@import "@littlebigcode/design-system/css/diametral.css";
+@import "@diametral/design-system/css/diametral.css";
 ```
 
 Then use the `.ds-*` classes directly in templates. To use the **Web Components**, import the module
@@ -259,7 +259,7 @@ once (e.g. in `main.ts`) and allow custom elements in the modules/components tha
 
 ```ts
 // main.ts
-import "@littlebigcode/design-system/components";
+import "@diametral/design-system/components";
 ```
 
 ```ts
@@ -281,7 +281,7 @@ Import the CSS once in `main.js`:
 ```js
 // main.js
 import { createApp } from "vue";
-import "@littlebigcode/design-system/css/diametral.css";
+import "@diametral/design-system/css/diametral.css";
 import App from "./App.vue";
 
 createApp(App).mount("#app");
@@ -292,7 +292,7 @@ will render the custom elements as-is:
 
 ```js
 // main.js
-import "@littlebigcode/design-system/components";
+import "@diametral/design-system/components";
 ```
 
 ```vue
@@ -315,7 +315,7 @@ real app, prefer npm + a bundler.
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/@littlebigcode/design-system/css/diametral.css">
+<link rel="stylesheet" href="https://unpkg.com/@diametral/design-system/css/diametral.css">
 
 <div id="app"></div>
 
@@ -324,13 +324,13 @@ real app, prefer npm + a bundler.
   "react": "https://esm.sh/react@18.3.1",
   "react-dom": "https://esm.sh/react-dom@18.3.1?external=react",
   "react-dom/client": "https://esm.sh/react-dom@18.3.1/client?external=react",
-  "@littlebigcode/design-system/react": "https://esm.sh/@littlebigcode/design-system/react"
+  "@diametral/design-system/react": "https://esm.sh/@diametral/design-system/react"
 } }
 </script>
 <script type="module">
   import React from "react";
   import { createRoot } from "react-dom/client";
-  import { Button } from "@littlebigcode/design-system/react";
+  import { Button } from "@diametral/design-system/react";
   createRoot(document.getElementById("app"))
     .render(React.createElement(Button, { variant: "primary" }, "Save"));
 </script>
@@ -349,7 +349,7 @@ and the rest to the `--ds-*` custom properties:
 ```js
 // tailwind.config.js
 module.exports = {
-  presets: [require("@littlebigcode/design-system/tailwind-preset")],
+  presets: [require("@diametral/design-system/tailwind-preset")],
   content: ["./src/**/*.{html,js,ts,jsx,tsx,vue}"],
 };
 ```
@@ -363,11 +363,11 @@ Because they are backed by the **variables**, runtime theming still works: flip
 to the CSS var, so theming still applies):
 
 ```scss
-@use "@littlebigcode/design-system/dist/tokens.scss" as ds;
+@use "@diametral/design-system/dist/tokens.scss" as ds;
 .thing { color: ds.$ds-ink; padding: ds.$ds-space-4; }
 
 // or the legacy syntax
-@import "@littlebigcode/design-system/dist/tokens.scss";
+@import "@diametral/design-system/dist/tokens.scss";
 .thing { color: $ds-ink; }
 ```
 
@@ -384,8 +384,8 @@ Dark mode (and any theme) is a one-liner — import the theme stylesheet and set
 root element:
 
 ```js
-import "@littlebigcode/design-system/css/diametral.css";
-import "@littlebigcode/design-system/css/themes/dark.css";
+import "@diametral/design-system/css/diametral.css";
+import "@diametral/design-system/css/themes/dark.css";
 ```
 
 ```html
@@ -402,7 +402,7 @@ drops in regardless of which convention your app uses. For OS-driven dark mode, 
 ## 7. TypeScript
 
 No extra setup. Types ship with the React entry and are wired through the package `exports` map
-(`react/index.d.ts`), so `import { Button } from "@littlebigcode/design-system/react"` is fully typed
+(`react/index.d.ts`), so `import { Button } from "@diametral/design-system/react"` is fully typed
 out of the box — typed props, `children`, event handlers, and `forwardRef` on `Button` / `Input`.
 
 ---
@@ -411,7 +411,7 @@ out of the box — typed props, `children`, event handlers, and `forwardRef` on 
 
 - **"node_modules JSX isn't transpiled."** It doesn't need to be. The React components are authored
   as plain ES modules with `React.createElement` (no JSX) and ship as valid JS — Vite, Next, CRA,
-  Remix, etc. import them directly. You don't have to add `@littlebigcode/design-system` to a
+  Remix, etc. import them directly. You don't have to add `@diametral/design-system` to a
   `transpilePackages` / `transpileDependencies` allowlist.
 - **Fonts don't load offline.** Geist and Ufficio load fine over `file://`; only the Google Fonts
   `<link>` needs a network. The system still renders with system fallbacks offline. Self-host the

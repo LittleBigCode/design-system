@@ -441,7 +441,7 @@ Live: [../examples/components/dividers.html](../examples/components/dividers.htm
 
 The components above were de-domained from the source app; the ones below round the
 system out into a general-purpose kit. Each ships a `.ds-*` class set, a React component
-(`@littlebigcode/design-system/react`), and a showcase page. They are flat and sharp by the same
+(`@diametral/design-system/react`), and a showcase page. They are flat and sharp by the same
 parti pris: 1px borders, no radius (the radio dot, spinner, and progress motion are the only
 sanctioned exceptions), separation by rule rather than shadow.
 
@@ -545,7 +545,7 @@ Per-column `sortable` / `filterable` enable sorting and the filter input on that
 `hidden` (with the columns menu) drives show/hide.
 
 ```jsx
-import { DataGrid } from "@littlebigcode/design-system/react";
+import { DataGrid } from "@diametral/design-system/react";
 
 const columns = [
   { key: "id", header: "ID", sortable: true, align: "right", width: "64px" },
@@ -981,7 +981,7 @@ the left bar.
 `<Toast>` card (props `type`, `title`, `message`, `onClose`) is also exported.
 
 ```jsx
-import { ToastProvider, useToast } from "@littlebigcode/design-system/react";
+import { ToastProvider, useToast } from "@diametral/design-system/react";
 
 function App() { return <ToastProvider><Toolbar /></ToastProvider>; }
 
@@ -1298,7 +1298,7 @@ dropdown).
 title, `variant`, `size`), and `<SplitButton>` (props: `onMain`, `variant`, `size`, `menu`).
 
 ```jsx
-import { Button, ButtonGroup, IconButton, SplitButton } from "@littlebigcode/design-system/react";
+import { Button, ButtonGroup, IconButton, SplitButton } from "@diametral/design-system/react";
 
 <Button size="lg" loading>Saving</Button>
 <IconButton label="Add" variant="primary"><PlusIcon /></IconButton>
@@ -1379,7 +1379,7 @@ Live: [../examples/components/skeleton.html](../examples/components/skeleton.htm
 The wave-two additions: richer form controls (a typeahead, token field, number stepper, date
 picker, and file dropzone) plus the page-level layout primitives (a toolbar, an application shell,
 and a multi-step wizard). Same parti pris — 1px borders, no radius, no shadow — and each ships a
-`.ds-*` class set, a React component (`@littlebigcode/design-system/react`), and a showcase page.
+`.ds-*` class set, a React component (`@diametral/design-system/react`), and a showcase page.
 
 ## Combobox
 
@@ -1740,7 +1740,7 @@ The wave-three additions: two overlays (an off-canvas drawer and a ⌘K command 
 of data-viz primitives (a sparkline, a bar chart, and a KPI stat card), a few more inputs (a rating,
 a date-range picker, and a color picker), and two utilities (a dark code block and an inline keycap).
 Same parti pris — 1px borders, no radius, no shadow — and each ships a `.ds-*` class set, a React
-component (`@littlebigcode/design-system/react`), and a showcase page.
+component (`@diametral/design-system/react`), and a showcase page.
 
 ## Drawer
 
