@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grid system · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="foundations/grid">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Foundations</p>
+        <h1 class="ds-title ds-title--xl">Grid system</h1>
+        <p class="docs-lede">Beyond color and type, the brand is marked by <b>visible structural lines</b>: thin rules that frame the content column, divide it into ruled columns, and carry small registration ticks — with the accent marking key edges. Make the structure legible, never hidden.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Ruled columns</h2>
+        <p class="docs-note">Columns separated by visible 1px vertical rules over a top rule (<code>.ds-ruled</code> / <code>.ds-ruled__col</code>).</p>
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">.ds-ruled</span><button class="ds-button" data-copy-target="#c-ruled">Copy</button></header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-ruled">
+              <div class="ds-ruled__col"><div class="ds-gridlabel">Design</div><p style="margin-top:8px;color:var(--ds-ink-soft)">Map the problem.</p></div>
+              <div class="ds-ruled__col"><div class="ds-gridlabel">Build</div><p style="margin-top:8px;color:var(--ds-ink-soft)">Engineer it.</p></div>
+              <div class="ds-ruled__col"><div class="ds-gridlabel">Scale</div><p style="margin-top:8px;color:var(--ds-ink-soft)">Deploy at scale.</p></div>
+              <div class="ds-ruled__col"><div class="ds-gridlabel">Run</div><p style="margin-top:8px;color:var(--ds-ink-soft)">Operate over time.</p></div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-ruled">&lt;div class="ds-ruled"&gt;
+  &lt;div class="ds-ruled__col"&gt;&lt;span class="ds-gridlabel"&gt;Design&lt;/span&gt;…&lt;/div&gt;
+  &lt;div class="ds-ruled__col"&gt;&lt;span class="ds-gridlabel"&gt;Build&lt;/span&gt;…&lt;/div&gt;
+  &lt;div class="ds-ruled__col"&gt;…&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Stat grid</h2>
+        <p class="docs-note">The “impact in numbers” pattern: ruled columns, an uppercase label with a leading accent tick, and a large display figure (<code>.ds-statgrid</code>).</p>
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">.ds-statgrid</span><button class="ds-button" data-copy-target="#c-stat">Copy</button></header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-statgrid">
+              <div class="ds-statgrid__cell"><div class="ds-statgrid__label">Experience</div><div class="ds-statgrid__value">7<small> ans</small></div></div>
+              <div class="ds-statgrid__cell"><div class="ds-statgrid__label">Experts</div><div class="ds-statgrid__value">120<small> +</small></div></div>
+              <div class="ds-statgrid__cell"><div class="ds-statgrid__label">Projects</div><div class="ds-statgrid__value">300<small> +</small></div></div>
+              <div class="ds-statgrid__cell"><div class="ds-statgrid__label">Offices</div><div class="ds-statgrid__value">7</div></div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-stat">&lt;div class="ds-statgrid"&gt;
+  &lt;div class="ds-statgrid__cell"&gt;
+    &lt;div class="ds-statgrid__label"&gt;Experience&lt;/div&gt;
+    &lt;div class="ds-statgrid__value"&gt;7&lt;small&gt; ans&lt;/small&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- …more cells… --&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Framed column &amp; accent edge</h2>
+        <p class="docs-note">Thin vertical rules at the content gutters (<code>.ds-frame</code>); accent the edges with <code>.ds-frame--accent</code>.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">.ds-frame</span><button class="ds-button" data-copy-target="#c-frame">Copy</button></header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-frame ds-frame--accent" style="max-width:480px;padding:24px 28px">
+              <div class="ds-gridlabel" style="margin-bottom:10px">Section</div>
+              <p style="color:var(--ds-ink-soft)">Content framed by visible gutter rules. The accent marks the structure.</p>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-frame">&lt;div class="ds-frame ds-frame--accent"&gt;…&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Measured grid overlay</h2>
+        <p class="docs-note">Faint vertical column lines behind content (<code>.ds-gridlines</code>; set <code>--ds-grid-cols</code> for the count).</p>
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">.ds-gridlines</span><button class="ds-button" data-copy-target="#c-over">Copy</button></header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-gridlines" style="--ds-grid-cols:8;padding:34px 22px;border:1px solid var(--ds-rule)">
+              <div class="ds-title ds-title--md">Structure, made visible</div>
+              <p style="color:var(--ds-ink-soft);margin-top:6px">An 8-column measured grid sits behind the content.</p>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-over">&lt;div class="ds-gridlines" style="--ds-grid-cols:8"&gt;…&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Registration marks &amp; ticked labels</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">.ds-marks · .ds-gridlabel</span><button class="ds-button" data-copy-target="#c-marks">Copy</button></header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <div class="ds-marks" style="padding:24px 28px;border:1px solid var(--ds-rule-soft)">
+              <span class="ds-gridlabel">Expertise data &amp; AI</span>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-marks">&lt;div class="ds-marks"&gt;&lt;span class="ds-gridlabel"&gt;Expertise data &amp; AI&lt;/span&gt;&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="color.html">Color →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -17,6 +17,7 @@ const NAV = [
   { label: "Foundations", items: [
     { k: "foundations/color", t: "Color" },
     { k: "foundations/typography", t: "Typography" },
+    { k: "foundations/grid", t: "Grid system" },
     { k: "foundations/spacing", t: "Spacing" },
     { k: "foundations/layout", t: "Layout" },
     { k: "foundations/borders", t: "Borders & rules" },

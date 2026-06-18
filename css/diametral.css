@@ -89,3 +89,6 @@
 @import url("./components/charts.css");
 @import url("./components/calendar-view.css");
 @import url("./components/agenda.css");
+
+/* Grid system — visible structural rules (brand signature) */
+@import url("./components/grid.css");
