@@ -1,0 +1,41 @@
+/* ============================================================================
+   Rating — .ds-rating
+   ----------------------------------------------------------------------------
+   A 5-star rating: an inline-flex row of star buttons, each an inline <svg>
+   filled with currentColor. Filled stars (.is-on) read accent; empty stars
+   read the rule color. The --readonly modifier drops the button affordances
+   for display-only use.
+   ============================================================================ */
+.ds-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.ds-rating__star {
+  display: inline-flex;
+  padding: 2px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--ds-rule);
+  line-height: 0;
+  transition: color var(--ds-transition);
+}
+.ds-rating__star svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+.ds-rating__star.is-on { color: var(--ds-accent); }
+.ds-rating__star:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Readonly — no pointer / no hover affordance (still keyboard-inert as buttons
+   are not rendered). */
+.ds-rating--readonly .ds-rating__star {
+  cursor: default;
+}

@@ -1,0 +1,57 @@
+/* ============================================================================
+   Code block — .ds-code (a near-black panel with a head bar and a scrolling body)
+   ----------------------------------------------------------------------------
+   A flat dark surface (var(--ds-noir)) with light mono text (var(--ds-grey-faint)),
+   no radius and no shadow. The __head carries the filename on the left and a small Copy button on
+   the right, divided from the body by a 1px rule. The __body scrolls a <pre>.
+   Mono font follows the system stack used by .ds-prose code (no --ds-* mono
+   token exists yet).
+   ============================================================================ */
+.ds-code {
+  background: var(--ds-noir);
+  color: var(--ds-grey-faint);
+  border: 1px solid var(--ds-noir);
+  border-radius: var(--ds-radius-none);
+  font-family: ui-monospace, "SF Mono", "Geist Mono", Menlo, Consolas, monospace;
+  font-size: var(--ds-text-sm);
+  line-height: var(--ds-leading-normal);
+  overflow: hidden;
+}
+
+/* Head — filename left, Copy button right, bottom rule on the dark divider. */
+.ds-code__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ds-space-3);
+  padding: var(--ds-space-2) var(--ds-space-3);
+  border-bottom: 1px solid var(--ds-grey-dark);
+}
+.ds-code__filename {
+  font-size: var(--ds-text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ds-ink-faint);
+}
+
+/* The Copy button sits on the dark head — invert its borders/text to read on
+   var(--ds-noir) while keeping the flat .ds-button shape from button.css. */
+.ds-code__head .ds-button {
+  border-color: var(--ds-grey-dark);
+  background: transparent;
+  color: var(--ds-grey-faint);
+}
+.ds-code__head .ds-button:hover { background: var(--ds-grey-dark); }
+
+/* Body — a horizontally scrolling <pre> holding the code text. */
+.ds-code__body {
+  margin: 0;
+  padding: var(--ds-space-3);
+  overflow: auto;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  white-space: pre;
+  tab-size: 2;
+}

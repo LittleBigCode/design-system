@@ -36,7 +36,9 @@ const NAV = [
     { k: "components/tag-input", t: "Tag input" },
     { k: "components/number-input", t: "Number input" },
     { k: "components/date-picker", t: "Date picker" },
+    { k: "components/date-range", t: "Date range" },
     { k: "components/file-upload", t: "File upload" },
+    { k: "components/color-picker", t: "Color picker" },
   ]},
   { label: "Data display", items: [
     { k: "components/datagrid", t: "Data grid" },
@@ -52,6 +54,10 @@ const NAV = [
     { k: "components/avatar", t: "Avatar" },
     { k: "components/timeline", t: "Timeline" },
     { k: "components/tree", t: "Tree view" },
+    { k: "components/stat-card", t: "Stat card" },
+    { k: "components/sparkline", t: "Sparkline" },
+    { k: "components/bar-chart", t: "Bar chart" },
+    { k: "components/rating", t: "Rating" },
   ]},
   { label: "Feedback", items: [
     { k: "components/alert", t: "Alert" },
@@ -78,10 +84,16 @@ const NAV = [
   ]},
   { label: "Overlays", items: [
     { k: "components/modal", t: "Modal" },
+    { k: "components/drawer", t: "Drawer" },
     { k: "components/menu", t: "Dropdown menu" },
     { k: "components/popover", t: "Popover" },
     { k: "components/tooltip", t: "Tooltip" },
     { k: "components/accordion", t: "Accordion" },
+    { k: "components/command-palette", t: "Command palette" },
+  ]},
+  { label: "Utilities", items: [
+    { k: "components/code-block", t: "Code block" },
+    { k: "components/kbd", t: "Keyboard key" },
   ]},
   { label: "Platform", items: [
     { k: "components/web-components", t: "Web Components" },

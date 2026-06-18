@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drawer · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/drawer">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Drawer</h1>
+        <p class="docs-lede">An off-canvas panel anchored to an edge of the viewport over a dimmed scrim: a bordered head with a title and close button, a scrollable body, and an optional footer. Slides in via a transform, anchored right by default — or left, top, bottom.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Static panel</h2>
+        <p class="docs-note">The drawer panel on its own (the fixed <code>.ds-drawer-overlay</code> scrim is omitted here so it renders in flow). Head, scrollable body, and a footer pushing the primary action right with a <code>.ds-drawer__spacer</code>.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Panel</span>
+            <button class="ds-button" data-copy-target="#c-static">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-drawer" style="position:static;width:360px;max-width:100%;transform:none">
+              <div class="ds-drawer__head">
+                <h2 class="ds-drawer__title">Filters</h2>
+                <button class="ds-button ds-drawer__close">Close</button>
+              </div>
+              <div class="ds-drawer__body"><p>Body content…</p></div>
+              <div class="ds-drawer__foot">
+                <button class="ds-button">Clear</button>
+                <span class="ds-drawer__spacer"></span>
+                <button class="ds-button ds-button--primary">Apply</button>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-static">&lt;div class="ds-drawer-overlay is-open"&gt;
+  &lt;div class="ds-drawer ds-drawer--right" role="dialog" aria-modal="true"&gt;
+    &lt;div class="ds-drawer__head"&gt;
+      &lt;h2 class="ds-drawer__title"&gt;Filters&lt;/h2&gt;
+      &lt;button class="ds-button ds-drawer__close"&gt;Close&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class="ds-drawer__body"&gt;&lt;p&gt;Body content…&lt;/p&gt;&lt;/div&gt;
+    &lt;div class="ds-drawer__foot"&gt;
+      &lt;button class="ds-button"&gt;Clear&lt;/button&gt;
+      &lt;span class="ds-drawer__spacer"&gt;&lt;/span&gt;
+      &lt;button class="ds-button ds-button--primary"&gt;Apply&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Placement</h2>
+        <p class="docs-note">Modifiers dock the panel to an edge: <code>.ds-drawer--right</code> (default) and <code>.ds-drawer--left</code> for side panels, <code>.ds-drawer--top</code> / <code>.ds-drawer--bottom</code> for sheets.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">right · left · top · bottom</span>
+            <button class="ds-button" data-copy-target="#c-placement">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-drawer ds-drawer--left" style="position:static;width:280px;max-width:100%;transform:none">
+              <div class="ds-drawer__head">
+                <h2 class="ds-drawer__title">Navigation</h2>
+                <button class="ds-button ds-drawer__close">Close</button>
+              </div>
+              <div class="ds-drawer__body"><p>A left-anchored panel.</p></div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-placement">&lt;div class="ds-drawer ds-drawer--left"&gt;…&lt;/div&gt;
+&lt;div class="ds-drawer ds-drawer--right"&gt;…&lt;/div&gt;
+&lt;div class="ds-drawer ds-drawer--top"&gt;…&lt;/div&gt;
+&lt;div class="ds-drawer ds-drawer--bottom"&gt;…&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Interactive</h2>
+        <p class="docs-note">A trigger opens the live fixed overlay; it closes on the close button, a backdrop click, or <kbd>Escape</kbd>. The panel slides in from the right (held still under <code>prefers-reduced-motion</code>).</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Open drawer</span>
+            <button class="ds-button" data-copy-target="#c-interactive">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <button class="ds-button ds-button--primary" id="drawerOpen">Open drawer</button>
+            <div class="ds-drawer-overlay" id="demoDrawer">
+              <div class="ds-drawer ds-drawer--right" role="dialog" aria-modal="true">
+                <div class="ds-drawer__head">
+                  <h2 class="ds-drawer__title">Filters</h2>
+                  <button class="ds-button ds-drawer__close" data-drawer-close>Close</button>
+                </div>
+                <div class="ds-drawer__body"><p>Body content goes here. The body scrolls when it overflows.</p></div>
+                <div class="ds-drawer__foot">
+                  <button class="ds-button" data-drawer-close>Clear</button>
+                  <span class="ds-drawer__spacer"></span>
+                  <button class="ds-button ds-button--primary" data-drawer-close>Apply</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-interactive">&lt;button class="ds-button ds-button--primary" id="drawerOpen"&gt;Open drawer&lt;/button&gt;
+&lt;div class="ds-drawer-overlay" id="demoDrawer"&gt;
+  &lt;div class="ds-drawer ds-drawer--right" role="dialog" aria-modal="true"&gt;
+    &lt;div class="ds-drawer__head"&gt;
+      &lt;h2 class="ds-drawer__title"&gt;Filters&lt;/h2&gt;
+      &lt;button class="ds-button ds-drawer__close" data-drawer-close&gt;Close&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class="ds-drawer__body"&gt;&lt;p&gt;Body content…&lt;/p&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+  const ov = document.querySelector("#demoDrawer");
+  document.querySelector("#drawerOpen").onclick = () =&gt; ov.classList.add("is-open");
+  const close = () =&gt; ov.classList.remove("is-open");
+  ov.addEventListener("click", (e) =&gt; { if (e.target === ov) close(); });
+  ov.querySelectorAll("[data-drawer-close]").forEach((b) =&gt; b.onclick = close);
+  document.addEventListener("keydown", (e) =&gt; { if (e.key === "Escape") close(); });
+&lt;/script&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <p class="docs-note">The <code>Drawer</code> component portals to <code>&lt;body&gt;</code> and is controlled via <code>open</code>; it closes on <kbd>Escape</kbd> and a backdrop click. Pass <code>placement</code>, a <code>heading</code>, and optional <code>footer</code> actions.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;Drawer&gt;</span>
+            <button class="ds-button" data-copy-target="#c-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-react">import { Drawer, Button } from "@diametral/design-system/react";
+
+function Filters() {
+  const [open, setOpen] = React.useState(false);
+  return (
+    &lt;&gt;
+      &lt;Button variant="primary" onClick={() =&gt; setOpen(true)}&gt;Open drawer&lt;/Button&gt;
+      &lt;Drawer
+        open={open}
+        onClose={() =&gt; setOpen(false)}
+        placement="right"
+        heading="Filters"
+        footer={&lt;Button variant="primary" onClick={() =&gt; setOpen(false)}&gt;Apply&lt;/Button&gt;}
+      &gt;
+        &lt;p&gt;Body content…&lt;/p&gt;
+      &lt;/Drawer&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      var ov = document.getElementById("demoDrawer");
+      var openBtn = document.getElementById("drawerOpen");
+      if (!ov || !openBtn) return;
+      function open() {
+        ov.classList.add("is-open");
+      }
+      function close() {
+        ov.classList.remove("is-open");
+      }
+      openBtn.addEventListener("click", open);
+      ov.addEventListener("click", function (e) {
+        if (e.target === ov) close();
+      });
+      ov.querySelectorAll("[data-drawer-close]").forEach(function (b) {
+        b.addEventListener("click", close);
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") close();
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+/* ============================================================================
+   Date range picker — .ds-daterange (a .ds-input that opens a two-month popover)
+   ----------------------------------------------------------------------------
+   The wrapper is a relative anchor holding the text input; the popover is a flat
+   bordered surface (1px border, no radius, no shadow) positioned beneath it that
+   lays two .ds-calendar grids side by side. Day cells reuse the .ds-calendar*
+   look from date-picker.css; the range adds three states on the __day cells:
+   .is-range-start / .is-range-end (the endpoints — ink fill, like .is-selected)
+   and .is-in-range (the span between them — a soft accent background). Position
+   the popover yourself (absolute / portal); the wrapper gives the relative anchor.
+   ============================================================================ */
+.ds-daterange {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+}
+.ds-daterange > .ds-input { min-width: 240px; }
+
+/* The popover surface — a flat bordered box wrapping the two month grids. */
+.ds-daterange__popover {
+  padding: var(--ds-space-3);
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-ink);
+  border-radius: var(--ds-radius-none);
+  z-index: var(--ds-z-popover);
+  font-family: var(--ds-font-sans);
+}
+
+/* Two month grids side by side, separated by a gap (no radius, no shadow). */
+.ds-daterange__months {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--ds-space-5);
+}
+/* The popover already provides the bordered surface — the inner grids drop
+   their own border so the two months read as one panel. */
+.ds-daterange__months > .ds-calendar {
+  padding: 0;
+  border: none;
+}
+
+/* Range span — a soft accent background tying the endpoints together. */
+.ds-daterange .ds-calendar__day.is-in-range {
+  background: var(--ds-accent-bg);
+  color: var(--ds-ink);
+}
+.ds-daterange .ds-calendar__day.is-in-range:hover {
+  background: var(--ds-accent-bg);
+}
+
+/* Endpoints — an ink fill with on-accent text, like the date picker selection;
+   wins over the in-range background, today's ring and hover. */
+.ds-daterange .ds-calendar__day.is-range-start,
+.ds-daterange .ds-calendar__day.is-range-end,
+.ds-daterange .ds-calendar__day.is-range-start:hover,
+.ds-daterange .ds-calendar__day.is-range-end:hover {
+  background: var(--ds-ink);
+  border-color: var(--ds-ink);
+  color: var(--ds-on-accent);
+}

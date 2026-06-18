@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bar chart · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/bar-chart">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Bar chart</h1>
+        <p class="docs-lede">A minimal flat bar chart — no library. The default is vertical: a flex-end row of columns whose heights are set inline as a percentage of the max. A horizontal modifier lays the same data out as rows. Bars fill with the accent or a status color.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Vertical</h2>
+        <p class="docs-note">Each <code>__bar</code> height is set with an inline <code>style="height: …%"</code> (value ÷ max).</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Columns</span>
+            <button class="ds-button" data-copy-target="#c-vert">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-barchart" role="img" aria-label="Weekly volume">
+              <div class="ds-barchart__col">
+                <div class="ds-barchart__track"><div class="ds-barchart__bar" style="height:40%"></div></div>
+                <span class="ds-barchart__value">12</span>
+              </div>
+              <div class="ds-barchart__col">
+                <div class="ds-barchart__track"><div class="ds-barchart__bar" style="height:73%"></div></div>
+                <span class="ds-barchart__value">22</span>
+              </div>
+              <div class="ds-barchart__col">
+                <div class="ds-barchart__track"><div class="ds-barchart__bar" style="height:60%"></div></div>
+                <span class="ds-barchart__value">18</span>
+              </div>
+              <div class="ds-barchart__col">
+                <div class="ds-barchart__track"><div class="ds-barchart__bar" style="height:100%"></div></div>
+                <span class="ds-barchart__value">30</span>
+              </div>
+              <div class="ds-barchart__col">
+                <div class="ds-barchart__track"><div class="ds-barchart__bar" style="height:50%"></div></div>
+                <span class="ds-barchart__value">15</span>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-vert">&lt;div class="ds-barchart" role="img" aria-label="Weekly volume"&gt;
+  &lt;div class="ds-barchart__col"&gt;
+    &lt;div class="ds-barchart__track"&gt;
+      &lt;div class="ds-barchart__bar" style="height:40%"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class="ds-barchart__value"&gt;12&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;!-- …more columns… --&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>With labels &amp; status</h2>
+        <p class="docs-note">A small faint <code>__label</code> sits under each column; a bar can take a status color via <code>.is-success</code> / <code>.is-warning</code> / <code>.is-danger</code>.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Labels + status bars</span>
+            <button class="ds-button" data-copy-target="#c-status">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-barchart" role="img" aria-label="Status by region">
+              <div class="ds-barchart__col">
+                <span class="ds-barchart__label">EMEA</span>
+                <div class="ds-barchart__track"><div class="ds-barchart__bar is-success" style="height:80%"></div></div>
+                <span class="ds-barchart__value">80</span>
+              </div>
+              <div class="ds-barchart__col">
+                <span class="ds-barchart__label">AMER</span>
+                <div class="ds-barchart__track"><div class="ds-barchart__bar is-warning" style="height:55%"></div></div>
+                <span class="ds-barchart__value">55</span>
+              </div>
+              <div class="ds-barchart__col">
+                <span class="ds-barchart__label">APAC</span>
+                <div class="ds-barchart__track"><div class="ds-barchart__bar is-danger" style="height:30%"></div></div>
+                <span class="ds-barchart__value">30</span>
+              </div>
+              <div class="ds-barchart__col">
+                <span class="ds-barchart__label">LATAM</span>
+                <div class="ds-barchart__track"><div class="ds-barchart__bar" style="height:65%"></div></div>
+                <span class="ds-barchart__value">65</span>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-status">&lt;div class="ds-barchart" role="img" aria-label="Status by region"&gt;
+  &lt;div class="ds-barchart__col"&gt;
+    &lt;span class="ds-barchart__label"&gt;EMEA&lt;/span&gt;
+    &lt;div class="ds-barchart__track"&gt;
+      &lt;div class="ds-barchart__bar is-success" style="height:80%"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class="ds-barchart__value"&gt;80&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;!-- …more columns… --&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Horizontal</h2>
+        <p class="docs-note">The <code>--horizontal</code> modifier turns the chart into rows: <code>label · track · value</code>, with the bar <code>width</code> as the data dimension.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">.ds-barchart--horizontal</span>
+            <button class="ds-button" data-copy-target="#c-horiz">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-barchart ds-barchart--horizontal" role="img" aria-label="Spend by team">
+              <div class="ds-barchart__col">
+                <span class="ds-barchart__label">Design</span>
+                <div class="ds-barchart__track"><div class="ds-barchart__bar" style="width:72%"></div></div>
+                <span class="ds-barchart__value">72</span>
+              </div>
+              <div class="ds-barchart__col">
+                <span class="ds-barchart__label">Engineering</span>
+                <div class="ds-barchart__track"><div class="ds-barchart__bar" style="width:100%"></div></div>
+                <span class="ds-barchart__value">98</span>
+              </div>
+              <div class="ds-barchart__col">
+                <span class="ds-barchart__label">Sales</span>
+                <div class="ds-barchart__track"><div class="ds-barchart__bar is-warning" style="width:44%"></div></div>
+                <span class="ds-barchart__value">44</span>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-horiz">&lt;div class="ds-barchart ds-barchart--horizontal" role="img" aria-label="Spend by team"&gt;
+  &lt;div class="ds-barchart__col"&gt;
+    &lt;span class="ds-barchart__label"&gt;Design&lt;/span&gt;
+    &lt;div class="ds-barchart__track"&gt;
+      &lt;div class="ds-barchart__bar" style="width:72%"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class="ds-barchart__value"&gt;72&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;!-- …more rows… --&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <p class="docs-note">The <code>&lt;BarChart&gt;</code> component takes <code>data={label, value, status?}[]</code> and derives each bar length from <code>value / max</code>.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;BarChart&gt;</span>
+            <button class="ds-button" data-copy-target="#c-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-react">import { BarChart } from "@diametral/design-system/react";
+
+&lt;BarChart data={[
+  { label: "EMEA", value: 80, status: "success" },
+  { label: "AMER", value: 55, status: "warning" },
+  { label: "APAC", value: 30, status: "danger" },
+]} /&gt;
+
+&lt;BarChart horizontal max={100} data={[
+  { label: "Design", value: 72 },
+  { label: "Engineering", value: 98 },
+]} /&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

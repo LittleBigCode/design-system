@@ -1,0 +1,42 @@
+/* ============================================================================
+   Sparkline — .ds-sparkline
+   ----------------------------------------------------------------------------
+   An inline mini line chart drawn as a single inline <svg>. No axes, no grid,
+   no library — just a polyline (and an optional faint area fill + an end dot).
+   The stroke uses currentColor, so the line picks up the element's color; the
+   default color is the accent. Sits inline-block so it can flow next to text
+   or drop into a stat tile.
+   ============================================================================ */
+.ds-sparkline {
+  display: inline-block;
+  line-height: 0;
+  color: var(--ds-accent);
+  vertical-align: middle;
+}
+
+.ds-sparkline__svg {
+  display: block;
+  overflow: visible;
+}
+
+/* The line — inherits color via currentColor. */
+.ds-sparkline__line {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+/* Optional faint area under the line (defaults to currentColor, made faint). */
+.ds-sparkline__area {
+  fill: currentColor;
+  opacity: 0.12;
+  stroke: none;
+}
+
+/* Dot marking the last point. */
+.ds-sparkline__dot {
+  fill: currentColor;
+  stroke: none;
+}

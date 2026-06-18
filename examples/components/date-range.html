@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Date range picker · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/date-range">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Date range picker</h1>
+        <p class="docs-lede">A <code>.ds-input</code> that opens a flat <code>.ds-daterange__popover</code> laying two <code>.ds-calendar</code> month grids side by side. Click to set the start, click again for the end — the span fills with a soft accent and the endpoints fill with ink. Reuses the <code>.ds-calendar*</code> look from the date picker. No radius, no shadow.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Two-month range</h2>
+        <p class="docs-note">The open <code>.ds-daterange__popover</code>: a <code>.ds-calendar__head</code> with the prev / next steppers, then <code>.ds-daterange__months</code> holding two borderless <code>.ds-calendar</code> grids. The endpoints carry <code>.is-range-start</code> / <code>.is-range-end</code> (ink fill); the days between carry <code>.is-in-range</code> (a <code>var(--ds-accent-bg)</code> band). Here the range runs June 12 → July 3, 2026.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Open range popover</span>
+            <button class="ds-button" data-copy-target="#c-range">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <div class="ds-daterange__popover" role="dialog" aria-label="Choose date range">
+              <div class="ds-calendar__head">
+                <button class="ds-button ds-button--icon ds-button--sm" type="button" aria-label="Previous month">
+                  <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M11 4 6 9l5 5"/></svg>
+                </button>
+                <button class="ds-button ds-button--icon ds-button--sm" type="button" aria-label="Next month">
+                  <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 4l5 5-5 5"/></svg>
+                </button>
+              </div>
+              <div class="ds-daterange__months">
+                <div class="ds-calendar" role="grid" aria-label="June 2026">
+                  <div class="ds-calendar__head"><div class="ds-calendar__label">June 2026</div></div>
+                  <div class="ds-calendar__grid">
+                    <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Su</div>
+                    <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Mo</div>
+                    <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Tu</div>
+                    <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">We</div>
+                    <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Th</div>
+                    <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Fr</div>
+                    <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Sa</div>
+                    <button class="ds-calendar__day is-outside" type="button" role="gridcell">31</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">1</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">2</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">3</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">4</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">5</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">6</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">7</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">8</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">9</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">10</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">11</button>
+                    <button class="ds-calendar__day is-range-start" type="button" role="gridcell" aria-pressed="true">12</button>
+                    <button class="ds-calendar__day is-in-range" type="button" role="gridcell">13</button>
+                    <button class="ds-calendar__day is-in-range" type="button" role="gridcell">14</button>
+                    <button class="ds-calendar__day is-in-range" type="button" role="gridcell">15</button>
+                    <button class="ds-calendar__day is-in-range" type="button" role="gridcell">16</button>
+                    <button class="ds-calendar__day is-in-range" type="button" role="gridcell">17</button>
+                    <button class="ds-calendar__day is-today is-in-range" type="button" role="gridcell">18</button>
+                    <button class="ds-calendar__day is-in-range" type="button" role="gridcell">19</button>
+                    <button class="ds-calendar__day is-in-range" type="button" role="gridcell">20</button>
+                    <button class="ds-calendar__day is-in-range" type="button" role="gridcell">21</button>
+                    <button class="ds-calendar__day is-in-range" type="button" role="gridcell">22</button>
+                    <button class="ds-calendar__day is-in-range" type="button" role="gridcell">23</button>
+                    <button class="ds-calendar__day is-in-range" type="button" role="gridcell">24</button>
+                    <button class="ds-calendar__day is-in-range" type="button" role="gridcell">25</button>
+                    <button class="ds-calendar__day is-in-range" type="button" role="gridcell">26</button>
+                    <button class="ds-calendar__day is-in-range" type="button" role="gridcell">27</button>
+                    <button class="ds-calendar__day is-in-range" type="button" role="gridcell">28</button>
+                    <button class="ds-calendar__day is-in-range" type="button" role="gridcell">29</button>
+                    <button class="ds-calendar__day is-in-range" type="button" role="gridcell">30</button>
+                    <button class="ds-calendar__day is-outside is-in-range" type="button" role="gridcell">1</button>
+                    <button class="ds-calendar__day is-outside is-in-range" type="button" role="gridcell">2</button>
+                    <button class="ds-calendar__day is-outside is-range-end" type="button" role="gridcell" aria-pressed="true">3</button>
+                    <button class="ds-calendar__day is-outside" type="button" role="gridcell">4</button>
+                    <button class="ds-calendar__day is-outside" type="button" role="gridcell">5</button>
+                    <button class="ds-calendar__day is-outside" type="button" role="gridcell">6</button>
+                    <button class="ds-calendar__day is-outside" type="button" role="gridcell">7</button>
+                    <button class="ds-calendar__day is-outside" type="button" role="gridcell">8</button>
+                    <button class="ds-calendar__day is-outside" type="button" role="gridcell">9</button>
+                    <button class="ds-calendar__day is-outside" type="button" role="gridcell">10</button>
+                    <button class="ds-calendar__day is-outside" type="button" role="gridcell">11</button>
+                  </div>
+                </div>
+                <div class="ds-calendar" role="grid" aria-label="July 2026">
+                  <div class="ds-calendar__head"><div class="ds-calendar__label">July 2026</div></div>
+                  <div class="ds-calendar__grid">
+                    <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Su</div>
+                    <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Mo</div>
+                    <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Tu</div>
+                    <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">We</div>
+                    <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Th</div>
+                    <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Fr</div>
+                    <div class="ds-calendar__weekday" role="columnheader" aria-hidden="true">Sa</div>
+                    <button class="ds-calendar__day is-outside is-in-range" type="button" role="gridcell">28</button>
+                    <button class="ds-calendar__day is-outside is-in-range" type="button" role="gridcell">29</button>
+                    <button class="ds-calendar__day is-outside is-in-range" type="button" role="gridcell">30</button>
+                    <button class="ds-calendar__day is-in-range" type="button" role="gridcell">1</button>
+                    <button class="ds-calendar__day is-in-range" type="button" role="gridcell">2</button>
+                    <button class="ds-calendar__day is-range-end" type="button" role="gridcell" aria-pressed="true">3</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">4</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">5</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">6</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">7</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">8</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">9</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">10</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">11</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">12</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">13</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">14</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">15</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">16</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">17</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">18</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">19</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">20</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">21</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">22</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">23</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">24</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">25</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">26</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">27</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">28</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">29</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">30</button>
+                    <button class="ds-calendar__day" type="button" role="gridcell">31</button>
+                    <button class="ds-calendar__day is-outside" type="button" role="gridcell">1</button>
+                    <button class="ds-calendar__day is-outside" type="button" role="gridcell">2</button>
+                    <button class="ds-calendar__day is-outside" type="button" role="gridcell">3</button>
+                    <button class="ds-calendar__day is-outside" type="button" role="gridcell">4</button>
+                    <button class="ds-calendar__day is-outside" type="button" role="gridcell">5</button>
+                    <button class="ds-calendar__day is-outside" type="button" role="gridcell">6</button>
+                    <button class="ds-calendar__day is-outside" type="button" role="gridcell">7</button>
+                    <button class="ds-calendar__day is-outside" type="button" role="gridcell">8</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-range">&lt;div class="ds-daterange__popover" role="dialog" aria-label="Choose date range"&gt;
+  &lt;div class="ds-calendar__head"&gt;
+    &lt;button class="ds-button ds-button--icon ds-button--sm" aria-label="Previous month"&gt;…&lt;/button&gt;
+    &lt;button class="ds-button ds-button--icon ds-button--sm" aria-label="Next month"&gt;…&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="ds-daterange__months"&gt;
+    &lt;div class="ds-calendar" role="grid" aria-label="June 2026"&gt;
+      &lt;div class="ds-calendar__head"&gt;&lt;div class="ds-calendar__label"&gt;June 2026&lt;/div&gt;&lt;/div&gt;
+      &lt;div class="ds-calendar__grid"&gt;
+        &lt;div class="ds-calendar__weekday"&gt;Su&lt;/div&gt; … &lt;div class="ds-calendar__weekday"&gt;Sa&lt;/div&gt;
+        &lt;button class="ds-calendar__day"&gt;11&lt;/button&gt;
+        &lt;button class="ds-calendar__day is-range-start" aria-pressed="true"&gt;12&lt;/button&gt;
+        &lt;button class="ds-calendar__day is-in-range"&gt;13&lt;/button&gt; …
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="ds-calendar" role="grid" aria-label="July 2026"&gt;
+      …
+      &lt;button class="ds-calendar__day is-in-range"&gt;2&lt;/button&gt;
+      &lt;button class="ds-calendar__day is-range-end" aria-pressed="true"&gt;3&lt;/button&gt; …
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Field</h2>
+        <p class="docs-note">In a form the popover hangs off a read-only <code>.ds-input</code> inside a <code>.ds-daterange</code> anchor. The input shows the selected range as <code>start — end</code>; the React component opens and positions the popover for you.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Closed input</span>
+            <button class="ds-button" data-copy-target="#c-field">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-daterange">
+              <input class="ds-input" type="text" readonly value="2026-06-12 — 2026-07-03" aria-haspopup="dialog" aria-expanded="false" autocomplete="off">
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-field">&lt;div class="ds-daterange"&gt;
+  &lt;input class="ds-input" type="text" readonly
+         value="2026-06-12 — 2026-07-03"
+         aria-haspopup="dialog" aria-expanded="false"&gt;
+  &lt;!-- .ds-daterange__popover (hidden until open) --&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <p class="docs-note">The <code>DateRangePicker</code> renders the <code>.ds-input</code> and two-month popover, computes both grids with pure JS date math, and selects a range: the first click sets the start, the next sets the end (swapping if it precedes the start), and a third click starts over. Hover previews the in-progress range. Works controlled (<code>value</code>/<code>onChange</code>) or uncontrolled (<code>defaultValue</code>); <code>value</code> is <code>{ start, end }</code> with Dates or ISO strings.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;DateRangePicker&gt;</span>
+            <button class="ds-button" data-copy-target="#c-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-react">import { DateRangePicker } from "@diametral/design-system/react";
+
+&lt;DateRangePicker
+  defaultValue={{ start: "2026-06-12", end: "2026-07-03" }}
+  min="2026-01-01"
+  max="2026-12-31"
+  onChange={(range, iso) =&gt; console.log(iso.start, iso.end, range)}
+/&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

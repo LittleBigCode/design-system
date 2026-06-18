@@ -1,0 +1,54 @@
+/* ============================================================================
+   Stat / KPI card — .ds-stat
+   ----------------------------------------------------------------------------
+   A dashboard tile: a flat bordered surface (like .ds-card) carrying an
+   uppercase faint label, a large title-voiced figure, an optional up/down
+   delta, and a slot for inline content (e.g. a Sparkline) under the value.
+   ============================================================================ */
+.ds-stat {
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-rule);
+  border-radius: var(--ds-radius-none);
+  color: var(--ds-ink);
+  padding: 16px 20px;
+}
+
+.ds-stat__label {
+  font-size: var(--ds-text-2xs);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ds-ink-faint);
+}
+
+.ds-stat__value {
+  font-family: var(--ds-font-title);
+  font-size: var(--ds-text-2xl);
+  font-weight: var(--ds-font-weight-title);
+  letter-spacing: -0.5px;
+  line-height: var(--ds-leading-tight);
+  font-variant-numeric: tabular-nums;
+  margin-top: var(--ds-space-2);
+}
+
+/* Delta — small signed change. .is-up reads success, .is-down reads danger;
+   the arrow is supplied via ::before. */
+.ds-stat__delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: var(--ds-space-1);
+  font-size: var(--ds-text-xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--ds-ink-faint);
+}
+.ds-stat__delta.is-up   { color: var(--ds-success); }
+.ds-stat__delta.is-down { color: var(--ds-danger); }
+.ds-stat__delta.is-up::before   { content: "\25B2"; font-size: 0.85em; }
+.ds-stat__delta.is-down::before { content: "\25BC"; font-size: 0.85em; }
+
+/* Spark slot — room for an inline chart (e.g. a sparkline) under the figure. */
+.ds-stat__spark {
+  margin-top: var(--ds-space-3);
+  line-height: 0;
+}

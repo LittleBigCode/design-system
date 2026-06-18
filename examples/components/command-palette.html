@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Command palette · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/command-palette">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Command palette</h1>
+        <p class="docs-lede">A ⌘K-style command surface: a borderless search input over a scrollable list of grouped, selectable rows. Filter as you type, move the active row with the arrow keys, and run it with <kbd>Enter</kbd>. Reuses the shared overlay scrim.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Static surface</h2>
+        <p class="docs-note">The <code>.ds-cmdk</code> surface on its own (the fixed <code>.ds-overlay</code> scrim is omitted here so it renders in flow). A borderless input with a bottom rule, faint uppercase group labels, an active row on <code>.is-active</code>, and a right-aligned hint or <code>.ds-cmdk__kbd</code>.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Surface</span>
+            <button class="ds-button" data-copy-target="#c-static">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-cmdk" style="max-height:none">
+              <input class="ds-cmdk__input" type="text" placeholder="Type a command or search…" value="">
+              <div class="ds-cmdk__list" role="listbox">
+                <div class="ds-cmdk__group-label">Navigation</div>
+                <button class="ds-cmdk__item is-active" role="option" aria-selected="true">
+                  <span class="ds-cmdk__label">Go to dashboard</span>
+                  <span class="ds-cmdk__kbd">G D</span>
+                </button>
+                <button class="ds-cmdk__item" role="option">
+                  <span class="ds-cmdk__label">Go to settings</span>
+                  <span class="ds-cmdk__kbd">G S</span>
+                </button>
+                <div class="ds-cmdk__group-label">Actions</div>
+                <button class="ds-cmdk__item" role="option">
+                  <span class="ds-cmdk__label">Create reference</span>
+                  <span class="ds-cmdk__hint">⌘ N</span>
+                </button>
+                <button class="ds-cmdk__item" role="option">
+                  <span class="ds-cmdk__label">Export matrix</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-static">&lt;div class="ds-cmdk"&gt;
+  &lt;input class="ds-cmdk__input" type="text" placeholder="Type a command or search…"&gt;
+  &lt;div class="ds-cmdk__list" role="listbox"&gt;
+    &lt;div class="ds-cmdk__group-label"&gt;Navigation&lt;/div&gt;
+    &lt;button class="ds-cmdk__item is-active" role="option" aria-selected="true"&gt;
+      &lt;span class="ds-cmdk__label"&gt;Go to dashboard&lt;/span&gt;
+      &lt;span class="ds-cmdk__kbd"&gt;G D&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;button class="ds-cmdk__item" role="option"&gt;
+      &lt;span class="ds-cmdk__label"&gt;Go to settings&lt;/span&gt;
+      &lt;span class="ds-cmdk__kbd"&gt;G S&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="ds-cmdk__group-label"&gt;Actions&lt;/div&gt;
+    &lt;button class="ds-cmdk__item" role="option"&gt;
+      &lt;span class="ds-cmdk__label"&gt;Create reference&lt;/span&gt;
+      &lt;span class="ds-cmdk__hint"&gt;⌘ N&lt;/span&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Empty state</h2>
+        <p class="docs-note">When the query matches nothing, the list shows a single centered <code>.ds-cmdk__empty</code> message.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">No results</span>
+            <button class="ds-button" data-copy-target="#c-empty">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-cmdk" style="max-height:none">
+              <input class="ds-cmdk__input" type="text" placeholder="Type a command or search…" value="zzz">
+              <div class="ds-cmdk__list" role="listbox">
+                <div class="ds-cmdk__empty">No results.</div>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-empty">&lt;div class="ds-cmdk__list" role="listbox"&gt;
+  &lt;div class="ds-cmdk__empty"&gt;No results.&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Interactive</h2>
+        <p class="docs-note">A trigger opens the live overlay. Type to filter, use <kbd>↑</kbd>/<kbd>↓</kbd> to move the active row, <kbd>Enter</kbd> to run it, <kbd>Escape</kbd> or a backdrop click to close. In a real app you would also wire a global <kbd>⌘</kbd><kbd>K</kbd> listener to flip the open state.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Open palette</span>
+            <button class="ds-button" data-copy-target="#c-interactive">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <button class="ds-button ds-button--primary" id="cmdkOpen">Open palette <span class="ds-cmdk__kbd" style="margin-left:8px">⌘ K</span></button>
+            <div class="ds-overlay" id="demoCmdk" style="align-items:flex-start">
+              <div class="ds-cmdk" role="dialog" aria-modal="true" aria-label="Command palette">
+                <input class="ds-cmdk__input" type="text" id="cmdkInput" placeholder="Type a command or search…">
+                <div class="ds-cmdk__list" role="listbox" id="cmdkList"></div>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-interactive">&lt;button class="ds-button ds-button--primary" id="cmdkOpen"&gt;Open palette&lt;/button&gt;
+&lt;div class="ds-overlay" id="demoCmdk" style="align-items:flex-start"&gt;
+  &lt;div class="ds-cmdk" role="dialog" aria-modal="true" aria-label="Command palette"&gt;
+    &lt;input class="ds-cmdk__input" type="text" id="cmdkInput" placeholder="Type a command or search…"&gt;
+    &lt;div class="ds-cmdk__list" role="listbox" id="cmdkList"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+  const COMMANDS = [
+    { label: "Go to dashboard", group: "Navigation", hint: "G D" },
+    { label: "Go to settings",  group: "Navigation", hint: "G S" },
+    { label: "Create reference", group: "Actions", hint: "⌘ N" },
+    { label: "Export matrix",    group: "Actions" },
+  ];
+  const ov = document.querySelector("#demoCmdk");
+  const input = document.querySelector("#cmdkInput");
+  const list = document.querySelector("#cmdkList");
+  let active = 0, view = COMMANDS;
+
+  function render() {
+    const q = input.value.trim().toLowerCase();
+    view = COMMANDS.filter((c) =&gt; c.label.toLowerCase().includes(q));
+    active = Math.min(active, Math.max(0, view.length - 1));
+    list.innerHTML = "";
+    if (!view.length) {
+      list.innerHTML = '&lt;div class="ds-cmdk__empty"&gt;No results.&lt;/div&gt;';
+      return;
+    }
+    let lastGroup;
+    view.forEach((c, i) =&gt; {
+      if (c.group &amp;&amp; c.group !== lastGroup) {
+        lastGroup = c.group;
+        const g = document.createElement("div");
+        g.className = "ds-cmdk__group-label";
+        g.textContent = c.group;
+        list.appendChild(g);
+      }
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "ds-cmdk__item" + (i === active ? " is-active" : "");
+      b.innerHTML = '&lt;span class="ds-cmdk__label"&gt;&lt;/span&gt;' +
+        (c.hint ? '&lt;span class="ds-cmdk__hint"&gt;&lt;/span&gt;' : "");
+      b.querySelector(".ds-cmdk__label").textContent = c.label;
+      if (c.hint) b.querySelector(".ds-cmdk__hint").textContent = c.hint;
+      b.addEventListener("mouseenter", () =&gt; { active = i; render(); });
+      b.addEventListener("click", () =&gt; close());
+      list.appendChild(b);
+    });
+  }
+  function open() { input.value = ""; active = 0; render(); ov.classList.add("is-open"); input.focus(); }
+  function close() { ov.classList.remove("is-open"); }
+
+  document.querySelector("#cmdkOpen").addEventListener("click", open);
+  ov.addEventListener("click", (e) =&gt; { if (e.target === ov) close(); });
+  input.addEventListener("input", render);
+  input.addEventListener("keydown", (e) =&gt; {
+    if (e.key === "ArrowDown") { e.preventDefault(); active = (active + 1) % view.length; render(); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); active = (active - 1 + view.length) % view.length; render(); }
+    else if (e.key === "Enter") { e.preventDefault(); close(); }
+    else if (e.key === "Escape") { close(); }
+  });
+  // Global ⌘K / Ctrl-K listener.
+  document.addEventListener("keydown", (e) =&gt; {
+    if ((e.metaKey || e.ctrlKey) &amp;&amp; e.key.toLowerCase() === "k") { e.preventDefault(); open(); }
+  });
+&lt;/script&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <p class="docs-note">The <code>CommandPalette</code> component portals to <code>&lt;body&gt;</code> and is controlled via <code>open</code>. Pass <code>commands</code> as <code>{ id, label, group?, hint?, onRun }</code>; filtering, arrow navigation, and <kbd>Enter</kbd>-to-run are built in. Wire a global <kbd>⌘</kbd><kbd>K</kbd> listener in your app to flip <code>open</code>.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;CommandPalette&gt;</span>
+            <button class="ds-button" data-copy-target="#c-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-react">import { CommandPalette } from "@diametral/design-system/react";
+
+function Palette() {
+  const [open, setOpen] = React.useState(false);
+
+  React.useEffect(() =&gt; {
+    const onKey = (e) =&gt; {
+      if ((e.metaKey || e.ctrlKey) &amp;&amp; e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setOpen((o) =&gt; !o);
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () =&gt; document.removeEventListener("keydown", onKey);
+  }, []);
+
+  const commands = [
+    { id: "dash", label: "Go to dashboard", group: "Navigation", hint: "G D", onRun: () =&gt; navigate("/") },
+    { id: "new",  label: "Create reference", group: "Actions", hint: "⌘ N", onRun: createReference },
+  ];
+
+  return (
+    &lt;CommandPalette
+      open={open}
+      onClose={() =&gt; setOpen(false)}
+      commands={commands}
+      placeholder="Type a command or search…"
+    /&gt;
+  );
+}</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      var COMMANDS = [
+        { label: "Go to dashboard", group: "Navigation", hint: "G D" },
+        { label: "Go to settings", group: "Navigation", hint: "G S" },
+        { label: "Create reference", group: "Actions", hint: "⌘ N" },
+        { label: "Export matrix", group: "Actions" }
+      ];
+      var ov = document.getElementById("demoCmdk");
+      var input = document.getElementById("cmdkInput");
+      var list = document.getElementById("cmdkList");
+      var openBtn = document.getElementById("cmdkOpen");
+      if (!ov || !input || !list || !openBtn) return;
+      var active = 0;
+      var view = COMMANDS;
+
+      function render() {
+        var q = input.value.trim().toLowerCase();
+        view = COMMANDS.filter(function (c) { return c.label.toLowerCase().indexOf(q) !== -1; });
+        active = Math.min(active, Math.max(0, view.length - 1));
+        list.innerHTML = "";
+        if (!view.length) {
+          var empty = document.createElement("div");
+          empty.className = "ds-cmdk__empty";
+          empty.textContent = "No results.";
+          list.appendChild(empty);
+          return;
+        }
+        var lastGroup;
+        view.forEach(function (c, i) {
+          if (c.group && c.group !== lastGroup) {
+            lastGroup = c.group;
+            var g = document.createElement("div");
+            g.className = "ds-cmdk__group-label";
+            g.textContent = c.group;
+            list.appendChild(g);
+          }
+          var b = document.createElement("button");
+          b.type = "button";
+          b.setAttribute("role", "option");
+          b.className = "ds-cmdk__item" + (i === active ? " is-active" : "");
+          var label = document.createElement("span");
+          label.className = "ds-cmdk__label";
+          label.textContent = c.label;
+          b.appendChild(label);
+          if (c.hint) {
+            var hint = document.createElement("span");
+            hint.className = "ds-cmdk__hint";
+            hint.textContent = c.hint;
+            b.appendChild(hint);
+          }
+          b.addEventListener("mouseenter", function () { active = i; render(); });
+          b.addEventListener("click", function () { close(); });
+          if (i === active) b.scrollIntoView({ block: "nearest" });
+          list.appendChild(b);
+        });
+      }
+      function open() {
+        input.value = "";
+        active = 0;
+        render();
+        ov.classList.add("is-open");
+        input.focus();
+      }
+      function close() {
+        ov.classList.remove("is-open");
+      }
+
+      openBtn.addEventListener("click", open);
+      ov.addEventListener("click", function (e) { if (e.target === ov) close(); });
+      input.addEventListener("input", render);
+      input.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowDown") { e.preventDefault(); if (view.length) { active = (active + 1) % view.length; render(); } }
+        else if (e.key === "ArrowUp") { e.preventDefault(); if (view.length) { active = (active - 1 + view.length) % view.length; render(); } }
+        else if (e.key === "Enter") { e.preventDefault(); close(); }
+        else if (e.key === "Escape") { close(); }
+      });
+      document.addEventListener("keydown", function (e) {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); open(); }
+      });
+    })();
+  </script>
+</body>
+</html>

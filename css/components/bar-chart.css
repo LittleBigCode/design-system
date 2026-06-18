@@ -1,0 +1,106 @@
+/* ============================================================================
+   Bar chart — .ds-barchart
+   ----------------------------------------------------------------------------
+   A minimal flat bar chart, no library. Default is vertical: a flex-end row of
+   columns whose heights are set inline as a %. The --horizontal modifier turns
+   it into stacked rows whose bar widths are set inline. Each entry pairs a
+   small faint label with a tabular value; bars fill with the accent (or a
+   status color via .is-* on the bar). Flat, sharp, 1px-aware — no radius.
+   ============================================================================ */
+.ds-barchart {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--ds-space-3);
+  width: 100%;
+  height: 160px;
+}
+
+/* One column: label on top is avoided — track grows, value/label sit below. */
+.ds-barchart__col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1 1 0;
+  min-width: 0;
+  height: 100%;
+  gap: var(--ds-space-1);
+}
+
+/* The vertical track holds the bar pinned to the bottom. */
+.ds-barchart__track {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.ds-barchart__bar {
+  width: 100%;
+  background: var(--ds-accent);
+  border-radius: var(--ds-radius-none);
+  transition: height var(--ds-transition), width var(--ds-transition);
+}
+
+/* Status colors for a bar. */
+.ds-barchart__bar.is-success  { background: var(--ds-success); }
+.ds-barchart__bar.is-warning  { background: var(--ds-warning); }
+.ds-barchart__bar.is-danger   { background: var(--ds-danger); }
+.ds-barchart__bar.is-critical { background: var(--ds-critical); }
+.ds-barchart__bar.is-neutral  { background: var(--ds-neutral); }
+.ds-barchart__bar.is-info     { background: var(--ds-info); }
+
+.ds-barchart__label {
+  font-size: var(--ds-text-2xs);
+  color: var(--ds-ink-faint);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.ds-barchart__value {
+  font-size: var(--ds-text-xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--ds-ink);
+}
+
+/* ----------------------------------------------------------------------------
+   Horizontal — rows of [label · track · value]. Width is the data dimension.
+   ---------------------------------------------------------------------------- */
+.ds-barchart--horizontal {
+  flex-direction: column;
+  align-items: stretch;
+  height: auto;
+  gap: var(--ds-space-2);
+}
+.ds-barchart--horizontal .ds-barchart__col {
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  height: auto;
+  gap: var(--ds-space-3);
+}
+.ds-barchart--horizontal .ds-barchart__track {
+  flex: 1 1 auto;
+  align-items: stretch;
+  justify-content: flex-start;
+  height: 14px;
+}
+.ds-barchart--horizontal .ds-barchart__bar {
+  width: 0;
+  height: 100%;
+}
+.ds-barchart--horizontal .ds-barchart__label {
+  flex: 0 0 auto;
+  width: 96px;
+  text-align: right;
+}
+.ds-barchart--horizontal .ds-barchart__value {
+  flex: 0 0 auto;
+  width: 40px;
+  text-align: left;
+}

@@ -1,0 +1,114 @@
+/* ============================================================================
+   Command palette — .ds-cmdk (a ⌘K-style command surface)
+   ----------------------------------------------------------------------------
+   A centered dialog floating near the top of the viewport over the shared
+   .ds-overlay scrim (see modal.css): a bordered surface with a borderless search
+   input, a scrollable list of grouped, selectable rows, and an empty state.
+   Flat parti pris: 1px borders, no radius, no shadow — separation by rule.
+   ============================================================================ */
+.ds-cmdk {
+  width: 100%;
+  max-width: 560px;
+  max-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-ink);
+  border-radius: var(--ds-radius-none);
+  font-family: var(--ds-font-sans);
+}
+
+/* ---- Search input — full-width, borderless, bottom rule ------------------- */
+.ds-cmdk__input {
+  flex: none;
+  width: 100%;
+  padding: 16px 18px;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-md);
+  font-weight: 400;
+  color: var(--ds-ink);
+  background: var(--ds-surface);
+  border: none;
+  border-bottom: 1px solid var(--ds-ink);
+  border-radius: var(--ds-radius-none);
+  outline: none;
+}
+.ds-cmdk__input::placeholder { color: var(--ds-ink-faint); }
+.ds-cmdk__input:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: -2px;
+}
+
+/* ---- List (scrolls) ------------------------------------------------------- */
+.ds-cmdk__list {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 6px 0;
+}
+
+/* ---- Group label — uppercase, faint --------------------------------------- */
+.ds-cmdk__group-label {
+  padding: 10px 18px 4px;
+  font-size: var(--ds-text-2xs);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ds-ink-faint);
+}
+
+/* ---- Item — a row; .is-active shifts to bg-alt; optional right-aligned hint */
+.ds-cmdk__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 18px;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-sm);
+  font-weight: 400;
+  letter-spacing: -0.1px;
+  text-align: left;
+  text-decoration: none;
+  color: var(--ds-ink);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--ds-transition), color var(--ds-transition);
+}
+.ds-cmdk__item:hover { background: var(--ds-bg-alt); }
+.ds-cmdk__item.is-active { background: var(--ds-bg-alt); }
+.ds-cmdk__item:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: -2px; }
+
+.ds-cmdk__label { flex: 1 1 auto; min-width: 0; }
+
+/* Right-aligned hint / keyboard shortcut. */
+.ds-cmdk__hint {
+  flex: none;
+  margin-left: auto;
+  font-size: var(--ds-text-2xs);
+  letter-spacing: 0.04em;
+  color: var(--ds-ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+.ds-cmdk__kbd {
+  flex: none;
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-2xs);
+  color: var(--ds-ink-soft);
+  background: var(--ds-bg-alt);
+  border: 1px solid var(--ds-rule);
+  border-radius: var(--ds-radius-none);
+}
+
+/* ---- Empty state ---------------------------------------------------------- */
+.ds-cmdk__empty {
+  padding: 28px 18px;
+  text-align: center;
+  font-size: var(--ds-text-sm);
+  color: var(--ds-ink-faint);
+}
