@@ -270,3 +270,8 @@ export * from "./components/Kbd.js";
 export * from "./components/MultiSelect.js";
 export * from "./components/TimePicker.js";
 export * from "./components/DateTimePicker.js";
+export * from "./components/LineChart.js";
+export * from "./components/AreaChart.js";
+export * from "./components/DonutChart.js";
+export * from "./components/Calendar.js";
+export * from "./components/Agenda.js";

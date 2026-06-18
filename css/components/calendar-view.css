@@ -1,0 +1,161 @@
+/* ============================================================================
+   Calendar / month view — .ds-monthview
+   ----------------------------------------------------------------------------
+   A full-size month calendar that shows events inside day cells. A flat bordered
+   surface (1px border, no radius, no shadow): a head with the month label flanked
+   by prev / next icon buttons (and an optional "Today" action), a faint uppercase
+   weekday row, then a 7-column grid of equal cells (min-height ~88px) separated by
+   1px rules. Each day shows its date number top-left; today gets an accent ring,
+   outside-month days recede, and the selected day fills with the accent. Events
+   stack as small truncating chips that recolor by status; an overflow "+N more"
+   line caps the list. Distinct from the date-picker's .ds-calendar popover.
+   ============================================================================ */
+.ds-monthview {
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-ink);
+  border-radius: var(--ds-radius-none);
+  font-family: var(--ds-font-sans);
+}
+
+/* Head — month/year label flanked by prev / next icon buttons + optional Today. */
+.ds-monthview__head {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+  padding: var(--ds-space-3) var(--ds-space-4);
+  border-bottom: 1px solid var(--ds-ink);
+}
+.ds-monthview__label {
+  font-size: var(--ds-text-md);
+  font-weight: 500;
+  letter-spacing: -0.2px;
+  color: var(--ds-ink);
+  font-variant-numeric: tabular-nums;
+  margin-right: auto;
+}
+.ds-monthview__nav {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-1);
+}
+
+/* Weekday header — 7 equal columns, small uppercase faint labels. */
+.ds-monthview__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-bottom: 1px solid var(--ds-rule);
+}
+.ds-monthview__weekday {
+  padding: var(--ds-space-2) var(--ds-space-3);
+  font-size: var(--ds-text-2xs);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ds-ink-faint);
+  text-align: left;
+}
+
+/* Grid — 7 equal columns; 1px rules between cells come from cell borders. */
+.ds-monthview__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+/* Day cell — date number top-left, then a stack of event chips. The right +
+   bottom borders draw the 1px rules; the last column / last row drop theirs so
+   the outer frame stays single-weight. */
+.ds-monthview__day {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 88px;
+  padding: var(--ds-space-2);
+  gap: var(--ds-space-1);
+  text-align: left;
+  font-family: var(--ds-font-sans);
+  background: var(--ds-surface);
+  border: none;
+  border-right: 1px solid var(--ds-rule-soft);
+  border-bottom: 1px solid var(--ds-rule-soft);
+  border-radius: var(--ds-radius-none);
+  color: var(--ds-ink);
+  cursor: pointer;
+  transition: background-color var(--ds-transition);
+}
+.ds-monthview__day:nth-child(7n) { border-right: none; }
+.ds-monthview__grid > .ds-monthview__day:nth-last-child(-n + 7) { border-bottom: none; }
+.ds-monthview__day:hover { background: var(--ds-bg-alt); }
+.ds-monthview__day:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: -2px;
+  z-index: 1;
+}
+
+/* The date number — top-left, tabular. */
+.ds-monthview__date {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 var(--ds-space-1);
+  font-size: var(--ds-text-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--ds-ink);
+}
+
+/* Today — an accent ring around the date number (no fill). */
+.ds-monthview__day.is-today .ds-monthview__date {
+  border: 1px solid var(--ds-accent);
+  color: var(--ds-accent);
+}
+
+/* Outside-month days — faint, to recede behind the current month. */
+.ds-monthview__day.is-outside { background: var(--ds-bg); }
+.ds-monthview__day.is-outside .ds-monthview__date { color: var(--ds-ink-faint); }
+
+/* Selected — accent background; wins over hover. Today's ring drops to read on
+   the fill. */
+.ds-monthview__day.is-selected,
+.ds-monthview__day.is-selected:hover {
+  background: var(--ds-accent-bg);
+}
+.ds-monthview__day.is-selected .ds-monthview__date {
+  background: var(--ds-accent);
+  border-color: var(--ds-accent);
+  color: var(--ds-on-accent);
+}
+
+/* Events — a stacked list of chips under the date number. */
+.ds-monthview__events {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-1);
+}
+
+/* Event chip — small, truncating, with a tinted bg + a left status bar. */
+.ds-monthview__event {
+  display: block;
+  max-width: 100%;
+  padding: 2px var(--ds-space-2);
+  font-size: var(--ds-text-2xs);
+  line-height: 1.4;
+  color: var(--ds-ink);
+  background: var(--ds-bg-alt);
+  border-left: 2px solid var(--ds-neutral);
+  border-radius: var(--ds-radius-none);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ds-monthview__event.is-success { background: var(--ds-success-bg); border-left-color: var(--ds-success); }
+.ds-monthview__event.is-warning { background: var(--ds-warning-bg); border-left-color: var(--ds-warning); }
+.ds-monthview__event.is-danger  { background: var(--ds-danger-bg);  border-left-color: var(--ds-danger); }
+.ds-monthview__event.is-info    { background: var(--ds-info-bg);    border-left-color: var(--ds-info); }
+
+/* Overflow line — "+N more", faint and small. */
+.ds-monthview__more {
+  font-size: var(--ds-text-2xs);
+  color: var(--ds-ink-faint);
+  padding: 0 var(--ds-space-2);
+}

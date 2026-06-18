@@ -1,0 +1,93 @@
+/* ============================================================================
+   Agenda / scheduler — .ds-agenda
+   ----------------------------------------------------------------------------
+   A chronological list of events grouped by day. Each group opens with a date
+   header (uppercase faint weekday + date) sitting on a top rule, then stacks
+   event rows. A row pairs a tabular faint time column, a small square status
+   marker (recolored via is-*), and a body with a title + optional meta. Rows
+   shift to bg-alt on hover. Flat & sharp — 1px rules, no radius, no shadow.
+   ============================================================================ */
+.ds-agenda {
+  font-family: var(--ds-font-sans);
+  border: 1px solid var(--ds-ink);
+  border-radius: var(--ds-radius-none);
+  background: var(--ds-surface);
+}
+
+/* Day header — a date row opening a group; uppercase, faint, on a top rule.
+   The first group drops its top rule so it meets the frame cleanly. */
+.ds-agenda__day {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ds-space-2);
+  padding: var(--ds-space-2) var(--ds-space-4);
+  background: var(--ds-bg-alt);
+  border-top: 1px solid var(--ds-rule);
+  font-size: var(--ds-text-2xs);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ds-ink-faint);
+}
+.ds-agenda > .ds-agenda__day:first-child { border-top: none; }
+.ds-agenda__weekday { color: var(--ds-ink); font-weight: 500; }
+.ds-agenda__date { font-variant-numeric: tabular-nums; }
+
+/* Event row — time column · status marker · body. Hover shifts to bg-alt. */
+.ds-agenda__event {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ds-space-3);
+  padding: var(--ds-space-3) var(--ds-space-4);
+  border-top: 1px solid var(--ds-rule-soft);
+  transition: background-color var(--ds-transition);
+}
+.ds-agenda__event:hover { background: var(--ds-bg-alt); }
+
+/* Time column — fixed width, tabular, faint. */
+.ds-agenda__time {
+  flex: none;
+  width: 64px;
+  padding-top: 1px;
+  font-size: var(--ds-text-xs);
+  color: var(--ds-ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Status marker — a small square dot, neutral by default; is-* recolors it. */
+.ds-agenda__marker {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  margin-top: 5px;
+  box-sizing: border-box;
+  background: var(--ds-neutral);
+  border: 1px solid var(--ds-neutral);
+  border-radius: var(--ds-radius-none);
+}
+.ds-agenda__marker.is-success { background: var(--ds-success); border-color: var(--ds-success); }
+.ds-agenda__marker.is-warning { background: var(--ds-warning); border-color: var(--ds-warning); }
+.ds-agenda__marker.is-danger  { background: var(--ds-danger);  border-color: var(--ds-danger); }
+.ds-agenda__marker.is-info    { background: var(--ds-info);    border-color: var(--ds-info); }
+
+/* Body — title + optional meta line. */
+.ds-agenda__body { min-width: 0; }
+.ds-agenda__title {
+  font-size: var(--ds-text-base);
+  font-weight: 500;
+  color: var(--ds-ink);
+}
+.ds-agenda__meta {
+  margin-top: var(--ds-space-1);
+  font-size: var(--ds-text-sm);
+  color: var(--ds-ink-soft);
+  line-height: var(--ds-leading-normal);
+}
+
+/* Empty state — a centered faint note when there are no events. */
+.ds-agenda__empty {
+  padding: var(--ds-space-6) var(--ds-space-4);
+  text-align: center;
+  font-size: var(--ds-text-sm);
+  color: var(--ds-ink-faint);
+}

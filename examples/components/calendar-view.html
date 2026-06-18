@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendar · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../../css/components/calendar-view.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="components/calendar-view">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components</p>
+        <h1 class="ds-title ds-title--xl">Calendar</h1>
+        <p class="docs-lede">A full-size month view on a flat bordered surface: a head with the month label, prev / next icon buttons and a Today action, a faint uppercase weekday row, then a 7-column grid of equal cells separated by 1px rules. Each day shows its date top-left and stacks small status-colored event chips, capped with a "+N more" line. Distinct from the date picker's compact popover.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Month view</h2>
+        <p class="docs-note">A live month with sample events. Use the prev / next buttons to navigate; today gets an accent ring and the selected day fills with the accent.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Month grid with events</span>
+            <button class="ds-button" data-copy-target="#c-structure">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-monthview" id="demoCal"></div>
+          </div>
+          <pre class="ds-example__code"><code id="c-structure">&lt;div class="ds-monthview"&gt;
+  &lt;div class="ds-monthview__head"&gt;
+    &lt;div class="ds-monthview__label"&gt;June 2026&lt;/div&gt;
+    &lt;button class="ds-button ds-button--sm"&gt;Today&lt;/button&gt;
+    &lt;div class="ds-monthview__nav"&gt;
+      &lt;button class="ds-button ds-button--icon ds-button--sm" aria-label="Previous month"&gt;…&lt;/button&gt;
+      &lt;button class="ds-button ds-button--icon ds-button--sm" aria-label="Next month"&gt;…&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="ds-monthview__weekdays"&gt;
+    &lt;div class="ds-monthview__weekday"&gt;Mon&lt;/div&gt; …
+  &lt;/div&gt;
+  &lt;div class="ds-monthview__grid"&gt;
+    &lt;button class="ds-monthview__day is-today"&gt;
+      &lt;span class="ds-monthview__date"&gt;18&lt;/span&gt;
+      &lt;div class="ds-monthview__events"&gt;
+        &lt;span class="ds-monthview__event is-success"&gt;Publish rates&lt;/span&gt;
+        &lt;span class="ds-monthview__event is-warning"&gt;Review draft&lt;/span&gt;
+        &lt;span class="ds-monthview__more"&gt;+2 more&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/button&gt; …
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>States &amp; event chips</h2>
+        <p class="docs-note">Day states: <code>.is-today</code> (accent ring), <code>.is-selected</code> (accent fill), <code>.is-outside</code> (faint). Event chips recolor by status via <code>.is-success</code> / <code>.is-warning</code> / <code>.is-danger</code> / <code>.is-info</code>.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Day states · event chip statuses</span>
+            <button class="ds-button" data-copy-target="#c-states">Copy</button>
+          </header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <div class="ds-monthview">
+              <div class="ds-monthview__weekdays">
+                <div class="ds-monthview__weekday">Mon</div>
+                <div class="ds-monthview__weekday">Tue</div>
+                <div class="ds-monthview__weekday">Wed</div>
+                <div class="ds-monthview__weekday">Thu</div>
+              </div>
+              <div class="ds-monthview__grid" style="grid-template-columns:repeat(4,1fr)">
+                <button class="ds-monthview__day is-today">
+                  <span class="ds-monthview__date">16</span>
+                  <div class="ds-monthview__events">
+                    <span class="ds-monthview__event is-success">Publish rates</span>
+                  </div>
+                </button>
+                <button class="ds-monthview__day is-selected">
+                  <span class="ds-monthview__date">17</span>
+                  <div class="ds-monthview__events">
+                    <span class="ds-monthview__event is-warning">Review draft</span>
+                  </div>
+                </button>
+                <button class="ds-monthview__day">
+                  <span class="ds-monthview__date">18</span>
+                  <div class="ds-monthview__events">
+                    <span class="ds-monthview__event is-danger">Deadline</span>
+                    <span class="ds-monthview__event is-info">Sync call</span>
+                    <span class="ds-monthview__more">+2 more</span>
+                  </div>
+                </button>
+                <button class="ds-monthview__day is-outside">
+                  <span class="ds-monthview__date">1</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-states">&lt;button class="ds-monthview__day is-today"&gt;
+  &lt;span class="ds-monthview__date"&gt;16&lt;/span&gt;
+  &lt;div class="ds-monthview__events"&gt;
+    &lt;span class="ds-monthview__event is-success"&gt;Publish rates&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/button&gt;
+&lt;button class="ds-monthview__day is-selected"&gt;
+  &lt;span class="ds-monthview__date"&gt;17&lt;/span&gt; …
+&lt;/button&gt;
+&lt;button class="ds-monthview__day is-outside"&gt;
+  &lt;span class="ds-monthview__date"&gt;1&lt;/span&gt;
+&lt;/button&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <p class="docs-note">The <code>&lt;Calendar&gt;</code> component builds the month grid from plain-JS date math and places <code>events</code> in day cells. The shown month is controlled via <code>month</code> + <code>onMonthChange</code>, or managed internally.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">&lt;Calendar&gt;</span>
+            <button class="ds-button" data-copy-target="#c-react">Copy</button>
+          </header>
+          <pre class="ds-example__code"><code id="c-react">import { Calendar } from "@diametral/design-system/react";
+
+&lt;Calendar
+  month="2026-06-01"
+  value={selected}
+  weekStartsOn={1}
+  onSelectDate={(date, iso) =&gt; setSelected(iso)}
+  onMonthChange={(month) =&gt; console.log(month)}
+  events={[
+    { date: "2026-06-03", label: "Publish rates", status: "success" },
+    { date: "2026-06-12", label: "Review draft", status: "warning" },
+    { date: "2026-06-18", label: "Quarter deadline", status: "danger" },
+    { date: "2026-06-18", label: "Sync call", status: "info" },
+  ]}
+/&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.2.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../kitchen-sink.html">Kitchen sink →</a>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Vanilla month-view demo (CSS-only showcase; mirrors the React component).
+    (function () {
+      var root = document.getElementById("demoCal");
+      if (!root) return;
+      var WD = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]; // weekStartsOn = 1
+      var MON = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+      var MAX = 3;
+      var today = new Date();
+      var iso = function (d) {
+        var p = function (n) { return String(n).padStart(2, "0"); };
+        return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate());
+      };
+      // Sample events keyed by ISO day, anchored to the current month.
+      var y = today.getFullYear(), m = today.getMonth();
+      var at = function (day) { return iso(new Date(y, m, day)); };
+      var events = {};
+      var add = function (day, label, status) {
+        var k = at(day);
+        (events[k] = events[k] || []).push({ label: label, status: status });
+      };
+      add(3, "Publish rates", "success");
+      add(9, "Vendor sync", "info");
+      add(12, "Review draft", "warning");
+      add(12, "1:1 with Director", "info");
+      add(18, "Quarter deadline", "danger");
+      add(18, "Sync call", "info");
+      add(18, "Retro", "success");
+      add(18, "Office hours", null);
+      add(24, "Ship v0.2", "success");
+      add(27, "Budget freeze", "warning");
+
+      var view = { year: y, month: m };
+      var selected = null;
+
+      function render() {
+        var first = new Date(view.year, view.month, 1);
+        var lead = (first.getDay() - 1 + 7) % 7; // Monday-first offset
+        var start = new Date(view.year, view.month, 1 - lead);
+
+        var html = "";
+        html += '<div class="ds-monthview__head">';
+        html += '<div class="ds-monthview__label">' + MON[view.month] + " " + view.year + "</div>";
+        html += '<button class="ds-button ds-button--sm" data-act="today">Today</button>';
+        html += '<div class="ds-monthview__nav">';
+        html += '<button class="ds-button ds-button--icon ds-button--sm" data-act="prev" aria-label="Previous month"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M11 4 6 9l5 5"/></svg></button>';
+        html += '<button class="ds-button ds-button--icon ds-button--sm" data-act="next" aria-label="Next month"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 4l5 5-5 5"/></svg></button>';
+        html += "</div></div>";
+
+        html += '<div class="ds-monthview__weekdays">';
+        for (var i = 0; i < 7; i++) html += '<div class="ds-monthview__weekday">' + WD[i] + "</div>";
+        html += "</div>";
+
+        html += '<div class="ds-monthview__grid" role="grid">';
+        for (var c = 0; c < 42; c++) {
+          var cell = new Date(start.getFullYear(), start.getMonth(), start.getDate() + c);
+          var cls = "ds-monthview__day";
+          if (cell.getMonth() !== view.month) cls += " is-outside";
+          if (iso(cell) === iso(today)) cls += " is-today";
+          if (selected && iso(cell) === selected) cls += " is-selected";
+          html += '<button type="button" class="' + cls + '" role="gridcell" data-date="' + iso(cell) + '" aria-label="' + iso(cell) + '">';
+          html += '<span class="ds-monthview__date">' + cell.getDate() + "</span>";
+          var evs = events[iso(cell)] || [];
+          if (evs.length) {
+            html += '<div class="ds-monthview__events">';
+            var shown = evs.slice(0, MAX);
+            for (var e = 0; e < shown.length; e++) {
+              var st = shown[e].status ? " is-" + shown[e].status : "";
+              html += '<span class="ds-monthview__event' + st + '" title="' + shown[e].label + '">' + shown[e].label + "</span>";
+            }
+            var over = evs.length - shown.length;
+            if (over > 0) html += '<span class="ds-monthview__more">+' + over + " more</span>";
+            html += "</div>";
+          }
+          html += "</button>";
+        }
+        html += "</div>";
+        root.innerHTML = html;
+      }
+
+      root.addEventListener("click", function (e) {
+        var nav = e.target.closest("[data-act]");
+        if (nav) {
+          var act = nav.getAttribute("data-act");
+          if (act === "prev") view = monthShift(-1);
+          else if (act === "next") view = monthShift(1);
+          else if (act === "today") view = { year: today.getFullYear(), month: today.getMonth() };
+          render();
+          return;
+        }
+        var day = e.target.closest("[data-date]");
+        if (day) { selected = day.getAttribute("data-date"); render(); }
+      });
+
+      function monthShift(delta) {
+        var d = new Date(view.year, view.month + delta, 1);
+        return { year: d.getFullYear(), month: d.getMonth() };
+      }
+
+      render();
+    })();
+  </script>
+</body>
+</html>

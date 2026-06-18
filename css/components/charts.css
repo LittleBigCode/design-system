@@ -1,0 +1,156 @@
+/* ============================================================================
+   Charts — .ds-chart (shared) · .ds-linechart · .ds-areachart · .ds-donut
+   ----------------------------------------------------------------------------
+   A tiny set of pure-SVG charts — no library. A shared `.ds-chart` wrapper and
+   `.ds-chart__svg` host any chart; `.ds-chart__grid` / `.ds-chart__axis` style
+   the optional gridlines and axis labels; `.ds-chart-legend` is a shared
+   wrap-friendly legend (a 10px square swatch + label). The per-chart blocks
+   (line / area / donut) only style the marks that differ. Flat, sharp, 1px —
+   no radius, no shadow. Colors come from a small series palette of --ds-*
+   tokens; status/area fills use fill-opacity rather than tinted colors.
+   ============================================================================ */
+.ds-chart {
+  display: block;
+  width: 100%;
+  color: var(--ds-ink);
+}
+
+.ds-chart__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* Gridlines — faint horizontal rules behind the marks. */
+.ds-chart__grid {
+  stroke: var(--ds-rule-soft);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+/* Axis tick labels. */
+.ds-chart__axis {
+  fill: var(--ds-ink-faint);
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-2xs);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ----------------------------------------------------------------------------
+   Legend — shared by the multi-series line/area charts and the donut.
+   ---------------------------------------------------------------------------- */
+.ds-chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ds-space-2) var(--ds-space-4);
+  margin-top: var(--ds-space-3);
+}
+
+.ds-chart-legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+  font-size: var(--ds-text-xs);
+  color: var(--ds-ink-soft);
+}
+
+.ds-chart-legend__swatch {
+  width: 10px;
+  height: 10px;
+  flex: 0 0 auto;
+  background: var(--ds-accent);
+  border-radius: var(--ds-radius-none);
+}
+
+.ds-chart-legend__value {
+  margin-left: var(--ds-space-1);
+  color: var(--ds-ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ----------------------------------------------------------------------------
+   Line chart — .ds-linechart
+   ---------------------------------------------------------------------------- */
+.ds-linechart__line {
+  fill: none;
+  stroke: var(--ds-accent);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.ds-linechart__dot {
+  fill: var(--ds-accent);
+  stroke: var(--ds-surface);
+  stroke-width: 1;
+}
+
+/* ----------------------------------------------------------------------------
+   Area chart — .ds-areachart (a line chart with a filled band beneath)
+   ---------------------------------------------------------------------------- */
+.ds-areachart__area {
+  stroke: none;
+  fill: var(--ds-accent);
+  fill-opacity: 0.14;
+}
+
+.ds-areachart__line {
+  fill: none;
+  stroke: var(--ds-accent);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.ds-areachart__dot {
+  fill: var(--ds-accent);
+  stroke: var(--ds-surface);
+  stroke-width: 1;
+}
+
+/* ----------------------------------------------------------------------------
+   Donut — .ds-donut (segments drawn as circle stroke-dasharray arcs)
+   ---------------------------------------------------------------------------- */
+.ds-donut {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ds-space-3);
+}
+
+.ds-donut__svg {
+  display: block;
+  overflow: visible;
+}
+
+/* The faint full ring behind the segments. */
+.ds-donut__track {
+  fill: none;
+  stroke: var(--ds-rule-soft);
+}
+
+/* One value segment — color set inline per datum. */
+.ds-donut__segment {
+  fill: none;
+  stroke: var(--ds-accent);
+  stroke-linecap: butt;
+  transition: stroke-dasharray var(--ds-transition);
+}
+
+.ds-donut__center {
+  fill: var(--ds-ink);
+  font-family: var(--ds-font-title);
+  font-weight: var(--ds-font-weight-title);
+  text-anchor: middle;
+}
+
+.ds-donut__center-label {
+  fill: var(--ds-ink-faint);
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-2xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-anchor: middle;
+}

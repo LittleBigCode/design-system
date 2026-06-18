@@ -60,7 +60,10 @@ const NAV = [
     { k: "components/stat-card", t: "Stat card" },
     { k: "components/sparkline", t: "Sparkline" },
     { k: "components/bar-chart", t: "Bar chart" },
+    { k: "components/charts", t: "Charts" },
     { k: "components/rating", t: "Rating" },
+    { k: "components/calendar-view", t: "Calendar" },
+    { k: "components/agenda", t: "Agenda" },
   ]},
   { label: "Feedback", items: [
     { k: "components/alert", t: "Alert" },
@@ -138,6 +141,29 @@ function renderRail() {
     const open = rail.classList.toggle("is-open");
     btn.setAttribute("aria-expanded", open ? "true" : "false");
   });
+
+  // Keep the left rail's scroll position stable across full page navigations
+  // (this is a multi-page static site, so every click reloads the page).
+  const KEY = "ds-rail-scroll";
+  const saved = sessionStorage.getItem(KEY);
+  if (saved != null) rail.scrollTop = parseInt(saved, 10) || 0;
+
+  // Make sure the active item is visible even after restoring (e.g. when arriving
+  // via a prev/next link to a page whose nav entry is outside the saved window).
+  const active = rail.querySelector('a[aria-current="page"]');
+  if (active) {
+    const a = active.getBoundingClientRect();
+    const r = rail.getBoundingClientRect();
+    if (a.top < r.top || a.bottom > r.bottom) {
+      active.scrollIntoView({ block: "center" });
+    }
+  }
+
+  rail.addEventListener(
+    "scroll",
+    () => sessionStorage.setItem(KEY, String(rail.scrollTop)),
+    { passive: true }
+  );
 }
 
 function wireCopy() {
