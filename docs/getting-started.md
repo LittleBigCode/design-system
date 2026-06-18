@@ -21,7 +21,7 @@ From an app stylesheet:
 Via npm:
 
 ```js
-import "@diametral/design-system/css/diametral.css";
+import "@littlebigcode/design-system/css/diametral.css";
 ```
 
 ## 2. Load the fonts

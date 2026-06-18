@@ -7,14 +7,14 @@ Real React components live in [`react/`](../react/) and are documented in
 ## Install
 
 ```bash
-npm i @diametral/design-system react react-dom
+npm i @littlebigcode/design-system react react-dom
 ```
 
 ```jsx
 // once, at your app root
-import "@diametral/design-system/css/diametral.css";
+import "@littlebigcode/design-system/css/diametral.css";
 
-import { Button, Status, Metric, Modal } from "@diametral/design-system/react";
+import { Button, Status, Metric, Modal } from "@littlebigcode/design-system/react";
 ```
 
 `react` / `react-dom` are **optional peer dependencies** — CSS-only and Web Component

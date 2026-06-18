@@ -1,10 +1,13 @@
 {
-  "name": "@diametral/design-system",
+  "name": "@littlebigcode/design-system",
   "version": "0.2.0",
   "description": "Diametral Design System — a minimal, flat, buildless CSS + tokens + Web Components design system. Welcome to (the real).",
   "license": "MIT",
   "type": "module",
   "keywords": ["design-system", "css", "design-tokens", "web-components", "diametral"],
+  "repository": { "type": "git", "url": "git+https://github.com/LittleBigCode/design-system.git" },
+  "homepage": "https://littlebigcode.github.io/design-system/",
+  "publishConfig": { "registry": "https://npm.pkg.github.com" },
   "sideEffects": [
     "**/*.css",
     "./components/*.js",

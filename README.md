@@ -58,12 +58,12 @@ the [live showcase](https://littlebigcode.github.io/design-system/).
 **3 · npm** *(optional)*
 
 ```bash
-npm i @diametral/design-system
+npm i @littlebigcode/design-system
 ```
 
 ```js
-import "@diametral/design-system/css/diametral.css";
-import "@diametral/design-system/components"; // optional Web Components
+import "@littlebigcode/design-system/css/diametral.css";
+import "@littlebigcode/design-system/components"; // optional Web Components
 ```
 
 **Web Components** (optional layer):
@@ -79,8 +79,8 @@ import "@diametral/design-system/components"; // optional Web Components
 **React** (optional layer — real, typed components):
 
 ```jsx
-import "@diametral/design-system/css/diametral.css";
-import { Button, Status, Metric } from "@diametral/design-system/react";
+import "@littlebigcode/design-system/css/diametral.css";
+import { Button, Status, Metric } from "@littlebigcode/design-system/react";
 
 <Button variant="primary">Save</Button>
 ```
