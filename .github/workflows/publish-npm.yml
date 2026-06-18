@@ -7,6 +7,8 @@ name: Publish to npm (public)
 # GitHub Release, or manually. See RELEASE.md.
 
 on:
+  push:
+    tags: ["v*"]
   release:
     types: [published]
   workflow_dispatch:
@@ -18,6 +20,10 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    # NPM_TOKEN is stored as an *environment* secret, so the job must target that
+    # environment to read it. (If you move NPM_TOKEN to a Repository secret, drop
+    # this line.)
+    environment: default
     steps:
       - uses: actions/checkout@v4
 

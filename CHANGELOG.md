@@ -4,6 +4,17 @@ All notable changes to the Diametral Design System are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/), and the project
 adheres to [Semantic Versioning](https://semver.org/) — see [docs/versioning.md](docs/versioning.md).
 
+## [0.2.1] — 2026-06-18
+
+### Changed
+- Published to the **public npm registry** as `@diametral/design-system` (scope renamed from
+  `@littlebigcode`). Installs with no registry config and no token.
+- The published package is lean and license-safe: ships the free font CSS + logo SVGs + docs, and
+  **excludes** the commercial Ufficio font binary, the photography, and raster brand PNGs
+  (~193 kB vs 7.3 MB). The GitHub Packages workflow was removed; CI publishes to public npm on a
+  `v*` tag / GitHub Release via the `publish-npm.yml` workflow (NPM_TOKEN environment secret).
+- Installation docs lead with the frictionless public-npm install.
+
 ## [0.2.0] — 2026-06-18
 
 A major, Clarity-inspired component expansion with full React integration.

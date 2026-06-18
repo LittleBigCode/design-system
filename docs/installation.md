@@ -22,7 +22,7 @@ each works on its own, and **none requires a build step to consume**.
 | **React components** (optional) | Real, typed React components (`Button`, `DataGrid`, …). | `@diametral/design-system/react` |
 | **Tailwind preset** | Binds Tailwind `colors`/`spacing`/`fontFamily`/… to the `--ds-*` variables. | `@diametral/design-system/tailwind-preset` |
 | **SCSS variables** | `$ds-*` variables, each resolving to the matching CSS var. | `@diametral/design-system/dist/tokens.scss` |
-| **Assets** | Bundled fonts (Ufficio + license), logo, photography. | `@diametral/design-system/assets/*` |
+| **Assets** | Free font CSS (Fraunces fallback) + logo SVGs + license notes. The commercial **Ufficio** font is **not** bundled in the package — licensed users add it. | `@diametral/design-system/assets/*` |
 
 The CSS and the tokens are the foundation; the Web Components and React layers render the **same**
 `.ds-*` markup, so styling and theming always come from the one stylesheet. Change a token, every
@@ -38,18 +38,8 @@ layer follows.
 npm i @diametral/design-system    # or pnpm / yarn / bun
 ```
 
-<details>
-<summary>Installing from GitHub Packages instead</summary>
-
-The package is also published to GitHub Packages. That registry requires auth even for public
-packages, so add a project `.npmrc` and a `read:packages` token:
-
-```ini
-# .npmrc
-@diametral:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
-```
-</details>
+It is published to the **public npm registry** — installs with no `.npmrc` and no token.
+Live: [npmjs.com/package/@diametral/design-system](https://www.npmjs.com/package/@diametral/design-system).
 
 `react` and `react-dom` are **optional peer dependencies** — add them *only* if you use the React
 layer. CSS-only and Web Component consumers don't pull them in.
