@@ -8,17 +8,11 @@
 const NAV = [
   { label: null, items: [
     { k: "index", t: "Overview" },
+    { k: "demo", t: "Demo app ▸" },
     { k: "kitchen-sink", t: "Kitchen sink" },
     { k: "react", t: "React demo" },
     { k: "theming", t: "Theming" },
     { k: "installation", t: "Installation" },
-  ]},
-  { label: "Examples", items: [
-    { k: "demos/index", t: "Examples gallery" },
-    { k: "demos/dashboard", t: "Dashboard" },
-    { k: "demos/inbox", t: "Inbox" },
-    { k: "demos/forms", t: "Forms / settings" },
-    { k: "demos/login", t: "Login" },
   ]},
   { label: "Foundations", items: [
     { k: "foundations/color", t: "Color" },

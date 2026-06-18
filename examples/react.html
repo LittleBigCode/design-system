@@ -12,8 +12,8 @@
   <link rel="stylesheet" href="../css/diametral.css">
   <link rel="stylesheet" href="../css/themes/dark.css">
   <link rel="stylesheet" href="./shell.css">
-  <script type="module" src="./showcase.js"></script>
-  <!-- React from a CDN; the import map keeps a single React instance via ?external=react -->
+  <!-- React from a CDN; the import map keeps a single React instance via ?external=react.
+       NOTE: the import map MUST precede any module script (incl. showcase.js) or it is ignored. -->
   <script type="importmap">
   {
     "imports": {
@@ -23,6 +23,7 @@
     }
   }
   </script>
+  <script type="module" src="./showcase.js"></script>
 </head>
 <body data-page="react">
   <div class="docs">

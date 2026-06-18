@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diametral — Console (live React demo)</title>
+  <link rel="icon" href="../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../css/diametral.css">
+  <!-- Import map MUST precede any module script so bare "react" specifiers resolve. -->
+  <script type="importmap">
+  { "imports": {
+    "react": "https://esm.sh/react@18.3.1",
+    "react-dom": "https://esm.sh/react-dom@18.3.1?external=react",
+    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client?external=react"
+  } }
+  </script>
+  <style>
+    html, body { height: 100%; }
+    #app { min-height: 100vh; }
+    .demo-back { position: fixed; left: 14px; bottom: 12px; z-index: 50; font-size: 12px;
+      color: var(--ds-ink-faint); text-decoration: none; background: var(--ds-bg);
+      border: 1px solid var(--ds-rule); padding: 4px 10px; }
+    .demo-back:hover { color: var(--ds-ink); }
+    /* App layout */
+    .ap { display: grid; grid-template-columns: 232px minmax(0,1fr); min-height: 100vh; }
+    .ap__side { border-right: 1px solid var(--ds-rule); background: var(--ds-bg); padding: 14px 0; position: sticky; top: 57px; height: calc(100vh - 57px); overflow:auto; }
+    .ap__main { min-width: 0; background: var(--ds-bg-alt); }
+    .ap__bar { grid-column: 1 / -1; }
+    .ap__wrap { max-width: 1240px; margin: 0 auto; padding: 28px 32px 80px; }
+    .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .grid2 { display: grid; grid-template-columns: 1fr 360px; gap: 16px; align-items: start; }
+    @media (max-width: 1100px){ .grid4{grid-template-columns:repeat(2,1fr)} .grid2{grid-template-columns:1fr} }
+    .ph { font-family: var(--ds-font-title); font-weight: 300; font-size: 26px; letter-spacing:-.4px; }
+    .psub { color: var(--ds-ink-soft); margin: 4px 0 22px; }
+    /* inbox */
+    .ib { display: grid; grid-template-columns: 340px minmax(0,1fr); min-height: calc(100vh - 57px); }
+    .ib__list { border-right: 1px solid var(--ds-rule); background: var(--ds-bg); overflow:auto; }
+    .ib__row { display:flex; gap:12px; padding:14px 16px; border-bottom:1px solid var(--ds-rule-soft); cursor:pointer; }
+    .ib__row:hover { background: var(--ds-bg-alt); }
+    .ib__row.on { background: var(--ds-accent-bg); }
+    .ib__dot { width:7px; height:7px; background:var(--ds-accent); margin-top:6px; flex:none; }
+    .ib__read { background: var(--ds-bg); padding: 26px 30px; }
+  </style>
+</head>
+<body>
+  <a class="demo-back" href="index.html">← Design system</a>
+  <div id="app" style="display:grid;place-items:center;color:var(--ds-ink-faint)">Loading the live React demo…</div>
+
+  <script type="module">
+    import React from "react";
+    import { createRoot } from "react-dom/client";
+    import {
+      Wordmark, Button, IconButton, Input, Field, FieldHint, Select, Switch, Checkbox, Textarea,
+      Tabs, Avatar, Badge, Tag, Callout, Card, StatCard, Sparkline, LineChart, DonutChart,
+      BarChart, DataGrid, Tooltip, EmptyState, ToastProvider, useToast,
+    } from "../react/index.js";
+    const h = React.createElement;
+    const { useState } = React;
+
+    /* ---------- mock data ---------- */
+    const ENTITIES = ["LBC_FR", "LBC_BE", "LBC_US", "LBC_CH"];
+    const GRADES = ["Consultant", "Senior", "Manager", "Director"];
+    const ROWS = Array.from({ length: 124 }, (_, i) => ({
+      id: i + 1, name: "Mission " + String(i + 1).padStart(3, "0"),
+      entity: ENTITIES[i % 4], grade: GRADES[(i * 3) % 4],
+      margin: Math.round((((i * 37) % 60) - 8) * 10) / 10,
+    }));
+    function loadPage({ page, pageSize, sort, filters }) {
+      return new Promise((res) => setTimeout(() => {
+        let d = ROWS.slice();
+        for (const [k, v] of Object.entries(filters)) if (v) d = d.filter((r) => String(r[k]).toLowerCase().includes(v.toLowerCase()));
+        if (sort && sort.key) d.sort((a, b) => { const x = a[sort.key], y = b[sort.key]; const c = x > y ? 1 : x < y ? -1 : 0; return sort.dir === "desc" ? -c : c; });
+        const start = (page - 1) * pageSize;
+        res({ rows: d.slice(start, start + pageSize), total: d.length });
+      }, 450));
+    }
+    const MESSAGES = [
+      { id: 1, from: "Camille Roy", init: "CR", subj: "Q2 pricing review", snip: "Sharing the updated delegation thresholds before Friday…", time: "09:24", unread: true, body: "Hi — the Q2 pricing matrix is ready for review. The delegation thresholds were updated: full delegation now starts at 35% margin. Can you confirm the BE entity figures before Friday?" },
+      { id: 2, from: "Data Platform", init: "DP", subj: "Pipeline succeeded", snip: "pricing-matrix-prod deployed at 08:12", time: "08:12", unread: true, body: "The production deploy for pricing-matrix-prod completed successfully at 08:12 UTC. All health checks green." },
+      { id: 3, from: "Inès Fournier", init: "IF", subj: "New mission — Acme", snip: "Drafted the staffing for the Acme account…", time: "Yest", unread: false, body: "I drafted the staffing plan for the Acme account: 3 consultants + 1 manager. Margin looks healthy at ~32%. Want to walk through it?" },
+      { id: 4, from: "Vincent D.", init: "VD", subj: "Re: Director sign-off", snip: "Approved — proceed with the VP arbitrage path.", time: "Yest", unread: false, body: "Approved. Proceed with the VP arbitrage path for the two sub-20% deals; everything else is full delegation." },
+      { id: 5, from: "Recruiting", init: "Rc", subj: "2 candidates at manager level", snip: "Both available from June, strong AI background…", time: "Mon", unread: false, body: "Two strong manager-level candidates available from June, both with solid AI/ML backgrounds. Shall I book intro calls?" },
+    ];
+
+    /* ---------- views ---------- */
+    const SERIES = [
+      { name: "Revenue", data: [42, 38, 51, 49, 62, 58, 67, 71, 69, 78, 74, 86] },
+      { name: "Cost", data: [30, 33, 29, 36, 34, 41, 39, 44, 46, 43, 48, 52] },
+    ];
+    const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+    function Overview() {
+      return h("div", { className: "ap__wrap" },
+        h("div", { className: "ph" }, "Overview"),
+        h("div", { className: "psub" }, "Pricing performance across all entities · Q2 2026"),
+        h("div", { className: "grid4" },
+          h(StatCard, { label: "Active missions", value: "124", delta: "8 this week", deltaDir: "up" }),
+          h(StatCard, { label: "Avg. margin", value: "24.6 %", delta: "2.1 pts", deltaDir: "up" }),
+          h(StatCard, { label: "At-risk rate", value: "5.2 %", delta: "0.4 pts", deltaDir: "down" }),
+          h(StatCard, { label: "Revenue · 30d", value: "€4.51M" },
+            h(Sparkline, { data: [40,44,42,50,48,57,54,62,60,71,68,80], fill: true, width: 200, height: 36 }))
+        ),
+        h("div", { className: "grid2", style: { marginTop: "16px" } },
+          h(Card, { title: "Revenue vs cost" }, h("div", { style: { padding: "8px 4px" } },
+            h(LineChart, { series: SERIES, labels: MONTHS, width: 720, height: 240 }))),
+          h(Card, { title: "Revenue by entity" }, h("div", { style: { padding: "8px", display: "grid", placeItems: "center" } },
+            h(DonutChart, { data: [
+              { label: "LBC_FR", value: 46 }, { label: "LBC_BE", value: 28 },
+              { label: "LBC_US", value: 19 }, { label: "LBC_CH", value: 11 },
+            ], centerLabel: "104", size: 200 })))
+        )
+      );
+    }
+
+    function Missions() {
+      const columns = [
+        { key: "id", header: "ID", sortable: true, align: "right", width: "64px" },
+        { key: "name", header: "Mission", sortable: true, filterable: true, editable: true },
+        { key: "entity", header: "Entity", sortable: true, filterable: true },
+        { key: "grade", header: "Grade", sortable: true, editable: true },
+        { key: "margin", header: "Margin %", sortable: true, align: "right",
+          render: (r) => h("span", { className: "ds-numeric", style: { color: r.margin < 0 ? "var(--ds-danger)" : "var(--ds-success)" } }, r.margin + " %") },
+      ];
+      return h("div", { className: "ap__wrap" },
+        h("div", { className: "ph" }, "Missions"),
+        h("div", { className: "psub" }, "Server-side, lazy-loaded. Sort, filter, select, expand, edit (double-click), reorder columns."),
+        h(DataGrid, {
+          title: "All missions", columns, loadPage, lazyMode: "pagination", pageSize: 9,
+          selectable: true, filterable: true, expandable: true, editable: true, reorderable: true,
+          onCellEdit: (row, k, v) => { row[k] = v; },
+          renderDetail: (r) => h("div", null, `${r.name} — ${r.entity} · ${r.grade} · margin ${r.margin}%`),
+        })
+      );
+    }
+
+    function Inbox() {
+      const [sel, setSel] = useState(MESSAGES[0].id);
+      const [read, setRead] = useState(() => new Set());
+      const cur = MESSAGES.find((m) => m.id === sel);
+      const open = (id) => { setSel(id); setRead((s) => new Set(s).add(id)); };
+      return h("div", { className: "ib" },
+        h("div", { className: "ib__list" },
+          MESSAGES.map((m) => {
+            const unread = m.unread && !read.has(m.id);
+            return h("div", { key: m.id, className: "ib__row" + (m.id === sel ? " on" : ""), onClick: () => open(m.id) },
+              h(Avatar, { initials: m.init, size: "sm" }),
+              h("div", { style: { minWidth: 0, flex: 1 } },
+                h("div", { style: { display: "flex", justifyContent: "space-between", gap: "8px" } },
+                  h("b", { style: { fontWeight: unread ? 600 : 400, fontSize: "13.5px" } }, m.from),
+                  h("span", { style: { color: "var(--ds-ink-faint)", fontSize: "12px" } }, m.time)),
+                h("div", { style: { fontSize: "13px", fontWeight: unread ? 500 : 400 } }, m.subj),
+                h("div", { style: { fontSize: "12.5px", color: "var(--ds-ink-faint)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" } }, m.snip)),
+              unread ? h("span", { className: "ib__dot" }) : null);
+          })),
+        h("div", { className: "ib__read" },
+          cur ? h("div", null,
+            h("div", { style: { display: "flex", alignItems: "center", gap: "12px", marginBottom: "18px" } },
+              h(Avatar, { initials: cur.init }),
+              h("div", { style: { flex: 1 } }, h("div", { className: "ph", style: { fontSize: "20px" } }, cur.subj),
+                h("div", { style: { color: "var(--ds-ink-faint)", fontSize: "13px" } }, cur.from)),
+              h(Tooltip, { label: "Archive" }, h(IconButton, { label: "Archive" }, "▾")),
+              h(Button, { variant: "primary" }, "Reply")),
+            h("p", { style: { lineHeight: 1.6, color: "var(--ds-ink-soft)", maxWidth: "62ch" } }, cur.body),
+            h("div", { style: { marginTop: "20px" } },
+              h(Field, { label: "Reply" }, h(Textarea, { rows: 3, placeholder: "Write a reply…" })),
+              h("div", { style: { marginTop: "10px" } }, h(Button, { variant: "primary" }, "Send")))
+          ) : h(EmptyState, { title: "No message selected" }))
+      );
+    }
+
+    function Settings() {
+      const toast = useToast();
+      const [name, setName] = useState("Vincent Devillers");
+      const [tab, setTab] = useState("profile");
+      const items = [
+        { id: "profile", label: "Profile", content: h("div", { style: { paddingTop: "18px", display: "grid", gap: "16px", maxWidth: "520px" } },
+          h(Field, { label: "Name" }, h(Input, { value: name, onChange: (e) => setName(e.target.value) }), !name ? h(FieldHint, { status: "error" }, "Name is required") : null),
+          h(Field, { label: "Email" }, h(Input, { type: "email", defaultValue: "vincent@diametral.io" })),
+          h(Field, { label: "Bio" }, h(Textarea, { rows: 3, defaultValue: "Building the AI-native pricing matrix." })),
+          h(Field, { label: "Role" }, h(Select, { options: ["Director", "Manager", "Consultant"] }))) },
+        { id: "notif", label: "Notifications", content: h("div", { style: { paddingTop: "18px", display: "grid", gap: "14px" } },
+          h("label", { className: "ds-input-row" }, h("span", null, "Email digests"), h(Switch, { defaultChecked: true })),
+          h("label", { className: "ds-input-row" }, h("span", null, "Push alerts"), h(Switch, {})),
+          h("label", { className: "ds-input-row" }, h("span", null, "Weekly report"), h(Switch, { defaultChecked: true }))) },
+        { id: "appear", label: "Appearance", content: h("div", { style: { paddingTop: "18px" } },
+          h(Callout, { type: "info", heading: "Theming" }, "Switch themes on the Theming page; settings here are illustrative.")) },
+      ];
+      return h("div", { className: "ap__wrap", style: { maxWidth: "780px" } },
+        h("div", { className: "ph" }, "Settings"),
+        h("div", { className: "psub" }, "Account preferences"),
+        h(Tabs, { items, value: tab, onChange: setTab }),
+        h("div", { style: { marginTop: "22px", display: "flex", gap: "10px" } },
+          h(Button, {}, "Cancel"),
+          h(Button, { variant: "primary", onClick: () => toast.show({ type: "success", title: "Saved", message: "Your settings were updated." }) }, "Save changes"))
+      );
+    }
+
+    const NAV = [
+      { id: "overview", label: "Overview" },
+      { id: "inbox", label: "Inbox", badge: 2 },
+      { id: "missions", label: "Missions" },
+      { id: "settings", label: "Settings" },
+    ];
+
+    function Shell({ onSignOut }) {
+      const [view, setView] = useState("overview");
+      const Body = { overview: Overview, inbox: Inbox, missions: Missions, settings: Settings }[view];
+      return h("div", { className: "ap" },
+        h("header", { className: "ds-app-bar ap__bar" },
+          h("div", { className: "ds-app-bar__inner" },
+            h(Wordmark, { sub: "Console" }),
+            h("div", { style: { flex: 1, maxWidth: "360px", marginLeft: "8px" } }, h(Input, { placeholder: "Search missions, people, reports…" })),
+            h("div", { className: "ds-app-bar__actions" },
+              h(Badge, { variant: "accent" }, "Production"),
+              h(Button, { variant: "primary" }, "New mission"),
+              h(Tooltip, { label: "Sign out" }, h("span", { onClick: onSignOut, style: { cursor: "pointer" } }, h(Avatar, { initials: "VD", size: "sm" })))))),
+        h("aside", { className: "ap__side" },
+          h("nav", { className: "ds-vnav" },
+            h("div", { className: "ds-vnav__group" },
+              NAV.map((n) => h("button", {
+                key: n.id, className: "ds-vnav__item" + (view === n.id ? " is-active" : ""),
+                onClick: () => setView(n.id),
+                style: { display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", background: "none", border: "none", textAlign: "left", font: "inherit", cursor: "pointer" },
+              }, h("span", null, n.label), n.badge ? h(Badge, null, n.badge) : null))))),
+        h("main", { className: "ap__main" }, h(Body))
+      );
+    }
+
+    function Login({ onSignIn }) {
+      const [loading, setLoading] = useState(false);
+      const submit = (e) => { e.preventDefault(); setLoading(true); setTimeout(onSignIn, 650); };
+      return h("div", { style: { minHeight: "100vh", display: "grid", placeItems: "center", padding: "24px" } },
+        h("form", { onSubmit: submit, style: { width: "360px", maxWidth: "100%" } },
+          h(Card, null, h("div", { style: { padding: "26px 24px" } },
+            h("div", { style: { marginBottom: "18px" } }, h(Wordmark, {})),
+            h("div", { className: "ph", style: { fontSize: "22px", marginBottom: "4px" } }, "Sign in"),
+            h("div", { className: "psub", style: { margin: "0 0 20px" } }, "Welcome back to the Console."),
+            h("div", { style: { display: "grid", gap: "14px" } },
+              h(Field, { label: "Email" }, h(Input, { type: "email", defaultValue: "vincent@diametral.io", required: true })),
+              h(Field, { label: "Password" }, h(Input, { type: "password", defaultValue: "password", required: true })),
+              h(Button, { variant: "primary", block: true, loading, type: "submit" }, "Sign in"),
+              h("div", { style: { textAlign: "center" } }, h(Button, { block: true }, "Continue with SSO")))
+          )))
+      );
+    }
+
+    function App() {
+      const [authed, setAuthed] = useState(false);
+      return h(ToastProvider, null,
+        authed ? h(Shell, { onSignOut: () => setAuthed(false) }) : h(Login, { onSignIn: () => setAuthed(true) }));
+    }
+
+    createRoot(document.getElementById("app")).render(h(App));
+  </script>
+</body>
+</html>
