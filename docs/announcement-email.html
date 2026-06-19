@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Announcement email — Diametral Design System</title>
+  <!-- Subject: Use the Diametral Design System for your apps -->
+  <!-- Internal announcement. Paste the <table> below into your email client's HTML/source mode. -->
+</head>
+<body style="margin:0;background:#ffffff;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#ffffff;">
+  <tr>
+    <td align="center" style="padding:24px 12px;">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#161616;line-height:1.55;">
+
+        <!-- Brand -->
+        <tr><td style="padding:0 0 4px;border-bottom:1px solid #161616;">
+          <span style="font-size:20px;font-weight:600;letter-spacing:-0.2px;">Diametral</span>
+          <span style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#6c6f7d;">&nbsp;&nbsp;Design System</span>
+        </td></tr>
+
+        <!-- Heading -->
+        <tr><td style="padding:24px 0 6px;">
+          <h1 style="margin:0;font-size:22px;font-weight:600;">Use the Diametral Design System for your apps</h1>
+        </td></tr>
+
+        <tr><td style="padding:6px 0 16px;font-size:15px;">
+          Team — we now have one shared <strong>Diametral Design System</strong>: a buildless component library and app shell so we stop rebuilding buttons, tables and themes in every project. It's live and on npm.
+        </td></tr>
+
+        <!-- Heads-up callout -->
+        <tr><td style="padding:0 0 18px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e5e5e5;border-left:3px solid #ff2a00;background:#faf8f7;">
+            <tr><td style="padding:12px 16px;font-size:14px;color:#161616;">
+              <strong>Heads-up — visuals are not final.</strong> Juliette (CMO) still has to sign off on the look, and you can expect <strong>style tweaks over the coming days</strong>. The component <strong>APIs are stable</strong>, so build now — the styling is all design tokens + <code>.ds-*</code> classes and will update under you with no code changes.
+            </td></tr>
+          </table>
+        </td></tr>
+
+        <!-- Buttons -->
+        <tr><td style="padding:0 0 20px;">
+          <a href="https://littlebigcode.github.io/design-system/examples/demo.html" style="display:inline-block;background:#161616;color:#ffffff;text-decoration:none;font-size:14px;padding:11px 18px;margin:0 8px 8px 0;">&#9656; Open the demo app</a>
+          <a href="https://littlebigcode.github.io/design-system/" style="display:inline-block;background:#ffffff;color:#161616;text-decoration:none;font-size:14px;padding:10px 17px;border:1px solid #161616;">Showcase &amp; docs</a>
+        </td></tr>
+
+        <!-- Install -->
+        <tr><td style="padding:0 0 6px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#6c6f7d;">Install (public npm — no token)</td></tr>
+        <tr><td style="padding:0 0 18px;">
+          <pre style="margin:0;font-family:'SF Mono',Menlo,Consolas,monospace;font-size:13px;background:#f5f5f5;border:1px solid #e5e5e5;padding:12px 14px;white-space:pre-wrap;word-break:break-word;color:#161616;">npm i @diametral/design-system
+
+import "@diametral/design-system/css/diametral.css";
+import { Button, DataGrid, ConsoleLayout } from "@diametral/design-system/react";</pre>
+        </td></tr>
+
+        <tr><td style="padding:0 0 16px;font-size:15px;">
+          <strong>In it:</strong> ~60 components, charts, a data grid, kanban, a &#8984;K command palette, a turnkey <code>&lt;ConsoleLayout&gt;</code>, forms &amp; data hooks, icons, theming and copy-paste blocks. Need a running app? Clone <code>starters/vite-react/</code>.
+        </td></tr>
+
+        <tr><td style="padding:0 0 4px;font-size:15px;">
+          <strong>Good to know:</strong> flat by design (1px rules, no radius), every class is <code>.ds-*</code>-namespaced, and accessibility is checked in CI. Titles use the commercial <em>Ufficio</em> font — if a project doesn't hold a license, skip <code>ufficio.css</code> and titles fall back automatically.
+        </td></tr>
+
+        <tr><td style="padding:14px 0 0;font-size:15px;">
+          Docs &amp; issues: <a href="https://github.com/LittleBigCode/design-system" style="color:#ff2a00;">github.com/LittleBigCode/design-system</a> (installation, recipes, forms/data).
+        </td></tr>
+
+        <tr><td style="padding:18px 0 0;font-size:15px;">
+          Try it on your next screen and tell me what's missing.<br><br>
+          Thanks,<br>Vincent
+        </td></tr>
+
+      </table>
+    </td></tr>
+</table>
+</body>
+</html>

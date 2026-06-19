@@ -4,6 +4,16 @@ All notable changes to the Diametral Design System are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/), and the project
 adheres to [Semantic Versioning](https://semver.org/) — see [docs/versioning.md](docs/versioning.md).
 
+## [0.7.0] — 2026-06-19
+
+### Added
+- **Email kit** (`@diametral/design-system/emails`): dependency-free, **email-safe** builders
+  (table layout + inline styles + system-font fallbacks, flat / 1px / no-radius) for on-brand
+  transactional emails — a shared `layout()` + block helpers (`button`, `heading`, `kicker`,
+  `codeBox`, `row`…) and ready-made `welcomeEmail` / `passwordResetEmail` / `otpEmail` /
+  `notificationEmail` / `invoiceEmail`. Live previews at `examples/components/email.html`; docs in
+  [`docs/emails.md`](docs/emails.md).
+
 ## [0.6.0] — 2026-06-19
 
 ### Added

@@ -25,7 +25,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p _site
-          cp -r css assets components react examples _site/
+          cp -r css assets components react examples emails _site/
 
           # The Ufficio title font is served here under Diametral's own font license
           # (see NOTICE.md). To publish a license-safe build that excludes it instead,

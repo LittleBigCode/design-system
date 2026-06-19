@@ -106,6 +106,7 @@ const NAV = [
   ]},
   { label: "Utilities", items: [
     { k: "components/icons", t: "Icons" },
+    { k: "components/email", t: "Email templates" },
     { k: "components/code-block", t: "Code block" },
     { k: "components/kbd", t: "Keyboard key" },
   ]},

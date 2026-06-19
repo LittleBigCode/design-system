@@ -1,6 +1,6 @@
 {
   "name": "@diametral/design-system",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Diametral Design System — a minimal, flat, buildless CSS + tokens + Web Components design system. Welcome to (the real).",
   "license": "MIT",
   "type": "module",
@@ -21,6 +21,7 @@
     "dist",
     "docs",
     "configs",
+    "emails",
     "assets/fonts/ufficio.css",
     "assets/fonts/fallback.css",
     "assets/fonts/LICENSE-FONTS.md",
@@ -49,6 +50,10 @@
     },
     "./react/*": "./react/*",
     "./configs/*": "./configs/*",
+    "./emails": {
+      "types": "./emails/diametral-email.d.ts",
+      "default": "./emails/diametral-email.js"
+    },
     "./tailwind-preset": "./dist/tailwind-preset.cjs",
     "./dist/*": "./dist/*",
     "./assets/*": "./assets/*"

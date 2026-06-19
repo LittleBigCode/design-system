@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email templates · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+  <style>
+    .email-frame { width: 100%; height: 520px; border: 1px solid var(--ds-rule); background: #f4f4f5; display: block; }
+    .email-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    @media (max-width: 900px) { .email-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body data-page="components/email">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Patterns · email</p>
+        <h1 class="ds-title ds-title--xl">Email templates</h1>
+        <p class="docs-lede">On-brand <b>transactional emails</b> for the messages your apps send. Email can't use the <code>.ds-*</code> stylesheet — clients strip linked CSS, ignore flexbox/grid and won't load the brand fonts — so these are <b>email-safe</b>: table layout, inline styles, system-font fallbacks, flat / 1px / no-radius. Import the builders server-side and hand the HTML to your mailer.</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Usage</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">@diametral/design-system/emails</span><button class="ds-button" data-copy-target="#c-email">Copy</button></header>
+          <pre class="ds-example__code"><code id="c-email">import { welcomeEmail, invoiceEmail } from "@diametral/design-system/emails";
+
+// Any mailer — nodemailer / SES / SendGrid / Postmark…
+await mailer.send({
+  to: user.email,
+  subject: "Welcome to the Console",
+  html: welcomeEmail({ name: user.firstName, ctaUrl: "https://app.example.com/start" }),
+});
+
+// Compose your own with the layout + block helpers:
+import { layout, kicker, heading, paragraph, button } from "@diametral/design-system/emails";
+const html = layout({ sub: "Account", preheader: "Your trial is ending",
+  body: kicker("Heads-up") + heading("Your trial ends in 3 days") +
+        paragraph("Upgrade to keep your projects.") + button("Upgrade", url) });</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Templates</h2>
+        <p class="docs-note">Live previews (rendered by the actual builders). Ready-made: <code>welcomeEmail</code>, <code>passwordResetEmail</code>, <code>otpEmail</code>, <code>notificationEmail</code>, <code>invoiceEmail</code>.</p>
+        <div class="email-grid">
+          <div><p class="ds-label" style="margin:0 0 8px">welcomeEmail()</p><iframe id="em-welcome" class="email-frame" title="Welcome email"></iframe></div>
+          <div><p class="ds-label" style="margin:0 0 8px">passwordResetEmail()</p><iframe id="em-reset" class="email-frame" title="Password reset email"></iframe></div>
+          <div><p class="ds-label" style="margin:0 0 8px">otpEmail()</p><iframe id="em-otp" class="email-frame" title="One-time code email"></iframe></div>
+          <div><p class="ds-label" style="margin:0 0 8px">notificationEmail()</p><iframe id="em-notification" class="email-frame" title="Notification email"></iframe></div>
+          <div style="grid-column:1/-1"><p class="ds-label" style="margin:0 0 8px">invoiceEmail()</p><iframe id="em-invoice" class="email-frame" title="Invoice email"></iframe></div>
+        </div>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.7.0</span>
+        <a href="../index.html">← Overview</a>
+        <a href="../demo.html">Demo app →</a>
+      </footer>
+    </main>
+  </div>
+
+  <script type="module">
+    import { welcomeEmail, passwordResetEmail, otpEmail, invoiceEmail, notificationEmail } from "../../emails/diametral-email.js";
+    const set = (id, html) => { const f = document.getElementById(id); if (f) f.srcdoc = html; };
+    set("em-welcome", welcomeEmail({ name: "Camille", product: "the Console", ctaUrl: "#" }));
+    set("em-reset", passwordResetEmail({ name: "Camille", resetUrl: "#" }));
+    set("em-otp", otpEmail({ code: "418 207" }));
+    set("em-notification", notificationEmail({ title: "Pipeline succeeded", message: "Production deploy completed at 08:12 UTC. All health checks are green.", sub: "Notification", ctaUrl: "#", ctaLabel: "View deploy" }));
+    set("em-invoice", invoiceEmail({ number: "INV-2026-1042", items: [{ label: "AI-native delivery — June", amount: "€18,000" }, { label: "Data platform retainer", amount: "€6,500" }], total: "€24,500", dueDate: "2026-07-15", payUrl: "#" }));
+  </script>
+</body>
+</html>
