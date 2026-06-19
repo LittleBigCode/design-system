@@ -4,6 +4,16 @@ All notable changes to the Diametral Design System are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/), and the project
 adheres to [Semantic Versioning](https://semver.org/) — see [docs/versioning.md](docs/versioning.md).
 
+## [0.6.0] — 2026-06-19
+
+### Added
+- **Motion** (restrained, honors `prefers-reduced-motion`): a thin indeterminate top **load bar**
+  and a content **fade** on navigation in `<ConsoleLayout>` (new `loading` prop); a **`.ds-pulse`**
+  "live" dot; a StatCard **count-up** (`animate`); and a Sparkline **draw-in** (`animate`).
+- The demo now loads real data from a static-JSON **API** ([`examples/demo/api/`](examples/demo/api/)):
+  the Overview chart via `useResource` (Skeleton → chart), and the Invoices table via a JSON-backed
+  `loadPage` (skeleton rows → data). Documented in [`docs/data.md`](docs/data.md).
+
 ## [0.5.1] — 2026-06-19
 
 ### Fixed

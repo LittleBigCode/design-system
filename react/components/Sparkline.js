@@ -10,7 +10,7 @@ const cx = (...a) => a.filter(Boolean).join(" ");
    library. Renders role="img" with an aria-label. forwardRef lands on the
    root <span>. */
 export const Sparkline = React.forwardRef(function Sparkline(
-  { data = [], width = 120, height = 32, stroke, fill, showDot = false,
+  { data = [], width = 120, height = 32, stroke, fill, showDot = false, animate = false,
     "aria-label": ariaLabel, className, style, ...rest }, ref
 ) {
   const pad = 2; // keep the stroke + end dot from clipping at the edges
@@ -46,7 +46,7 @@ export const Sparkline = React.forwardRef(function Sparkline(
 
   return h("span", {
     ref,
-    className: cx("ds-sparkline", className),
+    className: cx("ds-sparkline", animate && "ds-sparkline--animate", className),
     style: stroke ? { color: stroke, ...style } : style,
     role: "img",
     "aria-label": label,
@@ -68,7 +68,7 @@ export const Sparkline = React.forwardRef(function Sparkline(
           })
         : null,
       points.length
-        ? h("polyline", { className: "ds-sparkline__line", points: line })
+        ? h("polyline", { className: "ds-sparkline__line", points: line, pathLength: animate ? 1 : undefined })
         : null,
       showDot && last
         ? h("circle", { className: "ds-sparkline__dot", cx: last[0], cy: last[1], r: 2 })

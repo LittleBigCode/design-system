@@ -1,0 +1,7 @@
+{
+  "labels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+  "series": [
+    { "name": "Revenue", "data": [42, 38, 51, 49, 62, 58, 67, 71, 69, 78, 74, 86] },
+    { "name": "Cost", "data": [30, 33, 29, 36, 34, 41, 39, 44, 46, 43, 48, 52] }
+  ]
+}

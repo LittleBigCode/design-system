@@ -17,6 +17,8 @@ export interface SparklineProps extends HTMLAttributes<HTMLSpanElement> {
   fill?: boolean | string;
   /** Mark the last point with a dot. */
   showDot?: boolean;
+  /** Draw the line in on mount (respects reduced-motion). */
+  animate?: boolean;
 }
 
 export declare const Sparkline: ForwardRefExoticComponent<

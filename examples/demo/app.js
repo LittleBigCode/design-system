@@ -62,7 +62,8 @@ function Shell({ onSignOut }) {
     themes: true,
     searchPlaceholder: "Search projects, people…",
     actions: h(F, null,
-      h(Badge, { variant: "accent" }, "Production"),
+      h("span", { className: "row", style: { gap: "6px" }, title: "Live" },
+        h("span", { className: "ds-pulse" }), h(Badge, { variant: "accent" }, "Production")),
       h(Button, { variant: "primary", onClick: () => go("projects") }, "New")),
   }, h(Body, { go, sel, select }));
 }

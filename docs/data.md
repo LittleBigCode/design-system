@@ -157,3 +157,46 @@ loadPage={restLoadPage("/api/items", {
   fetchOptions: { credentials: "include" },
 })}
 ```
+
+## Loading from a static JSON (what the live demo does)
+
+The [demo app](../examples/demo.html) fetches static JSON files it ships in
+[`examples/demo/api/`](../examples/demo/api/) through a tiny
+[`examples/demo/api.js`](../examples/demo/api.js) module — a stand-in for a real
+backend (it even adds a little latency so the loading states are visible).
+
+**A chart from an API call.** The Overview chart loads its series with
+`useResource`, shows a `Skeleton` while in flight, and an `Alert` on failure:
+
+```jsx
+const { data, loading, error } = useResource(
+  () => fetch("/api/metrics.json").then((r) => r.json()), []
+);
+return error   ? <Alert type="danger">Couldn’t load metrics.</Alert>
+     : loading ? <Skeleton variant="block" height={240} />
+     :           <LineChart series={data.series} labels={data.labels} width={700} height={240} />;
+```
+
+**A datatable from a static JSON.** When the data is a single JSON array (no
+server-side paging), fetch it once and page client-side. The demo's
+`jsonLoadPage(file)` returns a `<DataGrid loadPage>` that does exactly that:
+
+```js
+export function jsonLoadPage(file) {
+  let cache = null;
+  return async ({ page, pageSize, sort, filters }) => {
+    if (!cache) cache = await fetch(file).then((r) => r.json());
+    let rows = cache.slice();
+    // …apply `filters` + `sort` here…
+    const start = (page - 1) * pageSize;
+    return { rows: rows.slice(start, start + pageSize), total: rows.length };
+  };
+}
+```
+
+```jsx
+<DataGrid columns={columns} pageSize={8} filterable loadPage={jsonLoadPage("/api/invoices.json")} />
+```
+
+Use this for bundled/static data; reach for `restLoadPage` once you have a real
+paginated endpoint. Either way `<DataGrid>` shows skeleton rows while it loads.

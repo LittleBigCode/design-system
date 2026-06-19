@@ -1,0 +1,60 @@
+/* Motion — deliberately restrained (a Diametral brand value: minimal, refined).
+   A thin indeterminate load bar, a quiet "live" pulse, and a line draw-in.
+   All honor prefers-reduced-motion. */
+
+/* Indeterminate top load bar — a thin accent sliver crossing a 2px track.
+   The track is always present (no layout shift); the sliver shows on .is-loading. */
+.ds-loadbar { position: relative; height: 2px; overflow: hidden; pointer-events: none; }
+.ds-loadbar::before {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0; left: -40%;
+  width: 40%;
+  background: var(--ds-accent);
+  opacity: 0;
+}
+.ds-loadbar.is-loading::before {
+  opacity: 1;
+  animation: ds-loadbar-slide 0.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+@keyframes ds-loadbar-slide {
+  0% { left: -40%; }
+  100% { left: 100%; }
+}
+
+/* "Live" pulse — a small accent dot with a soft expanding ring. */
+.ds-pulse {
+  position: relative;
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--ds-accent);
+  flex: none;
+}
+.ds-pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--ds-accent);
+  animation: ds-pulse-ring 1.8s ease-out infinite;
+}
+@keyframes ds-pulse-ring {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+/* Sparkline / line draw-in — opt-in via .ds-sparkline--animate (the React
+   <Sparkline animate> sets pathLength="1" so the dash math is resolution-free). */
+@keyframes ds-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+.ds-sparkline--animate .ds-sparkline__line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: ds-draw 0.9s ease forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-loadbar.is-loading::before { animation: none; opacity: 0; }
+  .ds-pulse::after { display: none; }
+  .ds-sparkline--animate .ds-sparkline__line { animation: none; stroke-dashoffset: 0; }
+}

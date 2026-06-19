@@ -6,7 +6,12 @@ import {
   PageHeader, Button, StatCard, Card, BarChart, Timeline,
   DataGrid, Drawer, DescriptionList,
 } from "../../../react/index.js";
-import { loadInvoices, INVOICES, REVENUE_BARS } from "../data.js";
+import { REVENUE_BARS } from "../data.js";
+import { jsonLoadPage } from "../api.js";
+
+// Datatable backed by a static JSON through the demo API (fetch + client-side
+// filter/sort/paginate). The DataGrid shows skeleton rows while it loads.
+const loadInvoicesPage = jsonLoadPage("invoices.json");
 
 const PAYMENTS = [
   { time: "Today 10:42", title: "Acme — INV-2026-1012", body: "€48,200 received via SEPA.", status: "success" },
@@ -56,7 +61,7 @@ export function Invoices() {
     h(DataGrid, {
       title: "All invoices",
       columns,
-      loadPage: loadInvoices,
+      loadPage: loadInvoicesPage,
       lazyMode: "pagination",
       pageSize: 8,
       filterable: true,

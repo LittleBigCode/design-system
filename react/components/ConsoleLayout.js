@@ -16,10 +16,11 @@ const { useState, useEffect } = React;
 
 export function ConsoleLayout({
   brand, nav = [], active, onNavigate, commands, user, actions,
-  search = true, searchPlaceholder = "Search…", themes = false, children, className,
+  search = true, searchPlaceholder = "Search…", themes = false, loading = false, children, className,
 }) {
   const [cmdOpen, setCmdOpen] = useState(false);
   const [theme, setTheme] = useState("light");
+  const [navLoading, setNavLoading] = useState(false);
 
   useEffect(() => {
     if (!search) return undefined;
@@ -36,6 +37,13 @@ export function ConsoleLayout({
     if (theme === "light") root.removeAttribute("data-theme");
     else root.setAttribute("data-theme", theme);
   }, [theme, themes]);
+
+  // Flash the top load bar briefly on each navigation, for a sense of activity.
+  useEffect(() => {
+    setNavLoading(true);
+    const t = setTimeout(() => setNavLoading(false), 500);
+    return () => clearTimeout(t);
+  }, [active]);
 
   const flat = nav.flatMap((g) => g.items || []);
   const cmds = commands || flat.map((n) => ({ id: n.id, label: n.label, group: "Go to", onRun: () => onNavigate && onNavigate(n.id) }));
@@ -59,6 +67,8 @@ export function ConsoleLayout({
           className: cx("ds-vnav__item ds-console__navitem", active === n.id && "is-active"),
           onClick: () => onNavigate && onNavigate(n.id),
         }, h("span", null, n.label), n.badge != null ? h(Badge, null, n.badge) : null)))))),
-    h("main", { className: "ds-console__main" }, h("div", { className: "ds-console__wrap" }, children)),
+    h("main", { className: "ds-console__main" },
+      h("div", { className: cx("ds-loadbar", (loading || navLoading) && "is-loading"), "aria-hidden": "true" }),
+      h("div", { className: "ds-console__wrap" }, h("div", { key: active, className: "ds-fade-in" }, children))),
     search ? h(CommandPalette, { open: cmdOpen, onClose: () => setCmdOpen(false), commands: cmds, placeholder: "Jump to a page or run a command…" }) : null);
 }

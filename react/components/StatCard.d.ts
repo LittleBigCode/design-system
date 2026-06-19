@@ -14,6 +14,8 @@ export interface StatCardProps extends HTMLAttributes<HTMLDivElement> {
   delta?: ReactNode;
   /** Colors the delta (success/danger) and prepends a ▲/▼. */
   deltaDir?: "up" | "down";
+  /** Count the numeric part of `value` up on mount (respects reduced-motion). */
+  animate?: boolean;
   /** Rendered in a spark slot under the value (e.g. a Sparkline). */
   children?: ReactNode;
 }

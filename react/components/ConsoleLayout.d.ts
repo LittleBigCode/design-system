@@ -36,6 +36,8 @@ export interface ConsoleLayoutProps {
   searchPlaceholder?: string;
   /** Render a Light/Dark/Sepia switcher that drives `data-theme` on <html>. */
   themes?: boolean;
+  /** Force the top load bar on (it also flashes briefly on every navigation). */
+  loading?: boolean;
   children?: ReactNode;
   className?: string;
 }
