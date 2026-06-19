@@ -334,7 +334,8 @@ demo in [`examples/react.html`](../examples/react.html) and the notes in [react.
 Streamlit renders its own React widgets, so you don't install the package into
 it. Set the brand colors in `.streamlit/config.toml`, inject the stylesheet with
 `st.markdown`, and render `.ds-*` blocks as HTML. Full guide:
-[`docs/streamlit.md`](streamlit.md).
+[`docs/streamlit.md`](streamlit.md). Runnable example (Docker):
+[`examples/streamlit/`](../examples/streamlit/).
 
 ---
 
