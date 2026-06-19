@@ -371,6 +371,43 @@ import "@diametral/design-system/components";</code></pre>
       </section>
 
       <section class="docs-section">
+        <h2>Quick start · Streamlit (Python)</h2>
+        <p class="docs-note">Streamlit renders its own widgets, so you don't install the package into it. Align colors in <code>.streamlit/config.toml</code>, inject the stylesheet, then render <code>.ds-*</code> blocks with <code>st.markdown</code>. Full guide: <a href="https://github.com/LittleBigCode/design-system/blob/main/docs/streamlit.md"><code>docs/streamlit.md</code></a>.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">.streamlit/config.toml</span><button class="ds-button" data-copy-target="#c-st-theme">Copy</button></header>
+          <pre class="ds-example__code"><code id="c-st-theme">[theme]
+primaryColor = "#ff2a00"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f5f5f5"
+textColor = "#161616"
+font = "sans serif"</code></pre>
+        </section>
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">inject the stylesheet + flatten widgets</span><button class="ds-button" data-copy-target="#c-st-inject">Copy</button></header>
+          <pre class="ds-example__code"><code id="c-st-inject">import streamlit as st
+
+st.markdown("""
+&lt;link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet"&gt;
+&lt;link rel="stylesheet" href="https://unpkg.com/@diametral/design-system/css/diametral.css"&gt;
+&lt;style&gt;
+  html, body, button, input, textarea { font-family: "Geist", sans-serif; }
+  .stButton > button { border-radius: 0; border: 1px solid #161616; background: #161616; color: #fff; box-shadow: none; }
+  .stTextInput input, [data-baseweb="select"] > div { border-radius: 0 !important; box-shadow: none !important; }
+&lt;/style&gt;
+""", unsafe_allow_html=True)</code></pre>
+        </section>
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">render a .ds-* block</span><button class="ds-button" data-copy-target="#c-st-block">Copy</button></header>
+          <pre class="ds-example__code"><code id="c-st-block">st.markdown("""
+&lt;div class="ds-statgrid"&gt;
+  &lt;div class="ds-statgrid__cell"&gt;&lt;div class="ds-statgrid__label"&gt;Revenue&lt;/div&gt;&lt;div class="ds-statgrid__value"&gt;€4.5M&lt;/div&gt;&lt;/div&gt;
+  &lt;div class="ds-statgrid__cell"&gt;&lt;div class="ds-statgrid__label"&gt;Margin&lt;/div&gt;&lt;div class="ds-statgrid__value"&gt;24.6%&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+""", unsafe_allow_html=True)</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
         <h2>Tailwind</h2>
         <p class="docs-note">Add the preset to <code>presets</code> in your Tailwind config — it binds <code>colors</code>, <code>spacing</code>, <code>fontFamily</code>, and the rest to the <code>--ds-*</code> custom properties:</p>
         <section class="ds-example">
