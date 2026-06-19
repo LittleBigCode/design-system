@@ -4,6 +4,17 @@ All notable changes to the Diametral Design System are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/), and the project
 adheres to [Semantic Versioning](https://semver.org/) — see [docs/versioning.md](docs/versioning.md).
 
+## [0.5.1] — 2026-06-19
+
+### Fixed
+- `Select` now accepts bare-string `options` (e.g. `["Director","Manager"]`), normalizing them to
+  `{ value, label }` like `MultiSelect` — previously bare strings rendered empty `<option>`s.
+
+### Changed
+- The demo **Settings** page is now a forms showcase: regex validation (email / username),
+  cross-field password confirmation, color picker, date picker and a multi-select dropdown — all
+  built on `useForm` + `<FormField>`.
+
 ## [0.5.0] — 2026-06-19
 
 ### Added

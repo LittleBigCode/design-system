@@ -4,6 +4,7 @@ import {
   StatCard, Sparkline, LineChart, DonutChart, Card,
   Avatar, Tooltip, IconButton, Button, Field, Textarea, EmptyState,
   Tabs, Input, FieldHint, Select, Switch, useToast,
+  useForm, FormField, ColorPicker, DatePicker, MultiSelect,
 } from "../../../react/index.js";
 import { h, F } from "../ui.js";
 import { MESSAGES, SERIES, MONTHS } from "../data.js";
@@ -51,23 +52,93 @@ export function Inbox() {
         h("div", { style: { marginTop: "18px" } }, h(Field, { label: "Reply" }, h(Textarea, { rows: 3, placeholder: "Write a reply…" })), h("div", { style: { marginTop: "10px" } }, h(Button, { variant: "primary" }, "Send")))) : h(EmptyState, { title: "No message selected" }))));
 }
 
+const SKILL_OPTS = [
+  { value: "python", label: "Python" }, { value: "react", label: "React" },
+  { value: "sql", label: "SQL" }, { value: "llms", label: "LLMs" },
+  { value: "mlops", label: "MLOps" }, { value: "airflow", label: "Airflow" },
+  { value: "go", label: "Go" }, { value: "rust", label: "Rust" },
+];
+const RE_EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+const RE_USER = /^[a-z0-9_]{3,20}$/;
+const RE_PW = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+// Validation lives in one place: regex checks + a cross-field password match.
+function validateSettings(v) {
+  const e = {};
+  if (!v.name || v.name.trim().length < 2) e.name = "Enter at least 2 characters.";
+  if (!RE_EMAIL.test(v.email)) e.email = "Enter a valid email address.";
+  if (!RE_USER.test(v.username)) e.username = "3–20 chars: lowercase letters, digits or underscore.";
+  if (!v.skills || v.skills.length === 0) e.skills = "Pick at least one skill.";
+  if (v.password || v.confirm) {
+    if (!RE_PW.test(v.password)) e.password = "Min 8 chars, with an upper, a lower and a digit.";
+    if (v.confirm !== v.password) e.confirm = "Passwords don't match.";
+  }
+  return e;
+}
+
 export function Settings() {
   const toast = useToast();
-  const [name, setName] = useState("Vincent Devillers");
+  const form = useForm({
+    initialValues: {
+      name: "Vincent Devillers", email: "vincent@diametral.io", username: "vincent",
+      role: "Director", bio: "", color: "#ff2a00", birthday: "", skills: ["react", "llms"],
+      password: "", confirm: "",
+    },
+    validate: validateSettings,
+  });
+  const { values, errors, setValue, register } = form;
+  const grid = { paddingTop: "18px", display: "grid", gap: "16px", maxWidth: "560px" };
+
+  const runSave = form.handleSubmit(() => toast.show({ type: "success", title: "Saved", message: "Your profile was updated." }));
+  const onSubmit = (ev) => {
+    ev.preventDefault();
+    const ok = Object.keys(validateSettings(values)).length === 0;
+    runSave(ev);
+    if (!ok) toast.show({ type: "danger", title: "Check the form", message: "Some fields need attention." });
+  };
+
+  const profile = h("div", { style: grid },
+    h(FormField, { label: "Full name", htmlFor: "st-name", error: errors.name },
+      h(Input, { id: "st-name", ...register("name") })),
+    h(FormField, { label: "Email", htmlFor: "st-email", error: errors.email },
+      h(Input, { id: "st-email", type: "email", ...register("email") })),
+    h(FormField, { label: "Username", htmlFor: "st-user", error: errors.username, hint: "Lowercase letters, digits or underscore — validated by regex." },
+      h(Input, { id: "st-user", ...register("username") })),
+    h(FormField, { label: "Role", htmlFor: "st-role" },
+      h(Select, { id: "st-role", ...register("role"), options: ["Director", "Manager", "Consultant"] })),
+    h(FormField, { label: "Bio", htmlFor: "st-bio", hint: "A short description for your profile." },
+      h(Textarea, { id: "st-bio", rows: 3, placeholder: "Tell the team about yourself…", ...register("bio") })),
+    h(FormField, { label: "Skills", error: errors.skills, hint: "Multi-select with a dropdown — pick one or more." },
+      h(MultiSelect, { options: SKILL_OPTS, value: values.skills, onChange: (a) => setValue("skills", a), placeholder: "Add skills…" })),
+    h("div", { className: "grid-2" },
+      h(FormField, { label: "Accent color", hint: "Color picker with brand swatches." },
+        h(ColorPicker, { value: values.color, onChange: (v) => setValue("color", v) })),
+      h(FormField, { label: "Birthday", hint: "Date picker (no future dates)." },
+        h(DatePicker, { value: values.birthday, onChange: (d, iso) => setValue("birthday", iso), max: new Date(), placeholder: "yyyy-mm-dd" }))));
+
+  const security = h("div", { style: grid },
+    h(FormField, { label: "New password", htmlFor: "st-pw", error: errors.password, hint: "Min 8 chars, with an upper, a lower and a digit." },
+      h(Input, { id: "st-pw", type: "password", ...register("password") })),
+    h(FormField, { label: "Confirm password", htmlFor: "st-pw2", error: errors.confirm, hint: "Cross-field validation: must match the password above." },
+      h(Input, { id: "st-pw2", type: "password", ...register("confirm") })));
+
+  const notif = h("div", { style: { paddingTop: "18px", display: "grid", gap: "14px", maxWidth: "560px" } },
+    h("label", { className: "ds-input-row" }, h("span", null, "Email digests"), h(Switch, { defaultChecked: true })),
+    h("label", { className: "ds-input-row" }, h("span", null, "Push alerts"), h(Switch, {})),
+    h("label", { className: "ds-input-row" }, h("span", null, "Weekly summary"), h(Switch, { defaultChecked: true })));
+
   const items = [
-    { id: "profile", label: "Profile", content: h("div", { style: { paddingTop: "18px", display: "grid", gap: "16px", maxWidth: "520px" } },
-      h(Field, { label: "Name" }, h(Input, { value: name, onChange: (e) => setName(e.target.value) }), !name ? h(FieldHint, { status: "error" }, "Name is required") : null),
-      h(Field, { label: "Email" }, h(Input, { type: "email", defaultValue: "vincent@diametral.io" })),
-      h(Field, { label: "Role" }, h(Select, { options: ["Director", "Manager", "Consultant"] }))) },
-    { id: "notif", label: "Notifications", content: h("div", { style: { paddingTop: "18px", display: "grid", gap: "14px", maxWidth: "520px" } },
-      h("label", { className: "ds-input-row" }, h("span", null, "Email digests"), h(Switch, { defaultChecked: true })),
-      h("label", { className: "ds-input-row" }, h("span", null, "Push alerts"), h(Switch, {}))) },
+    { id: "profile", label: "Profile", content: profile },
+    { id: "security", label: "Security", content: security },
+    { id: "notif", label: "Notifications", content: notif },
   ];
+
   return h(F, null,
     h("div", { className: "ph" }, "Settings"),
-    h("div", { className: "psub" }, "Account preferences"),
-    h(Tabs, { items }),
-    h("div", { style: { marginTop: "22px", display: "flex", gap: "10px" } },
-      h(Button, {}, "Cancel"),
-      h(Button, { variant: "primary", onClick: () => toast.show({ type: "success", title: "Saved", message: "Your settings were updated." }) }, "Save changes")));
+    h("div", { className: "psub" }, "Account preferences — a tour of the form controls & validation."),
+    h("form", { onSubmit, noValidate: true },
+      h(Tabs, { items }),
+      h("div", { style: { marginTop: "22px", display: "flex", gap: "10px" } },
+        h(Button, { type: "button", onClick: () => form.reset() }, "Reset"),
+        h(Button, { variant: "primary", type: "submit" }, "Save changes"))));
 }

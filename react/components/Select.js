@@ -15,7 +15,10 @@ export const Select = React.forwardRef(function Select(
   if (value !== undefined) props.value = value;
   else if (defaultValue !== undefined) props.defaultValue = defaultValue;
   const body = options
-    ? options.map((o) => h("option", { key: o.value, value: o.value, disabled: o.disabled }, o.label))
+    ? options.map((o) => {
+        const opt = o && typeof o === "object" ? o : { value: o, label: o };
+        return h("option", { key: opt.value, value: opt.value, disabled: opt.disabled }, opt.label ?? opt.value);
+      })
     : children;
   return h("div", { className: cx("ds-select", block && "ds-select--block", className) },
     h("select", props, body)
