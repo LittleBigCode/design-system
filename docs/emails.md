@@ -37,6 +37,10 @@ preview text.
 | `otpEmail({ code, expiresMin })` | one-time codes / 2FA |
 | `notificationEmail({ title, message, sub, ctaUrl, ctaLabel })` | generic alerts |
 | `invoiceEmail({ number, items, total, dueDate, payUrl })` | billing / receipts |
+| `inviteEmail({ inviter, team, role, acceptUrl })` | team invitations |
+| `digestEmail({ name, period, stats, items, ctaUrl })` | periodic summaries |
+| `alertEmail({ title, message, level, ctaUrl, ctaLabel })` | incidents / status (`level`: info/success/warning/danger) |
+| `kitchenSinkEmail()` | reference — every block in one email |
 
 Each returns a complete HTML document.
 
@@ -44,7 +48,9 @@ Each returns a complete HTML document.
 
 Build any email from the shared `layout()` plus the block helpers — `kicker`,
 `heading`, `paragraph`, `muted`, `button(label, href, { variant })`, `divider`,
-`codeBox`, and `row(label, amount, { strong })` for line items:
+`codeBox`, `row(label, amount, { strong })` for line items, `callout(html, { type })`
+(info/success/warning/danger), `list(items)`, `statBand(stats)`, `quote(text, cite)`
+and `card(html, { title })`:
 
 ```js
 import { layout, kicker, heading, paragraph, button } from "@diametral/design-system/emails";

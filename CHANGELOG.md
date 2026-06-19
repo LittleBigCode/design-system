@@ -4,6 +4,16 @@ All notable changes to the Diametral Design System are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/), and the project
 adheres to [Semantic Versioning](https://semver.org/) — see [docs/versioning.md](docs/versioning.md).
 
+## [0.8.0] — 2026-06-19
+
+### Added
+- More **email templates** — `inviteEmail`, `digestEmail`, `alertEmail` — plus a
+  `kitchenSinkEmail` reference that exercises every block, and new email blocks
+  `callout` / `list` / `statBand` / `quote` / `card`.
+- A **Streamlit (Python) guide** ([`docs/streamlit.md`](docs/streamlit.md)): theme config + CSS
+  injection + rendering `.ds-*` blocks via `st.markdown`, with caveats for native widgets, charts,
+  the React components and emails.
+
 ## [0.7.0] — 2026-06-19
 
 ### Added

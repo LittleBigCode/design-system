@@ -329,6 +329,13 @@ real app, prefer npm + a bundler.
 The `?external=react` query keeps a single React instance across the imports. See the full working
 demo in [`examples/react.html`](../examples/react.html) and the notes in [react.md](react.md).
 
+### Streamlit (Python)
+
+Streamlit renders its own React widgets, so you don't install the package into
+it. Set the brand colors in `.streamlit/config.toml`, inject the stylesheet with
+`st.markdown`, and render `.ds-*` blocks as HTML. Full guide:
+[`docs/streamlit.md`](streamlit.md).
+
 ---
 
 ## 5. Tailwind

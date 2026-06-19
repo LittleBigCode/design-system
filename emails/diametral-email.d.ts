@@ -15,6 +15,13 @@ export declare function muted(html: string): string;
 export declare function divider(): string;
 export declare function codeBox(code: string): string;
 export declare function row(label: string, amount: string, options?: { strong?: boolean }): string;
+export type CalloutType = "info" | "success" | "warning" | "danger";
+export declare function callout(html: string, options?: { type?: CalloutType }): string;
+export declare function list(items: string[]): string;
+export interface Stat { label: string; value: string; }
+export declare function statBand(stats: Stat[]): string;
+export declare function quote(text: string, cite?: string): string;
+export declare function card(html: string, options?: { title?: string }): string;
 
 export interface LayoutOptions {
   title?: string;
@@ -36,3 +43,9 @@ export declare function otpEmail(opts?: { code?: string; expiresMin?: number }):
 export declare function notificationEmail(opts?: { title?: string; message?: string; sub?: string; ctaUrl?: string; ctaLabel?: string }): string;
 export interface InvoiceLine { label: string; amount: string; }
 export declare function invoiceEmail(opts?: { number?: string; items?: InvoiceLine[]; total?: string; dueDate?: string; payUrl?: string }): string;
+export declare function inviteEmail(opts?: { inviter?: string; team?: string; role?: string; acceptUrl?: string }): string;
+export interface DigestItem { title: string; meta?: string; }
+export declare function digestEmail(opts?: { name?: string; period?: string; stats?: Stat[]; items?: DigestItem[]; ctaUrl?: string }): string;
+export declare function alertEmail(opts?: { title?: string; message?: string; level?: CalloutType; sub?: string; ctaUrl?: string; ctaLabel?: string }): string;
+/** A reference email exercising every block — the email "kitchen sink". */
+export declare function kitchenSinkEmail(): string;

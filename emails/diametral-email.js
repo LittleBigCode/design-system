@@ -80,6 +80,46 @@ export function row(label, amount, { strong = false } = {}) {
     <td align="right" style="${top}font-family:${brand.sans};font-size:${strong ? 15 : 14}px;font-weight:${w};color:${brand.ink};">${esc(amount)}</td></tr>`;
 }
 
+const CALLOUT = {
+  info: { bd: "#0e6a82", bg: "#eef6f9" },
+  success: { bd: "#2e7d4f", bg: "#eef6f0" },
+  warning: { bd: "#b8400b", bg: "#fdf3ee" },
+  danger: { bd: "#db2400", bg: "#fdeeec" },
+};
+/** A status banner with a colored left rule. type: info | success | warning | danger. */
+export function callout(html, { type = "info" } = {}) {
+  const c = CALLOUT[type] || CALLOUT.info;
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:6px 0 16px;"><tr>
+    <td style="border:1px solid ${brand.rule};border-left:3px solid ${c.bd};background:${c.bg};padding:12px 16px;font-family:${brand.sans};font-size:14px;line-height:1.55;color:${brand.ink};">${html}</td></tr></table>`;
+}
+
+/** A bulleted list. `items` are HTML strings. */
+export function list(items = []) {
+  const li = items.map((it) => `<li style="margin:0 0 6px;">${it}</li>`).join("");
+  return `<ul style="margin:0 0 16px;padding-left:20px;font-family:${brand.sans};font-size:15px;line-height:1.6;color:${brand.soft};">${li}</ul>`;
+}
+
+/** A row of label/value stats divided by 1px rules (the brand stat band). */
+export function statBand(stats = []) {
+  const w = stats.length ? Math.floor(100 / stats.length) : 100;
+  const cells = stats.map((s, i) => `<td width="${w}%" style="padding:14px 16px;${i ? `border-left:1px solid ${brand.rule};` : ""}vertical-align:top;">
+    <div style="font-family:${brand.sans};font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:${brand.faint};">${esc(s.label)}</div>
+    <div style="font-family:${brand.serif};font-size:24px;color:${brand.ink};margin-top:4px;">${esc(s.value)}</div></td>`).join("");
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:6px 0 16px;border-top:1px solid ${brand.rule};border-bottom:1px solid ${brand.rule};"><tr>${cells}</tr></table>`;
+}
+
+/** A pull-quote with a left rule. */
+export function quote(text, cite) {
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:6px 0 16px;"><tr>
+    <td style="border-left:2px solid ${brand.ink};padding:4px 0 4px 16px;font-family:${brand.serif};font-size:17px;font-style:italic;line-height:1.5;color:${brand.ink};">${esc(text)}${cite ? `<div style="font-family:${brand.sans};font-style:normal;font-size:13px;color:${brand.faint};margin-top:8px;">— ${esc(cite)}</div>` : ""}</td></tr></table>`;
+}
+
+/** A bordered inner panel, with an optional uppercase title. */
+export function card(html, { title } = {}) {
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:6px 0 16px;border:1px solid ${brand.rule};"><tr>
+    <td style="padding:16px 18px;">${title ? `<div style="font-family:${brand.sans};font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:${brand.faint};margin-bottom:10px;">${esc(title)}</div>` : ""}${html}</td></tr></table>`;
+}
+
 /* ---- Layout -------------------------------------------------------------- */
 
 function defaultFooter() {
@@ -164,5 +204,62 @@ export function invoiceEmail({ number = "INV-0000", items = [], total = "€0", 
       + (dueDate ? muted(`Due ${esc(dueDate)}.`) : "")
       + `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:10px 0 18px;">${lines}${row("Total", total, { strong: true })}</table>`
       + (payUrl ? button("Pay invoice", payUrl) : ""),
+  });
+}
+
+export function inviteEmail({ inviter = "A teammate", team = "the team", role = "member", acceptUrl = "#" } = {}) {
+  return layout({
+    title: "You're invited", sub: "Invitation", preheader: `${inviter} invited you to ${team}`,
+    body: kicker("Invitation")
+      + heading(`Join ${esc(team)} on Diametral`)
+      + paragraph(`<strong>${esc(inviter)}</strong> invited you to join <strong>${esc(team)}</strong> as ${esc(role)}.`)
+      + button("Accept invitation", acceptUrl)
+      + muted("This invitation expires in 7 days."),
+  });
+}
+
+export function digestEmail({ name = "there", period = "this week", stats = [], items = [], ctaUrl = "#" } = {}) {
+  return layout({
+    title: "Your digest", sub: "Digest", preheader: `Your summary for ${period}`,
+    body: kicker("Digest")
+      + heading(`Your ${esc(period)} in review`)
+      + paragraph(`Hi ${esc(name)}, here's what moved ${esc(period)}.`)
+      + (stats.length ? statBand(stats) : "")
+      + (items.length ? card(list(items.map((it) => `<strong>${esc(it.title)}</strong>${it.meta ? ` — <span style="color:${brand.faint}">${esc(it.meta)}</span>` : ""}`)), { title: "Highlights" }) : "")
+      + button("Open the Console", ctaUrl),
+  });
+}
+
+export function alertEmail({ title = "Alert", message = "", level = "warning", sub = "Alert", ctaUrl, ctaLabel = "Investigate" } = {}) {
+  return layout({
+    title, sub, preheader: title,
+    body: heading(title)
+      + callout(esc(message), { type: level })
+      + (ctaUrl ? button(ctaLabel, ctaUrl) : ""),
+  });
+}
+
+/** A reference email exercising every block — the email "kitchen sink". */
+export function kitchenSinkEmail() {
+  return layout({
+    title: "All the blocks", sub: "Reference", preheader: "Every email block in one message",
+    body: kicker("Reference")
+      + heading("Every block, one email")
+      + paragraph(`A paragraph with a <a href="#" style="color:${brand.accentInk};text-decoration:underline;">link</a> and <strong>strong</strong> text.`)
+      + button("Primary action", "#")
+      + button("Secondary", "#", { variant: "ghost" })
+      + divider()
+      + callout("An informational note.", { type: "info" })
+      + callout("Something succeeded.", { type: "success" })
+      + callout("Heads-up — check this.", { type: "warning" })
+      + callout("Something needs attention.", { type: "danger" })
+      + statBand([{ label: "Revenue", value: "€4.5M" }, { label: "Margin", value: "24.6%" }, { label: "Projects", value: "86" }])
+      + card(list(["First highlight item", "Second highlight item", "Third highlight item"]), { title: "A list inside a card" })
+      + quote("Welcome to (the real).", "Diametral")
+      + heading("A verification code")
+      + codeBox("418 207")
+      + heading("An itemized total")
+      + `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:6px 0 16px;">${row("AI-native delivery", "€18,000")}${row("Retainer", "€6,500")}${row("Total", "€24,500", { strong: true })}</table>`
+      + muted("And a muted footnote at the end."),
   });
 }

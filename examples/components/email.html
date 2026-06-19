@@ -57,7 +57,11 @@ const html = layout({ sub: "Account", preheader: "Your trial is ending",
           <div><p class="ds-label" style="margin:0 0 8px">passwordResetEmail()</p><iframe id="em-reset" class="email-frame" title="Password reset email"></iframe></div>
           <div><p class="ds-label" style="margin:0 0 8px">otpEmail()</p><iframe id="em-otp" class="email-frame" title="One-time code email"></iframe></div>
           <div><p class="ds-label" style="margin:0 0 8px">notificationEmail()</p><iframe id="em-notification" class="email-frame" title="Notification email"></iframe></div>
+          <div><p class="ds-label" style="margin:0 0 8px">inviteEmail()</p><iframe id="em-invite" class="email-frame" title="Invitation email"></iframe></div>
+          <div><p class="ds-label" style="margin:0 0 8px">alertEmail()</p><iframe id="em-alert" class="email-frame" title="Alert email"></iframe></div>
           <div style="grid-column:1/-1"><p class="ds-label" style="margin:0 0 8px">invoiceEmail()</p><iframe id="em-invoice" class="email-frame" title="Invoice email"></iframe></div>
+          <div style="grid-column:1/-1"><p class="ds-label" style="margin:0 0 8px">digestEmail()</p><iframe id="em-digest" class="email-frame" title="Digest email"></iframe></div>
+          <div style="grid-column:1/-1"><p class="ds-label" style="margin:0 0 8px">kitchenSinkEmail() — every block in one email</p><iframe id="em-kitchen" class="email-frame" style="height:1000px" title="All blocks email"></iframe></div>
         </div>
       </section>
 
@@ -70,13 +74,17 @@ const html = layout({ sub: "Account", preheader: "Your trial is ending",
   </div>
 
   <script type="module">
-    import { welcomeEmail, passwordResetEmail, otpEmail, invoiceEmail, notificationEmail } from "../../emails/diametral-email.js";
+    import { welcomeEmail, passwordResetEmail, otpEmail, invoiceEmail, notificationEmail, inviteEmail, digestEmail, alertEmail, kitchenSinkEmail } from "../../emails/diametral-email.js";
     const set = (id, html) => { const f = document.getElementById(id); if (f) f.srcdoc = html; };
     set("em-welcome", welcomeEmail({ name: "Camille", product: "the Console", ctaUrl: "#" }));
     set("em-reset", passwordResetEmail({ name: "Camille", resetUrl: "#" }));
     set("em-otp", otpEmail({ code: "418 207" }));
     set("em-notification", notificationEmail({ title: "Pipeline succeeded", message: "Production deploy completed at 08:12 UTC. All health checks are green.", sub: "Notification", ctaUrl: "#", ctaLabel: "View deploy" }));
     set("em-invoice", invoiceEmail({ number: "INV-2026-1042", items: [{ label: "AI-native delivery — June", amount: "€18,000" }, { label: "Data platform retainer", amount: "€6,500" }], total: "€24,500", dueDate: "2026-07-15", payUrl: "#" }));
+    set("em-invite", inviteEmail({ inviter: "Camille Roy", team: "Acme Delivery", role: "manager", acceptUrl: "#" }));
+    set("em-alert", alertEmail({ title: "Margin below threshold", message: "Project Atlas dropped to 11% margin — below the 20% floor.", level: "danger", ctaUrl: "#", ctaLabel: "Review pricing" }));
+    set("em-digest", digestEmail({ name: "Camille", period: "this week", stats: [{ label: "Revenue", value: "€312k" }, { label: "New projects", value: "8" }, { label: "At risk", value: "3" }], items: [{ title: "Acme kickoff completed", meta: "Mon" }, { title: "2 candidates moved to offer", meta: "Wed" }, { title: "Q3 staffing drafted", meta: "Fri" }], ctaUrl: "#" }));
+    set("em-kitchen", kitchenSinkEmail());
   </script>
 </body>
 </html>
