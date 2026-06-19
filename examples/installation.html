@@ -384,17 +384,20 @@ font = "sans serif"</code></pre>
         </section>
         <section class="ds-example">
           <header class="ds-example__bar"><span class="ds-label">inject the stylesheet + flatten widgets</span><button class="ds-button" data-copy-target="#c-st-inject">Copy</button></header>
-          <pre class="ds-example__code"><code id="c-st-inject">import streamlit as st
+          <pre class="ds-example__code"><code id="c-st-inject">import urllib.request, streamlit as st
 
-st.markdown("""
-&lt;link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet"&gt;
-&lt;link rel="stylesheet" href="https://unpkg.com/@diametral/design-system/css/diametral.css"&gt;
-&lt;style&gt;
-  html, body, button, input, textarea { font-family: "Geist", sans-serif; }
-  .stButton > button { border-radius: 0; border: 1px solid #161616; background: #161616; color: #fff; box-shadow: none; }
-  .stTextInput input, [data-baseweb="select"] > div { border-radius: 0 !important; box-shadow: none !important; }
-&lt;/style&gt;
-""", unsafe_allow_html=True)</code></pre>
+# Fetch the FLATTENED bundle (dist/, not css/ which is @import-based) and inline
+# it — Streamlit can strip a bare &lt;link&gt; but keeps an inline &lt;style&gt;.
+CDN = "https://unpkg.com/@diametral/design-system/dist/diametral.css"
+css = urllib.request.urlopen(CDN, timeout=15).read().decode()
+
+st.markdown(f"""&lt;style&gt;
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap');
+{css}
+html, body, button, input, textarea {{ font-family: "Geist", sans-serif; }}
+.stButton > button {{ border-radius:0; border:1px solid #161616; background:#161616; color:#fff; box-shadow:none; }}
+.stTextInput input, [data-baseweb="select"] > div {{ border-radius:0 !important; box-shadow:none !important; }}
+&lt;/style&gt;""", unsafe_allow_html=True)</code></pre>
         </section>
         <section class="ds-example">
           <header class="ds-example__bar"><span class="ds-label">render a .ds-* block</span><button class="ds-button" data-copy-target="#c-st-block">Copy</button></header>

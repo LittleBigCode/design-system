@@ -4,6 +4,17 @@ All notable changes to the Diametral Design System are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/), and the project
 adheres to [Semantic Versioning](https://semver.org/) — see [docs/versioning.md](docs/versioning.md).
 
+## [0.8.1] — 2026-06-19
+
+### Fixed
+- **Streamlit guide**: inject the **flattened `dist/diametral.css`** bundle (fetched + inlined),
+  not `css/diametral.css` (whose relative `@import`s 404 once inlined) nor a bare `<link>` (Streamlit
+  can strip it). Verified end-to-end in a Docker Streamlit app.
+
+### Added
+- A runnable **Streamlit example** at [`examples/streamlit/`](examples/streamlit/) (app +
+  `.streamlit/config.toml` + Dockerfile).
+
 ## [0.8.0] — 2026-06-19
 
 ### Added

@@ -25,45 +25,50 @@ load Geist/Ufficio or remove border-radius — that's step 2.
 
 ## 2. Inject the stylesheet + flatten widgets
 
-Call this once at the top of your app. It loads the fonts + the published CSS
-(from a CDN that serves npm), pins everything flat (no radius, 1px rules), and
-restyles the most common native widgets to the Diametral look:
+Streamlit's markdown sanitizer can strip a bare `<link>`, and `css/diametral.css`
+is `@import`-based (relative URLs that 404 once inlined). The reliable path —
+verified in the [`examples/streamlit/`](../examples/streamlit/) Docker app — is to
+**fetch the flattened `dist/diametral.css` bundle and inline it** in a `<style>`
+(which Streamlit keeps), plus a few overrides that flatten Streamlit's own widgets:
 
 ```python
+import urllib.request
 import streamlit as st
+
+CDN = "https://unpkg.com/@diametral/design-system/dist/diametral.css"  # flattened bundle (not css/)
+
+@st.cache_data(show_spinner=False)
+def _diametral_css() -> str:
+    return urllib.request.urlopen(CDN, timeout=15).read().decode("utf-8")
 
 def inject_diametral():
     st.markdown(
-        """
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://unpkg.com/@diametral/design-system/css/diametral.css">
-        <style>
-          html, body, [class*="st-"], button, input, textarea { font-family: "Geist", -apple-system, "Segoe UI", sans-serif; }
-          /* Flat by design: no radius, 1px rules, black primary button */
-          .stButton > button, .stDownloadButton > button, .stFormSubmitButton > button {
-            border-radius: 0; border: 1px solid #161616; background: #161616; color: #fff;
-            box-shadow: none; font-weight: 500;
-          }
-          .stButton > button:hover { background: #000; }
-          .stTextInput input, .stNumberInput input, .stTextArea textarea,
-          [data-baseweb="select"] > div, [data-baseweb="input"] {
-            border-radius: 0 !important; box-shadow: none !important;
-          }
-          [data-testid="stMetric"] { border: 1px solid #e5e5e5; padding: 14px 16px; }
-          [data-testid="stHeader"] { background: transparent; }
-          a { color: #db2400; }
-        </style>
-        """,
+        f"""<style>
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap');
+{_diametral_css()}
+/* Flatten Streamlit's own widgets to the Diametral look */
+html, body, button, input, textarea, [class*="st-"] {{ font-family: "Geist", -apple-system, sans-serif; }}
+.stButton > button, .stDownloadButton > button, .stFormSubmitButton > button {{
+  border-radius: 0; border: 1px solid #161616; background: #161616; color: #fff; box-shadow: none; font-weight: 500;
+}}
+.stButton > button:hover {{ background: #000; }}
+.stTextInput input, .stNumberInput input, .stTextArea textarea,
+[data-baseweb="select"] > div, [data-baseweb="input"] {{ border-radius: 0 !important; box-shadow: none !important; }}
+[data-testid="stMetric"] {{ border: 1px solid #e5e5e5; padding: 14px 16px; }}
+a {{ color: #db2400; }}
+</style>""",
         unsafe_allow_html=True,
     )
 
 inject_diametral()
 ```
 
-> Native widgets are Streamlit's own React DOM, so the selectors above target
-> stable `data-testid` / `data-baseweb` hooks. They can shift between Streamlit
-> versions — pin Streamlit and re-check after upgrades.
+> Why fetch-and-inline rather than a `<link>`: Streamlit can drop a bare `<link>`,
+> and inlining `css/diametral.css` breaks its relative `@import`s — the `dist`
+> bundle has every rule inlined, so it works. Native widgets are Streamlit's own
+> React DOM, so the selectors target stable `data-testid` / `data-baseweb` hooks —
+> pin Streamlit and re-check after upgrades. A runnable version of this exact page
+> (with a Dockerfile) lives in [`examples/streamlit/`](../examples/streamlit/).
 
 ## 3. Render `.ds-*` blocks with `st.markdown`
 
