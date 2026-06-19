@@ -7,6 +7,8 @@ the package into it. There are three practical layers — use as many as you nee
 2. **CSS injection** — load the Diametral stylesheet + flatten native widgets.
 3. **`.ds-*` HTML blocks** — render on-brand custom markup with `st.markdown`.
 
+![Diametral styling in a Streamlit app — the stat band, restyled native widgets (square inputs, black button, accent slider) and `.ds-*` blocks](../examples/streamlit/screenshot.png)
+
 ## 1. Theme config (colors + base look)
 
 Map Streamlit's theme to the brand in `.streamlit/config.toml`:

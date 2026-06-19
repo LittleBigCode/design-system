@@ -3,6 +3,8 @@
 A minimal Streamlit app styled with the Diametral design system — see
 [`docs/streamlit.md`](../../docs/streamlit.md) for the how-and-why.
 
+![The example running — the stat band, restyled native widgets, and .ds-* blocks](screenshot.png)
+
 It does three things:
 1. Sets the brand colors for native widgets in [`.streamlit/config.toml`](.streamlit/config.toml).
 2. Injects the published `diametral.css` (fetched + inlined, since Streamlit can strip a bare
