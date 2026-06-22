@@ -5,8 +5,11 @@
        <link rel="stylesheet" href="css/diametral.css">
        @import url("@diametral/design-system/css/diametral.css");
 
-   Themes (css/themes/*.css) and compat aliases (css/compat/*.css) are opt-in
-   and intentionally NOT imported here. See docs/theming.md and docs/migration.md.
+   The dark + sepia themes are bundled at the end (scoped to [data-theme="…"],
+   so they are inert until a theme is activated — this is what makes
+   ConsoleLayout's Light/Dark/Sepia switcher work out of the box). Other themes
+   (ocean, brand examples) and compat aliases (css/compat/*.css) remain opt-in.
+   See docs/theming.md and docs/migration.md.
    ============================================================================ */
 
 /* Tier 1+2+3 tokens */
@@ -97,3 +100,8 @@
 @import url("./components/console-layout.css");
 @import url("./components/icon.css");
 @import url("./components/motion.css");
+
+/* Alternate themes — scoped to [data-theme="dark"|"sepia"], inert until a theme
+   is set on a root element (e.g. by ConsoleLayout's Light/Dark/Sepia switcher). */
+@import url("./themes/dark.css");
+@import url("./themes/sepia.css");
