@@ -201,6 +201,51 @@ a:hover { color: var(--ds-accent); }
 .alert-info, .pf-c-alert.pf-m-info { border-left-color: #0e6a82; }
 .kc-feedback-text { color: var(--ds-soft); }
 
+/* ---- Special pages (all inherited from the keycloak parent) -------------- */
+/* select-authenticator.ftl — authenticator choice tiles */
+.select-auth-box-parent,
+.select-auth-box-arrow ~ *,
+.pf-c-tile {
+  border: 1px solid var(--ds-rule) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+.select-auth-box-parent:hover { border-color: var(--ds-ink) !important; }
+.select-auth-box-headers, .select-auth-box-desc { font-family: var(--ds-sans); }
+
+/* login-config-totp.ftl — TOTP/OTP setup (QR + manual secret) */
+#kc-totp-secret-key,
+.kc-totp-secret-key {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  background: var(--ds-bg);
+  border: 1px solid var(--ds-rule);
+  padding: 8px 10px;
+  display: inline-block;
+}
+#kc-totp-secret-qr-code, .qr-code { border: 1px solid var(--ds-rule); }
+ol#kc-totp-settings, .kc-totp-settings { font-family: var(--ds-sans); color: var(--ds-soft); }
+
+/* login-recovery-authn-code-config.ftl — recovery codes list */
+#kc-recovery-codes-list,
+ol.kc-recovery-codes-list {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  border: 1px solid var(--ds-rule);
+  background: var(--ds-bg);
+  padding: 14px 16px 14px 36px;
+}
+#kc-recovery-codes-list li { padding: 3px 0; letter-spacing: 0.06em; }
+
+/* login-oauth-grant.ftl — consent screen list */
+#kc-oauth ul, .kc-oauth-grant-list { list-style: none; padding: 0; }
+#kc-oauth li, .kc-oauth-grant-list li {
+  border-bottom: 1px solid var(--ds-rule-soft, #f0f0f0);
+  padding: 8px 0;
+  font-family: var(--ds-sans);
+  color: var(--ds-soft);
+}
+
 /* ---- Misc: language picker, footer -------------------------------------- */
 #kc-locale ul {
   background: var(--ds-surface);

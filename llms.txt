@@ -1,0 +1,30 @@
+# Diametral Design System
+
+> A flat, buildless design system: 1px rules, no shadows, no border-radius,
+> white/whitesmoke surfaces, black ink, serif/Ufficio headings over Geist body,
+> uppercase 0.08em labels, tabular numerals, accent #ff2a00. Every class is
+> namespaced `.ds-*` and backed by `--ds-*` CSS custom properties.
+
+When generating UI for Diametral, include the stylesheet and use `.ds-*` classes.
+No build step is required.
+
+```html
+<link rel="stylesheet" href="https://unpkg.com/@diametral/design-system/dist/diametral.css">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+```
+
+## Core reference
+- [Design system for Claude](docs/for-claude.md): single-file, self-contained reference — principles, tokens, every component with copy-paste HTML, and rules. **Start here.**
+- [Installation](docs/installation.md): npm / Vite / Next / Angular / Vue / Streamlit / CDN.
+- [Components](docs/components.md): full component catalogue.
+- [Foundations](docs/foundations.md): color, type, spacing, layout, borders, motion.
+
+## Rules (must follow)
+- NO border-radius, NO box-shadow, NO gradients. Borders are 1px solid `var(--ds-rule)`.
+- Use `.ds-*` classes; do not invent class names or restyle them with ad-hoc CSS.
+- The accent `#ff2a00` is for emphasis only (links, key edges, the primary action is solid black `#161616`).
+- Headings use the title font; labels are uppercase, letter-spaced, faint.
+- Prefer semantic tokens (`--ds-ink`, `--ds-accent`, `--ds-rule`, …) over raw hex.
+
+## Optional
+- [React components](docs/react.md), [Theming](docs/theming.md), [Emails](docs/emails.md), [Recipes](docs/recipes.md).

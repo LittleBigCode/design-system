@@ -114,6 +114,7 @@ A kit to stand up an app fast on top of the components:
 - **Streamlit (Python)** — theme config + CSS injection + `.ds-*` HTML blocks: [`docs/streamlit.md`](docs/streamlit.md).
 - **Keycloak** — a drop-in theme for the login flow + transactional emails: [`keycloak/`](keycloak/).
 - **Designer handoff** — `npm run build` emits Tokens Studio tokens for Figma ([`docs/figma.md`](docs/figma.md)).
+- **AI assistants / Claude** — a single self-contained reference ([`docs/for-claude.md`](docs/for-claude.md)) + an [`llms.txt`](llms.txt) index, so Claude generates on-brand UI. Add it at [claude.ai/design](https://claude.ai/design#design-systems).
 - **Tested** — visual-regression + axe accessibility checks in CI (`npm run test:visual` / `npm run test:a11y`).
 
 ## What's inside

@@ -4,6 +4,20 @@ All notable changes to the Diametral Design System are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/), and the project
 adheres to [Semantic Versioning](https://semver.org/) — see [docs/versioning.md](docs/versioning.md).
 
+## [0.10.0] — 2026-06-22
+
+### Added
+- **Reference for Claude / AI assistants**: a single self-contained
+  [`docs/for-claude.md`](docs/for-claude.md) (principles, tokens, every component as copy-paste
+  HTML, the grid system, a full example, and don'ts) plus a root [`llms.txt`](llms.txt) index — for
+  use with claude.ai's design-systems feature. Verified by having a fresh assistant build a screen
+  from the doc alone: 33 classes used, all real, rendered on-brand.
+
+### Changed
+- **Keycloak login theme**: added CSS for the special pages (TOTP setup, select-authenticator,
+  recovery codes, OAuth grant). All 41 login + 13 email templates are inherited from the `keycloak`
+  parent and styled; login, reset, register, update-password and TOTP-setup verified on Keycloak 25.
+
 ## [0.9.0] — 2026-06-22
 
 ### Added
