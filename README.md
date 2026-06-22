@@ -112,6 +112,7 @@ A kit to stand up an app fast on top of the components:
 - **Icons** — a Lucide-compatible `<Icon>` / `<ds-icon>` line-icon set; any 24×24 stroke SVG drops in.
 - **Emails** — on-brand, email-safe transactional templates (welcome, reset, OTP, notification, invoice, invite, digest, alert) in [`docs/emails.md`](docs/emails.md).
 - **Streamlit (Python)** — theme config + CSS injection + `.ds-*` HTML blocks: [`docs/streamlit.md`](docs/streamlit.md).
+- **Keycloak** — a drop-in theme for the login flow + transactional emails: [`keycloak/`](keycloak/).
 - **Designer handoff** — `npm run build` emits Tokens Studio tokens for Figma ([`docs/figma.md`](docs/figma.md)).
 - **Tested** — visual-regression + axe accessibility checks in CI (`npm run test:visual` / `npm run test:a11y`).
 

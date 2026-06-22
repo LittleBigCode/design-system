@@ -4,6 +4,15 @@ All notable changes to the Diametral Design System are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/), and the project
 adheres to [Semantic Versioning](https://semver.org/) — see [docs/versioning.md](docs/versioning.md).
 
+## [0.9.0] — 2026-06-22
+
+### Added
+- **Keycloak theme** ([`keycloak/`](keycloak/)): a drop-in theme branding the **login** flow
+  (sign-in, reset password, OTP, register, update password, verify email, error/info) via one
+  stylesheet on the classic `keycloak` parent, and the **transactional emails** by overriding the
+  shared HTML shell (`email/html/template.ftl`). Includes a `docker-compose.yml` to try it and a
+  README covering install + realm selection. Ships in the npm package under `keycloak/`.
+
 ## [0.8.1] — 2026-06-19
 
 ### Fixed
