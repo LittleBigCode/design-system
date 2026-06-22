@@ -114,8 +114,46 @@ A kit to stand up an app fast on top of the components:
 - **Streamlit (Python)** — theme config + CSS injection + `.ds-*` HTML blocks: [`docs/streamlit.md`](docs/streamlit.md).
 - **Keycloak** — a drop-in theme for the login flow + transactional emails: [`keycloak/`](keycloak/).
 - **Designer handoff** — `npm run build` emits Tokens Studio tokens for Figma ([`docs/figma.md`](docs/figma.md)).
-- **AI assistants / Claude** — a single self-contained reference ([`docs/for-claude.md`](docs/for-claude.md)) + an [`llms.txt`](llms.txt) index, so Claude generates on-brand UI. Add it at [claude.ai/design](https://claude.ai/design#design-systems).
+- **AI assistants / Claude** — generate on-brand UI by giving Claude one reference file. See
+  [**Use it with Claude**](#use-it-with-claude) below.
 - **Tested** — visual-regression + axe accessibility checks in CI (`npm run test:visual` / `npm run test:a11y`).
+
+## Use it with Claude
+
+You can have **Claude generate on-brand Diametral UI** for you. The trick is one file:
+[`docs/for-claude.md`](docs/for-claude.md) — a plain-English reference that describes the whole
+system (principles, tokens, and every component as copy‑paste HTML) in a form Claude reads. You give
+Claude that file once; then it builds screens using the real `.ds-*` classes.
+
+Its raw URL (handy for pasting):
+`https://raw.githubusercontent.com/LittleBigCode/design-system/main/docs/for-claude.md`
+
+**Pick one of these — all work:**
+
+1. **Design systems feature** — go to [claude.ai/design](https://claude.ai/design#design-systems),
+   add a design system named *Diametral*, and paste the contents of `docs/for-claude.md` (or its raw
+   URL). Then pick *Diametral* when you generate UI.
+2. **A Claude Project** — create a Project and paste `docs/for-claude.md` into its custom
+   instructions. Every chat in that Project then produces Diametral UI.
+3. **Any chat (quick)** — paste the raw URL (or the file) into a message and ask for UI.
+
+**Prompt that works well:**
+
+> Build a settings page using the Diametral Design System in the reference I gave you. Output a
+> standalone HTML artifact, include the stylesheet `<link>` from the doc, use only `.ds-*` classes,
+> keep it flat (no radius/shadow), and make the primary action solid black.
+
+**One gotcha for artifact previews.** The generated HTML loads the CSS from a CDN:
+
+```html
+<link rel="stylesheet" href="https://unpkg.com/@diametral/design-system/dist/diametral.css">
+```
+
+If the artifact sandbox blocks that and the preview looks unstyled, just ask Claude to *"inline the
+Diametral CSS in a `<style>` instead of the `<link>`"* — that renders everywhere.
+
+> Verified: a fresh assistant given only `docs/for-claude.md` built a correct screen — 33 `.ds-*`
+> classes, all real, flat / 1px / black primary.
 
 ## What's inside
 
