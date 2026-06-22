@@ -4,6 +4,22 @@ All notable changes to the Diametral Design System are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/), and the project
 adheres to [Semantic Versioning](https://semver.org/) — see [docs/versioning.md](docs/versioning.md).
 
+## [0.11.0] — 2026-06-23
+
+### Fixed
+- **Light/Dark/Sepia theme switcher now works out of the box.** `css/diametral.css`
+  bundles `css/themes/dark.css` + `css/themes/sepia.css` (scoped to
+  `[data-theme="dark"|"sepia"]`, so they stay inert until a theme is activated).
+  Previously `ConsoleLayout`'s switcher set `data-theme` on `<html>` but the
+  bundle shipped no matching rules, so switching had no visible effect.
+
+### Changed
+- **Title voice / fonts.** The `vite-react` starter now loads **Fraunces** next to
+  Geist, so headings render in the intended free serif instead of falling back to
+  Georgia. The **Keycloak login theme** likewise loads Fraunces, and its
+  `--ds-serif` now prefers `Ufficio → Fraunces → Georgia` — matching the app's
+  heading font across login and app.
+
 ## [0.10.0] — 2026-06-22
 
 ### Added
