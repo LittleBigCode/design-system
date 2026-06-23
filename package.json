@@ -43,6 +43,7 @@
     "./css/diametral.css": "./css/diametral.css",
     "./css/*": "./css/*",
     "./tokens.json": "./tokens/tokens.json",
+    "./components.json": "./tokens/components.json",
     "./components": "./components/index.js",
     "./components/*": "./components/*",
     "./react": {
@@ -60,11 +61,13 @@
     "./assets/*": "./assets/*"
   },
   "scripts": {
-    "build": "node scripts/build-tokens.mjs && node scripts/build-css.mjs && node scripts/build-components.mjs && node scripts/build-figma.mjs",
+    "build": "node scripts/build-tokens.mjs && node scripts/build-css.mjs && node scripts/build-components.mjs && node scripts/build-figma.mjs && node scripts/build-components-manifest.mjs",
     "build:tokens": "node scripts/build-tokens.mjs",
     "build:figma": "node scripts/build-figma.mjs",
     "build:css": "node scripts/build-css.mjs",
     "build:components": "node scripts/build-components.mjs",
+    "build:manifest": "node scripts/build-components-manifest.mjs",
+    "check:manifest": "node scripts/build-components-manifest.mjs --check",
     "serve": "python3 -m http.server 8080",
     "test:visual": "playwright test tests/visual.spec.js",
     "test:visual:update": "playwright test tests/visual.spec.js --update-snapshots",

@@ -1,0 +1,25 @@
+name: Component manifest in sync
+
+# Fails if tokens/components.json drifts from the CSS / Web Components / React
+# types it is generated from. The manifest is committed (it ships in the
+# package), so a PR that changes a `.ds-*` class, a Web Component, or a React
+# wrapper must regenerate it: `npm run build:manifest`, then commit.
+# Zero dependencies — just Node.
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  manifest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Check tokens/components.json is in sync
+        run: npm run check:manifest

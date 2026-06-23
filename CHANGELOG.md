@@ -4,6 +4,17 @@ All notable changes to the Diametral Design System are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/), and the project
 adheres to [Semantic Versioning](https://semver.org/) — see [docs/versioning.md](docs/versioning.md).
 
+## [Unreleased]
+
+### Added
+- **Component manifest** ([`tokens/components.json`](tokens/components.json)): a generated,
+  machine-readable catalogue of every `.ds-*` block — its base class, `__` elements, `--` modifiers,
+  the matching Web Component and React wrapper, and the React prop types parsed from the `.d.ts`.
+  Built by `npm run build:manifest` (zero-dependency `scripts/build-components-manifest.mjs`) from
+  the CSS + Web Components + React types, version-stamped, shipped in the package (`./components.json`
+  export), and kept in sync by a CI drift check (`npm run check:manifest`). Lets AI tooling, the docs
+  site, and Figma export read one source of truth instead of re-deriving structure from the CSS.
+
 ## [0.11.0] — 2026-06-23
 
 ### Fixed
@@ -19,7 +30,6 @@ adheres to [Semantic Versioning](https://semver.org/) — see [docs/versioning.m
   Georgia. The **Keycloak login theme** likewise loads Fraunces, and its
   `--ds-serif` now prefers `Ufficio → Fraunces → Georgia` — matching the app's
   heading font across login and app.
-
 ## [0.10.0] — 2026-06-22
 
 ### Added

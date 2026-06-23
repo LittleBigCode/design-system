@@ -14,6 +14,12 @@ variables. No build step.
 (React: `import "@diametral/design-system/css/diametral.css"` and
 `import { Button, Card, DataGrid } from "@diametral/design-system/react"`.)
 
+> **Full component index.** This guide covers the common components by hand. For
+> the complete set — every `.ds-*` block with its `__` elements, `--` modifiers,
+> web component, and React wrapper + props — read the generated machine-readable
+> [`components.json`](../tokens/components.json) (package export
+> `@diametral/design-system/components.json`).
+
 ## Principles — the look (follow strictly)
 
 - **Flat.** NO `border-radius`, NO `box-shadow`, NO gradients. Ever.

@@ -5,6 +5,13 @@ Component on top (see [`../components/README.md`](../components/README.md)). All
 copied from the live showcase — class and modifier names are exact. Each section links to its
 showcase page.
 
+> **Machine-readable index.** Every `.ds-*` block — its base class, `__` elements, `--` modifiers,
+> web component, and React wrapper + props — is generated into [`../tokens/components.json`](../tokens/components.json)
+> (package export `@diametral/design-system/components.json`). It is built by
+> `npm run build:manifest` from the CSS + Web Components + React types, and a CI check keeps it in
+> sync. Tools that need the whole catalogue (AI assistants, the docs site, Figma export) should read
+> it rather than re-deriving from the CSS.
+
 ## Status panel
 
 **The signature component.** A result / status / scoring panel: a solid colored head whose

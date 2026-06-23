@@ -1,0 +1,2475 @@
+{
+  "version": "0.11.0",
+  "count": 113,
+  "components": {
+    "accordion": {
+      "base": "ds-accordion",
+      "elements": [
+        "chevron",
+        "header",
+        "item",
+        "panel"
+      ],
+      "modifiers": [],
+      "react": "Accordion",
+      "reactProps": [
+        {
+          "name": "items",
+          "type": "AccordionItem[]",
+          "required": true
+        },
+        {
+          "name": "multiple",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "defaultOpen",
+          "type": "string | string[]",
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "string | string[]",
+          "required": false
+        },
+        {
+          "name": "onChange",
+          "type": "(value: string | string[] | null) => void",
+          "required": false
+        }
+      ]
+    },
+    "agenda": {
+      "base": "ds-agenda",
+      "elements": [
+        "body",
+        "date",
+        "day",
+        "empty",
+        "event",
+        "marker",
+        "meta",
+        "time",
+        "title",
+        "weekday"
+      ],
+      "modifiers": [],
+      "react": "Agenda",
+      "reactProps": [
+        {
+          "name": "events",
+          "type": "AgendaEvent[]",
+          "required": false
+        },
+        {
+          "name": "emptyMessage",
+          "type": "ReactNode",
+          "required": false
+        }
+      ]
+    },
+    "alert": {
+      "base": "ds-alert",
+      "elements": [
+        "actions",
+        "close",
+        "content",
+        "icon",
+        "title"
+      ],
+      "modifiers": [
+        "app",
+        "danger",
+        "info",
+        "success",
+        "warning"
+      ],
+      "react": "Alert",
+      "reactProps": [
+        {
+          "name": "type",
+          "type": "AlertType",
+          "required": false
+        },
+        {
+          "name": "dismissible",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "onDismiss",
+          "type": "(event: MouseEvent<HTMLButtonElement>) => void",
+          "required": false
+        },
+        {
+          "name": "icon",
+          "type": "ReactNode",
+          "required": false
+        },
+        {
+          "name": "app",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false
+        }
+      ]
+    },
+    "app-bar": {
+      "base": "ds-app-bar",
+      "elements": [
+        "actions",
+        "inner"
+      ],
+      "modifiers": []
+    },
+    "areachart": {
+      "base": "ds-areachart",
+      "elements": [
+        "area",
+        "dot",
+        "line"
+      ],
+      "modifiers": [],
+      "react": "AreaChart",
+      "reactProps": [
+        {
+          "name": "series",
+          "type": "AreaChartSeries[]",
+          "required": false
+        },
+        {
+          "name": "data",
+          "type": "number[]",
+          "required": false
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "labels",
+          "type": "ReactNode[]",
+          "required": false
+        },
+        {
+          "name": "grid",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "dots",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    "avatar": {
+      "base": "ds-avatar",
+      "elements": [
+        "img"
+      ],
+      "modifiers": [
+        "count",
+        "lg",
+        "sm"
+      ],
+      "react": "Avatar",
+      "reactProps": [
+        {
+          "name": "src",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "alt",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "initials",
+          "type": "ReactNode",
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"lg\"",
+          "required": false
+        }
+      ]
+    },
+    "avatar-group": {
+      "base": "ds-avatar-group",
+      "elements": [],
+      "modifiers": [
+        "lg",
+        "sm"
+      ]
+    },
+    "badge": {
+      "base": "ds-badge",
+      "elements": [],
+      "modifiers": [
+        "accent",
+        "solid"
+      ],
+      "webComponent": "ds-badge"
+    },
+    "banner": {
+      "base": "ds-banner",
+      "elements": [],
+      "modifiers": []
+    },
+    "barchart": {
+      "base": "ds-barchart",
+      "elements": [
+        "bar",
+        "col",
+        "label",
+        "track",
+        "value"
+      ],
+      "modifiers": [
+        "horizontal"
+      ],
+      "react": "BarChart",
+      "reactProps": [
+        {
+          "name": "data",
+          "type": "BarChartDatum[]",
+          "required": true
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "horizontal",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    "breadcrumb": {
+      "base": "ds-breadcrumb",
+      "elements": [
+        "item",
+        "link"
+      ],
+      "modifiers": [],
+      "react": "Breadcrumb",
+      "reactProps": [
+        {
+          "name": "items",
+          "type": "BreadcrumbItem[]",
+          "required": true
+        }
+      ]
+    },
+    "button": {
+      "base": "ds-button",
+      "elements": [],
+      "modifiers": [
+        "block",
+        "danger",
+        "icon",
+        "lg",
+        "loading",
+        "primary",
+        "sm"
+      ],
+      "webComponent": "ds-button"
+    },
+    "button-group": {
+      "base": "ds-button-group",
+      "elements": [],
+      "modifiers": []
+    },
+    "calendar": {
+      "base": "ds-calendar",
+      "elements": [
+        "day",
+        "grid",
+        "head",
+        "label",
+        "row",
+        "weekday"
+      ],
+      "modifiers": [],
+      "react": "Calendar",
+      "reactProps": [
+        {
+          "name": "month",
+          "type": "DateLike",
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "DateLike | null",
+          "required": false
+        },
+        {
+          "name": "events",
+          "type": "CalendarEvent[]",
+          "required": false
+        },
+        {
+          "name": "onSelectDate",
+          "type": "(date: Date, iso: string) => void",
+          "required": false
+        },
+        {
+          "name": "onMonthChange",
+          "type": "(month: Date) => void",
+          "required": false
+        },
+        {
+          "name": "weekStartsOn",
+          "type": "0 | 1 | 2 | 3 | 4 | 5 | 6",
+          "required": false
+        },
+        {
+          "name": "maxPerDay",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "showToday",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    "callout": {
+      "base": "ds-callout",
+      "elements": [
+        "title"
+      ],
+      "modifiers": [
+        "danger",
+        "info",
+        "success",
+        "warning"
+      ],
+      "webComponent": "ds-callout"
+    },
+    "card": {
+      "base": "ds-card",
+      "elements": [
+        "block",
+        "body",
+        "footer",
+        "header",
+        "media",
+        "title"
+      ],
+      "modifiers": [
+        "clickable"
+      ],
+      "react": "Card",
+      "reactProps": [
+        {
+          "name": "title",
+          "type": "ReactNode",
+          "required": false
+        },
+        {
+          "name": "media",
+          "type": "ReactNode",
+          "required": false
+        },
+        {
+          "name": "footer",
+          "type": "ReactNode",
+          "required": false
+        },
+        {
+          "name": "clickable",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    "chart": {
+      "base": "ds-chart",
+      "elements": [
+        "axis",
+        "grid",
+        "svg"
+      ],
+      "modifiers": []
+    },
+    "chart-legend": {
+      "base": "ds-chart-legend",
+      "elements": [
+        "item",
+        "swatch",
+        "value"
+      ],
+      "modifiers": []
+    },
+    "checkbox": {
+      "base": "ds-checkbox",
+      "elements": [
+        "box"
+      ],
+      "modifiers": [],
+      "react": "Checkbox",
+      "reactProps": [
+        {
+          "name": "checked",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "defaultChecked",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "onChange",
+          "type": "(checked: boolean, event: ChangeEvent<HTMLInputElement>) => void",
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false
+        }
+      ]
+    },
+    "chip": {
+      "base": "ds-chip",
+      "elements": [],
+      "modifiers": [
+        "warn"
+      ]
+    },
+    "chips": {
+      "base": "ds-chips",
+      "elements": [],
+      "modifiers": []
+    },
+    "cmdk": {
+      "base": "ds-cmdk",
+      "elements": [
+        "empty",
+        "group-label",
+        "hint",
+        "input",
+        "item",
+        "kbd",
+        "label",
+        "list"
+      ],
+      "modifiers": []
+    },
+    "code": {
+      "base": "ds-code",
+      "elements": [
+        "body",
+        "filename",
+        "head"
+      ],
+      "modifiers": []
+    },
+    "colorpicker": {
+      "base": "ds-colorpicker",
+      "elements": [
+        "native",
+        "row",
+        "swatch",
+        "swatches"
+      ],
+      "modifiers": [],
+      "react": "ColorPicker",
+      "reactProps": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "onChange",
+          "type": "(value: string) => void",
+          "required": false
+        },
+        {
+          "name": "swatches",
+          "type": "string[]",
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    "combobox": {
+      "base": "ds-combobox",
+      "elements": [
+        "empty",
+        "input",
+        "list",
+        "option"
+      ],
+      "modifiers": [
+        "block"
+      ],
+      "react": "Combobox",
+      "reactProps": [
+        {
+          "name": "options",
+          "type": "Array<string | ComboboxOption>",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "onChange",
+          "type": "(value: string) => void",
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "allowCustom",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    "console": {
+      "base": "ds-console",
+      "elements": [
+        "bar",
+        "main",
+        "navitem",
+        "navlabel",
+        "search",
+        "side",
+        "wrap"
+      ],
+      "modifiers": []
+    },
+    "context-bar": {
+      "base": "ds-context-bar",
+      "elements": [],
+      "modifiers": []
+    },
+    "datagrid": {
+      "base": "ds-datagrid",
+      "elements": [
+        "chevron",
+        "cols",
+        "cols-item",
+        "cols-menu",
+        "count",
+        "detail",
+        "edit",
+        "empty",
+        "expand",
+        "expandcell",
+        "filter-input",
+        "filters",
+        "footer",
+        "loadbar",
+        "pagebtn",
+        "pager",
+        "row",
+        "scroll",
+        "select",
+        "sort",
+        "sort-ind",
+        "spacer",
+        "table",
+        "td",
+        "th",
+        "title",
+        "toolbar"
+      ],
+      "modifiers": [
+        "draggable",
+        "editable",
+        "num"
+      ],
+      "react": "DataGrid",
+      "reactProps": [
+        {
+          "name": "columns",
+          "type": "DataGridColumn<Row>[]",
+          "required": true
+        },
+        {
+          "name": "rows",
+          "type": "Row[]",
+          "required": false
+        },
+        {
+          "name": "rowKey",
+          "type": "(row: Row, index: number) => string | number",
+          "required": false
+        },
+        {
+          "name": "selectable",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "selectedKeys",
+          "type": "Array<string | number>",
+          "required": false
+        },
+        {
+          "name": "defaultSelectedKeys",
+          "type": "Array<string | number>",
+          "required": false
+        },
+        {
+          "name": "onSelectionChange",
+          "type": "(keys: Array<string | number>) => void",
+          "required": false
+        },
+        {
+          "name": "expandable",
+          "type": "boolean | ((row: Row) => ReactNode)",
+          "required": false
+        },
+        {
+          "name": "renderDetail",
+          "type": "(row: Row) => ReactNode",
+          "required": false
+        },
+        {
+          "name": "defaultSort",
+          "type": "DataGridSort | null",
+          "required": false
+        },
+        {
+          "name": "onSortChange",
+          "type": "(sort: DataGridSort | null) => void",
+          "required": false
+        },
+        {
+          "name": "filterable",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "pageSize",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "loadPage",
+          "type": "(args: LoadPageArgs) => Promise<LoadPageResult<Row>> | LoadPageResult<Row>",
+          "required": false
+        },
+        {
+          "name": "lazyMode",
+          "type": "\"pagination\" | \"infinite\"",
+          "required": false
+        },
+        {
+          "name": "title",
+          "type": "ReactNode",
+          "required": false
+        },
+        {
+          "name": "toolbar",
+          "type": "ReactNode",
+          "required": false
+        },
+        {
+          "name": "columnToggle",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "editable",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "onCellEdit",
+          "type": "(row: Row, columnKey: string, value: string) => void",
+          "required": false
+        },
+        {
+          "name": "reorderable",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "emptyMessage",
+          "type": "ReactNode",
+          "required": false
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    "datepicker": {
+      "base": "ds-datepicker",
+      "elements": [],
+      "modifiers": [],
+      "react": "DatePicker",
+      "reactProps": [
+        {
+          "name": "value",
+          "type": "DateLike | null",
+          "required": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "DateLike | null",
+          "required": false
+        },
+        {
+          "name": "onChange",
+          "type": "(date: Date, iso: string) => void",
+          "required": false
+        },
+        {
+          "name": "min",
+          "type": "DateLike | null",
+          "required": false
+        },
+        {
+          "name": "max",
+          "type": "DateLike | null",
+          "required": false
+        },
+        {
+          "name": "format",
+          "type": "(date: Date) => string",
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    "daterange": {
+      "base": "ds-daterange",
+      "elements": [
+        "months",
+        "popover"
+      ],
+      "modifiers": []
+    },
+    "datetime": {
+      "base": "ds-datetime",
+      "elements": [],
+      "modifiers": [
+        "block"
+      ]
+    },
+    "dl": {
+      "base": "ds-dl",
+      "elements": [
+        "desc",
+        "term"
+      ],
+      "modifiers": []
+    },
+    "donut": {
+      "base": "ds-donut",
+      "elements": [
+        "center",
+        "center-label",
+        "segment",
+        "svg",
+        "track"
+      ],
+      "modifiers": []
+    },
+    "drawer": {
+      "base": "ds-drawer",
+      "elements": [
+        "body",
+        "close",
+        "foot",
+        "head",
+        "spacer",
+        "title"
+      ],
+      "modifiers": [
+        "bottom",
+        "left",
+        "right",
+        "top"
+      ],
+      "react": "Drawer",
+      "reactProps": [
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "name": "onClose",
+          "type": "() => void",
+          "required": false
+        },
+        {
+          "name": "placement",
+          "type": "DrawerPlacement",
+          "required": false
+        },
+        {
+          "name": "heading",
+          "type": "ReactNode",
+          "required": false
+        },
+        {
+          "name": "footer",
+          "type": "ReactNode",
+          "required": false
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false
+        }
+      ]
+    },
+    "drawer-overlay": {
+      "base": "ds-drawer-overlay",
+      "elements": [],
+      "modifiers": []
+    },
+    "dropdown": {
+      "base": "ds-dropdown",
+      "elements": [],
+      "modifiers": [],
+      "react": "Dropdown",
+      "reactProps": [
+        {
+          "name": "trigger",
+          "type": "((args: DropdownTriggerArgs) => ReactElement) | ReactNode",
+          "required": true
+        },
+        {
+          "name": "align",
+          "type": "\"start\" | \"end\"",
+          "required": false
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false
+        }
+      ]
+    },
+    "dropzone": {
+      "base": "ds-dropzone",
+      "elements": [
+        "hint"
+      ],
+      "modifiers": []
+    },
+    "empty": {
+      "base": "ds-empty",
+      "elements": [
+        "actions",
+        "desc",
+        "icon",
+        "title"
+      ],
+      "modifiers": []
+    },
+    "fade-in": {
+      "base": "ds-fade-in",
+      "elements": [],
+      "modifiers": []
+    },
+    "field": {
+      "base": "ds-field",
+      "elements": [
+        "hint",
+        "label"
+      ],
+      "modifiers": [
+        "error",
+        "success"
+      ]
+    },
+    "file-upload": {
+      "base": "ds-file-upload",
+      "elements": [],
+      "modifiers": [],
+      "react": "FileUpload",
+      "reactProps": [
+        {
+          "name": "accept",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "multiple",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "onFiles",
+          "type": "(files: File[]) => void",
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "File[]",
+          "required": false
+        },
+        {
+          "name": "hint",
+          "type": "ReactNode",
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    "filelist": {
+      "base": "ds-filelist",
+      "elements": [
+        "item",
+        "name",
+        "remove",
+        "size"
+      ],
+      "modifiers": []
+    },
+    "frame": {
+      "base": "ds-frame",
+      "elements": [],
+      "modifiers": [
+        "accent",
+        "wide"
+      ]
+    },
+    "gauge": {
+      "base": "ds-gauge",
+      "elements": [
+        "center",
+        "label",
+        "svg",
+        "track",
+        "value"
+      ],
+      "modifiers": []
+    },
+    "gridlabel": {
+      "base": "ds-gridlabel",
+      "elements": [],
+      "modifiers": []
+    },
+    "gridlines": {
+      "base": "ds-gridlines",
+      "elements": [],
+      "modifiers": []
+    },
+    "icon": {
+      "base": "ds-icon",
+      "elements": [],
+      "modifiers": [],
+      "webComponent": "ds-icon",
+      "react": "Icon",
+      "reactProps": [
+        {
+          "name": "name",
+          "type": "IconName | (string & {})",
+          "required": true
+        },
+        {
+          "name": "size",
+          "type": "number | string",
+          "required": false
+        },
+        {
+          "name": "strokeWidth",
+          "type": "number | string",
+          "required": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    "input": {
+      "base": "ds-input",
+      "elements": [],
+      "modifiers": [
+        "number"
+      ]
+    },
+    "input-group": {
+      "base": "ds-input-group",
+      "elements": [
+        "addon"
+      ],
+      "modifiers": [],
+      "react": "InputGroup",
+      "reactProps": [
+        {
+          "name": "before",
+          "type": "ReactNode",
+          "required": false
+        },
+        {
+          "name": "after",
+          "type": "ReactNode",
+          "required": false
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false
+        }
+      ]
+    },
+    "input-row": {
+      "base": "ds-input-row",
+      "elements": [
+        "unit"
+      ],
+      "modifiers": []
+    },
+    "kanban": {
+      "base": "ds-kanban",
+      "elements": [
+        "card",
+        "card-meta",
+        "card-title",
+        "col",
+        "col-head",
+        "count",
+        "list"
+      ],
+      "modifiers": [],
+      "react": "Kanban",
+      "reactProps": [
+        {
+          "name": "columns",
+          "type": "KanbanColumn[]",
+          "required": true
+        },
+        {
+          "name": "items",
+          "type": "Item[]",
+          "required": true
+        },
+        {
+          "name": "itemKey",
+          "type": "(item: Item) => string | number",
+          "required": false
+        },
+        {
+          "name": "renderCard",
+          "type": "(item: Item) => ReactNode",
+          "required": false
+        },
+        {
+          "name": "onMove",
+          "type": "(itemId: string | number, toColumnId: string) => void",
+          "required": false
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    "kbd": {
+      "base": "ds-kbd",
+      "elements": [],
+      "modifiers": [],
+      "react": "Kbd"
+    },
+    "kicker": {
+      "base": "ds-kicker",
+      "elements": [],
+      "modifiers": []
+    },
+    "label": {
+      "base": "ds-label",
+      "elements": [],
+      "modifiers": []
+    },
+    "linechart": {
+      "base": "ds-linechart",
+      "elements": [
+        "dot",
+        "line"
+      ],
+      "modifiers": [],
+      "react": "LineChart",
+      "reactProps": [
+        {
+          "name": "series",
+          "type": "LineChartSeries[]",
+          "required": false
+        },
+        {
+          "name": "data",
+          "type": "number[]",
+          "required": false
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "labels",
+          "type": "ReactNode[]",
+          "required": false
+        },
+        {
+          "name": "grid",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "dots",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    "loadbar": {
+      "base": "ds-loadbar",
+      "elements": [],
+      "modifiers": []
+    },
+    "marks": {
+      "base": "ds-marks",
+      "elements": [],
+      "modifiers": []
+    },
+    "menu": {
+      "base": "ds-menu",
+      "elements": [
+        "divider",
+        "header",
+        "item"
+      ],
+      "modifiers": [
+        "danger"
+      ]
+    },
+    "metric": {
+      "base": "ds-metric",
+      "elements": [
+        "k",
+        "v"
+      ],
+      "modifiers": [
+        "hero",
+        "sub"
+      ]
+    },
+    "modal": {
+      "base": "ds-modal",
+      "elements": [
+        "body",
+        "close",
+        "foot",
+        "head",
+        "spacer",
+        "title"
+      ],
+      "modifiers": [],
+      "webComponent": "ds-modal"
+    },
+    "monthview": {
+      "base": "ds-monthview",
+      "elements": [
+        "date",
+        "day",
+        "event",
+        "events",
+        "grid",
+        "head",
+        "label",
+        "more",
+        "nav",
+        "row",
+        "weekday",
+        "weekdays"
+      ],
+      "modifiers": []
+    },
+    "multiselect": {
+      "base": "ds-multiselect",
+      "elements": [
+        "control",
+        "empty",
+        "input",
+        "list",
+        "option",
+        "remove",
+        "token"
+      ],
+      "modifiers": [
+        "block"
+      ],
+      "react": "MultiSelect",
+      "reactProps": [
+        {
+          "name": "options",
+          "type": "Array<string | MultiSelectOption>",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "string[]",
+          "required": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "string[]",
+          "required": false
+        },
+        {
+          "name": "onChange",
+          "type": "(value: string[]) => void",
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    "number-input": {
+      "base": "ds-number-input",
+      "elements": [
+        "field",
+        "step"
+      ],
+      "modifiers": [
+        "block"
+      ],
+      "react": "NumberInput",
+      "reactProps": [
+        {
+          "name": "value",
+          "type": "number | null",
+          "required": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "number | null",
+          "required": false
+        },
+        {
+          "name": "onChange",
+          "type": "(value: number | null) => void",
+          "required": false
+        },
+        {
+          "name": "min",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "step",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    "numeric": {
+      "base": "ds-numeric",
+      "elements": [],
+      "modifiers": []
+    },
+    "overlay": {
+      "base": "ds-overlay",
+      "elements": [],
+      "modifiers": []
+    },
+    "page-header": {
+      "base": "ds-page-header",
+      "elements": [
+        "actions",
+        "subtitle",
+        "tabs",
+        "title",
+        "top"
+      ],
+      "modifiers": [
+        "flush"
+      ],
+      "react": "PageHeader",
+      "reactProps": [
+        {
+          "name": "title",
+          "type": "ReactNode",
+          "required": false
+        },
+        {
+          "name": "subtitle",
+          "type": "ReactNode",
+          "required": false
+        },
+        {
+          "name": "breadcrumb",
+          "type": "ReactNode",
+          "required": false
+        },
+        {
+          "name": "actions",
+          "type": "ReactNode",
+          "required": false
+        },
+        {
+          "name": "tabs",
+          "type": "ReactNode",
+          "required": false
+        },
+        {
+          "name": "flush",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    "pagination": {
+      "base": "ds-pagination",
+      "elements": [
+        "ellipsis",
+        "item",
+        "nav"
+      ],
+      "modifiers": [],
+      "react": "Pagination",
+      "reactProps": [
+        {
+          "name": "page",
+          "type": "number",
+          "required": true
+        },
+        {
+          "name": "pageCount",
+          "type": "number",
+          "required": true
+        },
+        {
+          "name": "onChange",
+          "type": "(page: number) => void",
+          "required": false
+        },
+        {
+          "name": "siblingCount",
+          "type": "number",
+          "required": false
+        }
+      ]
+    },
+    "panel": {
+      "base": "ds-panel",
+      "elements": [
+        "title"
+      ],
+      "modifiers": [
+        "rows"
+      ],
+      "webComponent": "ds-panel"
+    },
+    "piechart": {
+      "base": "ds-piechart",
+      "elements": [
+        "slice",
+        "svg"
+      ],
+      "modifiers": [],
+      "react": "PieChart",
+      "reactProps": [
+        {
+          "name": "data",
+          "type": "PieChartDatum[]",
+          "required": true
+        },
+        {
+          "name": "size",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "legend",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    "popover": {
+      "base": "ds-popover",
+      "elements": [
+        "arrow",
+        "body",
+        "title"
+      ],
+      "modifiers": [
+        "bottom",
+        "left",
+        "right"
+      ],
+      "react": "Popover",
+      "reactProps": [
+        {
+          "name": "trigger",
+          "type": "((args: PopoverTriggerArgs) => ReactElement) | ReactNode",
+          "required": true
+        },
+        {
+          "name": "placement",
+          "type": "PopoverPlacement",
+          "required": false
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "required": false
+        },
+        {
+          "name": "title",
+          "type": "ReactNode",
+          "required": false
+        },
+        {
+          "name": "arrow",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false
+        }
+      ]
+    },
+    "popover-host": {
+      "base": "ds-popover-host",
+      "elements": [],
+      "modifiers": []
+    },
+    "progress": {
+      "base": "ds-progress",
+      "elements": [
+        "bar",
+        "label",
+        "value"
+      ],
+      "modifiers": [
+        "danger",
+        "indeterminate",
+        "success",
+        "warning"
+      ],
+      "react": "Progress",
+      "reactProps": [
+        {
+          "name": "value",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "status",
+          "type": "\"success\" | \"warning\" | \"danger\"",
+          "required": false
+        },
+        {
+          "name": "indeterminate",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "ReactNode",
+          "required": false
+        }
+      ]
+    },
+    "prose": {
+      "base": "ds-prose",
+      "elements": [],
+      "modifiers": []
+    },
+    "pulse": {
+      "base": "ds-pulse",
+      "elements": [],
+      "modifiers": []
+    },
+    "radio": {
+      "base": "ds-radio",
+      "elements": [
+        "dot"
+      ],
+      "modifiers": [],
+      "react": "Radio",
+      "reactProps": [
+        {
+          "name": "checked",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "defaultChecked",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "onChange",
+          "type": "(value: string, event: ChangeEvent<HTMLInputElement>) => void",
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false
+        }
+      ]
+    },
+    "radio-group": {
+      "base": "ds-radio-group",
+      "elements": [],
+      "modifiers": []
+    },
+    "range": {
+      "base": "ds-range",
+      "elements": [],
+      "modifiers": [],
+      "react": "Range",
+      "reactProps": [
+        {
+          "name": "value",
+          "type": "number | string",
+          "required": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "number | string",
+          "required": false
+        },
+        {
+          "name": "onChange",
+          "type": "(value: number, event: ChangeEvent<HTMLInputElement>) => void",
+          "required": false
+        },
+        {
+          "name": "min",
+          "type": "number | string",
+          "required": false
+        },
+        {
+          "name": "max",
+          "type": "number | string",
+          "required": false
+        },
+        {
+          "name": "step",
+          "type": "number | string",
+          "required": false
+        }
+      ]
+    },
+    "rating": {
+      "base": "ds-rating",
+      "elements": [
+        "star"
+      ],
+      "modifiers": [
+        "readonly"
+      ],
+      "react": "Rating",
+      "reactProps": [
+        {
+          "name": "value",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "onChange",
+          "type": "(value: number) => void",
+          "required": false
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    "rule-x": {
+      "base": "ds-rule-x",
+      "elements": [],
+      "modifiers": [
+        "accent"
+      ]
+    },
+    "ruled": {
+      "base": "ds-ruled",
+      "elements": [
+        "col"
+      ],
+      "modifiers": []
+    },
+    "section": {
+      "base": "ds-section",
+      "elements": [],
+      "modifiers": []
+    },
+    "section-heading": {
+      "base": "ds-section-heading",
+      "elements": [],
+      "modifiers": [],
+      "webComponent": "ds-section-heading"
+    },
+    "segmented": {
+      "base": "ds-segmented",
+      "elements": [
+        "dot",
+        "item"
+      ],
+      "modifiers": [
+        "ko",
+        "ok"
+      ],
+      "webComponent": "ds-segmented"
+    },
+    "select": {
+      "base": "ds-select",
+      "elements": [
+        "chevron"
+      ],
+      "modifiers": [
+        "block"
+      ],
+      "react": "Select",
+      "reactProps": [
+        {
+          "name": "options",
+          "type": "SelectOption[]",
+          "required": false
+        },
+        {
+          "name": "block",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    "shell": {
+      "base": "ds-shell",
+      "elements": [
+        "header",
+        "main",
+        "sidebar",
+        "toggle"
+      ],
+      "modifiers": []
+    },
+    "skeleton": {
+      "base": "ds-skeleton",
+      "elements": [],
+      "modifiers": [
+        "block",
+        "circle",
+        "line",
+        "text"
+      ],
+      "react": "Skeleton",
+      "reactProps": [
+        {
+          "name": "variant",
+          "type": "\"text\" | \"line\" | \"circle\" | \"block\"",
+          "required": false
+        },
+        {
+          "name": "width",
+          "type": "number | string",
+          "required": false
+        },
+        {
+          "name": "height",
+          "type": "number | string",
+          "required": false
+        },
+        {
+          "name": "count",
+          "type": "number",
+          "required": false
+        }
+      ]
+    },
+    "sparkline": {
+      "base": "ds-sparkline",
+      "elements": [
+        "area",
+        "dot",
+        "line",
+        "svg"
+      ],
+      "modifiers": [
+        "animate"
+      ],
+      "react": "Sparkline",
+      "reactProps": [
+        {
+          "name": "data",
+          "type": "number[]",
+          "required": true
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "stroke",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "fill",
+          "type": "boolean | string",
+          "required": false
+        },
+        {
+          "name": "showDot",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "animate",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    "spinner": {
+      "base": "ds-spinner",
+      "elements": [],
+      "modifiers": [
+        "inline",
+        "lg",
+        "sm"
+      ],
+      "react": "Spinner",
+      "reactProps": [
+        {
+          "name": "size",
+          "type": "\"sm\" | \"lg\"",
+          "required": false
+        },
+        {
+          "name": "inline",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    "split": {
+      "base": "ds-split",
+      "elements": [
+        "menu"
+      ],
+      "modifiers": []
+    },
+    "stackedbar": {
+      "base": "ds-stackedbar",
+      "elements": [
+        "label",
+        "row",
+        "seg",
+        "track"
+      ],
+      "modifiers": [],
+      "react": "StackedBar",
+      "reactProps": [
+        {
+          "name": "data",
+          "type": "StackedBarRow[]",
+          "required": false
+        },
+        {
+          "name": "segments",
+          "type": "StackedBarSegment[]",
+          "required": false
+        },
+        {
+          "name": "showLegend",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    "stat": {
+      "base": "ds-stat",
+      "elements": [
+        "delta",
+        "label",
+        "spark",
+        "value"
+      ],
+      "modifiers": []
+    },
+    "statgrid": {
+      "base": "ds-statgrid",
+      "elements": [
+        "cell",
+        "label",
+        "value"
+      ],
+      "modifiers": []
+    },
+    "status": {
+      "base": "ds-status",
+      "elements": [
+        "body",
+        "head",
+        "key",
+        "kicker",
+        "note",
+        "subtitle",
+        "title"
+      ],
+      "modifiers": [
+        "critical",
+        "danger",
+        "info",
+        "neutral",
+        "success",
+        "warning"
+      ],
+      "webComponent": "ds-status"
+    },
+    "stepper": {
+      "base": "ds-stepper",
+      "elements": [
+        "desc",
+        "label",
+        "marker",
+        "step"
+      ],
+      "modifiers": [
+        "circle"
+      ],
+      "react": "Stepper",
+      "reactProps": [
+        {
+          "name": "steps",
+          "type": "StepperStep[]",
+          "required": true
+        },
+        {
+          "name": "active",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "complete",
+          "type": "number[] | ((index: number) => boolean)",
+          "required": false
+        },
+        {
+          "name": "circle",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    "switch": {
+      "base": "ds-switch",
+      "elements": [
+        "track"
+      ],
+      "modifiers": [],
+      "webComponent": "ds-switch"
+    },
+    "table": {
+      "base": "ds-table",
+      "elements": [
+        "name",
+        "num",
+        "row-action"
+      ],
+      "modifiers": [
+        "hover"
+      ]
+    },
+    "tabpane": {
+      "base": "ds-tabpane",
+      "elements": [],
+      "modifiers": []
+    },
+    "tabs": {
+      "base": "ds-tabs",
+      "elements": [
+        "sublabel",
+        "tab"
+      ],
+      "modifiers": [],
+      "webComponent": "ds-tabs"
+    },
+    "tag": {
+      "base": "ds-tag",
+      "elements": [
+        "remove"
+      ],
+      "modifiers": [
+        "danger",
+        "info",
+        "removable",
+        "success",
+        "warning"
+      ],
+      "react": "Tag",
+      "reactProps": [
+        {
+          "name": "status",
+          "type": "\"info\" | \"success\" | \"warning\" | \"danger\"",
+          "required": false
+        },
+        {
+          "name": "onRemove",
+          "type": "(event: MouseEvent<HTMLButtonElement>) => void",
+          "required": false
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false
+        }
+      ]
+    },
+    "tag-input": {
+      "base": "ds-tag-input",
+      "elements": [
+        "field",
+        "remove",
+        "token"
+      ],
+      "modifiers": [
+        "block"
+      ],
+      "react": "TagInput",
+      "reactProps": [
+        {
+          "name": "value",
+          "type": "string[]",
+          "required": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "string[]",
+          "required": false
+        },
+        {
+          "name": "onChange",
+          "type": "(value: string[]) => void",
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    "textarea": {
+      "base": "ds-textarea",
+      "elements": [],
+      "modifiers": [],
+      "react": "Textarea"
+    },
+    "timeline": {
+      "base": "ds-timeline",
+      "elements": [
+        "body",
+        "dot",
+        "item",
+        "time",
+        "title"
+      ],
+      "modifiers": [],
+      "react": "Timeline",
+      "reactProps": [
+        {
+          "name": "items",
+          "type": "TimelineItem[]",
+          "required": true
+        }
+      ]
+    },
+    "timepicker": {
+      "base": "ds-timepicker",
+      "elements": [
+        "col",
+        "opt",
+        "popover"
+      ],
+      "modifiers": [],
+      "react": "TimePicker",
+      "reactProps": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "onChange",
+          "type": "(value: string) => void",
+          "required": false
+        },
+        {
+          "name": "step",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    "title": {
+      "base": "ds-title",
+      "elements": [],
+      "modifiers": [
+        "lg",
+        "md",
+        "sm",
+        "xl"
+      ]
+    },
+    "toast": {
+      "base": "ds-toast",
+      "elements": [
+        "close",
+        "content",
+        "message",
+        "title"
+      ],
+      "modifiers": [
+        "danger",
+        "info",
+        "success",
+        "warning"
+      ]
+    },
+    "toasts": {
+      "base": "ds-toasts",
+      "elements": [],
+      "modifiers": []
+    },
+    "toolbar": {
+      "base": "ds-toolbar",
+      "elements": [
+        "group",
+        "spacer"
+      ],
+      "modifiers": [
+        "bordered"
+      ],
+      "react": "Toolbar",
+      "reactProps": [
+        {
+          "name": "bordered",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    "tooltip": {
+      "base": "ds-tooltip",
+      "elements": [],
+      "modifiers": [
+        "bottom",
+        "left",
+        "right",
+        "top"
+      ],
+      "react": "Tooltip",
+      "reactProps": [
+        {
+          "name": "label",
+          "type": "ReactNode",
+          "required": true
+        },
+        {
+          "name": "placement",
+          "type": "TooltipPlacement",
+          "required": false
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false
+        }
+      ]
+    },
+    "tooltip-host": {
+      "base": "ds-tooltip-host",
+      "elements": [],
+      "modifiers": []
+    },
+    "tree": {
+      "base": "ds-tree",
+      "elements": [
+        "children",
+        "item",
+        "label",
+        "row",
+        "toggle"
+      ],
+      "modifiers": [
+        "leaf"
+      ],
+      "react": "Tree",
+      "reactProps": [
+        {
+          "name": "nodes",
+          "type": "TreeNode[]",
+          "required": true
+        },
+        {
+          "name": "defaultExpanded",
+          "type": "string[]",
+          "required": false
+        },
+        {
+          "name": "onSelect",
+          "type": "(node: TreeNode) => void",
+          "required": false
+        }
+      ]
+    },
+    "vnav": {
+      "base": "ds-vnav",
+      "elements": [
+        "caret",
+        "children",
+        "group",
+        "item",
+        "label"
+      ],
+      "modifiers": [
+        "collapsible"
+      ]
+    },
+    "wizard": {
+      "base": "ds-wizard",
+      "elements": [
+        "footer",
+        "footer-actions",
+        "panel",
+        "steps"
+      ],
+      "modifiers": [],
+      "react": "Wizard",
+      "reactProps": [
+        {
+          "name": "steps",
+          "type": "WizardStep[]",
+          "required": true
+        },
+        {
+          "name": "active",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "defaultActive",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "onStepChange",
+          "type": "(index: number) => void",
+          "required": false
+        },
+        {
+          "name": "onFinish",
+          "type": "() => void",
+          "required": false
+        }
+      ]
+    },
+    "wordmark": {
+      "base": "ds-wordmark",
+      "elements": [
+        "mark",
+        "name",
+        "sub"
+      ],
+      "modifiers": []
+    }
+  },
+  "reactComponents": [
+    "Accordion",
+    "Agenda",
+    "Alert",
+    "AppShell",
+    "AreaChart",
+    "Avatar",
+    "BarChart",
+    "Breadcrumb",
+    "ButtonExtras",
+    "Calendar",
+    "Card",
+    "Checkbox",
+    "CodeBlock",
+    "ColorPicker",
+    "Combobox",
+    "CommandPalette",
+    "ConsoleLayout",
+    "DataGrid",
+    "DatePicker",
+    "DateRangePicker",
+    "DateTimePicker",
+    "DescriptionList",
+    "DonutChart",
+    "Drawer",
+    "Dropdown",
+    "EmptyState",
+    "FieldHint",
+    "FileUpload",
+    "FormField",
+    "GaugeChart",
+    "Icon",
+    "InputGroup",
+    "Kanban",
+    "Kbd",
+    "LineChart",
+    "MultiSelect",
+    "NumberInput",
+    "PageHeader",
+    "Pagination",
+    "PieChart",
+    "Popover",
+    "Progress",
+    "Radio",
+    "Range",
+    "Rating",
+    "Select",
+    "Skeleton",
+    "Sparkline",
+    "Spinner",
+    "StackedBar",
+    "StatCard",
+    "Stepper",
+    "Tag",
+    "TagInput",
+    "Textarea",
+    "TimePicker",
+    "Timeline",
+    "ToastProvider",
+    "Toolbar",
+    "Tooltip",
+    "Tree",
+    "VerticalNav",
+    "Wizard"
+  ],
+  "webComponents": [
+    "ds-badge",
+    "ds-button",
+    "ds-callout",
+    "ds-icon",
+    "ds-modal",
+    "ds-panel",
+    "ds-section-heading",
+    "ds-segmented",
+    "ds-status",
+    "ds-switch",
+    "ds-tabs"
+  ]
+}

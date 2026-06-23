@@ -17,6 +17,7 @@ No build step is required.
 - [Design system for Claude](docs/for-claude.md): single-file, self-contained reference — principles, tokens, every component with copy-paste HTML, and rules. **Start here.**
 - [Installation](docs/installation.md): npm / Vite / Next / Angular / Vue / Streamlit / CDN.
 - [Components](docs/components.md): full component catalogue.
+- [Component index (`components.json`)](tokens/components.json): machine-readable catalogue of every `.ds-*` block — its base class, `__` elements, `--` modifiers, web component, and React wrapper + props. The exhaustive long-tail index behind the curated `for-claude.md`. Package export: `@diametral/design-system/components.json`.
 - [Foundations](docs/foundations.md): color, type, spacing, layout, borders, motion.
 
 ## Rules (must follow)
