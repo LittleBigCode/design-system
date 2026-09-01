@@ -1,6 +1,6 @@
 <!--
 Derived artifact. Copied from diamorval/design-system-diametral,
-branch research/inventory, commit b5f492d862fafbab2861e970a8f45d94f818ea7e, path docs/migration/batch-plan.md.
+branch research/inventory, commit bff3c89fe79284c3764ea7d477405ec44da09591, path docs/migration/batch-plan.md.
 Copied 2026-09-01. Do not edit here to correct a measurement — correct it at
 the source and re-copy, or the two diverge silently.
 -->
@@ -13,6 +13,24 @@ Measured 2026-08-30 against source `packages/ui` @ `feat/css-conversion` (9182a9
 
 **This document is the map's destination.** When it exists and needs no further decisions, the map is done and execution is handed off.
 
+**Amended 2026-09-01** by [#174](https://github.com/diamorval/design-system-diametral/issues/174), folding in [#169](https://github.com/diamorval/design-system-diametral/issues/169), [#171](https://github.com/diamorval/design-system-diametral/issues/171) and [#173](https://github.com/diamorval/design-system-diametral/issues/173). Nothing below re-decides which components absorb or in what order.
+
+### The source ref
+
+**Every batch reads the annotated tag `migration-source-v1`.** Never `feat/css-conversion`'s tip, never `main`. It is `migration-source` (`9182a91` — the provenance pin all four ledgers measured, already on origin) plus **one** commit on branch `migration-source-stripped` that unwraps `@layer utilities { … }` from all 111 stylesheets under `packages/ui/src/styles/`. Cutting that branch and tag is the queue's first item, not a batch task ([#171](https://github.com/diamorval/design-system-diametral/issues/171)).
+
+**Nothing unfreezes the pin.** A source defect found mid-migration — a broken selector, a wrong token — is **fixed forward in the target**, inside the batch that hits it, and recorded as one line in `docs/absorption/`. Neither ref is ever re-cut, rebased or force-pushed, so all eight batches describe one tree and the ledgers keep meaning what they measured. The accepted cost is that source and target diverge with no trace outside that ledger line; that is bearable because `@diametral/ui` was never published and is not maintained past this migration.
+
+**Why the strip is exiled to its own branch** rather than done in place: `apps/web` still carries ~710 Tailwind utility literals and imports the same `globals.css`. Unwrapping a layered rule does not *lower* its priority — it makes the rule **unlayered**, and unlayered rules beat every layered rule, Tailwind's own `@layer utilities` included. Stripping on `feat/css-conversion` would silently stop those 710 consumer overrides from winning. In the target, which has neither `@layer` nor Tailwind, unlayered is a cascade no-op.
+
+**The unwrap.** Delete the `@layer utilities {` line and its matching closing `}`; dedent the enclosed block by 2. **Key the transform on the `@layer` line, not on line 1** — `label.css`, `textarea.css` and `kbd.css` open with a preamble comment and a "delete line 1" recipe corrupts all three. `label.css` carries a second block, `@layer components`, deliberately at lower priority; unwrap both — it precedes the utilities block in source order, so equal-specificity rules resolve the same way unlayered. `separator.css` and `label.css` each match `@layer utilities` twice, one match inside a comment: the real block count is **111, one per file**. The strip covers all 111 files, not the 82 [`css-ledger.md`](./css-ledger.md) §5.1 scopes to landing components — stripping the 29 that never land costs nothing and removes a per-file judgement call from every batch.
+
+### Re-verified against `9182a91`
+
+[#169](https://github.com/diamorval/design-system-diametral/issues/169) re-measured five rows on 2026-09-01. **Four confirm exactly** and are marked as re-verified, not silently left: the `z-index: 50` split holds at **7 + 2 + 9**; **zero** ledger verdicts flipped, so the headline stays **40/45/30/4**; per-batch landing LOC is exact to one line (2,031 · 2,345 · 1,840 · 1,591 · 1,889 · 2,464 · 2,715 · 1,528 = **16,403** against the 16,402 below — these are the figures *before* the `separator` re-cut, which moves 39 LOC from batch 3 to batch 2); and the 41-vs-56 dedupe-exception tension never existed — both numbers read one measurement.
+
+**One row is corrected**: `.ds-input` is **one-way, not four-way** (§4, batch 7). **One input the plan never had is added**: **17 forward cross-batch imports** (§2, §4, §6). No batch needs a re-cut for size; one batch boundary moves for cluster integrity (`separator`, batch 3 → batch 2).
+
 ---
 
 ## Headline
@@ -22,7 +40,7 @@ Measured 2026-08-30 against source `packages/ui` @ `feat/css-conversion` (9182a9
 | | |
 | --- | --- |
 | absorbed components | **89** (40 admit outright − `stat-card` flip, 45 source wins, 4 CSS-only) |
-| landing LOC (tsx + css) | **16,402** |
+| landing LOC (tsx + css) | **16,402** (re-measured: **16,403**, a one-line rounding difference) |
 | never absorbed | **30** components, 9,091 LOC — the incumbent holds |
 | batches | **8**, `1.0.0-beta.1` … `1.0.0-beta.8`, then `1.0.0` |
 | batch 0 | infrastructure + everything touching only held or global surfaces. **No beta.** |
@@ -88,6 +106,8 @@ A component's tier is the highest-risk CSS operation it performs:
 Two overrides, applied in this order:
 
 1. **Dependency beats tier.** `combo-chart.tsx:16` imports `ChartContainer`/`ChartLegend`/`ChartTooltip` from `./chart.js`, so the eight net-new charts cannot land before the `chart` primitive — which is T2, because its stylesheet replaces two target files. The whole chart family therefore sits at the T1/T2 boundary as batches 4 and 5.
+
+   The rule is applied **once as a re-ordering**, but it is not the only forward dependency. [#169](https://github.com/diamorval/design-system-diametral/issues/169) found **17 forward cross-batch imports** besides it. Sixteen have a target symbol to re-compose onto and so become re-wiring obligations rather than re-orderings (see §4). The seventeenth — `item` → `separator` — has none, and forces the one boundary move this amendment makes.
 2. **Family clusters stay whole within a tier**, so no batch splits the overlay family (where 7 of the 18 `z-index: 50` rules concentrate) or the form-control family.
 
 **Why this order and not the reverse.** A net-new component adds classes nothing already reads, so beta.1 is the artifact that *cannot* break an installed consumer. Under [#159](https://github.com/diamorval/design-system-diametral/issues/159) a batch that fails its gate is a stalled release, and the earliest batches are the ones with the least experience behind them. Risk-ascending puts the cheapest, safest work where the process is least proven.
@@ -106,13 +126,15 @@ Batch 0 publishes nothing. Its rule: **everything that touches only held or glob
 
 The dist-tag is deliberately left unexercised until `beta.1` carries real content. `publish-npm.yml` fires today on any `v*` tag with a bare `npm publish`, so nothing may be tagged before 0.1 lands.
 
+**Batches 0.1 and 0.3 have no verification gate, by construction** ([#173](https://github.com/diamorval/design-system-diametral/issues/173)). [#163](https://github.com/diamorval/design-system-diametral/issues/163)'s gate *is* the docs app, and `site/` cannot build or render before 0.1 establishes the tsc emit — so tiers 1 and 2 are unavailable to 0.1 and 0.3, and **tier-3 contract checks are the bar there**. This is the map's last open fog patch, answered negative and with a reason.
+
 ### 0.1 — Release and verification plumbing
 
 - Cut the long-lived **`v1` branch**; `main` stays at 0.11.0 so the gh-pages docs never advertise a system `latest` cannot install (#159 R12).
 - **`publish-npm.yml` learns a dist-tag** — `next` for prereleases. Required *before* beta 1 (#159).
 - **Port the source's `package` CI job** (#163 V9), with a component-class assertion, not just a token grep — the omission that let #154's dangling `@import`s ship. Brings the target the commercial-font tarball assertion it entirely lacks: Ufficio is kept out of the tarball by `.npmignore` alone.
 - Add **#155's two CI checks**, release-blocking: every `ds-*` class a component renders resolves to a defined selector, and the non-React layers import nothing.
-- Add the **`@layer utilities` CI check** (#157 C3) so every later batch is forced to strip on the way in.
+- Keep the **`@layer utilities` CI check** (#157 C3), **repurposed**. The strip is paid once upstream on `migration-source-v1`, so this is no longer an enforcement mechanism forcing every batch to strip — it is a cheap invariant guard that should never fire.
 - **Arm `a11y.yml`** (#163 V3) — the REPORT-ONLY header is false on both halves: both repos independently ship `--ds-ink-faint: #6c6f7d`, so nothing diverged from `tokens.json`.
 - Add **`web-components.html`** to the target's a11y spec (#163 V7) — it is the only page exercising the 11 web components and is in neither suite today.
 - **Un-hardcode `kanban-regress.spec.ts:50`** (it pins `localhost:5173`, the dev server, so it cannot run under the configured `webServer`) and add a **`test:regress` script**; neither regress spec is wired to any workflow.
@@ -142,6 +164,21 @@ The eight-step move from #158, plus two:
 
 It is a **PR check, never a release gate** as a deliverable (D4); the components it renders are release-gated (V10).
 
+**None of the eight steps is dropped.** [#173](https://github.com/diamorval/design-system-diametral/issues/173) tested two premises against the target and both were wrong: the Vite app *arrives with the move* (step 1 copies `apps/web` in), so `base` / `basename` / `404.html` are exactly right and the target being buildless is why those steps exist; and D2 already accounted for `pages.yml` and named `examples/` unmovable. `site/` collides with no target directory. What the checklist misses is six mechanical defects:
+
+| | defect | fix |
+| --- | --- | --- |
+| **A** | `apps/web/vite.config.ts` sets no `build` block, so Vite's default `assetsDir: "assets"` merges the SPA's hashed bundles into the `_site/assets` that `pages.yml:28` fills with the fonts and logos `examples/*.html` link as `../assets/fonts/ufficio.css`. The only real collision. | **`build.assetsDir: "_app"`** |
+| **B** | `pages.yml:37` runs `cp deploy/pages-redirect.html _site/index.html` *after* the bulk copy, clobbering the SPA. | **Delete the line and `deploy/pages-redirect.html`** — not reorder around them |
+| **C** | `dist/diametral.css` is written by `build-css.mjs` and `dist/` is gitignored, so the `file:..` install resolves to a package with no stylesheet in a fresh checkout. | Root **`npm run build` is a hard prerequisite**, not the soft ordering note D3 made of it |
+| **D** | `demo-source` climbs *three* levels from `apps/web/plugins` but only *two* from `site/plugins`, and hard-throws for any playground whose component TSX is missing. Copied in with 118 playgrounds, **`site/` fails to build**. | **Filter `registry.ts` to components present in the target**; each batch un-filters its own slugs. Correctness, not optimisation |
+| **E** | 2 of 121 import specifiers have no mapping: `lib/utils`' `cn` (5 files) does not resolve — the target exposes no `./lib/*`. And the target barrel is a hand-written 84-export monolith unrelated to `react/components/*`. | Use the barrel's **`cx`**; **order step 5 strictly after 0.1's tsc emit** |
+| **F** | The `components-page` skill says `pnpm --filter web build`. The target is npm with no workspace, and its `.claude/` is untracked. | Correct the command as the skill is copied in |
+
+**`pages.yml` afterwards.** Same trigger, same job. It **gains** `setup-node` + the root build + the `site/` build, then `cp -r site/dist/* _site/` and `cp _site/index.html _site/404.html`. It **loses** the redirect line (defect B). `examples/` still ships verbatim — it is the only committed fixture the visual and a11y suites have.
+
+**One gate-integrity bug, fixed on the way in.** `apps/web/src/App.tsx:20` carries `<Route path="*" element={<Navigate to="/" replace />} />`, so a registry-derived route for a page that does not exist **silently redirects and the gate passes green**. One line to remove, but [#163](https://github.com/diamorval/design-system-diametral/issues/163)'s tier 1 is not sound without it.
+
 ### 0.3 — Global CSS and the charte-conformance list
 
 Everything here touches held or global surfaces only.
@@ -167,7 +204,41 @@ Everything here touches held or global surfaces only.
 
 ## 4. The eight batches
 
-Each batch: absorbs its components, adds them to `registry.ts`, strips `@layer utilities` from every source stylesheet it lands, emits its removed→replacement rows to `docs/migration/renames.json`, rewrites the hand-written docs pages teaching its classes, runs the gate route-filtered to its own routes, then publishes `1.0.0-beta.N` on `next`.
+Each batch: absorbs its components, **un-filters its own slugs in `registry.ts`** (0.2 defect D), **resolves every dedupe exception on the stylesheets it lands**, **re-wires its forward cross-batch imports**, emits its removed→replacement rows to `docs/migration/renames.json`, rewrites the hand-written docs pages teaching its classes, runs the gate route-filtered to its own routes, then publishes `1.0.0-beta.N` on `next`.
+
+A batch does **not** strip `@layer utilities`. That is paid once upstream, on `migration-source-v1`.
+
+### Dedupe exceptions — 36 owed across 31 files
+
+Counted one per comment block: **51 exceptions across 43 files**, every one a Tailwind literal kept in place so `tailwind-merge` can dedupe a consumer override. **The target has no `tailwind-merge` and no Tailwind**, so an exception on a landing stylesheet must be **resolved** — the literal becomes a real declaration and the override becomes a class — never carried across.
+
+**15 are free across 12 files**: `sidebar.css`'s 3 (the file never lands — only two cherry-picks do, §4 batch 8) plus 12 on held components (`calendar`, `command`, `date-picker`, `date-range-picker`, `dialog`, `dropdown-menu`, `file-upload`, `number-field`, `radio-group`, `tabs`, `tags-input`). The remaining **36 are owed**, and each batch carries its own count:
+
+| batch | owed | files |
+| --- | --- | --- |
+| 1 | **2** | `navigation-menu`, `speed-dial` |
+| 2 | **8** | `toc` (4), `bubble`, `message-scroller`, `resizable`, `separator` |
+| 3 | **6** | `field-array` (2), `button-group.tsx`, `carousel`, `phone-input`, `wordmark` |
+| 4 | **5** | `chart`, `donut-chart`, `pie-chart.css`, `pie-chart.tsx`, `stacked-bar` |
+| 5 | **5** | `funnel-chart`, `radar-chart`, `scatter-chart`, `treemap`, `waterfall-chart` |
+| 6 | **3** | `pagination`, `table`, `timeline` |
+| 7 | **6** | `input-group` (2), `card`, `checkbox-group`, `select`, `textarea` |
+| 8 | **1** | `sheet` |
+
+Two of the 36 sit in TSX, not CSS (`button-group.tsx`, `pie-chart.tsx`); the other 34 are stylesheet comments. `tags-input.css`'s exception is the inverse case and is free only because `tags-input` holds — it records that the conversion *already* broke a dedupe against `button.css`.
+
+### Forward cross-batch imports — 16 re-wirings, each paid twice
+
+Beyond the four held-import re-wirings the plan already lists, **17 imports point forward** from an absorbed component to a component in a later batch. Sixteen have a target symbol to re-compose onto — `Button` (10), `Input` (3), `Select`, `Status`, `InputGroup` — so each is re-wired **twice**: onto the incumbent when its own batch lands, then back onto the source symbol when batch 7 (or batch 3, for `Separator`) supplies it. Same class of obligation as the held-import re-wirings, but the plan listed none of them.
+
+| batch | forward imports |
+| --- | --- |
+| 1 | **2** — `speed-dial` → `Button`; `autocomplete` → `InputGroup` |
+| 2 | **3** — `theme-switcher`, `message-scroller`, `attachment` → `Button` |
+| 3 | **7** — `editable` → `Button` + `Input`; `field-array`, `icon-button`, `carousel` → `Button`; `phone-input` → `Input` + `Select` |
+| 6 | **4** — `pagination` → `Button`; `toolbar` → `Button` + `Input`; `agenda` → `Status` |
+
+The **seventeenth cannot be re-wired**: `item.tsx:7` imports `Separator`, and the target has no `Separator` component and no `.ds-separator` rule anywhere in `react/` or `css/`. Moving `separator` into batch 2 dissolves it — see §6's seventh cluster boundary — which is why batch 2 shows 3 above and not 4.
 
 ### Batch 1 — net-new overlays and menus · beta.1 · 6 comp · 2,031 LOC
 
@@ -179,19 +250,25 @@ Carries **7 of the 18 `z-index: 50` remaps** (`context-menu` 2, `hover-card` 2, 
 
 **Re-wiring obligation:** `menubar` imports the source's `dropdown-menu`, which holds. Re-compose onto the target's `Dropdown`/`MenuItem`.
 
-### Batch 2 — net-new content and media · beta.2 · 14 comp · 2,345 LOC
+### Batch 2 — net-new content and media · beta.2 · 15 comp · 2,384 LOC
 
-`attachment` 404 · `item` 365 · `bubble` 316 · `theme-switcher` 217 · `message-scroller` 216 · `message` 148 · `marker` 135 · `toc` 131 · `resizable` 102 · `scroll-area` 92 · `qr-code` 90 · `snippet` 67 · `masonry` 34 · `aspect-ratio` 28
+`attachment` 404 · `item` 365 · `bubble` 316 · `theme-switcher` 217 · `message-scroller` 216 · `message` 148 · `marker` 135 · `toc` 131 · `resizable` 102 · `scroll-area` 92 · `qr-code` 90 · `snippet` 67 · **`separator` 39** · `masonry` 34 · `aspect-ratio` 28
 
-`message-scroller` and `resizable` are **admit-CSS-only** — their stylesheets ship, their React bindings do not, so real landing LOC here is ~2,197. `@shadcn/react` and `react-resizable-panels` are not acquired.
+**`separator` moves here from batch 3** — the seventh cluster boundary (§6). `item.tsx:7` imports `Separator`, and unlike the other sixteen forward imports it has no target symbol to re-compose onto: the target has no `Separator` component and no `.ds-separator` rule. Both are net-new T1 additions in adjacent batches, so the move is a re-cut §2's ordering rule already permits and re-decides nothing.
+
+`message-scroller` and `resizable` are **admit-CSS-only** — their stylesheets ship, their React bindings do not. Real landing LOC is **2,175** before the re-cut (the plan's ~2,197 subtracted `input-otp` from batch 3 but not `carousel`, and carried the slip here), **2,214** with `separator`. `@shadcn/react` and `react-resizable-panels` are not acquired.
 
 **Re-wiring:** `theme-switcher` imports held `dropdown-menu` and `toggle-group` → re-compose onto `Dropdown`/`MenuItem` and `Segmented`. `snippet` imports held `code-block` → re-compose onto the target's `CodeBlock`.
 
-### Batch 3 — net-new form controls and primitives · beta.3 · 16 comp · 1,839 LOC
+### Batch 3 — net-new form controls and primitives · beta.3 · 15 comp · 1,801 LOC
 
-`carousel` 303 · `relative-time` 179 · `input-otp` 171 · `editable` 169 · `phone-input` 157 · `button-group` 157 · `meter` 156 · `toggle` 138 · `field-array` 134 · `wordmark` 98 · `label` 53 · `separator` 39 · `icon-button` 37 · `form` 25 · `collapsible` 19 · `direction` 4
+`carousel` 303 · `relative-time` 179 · `input-otp` 171 · `editable` 169 · `phone-input` 157 · `button-group` 157 · `meter` 156 · `toggle` 138 · `field-array` 134 · `wordmark` 98 · `label` 53 · `icon-button` 37 · `form` 25 · `collapsible` 19 · `direction` 4
 
-`carousel` and `input-otp` are **admit-CSS-only** (~1,668 real). `embla-carousel-react` and `input-otp` are not acquired. `meter`, `form` and `toggle` are A4 withdrawals landing clean; `label` and `separator` are partials admitting outright. `button-group`, `icon-button` and `wordmark` replace applier symbols but have **no target stylesheet at all**, so their CSS is an addition.
+`separator` (39) has moved to batch 2; `button-group.tsx:6` imports it, so that import is now backward and free.
+
+`carousel` and `input-otp` are **admit-CSS-only** — real landing LOC **1,536** before the re-cut (not the ~1,668 stated, which subtracted `input-otp` but not `carousel`), **1,497** after `separator` leaves. Neither correction crosses a batch-size threshold. `embla-carousel-react` and `input-otp` are not acquired. `meter`, `form` and `toggle` are A4 withdrawals landing clean; `label` is a partial admitting outright. `button-group`, `icon-button` and `wordmark` replace applier symbols but have **no target stylesheet at all**, so their CSS is an addition.
+
+**`label.css` lands here**, and its opening comment explains a cascade bargain with Tailwind that no longer exists once the file is unlayered upstream ([#171](https://github.com/diamorval/design-system-diametral/issues/171)). Rewrite the comment on the way in; the `@layer components` block it describes merges into source order and its intent survives.
 
 Carries **`phone-input.tsx`'s Tailwind literals** — one of the two files left of #157's "~180 across 33", the rest absorbed by `feat/css-conversion`.
 
@@ -218,9 +295,11 @@ All eight compose batch 4's `ChartContainer`/`ChartLegend`/`ChartTooltip` and la
 The remaining 13 of the 20 wholesale-replaced stylesheets, plus two **cross-boundary pins**:
 
 - **`stepper`** — its React goes to the source, but `stepper.css` is **held**: `Wizard` (held) renders the entire `.ds-stepper__marker`/`__label`/`__step` block. The source `Stepper` must render the target's classes. **Verify `Wizard` still renders before the gate.**
-- **`table`** — no React component on either side; `table.css` replaces on its own.
+- **`table`** — no React component on either side; `table.css` replaces on its own. It does **not** replace cleanly: the target's `.ds-table--hover`, `__num`, `__name` and `__row-action` have readers in four `examples/` files plus `docs/components.md` and `docs/migration.md`. Re-class or preserve them; a wholesale swap breaks the committed fixtures the visual and a11y suites read.
 
 Red leaves `progress`, `stepper` and `spinner` free.
+
+**Ordering check — `kbd` before `input-group`** ([#171](https://github.com/diamorval/design-system-diametral/issues/171)). `kbd.css` is layered *on purpose* in the source so `InputGroupAddon`'s Tailwind utility keeps outranking it; unlayered, `background: var(--input)` wins instead — the inverse of the pre-conversion cascade. `kbd` lands here and `input-group` not until batch 7, so **that inversion ships in beta.6 and beta.7**. Either carry the addon override as a plain `.ds-input-group … .ds-kbd` rule with `kbd`, or accept it and fix it when `input-group` lands. Do not let it pass silently.
 
 **One look owed** (#165 §6.2): `agenda` and `pagination` are ruled *source wins* on "incumbent is a class-applier", but both incumbents carry real derived logic — `Agenda` groups and sorts through a `useMemo`, `Pagination` computes windows through `range()`/`go()`. Whether the source is a strict superset needs reading, not measuring. If either turns out not to be, it holds and its stylesheet holds with it.
 
@@ -230,11 +309,11 @@ Red leaves `progress`, `stepper` and `spinner` free.
 
 The highest-care batch: every class name here is fixed by a surface outside the package. Source CSS is absorbed **into** the existing contract — renamed into the frozen grammar, not replacing it.
 
-**Frozen readers** (#165 §1): `<ds-badge>`, `<ds-button>`, `<ds-callout>`, `<ds-icon>`, `<ds-modal>`, `<ds-panel>`, `<ds-section-heading>`, `<ds-segmented>`, `<ds-status>`, `<ds-switch>`, `<ds-tabs>` — 17 literal classes across 16 files — plus Streamlit consumers reading `ds-card`, `ds-statgrid`, `ds-tag`, `ds-tag--success`, `ds-title`, `ds-title--xl` from **published `docs/streamlit.md`**. Four families are **dynamic** (`ds-badge--`, `ds-button--`, `ds-callout--`, `ds-status--` are string-concatenated from a pass-through attribute), so the whole modifier family is frozen, not just the literal name.
+**Frozen readers** (#165 §1): `<ds-badge>`, `<ds-button>`, `<ds-callout>`, `<ds-icon>`, `<ds-modal>`, `<ds-panel>`, `<ds-section-heading>`, `<ds-segmented>`, `<ds-status>`, `<ds-switch>`, `<ds-tabs>` — 17 literal classes across 16 files — plus Streamlit consumers reading `ds-card`, `ds-statgrid`, `ds-tag`, `ds-tag--success`, `ds-title`, `ds-title--xl` from **published `docs/streamlit.md`** — plus `ds-card--clickable` and `ds-card__media` (read by `react/components/Card.js`) and `ds-card__block`, which the original list omitted. Four families are **dynamic** (`ds-badge--`, `ds-button--`, `ds-callout--`, `ds-status--` are string-concatenated from a pass-through attribute), so the whole modifier family is frozen, not just the literal name.
 
 Carries:
 - **The `form-controls.css` seven-way split** (§1.3) — six readers out to source-named files, the radio block stays.
-- **`.ds-input`'s four-way dedupe** — defined in `field.css` (canonical, frozen) plus `color-picker.css`, `combobox.css` and `time-picker.css`, resolved silently by load order today. All four files are frozen or held, so it is safe here and nowhere earlier.
+- **`.ds-input`'s rename propagation.** The four-way dedupe line item is **withdrawn** — [#169](https://github.com/diamorval/design-system-diametral/issues/169) measured it as **one-way**. `field.css` holds the only 8 declarations; `combobox.css` mentions the class in a file-header comment and defines nothing. What survives is a propagation obligation: five files carry descendant or child overrides that win on specificity, not load order — `color-picker.css:54`, `time-picker.css:13`, `toolbar.css:38`, `date-picker.css:16`, `date-range.css:17` — and every rename of `.ds-input` must reach all five. Still safe here and nowhere earlier.
 - **`ds-open` and `ds-close`** — set by `ds-modal.js`, matched by no rule in `css/`. Dead classes in a frozen surface: implement or delete from the web component.
 - **Lucide → Phosphor**, 8 files (§1.4), with `icon`.
 - **`badge.css`'s red strip.**
@@ -290,6 +369,7 @@ A re-cut may move anything except these. Each is a single behavioural or structu
 | the `form-controls` seven-way split | one file's readers disagree; splitting the split unstyles someone |
 | `Calendar` + `DatePicker` + `DateRangePicker` | one behavioural change across three files (batch 0.3) |
 | `stepper` with `Wizard`, `skeleton` with `DataGrid` | cross-boundary pins — whoever moves the React must verify the held component still renders |
+| `item` with `separator` | `item.tsx:7` imports `Separator` and the target has **no** `Separator` symbol and **no** `.ds-separator` rule, so the import cannot be re-composed onto an incumbent the way the other sixteen forward imports can. `separator` therefore sits in batch 2 with `item`, not batch 3 |
 
 ---
 
@@ -297,7 +377,11 @@ A re-cut may move anything except these. Each is a single behavioural or structu
 
 | task | source | batch |
 | --- | --- | --- |
-| `@layer utilities` strip, 82 files | #157 | **every batch**, CI-enforced from 0.1 |
+| `@layer utilities` strip, **111** files | #157 · #171 | **upstream, once** — on `migration-source-stripped`, tagged `migration-source-v1`. No batch task. The 0.1 CI check survives as an invariant guard |
+| dedupe exceptions, **36 owed** of 51 | #157 · #169 | **every batch**: B1 2 · B2 8 · B3 6 · B4 5 · B5 5 · B6 3 · B7 6 · B8 1 |
+| forward cross-batch import re-wirings, **16** | #169 | **B1** (2) · **B2** (3) · **B3** (7) · **B6** (4), each unwound again when the source symbol lands |
+| `registry.ts` filtered to migrated components | #173 | **0.2**, un-filtered per batch — a correctness requirement, not an optimisation |
+| remove `App.tsx:20`'s catch-all redirect | #173 | **0.2** — without it tier 1 passes green on a missing page |
 | `z-index: 50` remap, 18 rules | #157 | **B1** (7) · **B7** (2) · **B8** (9) |
 | Tailwind literals, 2 files | #157 | **B3** (`phone-input`) · **B8** (`sidebar` cherry-picks) |
 | shadcn slot-layer deletion (C5) + red-strip one-liner | #157 | **0.3** |
