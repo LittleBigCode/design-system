@@ -1,6 +1,6 @@
 <!--
 Derived artifact. Copied from diamorval/design-system-diametral,
-branch research/inventory, commit bff3c89fe79284c3764ea7d477405ec44da09591, path docs/migration/batch-plan.md.
+branch research/inventory, commit 6aeed040c0a682790c38f7edea2a091c2d60a6dd, path docs/migration/batch-plan.md.
 Copied 2026-09-01. Do not edit here to correct a measurement — correct it at
 the source and re-copy, or the two diverge silently.
 -->
