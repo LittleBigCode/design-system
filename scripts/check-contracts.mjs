@@ -26,9 +26,17 @@
    ============================================================================ */
 import { readFileSync, existsSync, readdirSync, statSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { dirname, join, extname, relative } from "node:path";
+import { dirname, join, extname, relative, resolve } from "node:path";
 
-const root = join(dirname(fileURLToPath(import.meta.url)), "..");
+// `--root <dir>` points the checks at an installed copy instead of the working
+// tree. The parity guarantee is a property of the shipped artifact: a class that
+// resolves in-repo but whose stylesheet never makes the tarball is exactly the
+// failure this exists to stop.
+const rootArg = process.argv.indexOf("--root");
+const root =
+  rootArg !== -1 && process.argv[rootArg + 1]
+    ? resolve(process.argv[rootArg + 1])
+    : join(dirname(fileURLToPath(import.meta.url)), "..");
 const failures = [];
 const fail = (check, msg) => failures.push(`[${check}] ${msg}`);
 
@@ -92,8 +100,11 @@ function classNameExpr(src, i) {
 const INTERPOLATED = /`([^`\\\n$]*?)\$\{/g;
 const STRING = /(["'`])((?:[^\\\n]|\\.)*?)\1/g;
 
+// In the working tree the React layer is TSX under react/; in an installed copy
+// it is the emit under dist/react/. Whichever is present gets checked.
 const sources = [
-  ...walk(join(root, "react"), [".js", ".jsx", ".ts", ".tsx"]),
+  ...walk(join(root, "react"), [".jsx", ".tsx"]),
+  ...walk(join(root, "dist", "react"), [".js"]),
   ...walk(join(root, "components"), [".js"]),
   ...walk(join(root, "emails"), [".js"]),
 ];

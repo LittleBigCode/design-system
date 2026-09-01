@@ -5,7 +5,7 @@ import {
   PageHeader, Breadcrumb, Button, Stepper, AreaChart, Timeline,
   DescriptionList, Avatar, AvatarGroup, GaugeChart, Callout, Card,
   Drawer, Field, Input,
-} from "../../../react/index.js";
+} from "../../../dist/react/index.js";
 import { PROJECTS, STAGES, BURNDOWN, SPRINTS, RISKS, ACTIVITY, PEOPLE } from "../data.js";
 
 export function ProjectDetail({ go, sel }) {

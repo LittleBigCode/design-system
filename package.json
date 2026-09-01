@@ -1,13 +1,27 @@
 {
   "name": "@diametral/design-system",
   "version": "0.11.0",
-  "description": "Diametral Design System — a minimal, flat, buildless CSS + tokens + Web Components design system. Welcome to (the real).",
+  "description": "Diametral Design System \u2014 a minimal, flat, buildless CSS + tokens + Web Components design system. Welcome to (the real).",
   "license": "MIT",
   "type": "module",
-  "keywords": ["design-system", "css", "design-tokens", "web-components", "diametral"],
-  "repository": { "type": "git", "url": "git+https://github.com/LittleBigCode/design-system.git" },
+  "keywords": [
+    "design-system",
+    "css",
+    "design-tokens",
+    "web-components",
+    "diametral"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LittleBigCode/design-system.git"
+  },
   "homepage": "https://littlebigcode.github.io/design-system/",
-  "publishConfig": { "access": "public" },
+  "publishConfig": {
+    "access": "public",
+    "exports": {
+      "./probe": "./dist/probe.js"
+    }
+  },
   "sideEffects": [
     "**/*.css",
     "./components/*.js",
@@ -16,7 +30,6 @@
   "files": [
     "css",
     "components",
-    "react",
     "tokens",
     "dist",
     "docs",
@@ -46,10 +59,9 @@
     "./components": "./components/index.js",
     "./components/*": "./components/*",
     "./react": {
-      "types": "./react/index.d.ts",
-      "default": "./react/index.js"
+      "types": "./dist/react/index.d.ts",
+      "default": "./dist/react/index.js"
     },
-    "./react/*": "./react/*",
     "./configs/*": "./configs/*",
     "./emails": {
       "types": "./emails/diametral-email.d.ts",
@@ -60,11 +72,16 @@
     "./assets/*": "./assets/*"
   },
   "scripts": {
-    "build": "node scripts/build-tokens.mjs && node scripts/build-css.mjs && node scripts/build-components.mjs && node scripts/build-figma.mjs",
+    "build": "npm run build:react && node scripts/build-tokens.mjs && node scripts/build-css.mjs && node scripts/build-components.mjs && node scripts/build-figma.mjs && node scripts/build-migration-guide.mjs",
+    "build:react": "tsc -p tsconfig.build.json",
     "build:tokens": "node scripts/build-tokens.mjs",
     "build:figma": "node scripts/build-figma.mjs",
     "build:css": "node scripts/build-css.mjs",
     "build:components": "node scripts/build-components.mjs",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run build && node scripts/check-contracts.mjs",
+    "clean": "rm -rf dist",
+    "prepack": "npm run build",
     "serve": "python3 -m http.server 8080",
     "test:visual": "playwright test tests/visual.spec.js",
     "test:visual:update": "playwright test tests/visual.spec.js --update-snapshots",
@@ -72,7 +89,10 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.0",
-    "@playwright/test": "^1.48.0"
+    "@playwright/test": "^1.48.0",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "typescript": "~5.7"
   },
   "engines": {
     "node": ">=18"
@@ -82,7 +102,11 @@
     "react-dom": ">=18"
   },
   "peerDependenciesMeta": {
-    "react": { "optional": true },
-    "react-dom": { "optional": true }
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
   }
 }

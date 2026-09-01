@@ -1,5 +1,5 @@
 /* Talent views: Candidates pipeline, CV. (Team + person profile live in team.js.) */
-import { Kanban, Avatar, Button, Card, Tag, Timeline, Progress, SectionHeading, StatCard } from "../../../react/index.js";
+import { Kanban, Avatar, Button, Card, Tag, Timeline, Progress, SectionHeading, StatCard } from "../../../dist/react/index.js";
 import { h, F } from "../ui.js";
 import { CAND_COLS, CANDIDATES, COURSES } from "../data.js";
 

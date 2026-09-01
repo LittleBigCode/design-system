@@ -4,7 +4,7 @@ import { h, F } from "../ui.js";
 import {
   PageHeader, Button, FileUpload, Tag, Avatar, Dropdown, MenuItem,
   MenuDivider, Drawer, DescriptionList,
-} from "../../../react/index.js";
+} from "../../../dist/react/index.js";
 import { FILES } from "../data.js";
 
 const TYPE_STATUS = { PDF: "danger", Sheet: "success", Image: "info", Doc: "info", Markdown: null };

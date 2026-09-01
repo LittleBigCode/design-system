@@ -21,11 +21,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci || npm i
+
+      # The React layer is authored in TSX and served from the emit, so the site
+      # cannot be assembled from the working tree alone any more.
+      - name: Build
+        run: npm run build
+
       - name: Assemble _site
         run: |
           set -euo pipefail
           mkdir -p _site
-          cp -r css assets components react examples emails _site/
+          cp -r css assets components examples emails dist _site/
 
           # The Ufficio title font is served here under Diametral's own font license
           # (see NOTICE.md). To publish a license-safe build that excludes it instead,

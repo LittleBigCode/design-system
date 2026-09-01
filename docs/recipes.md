@@ -28,7 +28,7 @@ import "@diametral/design-system/css/diametral.css";
 
 ## 1. App shell
 
-Wrap your whole router in [`<ConsoleLayout>`](../react/components/ConsoleLayout.d.ts):
+Wrap your whole router in [`<ConsoleLayout>`](../react/components/ConsoleLayout.tsx):
 a left sidebar built from a **grouped nav config**, a ⌘K command palette, an optional
 Light/Dark/Sepia theme switcher, and a user avatar with sign-out. Your routed content
 is the `children`.
@@ -100,9 +100,9 @@ at the root of the authenticated app.
 
 ## 2. CRUD list + detail
 
-A [`<DataGrid loadPage>`](../react/components/DataGrid.d.ts) list whose rows open a
-[`<Drawer>`](../react/components/Drawer.d.ts) holding a validated form. The form layer
-is [`useForm`](forms.md) + [`FormField`](../react/components/FormField.js): `useForm`
+A [`<DataGrid loadPage>`](../react/components/DataGrid.tsx) list whose rows open a
+[`<Drawer>`](../react/components/Drawer.tsx) holding a validated form. The form layer
+is [`useForm`](forms.md) + [`FormField`](../dist/react/index.js): `useForm`
 holds values/errors and hands you a `register(name)` spread plus a `handleSubmit`, and
 each `FormField` renders a labelled row with the matching inline error.
 
@@ -115,7 +115,7 @@ import {
   DataGrid, Drawer, useForm, FormField,
   Input, Select, Button, Toolbar,
 } from "@diametral/design-system/react";
-import { restLoadPage } from "@diametral/design-system/react/hooks/restLoadPage";
+import { restLoadPage } from "@diametral/design-system/react";
 
 const STATUS = [
   { value: "draft",    label: "Draft" },
@@ -239,9 +239,9 @@ Notes that keep this honest:
 
 ## 3. Dashboard
 
-A row of [`StatCard`](../react/components/StatCard.d.ts)s over a chart
-([`LineChart`](../react/components/LineChart.d.ts) /
-[`DonutChart`](../react/components/DonutChart.d.ts)). `StatCard` takes a `label`,
+A row of [`StatCard`](../react/components/StatCard.tsx)s over a chart
+([`LineChart`](../react/components/LineChart.tsx) /
+[`DonutChart`](../react/components/DonutChart.tsx)). `StatCard` takes a `label`,
 `value`, and a signed `delta` (`deltaDir` colors it and prepends ▲/▼); drop a
 `Sparkline` in as its `children` for an inline trend.
 
@@ -304,12 +304,12 @@ Every async view should resolve to exactly one of four states, rendered in prior
 order so the user always sees the most specific signal first. The
 [data layer](data.md) gives you [`useResource`](../react/hooks/useResource.js) (track
 `{ data, error, loading, reload }`) and the trio
-[`Skeleton`](../react/components/Skeleton.d.ts) /
-[`EmptyState`](../react/components/EmptyState.d.ts) /
-[`Alert`](../react/components/Alert.d.ts).
+[`Skeleton`](../react/components/Skeleton.tsx) /
+[`EmptyState`](../react/components/EmptyState.tsx) /
+[`Alert`](../react/components/Alert.tsx).
 
 ```jsx
-import { useResource } from "@diametral/design-system/react/hooks/useResource";
+import { useResource } from "@diametral/design-system/react";
 import { Skeleton, EmptyState, Alert, Button } from "@diametral/design-system/react";
 
 export function ProjectList({ query }) {

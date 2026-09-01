@@ -1,6 +1,6 @@
 /* Shared render helpers for the demo views. */
 import React from "react";
-import { Tag, Progress } from "../../react/index.js";
+import { Tag, Progress } from "../../dist/react/index.js";
 
 export const h = React.createElement;
 export const F = React.Fragment;

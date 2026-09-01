@@ -1,0 +1,113 @@
+name: CI
+
+# Typecheck, build and assert the contracts on every push and PR. Then pack the
+# package and install the tarball into a throwaway project, because the in-repo
+# build passes even when the *published* artifact is broken — a wrong exports
+# map and an extensionless ESM specifier both fail only for an external consumer.
+
+on:
+  push:
+    branches: [main, v1]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci || npm i
+
+      - run: npm run typecheck
+
+      - run: npm run build
+
+      # Release-blocking: ds-* class resolution, non-React layer import purity,
+      # and the @layer invariant guard. See scripts/check-contracts.mjs.
+      - name: Contract checks
+        run: node scripts/check-contracts.mjs
+
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci || npm i
+
+      - name: Pack
+        run: npm pack --pack-destination /tmp
+
+      # Ufficio is commercial and its licence requires offline-only storage
+      # (NOTICE.md). Today it is kept out of the tarball by .npmignore alone —
+      # one deleted line away from shipping. This asserts it.
+      - name: Assert no commercial font binary ships
+        run: |
+          if tar tzf /tmp/diametral-design-system-*.tgz | grep -iE 'ufficio|\.(woff2?|otf|ttf)$'; then
+            echo "::error::A font binary is present in the tarball. Ufficio is commercial and must never be distributed (see NOTICE.md)."
+            exit 1
+          fi
+          echo "No font binaries in the tarball."
+
+      - name: Install the tarball as an external consumer
+        run: |
+          mkdir -p /tmp/consumer/src && cd /tmp/consumer
+          echo '{"name":"consumer","private":true,"type":"module"}' > package.json
+          cat > tsconfig.json <<'JSON'
+          { "compilerOptions": { "target":"ES2022","lib":["ES2022","DOM"],"module":"ESNext",
+            "moduleResolution":"bundler","jsx":"react-jsx","strict":true,"noEmit":true,
+            "skipLibCheck":true }, "include":["src"] }
+          JSON
+          cat > src/app.tsx <<'TSX'
+          import { Button, Card, Status, cx } from "@diametral/design-system/react"
+          export const App = () => (
+            <Card className={cx("ds-card")}>
+              <Status status="warning" kicker="Approval" heading="Manager review" />
+              <Button variant="primary">Escalate</Button>
+            </Card>
+          )
+          TSX
+          npm install --no-audit --no-fund react@18 react-dom@18 @types/react@18 \
+            @types/react-dom@18 typescript /tmp/diametral-design-system-*.tgz
+
+      # The peer range is `>=18` and no React-19-only API is used. This is the
+      # compile that keeps that claim honest (#155 decision 3).
+      - name: Consumer typechecks against the tarball on React 18
+        run: cd /tmp/consumer && npx tsc --noEmit
+
+      - name: Consumer resolves the package under plain Node ESM
+        run: |
+          cd /tmp/consumer
+          node --input-type=module -e "
+            import('@diametral/design-system/react')
+              .then(() => console.log('Node ESM resolution OK'))
+              .catch(e => { console.error('Node ESM resolution FAILED:', e.code); process.exit(1) })
+          "
+
+      # The parity guarantee is a property of the *shipped* artifact, not the
+      # working tree: a class that resolves in-repo but whose stylesheet never
+      # makes the tarball is exactly the failure this is here to stop.
+      - name: Every ds-* class the tarball renders resolves in the tarball's CSS
+        run: |
+          cd /tmp/consumer
+          node --input-type=module -e "
+            import { createRequire } from 'node:module'
+            const require = createRequire(process.cwd() + '/')
+            const root = require.resolve('@diametral/design-system/css/diametral.css')
+            console.log('stylesheet present:', root)
+          "
+          node "$GITHUB_WORKSPACE/scripts/check-contracts.mjs" --root node_modules/@diametral/design-system
