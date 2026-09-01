@@ -26,6 +26,8 @@ const PAGES = [
   { name: "kitchen-sink", path: "/examples/kitchen-sink.html" },
   { name: "components-buttons", path: "/examples/components/buttons.html" },
   { name: "components-forms", path: "/examples/components/forms.html" },
+  // The only page that exercises the 11 web components; it was in neither suite.
+  { name: "components-web-components", path: "/examples/components/web-components.html" },
 ];
 
 // Settle a page the same way the visual suite does before measuring it.

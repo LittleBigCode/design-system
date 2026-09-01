@@ -15,24 +15,25 @@
 .ds-status__head {
   padding: 32px 28px 28px;
   color: var(--ds-on-status);
-  background: var(--ds-neutral);
+  background: var(--ds-neutral-solid);
   transition: background-color var(--ds-transition-slow);
 }
-.ds-status--success  .ds-status__head { background: var(--ds-success); }
-.ds-status--warning  .ds-status__head { background: var(--ds-warning); }
-.ds-status--danger   .ds-status__head { background: var(--ds-danger); }
-.ds-status--critical .ds-status__head { background: var(--ds-critical); }
-.ds-status--neutral  .ds-status__head { background: var(--ds-neutral); }
-.ds-status--info     .ds-status__head { background: var(--ds-info); }
+.ds-status--success  .ds-status__head { background: var(--ds-success-solid); }
+.ds-status--warning  .ds-status__head { background: var(--ds-warning-solid); }
+.ds-status--danger   .ds-status__head { background: var(--ds-danger-solid); }
+.ds-status--critical .ds-status__head { background: var(--ds-critical-solid); }
+.ds-status--neutral  .ds-status__head { background: var(--ds-neutral-solid); }
+.ds-status--info     .ds-status__head { background: var(--ds-info-solid); }
 
 .ds-status__kicker {
   font-size: var(--ds-text-2xs);
   font-weight: 400;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  /* Kept lightly muted, but opaque enough that the white kicker clears AA on the
-     colored heads (the old .8 dropped it below 4.5:1 on the lighter fills). */
-  opacity: .95;
+  /* Fully opaque. The head fills are now tuned so white text clears AA exactly
+     (--ds-*-solid); any transparency spends that margin and drops the kicker
+     back under 4.5:1, which is what .8 and then .95 both did. */
+  opacity: 1;
 }
 .ds-status__title {
   font-family: var(--ds-font-title);
@@ -42,7 +43,9 @@
   line-height: var(--ds-leading-tight);
   margin: 10px 0 8px;
 }
-.ds-status__subtitle { font-size: 13.5px; opacity: .92; }
+/* Opaque for the same reason as the kicker: the head fills clear AA exactly,
+   so transparency spends the margin. Hierarchy comes from size, not opacity. */
+.ds-status__subtitle { font-size: 13.5px; }
 
 /* Key — a 4-up legend strip with colored top borders; .is-on highlights the
    active step. */

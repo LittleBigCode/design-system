@@ -11,6 +11,9 @@
   padding-bottom: 16px;
 }
 .ds-page-header--flush .ds-page-header__top { padding-bottom: 0; }
+/* The title column beside __actions. min-width:0 is what lets a long title
+   truncate instead of pushing the actions out of the row. */
+.ds-page-header__titles { min-width: 0; }
 .ds-page-header__title {
   font-family: var(--ds-font-title);
   font-weight: var(--ds-font-weight-title);
