@@ -35,6 +35,19 @@ const CHARTS = [
   { slug: "pie-chart", mark: ".recharts-pie-sector" },
   { slug: "donut-chart", mark: ".recharts-pie-sector" },
   { slug: "chart", mark: ".recharts-bar-rectangle" },
+  // Batch 5. Every one of these composes the same container, so the sizing
+  // failure this file exists to catch is the same failure — and three of them
+  // resolve their height through a `--ds-chart-height` default declared on
+  // their own root rather than on `--plot`, which is the part a rewrite breaks.
+  { slug: "radar-chart", mark: ".recharts-radar-polygon" },
+  { slug: "combo-chart", mark: ".recharts-bar-rectangle" },
+  { slug: "funnel-chart", mark: ".recharts-trapezoid" },
+  { slug: "scatter-chart", mark: ".recharts-symbols" },
+  // The treemap's tiles come from this package's own `content` renderer, so
+  // they carry no recharts class — they are bare <rect> on the plot surface,
+  // and the treemap draws nothing else there.
+  { slug: "treemap", mark: ".recharts-surface rect" },
+  { slug: "waterfall-chart", mark: ".recharts-bar-rectangle" },
 ]
 
 for (const { slug, mark } of CHARTS) {
@@ -114,4 +127,54 @@ test.describe("library-free charts", () => {
     await expect(gauge.locator("path")).toHaveCount(2)
     await expect(gauge).toHaveAttribute("aria-label", /\d+ of \d+/)
   })
+
+  test("a heatmap draws named cells and a step legend", async ({ page }) => {
+    await page.goto(routePath("/docs/heatmap"))
+    await settle(page)
+
+    const heatmap = page.locator(".ds-heatmap").first()
+    // Colour is the only encoding, so every cell has to carry its own name.
+    const cells = heatmap.locator(".ds-heatmap-tile")
+    expect(await cells.count()).toBeGreaterThan(0)
+    await expect(cells.first()).toHaveAttribute("role", "img")
+    await expect(cells.first()).toHaveAttribute("aria-label", /.+/)
+    await expect(heatmap.locator(".ds-heatmap-legend-swatch")).toHaveCount(5)
+  })
+
+  test("a bullet chart measures a meter and speaks its target", async ({
+    page,
+  }) => {
+    await page.goto(routePath("/docs/bullet-chart"))
+    await settle(page)
+
+    const track = page.locator(".ds-bullet-chart-track").first()
+    await expect(track).toHaveAttribute("role", "meter")
+    // The target is the point of the chart and is geometry only, so the spoken
+    // value is the one place a screen reader can find it.
+    await expect(track).toHaveAttribute("aria-valuetext", /target/)
+    const measure = await track
+      .locator(".ds-bullet-chart-measure")
+      .boundingBox()
+    expect(measure!.width).toBeGreaterThan(0)
+  })
+})
+
+// The funnel's labels are drawn through `LabelList`, and recharts gates them
+// behind `showLabels = !isAnimating`. The source's own comment claims its
+// animation id is rebuilt every render, so the animation restarts forever and
+// the labels never arrive — and then never turns the animation off. Against the
+// recharts this package pins they do arrive, which is what this asserts. It
+// lives here rather than beside the sizing tests because animation on is the
+// only condition under which the claim is falsifiable, and this file is the one
+// gate that opts back out of reduced motion.
+test("a funnel prints its stage labels with animation on", async ({ page }) => {
+  await page.goto(routePath("/docs/funnel-chart"))
+  await settle(page)
+
+  const labels = page.locator(".ds-funnel-chart-stage-label")
+  await expect(labels.first()).toBeVisible()
+  expect(await labels.count()).toBeGreaterThan(1)
+  await expect(
+    page.locator(".ds-funnel-chart-share-label").first()
+  ).toBeVisible()
 })

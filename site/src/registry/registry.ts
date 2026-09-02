@@ -2493,6 +2493,318 @@ export const COMPONENTS: ComponentDoc[] = [
       },
     ],
   },
+
+  {
+    slug: "radar-chart",
+    name: "Radar Chart",
+    category: "Data display",
+    exports: ["RadarChart"],
+    description:
+      "A spider chart — how two or three entities compare across many dimensions at once.",
+    intro: [
+      "Radar Chart answers how a small number of entities compare across many dimensions: a product's capability profile, a candidate against a role's requirements, plan A against plan B. Each spoke is a dimension and each closed polygon is one entity. When there is only one dimension to compare on, `Bar Chart` says it more precisely; when the dimensions are a sequence rather than a set, `Line Chart` is the honest read.",
+      "The data is transposed against every other wrapper here and it is the thing to get right: `data` rows are the spokes and `config` keys are the polygons, so a two-product five-capability chart is five rows of two fields. Pin `domain` whenever two charts sit side by side — left off, recharts refits the radius to each chart's own data and the two stop being comparable.",
+    ],
+    examples: [
+      {
+        demo: "radar-chart/basic",
+        title: "One profile",
+        description:
+          "A single polygon across five capabilities. `domain` is pinned to 0–100 so the shape means the same thing on every render, not just relative to its own maximum.",
+      },
+      {
+        demo: "radar-chart/overlaid",
+        title: "Candidate against requirement",
+        description:
+          "Two polygons is where the form earns its keep — the gaps read as area. `radiusAxis` prints the radius ticks, which is worth the noise on a five-point scale where the exact level matters.",
+      },
+      {
+        demo: "radar-chart/pinned",
+        title: "Two regions compared",
+        description:
+          "The same `domain` on both charts is what makes them comparable. Without it each would fill its own box and Europe's 38% organic would look the same size as North America's 34% paid.",
+      },
+      {
+        demo: "radar-chart/dense",
+        title: "Dense dimensions",
+        description:
+          "Twelve spokes, where the form starts to break down: the outline still reads as a silhouette but no individual value is recoverable. `grid={false}` drops the rules that were only adding ink at this density.",
+      },
+    ],
+  },
+
+  {
+    slug: "combo-chart",
+    name: "Combo Chart",
+    category: "Data display",
+    exports: ["ComboChart", "type ComboSeries"],
+    description:
+      "Bars and a line on one x axis, with a second Y scale — the volume-plus-rate dashboard shape.",
+    intro: [
+      "Combo Chart relates a volume series and a rate series over the same x axis: revenue bars with a margin-percent line, signups with a conversion rate, tickets opened with median resolution time. It is the most common business-dashboard shape and the one `Bar Chart` and `Line Chart` cannot cover between them, because they cannot share an axis. When both series are the same kind of quantity, stay with the single-mark wrapper.",
+      "`series` is the one place a chart wrapper here takes an array, because which mark a series draws as cannot be inferred from `config` — and because marks are layered back to front, which the component sorts for you so a line never hides under a bar. `rightAxis` is the second scale; omit it and every series falls back to the left one, which is the right degrade rather than an error.",
+    ],
+    examples: [
+      {
+        demo: "combo-chart/revenue-margin",
+        title: "Revenue against margin",
+        description:
+          'The canonical case: euros as bars on the left scale, a percentage as a line on the right. `axis: "right"` is what binds the line to the second scale — half-specifying it would silently put both series back on one.',
+      },
+      {
+        demo: "combo-chart/volume-rate",
+        title: "Volume against rate",
+        description:
+          "An area for the volume rather than bars, which reads better when the series is continuous. `rightAxis.label` captions the second scale, and without it a reader has no way to know which axis the line belongs to.",
+      },
+      {
+        demo: "combo-chart/same-scale",
+        title: "Same scale",
+        description:
+          "No `rightAxis`, so no second axis renders and both series are measured on the left one. This is the right shape when the two are the same unit — booked days against delivered days — and a dual axis would imply a difference that is not there.",
+      },
+      {
+        demo: "combo-chart/formatted-axis",
+        title: "Formatted second axis",
+        description:
+          "`rightAxis.tickFormatter` reaches the second axis' ticks, here turning stored milliseconds into hours. The underlying values stay raw, so the tooltip and any sorting still work on numbers.",
+      },
+    ],
+  },
+
+  {
+    slug: "funnel-chart",
+    name: "Funnel Chart",
+    category: "Data display",
+    exports: ["FunnelChart", "type FunnelConversion"],
+    description:
+      "Ordered conversion stages with the drop-off derived for you from raw counts.",
+    intro: [
+      "Funnel Chart shows where people leave an ordered sequence: visit to signup to activation to paid, or lead to demo to proposal to close. The value of the form is the drop rather than the absolute widths, which is why `conversion` exists — the caller passes raw counts and the percentage beside each stage is computed. For unordered parts of a whole, `Pie Chart` or `Stacked Bar`; for a count per category with no sequence, `Bar Chart`.",
+      'Rows are used in the order given and are never sorted, because the caller\'s order is the funnel\'s order. `conversion="previous"` is the stage-over-stage drop and leaves the first stage blank, `"first"` is cumulative from the top and starts at 100%. There is no horizontal layout: recharts computes its trapezoids from a fixed vertical stack, so long stage names are handled by widening `margin.right` instead.',
+    ],
+    examples: [
+      {
+        demo: "funnel-chart/signup",
+        title: "Signup funnel",
+        description:
+          "Stage-over-stage drop, the default. Each percentage on the left is that stage against the one above it, so 26% is the visit-to-signup step rather than a share of the whole.",
+      },
+      {
+        demo: "funnel-chart/pipeline",
+        title: "Sales pipeline",
+        description:
+          '`conversion="first"` reads every stage against the top of the funnel instead, which is the number a pipeline is usually managed on. `config` is keyed by stage name, so one stage can be recoloured without touching the rest.',
+      },
+      {
+        demo: "funnel-chart/long-labels",
+        title: "Long stage names",
+        description:
+          "Labels are drawn in the right margin, so a wider `margin.right` is what makes room for them. They sit outside the trapezoids on purpose — no single text colour clears AA against every slice in the ramp.",
+      },
+      {
+        demo: "funnel-chart/two-stage",
+        title: "Two stages",
+        description:
+          "The degenerate case, which has to not look broken: two trapezoids and one percentage. A short `className` height keeps it proportionate instead of stretching two bands over a full chart.",
+      },
+    ],
+  },
+
+  {
+    slug: "scatter-chart",
+    name: "Scatter Chart",
+    category: "Data display",
+    exports: ["ScatterChart"],
+    description:
+      "Quantity against quantity, with optional bubble sizing for a third variable.",
+    intro: [
+      "Scatter Chart answers whether two quantities correlate and where the outliers sit: price against rating, page weight against bounce rate, tenure against output. It is the only chart in the set that plots a quantity against another quantity rather than against a category or a date, which is what makes it the wrong reach for anything over time — that is `Line Chart`.",
+      "Both axes are pinned to a numeric scale by the component. recharts defaults its x axis to categories, which spaces the points evenly and quietly collapses a scatter into columns, so this is not a knob. `groupKey` splits one flat array into separately-coloured groups, and `sizeKey` wires a third field through the area of each mark — area rather than radius, because that is what the eye reads as magnitude.",
+    ],
+    examples: [
+      {
+        demo: "scatter-chart/correlation",
+        title: "Correlation with a threshold",
+        description:
+          "One group, and `xLabel`/`yLabel` doing work a time series does not need — an unlabelled scatter is unreadable. The `ReferenceLine` child is the escape hatch for the alert level the points are read against.",
+      },
+      {
+        demo: "scatter-chart/groups",
+        title: "Two groups separated",
+        description:
+          "`groupKey` names the row field that says which `config` entry a row belongs to, so one flat array becomes two coloured clouds. The separation is the finding here, not any individual point.",
+      },
+      {
+        demo: "scatter-chart/bubble",
+        title: "Bubble sizing",
+        description:
+          "`sizeKey` adds a third variable as the mark's area. Ireland's GDP outlier reads as an outlier partly because its bubble is small — the size is carrying the population that explains it.",
+      },
+      {
+        demo: "scatter-chart/dense",
+        title: "Hundreds of points",
+        description:
+          "320 marks at a partial fill opacity, so overlap reads as density rather than as a solid block. `grid={false}` removes rules that stop helping once the cloud fills the box.",
+      },
+    ],
+  },
+
+  {
+    slug: "treemap",
+    name: "Treemap",
+    category: "Data display",
+    exports: ["Treemap", "type TreemapDatum"],
+    description:
+      "A weighted hierarchy as nested areas — where a pie stops working and a bar chart runs out of room.",
+    intro: [
+      "Treemap shows how a weighted hierarchy divides up: cloud spend by service, storage by team then by project, bundle size by module. A pie stops working past six or seven slices; a treemap keeps reading into the dozens and gets a second level for free. This is not `Tree`, which is a navigation control for a file or category hierarchy — the two share nothing but a prefix.",
+      "Two levels is the ceiling and deliberately so: at three the tiles have nowhere to put a label and the form stops informing. Tiles are drawn as a wash of their hue rather than a solid fill, which is what lets the label sit on something close to the page background and clear AA in both themes; a child tile takes its parent's hue dimmed a step, so a group reads as a group.",
+    ],
+    examples: [
+      {
+        demo: "treemap/spend",
+        title: "Flat spend by service",
+        description:
+          "Ten services in one level, which is already past where a pie would hold up. `formatValue` prints the figure under each label; the raw values stay numbers so the tiling is still weighted correctly.",
+      },
+      {
+        demo: "treemap/two-level",
+        title: "Team then project",
+        description:
+          "Nesting `children` groups the tiles and tints each child off its parent's hue. A group's own tile contributes only the frame, since its area is entirely covered by its children — the legend beside the chart is composed by the caller.",
+      },
+      {
+        demo: "treemap/long-tail",
+        title: "One dominant part",
+        description:
+          "Where a treemap beats a pie outright: `react-dom` at 63% and seven packages under 3% each. The small tiles stay visible as tiles rather than becoming unclickable slivers of a circle.",
+      },
+      {
+        demo: "treemap/small-tiles",
+        title: "Small tiles",
+        description:
+          "Eighteen entries, where the labels suppress themselves rather than overflow. Suppression is measured against each tile's rendered width and height, so it responds to the container rather than to the number of rows.",
+      },
+    ],
+  },
+
+  {
+    slug: "waterfall-chart",
+    name: "Waterfall Chart",
+    category: "Data display",
+    exports: ["WaterfallChart"],
+    description:
+      "Signed deltas accumulating to a total — the bridge a bar chart and a line chart each tell half of.",
+    intro: [
+      "Waterfall Chart shows how signed deltas accumulate from a starting value to an ending one: opening ARR through new, expansion, contraction and churn to closing ARR; budget to actuals through each variance; headcount quarter over quarter. A bar chart shows the deltas but hides the running total, and a line shows the total but hides what moved it. recharts has no waterfall primitive, so this is a composed chart with a transparent offset series carrying the running base.",
+      "The caller passes raw signed values and never a base — working those out is the component. `totalKeys` names the rows that restate the total rather than move it, and without it the closing bar stacks on the running figure and floats at roughly twice its true height. Colour is semantic rather than a series ramp: rises take the success tone, falls the danger tone, and totals a neutral slot. The running total is assumed to stay at or above zero.",
+    ],
+    examples: [
+      {
+        demo: "waterfall-chart/arr-bridge",
+        title: "ARR bridge",
+        description:
+          "The canonical shape: two totals bracketing four deltas. The connectors are what make it read as a bridge rather than as six unrelated bars, and the tooltip carries the signed change and the running figure — never the internal offset.",
+      },
+      {
+        demo: "waterfall-chart/budget-variance",
+        title: "Budget variance",
+        description:
+          "Ends below where it started, with rises and falls interleaved. The tones are doing the reading here, so the closing total needs no annotation to say the budget was underspent.",
+      },
+      {
+        demo: "waterfall-chart/accumulation",
+        title: "All positive",
+        description:
+          "No totals and no falls — a pure accumulation, which is a stacked bar unrolled along an axis. `connectors={false}` because with every step rising the staircase is already unambiguous.",
+      },
+      {
+        demo: "waterfall-chart/subtotal",
+        title: "Mid-sequence subtotals",
+        description:
+          "Three entries in `totalKeys`, so Q2 restates the running figure in the middle of the sequence and the deltas after it stack on that instead of on the arithmetic before it.",
+      },
+    ],
+  },
+
+  {
+    slug: "heatmap",
+    name: "Heatmap",
+    category: "Data display",
+    exports: ["Heatmap", "type HeatmapCell", "type HeatmapDay"],
+    description:
+      "Density across two axes as colour — CSS grid, not a chart library, and the only form here that encodes magnitude without position.",
+    intro: [
+      "Heatmap shows where density concentrates across two axes: activity per weekday-by-hour, errors per service-by-day, a year of contributions. It is the only form in the set that encodes magnitude as colour rather than position, which is what lets it scale to hundreds of cells where a bar chart cannot — and also what makes it the wrong reach when an exact value matters. It is plain CSS grid and divs; recharts has no heatmap primitive and the shape is a grid of coloured rectangles, which is what CSS grid already is.",
+      "`layout` chooses between two forms: a sparse `{ x, y, value }` grid where a missing pair renders empty rather than as zero, and a `{ date, value }` calendar whose week columns and weekday rows are derived from the range. The ramp is five quantised steps off one hue from `--ds-heat-1` to `--ds-heat-5`, not the categorical `--ds-chart-*` ramp — reading a categorical ramp as a scale is the classic dataviz error. Pin `scale.max` whenever two heatmaps are meant to compare. Because colour is the only encoding, every cell carries its own accessible name with both axes and its value.",
+    ],
+    examples: [
+      {
+        demo: "heatmap/activity",
+        title: "Weekday by hour",
+        description:
+          "168 cells, which is the density this form exists for. `formatValue` reaches the accessible name on every cell, so the value is available to a screen reader and on hover without a single focusable trigger.",
+      },
+      {
+        demo: "heatmap/calendar",
+        title: "Contribution calendar",
+        description:
+          'layout="calendar" derives the week columns from the date range, so the caller passes dates and never a week index. Month labels appear where the month changes and weekdays are labelled every other row, which is what keeps a year legible at 12px cells.',
+      },
+      {
+        demo: "heatmap/sparse",
+        title: "Sparse grid",
+        description:
+          "Missing pairs render as an unfilled ring while a present zero takes the lowest step — the distinction matters, and it is visible. `emptyLabel` is what a missing cell announces.",
+      },
+      {
+        demo: "heatmap/pinned",
+        title: "Pinned scale",
+        description:
+          "The same `scale.max` on both grids is what makes them comparable. Left off, each would scale to its own maximum and last week's quiet load would look exactly as busy as this week's.",
+      },
+    ],
+  },
+
+  {
+    slug: "bullet-chart",
+    name: "Bullet Chart",
+    category: "Data display",
+    exports: ["BulletChart", "type BulletBand"],
+    description:
+      "An actual against its target and qualitative bands — what `meter`, `gauge` and `progress` cannot say.",
+    intro: [
+      "Bullet Chart is Stephen Few's bullet graph: one measure bar, one target tick across it, and two or three background bands. Reach for it when the reading is not just where a value sits in a range but how it sits against a target — 68% of quota, target 80%, bands poor/ok/good. `meter`, `gauge` and `progress` all answer the first question; none of them can express a target or comparison bands, and that gap is why this exists.",
+      "It is sized to sit inside a `stat-card` or a table cell, and the primary use is a stack of them. That is why the label and figure columns are fixed widths driven by `--bullet-label` and `--bullet-value` rather than sized to their content — intrinsic columns would leave every row in a stack starting at a different x. Band fills are surface tints rather than a tone ink at reduced opacity, and the target goes into the spoken value as well as the geometry, because it is invisible to a screen reader otherwise.",
+    ],
+    examples: [
+      {
+        demo: "bullet-chart/quota",
+        title: "Quota with bands",
+        description:
+          "Three toned bands behind the measure, with the target tick at 85%. The bands are what turn 68 from a number into a judgement — it is in the warning range and short of target.",
+      },
+      {
+        demo: "bullet-chart/stack",
+        title: "A stack of KPIs",
+        description:
+          "Four bullets in a card, all on different scales and all aligned. `[--bullet-label:8rem]` on the container retunes the label column for every row at once rather than per instance.",
+      },
+      {
+        demo: "bullet-chart/in-table",
+        title: "In a table cell",
+        description:
+          "Collapsing `--bullet-label` to zero drops the label column when the table's own column already names the row. `aria-label` then supplies the accessible name, since there is no visible label left to derive one from.",
+      },
+      {
+        demo: "bullet-chart/no-target",
+        title: "No target",
+        description:
+          "Omit `target` and no tick renders — the component degrades to a banded meter rather than inventing a goal. The default three-band neutral ramp is still drawn, so the bar has something to be read against.",
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [
@@ -3155,302 +3467,6 @@ export const PENDING: ComponentDoc[] = [
         title: "Empty state",
         description:
           "No events renders `Empty` rather than a bespoke placeholder, so the voice matches every other empty surface in the system. `emptyMessage` is the one line you write.",
-      },
-    ],
-  },
-  {
-    slug: "radar-chart",
-    name: "Radar Chart",
-    category: "Data display",
-    description:
-      "A spider chart — how two or three entities compare across many dimensions at once.",
-    intro: [
-      "Radar Chart answers how a small number of entities compare across many dimensions: a product's capability profile, a candidate against a role's requirements, plan A against plan B. Each spoke is a dimension and each closed polygon is one entity. When there is only one dimension to compare on, `Bar Chart` says it more precisely; when the dimensions are a sequence rather than a set, `Line Chart` is the honest read.",
-      "The data is transposed against every other wrapper here and it is the thing to get right: `data` rows are the spokes and `config` keys are the polygons, so a two-product five-capability chart is five rows of two fields. Pin `domain` whenever two charts sit side by side — left off, recharts refits the radius to each chart's own data and the two stop being comparable.",
-    ],
-    examples: [
-      {
-        demo: "radar-chart/basic",
-        title: "One profile",
-        description:
-          "A single polygon across five capabilities. `domain` is pinned to 0–100 so the shape means the same thing on every render, not just relative to its own maximum.",
-      },
-      {
-        demo: "radar-chart/overlaid",
-        title: "Candidate against requirement",
-        description:
-          "Two polygons is where the form earns its keep — the gaps read as area. `radiusAxis` prints the radius ticks, which is worth the noise on a five-point scale where the exact level matters.",
-      },
-      {
-        demo: "radar-chart/pinned",
-        title: "Two regions compared",
-        description:
-          "The same `domain` on both charts is what makes them comparable. Without it each would fill its own box and Europe's 38% organic would look the same size as North America's 34% paid.",
-      },
-      {
-        demo: "radar-chart/dense",
-        title: "Dense dimensions",
-        description:
-          "Twelve spokes, where the form starts to break down: the outline still reads as a silhouette but no individual value is recoverable. `grid={false}` drops the rules that were only adding ink at this density.",
-      },
-    ],
-  },
-  {
-    slug: "combo-chart",
-    name: "Combo Chart",
-    category: "Data display",
-    description:
-      "Bars and a line on one x axis, with a second Y scale — the volume-plus-rate dashboard shape.",
-    intro: [
-      "Combo Chart relates a volume series and a rate series over the same x axis: revenue bars with a margin-percent line, signups with a conversion rate, tickets opened with median resolution time. It is the most common business-dashboard shape and the one `Bar Chart` and `Line Chart` cannot cover between them, because they cannot share an axis. When both series are the same kind of quantity, stay with the single-mark wrapper.",
-      "`series` is the one place a chart wrapper here takes an array, because which mark a series draws as cannot be inferred from `config` — and because marks are layered back to front, which the component sorts for you so a line never hides under a bar. `rightAxis` is the second scale; omit it and every series falls back to the left one, which is the right degrade rather than an error.",
-    ],
-    examples: [
-      {
-        demo: "combo-chart/revenue-margin",
-        title: "Revenue against margin",
-        description:
-          'The canonical case: euros as bars on the left scale, a percentage as a line on the right. `axis: "right"` is what binds the line to the second scale — half-specifying it would silently put both series back on one.',
-      },
-      {
-        demo: "combo-chart/volume-rate",
-        title: "Volume against rate",
-        description:
-          "An area for the volume rather than bars, which reads better when the series is continuous. `rightAxis.label` captions the second scale, and without it a reader has no way to know which axis the line belongs to.",
-      },
-      {
-        demo: "combo-chart/same-scale",
-        title: "Same scale",
-        description:
-          "No `rightAxis`, so no second axis renders and both series are measured on the left one. This is the right shape when the two are the same unit — booked days against delivered days — and a dual axis would imply a difference that is not there.",
-      },
-      {
-        demo: "combo-chart/formatted-axis",
-        title: "Formatted second axis",
-        description:
-          "`rightAxis.tickFormatter` reaches the second axis' ticks, here turning stored milliseconds into hours. The underlying values stay raw, so the tooltip and any sorting still work on numbers.",
-      },
-    ],
-  },
-  {
-    slug: "funnel-chart",
-    name: "Funnel Chart",
-    category: "Data display",
-    description:
-      "Ordered conversion stages with the drop-off derived for you from raw counts.",
-    intro: [
-      "Funnel Chart shows where people leave an ordered sequence: visit to signup to activation to paid, or lead to demo to proposal to close. The value of the form is the drop rather than the absolute widths, which is why `conversion` exists — the caller passes raw counts and the percentage beside each stage is computed. For unordered parts of a whole, `Pie Chart` or `Stacked Bar`; for a count per category with no sequence, `Bar Chart`.",
-      'Rows are used in the order given and are never sorted, because the caller\'s order is the funnel\'s order. `conversion="previous"` is the stage-over-stage drop and leaves the first stage blank, `"first"` is cumulative from the top and starts at 100%. There is no horizontal layout: recharts computes its trapezoids from a fixed vertical stack, so long stage names are handled by widening `margin.right` instead.',
-    ],
-    examples: [
-      {
-        demo: "funnel-chart/signup",
-        title: "Signup funnel",
-        description:
-          "Stage-over-stage drop, the default. Each percentage on the left is that stage against the one above it, so 26% is the visit-to-signup step rather than a share of the whole.",
-      },
-      {
-        demo: "funnel-chart/pipeline",
-        title: "Sales pipeline",
-        description:
-          '`conversion="first"` reads every stage against the top of the funnel instead, which is the number a pipeline is usually managed on. `config` is keyed by stage name, so one stage can be recoloured without touching the rest.',
-      },
-      {
-        demo: "funnel-chart/long-labels",
-        title: "Long stage names",
-        description:
-          "Labels are drawn in the right margin, so a wider `margin.right` is what makes room for them. They sit outside the trapezoids on purpose — no single text colour clears AA against every slice in the ramp.",
-      },
-      {
-        demo: "funnel-chart/two-stage",
-        title: "Two stages",
-        description:
-          "The degenerate case, which has to not look broken: two trapezoids and one percentage. A short `className` height keeps it proportionate instead of stretching two bands over a full chart.",
-      },
-    ],
-  },
-  {
-    slug: "scatter-chart",
-    name: "Scatter Chart",
-    category: "Data display",
-    description:
-      "Quantity against quantity, with optional bubble sizing for a third variable.",
-    intro: [
-      "Scatter Chart answers whether two quantities correlate and where the outliers sit: price against rating, page weight against bounce rate, tenure against output. It is the only chart in the set that plots a quantity against another quantity rather than against a category or a date, which is what makes it the wrong reach for anything over time — that is `Line Chart`.",
-      "Both axes are pinned to a numeric scale by the component. recharts defaults its x axis to categories, which spaces the points evenly and quietly collapses a scatter into columns, so this is not a knob. `groupKey` splits one flat array into separately-coloured groups, and `sizeKey` wires a third field through the area of each mark — area rather than radius, because that is what the eye reads as magnitude.",
-    ],
-    examples: [
-      {
-        demo: "scatter-chart/correlation",
-        title: "Correlation with a threshold",
-        description:
-          "One group, and `xLabel`/`yLabel` doing work a time series does not need — an unlabelled scatter is unreadable. The `ReferenceLine` child is the escape hatch for the alert level the points are read against.",
-      },
-      {
-        demo: "scatter-chart/groups",
-        title: "Two groups separated",
-        description:
-          "`groupKey` names the row field that says which `config` entry a row belongs to, so one flat array becomes two coloured clouds. The separation is the finding here, not any individual point.",
-      },
-      {
-        demo: "scatter-chart/bubble",
-        title: "Bubble sizing",
-        description:
-          "`sizeKey` adds a third variable as the mark's area. Ireland's GDP outlier reads as an outlier partly because its bubble is small — the size is carrying the population that explains it.",
-      },
-      {
-        demo: "scatter-chart/dense",
-        title: "Hundreds of points",
-        description:
-          "320 marks at a partial fill opacity, so overlap reads as density rather than as a solid block. `grid={false}` removes rules that stop helping once the cloud fills the box.",
-      },
-    ],
-  },
-  {
-    slug: "treemap",
-    name: "Treemap",
-    category: "Data display",
-    description:
-      "A weighted hierarchy as nested areas — where a pie stops working and a bar chart runs out of room.",
-    intro: [
-      "Treemap shows how a weighted hierarchy divides up: cloud spend by service, storage by team then by project, bundle size by module. A pie stops working past six or seven slices; a treemap keeps reading into the dozens and gets a second level for free. This is not `Tree`, which is a navigation control for a file or category hierarchy — the two share nothing but a prefix.",
-      "Two levels is the ceiling and deliberately so: at three the tiles have nowhere to put a label and the form stops informing. Tiles are drawn as a wash of their hue rather than a solid fill, which is what lets the label sit on something close to the page background and clear AA in both themes; a child tile takes its parent's hue dimmed a step, so a group reads as a group.",
-    ],
-    examples: [
-      {
-        demo: "treemap/spend",
-        title: "Flat spend by service",
-        description:
-          "Ten services in one level, which is already past where a pie would hold up. `formatValue` prints the figure under each label; the raw values stay numbers so the tiling is still weighted correctly.",
-      },
-      {
-        demo: "treemap/two-level",
-        title: "Team then project",
-        description:
-          "Nesting `children` groups the tiles and tints each child off its parent's hue. A group's own tile contributes only the frame, since its area is entirely covered by its children — the legend beside the chart is composed by the caller.",
-      },
-      {
-        demo: "treemap/long-tail",
-        title: "One dominant part",
-        description:
-          "Where a treemap beats a pie outright: `react-dom` at 63% and seven packages under 3% each. The small tiles stay visible as tiles rather than becoming unclickable slivers of a circle.",
-      },
-      {
-        demo: "treemap/small-tiles",
-        title: "Small tiles",
-        description:
-          "Eighteen entries, where the labels suppress themselves rather than overflow. Suppression is measured against each tile's rendered width and height, so it responds to the container rather than to the number of rows.",
-      },
-    ],
-  },
-  {
-    slug: "waterfall-chart",
-    name: "Waterfall Chart",
-    category: "Data display",
-    description:
-      "Signed deltas accumulating to a total — the bridge a bar chart and a line chart each tell half of.",
-    intro: [
-      "Waterfall Chart shows how signed deltas accumulate from a starting value to an ending one: opening ARR through new, expansion, contraction and churn to closing ARR; budget to actuals through each variance; headcount quarter over quarter. A bar chart shows the deltas but hides the running total, and a line shows the total but hides what moved it. recharts has no waterfall primitive, so this is a composed chart with a transparent offset series carrying the running base.",
-      "The caller passes raw signed values and never a base — working those out is the component. `totalKeys` names the rows that restate the total rather than move it, and without it the closing bar stacks on the running figure and floats at roughly twice its true height. Colour is semantic rather than a series ramp: rises take the success tone, falls the danger tone, and totals a neutral slot. The running total is assumed to stay at or above zero.",
-    ],
-    examples: [
-      {
-        demo: "waterfall-chart/arr-bridge",
-        title: "ARR bridge",
-        description:
-          "The canonical shape: two totals bracketing four deltas. The connectors are what make it read as a bridge rather than as six unrelated bars, and the tooltip carries the signed change and the running figure — never the internal offset.",
-      },
-      {
-        demo: "waterfall-chart/budget-variance",
-        title: "Budget variance",
-        description:
-          "Ends below where it started, with rises and falls interleaved. The tones are doing the reading here, so the closing total needs no annotation to say the budget was underspent.",
-      },
-      {
-        demo: "waterfall-chart/accumulation",
-        title: "All positive",
-        description:
-          "No totals and no falls — a pure accumulation, which is a stacked bar unrolled along an axis. `connectors={false}` because with every step rising the staircase is already unambiguous.",
-      },
-      {
-        demo: "waterfall-chart/subtotal",
-        title: "Mid-sequence subtotals",
-        description:
-          "Three entries in `totalKeys`, so Q2 restates the running figure in the middle of the sequence and the deltas after it stack on that instead of on the arithmetic before it.",
-      },
-    ],
-  },
-  {
-    slug: "heatmap",
-    name: "Heatmap",
-    category: "Data display",
-    description:
-      "Density across two axes as colour — CSS grid, not a chart library, and the only form here that encodes magnitude without position.",
-    intro: [
-      "Heatmap shows where density concentrates across two axes: activity per weekday-by-hour, errors per service-by-day, a year of contributions. It is the only form in the set that encodes magnitude as colour rather than position, which is what lets it scale to hundreds of cells where a bar chart cannot — and also what makes it the wrong reach when an exact value matters. It is plain CSS grid and divs; recharts has no heatmap primitive and the shape is a grid of coloured rectangles, which is what CSS grid already is.",
-      "`layout` chooses between two forms: a sparse `{ x, y, value }` grid where a missing pair renders empty rather than as zero, and a `{ date, value }` calendar whose week columns and weekday rows are derived from the range. The ramp is five quantised steps off one hue from `--ds-heat-1` to `--ds-heat-5`, not the categorical `--ds-chart-*` ramp — reading a categorical ramp as a scale is the classic dataviz error. Pin `scale.max` whenever two heatmaps are meant to compare. Because colour is the only encoding, every cell carries its own accessible name with both axes and its value.",
-    ],
-    examples: [
-      {
-        demo: "heatmap/activity",
-        title: "Weekday by hour",
-        description:
-          "168 cells, which is the density this form exists for. `formatValue` reaches the accessible name on every cell, so the value is available to a screen reader and on hover without a single focusable trigger.",
-      },
-      {
-        demo: "heatmap/calendar",
-        title: "Contribution calendar",
-        description:
-          'layout="calendar" derives the week columns from the date range, so the caller passes dates and never a week index. Month labels appear where the month changes and weekdays are labelled every other row, which is what keeps a year legible at 12px cells.',
-      },
-      {
-        demo: "heatmap/sparse",
-        title: "Sparse grid",
-        description:
-          "Missing pairs render as an unfilled ring while a present zero takes the lowest step — the distinction matters, and it is visible. `emptyLabel` is what a missing cell announces.",
-      },
-      {
-        demo: "heatmap/pinned",
-        title: "Pinned scale",
-        description:
-          "The same `scale.max` on both grids is what makes them comparable. Left off, each would scale to its own maximum and last week's quiet load would look exactly as busy as this week's.",
-      },
-    ],
-  },
-  {
-    slug: "bullet-chart",
-    name: "Bullet Chart",
-    category: "Data display",
-    description:
-      "An actual against its target and qualitative bands — what `meter`, `gauge` and `progress` cannot say.",
-    intro: [
-      "Bullet Chart is Stephen Few's bullet graph: one measure bar, one target tick across it, and two or three background bands. Reach for it when the reading is not just where a value sits in a range but how it sits against a target — 68% of quota, target 80%, bands poor/ok/good. `meter`, `gauge` and `progress` all answer the first question; none of them can express a target or comparison bands, and that gap is why this exists.",
-      "It is sized to sit inside a `stat-card` or a table cell, and the primary use is a stack of them. That is why the label and figure columns are fixed widths driven by `--bullet-label` and `--bullet-value` rather than sized to their content — intrinsic columns would leave every row in a stack starting at a different x. Band fills are surface tints rather than a tone ink at reduced opacity, and the target goes into the spoken value as well as the geometry, because it is invisible to a screen reader otherwise.",
-    ],
-    examples: [
-      {
-        demo: "bullet-chart/quota",
-        title: "Quota with bands",
-        description:
-          "Three toned bands behind the measure, with the target tick at 85%. The bands are what turn 68 from a number into a judgement — it is in the warning range and short of target.",
-      },
-      {
-        demo: "bullet-chart/stack",
-        title: "A stack of KPIs",
-        description:
-          "Four bullets in a card, all on different scales and all aligned. `[--bullet-label:8rem]` on the container retunes the label column for every row at once rather than per instance.",
-      },
-      {
-        demo: "bullet-chart/in-table",
-        title: "In a table cell",
-        description:
-          "Collapsing `--bullet-label` to zero drops the label column when the table's own column already names the row. `aria-label` then supplies the accessible name, since there is no visible label left to derive one from.",
-      },
-      {
-        demo: "bullet-chart/no-target",
-        title: "No target",
-        description:
-          "Omit `target` and no tick renders — the component degrades to a banded meter rather than inventing a goal. The default three-band neutral ramp is still drawn, so the bar has something to be read against.",
       },
     ],
   },

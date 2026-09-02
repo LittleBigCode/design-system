@@ -4,6 +4,118 @@ All notable changes to the Diametral Design System are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/), and the project
 adheres to [Semantic Versioning](https://semver.org/) — see [docs/versioning.md](docs/versioning.md).
 
+## [1.0.0-beta.5] — 2026-09-02
+
+Eight net-new charts, all composing beta.4's substrate, all landing in clean
+namespace. **This batch acquires no dependency**: `recharts` was already paid for,
+and six of the eight are wrappers over `ChartContainer` / `ChartTooltip` /
+`ChartLegend`. The other two are CSS grid and divs. Published on the `next`
+dist-tag — `latest` stays at 0.11.0 for the whole migration.
+
+### Added
+- **`ComboChart`** — a volume series and a rate series on one x axis, with a
+  second Y scale. The commonest business-dashboard shape, and the one `BarChart`
+  and `LineChart` cannot cover between them because they cannot share an axis.
+  `series` says which mark each config key draws as; marks are sorted back to
+  front (area, bar, line) rather than drawn in declaration order, which is the
+  difference between a visible line and one hidden under a bar.
+- **`BulletChart`** — Stephen Few's bullet graph: one measure bar, one target
+  tick across it, two or three qualitative bands behind both. `Meter`, `Gauge`
+  and `Progress` all answer "where does this value sit in a range"; none of them
+  can express a target, and that gap is why this exists. Library-free.
+- **`FunnelChart`** — ordered stages with the drop-off derived from raw counts:
+  `conversion="previous"` is the stage-over-stage drop, `"first"` is cumulative
+  from the top. Both label columns are drawn in the chart's margins, not inside
+  the trapezoids — the slice ramp runs the whole `--ds-chart-*` set and no single
+  text colour clears AA against all six.
+- **`WaterfallChart`** — signed deltas accumulating to a total, as two stacked
+  bars per step: a transparent offset carrying the running base, and the delta
+  floating on it. recharts has no waterfall primitive. `totalKeys` names the rows
+  that *restate* the total rather than move it; without it the closing bar floats
+  at roughly twice its true height.
+- **`Treemap`** — a weighted hierarchy as nested areas, where a pie stops working
+  and a bar chart runs out of room. Two levels is the ceiling on purpose. Tiles
+  are a wash of their hue rather than a solid fill, which is what lets the label
+  sit on something close to the page background and clear AA on every ramp slot
+  in both themes. Not `Tree`, which is a navigation control.
+- **`ScatterChart`** — quantity against quantity, with `sizeKey` adding a third
+  variable as the mark's *area* (radius would double the apparent value). Both
+  axes are pinned numeric and it is not a knob: recharts defaults its x axis to
+  categories, which spaces the points evenly and quietly collapses a scatter into
+  columns.
+- **`RadarChart`** — a spider chart, two or three entities across many
+  dimensions. Its `config`/`data` are transposed against every other wrapper
+  here: rows are the spokes, config keys are the polygons.
+- **`Heatmap`** — density across two axes as colour, in a `grid` form (sparse
+  `{ x, y, value }`) or a `calendar` form (`{ date, value }`, week columns
+  derived from the range). Library-free CSS grid; recharts has no heatmap
+  primitive and the shape is a grid of coloured rectangles, which is what CSS
+  grid already is. Every cell carries its own accessible name with both axes and
+  its value — colour is the only encoding, so a grid of unlabelled divs would be
+  a critical axe failure.
+- **`--ds-heat-1` … `--ds-heat-5`** — a *sequential* ramp, one hue getting
+  darker, derived from `--ds-chart-2`. Separate from the categorical
+  `--ds-chart-*` ramp because reading a categorical ramp as a scale is the
+  classic dataviz error. It is the one Tier-1 primitive `themes/dark.css`
+  overrides, and it inverts there: a sequential ramp encodes magnitude, so "more"
+  has to mean brighter on a dark page or the top of the scale sinks into it.
+- **`--ds-bullet-label` / `--ds-bullet-value`** — the fixed label and figure
+  column widths. Fixed rather than intrinsic because the primary use is a
+  *stack*, and content-sized columns would leave every row starting at a
+  different x. Set either on the chart or on a wrapper to retune one bullet or
+  all of them.
+- **Nine new assertions in `tests/chart-marks.spec.ts`** — the six recharts
+  charts join the sizing and mark-geometry checks, `Heatmap` and `BulletChart`
+  get the contract checks their library-free markup owes, and the funnel's stage
+  labels are asserted under animation. See **Fixed**.
+
+### Changed
+- **`.ds-chart-container--plot` is not one height any more.**
+  `.ds-funnel-chart-root`, `.ds-treemap-root` and `.ds-scatter-chart-root` each
+  default `--ds-chart-height` to 16rem on their own element rather than taking
+  `--plot`'s 14rem, because each needs vertical range the axis charts do not — a
+  funnel is a stack of labelled bands, a treemap suppresses labels below a
+  measured height, and a scatter needs range for the cloud to read as a cloud.
+  A caller's inline `--ds-chart-height` lands on the same element and still wins.
+- **`recharts` now backs twelve charts, not six** — `docs/react.md`'s install
+  note names all twelve. Still an optional peer, still one copy resolved by the
+  consumer.
+- **`examples/components/charts.html`** gains a bullet-chart and a heatmap
+  section with real markup, because both are library-free and their `.ds-*`
+  classes are the whole contract for a non-React binding. The page is now linked
+  from `examples/index.html`, which it was not.
+- **The eight slugs are un-filtered in the docs registry** — 82 documented
+  components, all eight now on the a11y and contract gates, with their demos and
+  playgrounds moved out of `_pending/`.
+
+### Fixed
+- **Six dedupe exceptions resolved, not five.** The batch plan's table gives this
+  batch five (`funnel-chart`, `radar-chart`, `scatter-chart`, `treemap`,
+  `waterfall-chart`); `bullet-chart.css` carries a sixth in the same form and for
+  the same reason. All six were one bargain — a Tailwind literal kept literal so
+  `tailwind-merge` could dedupe a caller's override against it. With no Tailwind
+  and no merge pass the literals became real declarations and the overrides
+  became `--ds-chart-height`, `--ds-bullet-label` and `--ds-bullet-value`.
+  Variables rather than competing classes on purpose: two height classes would be
+  settled by stylesheet order, which is not a contract. Recorded in
+  `docs/absorption/corrections.md`.
+- **`FunnelChart`'s labels are asserted, not assumed.** The source comments that
+  recharts gates a funnel's labels behind `showLabels = !isAnimating` and that
+  the animation restarts forever, then never turns the animation off — on this or
+  any component. Against the recharts this package pins, the labels do render
+  with animation on, so the component is absorbed unchanged and the claim is now
+  a test in the one gate that opts back out of reduced motion. A recharts bump
+  that reintroduces the behaviour fails there rather than dropping the labels
+  silently.
+
+### Notes
+- `renames.json` owes **no rows from removal** — all eight land in clean
+  namespace and remove nothing. The two rows it does gain record the new knobs
+  and the new ramp, which are consumer-visible without being renames.
+- Three demos were re-wired onto incumbents that hold until a later batch:
+  `bullet-chart/stack` onto the prop-driven `Card` (batch 7) and
+  `bullet-chart/in-table` onto `DataGrid` (the source calls it `DataTable`).
+
 ## [1.0.0-beta.4] — 2026-09-02
 
 The chart substrate and the six charts that replace hand-drawn marks. This is the

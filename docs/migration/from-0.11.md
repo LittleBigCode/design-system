@@ -2,7 +2,7 @@
 
 # Migrating from 0.11 to 1.0
 
-The v1 absorption renames 27 consumer-visible thing(s). Everything else is additive.
+The v1 absorption renames 29 consumer-visible thing(s). Everything else is additive.
 
 ### Exports
 
@@ -44,6 +44,8 @@ The v1 absorption renames 27 consumer-visible thing(s). Everything else is addit
 | `--ds-vert` | `--ds-vert` | 0.3 | Value corrected #89fc79 -> #53ff64. The 0.11 hex was eye-dropped from the charter PNG on the belief that the swatch label was a typo; the label was right. Name unchanged — re-check any hard-coded copy of the old hex. |
 | `--ds-accent (in charts, sparkline, bar-chart series)` | `--ds-chart-1` | 0.3 | Data series no longer read the themeable accent. Visually identical at the default theme (--ds-chart-1 is #ff2a00); a theme that overrode --ds-accent to recolour its charts must now override --ds-chart-*. |
 | `(none — height was a Tailwind class in the source)` | `--ds-chart-height` | 4 | The knob that replaced the source's `h-56`/`h-64`/`h-40`/`h-24` literals. `.ds-chart-container--plot` and `--square` read it, defaulting to 14rem and 16rem; set it on the chart to retune one. This package has no Tailwind and no tailwind-merge, so a competing height class would be decided by stylesheet order — a variable is not. |
+| `(none — the label and value column widths were Tailwind arbitrary-property classes in the source)` | `--ds-bullet-label, --ds-bullet-value` | 5 | The knobs that replaced the source's `[--bullet-label:7rem]` / `[--bullet-value:4rem]` literals on BulletChart's own className. `.ds-bullet-chart` declares both as its defaults and reads them in `grid-template-columns`; set either on the chart or on a wrapper to retune one bullet or a whole stack. Unprefixed `--bullet-*` is not read — every custom property in this package is `--ds-*`. |
+| `(none — net-new)` | `--ds-heat-1 … --ds-heat-5` | 5 | The sequential ramp `.ds-heatmap` quantises into, one hue getting darker. Separate from the categorical `--ds-chart-*` ramp on purpose: reading a categorical ramp as a scale is the classic dataviz error. It is also the one Tier-1 primitive css/themes/dark.css overrides — a sequential ramp encodes magnitude, so "more" has to mean brighter on a dark page. A theme that recolours data now has two ramps to consider, not one. |
 
 ### Paths
 

@@ -319,7 +319,26 @@ label, as the donut's three do here: the colors then come from the shared
 `--ds-chart-*` ramp in config order, which is what makes a chart on-brand by default.
 
 Height comes from the container, not a prop: `--ds-chart-height` retunes one chart
-(the axis charts default to 14rem, the round ones to 16rem).
+(the axis charts default to 14rem, the round ones to 16rem; `FunnelChart`, `Treemap`
+and `ScatterChart` default to 16rem on their own roots, because each needs vertical
+range the axis charts do not).
+
+**Reaching past the six.** `1.0.0-beta.5` adds eight forms for the readings the
+common shapes cannot carry, all taking the same `config` + `data` contract:
+
+| reading | chart |
+| --- | --- |
+| a volume series and a rate series on one x axis | `ComboChart` — the dashboard shape `BarChart` and `LineChart` cannot share |
+| an actual against a **target** and qualitative bands | `BulletChart` — what `Meter`, `Gauge` and `Progress` cannot say |
+| where people drop out of an ordered sequence | `FunnelChart`, with the drop derived from raw counts |
+| signed deltas accumulating to a total | `WaterfallChart` — the bridge a bar and a line each tell half of |
+| a weighted hierarchy with too many parts for a pie | `Treemap` |
+| quantity against quantity | `ScatterChart`, with optional bubble sizing |
+| a few entities across many dimensions | `RadarChart` |
+| density across two axes, hundreds of cells | `Heatmap`, on the sequential `--ds-heat-*` ramp |
+
+`BulletChart` and `Heatmap` are CSS grid and divs, so they render from plain markup
+without `recharts` — the same way `Sparkline` and `Gauge` do.
 
 ---
 

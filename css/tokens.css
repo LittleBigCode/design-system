@@ -53,6 +53,22 @@
   --ds-chart-5: #7b5ea7;  /* violet */
   --ds-chart-6: #e0a32e;  /* amber */
 
+  /* Sequential ramp — magnitude encoded as colour, for .ds-heatmap's five
+     steps. Ordered data needs one hue getting darker, not six unrelated ones;
+     the --ds-chart-* ramp above is categorical and reading it as a scale is the
+     classic dataviz error. Derived from --ds-chart-2 (teal) because a red ramp
+     reads as severity on data that is only dense.
+
+     Step 1 is a real tint rather than a hairline wash: an empty cell renders as
+     an unfilled ring, and the two have to be separable at a glance. Five
+     quantised steps rather than a gradient, because a gradient cannot be put in
+     a legend. This is the one primitive themes/dark.css overrides — see there. */
+  --ds-heat-1: #9fd3e2;
+  --ds-heat-2: #6fbcd0;
+  --ds-heat-3: #3f9db6;
+  --ds-heat-4: #1f7d97;
+  --ds-heat-5: #0b5a70;
+
   /* ===== TIER 2 — SEMANTIC (the override surface) ========================= */
 
   /* Surfaces & text */

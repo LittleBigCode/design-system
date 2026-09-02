@@ -64,7 +64,7 @@ const NAV = [
     { k: "components/tree", t: "Tree view" },
     { k: "components/stat-card", t: "Stat card" },
     { k: "components/sparkline", t: "Sparkline" },
-    { k: "components/charts", t: "Charts · Gauge" },
+    { k: "components/charts", t: "Charts · gauge, bullet, heatmap" },
     { k: "components/rating", t: "Rating" },
     { k: "components/calendar-view", t: "Calendar" },
     { k: "components/agenda", t: "Agenda" },

@@ -20,8 +20,8 @@
       <header class="docs-head">
         <p class="ds-kicker">Components</p>
         <h1 class="ds-title ds-title--xl">Charts</h1>
-        <p class="docs-lede">Six of the eight charts are <strong>React-only</strong> from 1.0.0-beta.4 on: line, area, bar, stacked bar, pie and donut draw their marks with <a href="https://recharts.org">recharts</a>, so there is no markup that reproduces them and no class per mark. What the stylesheet owns is the frame — <code>.ds-chart-container</code>, <code>.ds-chart-tooltip-content</code> and <code>.ds-chart-legend-content</code> — plus the descendant rules that repaint recharts' hard-coded <code>#ccc</code> gridlines and <code>#fff</code> outlines onto <code>--ds-*</code> tokens. Each of the six is documented, with a live playground, in the <a href="../../react-workbench/docs/line-chart">React workbench</a>.</p>
-        <p class="docs-note">The <strong>gauge</strong> below and the <a href="sparkline.html">sparkline</a> stay library-free — one arc pair and one polyline, drawable by hand — so they are the two charts a non-React binding can still render. 0.11's pure-SVG <code>.ds-chart</code>, <code>.ds-linechart</code>, <code>.ds-areachart</code>, <code>.ds-donut</code>, <code>.ds-piechart</code>, <code>.ds-stackedbar</code> and <code>.ds-barchart</code> classes were removed in the same release; <a href="../../docs/migration/from-0.11.md">from-0.11.md</a> maps every one.</p>
+        <p class="docs-lede">Twelve of the sixteen charts are <strong>React-only</strong>: line, area, bar, stacked bar, pie and donut from 1.0.0-beta.4, then radar, combo, funnel, scatter, treemap and waterfall from 1.0.0-beta.5. All twelve draw their marks with <a href="https://recharts.org">recharts</a>, so there is no markup that reproduces them and no class per mark. What the stylesheet owns is the frame — <code>.ds-chart-container</code>, <code>.ds-chart-tooltip-content</code> and <code>.ds-chart-legend-content</code> — plus the descendant rules that repaint recharts' hard-coded <code>#ccc</code> gridlines and <code>#fff</code> outlines onto <code>--ds-*</code> tokens. Each one is documented, with a live playground, in the <a href="../../react-workbench/docs/line-chart">React workbench</a>.</p>
+        <p class="docs-note">Four stay <strong>library-free</strong> and are the ones a non-React binding can still render: the <strong>gauge</strong> and the <strong>bullet chart</strong> and <strong>heatmap</strong> below, plus the <a href="sparkline.html">sparkline</a>. 0.11's pure-SVG <code>.ds-chart</code>, <code>.ds-linechart</code>, <code>.ds-areachart</code>, <code>.ds-donut</code>, <code>.ds-piechart</code>, <code>.ds-stackedbar</code> and <code>.ds-barchart</code> classes were removed in beta.4; <a href="../../docs/migration/from-0.11.md">from-0.11.md</a> maps every one.</p>
       </header>
 
       <section class="docs-section">
@@ -88,8 +88,153 @@
       </section>
 
       <section class="docs-section">
+        <h2>Bullet chart</h2>
+        <p class="docs-note">The reading <code>.ds-meter</code>, <code>.ds-gauge</code> and <code>.ds-progress</code> cannot carry: an actual against <strong>a target and its qualitative bands</strong>. Three grid columns — label, track, figure — and the two outer ones are fixed widths read from <code>--ds-bullet-label</code> and <code>--ds-bullet-value</code>, because the primary use is a stack and intrinsic columns would leave every row starting at a different x. The <code>role="meter"</code> and the accessible name go on the track, and the target goes into <code>aria-valuetext</code>: it is geometry only, and invisible to a screen reader otherwise.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Measure · target tick · toned bands</span>
+            <button class="ds-button" data-copy-target="#c-bullet">Copy</button>
+          </header>
+          <div class="ds-example__preview">
+            <div class="ds-bullet-chart" style="--ds-bullet-label: 8rem; width: 100%; max-width: 28rem">
+              <div class="ds-bullet-chart-info">
+                <div class="ds-bullet-chart-label">New ARR</div>
+                <div class="ds-bullet-chart-caption">Q3 quota attainment</div>
+              </div>
+              <div class="ds-bullet-chart-track" role="meter" aria-label="New ARR"
+                   aria-valuenow="68" aria-valuemin="0" aria-valuemax="120"
+                   aria-valuetext="68%; target 85%">
+                <div class="ds-bullet-chart-band" aria-hidden="true" style="left: 0%; width: 50%; background-color: var(--ds-danger-bg)"></div>
+                <div class="ds-bullet-chart-band" aria-hidden="true" style="left: 50%; width: 20.8333%; background-color: var(--ds-warning-bg)"></div>
+                <div class="ds-bullet-chart-band" aria-hidden="true" style="left: 70.8333%; width: 29.1667%; background-color: var(--ds-success-bg)"></div>
+                <div class="ds-bullet-chart-measure" aria-hidden="true" style="width: 56.6667%"></div>
+                <div class="ds-bullet-chart-target" aria-hidden="true" style="left: 70.8333%"></div>
+              </div>
+              <div class="ds-bullet-chart-value">68%</div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-bullet">&lt;div class="ds-bullet-chart" style="--ds-bullet-label: 8rem"&gt;
+  &lt;div class="ds-bullet-chart-info"&gt;
+    &lt;div class="ds-bullet-chart-label"&gt;New ARR&lt;/div&gt;
+    &lt;div class="ds-bullet-chart-caption"&gt;Q3 quota attainment&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- role and name on the track: a name on the grid leaves the meter
+       unlabelled. The target lives in aria-valuetext, not just in the tick. --&gt;
+  &lt;div class="ds-bullet-chart-track" role="meter" aria-label="New ARR"
+       aria-valuenow="68" aria-valuemin="0" aria-valuemax="120"
+       aria-valuetext="68%; target 85%"&gt;
+    &lt;div class="ds-bullet-chart-band" aria-hidden="true"
+         style="left: 0%; width: 50%;
+                background-color: var(--ds-danger-bg)"&gt;&lt;/div&gt;
+    &lt;div class="ds-bullet-chart-band" aria-hidden="true"
+         style="left: 50%; width: 20.8333%;
+                background-color: var(--ds-warning-bg)"&gt;&lt;/div&gt;
+    &lt;div class="ds-bullet-chart-band" aria-hidden="true"
+         style="left: 70.8333%; width: 29.1667%;
+                background-color: var(--ds-success-bg)"&gt;&lt;/div&gt;
+    &lt;div class="ds-bullet-chart-measure" aria-hidden="true"
+         style="width: 56.6667%"&gt;&lt;/div&gt;
+    &lt;div class="ds-bullet-chart-target" aria-hidden="true"
+         style="left: 70.8333%"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="ds-bullet-chart-value"&gt;68%&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- React: the percentages are derived for you --&gt;
+&lt;BulletChart label="New ARR" caption="Q3 quota attainment"
+             value={68} target={85} max={120}
+             bands={[{ to: 60, tone: "danger" },
+                     { to: 85, tone: "warning" },
+                     { to: 120, tone: "success" }]}
+             formatValue={(n) =&gt; `${n}%`} /&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>Heatmap</h2>
+        <p class="docs-note">The only chart here that encodes magnitude as <strong>colour</strong> rather than position, which is what lets it scale to hundreds of cells. CSS grid and divs — the cell colour, size and the grid's track counts are inline because all three are derived from the data. The ramp is <code>--ds-heat-1</code> to <code>--ds-heat-5</code>, sequential and one hue: the categorical <code>--ds-chart-*</code> ramp read as a scale is the classic dataviz error. Colour being the only encoding, <strong>every cell carries its own accessible name</strong> with both axes and its value; an empty cell is a ring rather than a paler tint, because no reading is a different thing from a low one.</p>
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Sparse grid · step legend</span>
+            <button class="ds-button" data-copy-target="#c-heatmap">Copy</button>
+          </header>
+          <div class="ds-example__preview">
+            <div class="ds-heatmap">
+              <div class="ds-heatmap-scroll">
+                <div class="ds-heatmap-grid" style="grid-template-columns: auto repeat(5, 16px); gap: 3px">
+                  <div></div>
+                  <div class="ds-heatmap-grid-column">Mon</div>
+                  <div class="ds-heatmap-grid-column">Tue</div>
+                  <div class="ds-heatmap-grid-column">Wed</div>
+                  <div class="ds-heatmap-grid-column">Thu</div>
+                  <div class="ds-heatmap-grid-column">Fri</div>
+
+                  <div class="ds-heatmap-grid-row-label">auth</div>
+                  <div class="ds-heatmap-tile" role="img" aria-label="auth, Mon: 4" title="auth, Mon: 4" style="width: 16px; height: 16px; background-color: var(--ds-heat-2)"></div>
+                  <div class="ds-heatmap-tile" role="img" aria-label="auth, Tue: 11" title="auth, Tue: 11" style="width: 16px; height: 16px; background-color: var(--ds-heat-4)"></div>
+                  <div class="ds-heatmap-tile" role="img" aria-label="auth, Wed: no data" title="auth, Wed: no data" data-empty="" style="width: 16px; height: 16px; background-color: transparent"></div>
+                  <div class="ds-heatmap-tile" role="img" aria-label="auth, Thu: 2" title="auth, Thu: 2" style="width: 16px; height: 16px; background-color: var(--ds-heat-1)"></div>
+                  <div class="ds-heatmap-tile" role="img" aria-label="auth, Fri: 14" title="auth, Fri: 14" style="width: 16px; height: 16px; background-color: var(--ds-heat-5)"></div>
+
+                  <div class="ds-heatmap-grid-row-label">billing</div>
+                  <div class="ds-heatmap-tile" role="img" aria-label="billing, Mon: 0" title="billing, Mon: 0" style="width: 16px; height: 16px; background-color: var(--ds-heat-1)"></div>
+                  <div class="ds-heatmap-tile" role="img" aria-label="billing, Tue: 6" title="billing, Tue: 6" style="width: 16px; height: 16px; background-color: var(--ds-heat-3)"></div>
+                  <div class="ds-heatmap-tile" role="img" aria-label="billing, Wed: 8" title="billing, Wed: 8" style="width: 16px; height: 16px; background-color: var(--ds-heat-3)"></div>
+                  <div class="ds-heatmap-tile" role="img" aria-label="billing, Thu: 13" title="billing, Thu: 13" style="width: 16px; height: 16px; background-color: var(--ds-heat-5)"></div>
+                  <div class="ds-heatmap-tile" role="img" aria-label="billing, Fri: 9" title="billing, Fri: 9" style="width: 16px; height: 16px; background-color: var(--ds-heat-4)"></div>
+                </div>
+              </div>
+              <div class="ds-heatmap-legend">
+                <span>Less</span>
+                <span class="ds-heatmap-legend-swatch" aria-hidden="true" style="background-color: var(--ds-heat-1)"></span>
+                <span class="ds-heatmap-legend-swatch" aria-hidden="true" style="background-color: var(--ds-heat-2)"></span>
+                <span class="ds-heatmap-legend-swatch" aria-hidden="true" style="background-color: var(--ds-heat-3)"></span>
+                <span class="ds-heatmap-legend-swatch" aria-hidden="true" style="background-color: var(--ds-heat-4)"></span>
+                <span class="ds-heatmap-legend-swatch" aria-hidden="true" style="background-color: var(--ds-heat-5)"></span>
+                <span>More</span>
+              </div>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-heatmap">&lt;div class="ds-heatmap"&gt;
+  &lt;div class="ds-heatmap-scroll"&gt;
+    &lt;div class="ds-heatmap-grid"
+         style="grid-template-columns: auto repeat(5, 16px); gap: 3px"&gt;
+      &lt;div&gt;&lt;/div&gt;
+      &lt;div class="ds-heatmap-grid-column"&gt;Mon&lt;/div&gt;
+      &lt;!-- … one per column --&gt;
+
+      &lt;div class="ds-heatmap-grid-row-label"&gt;auth&lt;/div&gt;
+      &lt;!-- colour is the only encoding, so the cell carries both axes and
+           its value as its own accessible name --&gt;
+      &lt;div class="ds-heatmap-tile" role="img"
+           aria-label="auth, Mon: 4" title="auth, Mon: 4"
+           style="width: 16px; height: 16px;
+                  background-color: var(--ds-heat-2)"&gt;&lt;/div&gt;
+      &lt;!-- no reading: a ring, not a paler tint --&gt;
+      &lt;div class="ds-heatmap-tile" role="img" data-empty=""
+           aria-label="auth, Wed: no data" title="auth, Wed: no data"
+           style="width: 16px; height: 16px;
+                  background-color: transparent"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="ds-heatmap-legend"&gt;
+    &lt;span&gt;Less&lt;/span&gt;
+    &lt;span class="ds-heatmap-legend-swatch" aria-hidden="true"
+          style="background-color: var(--ds-heat-1)"&gt;&lt;/span&gt;
+    &lt;!-- … one per step --&gt;
+    &lt;span&gt;More&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- React: the steps, the week columns and the labels are all derived --&gt;
+&lt;Heatmap data={cells} /&gt;
+&lt;Heatmap layout="calendar" data={days} scale={{ max: 20 }} /&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
         <h2>The frame</h2>
-        <p class="docs-note">These three classes are what a recharts chart lands in, and the only chart classes a consumer writes by hand. <code>.ds-chart-container</code> is a 16/9 box; <code>--plot</code> swaps that for a fixed height and full width (the axis charts), <code>--square</code> for a 1:1 box (pie, donut), and both read <code>--ds-chart-height</code> — the knob that replaced the source's Tailwind height literals.</p>
+        <p class="docs-note">These three classes are what a recharts chart lands in, and the only chart classes a consumer writes by hand. <code>.ds-chart-container</code> is a 16/9 box; <code>--plot</code> swaps that for a fixed height and full width (the axis charts), <code>--square</code> for a 1:1 box (pie, donut, radar), and both read <code>--ds-chart-height</code> — the knob that replaced the source's Tailwind height literals. Three charts default that knob on their own root instead, because each needs vertical range the axis charts do not: <code>.ds-funnel-chart-root</code>, <code>.ds-treemap-root</code> and <code>.ds-scatter-chart-root</code>, all at 16rem.</p>
         <section class="ds-example">
           <header class="ds-example__bar">
             <span class="ds-label">Tooltip · legend</span>
@@ -146,13 +291,14 @@
 
         <section class="ds-example">
           <header class="ds-example__bar">
-            <span class="ds-label">The six React charts</span>
+            <span class="ds-label">The twelve React charts</span>
             <button class="ds-button" data-copy-target="#c-react-charts">Copy</button>
           </header>
           <pre class="ds-example__code"><code id="c-react-charts">// recharts is an optional peer dependency, like react:
 //   npm i recharts
 import {
   LineChart, AreaChart, BarChart, StackedBar, PieChart, DonutChart,
+  RadarChart, ComboChart, FunnelChart, ScatterChart, Treemap, WaterfallChart,
 } from "@diametral/design-system/react";
 
 const config = {
@@ -163,7 +309,21 @@ const config = {
 &lt;LineChart config={config} data={rows} xAxisKey="week" /&gt;
 &lt;BarChart config={config} data={rows} xAxisKey="week" max={300} horizontal /&gt;
 &lt;DonutChart config={config} data={rows} valueKey="gb" nameKey="bucket"
-            centerLabel="8.2 GB" centerCaption="of 10 GB" /&gt;</code></pre>
+            centerLabel="8.2 GB" centerCaption="of 10 GB" /&gt;
+
+// beta.5. Same config + data contract; each names the row fields it reads.
+&lt;ComboChart config={config} data={rows} xAxisKey="month"
+            series={[{ key: "revenue", type: "bar" },
+                     { key: "margin", type: "line", axis: "right" }]}
+            rightAxis={{ label: "Margin %" }} /&gt;
+&lt;FunnelChart data={rows} nameKey="stage" valueKey="users" /&gt;
+&lt;WaterfallChart data={rows} nameKey="step" valueKey="delta"
+                totalKeys={["Opening", "Closing"]} /&gt;
+&lt;ScatterChart config={config} data={rows} xKey="weight" yKey="bounce"
+              sizeKey="visits" xLabel="Page weight (KB)" /&gt;
+&lt;Treemap data={rows} /&gt;
+&lt;RadarChart config={config} data={rows} dimensionKey="capability"
+            domain={[0, 100]} /&gt;</code></pre>
         </section>
       </section>
     </main>
