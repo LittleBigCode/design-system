@@ -27,6 +27,34 @@
       "to": "--ds-chart-1",
       "batch": "0.3",
       "note": "Data series no longer read the themeable accent. Visually identical at the default theme (--ds-chart-1 is #ff2a00); a theme that overrode --ds-accent to recolour its charts must now override --ds-chart-*."
+    },
+    {
+      "kind": "export",
+      "from": "Wordmark ({ name, sub })",
+      "to": "Wordmark ({ variant, label, name, sub })",
+      "batch": "3",
+      "note": "The geometric construction 0.x drew — a circle, a square and a diagonal line, the brand's three elements as primitives — is replaced by the produced lockups, as two `currentColor` variants: `horizontal` (the full name) and `square` (the monogram). `name` and `sub` are unchanged and still render `.ds-wordmark__name` / `__sub`, but they no longer default: a bare <Wordmark /> is now the lockup alone, where it used to print the word \"Diametral\". A name beside the mark wants variant=\"square\" — the horizontal lockup already spells it. `.ds-wordmark__mark` still styles a hand-written svg; the React binding emits none. `assets/logo/diametral-mark.svg` still holds the geometric mark and has not been re-cut to match."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-wordmark, .ds-wordmark__mark, .ds-wordmark__name, .ds-wordmark__sub (in app-bar.css)",
+      "to": ".ds-wordmark, .ds-wordmark__mark, .ds-wordmark__name, .ds-wordmark__sub (in wordmark.css)",
+      "batch": "3",
+      "note": "File move only, no rename and no visual change — the four rules left app-bar.css for the new wordmark.css when the real lockup landed. Anyone importing css/diametral.css is unaffected; only a consumer cherry-picking css/components/app-bar.css has to add css/components/wordmark.css."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-button-group (in button-extras.css)",
+      "to": ".ds-button-group (in button-group.css)",
+      "batch": "3",
+      "note": "Replaced wholesale, same name. The seam no longer overlaps members with margin-left: -1px; it removes the losing border with border-inline-start-width, which is identical in LTR and correct in RTL. Every selector matches both the new parts' data-slot and .ds-button/.ds-input/.ds-select, so existing markup keeps joining. New: [data-orientation=\"vertical\"], .ds-button-group-text and .ds-button-group-separator."
+    },
+    {
+      "kind": "export",
+      "from": "IconButton ({ size: \"sm\" | \"lg\" })",
+      "to": "IconButton ({ size: \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | \"xs\" | \"sm\" | \"lg\" })",
+      "batch": "3",
+      "note": "Additive, not a rename: `sm` and `lg` keep working, and `icon-` is simply stripped, so the source's four square spellings resolve onto the same boxes. `icon-xs` (24px, .ds-button--xs) is new. `label` was already required on both sides — the ledger's \"incumbent is a class-applier\" premise does not hold here, the same way batch-plan §1.1 found for stat-card. Moved from react/components/ButtonExtras.tsx to react/components/icon-button.tsx; the barrel import is unchanged."
     }
   ],
   "notes": [
@@ -77,6 +105,24 @@
       "subject": "batch 2 dedupe exceptions",
       "batch": "2",
       "note": "Eight Tailwind literals kept as dedupe exceptions upstream are resolved into real declarations plus a modifier class for each consumer override: .ds-toc--static, .ds-toc-label--tight, .ds-toc-list--tight, .ds-toc-link--current, .ds-bubble-group--loose, .ds-message-scroller-content--tight, .ds-separator--auto, and resizable's h-full/w-full which become the group's own defaults. All are net-new names in a clean namespace, so no 0.x class is renamed."
+    },
+    {
+      "kind": "export",
+      "subject": "Editable, FieldArray, IconButton",
+      "batch": "3",
+      "note": "The source composes these onto its own six-variant Button; that component holds until batch 7, so they compose onto this repo's Button and IconButton and `variant` accepts only `primary` and `danger`. Editable's three affordances gain a required accessible name in the process, since IconButton cannot ship without `label`. Batch 7 re-wires them back and owes the rows."
+    },
+    {
+      "kind": "export",
+      "subject": "PhoneInput",
+      "batch": "3",
+      "note": "The source composes a five-part Base UI select (Select/SelectTrigger/SelectContent/SelectItem/SelectValue); that component holds until batch 7, so the five parts collapse onto this repo's native Select, which takes its options as a prop. Batch 7 re-wires it back and owes the row. The collapse is also what dissolves the batch's largest dedupe exception — nothing is literal on either side any more."
+    },
+    {
+      "kind": "class",
+      "subject": "carousel, input-otp",
+      "batch": "3",
+      "note": "Stylesheet only: embla-carousel-react and input-otp are not acquired, so .ds-carousel-* and .ds-input-otp-* ship with no React binding, as resizable and message-scroller did in batch 2. No export is added or removed; a binding that renders the documented markup gets the look."
     }
   ]
 }

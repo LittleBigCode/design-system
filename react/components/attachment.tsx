@@ -6,7 +6,7 @@ import { useRender } from "@base-ui/react/use-render"
 
 import { cx } from "../lib/cx.js"
 import { variants } from "../lib/variants.js"
-import { IconButton } from "./ButtonExtras.js"
+import { IconButton } from "./icon-button.js"
 
 /* Attachment — a file chip: media thumbnail or icon, title, description, and
    actions, in a horizontal or vertical card that reports upload progress

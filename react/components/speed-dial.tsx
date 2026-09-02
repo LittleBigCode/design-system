@@ -4,7 +4,7 @@ import * as React from "react"
 import { Menu as MenuPrimitive } from "@base-ui/react/menu"
 import { XIcon } from "@phosphor-icons/react"
 
-import { IconButton } from "./ButtonExtras.js"
+import { IconButton } from "./icon-button.js"
 import { bcx } from "../lib/baseClass.js"
 import { cx } from "../lib/cx.js"
 

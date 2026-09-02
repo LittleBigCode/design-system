@@ -133,6 +133,26 @@
 @import url("./components/toc.css");
 @import url("./components/theme-switcher.css");
 
+/* Batch 3 — net-new form controls and primitives (1.0.0-beta.3)
+   button-group.css trails button-extras.css, whose four-rule .ds-button-group
+   block it replaces; wordmark.css trails app-bar.css, out of which its parts
+   moved. label.css leads the controls: toggle, meter and the two
+   stylesheet-only ones sit beside a label, never inside it. phone-input.css
+   trails input.css and select.css — it borders the group and un-borders the
+   two members, so its deltas have to win. */
+@import url("./components/label.css");
+@import url("./components/form.css");
+@import url("./components/button-group.css");
+@import url("./components/wordmark.css");
+@import url("./components/toggle.css");
+@import url("./components/meter.css");
+@import url("./components/relative-time.css");
+@import url("./components/editable.css");
+@import url("./components/field-array.css");
+@import url("./components/phone-input.css");
+@import url("./components/carousel.css");
+@import url("./components/input-otp.css");
+
 /* Alternate themes — scoped to [data-theme="dark"|"sepia"], inert until a theme
    is set on a root element (e.g. by ConsoleLayout's Light/Dark/Sepia switcher). */
 @import url("./themes/dark.css");

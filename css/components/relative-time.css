@@ -1,0 +1,11 @@
+/* ============================================================================
+   Relative time — .ds-relative-time
+   ----------------------------------------------------------------------------
+   A `<time>` whose text is a locale-aware "3 hours ago" that advances while
+   mounted. Tabular figures are the whole stylesheet: the text repaints on a
+   timer, and proportional digits make the line jitter as "9 minutes ago"
+   becomes "10 minutes ago" beside anything laid out in a column.
+   ============================================================================ */
+.ds-relative-time {
+  font-variant-numeric: tabular-nums;
+}

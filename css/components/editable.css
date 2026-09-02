@@ -1,0 +1,41 @@
+/* ============================================================================
+   Editable — .ds-editable
+   ----------------------------------------------------------------------------
+   Click-to-edit text in place: a preview with a pencil beside it, swapped for
+   an input plus confirm/cancel while editing. The pencil is invisible until
+   the row is hovered or the button itself is focused, so a dense list is not a
+   wall of icons — and keyboard reach is preserved because `:focus-visible`
+   reveals it as surely as hover does.
+
+   The input is shortened to 32px against `.ds-input`'s own height. Upstream
+   that was a literal `h-8` utility on the Input, which stopped winning once
+   `.ds-input` baked its height in — Tailwind's generated utilities land in an
+   earlier layer than component CSS. Targeting the slot sidesteps the whole
+   question, and it is the one selector here that has to be attribute-keyed:
+   the height belongs to Editable's input, not to every `.ds-input`.
+   ============================================================================ */
+.ds-editable {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+[data-slot="editable-preview"][data-empty] {
+  color: var(--ds-ink-faint);
+}
+
+[data-slot="editable-input"] {
+  height: 32px;
+}
+
+.ds-editable-edit-button {
+  opacity: 0;
+  transition: opacity var(--ds-transition);
+}
+.ds-editable:hover .ds-editable-edit-button,
+.ds-editable-edit-button:focus-visible {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-editable-edit-button { transition: none; }
+}

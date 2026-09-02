@@ -34,12 +34,20 @@ Each component's **binding tier** is recorded in its
 behaviour parity is React-only and named as such.
 
 A handful of components go one step further and ship **no binding at all** — the stylesheet
-is the entire contract, and any markup rendering its `.ds-*` classes gets the look. Since
-`1.0.0-beta.2` these are `resizable` and `message-scroller`: each one's React binding
-existed only to wrap a narrow third-party dependency (`react-resizable-panels`,
-`@shadcn/react`), and acquiring a dependency to re-export its behaviour is the trade ADR
-0001 declines. Their docs pages print no import line and say so; batch 3 adds `carousel`
-and `input-otp` on the same rule.
+is the entire contract, and any markup rendering its `.ds-*` classes gets the look. Each
+one's React binding existed only to wrap a narrow third-party dependency, and acquiring a
+dependency to re-export its behaviour is the trade ADR 0001 declines. Their docs pages
+print no import line and say so, and their registry entries declare `exports: []`.
+
+| component | since | the dependency, and what it was buying |
+| --- | --- | --- |
+| `resizable` | `1.0.0-beta.2` | `react-resizable-panels` — the pointer maths, keyboard resize and persisted layout |
+| `message-scroller` | `1.0.0-beta.2` | `@shadcn/react` — the stick-to-bottom scroll behaviour |
+| `carousel` | `1.0.0-beta.3` | `embla-carousel-react` — drag, snap points and autoplay |
+| `input-otp` | `1.0.0-beta.3` | `input-otp` — the hidden-input trick that makes a row of boxes behave as one field, so paste, password managers and OS one-time-code suggestion keep working |
+
+In each case the dependency *is* the component. What the stylesheet cannot supply is named on
+the component's page, so a consumer writing their own binding knows exactly what they owe.
 
 ## How it works
 

@@ -181,22 +181,21 @@ export function usePlaygroundControls(slug: string) {
           const value = extraValue(control)
 
           if (control.type === "boolean") {
+            // The name is the Switch's own children, not a sibling <label>
+            // pointing at it: `.ds-switch` *is* a <label> wrapping its input,
+            // and it takes no `id`, so the old `htmlFor={`pg-${prop}`}` pointed
+            // at nothing and every boolean control was an unnamed checkbox to
+            // axe. `flex-row-reverse` keeps the name on the left and the track
+            // on the right, which is the layout the sibling gave.
             return (
-              <div
+              <Switch
                 key={control.prop}
-                className="flex items-center justify-between gap-3"
+                className="w-full flex-row-reverse justify-between gap-3 font-mono text-xs"
+                checked={value === true}
+                onChange={(checked) => set(control.prop, checked)}
               >
-                <label
-                  htmlFor={`pg-${control.prop}`}
-                  className="font-mono text-xs text-muted-foreground"
-                >
-                  {label}
-                </label>
-                <Switch
-                  checked={value === true}
-                  onChange={(checked) => set(control.prop, checked)}
-                />
-              </div>
+                {label}
+              </Switch>
             )
           }
 

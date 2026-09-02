@@ -19,7 +19,9 @@
 .ds-title--md  { font-size: var(--ds-text-lg); letter-spacing: -0.4px; }    /* 22 */
 .ds-title--sm  { font-size: var(--ds-text-md); letter-spacing: -0.2px; }    /* 19 */
 
-/* Uppercase label — the signature small-caps label treatment. */
+/* Uppercase label — the signature small-caps label treatment. These three type
+   properties are the published contract: components/label.css deliberately does
+   not restate them, and adds only the flex row and the two state overrides. */
 .ds-label {
   font-family: var(--ds-font-sans);
   font-size: var(--ds-text-xs);

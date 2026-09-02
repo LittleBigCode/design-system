@@ -2,7 +2,21 @@
 
 # Migrating from 0.11 to 1.0
 
-The v1 absorption renames 2 consumer-visible thing(s). Everything else is additive.
+The v1 absorption renames 6 consumer-visible thing(s). Everything else is additive.
+
+### Exports
+
+| 0.11 | 1.0 | batch | notes |
+| --- | --- | --- | --- |
+| `Wordmark ({ name, sub })` | `Wordmark ({ variant, label, name, sub })` | 3 | The geometric construction 0.x drew — a circle, a square and a diagonal line, the brand's three elements as primitives — is replaced by the produced lockups, as two `currentColor` variants: `horizontal` (the full name) and `square` (the monogram). `name` and `sub` are unchanged and still render `.ds-wordmark__name` / `__sub`, but they no longer default: a bare <Wordmark /> is now the lockup alone, where it used to print the word "Diametral". A name beside the mark wants variant="square" — the horizontal lockup already spells it. `.ds-wordmark__mark` still styles a hand-written svg; the React binding emits none. `assets/logo/diametral-mark.svg` still holds the geometric mark and has not been re-cut to match. |
+| `IconButton ({ size: "sm" | "lg" })` | `IconButton ({ size: "icon" | "icon-xs" | "icon-sm" | "icon-lg" | "xs" | "sm" | "lg" })` | 3 | Additive, not a rename: `sm` and `lg` keep working, and `icon-` is simply stripped, so the source's four square spellings resolve onto the same boxes. `icon-xs` (24px, .ds-button--xs) is new. `label` was already required on both sides — the ledger's "incumbent is a class-applier" premise does not hold here, the same way batch-plan §1.1 found for stat-card. Moved from react/components/ButtonExtras.tsx to react/components/icon-button.tsx; the barrel import is unchanged. |
+
+### Classes
+
+| 0.11 | 1.0 | batch | notes |
+| --- | --- | --- | --- |
+| `.ds-wordmark, .ds-wordmark__mark, .ds-wordmark__name, .ds-wordmark__sub (in app-bar.css)` | `.ds-wordmark, .ds-wordmark__mark, .ds-wordmark__name, .ds-wordmark__sub (in wordmark.css)` | 3 | File move only, no rename and no visual change — the four rules left app-bar.css for the new wordmark.css when the real lockup landed. Anyone importing css/diametral.css is unaffected; only a consumer cherry-picking css/components/app-bar.css has to add css/components/wordmark.css. |
+| `.ds-button-group (in button-extras.css)` | `.ds-button-group (in button-group.css)` | 3 | Replaced wholesale, same name. The seam no longer overlaps members with margin-left: -1px; it removes the losing border with border-inline-start-width, which is identical in LTR and correct in RTL. Every selector matches both the new parts' data-slot and .ds-button/.ds-input/.ds-select, so existing markup keeps joining. New: [data-orientation="vertical"], .ds-button-group-text and .ds-button-group-separator. |
 
 ### Tokens
 

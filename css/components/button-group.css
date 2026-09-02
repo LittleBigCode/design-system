@@ -1,0 +1,111 @@
+/* ============================================================================
+   Button group — .ds-button-group
+   ----------------------------------------------------------------------------
+   Buttons joined into one control: a segmented action, a toolbar cluster, a
+   button with an attached input or select. The source's version replaces this
+   package's four-rule `.ds-button-group` block, which lived in
+   `button-extras.css` and is deleted there — the class name is unchanged, and
+   the published contract (wrap buttons, they join) is unchanged with it.
+
+   The edge collapsing is the substance. Where the incumbent overlapped members
+   with `margin-left: -1px`, this removes the losing border outright with
+   `border-inline-start-width`, which is the same result in LTR and the correct
+   one in RTL. Every rule that keys on `[data-slot]` — the vocabulary the
+   absorbed parts carry — also names `.ds-button`, `.ds-input` and `.ds-select`,
+   so the markup in `examples/` and `docs/components.md`, which has no
+   `data-slot` at all, keeps joining. Both spellings, one mechanism.
+
+   One dedupe exception is resolved, and by batch 2 rather than here:
+   `ButtonGroupSeparator` kept `bg-input data-horizontal:w-auto
+   data-vertical:h-auto` literal so tailwind-merge could dedupe it against
+   `Separator`'s own literal defaults. `separator.css` landed the sizing half as
+   `.ds-separator--auto` when it arrived, and the colour half needs nothing —
+   `bg-input` and `bg-border` both collapse onto --ds-rule here, which is what
+   `.ds-separator` already paints. So the TSX composes the modifier and carries
+   no literal.
+
+   Two Tailwind escape hatches go: `:not([class*="w-"])` on the select trigger
+   and `svg:not([class*="size-"])` on the text part. There is no `w-*` or
+   `size-*` utility to escape here, and each negation silently skipped any
+   element whose class merely contained the fragment.
+   ============================================================================ */
+.ds-button-group {
+  display: flex;
+  width: fit-content;
+  align-items: stretch;
+}
+/* A focused member lifts above its neighbours so its outline is not clipped by
+   the next button's edge. */
+.ds-button-group > *:focus-visible {
+  position: relative;
+  z-index: 1;
+}
+/* A group of groups is spaced, not joined — that is what nesting means here. */
+.ds-button-group:has(> [data-slot="button-group"]) {
+  gap: var(--ds-space-2);
+}
+.ds-button-group > [data-slot="input"],
+.ds-button-group > .ds-input {
+  padding-inline: var(--ds-space-4);
+}
+.ds-button-group > [data-slot="select-trigger"],
+.ds-button-group > .ds-select {
+  width: fit-content;
+}
+.ds-button-group > input {
+  flex: 1;
+}
+
+/* The shared edge. A separator stands in for it, so the member before one
+   drops its own end border too; without that the two stack into 2px. */
+.ds-button-group[data-orientation="horizontal"] > [data-slot] ~ [data-slot],
+.ds-button-group[data-orientation="horizontal"] > .ds-button ~ .ds-button {
+  border-inline-start-width: 0;
+}
+.ds-button-group[data-orientation="horizontal"]
+  > [data-slot]:has(+ [data-slot="button-group-separator"]) {
+  border-inline-end-width: 0;
+}
+.ds-button-group[data-orientation="vertical"] {
+  flex-direction: column;
+}
+.ds-button-group[data-orientation="vertical"] > [data-slot] ~ [data-slot],
+.ds-button-group[data-orientation="vertical"] > .ds-button ~ .ds-button {
+  border-top-width: 0;
+}
+.ds-button-group[data-orientation="vertical"]
+  > [data-slot]:has(+ [data-slot="button-group-separator"]) {
+  border-bottom-width: 0;
+}
+
+.ds-button-group-separator {
+  position: relative;
+  align-self: stretch;
+}
+
+.ds-button-group-text {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+  border: 1px solid var(--ds-rule);
+  border-radius: var(--ds-radius-none);
+  background: transparent;
+  padding-inline: var(--ds-space-4);
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-xs);
+  font-weight: 600;
+  color: var(--ds-ink);
+}
+/* Boxed by default so it closes the outline next to bordered buttons; an input
+   sibling is underline-only, so match that instead and the two share one
+   continuous rule. */
+.ds-button-group:has(> [data-slot="input"]) .ds-button-group-text,
+.ds-button-group:has(> .ds-input) .ds-button-group-text {
+  border-color: transparent;
+  border-bottom-color: var(--ds-rule);
+}
+.ds-button-group-text svg {
+  pointer-events: none;
+  width: 14px;
+  height: 14px;
+}

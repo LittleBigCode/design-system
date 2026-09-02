@@ -12,7 +12,7 @@ import {
 
 import { cx } from "../lib/cx.js"
 import { Button, Segmented } from "../index.js"
-import { IconButton } from "./ButtonExtras.js"
+import { IconButton } from "./icon-button.js"
 
 /* ThemeSwitcher — three modes in one of three footprints.
 
