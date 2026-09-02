@@ -1,7 +1,7 @@
 {
   "name": "@diametral/design-system",
-  "version": "1.0.0-beta.3",
-  "description": "Diametral Design System \u2014 a minimal, flat, buildless CSS + tokens + Web Components design system. Welcome to (the real).",
+  "version": "1.0.0-beta.4",
+  "description": "Diametral Design System — a minimal, flat, buildless CSS + tokens + Web Components design system. Welcome to (the real).",
   "license": "MIT",
   "type": "module",
   "keywords": [
@@ -93,6 +93,7 @@
     "@playwright/test": "^1.48.0",
     "@types/react": "^18.3.31",
     "@types/react-dom": "^18.3.7",
+    "recharts": "^3.8.0",
     "typescript": "~5.7"
   },
   "engines": {
@@ -100,13 +101,17 @@
   },
   "peerDependencies": {
     "react": ">=18",
-    "react-dom": ">=18"
+    "react-dom": ">=18",
+    "recharts": ">=3"
   },
   "peerDependenciesMeta": {
     "react": {
       "optional": true
     },
     "react-dom": {
+      "optional": true
+    },
+    "recharts": {
       "optional": true
     }
   },

@@ -175,8 +175,9 @@ export * from "./components/AppShell.js";
 export * from "./components/Wizard.js";
 export * from "./components/Drawer.js";
 export * from "./components/CommandPalette.js";
-export * from "./components/Sparkline.js";
-export * from "./components/BarChart.js";
+/* The eight 0.11 charts moved to the flat-kebab modules in the batch 4 block
+   below, where recharts replaced their hand-rolled SVG and CSS-flex marks.
+   `GaugeChart` is now `Gauge`; the other seven keep their names. */
 export * from "./components/StatCard.js";
 export * from "./components/Rating.js";
 export * from "./components/DateRangePicker.js";
@@ -186,14 +187,8 @@ export * from "./components/Kbd.js";
 export * from "./components/MultiSelect.js";
 export * from "./components/TimePicker.js";
 export * from "./components/DateTimePicker.js";
-export * from "./components/LineChart.js";
-export * from "./components/AreaChart.js";
-export * from "./components/DonutChart.js";
 export * from "./components/Calendar.js";
 export * from "./components/Agenda.js";
-export * from "./components/PieChart.js";
-export * from "./components/GaugeChart.js";
-export * from "./components/StackedBar.js";
 export * from "./components/Kanban.js";
 export * from "./components/PageHeader.js";
 export * from "./components/ConsoleLayout.js";
@@ -438,8 +433,6 @@ export * from "./components/AppShell.js";
 export * from "./components/Wizard.js";
 export * from "./components/Drawer.js";
 export * from "./components/CommandPalette.js";
-export * from "./components/Sparkline.js";
-export * from "./components/BarChart.js";
 export * from "./components/StatCard.js";
 export * from "./components/Rating.js";
 export * from "./components/DateRangePicker.js";
@@ -449,14 +442,8 @@ export * from "./components/Kbd.js";
 export * from "./components/MultiSelect.js";
 export * from "./components/TimePicker.js";
 export * from "./components/DateTimePicker.js";
-export * from "./components/LineChart.js";
-export * from "./components/AreaChart.js";
-export * from "./components/DonutChart.js";
 export * from "./components/Calendar.js";
 export * from "./components/Agenda.js";
-export * from "./components/PieChart.js";
-export * from "./components/GaugeChart.js";
-export * from "./components/StackedBar.js";
 export * from "./components/Kanban.js";
 export * from "./components/PageHeader.js";
 export * from "./components/ConsoleLayout.js";
@@ -510,6 +497,23 @@ export * from "./components/phone-input.js";
 export * from "./components/collapsible.js";
 export * from "./components/direction.js";
 export * from "./hooks/useControllableValue.js";
+
+/* Batch 4 — chart substrate and replacement charts (1.0.0-beta.4)
+   `chart` is the substrate the six finished wrappers compose, so it leads. The
+   axis charts are recharts-bound and React-only; `gauge` and `sparkline` stay
+   library-free, so their markup is reproducible by any binding. recharts is a
+   substrate dependency from here on — batch 5's eight net-new charts add no
+   dependency of their own. */
+export * from "./components/chart.js";
+export * from "./components/line-chart.js";
+export * from "./components/area-chart.js";
+export * from "./components/bar-chart.js";
+export * from "./components/stacked-bar.js";
+export * from "./components/pie-chart.js";
+export * from "./components/donut-chart.js";
+export * from "./components/gauge.js";
+export * from "./components/sparkline.js";
+export * from "./lib/chart-series.js";
 
 /* Types several modules re-declare. Naming the canonical module here is what
    keeps `export *` unambiguous. */

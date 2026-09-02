@@ -75,7 +75,6 @@
 @import url("./components/drawer.css");
 @import url("./components/command-palette.css");
 @import url("./components/sparkline.css");
-@import url("./components/bar-chart.css");
 @import url("./components/stat-card.css");
 @import url("./components/rating.css");
 @import url("./components/date-range.css");
@@ -88,8 +87,8 @@
 @import url("./components/time-picker.css");
 @import url("./components/date-time.css");
 
-/* Wave 5 — charts, calendar, agenda */
-@import url("./components/charts.css");
+/* Wave 5 — calendar, agenda (charts.css merged into components/chart.css in
+   1.0.0-beta.4) */
 @import url("./components/calendar-view.css");
 @import url("./components/agenda.css");
 
@@ -152,6 +151,19 @@
 @import url("./components/phone-input.css");
 @import url("./components/carousel.css");
 @import url("./components/input-otp.css");
+
+/* Batch 4 — chart substrate and replacement charts (1.0.0-beta.4)
+   chart.css is the substrate: it replaced 0.11's charts.css and bar-chart.css,
+   and every file below it styles what the substrate cannot reach. The four
+   last three files are container modifiers or centring, so they have to load
+   after .ds-chart-container is defined. gauge.css is new here because 0.11 kept
+   the gauge inside charts.css; sparkline.css, the other library-free chart, was
+   already its own file and stays where Wave 3 put it. */
+@import url("./components/chart.css");
+@import url("./components/gauge.css");
+@import url("./components/stacked-bar.css");
+@import url("./components/pie-chart.css");
+@import url("./components/donut-chart.css");
 
 /* Alternate themes — scoped to [data-theme="dark"|"sepia"], inert until a theme
    is set on a root element (e.g. by ConsoleLayout's Light/Dark/Sepia switcher). */

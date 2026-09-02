@@ -734,10 +734,10 @@
             <div class="ds-stat__delta is-up">12%</div>
             <div class="ds-stat__spark">
               <span class="ds-sparkline" style="color: var(--ds-success)">
-                <svg class="ds-sparkline__svg" width="160" height="32" viewBox="0 0 160 32" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-                  <path class="ds-sparkline__area" d="M2,30 L2,26 33.6,22 65.2,24 96.8,14 128.4,10 158,4 L158,30 Z" />
-                  <polyline class="ds-sparkline__line" points="2,26 33.6,22 65.2,24 96.8,14 128.4,10 158,4" />
-                  <circle class="ds-sparkline__dot" cx="158" cy="4" r="2" />
+                <svg class="ds-sparkline-svg" width="160" height="32" viewBox="0 0 160 32" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                  <path class="ds-sparkline-area" d="M2,30 L2,26 33.6,22 65.2,24 96.8,14 128.4,10 158,4 L158,30 Z" />
+                  <polyline class="ds-sparkline-line" points="2,26 33.6,22 65.2,24 96.8,14 128.4,10 158,4" />
+                  <circle class="ds-sparkline-dot" cx="158" cy="4" r="2" />
                 </svg>
               </span>
             </div>
@@ -754,66 +754,49 @@
         <h2>Sparkline</h2>
         <div style="display:flex;flex-wrap:wrap;gap:32px;align-items:center">
           <span class="ds-sparkline">
-            <svg class="ds-sparkline__svg" width="120" height="32" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-              <polyline class="ds-sparkline__line" points="2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2" />
+            <svg class="ds-sparkline-svg" width="120" height="32" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+              <polyline class="ds-sparkline-line" points="2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2" />
             </svg>
           </span>
           <span class="ds-sparkline">
-            <svg class="ds-sparkline__svg" width="120" height="32" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-              <path class="ds-sparkline__area" d="M2,30 L2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2 L118,30 Z" />
-              <polyline class="ds-sparkline__line" points="2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2" />
-              <circle class="ds-sparkline__dot" cx="118" cy="2" r="2" />
+            <svg class="ds-sparkline-svg" width="120" height="32" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+              <path class="ds-sparkline-area" d="M2,30 L2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2 L118,30 Z" />
+              <polyline class="ds-sparkline-line" points="2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2" />
+              <circle class="ds-sparkline-dot" cx="118" cy="2" r="2" />
             </svg>
           </span>
           <span class="ds-sparkline" style="color: var(--ds-success)">
-            <svg class="ds-sparkline__svg" width="120" height="32" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-              <polyline class="ds-sparkline__line" points="2,28 25.6,22 49.2,24 72.8,14 96.4,10 118,4" />
+            <svg class="ds-sparkline-svg" width="120" height="32" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+              <polyline class="ds-sparkline-line" points="2,28 25.6,22 49.2,24 72.8,14 96.4,10 118,4" />
             </svg>
           </span>
         </div>
       </section>
 
       <section class="docs-section">
-        <h2>Bar chart</h2>
+        <h2>Gauge</h2>
+        <p class="docs-note">The bar, line, area, pie, donut and stacked-bar charts became
+          React-only in 1.0.0-beta.4, when recharts replaced their hand-drawn marks: their classes
+          are the plotting frame, not the marks. Each one is documented in the React workbench —
+          <a href="../react-workbench/docs/bar-chart">/react-workbench/docs/bar-chart</a> and its
+          siblings. The gauge and the sparkline above it stay library-free, so both are still
+          plain markup.</p>
         <div style="display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start">
-          <div class="ds-barchart" role="img" aria-label="Status by region" style="max-width:320px">
-            <div class="ds-barchart__col">
-              <span class="ds-barchart__label">EMEA</span>
-              <div class="ds-barchart__track"><div class="ds-barchart__bar is-success" style="height:80%"></div></div>
-              <span class="ds-barchart__value">80</span>
-            </div>
-            <div class="ds-barchart__col">
-              <span class="ds-barchart__label">AMER</span>
-              <div class="ds-barchart__track"><div class="ds-barchart__bar is-warning" style="height:55%"></div></div>
-              <span class="ds-barchart__value">55</span>
-            </div>
-            <div class="ds-barchart__col">
-              <span class="ds-barchart__label">APAC</span>
-              <div class="ds-barchart__track"><div class="ds-barchart__bar is-danger" style="height:30%"></div></div>
-              <span class="ds-barchart__value">30</span>
-            </div>
-            <div class="ds-barchart__col">
-              <span class="ds-barchart__label">LATAM</span>
-              <div class="ds-barchart__track"><div class="ds-barchart__bar" style="height:65%"></div></div>
-              <span class="ds-barchart__value">65</span>
-            </div>
+          <div class="ds-gauge" role="img" aria-label="Capacity: 68 of 100">
+            <svg class="ds-gauge-svg" width="180" height="180" viewBox="0 0 180 180" aria-hidden="true" focusable="false">
+              <path class="ds-gauge-track" d="M 24.02,148 A 82,82 0 1 1 155.98,148" fill="none" stroke-width="16"></path>
+              <path class="ds-gauge-value" d="M 24.02,148 A 82,82 0 1 1 155.98,148" fill="none" stroke-width="16" stroke-dasharray="262.9 386.6"></path>
+              <text class="ds-gauge-center" x="90" y="86.4" font-size="43.2" dominant-baseline="central">68</text>
+              <text class="ds-gauge-label" x="90" y="122.4" dominant-baseline="central">Capacity</text>
+            </svg>
           </div>
-          <div class="ds-barchart ds-barchart--horizontal" role="img" aria-label="Spend by team" style="max-width:360px">
-            <div class="ds-barchart__col">
-              <span class="ds-barchart__label">Design</span>
-              <div class="ds-barchart__track"><div class="ds-barchart__bar" style="width:72%"></div></div>
-              <span class="ds-barchart__value">72</span>
-            </div>
-            <div class="ds-barchart__col">
-              <span class="ds-barchart__label">Engineering</span>
-              <div class="ds-barchart__track"><div class="ds-barchart__bar" style="width:100%"></div></div>
-              <span class="ds-barchart__value">98</span>
-            </div>
-            <div class="ds-barchart__col">
-              <span class="ds-barchart__label">Sales</span>
-              <div class="ds-barchart__track"><div class="ds-barchart__bar is-warning" style="width:44%"></div></div>
-              <span class="ds-barchart__value">44</span>
-            </div>
+          <div class="ds-gauge" role="img" aria-label="Error budget: 92 of 120">
+            <svg class="ds-gauge-svg" width="180" height="180" viewBox="0 0 180 180" aria-hidden="true" focusable="false">
+              <path class="ds-gauge-track" d="M 24.02,148 A 82,82 0 1 1 155.98,148" fill="none" stroke-width="16"></path>
+              <path class="ds-gauge-value" d="M 24.02,148 A 82,82 0 1 1 155.98,148" fill="none" stroke-width="16" stroke-dasharray="296.4 386.6" style="stroke: var(--ds-warning)"></path>
+              <text class="ds-gauge-center" x="90" y="86.4" font-size="43.2" dominant-baseline="central">92</text>
+              <text class="ds-gauge-label" x="90" y="122.4" dominant-baseline="central">Error budget</text>
+            </svg>
           </div>
         </div>
       </section>

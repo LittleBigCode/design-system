@@ -30,8 +30,16 @@ export default defineConfig({
      * them as optional peers. Vite then substitutes its optional-peer stub and
      * `createPortal` silently disappears from ToastProvider, Drawer and
      * CommandPalette. Deduping pins both to this app's copies.
+     *
+     * `recharts` joins the list for a sharper version of the same failure: the
+     * /docs/chart demos import `Bar`, `XAxis` and friends themselves and hand
+     * them to the package's `ChartContainer`, so two copies put the children
+     * and the container on different recharts contexts and the plot renders
+     * empty, with no error. tests/chart-marks.spec.ts is what catches it. The
+     * package declares recharts an optional peer for the same reason: a chart's
+     * children are written by the consumer, so there can only be one copy.
      */
-    dedupe: ["react", "react-dom"],
+    dedupe: ["react", "react-dom", "recharts"],
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },

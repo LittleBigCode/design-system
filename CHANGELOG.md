@@ -4,6 +4,129 @@ All notable changes to the Diametral Design System are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/), and the project
 adheres to [Semantic Versioning](https://semver.org/) — see [docs/versioning.md](docs/versioning.md).
 
+## [1.0.0-beta.4] — 2026-09-02
+
+The chart substrate and the six charts that replace hand-drawn marks. This is the
+batch that buys `recharts` — as an *optional peer*, the way `react` is — and the
+one where two of this package's stylesheets are deleted rather than added to.
+Published on the `next` dist-tag — `latest` stays at 0.11.0 for the whole migration.
+
+### Added
+- **`Chart`, the substrate** — `ChartContainer`, `ChartTooltip(Content)`,
+  `ChartLegend(Content)` and `ChartStyle`. It is what every chart in this batch
+  and the next composes: a responsive plotting box, one place to name and colour
+  a series (`config`), and the two pieces recharts leaves to a design system.
+  It lands first even though its stylesheet is a replacement rather than an
+  addition — dependency beats tier, because eight more charts import it in
+  beta.5.
+- **`Gauge`** — 0.11's `GaugeChart` under the source's shorter name, with every
+  prop intact. Library-free, and now the only chart besides `Sparkline` that a
+  non-React binding can render: two arc paths and two text nodes.
+- **`react/lib/chart-series.ts`** — the six-colour ramp, the ident-safe
+  `--color-<key>` naming and the per-slice colouring, as one module. 0.11 copied
+  its `SERIES_COLORS` array into each of eight chart files.
+- **`--ds-chart-height`** — the knob that replaced the source's Tailwind height
+  literals. `.ds-chart-container` is 16/9; `--plot` swaps that for a fixed
+  height and full width (the axis charts) and `--square` for a 1:1 box (pie,
+  donut), both reading the variable.
+- **`tests/chart-marks.spec.ts`**, in `site/` — the spec `playwright.config.ts`
+  has cited since batch 0.1 and that did not exist. See **Fixed**.
+
+### Changed
+- **The chart merge: `charts.css` and `bar-chart.css` are deleted**, and the
+  source's `chart.css` lands in their place, with `gauge.css`, `stacked-bar.css`,
+  `pie-chart.css` and `donut-chart.css` beside it. The consequence is the batch's
+  headline: **the marks are recharts nodes now, so line, area, bar, stacked bar,
+  pie and donut are React-only.** There is no static markup that reproduces
+  them and no class per mark. What the stylesheet owns is the frame — the box,
+  the tooltip, the legend — plus the descendant rules that repaint recharts'
+  hard-coded `#ccc` gridlines and `#fff` outlines onto `--ds-*` tokens in both
+  themes. 0.11's `.ds-chart`, `.ds-linechart`, `.ds-areachart`, `.ds-donut`,
+  `.ds-piechart`, `.ds-stackedbar` and `.ds-barchart` families are gone; every
+  one is mapped in [migration/from-0.11.md](docs/migration/from-0.11.md).
+- **Six charts replaced**, each an incumbent the react-ledger read as a
+  class-applier: `LineChart`, `AreaChart`, `BarChart`, `StackedBar`, `PieChart`
+  and `DonutChart`. All six now take a `config` plus rows of `data` instead of
+  parallel arrays, because that object is already how this system names and
+  colours a series and how the tooltip and legend find their labels. `AreaChart`
+  gains `stacked`, `DonutChart` gains `centerCaption`, and `BarChart` keeps
+  0.11's `max`, `horizontal` and status tones under its own prop names.
+- **All six of 0.11's bar tones survive.** The source's `STATUS_COLORS` carried
+  four; `critical` and `neutral` are added back, because the incumbent
+  `.ds-barchart__bar.is-*` block defined all six and they are the system's status
+  family. Reported rather than silently narrowed.
+- **`Sparkline` keeps its `--ds-chart-1` default.** The source relied on
+  inheritance, which would have let a themed `--ds-accent` repaint data; batch
+  0.3 moved series off the accent on purpose, so the incumbent's `color`
+  declaration stays. Its parts are flat kebab now (`__line` → `-line`), and
+  `--animate` moved from the root onto the polyline — the element the keyframe
+  actually draws. The keyframe stays in `components/motion.css`, where this
+  system keeps every animation it can be asked to switch off.
+- **Five dedupe exceptions resolved, not carried** — matching the plan's count,
+  one of them in TSX (`pie-chart.tsx`) rather than CSS. All five were the same
+  bargain: a Tailwind height or aspect literal kept literal so `tailwind-merge`
+  could dedupe a caller's override against it. With no Tailwind and no merge
+  pass, the literals became real declarations and the override became
+  `--ds-chart-height` — deterministic, where two competing height *classes*
+  would be decided by stylesheet order.
+- **`examples/components/bar-chart.html` is deleted** and
+  `examples/components/charts.html` rewritten: the gauge, the frame classes, and
+  a pointer to the workbench for the six React charts. `kitchen-sink.html`'s bar
+  chart section becomes a gauge section, and `templates/dashboard.html`'s chart
+  panel becomes a `.ds-table` of figures with a sparkline per row — the pattern
+  that stays plain markup, and in a dashboard it carries the value and the trend
+  at once.
+- The nine slugs are un-filtered in the docs-site registry, which is what puts
+  them on the a11y and contract gates: **74 documented components**.
+
+### Fixed
+- **The phantom `tests/chart-marks.spec.ts`.** `playwright.config.ts` sets
+  `reducedMotion: "reduce"` for every suite because recharts animates in
+  JavaScript, and claimed one gate opted back out and ran the animation for
+  real. That gate did not exist. It does now — and writing it immediately caught
+  a defect nothing else could see: the `/docs/chart` demos import `Bar` and
+  `XAxis` themselves and hand them to the package's `ChartContainer`, so the two
+  recharts copies (the site's and the package's) put the children and the
+  container on different contexts and **the plot rendered empty, with no error**.
+  Fixed by deduping recharts in `site/vite.config.ts` and by declaring it a peer
+  rather than a dependency, which is the same fix for a consumer.
+- **A focus ring that drew nothing.** The source reserved
+  `outline: 2px solid transparent` on the three nodes recharts' accessibility
+  layer focuses — Tailwind's `outline-hidden` idiom. It is bound to
+  `:focus-visible` with the charte's real 2px `--ds-focus-ring` outline instead.
+- **A tooltip lifted off the page.** The source's tooltip carried a 10%-ink ring
+  plus two shadow layers; the charte does not drop-shadow, so it is the same 1px
+  solid ink surface `.ds-menu` and `.ds-hover-card-content` use.
+- **Two unprefixed tokens on the tooltip swatch.** `--color-bg` / `--color-border`
+  belonged to the shadcn tier batch 0.3 deleted; the swatch reads one
+  `--ds-chart-indicator`, set inline by the binding that knows the series.
+- **A flat sparkline drawn along the floor.** 0.11 divided by a `|| 1` span, so a
+  series of equal values — or a single point — hugged the bottom of the box and
+  read as a minimum it was not. It pins to the vertical middle.
+- `--font-mono`, `--popover`, `--muted-foreground`, `--border` and the rest of
+  the source's unprefixed vocabulary are remapped onto `--ds-*` throughout;
+  mono type is the platform stack `.ds-kbd` and `.ds-snippet` spell out, since
+  this system defines no mono token.
+
+### Migration
+- **`GaugeChart` is `Gauge`.** Every prop survives (`value`, `max`, `size`,
+  `thickness`, `label`, `color`, `thresholds`, `format`), so a find-and-replace
+  of the symbol is the whole migration. `GaugeChartProps` and
+  `GaugeChartThreshold` become the inline props type and `GaugeThreshold`.
+- **`recharts >= 3` is an optional peer dependency.** Install it to use the six
+  charts; install nothing if you only consume the CSS. A peer rather than a
+  dependency because a chart's children are written by the consumer, so there
+  can only be one copy — see **Fixed**.
+- Twenty-one rows in [docs/migration/renames.json](docs/migration/renames.json),
+  the largest set before batch 6: eight export renames or signature changes,
+  eleven class families, `--ds-chart-height`, and the file move. The class rows
+  are honest about what has no replacement — a hand-written bar chart has none.
+- Three forward cross-batch imports re-wired onto the incumbents, each to be
+  paid again later: the `sparkline/stat-card` demo composes onto this package's
+  prop-driven `StatCard` (batch 6 brings the compound parts), `sparkline/table`
+  onto the `.ds-table` classes (batch 6), and `stacked-bar/inline` onto the
+  prop-driven `Card` (batch 7).
+
 ## [1.0.0-beta.3] — 2026-09-02
 
 Net-new form controls and primitives. Fifteen components, three of which replace a

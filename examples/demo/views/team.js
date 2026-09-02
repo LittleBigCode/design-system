@@ -1,7 +1,7 @@
 import React from "react";
 const { useState } = React;
 import { h, F } from "../ui.js";
-import { PageHeader, Toolbar, Select, Input, Card, Avatar, Progress, Tag, Button, DescriptionList, GaugeChart, Timeline, SectionHeading } from "../../../dist/react/index.js";
+import { PageHeader, Toolbar, Select, Input, Card, Avatar, Progress, Tag, Button, DescriptionList, Gauge, Timeline, SectionHeading } from "../../../dist/react/index.js";
 import { TEAM, DEPTS } from "../data.js";
 
 const deptTag = (d) => h(Tag, { status: d === "Data" ? "info" : d === "Engineering" ? "success" : d === "Product" ? "warning" : null }, d);
@@ -71,7 +71,7 @@ export function PersonProfile({ go, sel }) {
           ] })))),
       h("div", { style: { display: "grid", gap: "16px" } },
         h(Card, null, h("div", { className: "card-pad", style: { display: "grid", placeItems: "center" } },
-          h(GaugeChart, {
+          h(Gauge, {
             value: u.util,
             label: "Utilization",
             thresholds: [{ at: 0, color: "var(--ds-success)" }, { at: 75, color: "var(--ds-warning)" }, { at: 90, color: "var(--ds-danger)" }],

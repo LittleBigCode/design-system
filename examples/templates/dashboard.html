@@ -154,10 +154,10 @@
           <div class="ds-stat__value">€4.18M</div>
           <div class="ds-stat__spark">
             <span class="ds-sparkline">
-              <svg class="ds-sparkline__svg" width="120" height="32" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true">
-                <polyline class="ds-sparkline__area" points="0,32 0,24 20,26 40,18 60,21 80,12 100,15 120,6 120,32"></polyline>
-                <polyline class="ds-sparkline__line" points="0,24 20,26 40,18 60,21 80,12 100,15 120,6"></polyline>
-                <circle class="ds-sparkline__dot" cx="120" cy="6" r="2"></circle>
+              <svg class="ds-sparkline-svg" width="120" height="32" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true">
+                <polyline class="ds-sparkline-area" points="0,32 0,24 20,26 40,18 60,21 80,12 100,15 120,6 120,32"></polyline>
+                <polyline class="ds-sparkline-line" points="0,24 20,26 40,18 60,21 80,12 100,15 120,6"></polyline>
+                <circle class="ds-sparkline-dot" cx="120" cy="6" r="2"></circle>
               </svg>
             </span>
           </div>
@@ -170,33 +170,77 @@
             <h2>Margin by entity</h2>
             <span class="ds-label">Q2 2026</span>
           </div>
-          <div class="ds-barchart" role="img" aria-label="Margin by entity bar chart">
-            <div class="ds-barchart__col">
-              <div class="ds-barchart__track"><div class="ds-barchart__bar" style="height:62%;"></div></div>
-              <span class="ds-barchart__value">22%</span>
-              <span class="ds-barchart__label">LBC_FR</span>
-            </div>
-            <div class="ds-barchart__col">
-              <div class="ds-barchart__track"><div class="ds-barchart__bar is-success" style="height:84%;"></div></div>
-              <span class="ds-barchart__value">29%</span>
-              <span class="ds-barchart__label">LBC_BE</span>
-            </div>
-            <div class="ds-barchart__col">
-              <div class="ds-barchart__track"><div class="ds-barchart__bar" style="height:48%;"></div></div>
-              <span class="ds-barchart__value">17%</span>
-              <span class="ds-barchart__label">LBC_US</span>
-            </div>
-            <div class="ds-barchart__col">
-              <div class="ds-barchart__track"><div class="ds-barchart__bar is-warning" style="height:34%;"></div></div>
-              <span class="ds-barchart__value">12%</span>
-              <span class="ds-barchart__label">LBC_CH</span>
-            </div>
-            <div class="ds-barchart__col">
-              <div class="ds-barchart__track"><div class="ds-barchart__bar" style="height:71%;"></div></div>
-              <span class="ds-barchart__value">25%</span>
-              <span class="ds-barchart__label">LBC_DE</span>
-            </div>
-          </div>
+          <!-- The CSS bar chart this panel drew was removed in 1.0.0-beta.4: the bar,
+               line, area, pie, donut and stacked-bar charts are recharts-bound React
+               components now (see /react-workbench/docs/bar-chart). A table of figures
+               with a sparkline per row is the pattern that stays plain markup — and in a
+               dashboard it carries the value and the trend at once. -->
+          <table class="ds-table ds-table--hover">
+            <thead>
+              <tr>
+                <th>Entity</th>
+                <th class="ds-table__num">Margin</th>
+                <th class="ds-table__num">6 months</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="ds-table__name">LBC_FR</td>
+                <td class="ds-table__num">22%</td>
+                <td class="ds-table__num">
+                  <span class="ds-sparkline" role="img" aria-label="LBC_FR margin over 6 months">
+                    <svg class="ds-sparkline-svg" width="90" height="20" viewBox="0 0 90 20" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                      <polyline class="ds-sparkline-line" points="2,14 19.6,12 37.2,15 54.8,9 72.4,11 88,6"></polyline>
+                    </svg>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td class="ds-table__name">LBC_BE</td>
+                <td class="ds-table__num">29%</td>
+                <td class="ds-table__num">
+                  <span class="ds-sparkline" style="color: var(--ds-success)" role="img" aria-label="LBC_BE margin over 6 months">
+                    <svg class="ds-sparkline-svg" width="90" height="20" viewBox="0 0 90 20" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                      <polyline class="ds-sparkline-line" points="2,16 19.6,13 37.2,11 54.8,8 72.4,5 88,2"></polyline>
+                    </svg>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td class="ds-table__name">LBC_US</td>
+                <td class="ds-table__num">17%</td>
+                <td class="ds-table__num">
+                  <span class="ds-sparkline" role="img" aria-label="LBC_US margin over 6 months">
+                    <svg class="ds-sparkline-svg" width="90" height="20" viewBox="0 0 90 20" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                      <polyline class="ds-sparkline-line" points="2,8 19.6,10 37.2,9 54.8,12 72.4,11 88,13"></polyline>
+                    </svg>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td class="ds-table__name">LBC_CH</td>
+                <td class="ds-table__num">12%</td>
+                <td class="ds-table__num">
+                  <span class="ds-sparkline" style="color: var(--ds-warning)" role="img" aria-label="LBC_CH margin over 6 months">
+                    <svg class="ds-sparkline-svg" width="90" height="20" viewBox="0 0 90 20" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                      <polyline class="ds-sparkline-line" points="2,4 19.6,7 37.2,9 54.8,10 72.4,14 88,16"></polyline>
+                    </svg>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td class="ds-table__name">LBC_DE</td>
+                <td class="ds-table__num">25%</td>
+                <td class="ds-table__num">
+                  <span class="ds-sparkline" role="img" aria-label="LBC_DE margin over 6 months">
+                    <svg class="ds-sparkline-svg" width="90" height="20" viewBox="0 0 90 20" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                      <polyline class="ds-sparkline-line" points="2,11 19.6,9 37.2,10 54.8,7 72.4,8 88,5"></polyline>
+                    </svg>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </section>
 
         <section class="ds-card tpl-chart-card">
