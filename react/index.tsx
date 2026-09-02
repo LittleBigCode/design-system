@@ -138,29 +138,29 @@ export interface ModalProps {
 /* ---- Extended component library (separate modules) ----------------------- */
 export * from "./components/Accordion.js";
 export * from "./components/Alert.js";
-export * from "./components/Avatar.js";
-export * from "./components/Breadcrumb.js";
+export * from "./components/avatar.js";
+export * from "./components/breadcrumb.js";
 export * from "./components/ButtonExtras.js";
 export * from "./components/Card.js";
 export * from "./components/Checkbox.js";
 export * from "./components/DataGrid.js";
-export * from "./components/DescriptionList.js";
+export * from "./components/description-list.js";
 export * from "./components/Dropdown.js";
-export * from "./components/EmptyState.js";
+export * from "./components/empty.js";
 export * from "./components/FieldHint.js";
 export * from "./components/InputGroup.js";
-export * from "./components/Pagination.js";
+export * from "./components/pagination.js";
 export * from "./components/Popover.js";
-export * from "./components/Progress.js";
+export * from "./components/progress.js";
 export * from "./components/Radio.js";
 export * from "./components/Range.js";
 export * from "./components/Select.js";
 export * from "./components/Skeleton.js";
-export * from "./components/Spinner.js";
-export * from "./components/Stepper.js";
+export * from "./components/spinner.js";
+export * from "./components/stepper.js";
 export * from "./components/Tag.js";
 export * from "./components/Textarea.js";
-export * from "./components/Timeline.js";
+export * from "./components/timeline.js";
 export * from "./components/ToastProvider.js";
 export * from "./components/Tooltip.js";
 export * from "./components/Tree.js";
@@ -170,7 +170,7 @@ export * from "./components/TagInput.js";
 export * from "./components/NumberInput.js";
 export * from "./components/DatePicker.js";
 export * from "./components/FileUpload.js";
-export * from "./components/Toolbar.js";
+export * from "./components/toolbar.js";
 export * from "./components/AppShell.js";
 export * from "./components/Wizard.js";
 export * from "./components/Drawer.js";
@@ -183,14 +183,16 @@ export * from "./components/Rating.js";
 export * from "./components/DateRangePicker.js";
 export * from "./components/ColorPicker.js";
 export * from "./components/CodeBlock.js";
-export * from "./components/Kbd.js";
+export * from "./components/kbd.js";
 export * from "./components/MultiSelect.js";
 export * from "./components/TimePicker.js";
 export * from "./components/DateTimePicker.js";
 export * from "./components/Calendar.js";
-export * from "./components/Agenda.js";
+export * from "./components/agenda.js";
+export * from "./components/banner.js";
+export * from "./components/table.js";
 export * from "./components/Kanban.js";
-export * from "./components/PageHeader.js";
+export * from "./components/page-header.js";
 export * from "./components/ConsoleLayout.js";
 export * from "./components/FormField.js";
 export * from "./hooks/useForm.js";
@@ -252,9 +254,8 @@ export function Chip({ warn, className, children, ...rest }: ChipProps) {
   }, children);
 }
 
-export function Banner({ className, children, ...rest }: HTMLAttributes<HTMLDivElement>) {
-  return h("div", { className: cx("ds-banner", className), ...rest }, children);
-}
+/* Banner moved to components/banner.tsx in 1.0.0-beta.6, when it gained the
+   six-tone axis and its content/title/description/action parts. */
 
 /* ---- Callout ------------------------------------------------------------- */
 export function Callout({ type, heading, className, children, ...rest }: CalloutProps) {
@@ -396,29 +397,29 @@ export function Modal({ open, onClose, heading, footer, className, children }: M
 /* ---- Extended component library (separate modules) ----------------------- */
 export * from "./components/Accordion.js";
 export * from "./components/Alert.js";
-export * from "./components/Avatar.js";
-export * from "./components/Breadcrumb.js";
+export * from "./components/avatar.js";
+export * from "./components/breadcrumb.js";
 export * from "./components/ButtonExtras.js";
 export * from "./components/Card.js";
 export * from "./components/Checkbox.js";
 export * from "./components/DataGrid.js";
-export * from "./components/DescriptionList.js";
+export * from "./components/description-list.js";
 export * from "./components/Dropdown.js";
-export * from "./components/EmptyState.js";
+export * from "./components/empty.js";
 export * from "./components/FieldHint.js";
 export * from "./components/InputGroup.js";
-export * from "./components/Pagination.js";
+export * from "./components/pagination.js";
 export * from "./components/Popover.js";
-export * from "./components/Progress.js";
+export * from "./components/progress.js";
 export * from "./components/Radio.js";
 export * from "./components/Range.js";
 export * from "./components/Select.js";
 export * from "./components/Skeleton.js";
-export * from "./components/Spinner.js";
-export * from "./components/Stepper.js";
+export * from "./components/spinner.js";
+export * from "./components/stepper.js";
 export * from "./components/Tag.js";
 export * from "./components/Textarea.js";
-export * from "./components/Timeline.js";
+export * from "./components/timeline.js";
 export * from "./components/ToastProvider.js";
 export * from "./components/Tooltip.js";
 export * from "./components/Tree.js";
@@ -428,7 +429,7 @@ export * from "./components/TagInput.js";
 export * from "./components/NumberInput.js";
 export * from "./components/DatePicker.js";
 export * from "./components/FileUpload.js";
-export * from "./components/Toolbar.js";
+export * from "./components/toolbar.js";
 export * from "./components/AppShell.js";
 export * from "./components/Wizard.js";
 export * from "./components/Drawer.js";
@@ -438,14 +439,16 @@ export * from "./components/Rating.js";
 export * from "./components/DateRangePicker.js";
 export * from "./components/ColorPicker.js";
 export * from "./components/CodeBlock.js";
-export * from "./components/Kbd.js";
+export * from "./components/kbd.js";
 export * from "./components/MultiSelect.js";
 export * from "./components/TimePicker.js";
 export * from "./components/DateTimePicker.js";
 export * from "./components/Calendar.js";
-export * from "./components/Agenda.js";
+export * from "./components/agenda.js";
+export * from "./components/banner.js";
+export * from "./components/table.js";
 export * from "./components/Kanban.js";
-export * from "./components/PageHeader.js";
+export * from "./components/page-header.js";
 export * from "./components/ConsoleLayout.js";
 export * from "./components/FormField.js";
 export * from "./hooks/useForm.js";

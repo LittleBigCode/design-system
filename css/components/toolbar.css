@@ -1,38 +1,106 @@
 /* ============================================================================
-   Toolbar — .ds-toolbar (horizontal action bar)
+   Toolbar — .ds-toolbar (a boxed strip of controls with roving focus)
    ----------------------------------------------------------------------------
-   A horizontal strip that aligns controls — buttons, segmented controls, a
-   search field — on a single row. By default it's a borderless flex row with a
-   1px bottom rule; the --bordered modifier turns it into a fully boxed bar.
-   Group related controls with .ds-toolbar__group and push the rest to the far
-   edge with a flexible .ds-toolbar__spacer.
+   Base UI's Toolbar underneath, so one Tab reaches the strip and the arrow keys
+   walk it — which is the whole reason the source wins over 0.x's flex row.
+   Horizontal or vertical; groups cluster related controls, separators rule
+   between them.
+
+   0.x's --bordered is gone: this bar is boxed by default, which is what
+   --bordered used to opt into, and the borderless bottom-ruled variant it
+   defaulted to has no reader left.
+
+   `.ds-toolbar-spacer` is PRESERVED, renamed from 0.x's __spacer. A Base UI
+   toolbar is `width: fit-content`, so the composed <Toolbar> has no free space
+   for a spacer to eat — but a hand-written full-width bar (examples/blocks/
+   app-chrome.html) does, and stretching it is what pushes its two clusters to
+   opposite edges. One rule, and the composed component never sees it.
+
+   `.ds-toolbar .ds-input { min-width: 200px }` also goes. It was one of the
+   five --ds-input descendant overrides batch 7 owes a propagation pass; the
+   replacement is .ds-toolbar-input below, which sets its own width. Recorded in
+   docs/absorption/corrections.md so batch 7 looks for four, not five.
    ============================================================================ */
 .ds-toolbar {
   display: flex;
+  width: fit-content;
   align-items: center;
-  gap: var(--ds-space-3);
-  padding: var(--ds-space-2) var(--ds-space-3);
-  border-bottom: 1px solid var(--ds-rule);
-  background: var(--ds-bg);
+  gap: 0.25rem;
+  border-radius: var(--ds-radius-none);
+  border: 1px solid var(--ds-rule);
+  background-color: var(--ds-bg);
+  padding: 0.25rem;
   font-family: var(--ds-font-sans);
 }
-
-/* Group — a cluster of controls kept together with a tighter gap. */
-.ds-toolbar__group {
-  display: flex;
-  align-items: center;
-  gap: var(--ds-space-2);
+.ds-toolbar[data-disabled] {
+  opacity: 0.5;
+}
+.ds-toolbar[data-orientation="vertical"] {
+  flex-direction: column;
+  align-items: stretch;
 }
 
-/* Spacer — eats the free space, pushing what follows to the opposite edge. */
-.ds-toolbar__spacer {
+.ds-toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.ds-toolbar-group[data-disabled] {
+  opacity: 0.5;
+}
+:where(.ds-toolbar[data-orientation="vertical"]) .ds-toolbar-group {
+  flex-direction: column;
+}
+
+/* Eats the free space, pushing what follows to the opposite edge. Only does
+   anything on a toolbar a caller has widened past its content. */
+.ds-toolbar-spacer {
   flex: 1;
 }
 
-/* Bordered — a fully boxed bar (1px all around) instead of just a bottom rule. */
-.ds-toolbar--bordered {
-  border: 1px solid var(--ds-rule);
+.ds-toolbar-button {
+  flex-shrink: 0;
+}
+.ds-toolbar-button[data-pressed] {
+  background-color: var(--ds-bg-alt);
 }
 
-/* Search controls inside the toolbar stretch to a comfortable width. */
-.ds-toolbar .ds-input { min-width: 200px; }
+.ds-toolbar-link {
+  display: inline-flex;
+  height: 2.25rem;
+  flex-shrink: 0;
+  align-items: center;
+  padding-inline: 0.75rem;
+  font-size: var(--ds-text-xs);
+  line-height: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration-line: underline;
+  text-underline-offset: 4px;
+  color: inherit;
+  outline: none;
+}
+.ds-toolbar-link:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: 2px;
+}
+
+.ds-toolbar-input {
+  height: 2.25rem;
+  width: 8rem;
+  padding-inline: 0.5rem;
+}
+
+.ds-toolbar-separator {
+  flex-shrink: 0;
+  background-color: var(--ds-rule);
+}
+.ds-toolbar-separator[data-orientation="horizontal"] {
+  height: 1px;
+  width: 100%;
+}
+.ds-toolbar-separator[data-orientation="vertical"] {
+  height: 1.25rem;
+  width: 1px;
+}

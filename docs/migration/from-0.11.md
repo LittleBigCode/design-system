@@ -2,7 +2,13 @@
 
 # Migrating from 0.11 to 1.0
 
-The v1 absorption renames 29 consumer-visible thing(s). Everything else is additive.
+The v1 absorption renames 112 consumer-visible thing(s). Everything else is additive.
+
+### Components
+
+| 0.11 | 1.0 | batch | notes |
+| --- | --- | --- | --- |
+| `null` | `Table` | 6 | New: 0.11 shipped table.css with no React binding. Table + TableHeader + TableBody + TableFooter + TableRow + TableHead + TableCell + TableCaption. DataGrid is unaffected and stays the stateful table. |
 
 ### Exports
 
@@ -18,6 +24,20 @@ The v1 absorption renames 29 consumer-visible thing(s). Everything else is addit
 | `PieChart ({ data, color, legend, size })` | `PieChart ({ config, data, valueKey, nameKey, legend })` | 4 | `valueKey`/`nameKey` name the row fields; a slice's colour is a `config` entry keyed by its name, which is also how the tooltip and legend find its label. `size` becomes the container's square box — retune it with `--ds-chart-height`. |
 | `DonutChart ({ data, centerLabel, thickness, legend, size })` | `DonutChart ({ config, data, valueKey, nameKey, centerLabel, centerCaption, thickness, legend })` | 4 | See PieChart. `thickness` is now a percentage of the chart radius, not px, because the container is responsive and a px ring would not scale with it. `centerCaption` is new: the uppercase line under the figure, in the register Gauge uses. |
 | `Sparkline (flat series drawn along the floor)` | `Sparkline (flat series pinned to the middle)` | 4 | Props are unchanged. The one behavioural change is a defect fix: 0.11 divided by a `|| 1` span, so a flat series — or a single point — drew along the bottom of the box and read as a minimum it was not. It now pins to the vertical middle. |
+| `EmptyState` | `Empty` | 6 | Renamed with the split into parts. `icon`/`title`/`description`/`actions` become <EmptyMedia>, <EmptyTitle>, <EmptyDescription> and <EmptyContent>, all inside an <EmptyHeader> except the content. |
+| `Avatar (props src/alt/initials/size)` | `Avatar + AvatarImage + AvatarFallback` | 6 | Base UI's Avatar. The fallback now appears only once the image has actually failed or is still loading; `size` survives and lands as data-size. |
+| `AvatarGroup (prop max)` | `AvatarGroup + AvatarGroupCount` | 6 | The overflow count is written rather than computed: `max` is gone and <AvatarGroupCount>+N</AvatarGroupCount> is the tail. |
+| `Breadcrumb (prop items)` | `Breadcrumb + BreadcrumbList + BreadcrumbItem + BreadcrumbLink + BreadcrumbPage + BreadcrumbSeparator + BreadcrumbEllipsis` | 6 | BreadcrumbLink is polymorphic through `render`, so a router's Link renders in its place with no wrapper. |
+| `DescriptionList (prop items)` | `DescriptionList + DescriptionTerm + DescriptionDetail` | 6 |  |
+| `PageHeader (props title/subtitle/breadcrumb/actions/tabs/flush)` | `PageHeader + PageHeaderHeading + PageHeaderTitle + PageHeaderDescription + PageHeaderActions + PageHeaderIcon + PageHeaderTabs` | 6 | `flush` has no replacement: page-header.css derives it from `:has([data-slot=page-header-tabs])`, so the markup says it. |
+| `Pagination (props page/pageCount/onChange/siblingCount)` | `Pagination + PaginationContent + PaginationItem + PaginationLink + PaginationNext + PaginationPrevious + PaginationEllipsis + paginationRange` | 6 | No capability is lost: `paginationRange({ page, pageCount, siblingCount })` is the same window function, exported. Rebuilding the controlled pager is ~10 lines and is written out in from-0.11.md. What the parts buy is a page that can be a real <a href>. |
+| `Progress (props value/max/status/indeterminate/label)` | `Progress + ProgressTrack + ProgressIndicator + ProgressLabel + ProgressValue` | 6 | Base UI's Progress. `status` is spelled `tone` and takes six values; `indeterminate` is `value={null}`; `label` is a <ProgressLabel> child. |
+| `Spinner (props size/inline)` | `Spinner` | 6 | `label` survives. `size` and `inline` are gone: the component renders a Phosphor glyph and the .ds-spinner--sm/--lg/--inline classes size it. |
+| `Stepper (props steps/active/complete/circle)` | `Stepper + StepperItem + StepperIndicator + StepperContent + StepperTitle + StepperDescription` | 6 | `circle` has no replacement — .ds-stepper--circle is still in the stylesheet and can be passed through className. There is no StepperSeparator: the connector is a ::after on the step. |
+| `Timeline (prop items)` | `Timeline + TimelineItem + TimelineIndicator + TimelineContent + TimelineTitle + TimelineTime + TimelineDescription` | 6 | `status` becomes `tone` on the item, and data-state="completed"|"active" fills or outlines the indicator. |
+| `Toolbar + ToolbarGroup + ToolbarSpacer` | `Toolbar + ToolbarGroup + ToolbarButton + ToolbarLink + ToolbarInput + ToolbarSeparator` | 6 | Base UI's Toolbar: the strip is one tab stop with arrow-key navigation. `bordered` is gone (boxed by default) and ToolbarSpacer with it — the bar is width: fit-content. |
+| `Kbd` | `Kbd + KbdGroup` | 6 | KbdGroup chains keys into one chord. |
+| `Banner` | `Banner + BannerContent + BannerTitle + BannerDescription + BannerAction` | 6 | Moves out of react/index.tsx into its own module and gains the six-tone axis; the fixed-yellow identity is now `tone="warning"`. |
 
 ### Classes
 
@@ -36,6 +56,73 @@ The v1 absorption renames 29 consumer-visible thing(s). Everything else is addit
 | `.ds-gauge__svg, .ds-gauge__track, .ds-gauge__value, .ds-gauge__center, .ds-gauge__label` | `.ds-gauge-svg, .ds-gauge-track, .ds-gauge-value, .ds-gauge-center, .ds-gauge-label` | 4 | Flat-kebab rename, no structural change: the gauge stays library-free, so hand-written markup keeps working after a find-and-replace of `__` for `-`. `.ds-gauge` itself is unchanged, and the value arc's transition is now a CSS declaration rather than an inline style. |
 | `.ds-sparkline__svg, .ds-sparkline__line, .ds-sparkline__area, .ds-sparkline__dot` | `.ds-sparkline-svg, .ds-sparkline-line, .ds-sparkline-area, .ds-sparkline-dot` | 4 | Flat-kebab rename, no structural change; the sparkline stays library-free. `.ds-sparkline` keeps its `color: var(--ds-chart-1)` default, so an inline sparkline still paints from the series ramp rather than the accent. |
 | `.ds-sparkline--animate` | `.ds-sparkline-line--animate` | 4 | The modifier moved from the root onto the polyline, which is the element the keyframe draws. The keyframe and its reduced-motion opt-out stay in components/motion.css. |
+| `.ds-dl` | `.ds-description-list` | 6 |  |
+| `.ds-dl__term` | `.ds-description-term` | 6 |  |
+| `.ds-dl__desc` | `.ds-description-detail` | 6 |  |
+| `.ds-page-header__top` | `.ds-page-header-heading` | 6 |  |
+| `.ds-page-header__titles` | _removed_ | 6 | No replacement — the title/description pair needs no class, only a wrapper element. |
+| `.ds-page-header__title` | `.ds-page-header-title` | 6 |  |
+| `.ds-page-header__subtitle` | `.ds-page-header-description` | 6 |  |
+| `.ds-page-header__actions` | `.ds-page-header-actions` | 6 |  |
+| `.ds-page-header__tabs` | `[data-slot="page-header-tabs"]` | 6 | An attribute rather than a class: .ds-page-header reads it through :has() to move its bottom rule, and it styles nothing itself. |
+| `.ds-page-header--flush` | _removed_ | 6 | Removed — derived from the tab slot's presence. |
+| `.ds-breadcrumb` | `.ds-breadcrumb-list` | 6 | The <nav> root carries no class now; the <ol> is the styled element. |
+| `.ds-breadcrumb__item` | `.ds-breadcrumb-item` | 6 |  |
+| `.ds-breadcrumb__link` | `.ds-breadcrumb-link` | 6 |  |
+| `null` | `.ds-breadcrumb-page` | 6 | New — the current page, which 0.11 marked with aria-current alone. |
+| `null` | `.ds-breadcrumb-separator` | 6 | New — the separator is its own presentational <li> rather than a ::after, so it flips for RTL and stays out of the neighbouring item's accessible name. |
+| `null` | `.ds-breadcrumb-ellipsis` | 6 | New — a collapsed middle of the trail. |
+| `.ds-avatar__img` | `.ds-avatar-image` | 6 |  |
+| `.ds-avatar--sm` | `[data-size="sm"]` | 6 | Size is an attribute so a group can size its overflow count off its members with :has(). |
+| `.ds-avatar--lg` | `[data-size="lg"]` | 6 |  |
+| `.ds-avatar--count` | `.ds-avatar-group-count` | 6 | No longer also carries .ds-avatar. |
+| `.ds-avatar-group--sm` | _removed_ | 6 | Removed — the group reads its members' data-size. |
+| `.ds-avatar-group--lg` | _removed_ | 6 | Removed — the group reads its members' data-size. |
+| `null` | `.ds-avatar-fallback` | 6 | New — bare initials inside .ds-avatar are no longer styled; they go in this slot. |
+| `null` | `.ds-avatar-badge` | 6 | New — the corner status dot. |
+| `.ds-progress__bar` | `.ds-progress-track > .ds-progress-indicator` | 6 | Two elements now: .ds-progress is the wrapping row that also holds the label and value. |
+| `.ds-progress__label` | `.ds-progress-label` | 6 | A sibling of the track inside .ds-progress, not a row above it. |
+| `.ds-progress__value` | `.ds-progress-value` | 6 |  |
+| `.ds-progress--success` | `.ds-progress--tone-success` | 6 |  |
+| `.ds-progress--warning` | `.ds-progress--tone-warning` | 6 |  |
+| `.ds-progress--danger` | `.ds-progress--tone-danger` | 6 |  |
+| `null` | `.ds-progress--tone-neutral / --tone-info / --tone-critical` | 6 | New — the tone axis is six-wide now. |
+| `.ds-empty__icon` | `.ds-empty-media` | 6 | Add --icon for the tinted tile; --default leaves it bare. |
+| `.ds-empty__title` | `.ds-empty-title` | 6 |  |
+| `.ds-empty__desc` | `.ds-empty-description` | 6 |  |
+| `.ds-empty__actions` | `.ds-empty-content` | 6 |  |
+| `null` | `.ds-empty-header` | 6 | New — groups the media, title and description and caps their width. |
+| `.ds-timeline__item` | `.ds-timeline-item` | 6 |  |
+| `.ds-timeline__dot` | `.ds-timeline-indicator` | 6 |  |
+| `.ds-timeline__body` | `.ds-timeline-content` | 6 | Now the wrapper around the title, time and description rather than the description itself. |
+| `.ds-timeline__title` | `.ds-timeline-title` | 6 |  |
+| `.ds-timeline__time` | `.ds-timeline-time` | 6 |  |
+| `.ds-timeline__dot.is-success` | `.ds-timeline-item--success + data-state="completed"` | 6 | Tone moves from the dot to the item; the state attribute is what fills the indicator with it. Same for is-info / is-warning / is-danger / is-neutral. |
+| `null` | `.ds-timeline-description` | 6 | New — the supporting text under the title. |
+| `.ds-agenda__day` | `.ds-agenda-day` | 6 | Now an <h3> over a <section> per day rather than a bare div. |
+| `.ds-agenda__weekday` | `.ds-agenda-day-weekday` | 6 |  |
+| `.ds-agenda__date` | _removed_ | 6 | No replacement — the date is a bare <time datetime> inside the heading. |
+| `.ds-agenda__event` | `.ds-agenda-event` | 6 |  |
+| `.ds-agenda__time` | `.ds-agenda-event-time` | 6 |  |
+| `.ds-agenda__marker` | `.ds-agenda-event-status` | 6 | States move from .is-success to .ds-agenda-event-status--success. Batch 7 replaces the span with a real <Status>. |
+| `.ds-agenda__body` | `.ds-agenda-event-body` | 6 |  |
+| `.ds-agenda__title` | `.ds-agenda-event-title` | 6 |  |
+| `.ds-agenda__meta` | `.ds-agenda-event-meta` | 6 |  |
+| `.ds-agenda__empty` | `.ds-empty` | 6 | No bespoke empty class: the agenda renders the system's empty state. |
+| `.ds-pagination__item` | `.ds-button` | 6 | A page is a Button now — .ds-button, plus --icon for the square metric and --primary for the active page. |
+| `.ds-pagination__nav` | `.ds-button + .ds-pagination-previous / .ds-pagination-next` | 6 |  |
+| `.ds-pagination__ellipsis` | `.ds-pagination-ellipsis` | 6 |  |
+| `null` | `.ds-pagination-content` | 6 | New — the <ul> the page items sit in. |
+| `null` | `.ds-pagination-label` | 6 | New — the prev/next text, hidden below 640px. |
+| `null` | `.ds-pagination-caret` | 6 | New — the prev/next glyph, flipped for RTL. |
+| `.ds-toolbar__group` | `.ds-toolbar-group` | 6 |  |
+| `.ds-toolbar__spacer` | `.ds-toolbar-spacer` | 6 | Kept, but the bar is width: fit-content now, so the spacer only does anything on a toolbar widened past its content. |
+| `.ds-toolbar--bordered` | _removed_ | 6 | Removed — the bar is boxed by default, which is what --bordered opted into. |
+| `null` | `.ds-toolbar-button / -link / -input / -separator` | 6 | New parts. |
+| `null` | `.ds-table-container / -header / -body / -footer / -row / -head / -cell / -caption` | 6 | New — the part grammar the composed <Table> renders. 0.11's .ds-table th/td, --hover, __num, __name and __row-action are PRESERVED alongside it: four files under examples/ plus docs read them, and no React component on either side would have re-classed them. |
+| `.ds-spinner (drawn ring)` | `.ds-spinner` | 6 | Kept for hand-written HTML, scoped `:not(svg)`. The React binding spins a glyph instead, and the rotation is shared. |
+| `.ds-banner (fixed yellow)` | `.ds-banner--warning` | 6 | The bare class is now the neutral tone. The 0.11 identity is the warning tone. |
+| `null` | `.ds-banner-content / -title / -action` | 6 | New parts. |
 
 ### Tokens
 
@@ -46,6 +133,7 @@ The v1 absorption renames 29 consumer-visible thing(s). Everything else is addit
 | `(none — height was a Tailwind class in the source)` | `--ds-chart-height` | 4 | The knob that replaced the source's `h-56`/`h-64`/`h-40`/`h-24` literals. `.ds-chart-container--plot` and `--square` read it, defaulting to 14rem and 16rem; set it on the chart to retune one. This package has no Tailwind and no tailwind-merge, so a competing height class would be decided by stylesheet order — a variable is not. |
 | `(none — the label and value column widths were Tailwind arbitrary-property classes in the source)` | `--ds-bullet-label, --ds-bullet-value` | 5 | The knobs that replaced the source's `[--bullet-label:7rem]` / `[--bullet-value:4rem]` literals on BulletChart's own className. `.ds-bullet-chart` declares both as its defaults and reads them in `grid-template-columns`; set either on the chart or on a wrapper to retune one bullet or a whole stack. Unprefixed `--bullet-*` is not read — every custom property in this package is `--ds-*`. |
 | `(none — net-new)` | `--ds-heat-1 … --ds-heat-5` | 5 | The sequential ramp `.ds-heatmap` quantises into, one hue getting darker. Separate from the categorical `--ds-chart-*` ramp on purpose: reading a categorical ramp as a scale is the classic dataviz error. It is also the one Tier-1 primitive css/themes/dark.css overrides — a sequential ramp encodes magnitude, so "more" has to mean brighter on a dark page. A theme that recolours data now has two ramps to consider, not one. |
+| `(pb-8 on .ds-timeline-item)` | `--ds-timeline-gap` | 6 | The source kept the row spacing a Tailwind literal for a tailwind-merge dedupe. Baked into timeline.css; override with this custom property on an item or on the list. |
 
 ### Paths
 

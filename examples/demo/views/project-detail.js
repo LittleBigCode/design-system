@@ -2,10 +2,24 @@ import React from "react";
 const { useState } = React;
 import { h, F, stageTag } from "../ui.js";
 import {
-  PageHeader, Breadcrumb, Button, Stepper, AreaChart, Timeline,
-  DescriptionList, Avatar, AvatarGroup, Gauge, Callout, Card,
-  Drawer, Field, Input,
+  Button,
+  AreaChart,
+  Gauge,
+  Callout,
+  Card,
+  Drawer,
+  Field,
+  Input,
 } from "../../../dist/react/index.js";
+import {
+  PageHeader,
+  Breadcrumb,
+  Stepper,
+  Timeline,
+  DescriptionList,
+  Avatar,
+  AvatarGroup,
+} from "../compat.js";
 import { PROJECTS, STAGES, BURNDOWN, SPRINTS, RISKS, ACTIVITY, PEOPLE } from "../data.js";
 
 export function ProjectDetail({ go, sel }) {

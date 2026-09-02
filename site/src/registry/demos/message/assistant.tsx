@@ -1,6 +1,6 @@
 import { SparkleIcon } from "@phosphor-icons/react"
 
-import { Avatar } from "@diametral/design-system/react"
+import { Avatar, AvatarFallback } from "@diametral/design-system/react"
 import { Bubble, BubbleContent } from "@diametral/design-system/react"
 import {
   Message,
@@ -16,7 +16,9 @@ export default function MessageAssistant() {
     <MessageGroup className="max-w-md">
       <Message align="end">
         <MessageAvatar>
-          <Avatar size="sm" initials="AM" />
+          <Avatar size="sm">
+            <AvatarFallback>AM</AvatarFallback>
+          </Avatar>
         </MessageAvatar>
         <MessageContent>
           <Bubble>
@@ -29,7 +31,11 @@ export default function MessageAssistant() {
 
       <Message>
         <MessageAvatar>
-          <Avatar size="sm" initials={<SparkleIcon />} />
+          <Avatar size="sm">
+            <AvatarFallback>
+              <SparkleIcon />
+            </AvatarFallback>
+          </Avatar>
         </MessageAvatar>
         <MessageContent>
           <MessageHeader>Assistant</MessageHeader>

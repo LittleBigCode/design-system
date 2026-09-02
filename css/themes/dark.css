@@ -34,6 +34,17 @@
   --ds-neutral-bg:  rgba(255, 255, 255, .08);
   --ds-critical-bg: rgba(255, 255, 255, .08);
 
+  /* Status INK — the light-theme values are darker shades tuned to read on the
+     pale tints above, and this theme replaces those tints with translucent dark
+     ones. Left un-overridden they are dark text on a dark tint: `.ds-tag--success`
+     and `.ds-banner--info` measured under 2:1 here. These are the mirror shades,
+     each clearing 4.5:1 on its own tint, on --ds-bg and on --ds-surface.
+     neutral and critical have no ink token in either theme and read --ds-ink. */
+  --ds-success-ink: #7fd6a0;
+  --ds-warning-ink: #ff9d6b;
+  --ds-danger-ink:  #f08a7e;
+  --ds-info-ink:    #6fd0e8;
+
   /* The one primitive this theme overrides. A sequential ramp encodes magnitude
      as colour, so "more" has to mean *further from the page* — on dark that is
      brighter, and the light ramp's darkest step would sink into the background
@@ -64,6 +75,17 @@
     --ds-info-bg:     rgba(20, 136, 166, .20);
     --ds-neutral-bg:  rgba(255, 255, 255, .08);
     --ds-critical-bg: rgba(255, 255, 255, .08);
+
+    /* Status INK — the light-theme values are darker shades tuned to read on the
+       pale tints above, and this theme replaces those tints with translucent dark
+       ones. Left un-overridden they are dark text on a dark tint: `.ds-tag--success`
+       and `.ds-banner--info` measured under 2:1 here. These are the mirror shades,
+       each clearing 4.5:1 on its own tint, on --ds-bg and on --ds-surface.
+       neutral and critical have no ink token in either theme and read --ds-ink. */
+    --ds-success-ink: #7fd6a0;
+    --ds-warning-ink: #ff9d6b;
+    --ds-danger-ink:  #f08a7e;
+    --ds-info-ink:    #6fd0e8;
     --ds-heat-1: #1d4250;
     --ds-heat-2: #275f73;
     --ds-heat-3: #327f99;

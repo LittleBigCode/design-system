@@ -37,7 +37,20 @@ arrangement that works.
 Four charts need none of it and stay renderable as plain markup by any binding:
 `Sparkline` and `Gauge` are hand-rolled SVG, `Heatmap` and `BulletChart` are CSS grid and
 divs. `1.0.0-beta.5` adds no dependency of its own — its eight charts compose the
-`ChartContainer` / `ChartTooltip` / `ChartLegend` substrate beta.4 already paid for.
+`ChartContainer` / `ChartTooltip` / `ChartLegend` substrate beta.4 already paid for. Nor
+does `1.0.0-beta.6`: its fifteen components reach for Base UI's `Avatar`, `Progress` and
+`Toolbar`, all already installed.
+
+**`1.0.0-beta.6` is the batch that turns appliers into parts.** Thirteen 0.11 components
+that took an `items` array or a bag of content props — `Avatar`, `Breadcrumb`,
+`DescriptionList`, `EmptyState` (now `Empty`), `PageHeader`, `Pagination`, `Progress`,
+`Spinner`, `Stepper`, `Timeline`, `Toolbar`, `Kbd`, `Banner` — become composable parts, and
+`Table` arrives with no incumbent at all. Every prop that disappears has a replacement or a
+recipe in [`docs/migration/from-0.11.md`](migration/from-0.11.md); nothing is dropped
+without one. Three of them gain behaviour rather than only shape: `Avatar` shows its
+fallback only once the image has actually failed, `Progress` is Base UI's with real ARIA,
+and `Toolbar` is **one** tab stop with arrow-key navigation where 0.11's flex row made every
+control its own stop.
 
 Since `1.0.0-beta.1` the React layer declares two real `dependencies`:
 `@base-ui/react` and `@phosphor-icons/react`. Base UI is where the behaviour of the

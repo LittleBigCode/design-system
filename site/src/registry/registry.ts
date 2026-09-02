@@ -2805,6 +2805,767 @@ export const COMPONENTS: ComponentDoc[] = [
       },
     ],
   },
+  /* -- Batch 6 — wholesale replacements ----------------------------------- */
+  {
+    slug: "stepper",
+    name: "Stepper",
+    category: "Navigation",
+    exports: [
+      "Stepper",
+      "StepperItem",
+      "StepperIndicator",
+      "StepperContent",
+      "StepperTitle",
+      "StepperDescription",
+    ],
+    description:
+      "Progress through a multi-step flow, with per-step state and orientation support.",
+    intro: [
+      "Stepper is the rail across the top of a flow that has been split into screens: the steps, the one you are on, and how much is left. Reach for it when the count is part of the task — checkout, onboarding, a long form worth breaking up. A dated record of what has already happened is `Timeline`; a bare fraction with no names is `Progress`.",
+      "It holds no state and knows nothing about your flow: `state` is a prop on each `StepperItem` (`inactive`, `active`, `completed`), and it lands as the `is-active` / `is-complete` classes the stylesheet keys off. Orientation is the root's alone — `data-orientation` on it is what the vertical layout reads, so horizontal to vertical is one prop and no change to the items.",
+    ],
+    examples: [
+      {
+        demo: "stepper/basic",
+        title: "Basic",
+        description:
+          "`state` is a prop on `StepperItem`, and the indicator swaps its number for a check on `completed` by itself.",
+      },
+      {
+        demo: "stepper/wizard",
+        title: "In a form wizard",
+        description:
+          "The shape most steppers ship in: the rail heads the panel, and one index drives both the item states and which fields render. Nothing inside the component tracks that index — `Continue` moves it.",
+      },
+      {
+        demo: "stepper/vertical",
+        title: "Vertical",
+        description:
+          "`orientation=\"vertical\"` re-lays the step as a two-column grid: marker beside the text rather than above it, and the connector running down the marker column. No change to the items.",
+      },
+      {
+        demo: "stepper/icon-indicators",
+        title: "Icon indicators",
+        description:
+          "A glyph instead of a number, for a flow whose steps have identities. `StepperIndicator` hides its children on `completed` and swaps in a check, so the icon reads only while the step is still ahead — design for that rather than around it.",
+      },
+    ],
+    parts: {
+      Stepper:
+        "An `<ol>` that owns `data-orientation`. It renders 0.11's class grammar on purpose — `Wizard` renders the same `.ds-stepper__step` / `__marker` / `__label` block and does not move in this migration, so the stylesheet is pinned and the React is what changed.",
+      StepperItem:
+        "Where `state` lives, as `is-active` / `is-complete` on the `<li>`; it also sets `aria-current=\"step\"` on the active one. A part outside an item stays in the inactive look.",
+      StepperIndicator:
+        "The numbered marker. Its children are hidden on `completed` and a check is drawn in their place by a `::after` in the stylesheet — which is why nothing here imports a check icon.",
+      StepperTitle:
+        "The step's label. A `<span>` — wrap or render it as a heading when the level matters to the page outline.",
+      StepperDescription:
+        "The optional second line under a label, at the smallest type size and the faintest ink.",
+    },
+  },
+
+  {
+    slug: "timeline",
+    name: "Timeline",
+    category: "Data display",
+    exports: [
+      "Timeline",
+      "TimelineItem",
+      "TimelineIndicator",
+      "TimelineContent",
+      "TimelineTitle",
+      "TimelineTime",
+      "TimelineDescription",
+    ],
+    description:
+      "A vertical sequence of events with completed, active and inactive states.",
+    intro: [
+      "Timeline is an ordered list of moments: an indicator on a rail, a title, and optionally a timestamp and a line of detail. Reach for it when the sequence itself is the information — a process someone is partway through, an audit trail, a shipment's history. When the steps are a form the reader walks through and can navigate, that is `Stepper`.",
+      "The rail is a `::before` on each item, hidden on the last, so items can be added or removed without touching it. State is `data-state` on the item — `completed`, `active`, or nothing — and the parts style themselves from there, which is why the indicator takes no state prop of its own. It is vertical only.",
+    ],
+    examples: [
+      {
+        demo: "timeline/basic",
+        title: "Basic",
+        description:
+          "The rail is a `::before` on each item, hidden on the last — items can be added or removed without touching it.",
+      },
+      {
+        demo: "timeline/states",
+        title: "States",
+        description:
+          "`data-state` goes on the *item*, not the indicator — and so does `tone`. The indicator reads both, which is what lets one attribute fill it and colour it at once.",
+      },
+      {
+        demo: "timeline/activity-feed",
+        title: "Activity feed",
+        description:
+          'The audit-trail shape: an icon per kind of event rather than a step number, and every entry already past, so no item takes a state. `TimelineTime` is a real `time` element — pass `dateTime` whenever the visible text is written for people, like "09:12".',
+      },
+      {
+        demo: "timeline/in-panel",
+        title: "Compact, in a panel",
+        description:
+          "Density is `--ds-timeline-gap`, set on an item or on the list; the default is 2rem. The rail spans from below the indicator to the bottom of the item, so it follows the tighter spacing without being retuned.",
+      },
+    ],
+    parts: {
+      Timeline:
+        "An `ol`, so the reading order is the chronology and the count is announced. It draws nothing itself — the rail belongs to the items.",
+      TimelineItem:
+        "Takes `data-state` and `tone`, and draws the rail: a `::before` from below the indicator to the bottom of the item, hidden on the last one. Both offsets are keyed to the 1.5rem indicator, so resizing it means retuning the rail's `top` and `inset-inline-start` with it.",
+      TimelineIndicator:
+        "Reads the item's `data-state` and `tone`, so it takes no state prop of its own. Fixed at 1.5rem and `flex-shrink: 0` — it is what the rail is aligned to.",
+      TimelineTitle:
+        "Uppercase tracked label type, and a `div` rather than a heading — add your own element when the level matters.",
+      TimelineDescription:
+        "Sets `text-transform: none` explicitly, so detail text stays sentence case under the uppercased title above it.",
+      TimelineTime:
+        "A real `time` element with `tabular-nums`, so a column of timestamps lines up. Give it `dateTime` whenever the visible text is not machine-readable.",
+    },
+  },
+  {
+    slug: "avatar",
+    name: "Avatar",
+    category: "Data display",
+    exports: [
+      "Avatar",
+      "AvatarImage",
+      "AvatarFallback",
+      "AvatarBadge",
+      "AvatarGroup",
+      "AvatarGroupCount",
+    ],
+    description:
+      "A user image with a text fallback, and a group with overflow count.",
+    intro: [
+      "Avatar is the identity marker: a round image with initials waiting behind it. Reach for it wherever a person or an account has to be recognisable at a glance — a comment header, an assignee cell, a member list. It renders no name of its own, so keep the name in the markup beside it unless the avatar is purely decorative.",
+      "`size` sets `data-size` on the root rather than styling the children directly, so `AvatarBadge` and `AvatarGroupCount` size themselves from the avatar they belong to. A group is scaled by sizing its avatars; the group itself takes no size.",
+    ],
+    examples: [
+      {
+        demo: "avatar/basic",
+        title: "Basic",
+        description:
+          "The fallback shows until the image resolves and stays if it fails, so initials are the default rather than a broken-image icon. The portrait is inlined as a data URI so the demo needs no network — any `src` behaves the same.",
+      },
+      {
+        demo: "avatar/sizes",
+        title: "Sizes and badge",
+        description:
+          "`AvatarBadge` reads the avatar's `data-size` instead of taking a size prop, and drops its icon at `sm` where it would be unreadable.",
+      },
+      {
+        demo: "avatar/group",
+        title: "Group",
+        description:
+          "`AvatarGroup` overlaps its children and rings them in the background colour; `AvatarGroupCount` closes the stack.",
+      },
+      {
+        demo: "avatar/in-row",
+        title: "In a member list",
+        description:
+          "Where avatars usually sit: leading a row, inside `ItemMedia`, with the name beside them. The online dot is decoration only — the row says `online` in words too, so the state does not depend on colour.",
+      },
+    ],
+    parts: {
+      Avatar:
+        "Sets `data-size`, which every other part reads — a part rendered outside an Avatar falls back to its own default. The border is an `::after` overlay in `mix-blend-darken`, so it darkens a photo's own edge instead of drawing a ring over it.",
+      AvatarImage:
+        "Base UI keeps it unmounted until the image loads, and removes it again if the load fails — which is why the fallback is not conditional. Render both, always.",
+      AvatarBadge:
+        "Positioned absolutely against the root, so it has to be a child of Avatar. It takes no size of its own and drops its icon at `sm`, where a glyph would be unreadable.",
+      AvatarGroup:
+        "Overlaps its children and rings each one in the background colour; the ring is what separates them, so a group on a tinted surface needs that ring recoloured.",
+      AvatarGroupCount:
+        "A counter, not an Avatar. It matches the group's size through `group-has-data-*`, so it follows whatever size the avatars were given.",
+    },
+  },
+  {
+    slug: "pagination",
+    name: "Pagination",
+    category: "Navigation",
+    exports: [
+      "Pagination",
+      "PaginationContent",
+      "PaginationItem",
+      "PaginationLink",
+      "PaginationPrevious",
+      "PaginationNext",
+      "PaginationEllipsis",
+      "paginationRange",
+    ],
+    description: "Page links with previous, next and ellipsis.",
+    intro: [
+      "Pagination is the rail under a long list: numbered pages, previous and next, and an ellipsis standing in for the numbers there is no room to show. Reach for it when the results are ordered and someone has to be able to come back to page 7 — invoices, search results, an archive. An endless feed is better with no rail at all than with one nobody can address.",
+      'Every entry is a real anchor: `PaginationLink` renders through Button\'s `render` with `nativeButton={false}`, and `isActive` sets both the `outline` variant and `aria-current="page"`. In an SPA, intercept the click and keep the `href` — dropping it costs middle-click, open-in-new-tab and the shareable URL.',
+      "The parts draw the rail; they do not decide what is on it. `paginationRange({ page, pageCount, siblingCount })` is the window calculation as a plain function — it returns page numbers and `ellipsis` markers for you to map over, so which pages show is answered in one place instead of in every consumer.",
+    ],
+    examples: [
+      {
+        demo: "pagination/basic",
+        title: "Basic",
+        description:
+          "`PaginationLink` renders an anchor through Button's `render` with `nativeButton={false}`, so it stays a real link — middle-click and open-in-new-tab keep working.",
+      },
+      {
+        demo: "pagination/controlled",
+        title: "Controlled",
+        description:
+          "In an SPA, intercept the click rather than dropping the `href` — the pages stay shareable that way.",
+      },
+      {
+        demo: "pagination/long-range",
+        title: "Long ranges",
+        description:
+          "Past a dozen pages the rail has to be computed, so `paginationRange` does it: `page` and `pageCount` in, page numbers and `ellipsis` markers out. It keeps a constant width — near an edge the run widens rather than the rail shrinking — and never puts an ellipsis in front of a single hidden page.",
+      },
+      {
+        demo: "pagination/under-a-table",
+        title: "Under a table",
+        description:
+          "Where a rail usually sits: a footer beside the result count. The root centres itself in the full width, so seating it at one end means overriding `margin-inline`, `width` and `justify-content` on `.ds-pagination`.",
+      },
+    ],
+    parts: {
+      Pagination:
+        "Already a `<nav>` labelled `pagination`, so it needs no wrapper of its own — but two rails on one page need distinct `aria-label`s. It is centred in the full width; both have to go to seat it in a table footer.",
+      PaginationContent:
+        "A real `<ul>`, so every child belongs in a `PaginationItem` — a link dropped straight in here breaks the list semantics screen readers count from.",
+      PaginationLink:
+        'Only `size` reaches Button; `variant` is decided by `isActive`, which also sets `aria-current="page"`. Styling the current page by hand instead leaves that announcement out.',
+      PaginationPrevious:
+        "Its word is hidden below the `sm` breakpoint, leaving the caret alone. The label is the `text` prop rather than children, which is what makes it translatable.",
+      PaginationNext:
+        "Mirrors Previous, `text` prop included; the caret flips itself under `rtl`.",
+      PaginationEllipsis:
+        "Decorative — `aria-hidden`, so it announces nothing and is never a target. It stands for skipped pages, not a menu: nothing opens.",
+    },
+  },
+  {
+    slug: "agenda",
+    name: "Agenda",
+    category: "Data display",
+    exports: ["Agenda"],
+    description:
+      "A chronological list of events grouped by day — the list half of a calendar, and where v2 keeps event display.",
+    intro: [
+      "Agenda sorts events by day and time, groups them under a day heading, and renders each as a time, a status dot and a title. Reach for it for what is coming up: a day view, a week's schedule, a room's bookings. `Timeline` is the neighbour that looks similar and answers a different question — it narrates a sequence of things that already happened.",
+      "Event display lives here and not on `calendar`. v2's calendar is `react-day-picker`, a date-selection control, and a month cell can honestly show about two events before it starts hiding the rest; a list has no such ceiling. The two compose instead — select a day in `calendar`, list it here — which is what the third example does.",
+    ],
+    examples: [
+      {
+        demo: "agenda/basic",
+        title: "Basic",
+        description:
+          "Events arrive unsorted and are grouped by day for you. `time` is free text sorted as a string, so write it zero-padded — `09:00` sorts before `14:00`, `9am` does not.",
+      },
+      {
+        demo: "agenda/with-calendar",
+        title: "With a calendar",
+        description:
+          "The intended pairing: `calendar` owns selection, Agenda owns the events. Filtering is the caller's, which is what keeps both components ignorant of each other.",
+      },
+      {
+        demo: "agenda/empty",
+        title: "Empty state",
+        description:
+          "No events renders `Empty` rather than a bespoke placeholder, so the voice matches every other empty surface in the system. `emptyMessage` is the one line you write.",
+      },
+    ],
+  },
+  {
+    slug: "table",
+    name: "Table",
+    category: "Data display",
+    exports: [
+      "Table",
+      "TableHeader",
+      "TableBody",
+      "TableFooter",
+      "TableRow",
+      "TableHead",
+      "TableCell",
+      "TableCaption",
+    ],
+    description:
+      "The static table primitives. For sorting, filtering and pagination use Data Table.",
+    intro: [
+      "Table is the styled HTML table and nothing more: one thin wrapper per element, no data layer, no state. Reach for it when the rows are already in the order you want them — a summary, a fixed list, markup rendered on the server. Sorting, filtering and pagination are `Data Table`, which composes these same parts around TanStack Table.",
+      "The root renders a wrapping div that owns the horizontal scroll, so a wide table scrolls inside its column rather than stretching the page — but `className` lands on the `table` element, not on that wrapper. Cells carry no opinion about their content, so a numeric column needs `text-right tabular-nums` on both its head and its cells.",
+    ],
+    examples: [
+      {
+        demo: "table/basic",
+        title: "Basic",
+        description:
+          "The whole skeleton in one pass. Rules come from the sections rather than the rows — `TableHeader` draws the line under the head and `TableBody` drops it on the last row, so a row never has to know where it sits.",
+      },
+      {
+        demo: "table/with-badges",
+        title: "With status badges",
+        description:
+          "Numeric columns take `text-right`; ids take `font-mono` so digits align down the column. `TableCaption` renders below the table whatever its position in the JSX — the root is `caption-bottom`.",
+      },
+      {
+        demo: "table/with-footer",
+        title: "With footer total",
+        description:
+          "`TableFooter` is styled as a summary row, not a repeat of the header — fill it with `TableCell`, not `TableHead`, and compute the total from the same array the body maps.",
+      },
+      {
+        demo: "table/selectable",
+        title: "Selectable rows",
+        description:
+          'Selection is the one state the primitives track: `data-state="selected"` tints the row and outranks the hover tint, so a selected row holds still under the pointer. A cell containing a `role="checkbox"` element drops its trailing padding, which is what keeps the control column narrow without a width.',
+      },
+    ],
+    parts: {
+      Table:
+        "Renders a scrolling div around the `table`, and `className` goes on the table inside it — a max-width or a border meant for the scroll container has to wrap this part instead.",
+      TableHeader:
+        "`[&_tr]:border-b`, so the head rule belongs to the section. A header of two stacked rows draws a line under each.",
+      TableBody:
+        "Drops the border on its last row, so the body never doubles up with the footer's own top rule.",
+      TableFooter:
+        "A summary row: muted fill, `font-medium`, top border. It is not a second header — put `TableCell` in it, so screen readers do not read the totals as column names.",
+      TableHead:
+        "Uppercase tracked caption text, start-aligned and `whitespace-nowrap`. It sets nothing for the column below it — a right-aligned column needs `text-right` here and on every cell.",
+      TableRow:
+        'Hover and `data-state="selected"` both tint the row, and selection wins the cascade, so a selected row does not change under the pointer. `has-aria-expanded` tints it too, for a row that owns an open disclosure.',
+      TableCell:
+        '`whitespace-nowrap` by default, so prose in a cell needs `whitespace-normal` and a width to wrap. Trailing padding drops to zero when the cell holds a `role="checkbox"` element.',
+      TableCaption:
+        "Always renders below the table — the root is `caption-bottom` — so it reads as a footnote, not a title. A real heading belongs above the component.",
+    },
+  },
+  {
+    slug: "breadcrumb",
+    name: "Breadcrumb",
+    category: "Navigation",
+    exports: [
+      "Breadcrumb",
+      "BreadcrumbList",
+      "BreadcrumbItem",
+      "BreadcrumbLink",
+      "BreadcrumbPage",
+      "BreadcrumbSeparator",
+      "BreadcrumbEllipsis",
+    ],
+    description:
+      "The trail to the current page, with the last item as plain text.",
+    intro: [
+      "Breadcrumb states where the current page sits in a hierarchy and offers the way back up it. Reach for it when a page has ancestors a reader can meaningfully return to — a file inside folders, a record inside a project. A flat app with three top-level screens has no trail to show, and history is what the back button is for.",
+      "The trail is an ordered list of links with one exception at the end: `BreadcrumbPage` is the current page, so it renders as plain text carrying `aria-current`, not as a link to where you already are. Links go through Base UI's `render` prop rather than `asChild`, which is how a router's own link component takes over the anchor.",
+    ],
+    examples: [
+      {
+        demo: "breadcrumb/basic",
+        title: "Basic",
+        description:
+          "`BreadcrumbPage` marks the current page: not a link, and `aria-current`. Separators are `aria-hidden`, so the trail reads cleanly aloud.",
+      },
+      {
+        demo: "breadcrumb/collapsed",
+        title: "Collapsed",
+        description:
+          "A deep path shortened to its ends. `BreadcrumbEllipsis` stands in for the levels between, and `BreadcrumbSeparator` renders a caret unless given children — pass a character or another icon to change the punctuation.",
+      },
+      {
+        demo: "breadcrumb/overflow-menu",
+        title: "Overflow menu",
+        description:
+          "The same truncation, but the hidden levels stay reachable: the ellipsis becomes a `DropdownMenu` trigger. `BreadcrumbEllipsis` is `aria-hidden`, so the accessible name has to come from the trigger around it.",
+      },
+    ],
+    parts: {
+      BreadcrumbLink:
+        "Takes Base UI's `render` prop, not `asChild` — pass a router link (`render={<Link to=\"/docs\" />}`) and it renders as that element with the breadcrumb's classes merged in.",
+      BreadcrumbPage:
+        'Plain text with `aria-current="page"` and `aria-disabled`, since the current page is not somewhere to navigate to. It is the last item, and only ever one.',
+      BreadcrumbSeparator:
+        "A presentational list item, hidden from the accessibility tree so the trail reads as words rather than punctuation. Give it children to replace the default caret.",
+      BreadcrumbEllipsis:
+        "Also `aria-hidden`. Wrapping it in a control — a menu trigger — means the label has to be on that control, or the button reads as unnamed.",
+    },
+  },
+  {
+    slug: "empty",
+    name: "Empty",
+    category: "Data display",
+    exports: [
+      "Empty",
+      "EmptyHeader",
+      "EmptyMedia",
+      "EmptyTitle",
+      "EmptyDescription",
+      "EmptyContent",
+    ],
+    description:
+      "The empty-state block: media, title, description and an action.",
+    intro: [
+      "Empty is the centred block a region shows when it has nothing to show: media, a title, a line of explanation, and the way out. One anatomy covers three situations that only differ in wording — a first-run state, a search with no matches, and a request that failed. For a message about the whole page rather than one region, that is `Banner`.",
+      'It sets `border-dashed` but no border width, so it is unframed until you add `border` — which is what lets the same block sit flush inside a card that already has edges. It is `flex-1`, so in a flex column it fills the space it is given rather than sizing to its text, and it carries no role: pass `role="status"` when the block replaces content after a load.',
+    ],
+    examples: [
+      {
+        demo: "empty/basic",
+        title: "Basic",
+        description:
+          "`Empty` sets `border-dashed` but no border width, so the caller decides whether the state is framed or sits flush in a card.",
+      },
+      {
+        demo: "empty/with-action",
+        title: "With actions",
+        description:
+          "`EmptyContent` is the slot for the way out — it constrains its own width so buttons stay centred under the text.",
+      },
+      {
+        demo: "empty/failed",
+        title: "Failed to load",
+        description:
+          'The same anatomy saying something went wrong rather than nothing is here, so the action is `Retry` and the description says what to expect. Empty ships no role, so `role="status"` is what makes the swap announced.',
+      },
+      {
+        demo: "empty/in-card",
+        title: "Inside a card",
+        description:
+          "The unframed form: no border, since the panel already has edges, and tighter padding than the default 3rem. The padding belongs to the block, so the container passes `px-0` rather than stacking the two.",
+      },
+    ],
+    parts: {
+      Empty:
+        'Sets `border-dashed` with no border width, so a standalone block needs `border` and one inside a card needs nothing. `flex-1` makes it fill a flex parent, and it carries no role — pass `role="status"` when it replaces loaded content.',
+      EmptyHeader:
+        "`max-w-sm` on the text column, so a long description wraps to a readable measure instead of the container's width.",
+      EmptyMedia:
+        '`variant="icon"` is the muted chip and sizes an `svg` child for you; `default` is a bare slot, so an illustration or a larger glyph carries its own size.',
+      EmptyTitle:
+        "Heading face, uppercase and tracked, but a `div` — add your own heading element when the page needs the level.",
+      EmptyDescription:
+        "Styles its descendant links, underlined and primary on hover, so the way out can live inside the sentence.",
+      EmptyContent:
+        "The slot for the way out, with its own `max-w-sm` so buttons stay centred under the text rather than spreading to the block's width.",
+    },
+  },
+  {
+    slug: "toolbar",
+    name: "Toolbar",
+    category: "Actions",
+    exports: [
+      "Toolbar",
+      "ToolbarGroup",
+      "ToolbarButton",
+      "ToolbarLink",
+      "ToolbarInput",
+      "ToolbarSeparator",
+    ],
+    description:
+      "A Base UI toolbar with arrow-key navigation across grouped buttons, inputs and separators.",
+    intro: [
+      "Toolbar is the chrome strip beside a canvas or above a list: formatting actions, view controls, a filter field. Reach for it when a cluster of controls is used over and over and should not cost one tab stop each — a row of buttons a reader passes once is just a flex container.",
+      "The strip is a single tab stop with the arrow keys moving inside it, wrapping at the ends, so a control only joins that ring if it is a Toolbar part: `ToolbarButton`, `ToolbarLink` and `ToolbarInput` are Base UI items rather than styling wrappers. `ToolbarButton` renders a `Button` underneath, so variants and tones still apply.",
+    ],
+    examples: [
+      {
+        demo: "toolbar/basic",
+        title: "Basic",
+        description:
+          "One tab stop for the whole toolbar; arrow keys move between buttons. `ToolbarGroup` bundles related actions.",
+      },
+      {
+        demo: "toolbar/with-input",
+        title: "With input and link",
+        description:
+          "`ToolbarInput` and `ToolbarLink` join the same arrow-key ring as the buttons, so a filter field stays reachable without a second tab stop.",
+      },
+      {
+        demo: "toolbar/vertical",
+        title: "Vertical",
+        description:
+          '`orientation="vertical"` switches the axis. `ToolbarSeparator` reads the root orientation and draws across it, so it needs no prop.',
+      },
+    ],
+    parts: {
+      Toolbar:
+        "Owns the roving focus: one tab stop for the strip, arrow keys within it, wrapping at the ends unless `loopFocus={false}`. Its `disabled` reaches every item, and `orientation` sets the axis the separators draw across.",
+      ToolbarGroup:
+        "Clusters items visually without breaking the ring — arrow keys still run the length of the toolbar. Its own `disabled` covers every item in the group.",
+      ToolbarButton:
+        "Renders a `Button`, so `variant`, `size` and `tone` all apply; it only changes the defaults to `ghost` and `icon-sm`. Icon-only buttons still need an `aria-label`.",
+      ToolbarInput:
+        "A real input inside the ring: the arrow keys move its caret first and only step out of the field once the caret has reached the end, so a filter field costs no second tab stop.",
+      ToolbarSeparator:
+        "Defaults to the opposite orientation of the toolbar, which is the one that draws across it — pass `orientation` only to override that.",
+    },
+  },
+  {
+    slug: "banner",
+    name: "Banner",
+    category: "Layout",
+    exports: [
+      "Banner",
+      "BannerContent",
+      "BannerTitle",
+      "BannerDescription",
+      "BannerAction",
+    ],
+    description:
+      "A full-width, tone-coloured message bar over the shared six-tone family — the same tokens button.tsx's `tone` axis reads.",
+    intro: [
+      "Banner is the page-level counterpart of Alert: the same icon, title and description anatomy, but full-width, flush-cornered and tinted edge to edge. Reach for it when a message concerns the whole screen or section — a maintenance window, a plan limit, an incident notice — pinned above the content rather than nested inside it.",
+      "`tone` sets `--tone-bg`/`--tone-ink` from the shared six-tone family in globals.css — the same tokens Button's `tone` axis reads — so a banner always matches its sibling controls and a new tone never needs a bespoke colour here.",
+    ],
+    examples: [
+      {
+        demo: "banner/basic",
+        title: "Basic",
+        description:
+          'Icon, title, description. The root carries `role="status"`, so a banner mounted after load is announced without an aria-live wrapper.',
+      },
+      {
+        demo: "banner/with-action",
+        title: "Action and dismiss",
+        description:
+          "`BannerAction` is a plain flex sibling rather than an absolutely-positioned corner, so it can hold more than one control without overlapping the text.",
+      },
+      {
+        demo: "banner/tones",
+        title: "Tones",
+        description:
+          "The full severity ladder. Each tone reads its `--ds-<tone>-bg`/`--ds-<tone>-ink` pair, so the ladder stays in step with Button, Alert and every other tone-aware component.",
+      },
+    ],
+    parts: {
+      Banner:
+        'Carries `role="status"` — mounted banners are announced politely with no aria-live wrapper. A leading `svg` child is auto-sized and top-aligned by the root\'s selectors.',
+      BannerDescription:
+        "Deliberately un-faded: the tone inks clear AA as bare text but drop under 4.5:1 behind opacity, so hierarchy comes from BannerTitle's `font-medium` instead.",
+      BannerAction:
+        "A flex sibling, not an absolutely-positioned corner — several controls fit beside long text without overlap.",
+    },
+  },
+  {
+    slug: "progress",
+    name: "Progress",
+    category: "Data display",
+    exports: [
+      "Progress",
+      "ProgressTrack",
+      "ProgressIndicator",
+      "ProgressLabel",
+      "ProgressValue",
+    ],
+    description: "Task completion, with optional label and value slots.",
+    intro: [
+      "Progress reports work advancing towards done: an upload, an import, an indexing pass. Reach for it when the value only moves one way and completion is the point — a measurement of capacity that can fall again is `Meter`, and work whose extent is unknown and unmeasured is `Spinner`.",
+      "`value={null}` is the indeterminate state, and it is the default — distinct from `0`, which means started with nothing done. The root reflects that state as `data-indeterminate`, `data-progressing` or `data-complete`, so a finished bar restyles itself off an attribute instead of the caller comparing `value` to `max`.",
+    ],
+    examples: [
+      {
+        demo: "progress/basic",
+        title: "Basic",
+        description:
+          "`Progress` renders its own track and indicator, so children are the label and value only. `format` takes `Intl.NumberFormatOptions`, which is what turns the 0–1 ratio into a percentage — without it the value prints as `value` divided by 100 regardless of `max`, unlike Meter, which reads its range.",
+      },
+      {
+        demo: "progress/indeterminate",
+        title: "Indeterminate",
+        description:
+          "`value={null}` means unknown — distinct from `0`, which means started but nothing done. A plain `ProgressValue` renders nothing while indeterminate; a function child is handed the literal string `indeterminate` instead.",
+      },
+      {
+        demo: "progress/upload-queue",
+        title: "Upload queue",
+        description:
+          "Several tasks in one list, with the finished bar recoloured off the root's `data-complete` attribute rather than a comparison at the call site. The function child on `ProgressValue` is what lets the completed row read `Done` instead of `100%`.",
+      },
+    ],
+    parts: {
+      Progress:
+        "Renders the track and the indicator itself, after your children, and carries `data-indeterminate`, `data-progressing` or `data-complete` — style completion off the attribute.",
+      ProgressTrack:
+        "Rendered for you. Restyle the bar through a descendant selector on the root rather than by adding a second track.",
+      ProgressIndicator:
+        "Also internal, and Base UI sets its width inline, so colour is the one thing left to change from outside.",
+      ProgressLabel:
+        "Registers itself as the bar's accessible name, so a bar without one needs an `aria-label` on the root.",
+      ProgressValue:
+        "`aria-hidden`: the root already announces the value through `aria-valuetext`. It renders nothing while `value` is `null` unless you pass a function child.",
+    },
+  },
+  {
+    slug: "page-header",
+    name: "Page Header",
+    category: "Layout",
+    exports: [
+      "PageHeader",
+      "PageHeaderHeading",
+      "PageHeaderIcon",
+      "PageHeaderTitle",
+      "PageHeaderDescription",
+      "PageHeaderActions",
+      "PageHeaderTabs",
+    ],
+    description:
+      "Breadcrumb, title, description and actions for the top of a page, with an optional flush tab strip.",
+    intro: [
+      "Page Header is the block every routed page opens with: an optional breadcrumb, the title and its description, the page's primary actions, and a rule closing it off. Reach for it so heading level, spacing and that rule are decided once here rather than re-guessed per screen.",
+      "It is slots rather than props — the parts compose in the order the page needs and take no configuration bag. `PageHeaderTitle` renders an `h1`, so a page renders one. `PageHeaderTabs` is the one part that changes the root: its presence drops the header's bottom padding, so the rule lands flush under the tab strip instead of above it.",
+    ],
+    examples: [
+      {
+        demo: "page-header/basic",
+        title: "Basic",
+        description: "Just a title and description, no prop bag, only slots.",
+      },
+      {
+        demo: "page-header/advanced",
+        title: "Advanced",
+        description:
+          "Breadcrumb, title, description and actions compose freely alongside the title.",
+      },
+      {
+        demo: "page-header/with-tabs",
+        title: "With tabs and icon",
+        description:
+          "`PageHeaderTabs` flips the header's bottom rule flush against the tab strip; `Tabs` wraps the header so the panels render below it. `PageHeaderIcon` sizes and mutes whatever Phosphor icon you hand it.",
+      },
+    ],
+    parts: {
+      PageHeader:
+        "Owns the bottom rule and the padding above it, and drops that padding when a PageHeaderTabs is present so the rule sits under the tabs.",
+      PageHeaderHeading:
+        "A wrapping `justify-between` row, which means it wants exactly two children: the title stack in one, PageHeaderActions in the other. Wrap the title and description together yourself — they are not a slot.",
+      PageHeaderTitle:
+        "An `h1`, so one per page. It carries the heading face and no spacing, and there is no level prop — a nested heading is a plain element, not this part.",
+      PageHeaderIcon:
+        "Fixes any icon inside it to 1.5rem and mutes it, and its 2rem height is what aligns it with the title's cap height, so it belongs beside the title stack rather than inside it.",
+      PageHeaderTabs:
+        "A marker with no styles of its own: its `data-slot` is what flips the root's padding. Put TabsList inside it and Tabs around the whole header, so the panels render below the rule.",
+    },
+  },
+  {
+    slug: "description-list",
+    name: "Description List",
+    category: "Data display",
+    exports: ["DescriptionList", "DescriptionTerm", "DescriptionDetail"],
+    description:
+      "Term/detail pairs for record summaries. Renders a real `dl`, so the pairing survives without sight of the layout.",
+    intro: [
+      "Description List is the record-summary primitive: term-and-detail pairs in a two-column grid. Reach for it whenever a block answers `what are the fields of this thing?` — an invoice head, a mission summary, a settings readout. A scannable column of many records is `Table`.",
+      "The grid columns live on the root, so terms and details must be direct children: pairs flow as consecutive grid cells with no row wrapper. Wrapping a pair in a `div` breaks the alignment for the whole list.",
+    ],
+    examples: [
+      {
+        demo: "description-list/basic",
+        title: "Basic",
+        description:
+          "The term column is `auto`-sized and the detail column takes the rest, so the widest term sets the gutter for every row.",
+      },
+      {
+        demo: "description-list/in-card",
+        title: "In a card",
+        description:
+          "Its most common home: the summary block of a record. The rules come from each pair's own `border-t`, with `first-of-type` suppressing the leading one — the list needs no divider of its own.",
+      },
+      {
+        demo: "description-list/rich-details",
+        title: "Details that aren't text",
+        description:
+          "A detail can hold a `Status` or a `Tag`, not just a string. The `dd` is padded for text, so a boxed control makes its row slightly taller than its neighbours.",
+      },
+    ],
+    parts: {
+      DescriptionList:
+        "Owns the `auto 1fr` grid, so every term and detail must be a direct child — a wrapper around a pair drops it out of the columns.",
+      DescriptionTerm:
+        "`whitespace-nowrap`: a long term widens the first column for the whole list rather than wrapping.",
+      DescriptionDetail:
+        "`tabular-nums`, so a column of amounts or dates lines up digit for digit.",
+    },
+  },
+  {
+    slug: "kbd",
+    name: "Kbd",
+    category: "Actions",
+    exports: ["Kbd", "KbdGroup"],
+    description:
+      "Renders a keyboard key or chord inline, sized to sit in a line of text.",
+    intro: [
+      "Kbd prints a key the reader is meant to press: the shortcut on a menu row, the `⌘K` hint inside a search field, the accelerator on a tooltip. One key per element, and `KbdGroup` for a chord.",
+      "It takes its colours from whatever contains it — inside an input group it picks up the input fill, inside a tooltip it inverts onto the dark surface — so a chord dropped into another component needs no props. It is also `pointer-events-none`: the key labels a shortcut, it never fires it.",
+    ],
+    examples: [
+      {
+        demo: "kbd/basic",
+        title: "Basic",
+        description:
+          "Single keys, plus a `KbdGroup` for a chord. The min-width keeps one-character keys square.",
+      },
+      {
+        demo: "kbd/shortcuts",
+        title: "Shortcut list",
+        description: "A shortcuts panel built from a plain description list.",
+      },
+      {
+        demo: "kbd/in-context",
+        title: "Inside other components",
+        description:
+          "`Kbd` restyles from its container — inside an input group it takes the input fill, inside a tooltip it inverts.",
+      },
+    ],
+    parts: {
+      Kbd: "A minimum width keeps a single character square while `Esc` or `⌘⇧` widen past it. `pointer-events-none` and `select-none` are deliberate: the handler belongs on the control this annotates.",
+      KbdGroup:
+        "The gap between the keys of one chord, and nothing else. It renders a `kbd` too, so the keys nest inside it legally — no `+` between them.",
+    },
+  },
+
+  {
+    slug: "spinner",
+    name: "Spinner",
+    category: "Data display",
+    exports: ["Spinner"],
+    description:
+      "An indeterminate loading indicator, sized to the current text.",
+    intro: [
+      "Spinner is the indeterminate wait: a rotating mark sized to the text beside it, for when there is no honest way to say how long or how far along. Reach for it inside a button that has been pressed, on a row refreshing in place, or in a region with no shape to build a placeholder from. When the shape of the arriving content is known, `Skeleton` holds the layout instead of covering it.",
+      'It is a bare `svg` carrying `role="status"`, so it announces itself with no wrapper, and it paints in `currentColor`, so it takes the colour of the text around it. `label` is the accessible name and defaults to "Loading" — right for a page, wrong for the third spinner in a list, which is why it is a prop rather than a constant. `className` retunes the `size-4` default.',
+    ],
+    examples: [
+      {
+        demo: "spinner/basic",
+        title: "Sizes",
+        description:
+          'It ships with `role="status"` and a default `label` of "Loading", so it is announced without a wrapper.',
+      },
+      {
+        demo: "spinner/labelled",
+        title: "Naming each wait",
+        description:
+          'Three spinners all announcing "Loading" tell a screen reader nothing. `label` names the one job each is waiting on, which is the whole reason it is a prop.',
+      },
+      {
+        demo: "spinner/in-context",
+        title: "In buttons and empty states",
+        description:
+          "A button sizes the glyph inside it, so a spinner needs no adjustment there. Written into plain HTML the class draws 0.11's ruled ring instead, because there is no glyph to spin.",
+      },
+      {
+        demo: "spinner/activity-rows",
+        title: "Per-row activity",
+        description:
+          'One wait per row, so each spinner takes its own `aria-label` — four rows all announcing "Loading" tell a screen-reader user nothing. Settled rows swap to `Status`, whose label carries the outcome without relying on colour.',
+      },
+      {
+        demo: "spinner/deferred",
+        title: "Deferred appearance",
+        description:
+          "A spinner that flashes for 80ms reads as a glitch, so the timer — not the request — decides when it mounts. Only waits long enough to be noticed ever draw one.",
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [
@@ -2871,85 +3632,6 @@ export const PENDING: ComponentDoc[] = [
       },
     ],
   },
-  {
-    slug: "toolbar",
-    name: "Toolbar",
-    category: "Actions",
-    description:
-      "A Base UI toolbar with arrow-key navigation across grouped buttons, inputs and separators.",
-    intro: [
-      "Toolbar is the chrome strip beside a canvas or above a list: formatting actions, view controls, a filter field. Reach for it when a cluster of controls is used over and over and should not cost one tab stop each — a row of buttons a reader passes once is just a flex container.",
-      "The strip is a single tab stop with the arrow keys moving inside it, wrapping at the ends, so a control only joins that ring if it is a Toolbar part: `ToolbarButton`, `ToolbarLink` and `ToolbarInput` are Base UI items rather than styling wrappers. `ToolbarButton` renders a `Button` underneath, so variants and tones still apply.",
-    ],
-    examples: [
-      {
-        demo: "toolbar/basic",
-        title: "Basic",
-        description:
-          "One tab stop for the whole toolbar; arrow keys move between buttons. `ToolbarGroup` bundles related actions.",
-      },
-      {
-        demo: "toolbar/with-input",
-        title: "With input and link",
-        description:
-          "`ToolbarInput` and `ToolbarLink` join the same arrow-key ring as the buttons, so a filter field stays reachable without a second tab stop.",
-      },
-      {
-        demo: "toolbar/vertical",
-        title: "Vertical",
-        description:
-          '`orientation="vertical"` switches the axis. `ToolbarSeparator` reads the root orientation and draws across it, so it needs no prop.',
-      },
-    ],
-    parts: {
-      Toolbar:
-        "Owns the roving focus: one tab stop for the strip, arrow keys within it, wrapping at the ends unless `loopFocus={false}`. Its `disabled` reaches every item, and `orientation` sets the axis the separators draw across.",
-      ToolbarGroup:
-        "Clusters items visually without breaking the ring — arrow keys still run the length of the toolbar. Its own `disabled` covers every item in the group.",
-      ToolbarButton:
-        "Renders a `Button`, so `variant`, `size` and `tone` all apply; it only changes the defaults to `ghost` and `icon-sm`. Icon-only buttons still need an `aria-label`.",
-      ToolbarInput:
-        "A real input inside the ring: the arrow keys move its caret first and only step out of the field once the caret has reached the end, so a filter field costs no second tab stop.",
-      ToolbarSeparator:
-        "Defaults to the opposite orientation of the toolbar, which is the one that draws across it — pass `orientation` only to override that.",
-    },
-  },
-  {
-    slug: "kbd",
-    name: "Kbd",
-    category: "Actions",
-    description:
-      "Renders a keyboard key or chord inline, sized to sit in a line of text.",
-    intro: [
-      "Kbd prints a key the reader is meant to press: the shortcut on a menu row, the `⌘K` hint inside a search field, the accelerator on a tooltip. One key per element, and `KbdGroup` for a chord.",
-      "It takes its colours from whatever contains it — inside an input group it picks up the input fill, inside a tooltip it inverts onto the dark surface — so a chord dropped into another component needs no props. It is also `pointer-events-none`: the key labels a shortcut, it never fires it.",
-    ],
-    examples: [
-      {
-        demo: "kbd/basic",
-        title: "Basic",
-        description:
-          "Single keys, plus a `KbdGroup` for a chord. The min-width keeps one-character keys square.",
-      },
-      {
-        demo: "kbd/shortcuts",
-        title: "Shortcut list",
-        description: "A shortcuts panel built from a plain description list.",
-      },
-      {
-        demo: "kbd/in-context",
-        title: "Inside other components",
-        description:
-          "`Kbd` restyles from its container — inside an input group it takes the input fill, inside a tooltip it inverts.",
-      },
-    ],
-    parts: {
-      Kbd: "A minimum width keeps a single character square while `Esc` or `⌘⇧` widen past it. `pointer-events-none` and `select-none` are deliberate: the handler belongs on the control this annotates.",
-      KbdGroup:
-        "The gap between the keys of one chord, and nothing else. It renders a `kbd` too, so the keys nest inside it legally — no `+` between them.",
-    },
-  },
-
   {
     slug: "input",
     name: "Input",
@@ -3347,61 +4029,6 @@ export const PENDING: ComponentDoc[] = [
     },
   },
   {
-    slug: "table",
-    name: "Table",
-    category: "Data display",
-    description:
-      "The static table primitives. For sorting, filtering and pagination use Data Table.",
-    intro: [
-      "Table is the styled HTML table and nothing more: one thin wrapper per element, no data layer, no state. Reach for it when the rows are already in the order you want them — a summary, a fixed list, markup rendered on the server. Sorting, filtering and pagination are `Data Table`, which composes these same parts around TanStack Table.",
-      "The root renders a wrapping div that owns the horizontal scroll, so a wide table scrolls inside its column rather than stretching the page — but `className` lands on the `table` element, not on that wrapper. Cells carry no opinion about their content, so a numeric column needs `text-right tabular-nums` on both its head and its cells.",
-    ],
-    examples: [
-      {
-        demo: "table/basic",
-        title: "Basic",
-        description:
-          "The whole skeleton in one pass. Rules come from the sections rather than the rows — `TableHeader` draws the line under the head and `TableBody` drops it on the last row, so a row never has to know where it sits.",
-      },
-      {
-        demo: "table/with-badges",
-        title: "With status badges",
-        description:
-          "Numeric columns take `text-right`; ids take `font-mono` so digits align down the column. `TableCaption` renders below the table whatever its position in the JSX — the root is `caption-bottom`.",
-      },
-      {
-        demo: "table/with-footer",
-        title: "With footer total",
-        description:
-          "`TableFooter` is styled as a summary row, not a repeat of the header — fill it with `TableCell`, not `TableHead`, and compute the total from the same array the body maps.",
-      },
-      {
-        demo: "table/selectable",
-        title: "Selectable rows",
-        description:
-          'Selection is the one state the primitives track: `data-state="selected"` tints the row and outranks the hover tint, so a selected row holds still under the pointer. A cell containing a `role="checkbox"` element drops its trailing padding, which is what keeps the control column narrow without a width.',
-      },
-    ],
-    parts: {
-      Table:
-        "Renders a scrolling div around the `table`, and `className` goes on the table inside it — a max-width or a border meant for the scroll container has to wrap this part instead.",
-      TableHeader:
-        "`[&_tr]:border-b`, so the head rule belongs to the section. A header of two stacked rows draws a line under each.",
-      TableBody:
-        "Drops the border on its last row, so the body never doubles up with the footer's own top rule.",
-      TableFooter:
-        "A summary row: muted fill, `font-medium`, top border. It is not a second header — put `TableCell` in it, so screen readers do not read the totals as column names.",
-      TableHead:
-        "Uppercase tracked caption text, start-aligned and `whitespace-nowrap`. It sets nothing for the column below it — a right-aligned column needs `text-right` here and on every cell.",
-      TableRow:
-        'Hover and `data-state="selected"` both tint the row, and selection wins the cascade, so a selected row does not change under the pointer. `has-aria-expanded` tints it too, for a row that owns an open disclosure.',
-      TableCell:
-        '`whitespace-nowrap` by default, so prose in a cell needs `whitespace-normal` and a width to wrap. Trailing padding drops to zero when the cell holds a `role="checkbox"` element.',
-      TableCaption:
-        "Always renders below the table — the root is `caption-bottom` — so it reads as a footnote, not a title. A real heading belongs above the component.",
-    },
-  },
-  {
     slug: "kanban",
     name: "Kanban",
     category: "Data display",
@@ -3438,37 +4065,6 @@ export const PENDING: ComponentDoc[] = [
       KanbanCardTitle:
         "Type styles only, and what the card falls back to when no `renderCard` is given. `renderCard` replaces the whole body, so compose this back in when the heading should still match.",
     },
-  },
-  {
-    slug: "agenda",
-    name: "Agenda",
-    category: "Data display",
-    description:
-      "A chronological list of events grouped by day — the list half of a calendar, and where v2 keeps event display.",
-    intro: [
-      "Agenda sorts events by day and time, groups them under a day heading, and renders each as a time, a status dot and a title. Reach for it for what is coming up: a day view, a week's schedule, a room's bookings. `Timeline` is the neighbour that looks similar and answers a different question — it narrates a sequence of things that already happened.",
-      "Event display lives here and not on `calendar`. v2's calendar is `react-day-picker`, a date-selection control, and a month cell can honestly show about two events before it starts hiding the rest; a list has no such ceiling. The two compose instead — select a day in `calendar`, list it here — which is what the third example does.",
-    ],
-    examples: [
-      {
-        demo: "agenda/basic",
-        title: "Basic",
-        description:
-          "Events arrive unsorted and are grouped by day for you. `time` is free text sorted as a string, so write it zero-padded — `09:00` sorts before `14:00`, `9am` does not.",
-      },
-      {
-        demo: "agenda/with-calendar",
-        title: "With a calendar",
-        description:
-          "The intended pairing: `calendar` owns selection, Agenda owns the events. Filtering is the caller's, which is what keeps both components ignorant of each other.",
-      },
-      {
-        demo: "agenda/empty",
-        title: "Empty state",
-        description:
-          "No events renders `Empty` rather than a bespoke placeholder, so the voice matches every other empty surface in the system. `emptyMessage` is the one line you write.",
-      },
-    ],
   },
   {
     slug: "card",
@@ -3558,97 +4154,6 @@ export const PENDING: ComponentDoc[] = [
     ],
   },
   {
-    slug: "avatar",
-    name: "Avatar",
-    category: "Data display",
-    description:
-      "A user image with a text fallback, and a group with overflow count.",
-    intro: [
-      "Avatar is the identity marker: a round image with initials waiting behind it. Reach for it wherever a person or an account has to be recognisable at a glance — a comment header, an assignee cell, a member list. It renders no name of its own, so keep the name in the markup beside it unless the avatar is purely decorative.",
-      "`size` sets `data-size` on the root rather than styling the children directly, so `AvatarBadge` and `AvatarGroupCount` size themselves from the avatar they belong to. A group is scaled by sizing its avatars; the group itself takes no size.",
-    ],
-    examples: [
-      {
-        demo: "avatar/basic",
-        title: "Basic",
-        description:
-          "The fallback shows until the image resolves and stays if it fails, so initials are the default rather than a broken-image icon. The portrait is inlined as a data URI so the demo needs no network — any `src` behaves the same.",
-      },
-      {
-        demo: "avatar/sizes",
-        title: "Sizes and badge",
-        description:
-          "`AvatarBadge` reads the avatar's `data-size` instead of taking a size prop, and drops its icon at `sm` where it would be unreadable.",
-      },
-      {
-        demo: "avatar/group",
-        title: "Group",
-        description:
-          "`AvatarGroup` overlaps its children and rings them in the background colour; `AvatarGroupCount` closes the stack.",
-      },
-      {
-        demo: "avatar/in-row",
-        title: "In a member list",
-        description:
-          "Where avatars usually sit: leading a row, inside `ItemMedia`, with the name beside them. The online dot is decoration only — the row says `online` in words too, so the state does not depend on colour.",
-      },
-    ],
-    parts: {
-      Avatar:
-        "Sets `data-size`, which every other part reads — a part rendered outside an Avatar falls back to its own default. The border is an `::after` overlay in `mix-blend-darken`, so it darkens a photo's own edge instead of drawing a ring over it.",
-      AvatarImage:
-        "Base UI keeps it unmounted until the image loads, and removes it again if the load fails — which is why the fallback is not conditional. Render both, always.",
-      AvatarBadge:
-        "Positioned absolutely against the root, so it has to be a child of Avatar. It takes no size of its own and drops its icon at `sm`, where a glyph would be unreadable.",
-      AvatarGroup:
-        "Overlaps its children and rings each one in the background colour; the ring is what separates them, so a group on a tinted surface needs that ring recoloured.",
-      AvatarGroupCount:
-        "A counter, not an Avatar. It matches the group's size through `group-has-data-*`, so it follows whatever size the avatars were given.",
-    },
-  },
-  {
-    slug: "progress",
-    name: "Progress",
-    category: "Data display",
-    description: "Task completion, with optional label and value slots.",
-    intro: [
-      "Progress reports work advancing towards done: an upload, an import, an indexing pass. Reach for it when the value only moves one way and completion is the point — a measurement of capacity that can fall again is `Meter`, and work whose extent is unknown and unmeasured is `Spinner`.",
-      "`value={null}` is the indeterminate state, and it is the default — distinct from `0`, which means started with nothing done. The root reflects that state as `data-indeterminate`, `data-progressing` or `data-complete`, so a finished bar restyles itself off an attribute instead of the caller comparing `value` to `max`.",
-    ],
-    examples: [
-      {
-        demo: "progress/basic",
-        title: "Basic",
-        description:
-          "`Progress` renders its own track and indicator, so children are the label and value only. `format` takes `Intl.NumberFormatOptions`, which is what turns the 0–1 ratio into a percentage — without it the value prints as `value` divided by 100 regardless of `max`, unlike Meter, which reads its range.",
-      },
-      {
-        demo: "progress/indeterminate",
-        title: "Indeterminate",
-        description:
-          "`value={null}` means unknown — distinct from `0`, which means started but nothing done. A plain `ProgressValue` renders nothing while indeterminate; a function child is handed the literal string `indeterminate` instead.",
-      },
-      {
-        demo: "progress/upload-queue",
-        title: "Upload queue",
-        description:
-          "Several tasks in one list, with the finished bar recoloured off the root's `data-complete` attribute rather than a comparison at the call site. The function child on `ProgressValue` is what lets the completed row read `Done` instead of `100%`.",
-      },
-    ],
-    parts: {
-      Progress:
-        "Renders the track and the indicator itself, after your children, and carries `data-indeterminate`, `data-progressing` or `data-complete` — style completion off the attribute.",
-      ProgressTrack:
-        "Rendered for you. Restyle the bar through a descendant selector on the root rather than by adding a second track.",
-      ProgressIndicator:
-        "Also internal, and Base UI sets its width inline, so colour is the one thing left to change from outside.",
-      ProgressLabel:
-        "Registers itself as the bar's accessible name, so a bar without one needs an `aria-label` on the root.",
-      ProgressValue:
-        "`aria-hidden`: the root already announces the value through `aria-valuetext`. It renders nothing while `value` is `null` unless you pass a function child.",
-    },
-  },
-  {
     slug: "skeleton",
     name: "Skeleton",
     category: "Data display",
@@ -3683,151 +4188,6 @@ export const PENDING: ComponentDoc[] = [
           'Skeleton has no ARIA of its own: `aria-busy` on the region plus one `role="status"` line says what is loading, and the bars go `aria-hidden` so a screen reader never walks a wall of empty divs.',
       },
     ],
-  },
-  {
-    slug: "spinner",
-    name: "Spinner",
-    category: "Data display",
-    description:
-      "An indeterminate loading indicator, sized to the current text.",
-    intro: [
-      "Spinner is the indeterminate wait: a rotating mark sized to the text beside it, for when there is no honest way to say how long or how far along. Reach for it inside a button that has been pressed, on a row refreshing in place, or in a region with no shape to build a placeholder from. When the shape of the arriving content is known, `Skeleton` holds the layout instead of covering it.",
-      'It is a bare `svg` carrying `role="status"`, so it announces itself with no wrapper, and it paints in `currentColor`, so it takes the colour of the text around it. `label` is the accessible name and defaults to "Loading" — right for a page, wrong for the third spinner in a list, which is why it is a prop rather than a constant. `className` retunes the `size-4` default.',
-    ],
-    examples: [
-      {
-        demo: "spinner/basic",
-        title: "Sizes",
-        description:
-          'It ships with `role="status"` and a default `label` of "Loading", so it is announced without a wrapper.',
-      },
-      {
-        demo: "spinner/labelled",
-        title: "Naming each wait",
-        description:
-          'Three spinners all announcing "Loading" tell a screen reader nothing. `label` names the one job each is waiting on, which is the whole reason it is a prop.',
-      },
-      {
-        demo: "spinner/in-context",
-        title: "In buttons and empty states",
-        description:
-          "Buttons size any `svg` child to `size-3.5`, so a spinner needs no adjustment inside one.",
-      },
-      {
-        demo: "spinner/activity-rows",
-        title: "Per-row activity",
-        description:
-          'One wait per row, so each spinner takes its own `aria-label` — four rows all announcing "Loading" tell a screen-reader user nothing. Settled rows swap to `Status`, whose label carries the outcome without relying on colour.',
-      },
-      {
-        demo: "spinner/deferred",
-        title: "Deferred appearance",
-        description:
-          "A spinner that flashes for 80ms reads as a glitch, so the timer — not the request — decides when it mounts. Only waits long enough to be noticed ever draw one.",
-      },
-    ],
-  },
-  {
-    slug: "timeline",
-    name: "Timeline",
-    category: "Data display",
-    description:
-      "A vertical sequence of events with completed, active and inactive states.",
-    intro: [
-      "Timeline is an ordered list of moments: an indicator on a rail, a title, and optionally a timestamp and a line of detail. Reach for it when the sequence itself is the information — a process someone is partway through, an audit trail, a shipment's history. When the steps are a form the reader walks through and can navigate, that is `Stepper`.",
-      "The rail is a `::before` on each item, hidden on the last, so items can be added or removed without touching it. State is `data-state` on the item — `completed`, `active`, or nothing — and the parts style themselves from there, which is why the indicator takes no state prop of its own. It is vertical only.",
-    ],
-    examples: [
-      {
-        demo: "timeline/basic",
-        title: "Basic",
-        description:
-          "The rail is a `::before` on each item, hidden on the last — items can be added or removed without touching it.",
-      },
-      {
-        demo: "timeline/states",
-        title: "States",
-        description:
-          "`data-state` goes on the *item*, not the indicator; the indicator styles itself from it with `group-data-[state=…]`.",
-      },
-      {
-        demo: "timeline/activity-feed",
-        title: "Activity feed",
-        description:
-          'The audit-trail shape: an icon per kind of event rather than a step number, and every entry already past, so no item takes a state. `TimelineTime` is a real `time` element — pass `dateTime` whenever the visible text is written for people, like "09:12".',
-      },
-      {
-        demo: "timeline/in-panel",
-        title: "Compact, in a panel",
-        description:
-          "Density is a `pb-*` override on the item, whose default is `pb-8`. The rail spans `top-6` to the bottom of the item, so it follows the tighter spacing without being retuned.",
-      },
-    ],
-    parts: {
-      Timeline:
-        "An `ol`, so the reading order is the chronology and the count is announced. It draws nothing itself — the rail belongs to the items.",
-      TimelineItem:
-        "Takes `data-state`, and draws the rail: a `::before` from `top-6` to the bottom, hidden on `last:`. Both offsets are keyed to the default `size-6` indicator, so resizing the indicator means retuning `before:top-*` and `before:start-*` with it.",
-      TimelineIndicator:
-        "Reads the item's `data-state` through `group-data-[state=…]`, so it takes no state prop. Fixed `size-6` and `shrink-0` — it is what the rail is aligned to.",
-      TimelineTitle:
-        "Uppercase tracked label type, and a `div` rather than a heading — add your own element when the level matters.",
-      TimelineDescription:
-        "Sets `normal-case` explicitly, so detail text stays sentence case even under chrome that uppercases what it contains.",
-      TimelineTime:
-        "A real `time` element with `tabular-nums`, so a column of timestamps lines up. Give it `dateTime` whenever the visible text is not machine-readable.",
-    },
-  },
-  {
-    slug: "empty",
-    name: "Empty",
-    category: "Data display",
-    description:
-      "The empty-state block: media, title, description and an action.",
-    intro: [
-      "Empty is the centred block a region shows when it has nothing to show: media, a title, a line of explanation, and the way out. One anatomy covers three situations that only differ in wording — a first-run state, a search with no matches, and a request that failed. For a message about the whole page rather than one region, that is `Banner`.",
-      'It sets `border-dashed` but no border width, so it is unframed until you add `border` — which is what lets the same block sit flush inside a card that already has edges. It is `flex-1`, so in a flex column it fills the space it is given rather than sizing to its text, and it carries no role: pass `role="status"` when the block replaces content after a load.',
-    ],
-    examples: [
-      {
-        demo: "empty/basic",
-        title: "Basic",
-        description:
-          "`Empty` sets `border-dashed` but no border width, so the caller decides whether the state is framed or sits flush in a card.",
-      },
-      {
-        demo: "empty/with-action",
-        title: "With actions",
-        description:
-          "`EmptyContent` is the slot for the way out — it constrains its own width so buttons stay centred under the text.",
-      },
-      {
-        demo: "empty/failed",
-        title: "Failed to load",
-        description:
-          'The same anatomy saying something went wrong rather than nothing is here, so the action is `Retry` and the description says what to expect. Empty ships no role, so `role="status"` is what makes the swap announced.',
-      },
-      {
-        demo: "empty/in-card",
-        title: "Inside a card",
-        description:
-          "The unframed form: no `border`, since the panel already has edges, and `p-8` in place of the default `p-12`. The padding belongs to the block, so the container passes `px-0` rather than stacking the two.",
-      },
-    ],
-    parts: {
-      Empty:
-        'Sets `border-dashed` with no border width, so a standalone block needs `border` and one inside a card needs nothing. `flex-1` makes it fill a flex parent, and it carries no role — pass `role="status"` when it replaces loaded content.',
-      EmptyHeader:
-        "`max-w-sm` on the text column, so a long description wraps to a readable measure instead of the container's width.",
-      EmptyMedia:
-        '`variant="icon"` is the muted chip and sizes an `svg` child for you; `default` is a bare slot, so an illustration or a larger glyph carries its own size.',
-      EmptyTitle:
-        "Heading face, uppercase and tracked, but a `div` — add your own heading element when the page needs the level.",
-      EmptyDescription:
-        "Styles its descendant links, underlined and primary on hover, so the way out can live inside the sentence.",
-      EmptyContent:
-        "The slot for the way out, with its own `max-w-sm` so buttons stay centred under the text rather than spreading to the block's width.",
-    },
   },
   {
     slug: "status",
@@ -3900,45 +4260,6 @@ export const PENDING: ComponentDoc[] = [
     ],
   },
   {
-    slug: "description-list",
-    name: "Description List",
-    category: "Data display",
-    description:
-      "Term/detail pairs for record summaries. Renders a real `dl`, so the pairing survives without sight of the layout.",
-    intro: [
-      "Description List is the record-summary primitive: term-and-detail pairs in a two-column grid. Reach for it whenever a block answers `what are the fields of this thing?` — an invoice head, a mission summary, a settings readout. A scannable column of many records is `Table`.",
-      "The grid columns live on the root, so terms and details must be direct children: pairs flow as consecutive grid cells with no row wrapper. Wrapping a pair in a `div` breaks the alignment for the whole list.",
-    ],
-    examples: [
-      {
-        demo: "description-list/basic",
-        title: "Basic",
-        description:
-          "The term column is `auto`-sized and the detail column takes the rest, so the widest term sets the gutter for every row.",
-      },
-      {
-        demo: "description-list/in-card",
-        title: "In a card",
-        description:
-          "Its most common home: the summary block of a record. The rules come from each pair's own `border-t`, with `first-of-type` suppressing the leading one — the list needs no divider of its own.",
-      },
-      {
-        demo: "description-list/rich-details",
-        title: "Details that aren't text",
-        description:
-          "A detail can hold a `Status` or a `Tag`, not just a string. The `dd` is padded for text, so a boxed control makes its row slightly taller than its neighbours.",
-      },
-    ],
-    parts: {
-      DescriptionList:
-        "Owns the `auto 1fr` grid, so every term and detail must be a direct child — a wrapper around a pair drops it out of the columns.",
-      DescriptionTerm:
-        "`whitespace-nowrap`: a long term widens the first column for the whole list rather than wrapping.",
-      DescriptionDetail:
-        "`tabular-nums`, so a column of amounts or dates lines up digit for digit.",
-    },
-  },
-  {
     slug: "stat-card",
     name: "Stat Card",
     category: "Data display",
@@ -3981,193 +4302,7 @@ export const PENDING: ComponentDoc[] = [
         "A slot with a top margin and nothing else. Keep whatever goes in it `aria-hidden`; the figure above already carries the number.",
     },
   },
-  {
-    slug: "breadcrumb",
-    name: "Breadcrumb",
-    category: "Navigation",
-    description:
-      "The trail to the current page, with the last item as plain text.",
-    intro: [
-      "Breadcrumb states where the current page sits in a hierarchy and offers the way back up it. Reach for it when a page has ancestors a reader can meaningfully return to — a file inside folders, a record inside a project. A flat app with three top-level screens has no trail to show, and history is what the back button is for.",
-      "The trail is an ordered list of links with one exception at the end: `BreadcrumbPage` is the current page, so it renders as plain text carrying `aria-current`, not as a link to where you already are. Links go through Base UI's `render` prop rather than `asChild`, which is how a router's own link component takes over the anchor.",
-    ],
-    examples: [
-      {
-        demo: "breadcrumb/basic",
-        title: "Basic",
-        description:
-          "`BreadcrumbPage` marks the current page: not a link, and `aria-current`. Separators are `aria-hidden`, so the trail reads cleanly aloud.",
-      },
-      {
-        demo: "breadcrumb/collapsed",
-        title: "Collapsed",
-        description:
-          "A deep path shortened to its ends. `BreadcrumbEllipsis` stands in for the levels between, and `BreadcrumbSeparator` renders a caret unless given children — pass a character or another icon to change the punctuation.",
-      },
-      {
-        demo: "breadcrumb/overflow-menu",
-        title: "Overflow menu",
-        description:
-          "The same truncation, but the hidden levels stay reachable: the ellipsis becomes a `DropdownMenu` trigger. `BreadcrumbEllipsis` is `aria-hidden`, so the accessible name has to come from the trigger around it.",
-      },
-    ],
-    parts: {
-      BreadcrumbLink:
-        "Takes Base UI's `render` prop, not `asChild` — pass a router link (`render={<Link to=\"/docs\" />}`) and it renders as that element with the breadcrumb's classes merged in.",
-      BreadcrumbPage:
-        'Plain text with `aria-current="page"` and `aria-disabled`, since the current page is not somewhere to navigate to. It is the last item, and only ever one.',
-      BreadcrumbSeparator:
-        "A presentational list item, hidden from the accessibility tree so the trail reads as words rather than punctuation. Give it children to replace the default caret.",
-      BreadcrumbEllipsis:
-        "Also `aria-hidden`. Wrapping it in a control — a menu trigger — means the label has to be on that control, or the button reads as unnamed.",
-    },
-  },
-  {
-    slug: "pagination",
-    name: "Pagination",
-    category: "Navigation",
-    description: "Page links with previous, next and ellipsis.",
-    intro: [
-      "Pagination is the rail under a long list: numbered pages, previous and next, and an ellipsis standing in for the numbers there is no room to show. Reach for it when the results are ordered and someone has to be able to come back to page 7 — invoices, search results, an archive. An endless feed is better with no rail at all than with one nobody can address.",
-      'Every entry is a real anchor: `PaginationLink` renders through Button\'s `render` with `nativeButton={false}`, and `isActive` sets both the `outline` variant and `aria-current="page"`. In an SPA, intercept the click and keep the `href` — dropping it costs middle-click, open-in-new-tab and the shareable URL.',
-      "The parts draw the rail; they do not decide what is on it. `paginationRange({ page, pageCount, siblingCount })` is the window calculation as a plain function — it returns page numbers and `ellipsis` markers for you to map over, so which pages show is answered in one place instead of in every consumer.",
-    ],
-    examples: [
-      {
-        demo: "pagination/basic",
-        title: "Basic",
-        description:
-          "`PaginationLink` renders an anchor through Button's `render` with `nativeButton={false}`, so it stays a real link — middle-click and open-in-new-tab keep working.",
-      },
-      {
-        demo: "pagination/controlled",
-        title: "Controlled",
-        description:
-          "In an SPA, intercept the click rather than dropping the `href` — the pages stay shareable that way.",
-      },
-      {
-        demo: "pagination/long-range",
-        title: "Long ranges",
-        description:
-          "Past a dozen pages the rail has to be computed, so `paginationRange` does it: `page` and `pageCount` in, page numbers and `ellipsis` markers out. It keeps a constant width — near an edge the run widens rather than the rail shrinking — and never puts an ellipsis in front of a single hidden page.",
-      },
-      {
-        demo: "pagination/under-a-table",
-        title: "Under a table",
-        description:
-          "Where a rail usually sits: a footer beside the result count. The root is `mx-auto flex w-full justify-center`, so seating it at one end means overriding the centring and the width it takes.",
-      },
-    ],
-    parts: {
-      Pagination:
-        "Already a `<nav>` labelled `pagination`, so it needs no wrapper of its own — but two rails on one page need distinct `aria-label`s. It is centred and `mx-auto`; both have to go to seat it in a table footer.",
-      PaginationContent:
-        "A real `<ul>`, so every child belongs in a `PaginationItem` — a link dropped straight in here breaks the list semantics screen readers count from.",
-      PaginationLink:
-        'Only `size` reaches Button; `variant` is decided by `isActive`, which also sets `aria-current="page"`. Styling the current page by hand instead leaves that announcement out.',
-      PaginationPrevious:
-        "Its word is hidden below the `sm` breakpoint, leaving the caret alone. The label is the `text` prop rather than children, which is what makes it translatable.",
-      PaginationNext:
-        "Mirrors Previous, `text` prop included; the caret flips itself under `rtl`.",
-      PaginationEllipsis:
-        "Decorative — `aria-hidden`, so it announces nothing and is never a target. It stands for skipped pages, not a menu: nothing opens.",
-    },
-  },
-  {
-    slug: "stepper",
-    name: "Stepper",
-    category: "Navigation",
-    description:
-      "Progress through a multi-step flow, with per-step state and orientation support.",
-    intro: [
-      "Stepper is the rail across the top of a flow that has been split into screens: the steps, the one you are on, and how much is left. Reach for it when the count is part of the task — checkout, onboarding, a long form worth breaking up. A dated record of what has already happened is `Timeline`; a bare fraction with no names is `Progress`.",
-      "It holds no state and knows nothing about your flow: `state` is a prop on each `StepperItem` (`inactive`, `active`, `completed`) and every part below styles itself off it through `group-data-*`. Orientation is the root's alone — the parts read `data-orientation` from it, so horizontal to vertical is one prop and no change to the items.",
-    ],
-    examples: [
-      {
-        demo: "stepper/basic",
-        title: "Basic",
-        description:
-          "`state` is a prop on `StepperItem`, and the indicator swaps its number for a check on `completed` by itself.",
-      },
-      {
-        demo: "stepper/wizard",
-        title: "In a form wizard",
-        description:
-          "The shape most steppers ship in: the rail heads the panel, and one index drives both the item states and which fields render. Nothing inside the component tracks that index — `Continue` moves it.",
-      },
-      {
-        demo: "stepper/vertical",
-        title: "Vertical",
-        description:
-          "`StepperSeparator` flips axis off the root's `data-orientation`, so going vertical needs no change to the items.",
-      },
-      {
-        demo: "stepper/icon-indicators",
-        title: "Icon indicators",
-        description:
-          "A glyph instead of a number, for a flow whose steps have identities. `StepperIndicator` hides its children on `completed` and swaps in a check, so the icon reads only while the step is still ahead — design for that rather than around it.",
-      },
-    ],
-    parts: {
-      Stepper:
-        "Owns `data-orientation` and is `w-full`. Every other part reads the orientation through `group-data-*`, so a separator rendered outside a Stepper is given no axis at all and collapses.",
-      StepperItem:
-        "Where `state` lives; the indicator and title style off it through `group/stepper-item`, so a part outside an item stays in the inactive look.",
-      StepperIndicator:
-        "Its children are hidden on `completed` and replaced by a check, so a number or glyph shows only while the step is incomplete.",
-      StepperTitle:
-        "Uppercased with `tracking-wider`, and a `div` — wrap or render it as a heading when the level matters to the page outline.",
-      StepperDescription:
-        "Resets `normal-case` against the uppercased title, so sentence-case text under a step reads as prose.",
-      StepperSeparator:
-        "Belongs inside the item it follows rather than between items, and takes its axis from the root — so drop it on the last item instead of styling it away.",
-    },
-  },
-
   /* -- Layout ------------------------------------------------------------ */
-  {
-    slug: "page-header",
-    name: "Page Header",
-    category: "Layout",
-    description:
-      "Breadcrumb, title, description and actions for the top of a page, with an optional flush tab strip.",
-    intro: [
-      "Page Header is the block every routed page opens with: an optional breadcrumb, the title and its description, the page's primary actions, and a rule closing it off. Reach for it so heading level, spacing and that rule are decided once here rather than re-guessed per screen.",
-      "It is slots rather than props — the parts compose in the order the page needs and take no configuration bag. `PageHeaderTitle` renders an `h1`, so a page renders one. `PageHeaderTabs` is the one part that changes the root: its presence drops the header's bottom padding, so the rule lands flush under the tab strip instead of above it.",
-    ],
-    examples: [
-      {
-        demo: "page-header/basic",
-        title: "Basic",
-        description: "Just a title and description, no prop bag, only slots.",
-      },
-      {
-        demo: "page-header/advanced",
-        title: "Advanced",
-        description:
-          "Breadcrumb, title, description and actions compose freely alongside the title.",
-      },
-      {
-        demo: "page-header/with-tabs",
-        title: "With tabs and icon",
-        description:
-          "`PageHeaderTabs` flips the header's bottom rule flush against the tab strip; `Tabs` wraps the header so the panels render below it. `PageHeaderIcon` sizes and mutes whatever Phosphor icon you hand it.",
-      },
-    ],
-    parts: {
-      PageHeader:
-        "Owns the bottom rule and the padding above it, and drops that padding when a PageHeaderTabs is present so the rule sits under the tabs.",
-      PageHeaderHeading:
-        "A wrapping `justify-between` row, which means it wants exactly two children: the title stack in one, PageHeaderActions in the other. Wrap the title and description together yourself — they are not a slot.",
-      PageHeaderTitle:
-        "An `h1`, so one per page. It carries the heading face and no spacing, and there is no level prop — a nested heading is a plain element, not this part.",
-      PageHeaderIcon:
-        "Fixes any icon inside it to `size-6` and mutes it, and its `h-8` is what aligns it with the title's cap height, so it belongs beside the title stack rather than inside it.",
-      PageHeaderTabs:
-        "A marker with no styles of its own: its `data-slot` is what flips the root's padding. Put TabsList inside it and Tabs around the whole header, so the panels render below the rule.",
-    },
-  },
   {
     slug: "panel",
     name: "Panel",
@@ -4210,45 +4345,6 @@ export const PENDING: ComponentDoc[] = [
       PanelFooter: "Mirrors the header: top padding is keyed off `.border-t`.",
       PanelRow:
         "Carries its own padding and divider; `last:border-b-0` stops the trailing rule doubling up with the footer's.",
-    },
-  },
-  {
-    slug: "banner",
-    name: "Banner",
-    category: "Layout",
-    description:
-      "A full-width, tone-coloured message bar over the shared six-tone family — the same tokens button.tsx's `tone` axis reads.",
-    intro: [
-      "Banner is the page-level counterpart of Alert: the same icon, title and description anatomy, but full-width, flush-cornered and tinted edge to edge. Reach for it when a message concerns the whole screen or section — a maintenance window, a plan limit, an incident notice — pinned above the content rather than nested inside it.",
-      "`tone` sets `--tone-bg`/`--tone-ink` from the shared six-tone family in globals.css — the same tokens Button's `tone` axis reads — so a banner always matches its sibling controls and a new tone never needs a bespoke colour here.",
-    ],
-    examples: [
-      {
-        demo: "banner/basic",
-        title: "Basic",
-        description:
-          'Icon, title, description. The root carries `role="status"`, so a banner mounted after load is announced without an aria-live wrapper.',
-      },
-      {
-        demo: "banner/with-action",
-        title: "Action and dismiss",
-        description:
-          "`BannerAction` is a plain flex sibling rather than an absolutely-positioned corner, so it can hold more than one control without overlapping the text.",
-      },
-      {
-        demo: "banner/tones",
-        title: "Tones",
-        description:
-          "The full severity ladder. Each tone reads its `--ds-<tone>-bg`/`--ds-<tone>-ink` pair, so the ladder stays in step with Button, Alert and every other tone-aware component.",
-      },
-    ],
-    parts: {
-      Banner:
-        'Carries `role="status"` — mounted banners are announced politely with no aria-live wrapper. A leading `svg` child is auto-sized and top-aligned by the root\'s selectors.',
-      BannerDescription:
-        "Deliberately un-faded: the tone inks clear AA as bare text but drop under 4.5:1 behind opacity, so hierarchy comes from BannerTitle's `font-medium` instead.",
-      BannerAction:
-        "A flex sibling, not an absolutely-positioned corner — several controls fit beside long text without overlap.",
     },
   },
   {

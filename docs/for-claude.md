@@ -109,8 +109,8 @@ variables. No build step.
 
 ### Avatar, progress, alert
 ```html
-<span class="ds-avatar ds-avatar--sm">CR</span>
-<div class="ds-progress"><div class="ds-progress__bar" style="width:62%"></div></div>
+<span class="ds-avatar" data-size="sm"><span class="ds-avatar-fallback">CR</span></span>
+<div class="ds-progress"><div class="ds-progress-track"><div class="ds-progress-indicator" style="width:62%"></div></div></div>
 <div class="ds-alert ds-alert--danger">Couldn’t load data.</div>
 ```
 
@@ -145,9 +145,9 @@ and section layout:
 ## Page header
 ```html
 <header class="ds-page-header">
-  <div class="ds-page-header__top">
-    <div><h1 class="ds-page-header__title">Projects</h1><p class="ds-page-header__subtitle">Delivery tracking</p></div>
-    <div class="ds-page-header__actions"><button class="ds-button">Export</button><button class="ds-button ds-button--primary">New</button></div>
+  <div class="ds-page-header-heading">
+    <div><h1 class="ds-page-header-title">Projects</h1><p class="ds-page-header-description">Delivery tracking</p></div>
+    <div class="ds-page-header-actions"><button class="ds-button">Export</button><button class="ds-button ds-button--primary">New</button></div>
   </div>
 </header>
 ```
@@ -159,9 +159,9 @@ and section layout:
 <link rel="stylesheet" href="https://unpkg.com/@diametral/design-system/dist/diametral.css">
 <body style="background:var(--ds-bg);margin:0;">
   <main style="max-width:1100px;margin:0 auto;padding:32px;">
-    <header class="ds-page-header"><div class="ds-page-header__top">
-      <div><p class="ds-kicker">Overview</p><h1 class="ds-page-header__title">Pricing matrix</h1></div>
-      <div class="ds-page-header__actions"><button class="ds-button ds-button--primary">New rate</button></div>
+    <header class="ds-page-header"><div class="ds-page-header-heading">
+      <div><p class="ds-kicker">Overview</p><h1 class="ds-page-header-title">Pricing matrix</h1></div>
+      <div class="ds-page-header-actions"><button class="ds-button ds-button--primary">New rate</button></div>
     </div></header>
     <div class="ds-statgrid" style="margin:22px 0">
       <div class="ds-statgrid__cell"><div class="ds-statgrid__label">Revenue</div><div class="ds-statgrid__value">€4.5M</div></div>

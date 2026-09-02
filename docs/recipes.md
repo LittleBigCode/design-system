@@ -349,12 +349,21 @@ order so the user always sees the most specific signal first. The
 [data layer](data.md) gives you [`useResource`](../react/hooks/useResource.js) (track
 `{ data, error, loading, reload }`) and the trio
 [`Skeleton`](../react/components/Skeleton.tsx) /
-[`EmptyState`](../react/components/EmptyState.tsx) /
+[`Empty`](../react/components/empty.tsx) /
 [`Alert`](../react/components/Alert.tsx).
 
 ```jsx
 import { useResource } from "@diametral/design-system/react";
-import { Skeleton, EmptyState, Alert, Button } from "@diametral/design-system/react";
+import {
+  Skeleton,
+  Empty,
+  EmptyHeader,
+  EmptyTitle,
+  EmptyDescription,
+  EmptyContent,
+  Alert,
+  Button,
+} from "@diametral/design-system/react";
 
 export function ProjectList({ query }) {
   const { data, error, loading, reload } = useResource(
@@ -374,11 +383,15 @@ export function ProjectList({ query }) {
 
   // 3. empty — friendly "nothing here yet"
   if (!data || data.length === 0) return (
-    <EmptyState
-      title="No projects yet"
-      description="Projects you create will show up here."
-      actions={<Button variant="primary">New project</Button>}
-    />
+    <Empty>
+      <EmptyHeader>
+        <EmptyTitle>No projects yet</EmptyTitle>
+        <EmptyDescription>Projects you create will show up here.</EmptyDescription>
+      </EmptyHeader>
+      <EmptyContent>
+        <Button variant="primary">New project</Button>
+      </EmptyContent>
+    </Empty>
   );
 
   // 4. data — the actual content

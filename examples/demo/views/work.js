@@ -1,5 +1,14 @@
 /* Work views: Projects (→ project detail), Board. */
-import { DataGrid, StatCard, Avatar, Button, Kanban, Tag } from "../../../dist/react/index.js";
+import {
+  DataGrid,
+  StatCard,
+  Button,
+  Kanban,
+  Tag,
+} from "../../../dist/react/index.js";
+import {
+  Avatar,
+} from "../compat.js";
 import { h, F, stageTag, progressCell } from "../ui.js";
 import { loadProjects, TASKS, TASK_COLS } from "../data.js";
 

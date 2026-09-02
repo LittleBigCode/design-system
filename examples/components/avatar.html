@@ -20,7 +20,7 @@
       <header class="docs-head">
         <p class="ds-kicker">Components</p>
         <h1 class="ds-title ds-title--xl">Avatar</h1>
-        <p class="docs-lede">A flat, sharp square showing uppercase initials or a cover-fit image clipped to a 1px bordered tile. Three sizes, plus an overlapping group with a "+N" overflow count.</p>
+        <p class="docs-lede">A flat, sharp square showing initials or a cover-fit image under a 1px hairline. Size is <code>data-size</code> (<code>sm</code> · default · <code>lg</code>); initials go in a <code>.ds-avatar-fallback</code>, which is the slot the React binding shows only once an image has actually failed. Groups overlap and end in a <code>.ds-avatar-group-count</code>.</p>
       </header>
 
       <section class="docs-section">
@@ -31,13 +31,13 @@
             <button class="ds-button" data-copy-target="#c-sizes">Copy</button>
           </header>
           <div class="ds-example__preview ds-example__preview--center">
-            <span class="ds-avatar ds-avatar--sm">VD</span>
-            <span class="ds-avatar">VD</span>
-            <span class="ds-avatar ds-avatar--lg">VD</span>
+            <span class="ds-avatar" data-size="sm"><span class="ds-avatar-fallback">VD</span></span>
+            <span class="ds-avatar"><span class="ds-avatar-fallback">VD</span></span>
+            <span class="ds-avatar" data-size="lg"><span class="ds-avatar-fallback">VD</span></span>
           </div>
-          <pre class="ds-example__code"><code id="c-sizes">&lt;span class="ds-avatar ds-avatar--sm"&gt;VD&lt;/span&gt;
-&lt;span class="ds-avatar"&gt;VD&lt;/span&gt;
-&lt;span class="ds-avatar ds-avatar--lg"&gt;VD&lt;/span&gt;</code></pre>
+          <pre class="ds-example__code"><code id="c-sizes">&lt;span class="ds-avatar" data-size="sm"&gt;&lt;span class="ds-avatar-fallback"&gt;VD&lt;/span&gt;&lt;/span&gt;
+&lt;span class="ds-avatar"&gt;&lt;span class="ds-avatar-fallback"&gt;VD&lt;/span&gt;&lt;/span&gt;
+&lt;span class="ds-avatar" data-size="lg"&gt;&lt;span class="ds-avatar-fallback"&gt;VD&lt;/span&gt;&lt;/span&gt;</code></pre>
         </section>
       </section>
 
@@ -49,12 +49,12 @@
             <button class="ds-button" data-copy-target="#c-image">Copy</button>
           </header>
           <div class="ds-example__preview ds-example__preview--center">
-            <span class="ds-avatar ds-avatar--sm"><img class="ds-avatar__img" src="https://i.pravatar.cc/96?img=12" alt="Maria Vance"></span>
-            <span class="ds-avatar"><img class="ds-avatar__img" src="https://i.pravatar.cc/96?img=32" alt="Leo Marsh"></span>
-            <span class="ds-avatar ds-avatar--lg"><img class="ds-avatar__img" src="https://i.pravatar.cc/96?img=5" alt="Ada Okafor"></span>
+            <span class="ds-avatar" data-size="sm"><img class="ds-avatar-image" src="https://i.pravatar.cc/96?img=12" alt="Maria Vance"></span>
+            <span class="ds-avatar"><img class="ds-avatar-image" src="https://i.pravatar.cc/96?img=32" alt="Leo Marsh"></span>
+            <span class="ds-avatar" data-size="lg"><img class="ds-avatar-image" src="https://i.pravatar.cc/96?img=5" alt="Ada Okafor"></span>
           </div>
           <pre class="ds-example__code"><code id="c-image">&lt;span class="ds-avatar"&gt;
-  &lt;img class="ds-avatar__img" src="https://i.pravatar.cc/96?img=32" alt="Leo Marsh"&gt;
+  &lt;img class="ds-avatar-image" src="https://i.pravatar.cc/96?img=32" alt="Leo Marsh"&gt;
 &lt;/span&gt;</code></pre>
         </section>
       </section>
@@ -68,17 +68,17 @@
           </header>
           <div class="ds-example__preview ds-example__preview--center">
             <div class="ds-avatar-group">
-              <span class="ds-avatar"><img class="ds-avatar__img" src="https://i.pravatar.cc/96?img=12" alt="Maria Vance"></span>
-              <span class="ds-avatar"><img class="ds-avatar__img" src="https://i.pravatar.cc/96?img=32" alt="Leo Marsh"></span>
-              <span class="ds-avatar">JL</span>
-              <span class="ds-avatar ds-avatar--count" aria-label="3 more">+3</span>
+              <span class="ds-avatar"><img class="ds-avatar-image" src="https://i.pravatar.cc/96?img=12" alt="Maria Vance"></span>
+              <span class="ds-avatar"><img class="ds-avatar-image" src="https://i.pravatar.cc/96?img=32" alt="Leo Marsh"></span>
+              <span class="ds-avatar"><span class="ds-avatar-fallback">JL</span></span>
+              <span class="ds-avatar-group-count" aria-label="3 more">+3</span>
             </div>
           </div>
           <pre class="ds-example__code"><code id="c-group">&lt;div class="ds-avatar-group"&gt;
-  &lt;span class="ds-avatar"&gt;&lt;img class="ds-avatar__img" src="…?img=12" alt="Maria Vance"&gt;&lt;/span&gt;
-  &lt;span class="ds-avatar"&gt;&lt;img class="ds-avatar__img" src="…?img=32" alt="Leo Marsh"&gt;&lt;/span&gt;
-  &lt;span class="ds-avatar"&gt;JL&lt;/span&gt;
-  &lt;span class="ds-avatar ds-avatar--count" aria-label="3 more"&gt;+3&lt;/span&gt;
+  &lt;span class="ds-avatar"&gt;&lt;img class="ds-avatar-image" src="…?img=12" alt="Maria Vance"&gt;&lt;/span&gt;
+  &lt;span class="ds-avatar"&gt;&lt;img class="ds-avatar-image" src="…?img=32" alt="Leo Marsh"&gt;&lt;/span&gt;
+  &lt;span class="ds-avatar"&gt;&lt;span class="ds-avatar-fallback"&gt;JL&lt;/span&gt;&lt;/span&gt;
+  &lt;span class="ds-avatar-group-count" aria-label="3 more"&gt;+3&lt;/span&gt;
 &lt;/div&gt;</code></pre>
         </section>
       </section>
@@ -90,18 +90,34 @@
             <span class="ds-label">Avatar · AvatarGroup</span>
             <button class="ds-button" data-copy-target="#c-react">Copy</button>
           </header>
-          <pre class="ds-example__code"><code id="c-react">import { Avatar, AvatarGroup } from "@diametral/design-system/react";
+          <pre class="ds-example__code"><code id="c-react">import {
+  Avatar,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarGroupCount,
+  AvatarImage,
+} from "@diametral/design-system/react";
 
-&lt;Avatar initials="VD" size="lg" /&gt;
-&lt;Avatar src="https://i.pravatar.cc/96?img=32" alt="Leo Marsh" /&gt;
+&lt;Avatar size="lg"&gt;
+  &lt;AvatarFallback&gt;VD&lt;/AvatarFallback&gt;
+&lt;/Avatar&gt;
 
-&lt;AvatarGroup max={3}&gt;
-  &lt;Avatar src="https://i.pravatar.cc/96?img=12" alt="Maria Vance" /&gt;
-  &lt;Avatar src="https://i.pravatar.cc/96?img=32" alt="Leo Marsh" /&gt;
-  &lt;Avatar initials="JL" /&gt;
-  &lt;Avatar initials="AO" /&gt;
-  &lt;Avatar initials="RK" /&gt;
-  &lt;Avatar initials="TM" /&gt;
+{/* The fallback shows only once the image has failed or is still loading —
+    that is Base UI's Avatar, and it is what the 0.x applier could not do. */}
+&lt;Avatar&gt;
+  &lt;AvatarImage src="https://i.pravatar.cc/96?img=32" alt="Leo Marsh" /&gt;
+  &lt;AvatarFallback&gt;LM&lt;/AvatarFallback&gt;
+&lt;/Avatar&gt;
+
+{/* The overflow count is written, not computed: 0.x's `max` prop is gone
+    because a group is now parts, and the caller already knows the total. */}
+&lt;AvatarGroup&gt;
+  &lt;Avatar&gt;
+    &lt;AvatarImage src="https://i.pravatar.cc/96?img=12" alt="Maria Vance" /&gt;
+    &lt;AvatarFallback&gt;MV&lt;/AvatarFallback&gt;
+  &lt;/Avatar&gt;
+  &lt;Avatar&gt;&lt;AvatarFallback&gt;JL&lt;/AvatarFallback&gt;&lt;/Avatar&gt;
+  &lt;AvatarGroupCount aria-label="3 more"&gt;+3&lt;/AvatarGroupCount&gt;
 &lt;/AvatarGroup&gt;</code></pre>
         </section>
       </section>

@@ -26,80 +26,80 @@
 
       <section class="docs-section">
         <h2>Grouped events</h2>
-        <p class="docs-note">Events are sorted and bucketed by day; each group opens with a date header. The marker recolors by status via <code>is-*</code>.</p>
+        <p class="docs-note">Events are sorted and bucketed by day; each group opens with a date header. The dot recolors by status via <code>.ds-agenda-event-status--*</code>, and the day heading is a real <code>&lt;h3&gt;</code> over a <code>&lt;section&gt;</code>, so a screen reader can skip a day.</p>
         <section class="ds-example">
           <header class="ds-example__bar">
             <span class="ds-label">Day-grouped schedule</span>
             <button class="ds-button" data-copy-target="#c-grouped">Copy</button>
           </header>
           <div class="ds-example__preview ds-example__preview--block">
-            <div class="ds-agenda">
-              <div class="ds-agenda__day">
-                <span class="ds-agenda__weekday">Thursday</span>
-                <span class="ds-agenda__date">Jun 18, 2026</span>
-              </div>
-              <div class="ds-agenda__event">
-                <div class="ds-agenda__time">09:00</div>
-                <span class="ds-agenda__marker is-success"></span>
-                <div class="ds-agenda__body">
-                  <div class="ds-agenda__title">Publish rate matrix</div>
-                  <div class="ds-agenda__meta">All 1,204 rates synced to production.</div>
+            <div class="ds-agenda ds-agenda-list">
+              <h3 class="ds-agenda-day">
+                <span class="ds-agenda-day-weekday">Thursday</span>
+                <time datetime="2026-06-18">Jun 18, 2026</time>
+              </h3>
+              <div class="ds-agenda-event">
+                <div class="ds-agenda-event-time">09:00</div>
+                <span class="ds-agenda-event-status ds-agenda-event-status--success"></span>
+                <div class="ds-agenda-event-body">
+                  <div class="ds-agenda-event-title">Publish rate matrix</div>
+                  <div class="ds-agenda-event-meta">All 1,204 rates synced to production.</div>
                 </div>
               </div>
-              <div class="ds-agenda__event">
-                <div class="ds-agenda__time">11:30</div>
-                <span class="ds-agenda__marker is-info"></span>
-                <div class="ds-agenda__body">
-                  <div class="ds-agenda__title">1:1 with the Director</div>
-                  <div class="ds-agenda__meta">Sign-off on the Q3 template.</div>
+              <div class="ds-agenda-event">
+                <div class="ds-agenda-event-time">11:30</div>
+                <span class="ds-agenda-event-status ds-agenda-event-status--info"></span>
+                <div class="ds-agenda-event-body">
+                  <div class="ds-agenda-event-title">1:1 with the Director</div>
+                  <div class="ds-agenda-event-meta">Sign-off on the Q3 template.</div>
                 </div>
               </div>
-              <div class="ds-agenda__event">
-                <div class="ds-agenda__time">16:00</div>
-                <span class="ds-agenda__marker is-danger"></span>
-                <div class="ds-agenda__body">
-                  <div class="ds-agenda__title">Quarter deadline</div>
+              <div class="ds-agenda-event">
+                <div class="ds-agenda-event-time">16:00</div>
+                <span class="ds-agenda-event-status ds-agenda-event-status--danger"></span>
+                <div class="ds-agenda-event-body">
+                  <div class="ds-agenda-event-title">Quarter deadline</div>
                 </div>
               </div>
-              <div class="ds-agenda__day">
-                <span class="ds-agenda__weekday">Friday</span>
-                <span class="ds-agenda__date">Jun 19, 2026</span>
-              </div>
-              <div class="ds-agenda__event">
-                <div class="ds-agenda__time">10:00</div>
-                <span class="ds-agenda__marker is-warning"></span>
-                <div class="ds-agenda__body">
-                  <div class="ds-agenda__title">Review draft</div>
-                  <div class="ds-agenda__meta">12 rows still missing a currency.</div>
+              <h3 class="ds-agenda-day">
+                <span class="ds-agenda-day-weekday">Friday</span>
+                <time datetime="2026-06-19">Jun 19, 2026</time>
+              </h3>
+              <div class="ds-agenda-event">
+                <div class="ds-agenda-event-time">10:00</div>
+                <span class="ds-agenda-event-status ds-agenda-event-status--warning"></span>
+                <div class="ds-agenda-event-body">
+                  <div class="ds-agenda-event-title">Review draft</div>
+                  <div class="ds-agenda-event-meta">12 rows still missing a currency.</div>
                 </div>
               </div>
-              <div class="ds-agenda__event">
-                <div class="ds-agenda__time">14:00</div>
-                <span class="ds-agenda__marker"></span>
-                <div class="ds-agenda__body">
-                  <div class="ds-agenda__title">Office hours</div>
+              <div class="ds-agenda-event">
+                <div class="ds-agenda-event-time">14:00</div>
+                <span class="ds-agenda-event-status"></span>
+                <div class="ds-agenda-event-body">
+                  <div class="ds-agenda-event-title">Office hours</div>
                 </div>
               </div>
             </div>
           </div>
-          <pre class="ds-example__code"><code id="c-grouped">&lt;div class="ds-agenda"&gt;
-  &lt;div class="ds-agenda__day"&gt;
-    &lt;span class="ds-agenda__weekday"&gt;Thursday&lt;/span&gt;
-    &lt;span class="ds-agenda__date"&gt;Jun 18, 2026&lt;/span&gt;
-  &lt;/div&gt;
-  &lt;div class="ds-agenda__event"&gt;
-    &lt;div class="ds-agenda__time"&gt;09:00&lt;/div&gt;
-    &lt;span class="ds-agenda__marker is-success"&gt;&lt;/span&gt;
-    &lt;div class="ds-agenda__body"&gt;
-      &lt;div class="ds-agenda__title"&gt;Publish rate matrix&lt;/div&gt;
-      &lt;div class="ds-agenda__meta"&gt;All 1,204 rates synced to production.&lt;/div&gt;
+          <pre class="ds-example__code"><code id="c-grouped">&lt;div class="ds-agenda ds-agenda-list"&gt;
+  &lt;h3 class="ds-agenda-day"&gt;
+    &lt;span class="ds-agenda-day-weekday"&gt;Thursday&lt;/span&gt;
+    &lt;time datetime="2026-06-18"&gt;Jun 18, 2026&lt;/time&gt;
+  &lt;/h3&gt;
+  &lt;div class="ds-agenda-event"&gt;
+    &lt;div class="ds-agenda-event-time"&gt;09:00&lt;/div&gt;
+    &lt;span class="ds-agenda-event-status ds-agenda-event-status--success"&gt;&lt;/span&gt;
+    &lt;div class="ds-agenda-event-body"&gt;
+      &lt;div class="ds-agenda-event-title"&gt;Publish rate matrix&lt;/div&gt;
+      &lt;div class="ds-agenda-event-meta"&gt;All 1,204 rates synced to production.&lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
-  &lt;div class="ds-agenda__event"&gt;
-    &lt;div class="ds-agenda__time"&gt;16:00&lt;/div&gt;
-    &lt;span class="ds-agenda__marker is-danger"&gt;&lt;/span&gt;
-    &lt;div class="ds-agenda__body"&gt;
-      &lt;div class="ds-agenda__title"&gt;Quarter deadline&lt;/div&gt;
+  &lt;div class="ds-agenda-event"&gt;
+    &lt;div class="ds-agenda-event-time"&gt;16:00&lt;/div&gt;
+    &lt;span class="ds-agenda-event-status ds-agenda-event-status--danger"&gt;&lt;/span&gt;
+    &lt;div class="ds-agenda-event-body"&gt;
+      &lt;div class="ds-agenda-event-title"&gt;Quarter deadline&lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
@@ -108,19 +108,27 @@
 
       <section class="docs-section">
         <h2>Empty state</h2>
-        <p class="docs-note">When there are no events, the agenda shows a centered faint message via <code>.ds-agenda__empty</code>.</p>
+        <p class="docs-note">With no events the agenda renders an <code>.ds-empty</code> block rather than a bespoke empty class of its own — one empty state for the whole system.</p>
         <section class="ds-example">
           <header class="ds-example__bar">
             <span class="ds-label">No events</span>
             <button class="ds-button" data-copy-target="#c-empty">Copy</button>
           </header>
           <div class="ds-example__preview ds-example__preview--block">
-            <div class="ds-agenda">
-              <div class="ds-agenda__empty">No events scheduled.</div>
+            <div class="ds-agenda ds-agenda-list">
+              <div class="ds-empty">
+                <div class="ds-empty-header">
+                  <p class="ds-empty-description">No events scheduled.</p>
+                </div>
+              </div>
             </div>
           </div>
-          <pre class="ds-example__code"><code id="c-empty">&lt;div class="ds-agenda"&gt;
-  &lt;div class="ds-agenda__empty"&gt;No events scheduled.&lt;/div&gt;
+          <pre class="ds-example__code"><code id="c-empty">&lt;div class="ds-agenda ds-agenda-list"&gt;
+  &lt;div class="ds-empty"&gt;
+    &lt;div class="ds-empty-header"&gt;
+      &lt;p class="ds-empty-description"&gt;No events scheduled.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
 &lt;/div&gt;</code></pre>
         </section>
       </section>
