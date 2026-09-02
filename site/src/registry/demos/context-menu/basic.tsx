@@ -1,26 +1,37 @@
+import { CopyIcon, PencilSimpleIcon, TrashIcon } from "@phosphor-icons/react"
+
 import {
-  Button,
-  Dropdown,
-  MenuDivider,
-  MenuHeader,
-  MenuItem,
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+  ContextMenuTrigger,
 } from "@diametral/design-system/react"
 
-/**
- * Right-click is not a trigger the incumbent Dropdown exposes, so the same menu
- * body hangs off an explicit "Actions" button instead. The rows are what a
- * context menu would have carried.
- */
 export default function ContextMenuBasic() {
   return (
-    <Dropdown trigger={<Button>Actions</Button>} align="start">
-      <MenuHeader>report-q3.csv</MenuHeader>
-      <MenuItem>Open</MenuItem>
-      <MenuItem>Rename</MenuItem>
-      <MenuItem>Duplicate</MenuItem>
-      <MenuDivider />
-      <MenuItem disabled>Move to archive</MenuItem>
-      <MenuItem>Delete</MenuItem>
-    </Dropdown>
+    <ContextMenu>
+      <ContextMenuTrigger
+        render={
+          <div className="flex h-32 w-full max-w-sm items-center justify-center border border-dashed border-border text-sm text-muted-foreground" />
+        }
+      >
+        Right-click here
+      </ContextMenuTrigger>
+      <ContextMenuContent>
+        <ContextMenuItem>
+          <PencilSimpleIcon /> Rename
+        </ContextMenuItem>
+        <ContextMenuItem>
+          <CopyIcon /> Duplicate
+          <ContextMenuShortcut>⌘D</ContextMenuShortcut>
+        </ContextMenuItem>
+        <ContextMenuSeparator />
+        <ContextMenuItem variant="destructive">
+          <TrashIcon /> Delete
+        </ContextMenuItem>
+      </ContextMenuContent>
+    </ContextMenu>
   )
 }

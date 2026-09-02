@@ -101,6 +101,16 @@
 @import url("./components/icon.css");
 @import url("./components/motion.css");
 
+/* Batch 1 — net-new overlays and menus (1.0.0-beta.1)
+   After menu.css and button.css: menubar's rows and speed-dial's action boxes
+   ride .ds-menu__item and .ds-button, and their deltas have to win. */
+@import url("./components/context-menu.css");
+@import url("./components/navigation-menu.css");
+@import url("./components/menubar.css");
+@import url("./components/autocomplete.css");
+@import url("./components/speed-dial.css");
+@import url("./components/hover-card.css");
+
 /* Alternate themes — scoped to [data-theme="dark"|"sepia"], inert until a theme
    is set on a root element (e.g. by ConsoleLayout's Light/Dark/Sepia switcher). */
 @import url("./themes/dark.css");

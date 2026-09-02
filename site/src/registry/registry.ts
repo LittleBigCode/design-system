@@ -48,6 +48,47 @@ export type ComponentDoc = {
 export const COMPONENTS: ComponentDoc[] = [
   /* -- Actions ------------------------------------------------------------- */
   {
+    slug: "speed-dial",
+    name: "Speed Dial",
+    category: "Actions",
+    exports: [
+      "SpeedDial",
+      "SpeedDialAction",
+    ],
+    description:
+      "A floating action button whose two-to-four actions fan out on open — the create button a whole view is about.",
+    intro: [
+      "Speed Dial is the one action a view exists to start, parked in a corner and reachable from anywhere in it: compose, create, upload. Reach for it when the action outranks everything else on the page and the reader may be scrolled far from a toolbar. Two to four actions is the honest range — a fifth belongs in a `Dropdown`, and a single action needs no dial at all, just an `IconButton` positioned the same way.",
+      "It is a `Menu` underneath, not the CSS `:focus-within` trick daisyUI's `fab` uses, so Escape closes it, arrow keys walk the actions and focus returns to the trigger. The trigger is also the root, so `className` positions the dial: `.ds-speed-dial` is `fixed` in the end-bottom corner, which is what a FAB wants, and `.ds-speed-dial--docked` swaps in `absolute` when the dial belongs to a region rather than the viewport.",
+    ],
+    examples: [
+      {
+        demo: "speed-dial/basic",
+        title: "Create actions",
+        description:
+          "Each action's visible label is its accessible name, so the glyph carries no `aria-label` of its own. The trigger's `icon` swaps for an X while open — that swap is CSS off `aria-expanded`, not a second state.",
+      },
+      {
+        demo: "speed-dial/docked",
+        title: "Docked to the top",
+        description:
+          '`side="bottom"` fans the column downwards for a dial that lives above its content. Alignment stays pinned to the trigger\'s end edge, which is what keeps the action boxes in a line under it.',
+      },
+      {
+        demo: "speed-dial/tone",
+        title: "Brand tone",
+        description:
+          "`tone` reaches the trigger only — the actions stay neutral so the dial reads as one accent rather than a stack of them. It is `primary` or `danger` here, the two the incumbent button has; the source's eight-tone scale arrives with batch 7. A `disabled` action greys out and refuses activation but stays arrow-reachable and `aria-disabled`, so a reader learns it exists instead of finding a gap.",
+      },
+    ],
+    parts: {
+      SpeedDial:
+        "The trigger is the root, so `className` positions the dial. `.ds-speed-dial` is the default corner-fixed placement; add `.ds-speed-dial--docked` to scope it to a positioned ancestor instead, and `--docked-top` to flip which edge it sits on.",
+      SpeedDialAction:
+        "The whole row is the menu item — label chip and glyph box together — so the label is the accessible name and the box needs none.",
+    },
+  },
+  {
     slug: "split-button",
     name: "SplitButton",
     category: "Actions",
@@ -107,6 +148,71 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
   },
   /* -- Forms --------------------------------------------------------------- */
+  {
+    slug: "autocomplete",
+    name: "Autocomplete",
+    category: "Forms",
+    exports: [
+      "Autocomplete",
+      "AutocompleteInput",
+      "AutocompleteClear",
+      "AutocompleteContent",
+      "AutocompleteList",
+      "AutocompleteItem",
+      "AutocompleteGroup",
+      "AutocompleteLabel",
+      "AutocompleteCollection",
+      "AutocompleteEmpty",
+      "AutocompleteStatus",
+      "AutocompleteSeparator",
+    ],
+    description:
+      "Free-text input with suggestions — unlike Combobox, the typed value need not come from the list.",
+    intro: [
+      "Autocomplete is a text input with suggestions attached, where the typed string is the value: the list is a shortcut, never a constraint. Reach for it for search fields, for the answer that is usually but not always one of a known set, and anywhere an “other” option would otherwise be needed. Combobox is the one to use when the value has to come from the list, and Command when the entries are actions rather than answers.",
+      "The root holds no selected value at all — only the input string, through `value`/`onValueChange` — and picking an item simply writes that item's text into the input. `mode` decides what a query does: `list` (the default) filters the list and leaves the input alone, `both` filters and previews the highlighted entry inline, `inline` previews without filtering, `none` does neither. Set `filter` to `null` when something upstream already narrowed `items`, or the same query is applied twice.",
+    ],
+    examples: [
+      {
+        demo: "autocomplete/basic",
+        title: "Basic",
+        description:
+          "Whatever is typed stays the value even when nothing matches — there is no selection to read back, only the string. Use Combobox when the value must come from the list.",
+      },
+      {
+        demo: "autocomplete/grouped",
+        title: "Grouped suggestions",
+        description:
+          "Groups come from the shape of `items`: entries carrying their own `items` array arrive at the list's function child as groups, and `AutocompleteCollection` renders the entries of the group it sits in.",
+      },
+      {
+        demo: "autocomplete/inline",
+        title: "Inline completion",
+        description:
+          '`mode="both"` filters the list and completes the highlighted entry inside the input, so a long value like a timezone is a few keystrokes rather than a scroll. It needs `autoHighlight` to have something to preview before the arrow keys are touched.',
+      },
+      {
+        demo: "autocomplete/async",
+        title: "Server-side search",
+        description:
+          "The page owns the results, so `filter={null}` stops Base UI filtering an already-filtered list. `AutocompleteStatus` is the polite live region for that request's state — it stays mounted and swaps its children, which is what lets a screen reader hear the count settle.",
+      },
+    ],
+    parts: {
+      AutocompleteInput:
+        "An `InputGroup` rather than a bare input, with `showClear` as this system's own addition. There is no trigger part here, unlike Combobox: the popup opens from typing, or from `openOnInputClick`.",
+      AutocompleteClear:
+        "Unmounts while there is nothing to clear, so it is absent from an empty field rather than disabled. Base UI renders it `aria-hidden` and out of the tab order deliberately — it is a pointer shortcut, and a keyboard reader clears the field by selecting its text. Do not treat it as the only way to clear.",
+      AutocompleteContent:
+        "Portalled, and pinned to the anchor's width — unlike Combobox's popup it never grows past the input, so a long suggestion wraps instead of widening the field.",
+      AutocompleteEmpty:
+        "Shown by a `data-empty` attribute on the popup, not by conditional rendering, so it belongs inside `AutocompleteContent` and outside `AutocompleteList`. Swap its children rather than unmounting it — staying mounted is what lets it announce the empty result.",
+      AutocompleteStatus:
+        "A polite live region for the state of the list, not a heading: it announces changes to its children, so unmounting it or filling it with a fixed string wastes it. Loading and result counts are what it is for.",
+      AutocompleteCollection:
+        "Renders the items of the `AutocompleteGroup` above it, or the root's filtered items when there is no group — the same wrapper `AutocompleteList` applies implicitly to a function child.",
+    },
+  },
   {
     slug: "calendar",
     name: "Calendar",
@@ -443,6 +549,132 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
   },
   {
+    slug: "menubar",
+    name: "Menubar",
+    category: "Navigation",
+    exports: [
+      "Menubar",
+      "MenubarMenu",
+      "MenubarTrigger",
+      "MenubarContent",
+      "MenubarItem",
+      "MenubarCheckboxItem",
+      "MenubarRadioGroup",
+      "MenubarRadioItem",
+      "MenubarLabel",
+      "MenubarSeparator",
+      "MenubarShortcut",
+      "MenubarGroup",
+      "MenubarPortal",
+      "MenubarSub",
+      "MenubarSubTrigger",
+      "MenubarSubContent",
+    ],
+    description:
+      "A desktop-style application menu bar with keyboard traversal.",
+    intro: [
+      "Menubar is application chrome: a persistent row of named menus — File, Edit, View — that keeps a dense tool's whole command surface in reach and grouped by noun. Reach for it in editor-shaped views people live inside. One button that reveals a few actions is `Dropdown`, a right-click surface is `Context Menu`, and a searchable flat list of commands is `CommandPalette`.",
+      "Each menu is a Base UI `Menu`, and its rows wear this system's own menu vocabulary — `.ds-menu`, `.ds-menu__item`, `.ds-menu__divider`, `.ds-menu__header` — so a menubar menu and a `Dropdown` menu are the same surface. `MenubarContent` mounts its own portal and positioner, so the tree stops at Menu → Trigger → Content. The root is Base UI's menubar, which is what gives the row a single tab stop and hands focus between menus with the arrow keys.",
+    ],
+    examples: [
+      {
+        demo: "menubar/basic",
+        title: "Basic",
+        description:
+          "One tab stop for the bar; arrow keys move between menus and an open menu stays open as you travel — the desktop convention.",
+      },
+      {
+        demo: "menubar/sectioned",
+        title: "A long menu, sectioned",
+        description:
+          "Once a menu passes half a dozen entries it needs headings. `MenubarLabel` is a group part — Base UI reads the group context above it, so it goes inside the `MenubarGroup` it names rather than beside it.",
+      },
+      {
+        demo: "menubar/with-state",
+        title: "Checkboxes, radios and submenus",
+        description:
+          "The item vocabulary matches Dropdown Menu, because `MenubarMenu` is that component underneath. Checkable items indent for their indicator, so a plain `MenubarItem` sharing the menu needs `inset` to line up.",
+      },
+      {
+        demo: "menubar/app-frame",
+        title: "In an app frame",
+        description:
+          "Where a menubar belongs: the top edge of a window, not a floating control. The root carries a full border, so a bar seated in a frame trades it for `border-0 border-b`.",
+      },
+    ],
+    parts: {
+      Menubar:
+        "Base UI's menubar root: it owns the bar's one tab stop and the arrow-key traversal between menus. A `MenubarMenu` outside it still opens, but as an isolated dropdown with a tab stop of its own.",
+      MenubarMenu:
+        "A Base UI `Menu` root — `open`, `onOpenChange`, `modal`. This repo's incumbent `Dropdown` is click-toggled with no submenus and no checkable rows, which is why the menus here are built on the primitive rather than on it.",
+      MenubarContent:
+        "Mounts its own portal and positioner, so the tree stops at Menu → Trigger → Content. It is a `.ds-menu`, so it never narrows below that surface's 180px — which is what a short trigger like File actually reads from.",
+      MenubarItem:
+        "`inset` adds the indicator gutter. Pass it when a plain item shares a menu with checkbox or radio items, or its label sits left of theirs.",
+      MenubarLabel:
+        "A group part: it registers with the group above it, so a label outside a `MenubarGroup` or `MenubarRadioGroup` throws rather than rendering.",
+      MenubarPortal:
+        "Only for putting a popup somewhere other than the body — `MenubarContent` already portals, so most trees never name this.",
+    },
+  },
+  {
+    slug: "navigation-menu",
+    name: "Navigation Menu",
+    category: "Navigation",
+    exports: [
+      "NavigationMenu",
+      "NavigationMenuList",
+      "NavigationMenuItem",
+      "NavigationMenuTrigger",
+      "NavigationMenuContent",
+      "NavigationMenuPositioner",
+      "NavigationMenuLink",
+      "NavigationMenuIndicator",
+      "navigationMenuTriggerStyle",
+    ],
+    description: "A horizontal site menu with optional rich dropdown panels.",
+    intro: [
+      "Navigation Menu is the top-level menu of a site header: a row of destinations, some of which open a panel with room for descriptions, groups or a featured link. Reach for it for marketing and documentation chrome. `Menubar` is the desktop-application counterpart with commands rather than destinations, and `Dropdown` is the right answer for actions on the page you are on.",
+      "The root mounts its own portal, positioner, popup and viewport, so the tree you write is only Root → List → Item — and `align` on the root is forwarded to that positioner rather than set on a part of your own. All the items share the single popup: moving between triggers resizes and slides it, and the content reads `data-activation-direction` to animate away from where the pointer came from.",
+    ],
+    examples: [
+      {
+        demo: "navigation-menu/basic",
+        title: "Basic",
+        description:
+          "One panel and one plain link. `navigationMenuTriggerStyle()` is what makes a link with no panel sit level with the triggers beside it.",
+      },
+      {
+        demo: "navigation-menu/multiple",
+        title: "Several menus",
+        description:
+          "Moving between triggers reuses one popup and slides it; the content reads `data-activation-direction` to animate away from where you came from.",
+      },
+      {
+        demo: "navigation-menu/featured",
+        title: "Featured panel",
+        description:
+          "A two-column panel with a promoted destination beside the list. The panel is your own markup — the component supplies the popup and the link styling, so the grid is yours to shape.",
+      },
+      {
+        demo: "navigation-menu/in-header",
+        title: "In a site header",
+        description:
+          "The placement it exists for, between a wordmark and an account action. The root is `max-w-max`, so it takes only the width of its list and the header's own flex layout keeps working around it.",
+      },
+    ],
+    parts: {
+      NavigationMenu:
+        "Renders the portal, positioner, popup and viewport itself — `align` is a positioner prop passed through here, and NavigationMenuPositioner is not something you mount yourself.",
+      NavigationMenuContent:
+        "The panel's contents, not the panel: sizing, columns and grids are your markup inside it, and the popup animates to whatever size that comes out.",
+      NavigationMenuLink:
+        "Styled for inside a panel — a flex row with a 0.75rem inset. `.ds-navigation-menu-link--block` is the tighter block-flow variant for a stacked list of links. For a top-level link with no panel, add `navigationMenuTriggerStyle()` so it matches the triggers on the row.",
+      NavigationMenuTrigger:
+        "Appends its own caret after the children and rotates it while the panel is open, so a trigger needs no icon of its own.",
+    },
+  },
+  {
     slug: "sidebar",
     name: "VerticalNav",
     category: "Navigation",
@@ -525,23 +757,69 @@ export const COMPONENTS: ComponentDoc[] = [
   },
   {
     slug: "context-menu",
-    name: "Dropdown",
+    name: "ContextMenu",
     category: "Overlays",
-    exports: ["Dropdown", "MenuItem", "MenuHeader", "MenuDivider"],
+    exports: [
+      "ContextMenu",
+      "ContextMenuTrigger",
+      "ContextMenuContent",
+      "ContextMenuItem",
+      "ContextMenuCheckboxItem",
+      "ContextMenuRadioGroup",
+      "ContextMenuRadioItem",
+      "ContextMenuLabel",
+      "ContextMenuSeparator",
+      "ContextMenuShortcut",
+      "ContextMenuGroup",
+      "ContextMenuPortal",
+      "ContextMenuSub",
+      "ContextMenuSubTrigger",
+      "ContextMenuSubContent",
+    ],
     description:
-      "Right-click's menu body, hung off an explicit trigger instead.",
+      "Right-click's own menu, positioned at the pointer.",
     intro: [
-      "There is no separate ContextMenu: `Dropdown` carries the menu, and a right-click trigger is not part of its contract. That is a real gap rather than a stylistic choice — until it closes, put the same rows behind a visible `Actions` affordance, which is also the only version a keyboard or touch reader can reach.",
-      "`MenuHeader` names what the rows act on, which matters more here than in a dropdown: a context menu's subject is whatever was clicked, and without the header the menu does not say.",
+      "A context menu is for actions that belong to *this* row, *this* file, *this* selection — the subject is whatever was right-clicked, which is why the menu opens at the pointer rather than under a button. Reach for it in list and canvas views where every row would otherwise need its own visible affordance. It is a shortcut, never the only path: pointer-only means a keyboard or touch reader never finds it, so the same actions belong somewhere reachable too — a `Dropdown` on the row, or a toolbar above it.",
+      "`ContextMenuTrigger` is the region that answers the right-click, so it wraps the content rather than sitting beside it, and `render` is how it becomes the `li`, `div` or cell it is really guarding. `ContextMenuContent` mounts its own portal and positioner: the tree stops at Root → Trigger + Content. Rows come in four shapes — plain, checkbox, radio and submenu — and `variant=\"destructive\"` is the one that colours a row rather than a modifier class.",
     ],
     examples: [
       {
         demo: "context-menu/basic",
-        title: "Menu rows",
+        title: "Rename, duplicate, delete",
         description:
-          "The rows a context menu would carry, behind a button — including a disabled row, which stays visible so the menu's shape does not shift.",
+          "The shape almost every context menu has: two safe actions, a divider, and the destructive one alone below it — far enough from the pointer's landing spot that a mis-aimed click cannot reach it.",
+      },
+      {
+        demo: "context-menu/rows",
+        title: "One menu per row",
+        description:
+          "A menu per row, each with its own subject. `ContextMenuLabel` names that subject at the top, which matters more here than in a dropdown: the menu is about whatever was clicked, and without the label it does not say which row it caught.",
+      },
+      {
+        demo: "context-menu/view-options",
+        title: "View options",
+        description:
+          "`ContextMenuRadioGroup` for a one-of-several setting — the canvas's own layout, read back in the trigger. Radio rows indent for their indicator, so a plain item sharing the menu needs `inset` to line its label up.",
+      },
+      {
+        demo: "context-menu/with-submenu",
+        title: "Checkbox and submenu",
+        description:
+          "A submenu keeps a long tail of destinations out of the first menu, and opens on hover or on ArrowRight. `ContextMenuCheckboxItem` is the state row: it stays open on activation, unlike a plain item.",
       },
     ],
+    parts: {
+      ContextMenuTrigger:
+        "The region that answers the right-click, so the guarded markup goes *inside* it. Pass `render` to make it the real element — a table row, a list item, a canvas — rather than wrapping one in a div that changes the layout.",
+      ContextMenuContent:
+        "Mounts its own portal and positioner, and positions at the pointer rather than to an anchor: `side`/`align` shift it from there, they do not attach it to the trigger's edge.",
+      ContextMenuLabel:
+        "Names the menu's subject. A context menu's subject is whatever was clicked and nothing on screen says so once the menu covers it, which is why this earns its row here and not in a dropdown.",
+      ContextMenuItem:
+        "`variant=\"destructive\"` colours the row; `inset` adds the indicator gutter, for when a plain item shares a menu with checkbox or radio rows.",
+      ContextMenuShortcut:
+        "The keyboard equivalent, on the row's end edge. It is a label, not a binding — the shortcut itself is the page's to register.",
+    },
   },
   {
     slug: "dialog",
@@ -581,6 +859,47 @@ export const COMPONENTS: ComponentDoc[] = [
           '`align="end"` so the menu hangs back under a right-aligned trigger, with one `as="a"` row.',
       },
     ],
+  },
+  {
+    slug: "hover-card",
+    name: "Hover Card",
+    category: "Overlays",
+    exports: [
+      "HoverCard",
+      "HoverCardTrigger",
+      "HoverCardContent",
+    ],
+    description: "A preview surface shown on hover, for links and mentions.",
+    intro: [
+      "Hover Card is the preview that saves a click: hovering a mention, a link or an entity name expands it into just enough context to decide whether to follow it. Everything inside is supplementary by definition — a touch user never hovers, so anything a reader actually needs belongs on the page, and anything they need to act on belongs in a Popover.",
+      "It wraps Base UI's `PreviewCard`, which puts the timings on the trigger rather than the root: `delay` (600ms) and `closeDelay` (300ms) are `HoverCardTrigger` props. That trigger renders an `a` element by default, so pass `render` whenever the real trigger is a button — the element has to match what a click would do.",
+    ],
+    examples: [
+      {
+        demo: "hover-card/basic",
+        title: "On a link",
+        description:
+          "Built on Base UI's `PreviewCard`. It opens on hover and on keyboard focus, but is still supplementary — never put anything essential only in here.",
+      },
+      {
+        demo: "hover-card/with-avatar",
+        title: "Person preview",
+        description:
+          "The usual case: a mention that expands into a profile. The trigger is a Button through `render`, since the default element is an anchor and this one navigates nowhere.",
+      },
+      {
+        demo: "hover-card/definition",
+        title: "Metric definition",
+        description:
+          "A glossary card for a dashboard: the label explains how its number is computed, instead of a legend nobody reads. `delay` is set on the trigger — 600ms is too long a wait when the reader is scanning a row of figures.",
+      },
+    ],
+    parts: {
+      HoverCardTrigger:
+        "Owns the timing: `delay` and `closeDelay` are trigger props, not root props, so two triggers can behave differently in one view. It renders an `a` by default — pass `render` when the trigger is really a button.",
+      HoverCardContent:
+        "Renders its own portal and positioner, so positioning props are accepted here. Opening does not move focus into the card, so anything interactive inside it is pointer-only — keep actions out.",
+    },
   },
   {
     slug: "popover",
@@ -886,43 +1205,6 @@ export const PENDING: ComponentDoc[] = [
           "`size` narrows to `Button`'s four square sizes; the text sizes would leave an icon floating in horizontal padding. `icon-xs` and `icon-sm` shrink the glyph with the box.",
       },
     ],
-  },
-  {
-    slug: "speed-dial",
-    name: "Speed Dial",
-    category: "Actions",
-    description:
-      "A floating action button whose two-to-four actions fan out on open — the create button a whole view is about.",
-    intro: [
-      "Speed Dial is the one action a view exists to start, parked in a corner and reachable from anywhere in it: compose, create, upload. Reach for it when the action outranks everything else on the page and the reader may be scrolled far from a toolbar. Two to four actions is the honest range — a fifth belongs in a `DropdownMenu`, and a single action needs no dial at all, just an `IconButton` positioned the same way.",
-      "It is a `Menu` underneath, not the CSS `:focus-within` trick daisyUI's `fab` uses, so Escape closes it, arrow keys walk the actions and focus returns to the trigger. The trigger is also the root: `className` positions the dial and defaults to `fixed end-6 bottom-6`, which an `absolute` override swaps out when the dial belongs to a region rather than the viewport.",
-    ],
-    examples: [
-      {
-        demo: "speed-dial/basic",
-        title: "Create actions",
-        description:
-          "Each action's visible label is its accessible name, so the glyph carries no `aria-label` of its own. The trigger's `icon` swaps for an X while open — that swap is CSS off `aria-expanded`, not a second state.",
-      },
-      {
-        demo: "speed-dial/docked",
-        title: "Docked to the top",
-        description:
-          '`side="bottom"` fans the column downwards for a dial that lives above its content. Alignment stays pinned to the trigger\'s end edge, which is what keeps the action boxes in a line under it.',
-      },
-      {
-        demo: "speed-dial/tone",
-        title: "Brand tone",
-        description:
-          "`tone` reaches the trigger only — the actions stay neutral so the dial reads as one accent rather than a stack of them. A `disabled` action greys out and refuses activation but stays arrow-reachable and `aria-disabled`, so a reader learns it exists instead of finding a gap.",
-      },
-    ],
-    parts: {
-      SpeedDial:
-        "The trigger is the root, so `className` positions the dial. Its default is `fixed end-6 bottom-6 z-40`; pass `absolute` and tailwind-merge drops the `fixed`.",
-      SpeedDialAction:
-        "The whole row is the menu item — label chip and glyph box together — so the label is the accessible name and the box needs none.",
-    },
   },
   /* -- Forms ------------------------------------------------------------- */
   {
@@ -1444,55 +1726,6 @@ export const PENDING: ComponentDoc[] = [
         "A `div` painted from the input's context by `index` — not a control, so it takes no value and no `onChange`, and an index past `maxLength` renders empty forever. The focus and `aria-invalid` underlines are drawn here, which is why an invalid state has to reach every slot.",
       InputOTPSeparator:
         'Always draws a dash: the icon is hardcoded, so children passed to it are ignored. It carries `role="separator"` and no tab stop, since it is punctuation rather than structure.',
-    },
-  },
-  {
-    slug: "autocomplete",
-    name: "Autocomplete",
-    category: "Forms",
-    description:
-      "Free-text input with suggestions — unlike Combobox, the typed value need not come from the list.",
-    intro: [
-      "Autocomplete is a text input with suggestions attached, where the typed string is the value: the list is a shortcut, never a constraint. Reach for it for search fields, for the answer that is usually but not always one of a known set, and anywhere an “other” option would otherwise be needed. Combobox is the one to use when the value has to come from the list, and Command when the entries are actions rather than answers.",
-      "The root holds no selected value at all — only the input string, through `value`/`onValueChange` — and picking an item simply writes that item's text into the input. `mode` decides what a query does: `list` (the default) filters the list and leaves the input alone, `both` filters and previews the highlighted entry inline, `inline` previews without filtering, `none` does neither. Set `filter` to `null` when something upstream already narrowed `items`, or the same query is applied twice.",
-    ],
-    examples: [
-      {
-        demo: "autocomplete/basic",
-        title: "Basic",
-        description:
-          "Whatever is typed stays the value even when nothing matches — there is no selection to read back, only the string. Use Combobox when the value must come from the list.",
-      },
-      {
-        demo: "autocomplete/grouped",
-        title: "Grouped suggestions",
-        description:
-          "Groups come from the shape of `items`: entries carrying their own `items` array arrive at the list's function child as groups, and `AutocompleteCollection` renders the entries of the group it sits in.",
-      },
-      {
-        demo: "autocomplete/inline",
-        title: "Inline completion",
-        description:
-          '`mode="both"` filters the list and completes the highlighted entry inside the input, so a long value like a timezone is a few keystrokes rather than a scroll. It needs `autoHighlight` to have something to preview before the arrow keys are touched.',
-      },
-      {
-        demo: "autocomplete/async",
-        title: "Server-side search",
-        description:
-          "The page owns the results, so `filter={null}` stops Base UI filtering an already-filtered list. `AutocompleteStatus` is the polite live region for that request's state — it stays mounted and swaps its children, which is what lets a screen reader hear the count settle.",
-      },
-    ],
-    parts: {
-      AutocompleteInput:
-        "An `InputGroup` rather than a bare input, with `showClear` as this system's own addition. There is no trigger part here, unlike Combobox: the popup opens from typing, or from `openOnInputClick`.",
-      AutocompleteContent:
-        "Portalled, and pinned to the anchor's width — unlike Combobox's popup it never grows past the input, so a long suggestion wraps instead of widening the field.",
-      AutocompleteEmpty:
-        "Shown by a `data-empty` attribute on the popup, not by conditional rendering, so it belongs inside `AutocompleteContent` and outside `AutocompleteList`. Swap its children rather than unmounting it — staying mounted is what lets it announce the empty result.",
-      AutocompleteStatus:
-        "A polite live region for the state of the list, not a heading: it announces changes to its children, so unmounting it or filling it with a fixed string wastes it. Loading and result counts are what it is for.",
-      AutocompleteCollection:
-        "Renders the items of the `AutocompleteGroup` above it, or the root's filtered items when there is no group — the same wrapper `AutocompleteList` applies implicitly to a function child.",
     },
   },
   {
@@ -3164,103 +3397,6 @@ export const PENDING: ComponentDoc[] = [
     },
   },
   {
-    slug: "navigation-menu",
-    name: "Navigation Menu",
-    category: "Navigation",
-    description: "A horizontal site menu with optional rich dropdown panels.",
-    intro: [
-      "Navigation Menu is the top-level menu of a site header: a row of destinations, some of which open a panel with room for descriptions, groups or a featured link. Reach for it for marketing and documentation chrome. `Menubar` is the desktop-application counterpart with commands rather than destinations, and `DropdownMenu` is the right answer for actions on the page you are on.",
-      "The root mounts its own portal, positioner, popup and viewport, so the tree you write is only Root → List → Item — and `align` on the root is forwarded to that positioner rather than set on a part of your own. All the items share the single popup: moving between triggers resizes and slides it, and the content reads `data-activation-direction` to animate away from where the pointer came from.",
-    ],
-    examples: [
-      {
-        demo: "navigation-menu/basic",
-        title: "Basic",
-        description:
-          "One panel and one plain link. `navigationMenuTriggerStyle()` is what makes a link with no panel sit level with the triggers beside it.",
-      },
-      {
-        demo: "navigation-menu/multiple",
-        title: "Several menus",
-        description:
-          "Moving between triggers reuses one popup and slides it; the content reads `data-activation-direction` to animate away from where you came from.",
-      },
-      {
-        demo: "navigation-menu/featured",
-        title: "Featured panel",
-        description:
-          "A two-column panel with a promoted destination beside the list. The panel is your own markup — the component supplies the popup and the link styling, so the grid is yours to shape.",
-      },
-      {
-        demo: "navigation-menu/in-header",
-        title: "In a site header",
-        description:
-          "The placement it exists for, between a wordmark and an account action. The root is `max-w-max`, so it takes only the width of its list and the header's own flex layout keeps working around it.",
-      },
-    ],
-    parts: {
-      NavigationMenu:
-        "Renders the portal, positioner, popup and viewport itself — `align` is a positioner prop passed through here, and NavigationMenuPositioner is not something you mount yourself.",
-      NavigationMenuContent:
-        "The panel's contents, not the panel: sizing, columns and grids are your markup inside it, and the popup animates to whatever size that comes out.",
-      NavigationMenuLink:
-        "Styled for inside a panel. For a top-level link with no panel, add `navigationMenuTriggerStyle()` so it matches the triggers on the row.",
-      NavigationMenuTrigger:
-        "Appends its own caret after the children and rotates it while the panel is open, so a trigger needs no icon of its own.",
-    },
-  },
-  {
-    slug: "menubar",
-    name: "Menubar",
-    category: "Navigation",
-    description:
-      "A desktop-style application menu bar with keyboard traversal.",
-    intro: [
-      "Menubar is application chrome: a persistent row of named menus — File, Edit, View — that keeps a dense tool's whole command surface in reach and grouped by noun. Reach for it in editor-shaped views people live inside. One button that reveals a few actions is `Dropdown Menu`, a right-click surface is `Context Menu`, and a searchable flat list of commands is `Command`.",
-      "`MenubarMenu` is Dropdown Menu under a different `data-slot`, so the item vocabulary — items, checkbox and radio items, labels, separators, submenus — is that component's, and `MenubarContent` mounts its own portal and positioner. Only the root is new: it is Base UI's menubar, which is what gives the row a single tab stop and hands focus between menus with the arrow keys.",
-    ],
-    examples: [
-      {
-        demo: "menubar/basic",
-        title: "Basic",
-        description:
-          "One tab stop for the bar; arrow keys move between menus and an open menu stays open as you travel — the desktop convention.",
-      },
-      {
-        demo: "menubar/sectioned",
-        title: "A long menu, sectioned",
-        description:
-          "Once a menu passes half a dozen entries it needs headings. `MenubarLabel` is a group part — Base UI reads the group context above it, so it goes inside the `MenubarGroup` it names rather than beside it.",
-      },
-      {
-        demo: "menubar/with-state",
-        title: "Checkboxes, radios and submenus",
-        description:
-          "The item vocabulary matches Dropdown Menu, because `MenubarMenu` is that component underneath. Checkable items indent for their indicator, so a plain `MenubarItem` sharing the menu needs `inset` to line up.",
-      },
-      {
-        demo: "menubar/app-frame",
-        title: "In an app frame",
-        description:
-          "Where a menubar belongs: the top edge of a window, not a floating control. The root carries a full border, so a bar seated in a frame trades it for `border-0 border-b`.",
-      },
-    ],
-    parts: {
-      Menubar:
-        "Base UI's menubar root: it owns the bar's one tab stop and the arrow-key traversal between menus. A `MenubarMenu` outside it still opens, but as an isolated dropdown with a tab stop of its own.",
-      MenubarMenu:
-        "`DropdownMenu` renamed, so its props are that component's — `open`, `onOpenChange`, `modal`.",
-      MenubarContent:
-        "Mounts its own portal and positioner, so the tree stops at Menu → Trigger → Content. It takes the trigger's width with a `min-w-48` floor, which is what a short trigger like File actually reads from.",
-      MenubarItem:
-        "`inset` adds the indicator gutter (`ps-9.5`). Pass it when a plain item shares a menu with checkbox or radio items, or its label sits left of theirs.",
-      MenubarLabel:
-        "A group part: it registers with the group above it, so a label outside a `MenubarGroup` or `MenubarRadioGroup` throws rather than rendering.",
-      MenubarPortal:
-        "Only for putting a popup somewhere other than the body — `MenubarContent` already portals, so most trees never name this.",
-    },
-  },
-  {
     slug: "pagination",
     name: "Pagination",
     category: "Navigation",
@@ -3933,42 +4069,6 @@ export const PENDING: ComponentDoc[] = [
         "`DrawerContent` renders it for you when the root has `showSwipeHandle`, so compose it directly only inside a custom content. It is `aria-hidden`: dragging is a pointer affordance, and Escape is the keyboard equivalent.",
       DrawerHeader:
         "Centres its text on vertical drawers and goes start-aligned from `md` up — a bottom sheet's title reads as a centred label on a phone and as a heading on a desktop.",
-    },
-  },
-  {
-    slug: "hover-card",
-    name: "Hover Card",
-    category: "Overlays",
-    description: "A preview surface shown on hover, for links and mentions.",
-    intro: [
-      "Hover Card is the preview that saves a click: hovering a mention, a link or an entity name expands it into just enough context to decide whether to follow it. Everything inside is supplementary by definition — a touch user never hovers, so anything a reader actually needs belongs on the page, and anything they need to act on belongs in a Popover.",
-      "It wraps Base UI's `PreviewCard`, which puts the timings on the trigger rather than the root: `delay` (600ms) and `closeDelay` (300ms) are `HoverCardTrigger` props. That trigger renders an `a` element by default, so pass `render` whenever the real trigger is a button — the element has to match what a click would do.",
-    ],
-    examples: [
-      {
-        demo: "hover-card/basic",
-        title: "On a link",
-        description:
-          "Built on Base UI's `PreviewCard`. It opens on hover and on keyboard focus, but is still supplementary — never put anything essential only in here.",
-      },
-      {
-        demo: "hover-card/with-avatar",
-        title: "Person preview",
-        description:
-          "The usual case: a mention that expands into a profile. The trigger is a Button through `render`, since the default element is an anchor and this one navigates nowhere.",
-      },
-      {
-        demo: "hover-card/definition",
-        title: "Metric definition",
-        description:
-          "A glossary card for a dashboard: the label explains how its number is computed, instead of a legend nobody reads. `delay` is set on the trigger — 600ms is too long a wait when the reader is scanning a row of figures.",
-      },
-    ],
-    parts: {
-      HoverCardTrigger:
-        "Owns the timing: `delay` and `closeDelay` are trigger props, not root props, so two triggers can behave differently in one view. It renders an `a` by default — pass `render` when the trigger is really a button.",
-      HoverCardContent:
-        "Renders its own portal and positioner, so positioning props are accepted here. Opening does not move focus into the card, so anything interactive inside it is pointer-only — keep actions out.",
     },
   },
   {

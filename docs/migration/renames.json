@@ -1,16 +1,17 @@
 {
   "provenance": {
     "purpose": "Every consumer-visible rename the v1 absorption makes, recorded as it happens.",
-    "created_by": "batch 0.1 \u2014 release and verification plumbing (LittleBigCode/design-system#4)",
+    "created_by": "batch 0.1 — release and verification plumbing (LittleBigCode/design-system#4)",
     "read_by": "scripts/build-migration-guide.mjs",
     "rule": "A batch that renames anything a consumer can import, target or reference owes a row here, in the same PR. The batch plan lists the rows each batch owes."
   },
   "schema": {
-    "kind": "component | export | class | token | path \u2014 what is being renamed",
+    "kind": "component | export | class | token | path — what is being renamed",
     "from": "the 0.x name",
     "to": "the 1.0 name, or null when the thing is removed with no replacement",
     "batch": "the batch number that made the change",
-    "note": "optional \u2014 why, or what a consumer has to do beyond a find-and-replace"
+    "note": "optional — why, or what a consumer has to do beyond a find-and-replace",
+    "notes": "A change a consumer can see that is not yet a rename — recorded so the row it will owe later is not lost. Not read by the generator."
   },
   "renames": [
     {
@@ -18,7 +19,7 @@
       "from": "--ds-vert",
       "to": "--ds-vert",
       "batch": "0.3",
-      "note": "Value corrected #89fc79 -> #53ff64. The 0.11 hex was eye-dropped from the charter PNG on the belief that the swatch label was a typo; the label was right. Name unchanged \u2014 re-check any hard-coded copy of the old hex."
+      "note": "Value corrected #89fc79 -> #53ff64. The 0.11 hex was eye-dropped from the charter PNG on the belief that the swatch label was a typo; the label was right. Name unchanged — re-check any hard-coded copy of the old hex."
     },
     {
       "kind": "token",
@@ -26,6 +27,26 @@
       "to": "--ds-chart-1",
       "batch": "0.3",
       "note": "Data series no longer read the themeable accent. Visually identical at the default theme (--ds-chart-1 is #ff2a00); a theme that overrode --ds-accent to recolour its charts must now override --ds-chart-*."
+    }
+  ],
+  "notes": [
+    {
+      "kind": "export",
+      "subject": "SpeedDial",
+      "batch": "1",
+      "note": "The source composes its trigger onto its own eight-tone Button; that component holds until batch 7, so the trigger is this repo's IconButton and `tone` accepts only its two variants (`primary`, `danger`). Batch 7 re-wires it back and owes the row."
+    },
+    {
+      "kind": "export",
+      "subject": "AutocompleteInput / AutocompleteClear",
+      "batch": "1",
+      "note": "The source composes onto its own compound InputGroup (InputGroupInput / InputGroupAddon / InputGroupButton); that component holds until batch 7, so these compose onto this repo's InputGroup (`after` slot) and IconButton. Batch 7 re-wires them back and owes the row."
+    },
+    {
+      "kind": "component",
+      "subject": "context-menu",
+      "batch": "1",
+      "note": "The /docs/context-menu route documented `Dropdown` and the absence of a right-click menu. It now documents the real `ContextMenu`. Nothing a consumer imports changed name — `Dropdown` is unmoved and still documented at /docs/dropdown-menu — so this is not a rename row."
     }
   ]
 }

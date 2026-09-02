@@ -9,7 +9,7 @@ showcase page.
 
 ## React components
 
-The 30 components exported from [`@diametral/design-system/react`](react.md). Every row has a live page with runnable examples, and every page is what the visual and accessibility gates drive — so this table and the tested surface cannot disagree.
+The 35 components exported from [`@diametral/design-system/react`](react.md). Every row has a live page with runnable examples, and every page is what the visual and accessibility gates drive — so this table and the tested surface cannot disagree.
 
 > Generated from `site/src/registry/registry.ts` by `scripts/build-components-md.mjs`. Edit the registry, then run `npm run build`.
 
@@ -18,6 +18,7 @@ The 30 components exported from [`@diametral/design-system/react`](react.md). Ev
 | Component | Imports | What it is |
 | --- | --- | --- |
 | [Segmented](https://littlebigcode.github.io/design-system/docs/toggle-group) | `Segmented`, `type SegmentedProps`, `type SegmentedItem` | A short row of mutually exclusive options, all visible at once. |
+| [Speed Dial](https://littlebigcode.github.io/design-system/docs/speed-dial) | `SpeedDial`, `SpeedDialAction` | A floating action button whose two-to-four actions fan out on open — the create button a whole view is about. |
 | [SplitButton](https://littlebigcode.github.io/design-system/docs/split-button) | `SplitButton`, `IconButton`, `ButtonGroup` | One primary action, with its variants behind an attached caret. |
 | [Wizard](https://littlebigcode.github.io/design-system/docs/wizard) | `Wizard`, `type WizardProps`, `type WizardStep` | An ordered sequence of steps, with the progress and the navigation handled. |
 
@@ -25,6 +26,7 @@ The 30 components exported from [`@diametral/design-system/react`](react.md). Ev
 
 | Component | Imports | What it is |
 | --- | --- | --- |
+| [Autocomplete](https://littlebigcode.github.io/design-system/docs/autocomplete) | `Autocomplete`, `AutocompleteInput`, `AutocompleteClear`, `AutocompleteContent`, `AutocompleteList`, `AutocompleteItem`, `AutocompleteGroup`, `AutocompleteLabel`, `AutocompleteCollection`, `AutocompleteEmpty`, `AutocompleteStatus`, `AutocompleteSeparator` | Free-text input with suggestions — unlike Combobox, the typed value need not come from the list. |
 | [Calendar](https://littlebigcode.github.io/design-system/docs/calendar) | `Calendar`, `type CalendarProps`, `type CalendarEvent` | A month grid with dated events, statuses and a selected day. |
 | [ColorPicker](https://littlebigcode.github.io/design-system/docs/color-picker) | `ColorPicker`, `type ColorPickerProps` | A swatch group over the brand palette, with a free-form hex field beside it. |
 | [Combobox](https://littlebigcode.github.io/design-system/docs/combobox) | `Combobox`, `type ComboboxProps`, `type ComboboxOption` | A text field that filters a list as you type, and settles on one value. |
@@ -52,6 +54,8 @@ The 30 components exported from [`@diametral/design-system/react`](react.md). Ev
 | Component | Imports | What it is |
 | --- | --- | --- |
 | [CommandPalette](https://littlebigcode.github.io/design-system/docs/command) | `CommandPalette`, `type CommandPaletteProps`, `type Command` | The ⌘K surface: one flat list of commands, grouped and filtered as you type. |
+| [Menubar](https://littlebigcode.github.io/design-system/docs/menubar) | `Menubar`, `MenubarMenu`, `MenubarTrigger`, `MenubarContent`, `MenubarItem`, `MenubarCheckboxItem`, `MenubarRadioGroup`, `MenubarRadioItem`, `MenubarLabel`, `MenubarSeparator`, `MenubarShortcut`, `MenubarGroup`, `MenubarPortal`, `MenubarSub`, `MenubarSubTrigger`, `MenubarSubContent` | A desktop-style application menu bar with keyboard traversal. |
+| [Navigation Menu](https://littlebigcode.github.io/design-system/docs/navigation-menu) | `NavigationMenu`, `NavigationMenuList`, `NavigationMenuItem`, `NavigationMenuTrigger`, `NavigationMenuContent`, `NavigationMenuPositioner`, `NavigationMenuLink`, `NavigationMenuIndicator`, `navigationMenuTriggerStyle` | A horizontal site menu with optional rich dropdown panels. |
 | [Tabs](https://littlebigcode.github.io/design-system/docs/tabs) | `Tabs`, `type TabsProps`, `type TabItem` | Sibling views of one subject, one visible at a time. |
 | [VerticalNav](https://littlebigcode.github.io/design-system/docs/sidebar) | `VerticalNav`, `type VerticalNavProps`, `type VerticalNavItem` | The app's own nav column: one level of nesting, one active row. |
 
@@ -65,8 +69,9 @@ The 30 components exported from [`@diametral/design-system/react`](react.md). Ev
 
 | Component | Imports | What it is |
 | --- | --- | --- |
-| [Dropdown](https://littlebigcode.github.io/design-system/docs/context-menu) | `Dropdown`, `MenuItem`, `MenuHeader`, `MenuDivider` | Right-click's menu body, hung off an explicit trigger instead. |
+| [ContextMenu](https://littlebigcode.github.io/design-system/docs/context-menu) | `ContextMenu`, `ContextMenuTrigger`, `ContextMenuContent`, `ContextMenuItem`, `ContextMenuCheckboxItem`, `ContextMenuRadioGroup`, `ContextMenuRadioItem`, `ContextMenuLabel`, `ContextMenuSeparator`, `ContextMenuShortcut`, `ContextMenuGroup`, `ContextMenuPortal`, `ContextMenuSub`, `ContextMenuSubTrigger`, `ContextMenuSubContent` | Right-click's own menu, positioned at the pointer. |
 | [Dropdown](https://littlebigcode.github.io/design-system/docs/dropdown-menu) | `Dropdown`, `MenuItem`, `MenuHeader`, `MenuDivider` | A menu of actions hanging off a trigger. |
+| [Hover Card](https://littlebigcode.github.io/design-system/docs/hover-card) | `HoverCard`, `HoverCardTrigger`, `HoverCardContent` | A preview surface shown on hover, for links and mentions. |
 | [Modal](https://littlebigcode.github.io/design-system/docs/alert-dialog) | `Modal`, `type ModalProps` | The destructive-confirmation shape of `Modal`: a heading, the consequence, and two buttons. |
 | [Modal](https://littlebigcode.github.io/design-system/docs/dialog) | `Modal`, `type ModalProps` | A focused task on top of the page: heading, body, footer actions. |
 | [Popover](https://littlebigcode.github.io/design-system/docs/popover) | `Popover`, `type PopoverProps`, `type PopoverPlacement` | A small panel anchored to a trigger, for detail that would crowd the page. |
@@ -2251,3 +2256,218 @@ Composes the date picker and time picker into one ISO `YYYY-MM-DDTHH:MM` value.
 **React** — `DateTimePicker({ value, defaultValue, onChange, min, max, step })`.
 
 Live: [../examples/components/date-time.html](../examples/components/date-time.html)
+
+---
+
+# Batch 1 — overlays and menus
+
+Absorbed from `@diametral/ui` in `1.0.0-beta.1`. These six are the first components in
+the system whose behaviour is not hand-written: it comes from Base UI, adopted as a
+substrate of the React binding ([ADR 0001](adr/0001-base-ui-as-a-substrate.md)). Each one
+records its **binding** below — the CSS ships for every binding, the keyboard and focus
+contract is React-only, and a Streamlit, Keycloak or plain-HTML consumer should read that
+line before reaching for one.
+
+## Context menu
+
+Right-click's own menu, positioned at the pointer. Rows come in four shapes — plain,
+checkbox, radio, submenu.
+
+```html
+<div class="ds-context-menu-positioner">
+  <div class="ds-context-menu-content">
+    <div class="ds-context-menu-label">charte-2026.pdf</div>
+    <div class="ds-context-menu-item">Rename</div>
+    <div class="ds-context-menu-item">
+      Duplicate <span class="ds-context-menu-shortcut">⌘D</span>
+    </div>
+    <div class="ds-context-menu-checkbox-item">
+      <span class="ds-context-menu-item-indicator">✓</span> Pinned
+    </div>
+    <div class="ds-context-menu-sub-trigger">
+      Move to <svg class="ds-context-menu-sub-trigger-icon"></svg>
+    </div>
+    <div class="ds-context-menu-separator"></div>
+    <div class="ds-context-menu-item" data-variant="destructive">Delete</div>
+  </div>
+</div>
+```
+
+**Parts:** `.ds-context-menu-trigger` (the region that answers the right-click),
+`-positioner`, `-content`, `-item`, `-checkbox-item`, `-radio-item`, `-item-indicator`,
+`-sub-trigger` + `-sub-trigger-icon`, `-label`, `-separator`, `-shortcut`. `data-inset` on
+an item adds the indicator gutter; `data-variant="destructive"` colours the row.
+
+**React** — `ContextMenu` + 14 parts. `ContextMenuTrigger` takes `render` to become the real
+element it guards; `ContextMenuContent` mounts its own portal and positioner.
+
+**Binding** — CSS: every binding. Behaviour (right-click capture, pointer positioning,
+submenus, focus return, Escape): React only.
+
+## Navigation menu
+
+A horizontal site menu whose triggers open one shared panel.
+
+```html
+<nav class="ds-navigation-menu">
+  <ul class="ds-navigation-menu-list">
+    <li class="ds-navigation-menu-item">
+      <button class="ds-navigation-menu-trigger">
+        Product <svg class="ds-navigation-menu-trigger-icon"></svg>
+      </button>
+    </li>
+  </ul>
+  <div class="ds-navigation-menu-positioner">
+    <div class="ds-navigation-menu-popup">
+      <div class="ds-navigation-menu-viewport">
+        <div class="ds-navigation-menu-content">
+          <a class="ds-navigation-menu-link" href="#">Overview</a>
+          <a class="ds-navigation-menu-link ds-navigation-menu-link--block" href="#">Changelog</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+```
+
+**Parts:** `.ds-navigation-menu`, `-list`, `-item`, `-trigger` + `-trigger-icon`,
+`-positioner`, `-popup`, `-viewport`, `-content`, `-link`, `-indicator` +
+`-indicator-arrow`. `.ds-navigation-menu-link--block` is the tighter block-flow link for a
+stacked list; the default is a flex row with a 0.75rem inset.
+
+**React** — `NavigationMenu` + 8 parts, plus `navigationMenuTriggerStyle()` for a top-level
+link with no panel. The root mounts its own portal, positioner, popup and viewport, so the
+tree you write is Root → List → Item.
+
+**Binding** — CSS: every binding. Behaviour (one shared popup, resize and slide between
+triggers, `data-activation-direction`): React only.
+
+## Menubar
+
+A desktop-style application menu bar: one tab stop, arrow keys between menus.
+
+```html
+<div class="ds-menubar">
+  <button class="ds-menubar-trigger">File</button>
+  <button class="ds-menubar-trigger">Edit</button>
+</div>
+<!-- an open menu is a .ds-menu, the same surface a Dropdown uses -->
+<div class="ds-menu">
+  <div class="ds-menu__header">Recent</div>
+  <div class="ds-menu__item">Open… <span class="ds-menubar-shortcut">⌘O</span></div>
+  <div class="ds-menu__item ds-menubar-checkbox-item">
+    <span class="ds-menubar-item-indicator">✓</span> Show gutter
+  </div>
+  <div class="ds-menu__divider"></div>
+  <div class="ds-menu__item ds-menubar-sub-trigger">
+    Move to <svg class="ds-menubar-sub-trigger-icon"></svg>
+  </div>
+</div>
+```
+
+**Parts:** `.ds-menubar` (the bar), `-trigger`. Everything inside a menu wears this system's
+own menu vocabulary — `.ds-menu`, `.ds-menu__item`, `.ds-menu__divider`, `.ds-menu__header`
+(see [Menu](#dropdown-menu)) — plus `.ds-menubar-checkbox-item` / `-radio-item` and
+`.ds-menubar-item-indicator` for the checkable rows, `-sub-trigger` + `-sub-trigger-icon`
+for a submenu row, and `.ds-menubar-shortcut` for the keyboard hint.
+`data-inset="true"` lines a plain row up with the checkable ones.
+
+**React** — `Menubar` + 15 parts. Each menu is a Base UI `Menu`, not this repo's
+`Dropdown`: the incumbent is click-toggled with no submenus and no checkable rows.
+
+**Binding** — CSS: every binding. Behaviour (the bar's single tab stop, arrow-key traversal
+between menus, submenus, checkable rows): React only.
+
+## Autocomplete
+
+A text input with suggestions, where the typed string is the value — the list is a
+shortcut, never a constraint. `Combobox` is the one whose value must come from the list.
+
+```html
+<div class="ds-input-group">
+  <input class="ds-input" placeholder="Start typing…">
+  <span class="ds-input-group__addon">
+    <button class="ds-button ds-button--icon ds-button--sm">
+      <svg class="ds-autocomplete-clear-icon"></svg>
+    </button>
+  </span>
+</div>
+<div class="ds-autocomplete-positioner">
+  <div class="ds-autocomplete-content">
+    <div class="ds-autocomplete-status">3 results</div>
+    <div class="ds-autocomplete-list">
+      <div class="ds-autocomplete-label">Forms</div>
+      <div class="ds-autocomplete-item">Combobox</div>
+      <div class="ds-autocomplete-separator"></div>
+      <div class="ds-autocomplete-empty">No suggestion.</div>
+    </div>
+  </div>
+</div>
+```
+
+**Parts:** the field is a `.ds-input-group` + `.ds-input` (see [Form
+controls](#form-controls)); the popup is `.ds-autocomplete-positioner`, `-content`,
+`-list`, `-item`, `-label`, `-separator`, `-empty`, `-status`, and
+`.ds-autocomplete-clear-icon` on the clear glyph.
+
+**React** — `Autocomplete` + 11 parts. `AutocompleteInput` renders the input group and takes
+`showClear`; `AutocompleteStatus` is a polite live region — swap its children rather than
+unmounting it. `mode` decides what a query does (`list`, `both`, `inline`, `none`); set
+`filter={null}` when something upstream already narrowed the items.
+
+**Binding** — CSS: every binding. Behaviour (filtering, inline completion, the live region,
+popup positioning, arrow-key traversal): React only.
+
+## Speed dial
+
+A floating action button whose two-to-four actions fan out on open.
+
+```html
+<button class="ds-button ds-button--icon ds-speed-dial" aria-label="Create" aria-expanded="false">
+  <span class="ds-speed-dial-icon"><!-- glyph --></span>
+  <svg class="ds-speed-dial-icon-close"></svg>
+</button>
+<div class="ds-speed-dial-positioner">
+  <div class="ds-speed-dial-actions">
+    <div class="ds-speed-dial-action">
+      <span class="ds-speed-dial-action-label">Upload</span>
+      <span class="ds-button ds-button--icon ds-speed-dial-action-icon"><!-- glyph --></span>
+    </div>
+  </div>
+</div>
+```
+
+**Parts:** `.ds-speed-dial` on the trigger (a `.ds-button.ds-button--icon`, fixed to the
+end-bottom corner); `.ds-speed-dial--docked` scopes it to a positioned ancestor and
+`--docked-top` flips which edge; `-icon` / `-icon-close` are the two glyphs, swapped by CSS
+off the trigger's `aria-expanded`; `-positioner`, `-actions`, `-action`, `-action-label`,
+`-action-icon` are the fan-out column.
+
+**React** — `SpeedDial` + `SpeedDialAction`. The trigger is the root, so `className`
+positions the dial. `tone` is `primary` or `danger` — the two the incumbent button has.
+
+**Binding** — CSS: every binding, including the open/closed glyph swap, which is pure CSS off
+`aria-expanded`. Behaviour (Escape, arrow keys across the actions, focus return): React only.
+
+## Hover card
+
+A preview surface shown on hover, for links and mentions. Everything inside is
+supplementary by definition — a touch user never hovers.
+
+```html
+<div class="ds-hover-card-positioner">
+  <div class="ds-hover-card-content" data-side="bottom">
+    <!-- the preview -->
+  </div>
+</div>
+```
+
+**Parts:** `.ds-hover-card-positioner`, `.ds-hover-card-content`. `data-side` on the content
+picks which edge it slides in from.
+
+**React** — `HoverCard`, `HoverCardTrigger`, `HoverCardContent`. The timings live on the
+trigger (`delay` 600ms, `closeDelay` 300ms), so two triggers can differ in one view. The
+trigger renders an `a` by default — pass `render` when it is really a button.
+
+**Binding** — CSS: every binding. Behaviour (hover and focus delays, dismissal, positioning):
+React only.

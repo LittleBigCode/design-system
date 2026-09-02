@@ -4,6 +4,48 @@ All notable changes to the Diametral Design System are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/), and the project
 adheres to [Semantic Versioning](https://semver.org/) — see [docs/versioning.md](docs/versioning.md).
 
+## [1.0.0-beta.1] — 2026-09-02
+
+The first absorption beta: `@diametral/ui`'s overlay and menu family enters the system.
+Published on the `next` dist-tag — `latest` stays at 0.11.0 for the whole migration.
+
+### Added
+- **Six net-new components**, all in a clean namespace: `ContextMenu` (15 parts),
+  `Menubar` (16), `Autocomplete` (12), `NavigationMenu` (9 + `navigationMenuTriggerStyle`),
+  `HoverCard` (3) and `SpeedDial` (2). Each ships its `.ds-*` stylesheet, so any binding
+  can render the look; the keyboard and focus contract is React-only, and each component's
+  [binding tier](docs/components.md) says so.
+- `--ds-*` classes for all six, bundled into `css/diametral.css`.
+
+### Changed
+- **`@base-ui/react` and `@phosphor-icons/react` are now runtime `dependencies` of the
+  React layer** ([ADR 0001](docs/adr/0001-base-ui-as-a-substrate.md)). The
+  zero-dependency promise is restated, not dropped: CSS, tokens and Web Components still
+  import nothing, and a release-blocking `layer-purity` check keeps that true.
+- **`/docs/context-menu` documents the real `ContextMenu`.** It previously documented
+  `Dropdown` and the absence of a right-click menu. Nothing a consumer imports changed
+  name — `Dropdown` is unmoved.
+- The seven `z-index: 50` values the overlay family arrived with are `var(--ds-z-popover)`.
+
+### Fixed
+- **The absorbed popups no longer paint drop shadows.** They arrived with a 10%-ink ring
+  plus two shadow layers; the charte separates by 1px rule, so each is a bordered flat
+  surface, and their focus rings use this system's `outline` convention.
+- **A submenu's border ring.** The source re-applied a `shadow-md` class on
+  `ContextMenuSubContent` on top of the popup's own `box-shadow`; as a single-class
+  override it *replaced* it, dropping the 1px ring. The class is deleted.
+- **`NavigationMenu`'s destructive-row dark state.** It was keyed to `.dark` alone, and
+  this system's dark theme also answers to `[data-theme="dark"]` — which is what the docs
+  site uses, so the rule never painted.
+
+### Migration
+- No renames. Every class and export in this release is additive; see
+  [docs/migration/from-0.11.md](docs/migration/from-0.11.md).
+- Two re-wirings are recorded as notes rather than rows in
+  `docs/migration/renames.json`: `SpeedDial` composes onto `IconButton` and
+  `Autocomplete` onto `InputGroup` until batch 7 supplies the source symbols. `tone` on
+  `SpeedDial` therefore takes `primary` or `danger`, not the source's eight tones.
+
 ## [0.11.0] — 2026-06-23
 
 ### Fixed
