@@ -27,7 +27,7 @@ export interface RadioGroupProps {
   /** Initial selected value (uncontrolled). */
   defaultValue?: string;
   onChange?: (value: string, event: ChangeEvent<HTMLInputElement>) => void;
-  /** Shared name applied to every radio in the group. */
+  /** Shared name applied to every radio in the group. Defaults to a generated id. */
   name?: string;
   options: RadioOption[];
   className?: string;
@@ -56,6 +56,10 @@ export function Radio({ checked, defaultChecked, name, value, onChange, disabled
 export function RadioGroup({ value, defaultValue, onChange, name, options = [], className }: RadioGroupProps) {
   const [internal, setInternal] = React.useState(defaultValue);
   const active = value !== undefined ? value : internal;
+  /* Radios are grouped by the shared `name`, not by role="radiogroup" — without
+     one the browser treats each input as its own group and its native arrow-key
+     navigation silently stops working. */
+  const groupName = name ?? React.useId();
   const select = (v: any, e: any) => {
     if (value === undefined) setInternal(v);
     onChange && onChange(v, e);
@@ -63,7 +67,7 @@ export function RadioGroup({ value, defaultValue, onChange, name, options = [], 
   return h("div", { className: cx("ds-radio-group", className), role: "radiogroup" },
     options.map((opt) => h(Radio, {
       key: opt.value,
-      name, value: opt.value,
+      name: groupName, value: opt.value,
       checked: active === opt.value,
       disabled: opt.disabled,
       onChange: select,

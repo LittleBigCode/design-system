@@ -5,14 +5,14 @@ import { Badge, Card } from "@diametral/design-system/react"
 import { COMPONENTS, componentsByCategory } from "@/registry/registry"
 
 const SWATCHES = [
-  { name: "black", token: "--ds-black" },
-  { name: "red", token: "--ds-red-brand" },
-  { name: "brown", token: "--ds-brown" },
-  { name: "khaki", token: "--ds-khaki" },
+  { name: "black", token: "--ds-noir" },
+  { name: "red", token: "--ds-rouge" },
+  { name: "brown", token: "--ds-marron" },
+  { name: "khaki", token: "--ds-kaki" },
   { name: "beige", token: "--ds-beige" },
-  { name: "green", token: "--ds-green-brand" },
-  { name: "blue", token: "--ds-blue" },
-  { name: "yellow", token: "--ds-yellow-pale" },
+  { name: "green", token: "--ds-vert" },
+  { name: "blue", token: "--ds-bleu" },
+  { name: "yellow", token: "--ds-jaune" },
 ]
 
 export function Overview() {

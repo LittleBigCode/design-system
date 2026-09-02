@@ -4,13 +4,14 @@
    An inline mini line chart drawn as a single inline <svg>. No axes, no grid,
    no library — just a polyline (and an optional faint area fill + an end dot).
    The stroke uses currentColor, so the line picks up the element's color; the
-   default color is the accent. Sits inline-block so it can flow next to text
+   default is the first series color, not the accent — a themed --ds-accent must
+   not repaint data. Sits inline-block so it can flow next to text
    or drop into a stat tile.
    ============================================================================ */
 .ds-sparkline {
   display: inline-block;
   line-height: 0;
-  color: var(--ds-accent);
+  color: var(--ds-chart-1);
   vertical-align: middle;
 }
 

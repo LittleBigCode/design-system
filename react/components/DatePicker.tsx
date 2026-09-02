@@ -1,4 +1,5 @@
 import { cx } from "../lib/cx.js";
+import { MonthGrid, buildWeeks, sameDay, startOfDay, toISO } from "../lib/monthGrid.js";
 /* ----------------------------------------------------------------------------
    Date picker — a .ds-input that opens a .ds-calendar popover.
    Renders a month grid (with leading / trailing days from the neighbouring
@@ -44,12 +45,6 @@ const MONTHS = [
   "July", "August", "September", "October", "November", "December",
 ];
 
-const pad = (n: any) => String(n).padStart(2, "0");
-
-/* yyyy-mm-dd for a Date (local — never UTC, to avoid an off-by-one near midnight). */
-function toISO(d: any) {
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-}
 
 /* Coerce a Date | ISO string | null/undefined into a Date (or null). */
 function toDate(v: any) {
@@ -60,26 +55,6 @@ function toDate(v: any) {
   if (m) return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
   const d = new Date(v);
   return Number.isNaN(d.getTime()) ? null : d;
-}
-
-const startOfDay = (d: any) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
-const sameDay = (a: any, b: any) =>
-  a && b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
-
-/* The 42 cells (6 weeks) covering `month`, with leading/trailing neighbour days. */
-function buildWeeks(year: any, month: any) {
-  const first = new Date(year, month, 1);
-  const start = new Date(year, month, 1 - first.getDay()); // back up to the Sunday
-  const weeks = [];
-  for (let w = 0; w < 6; w++) {
-    const row = [];
-    for (let d = 0; d < 7; d++) {
-      const cell = new Date(start.getFullYear(), start.getMonth(), start.getDate() + (w * 7 + d));
-      row.push(cell);
-    }
-    weeks.push(row);
-  }
-  return weeks;
 }
 
 export function DatePicker({
@@ -104,6 +79,7 @@ export function DatePicker({
   const maxDate = React.useMemo(() => { const d = toDate(max); return d ? startOfDay(d) : null; }, [max]);
 
   const [open, setOpen] = React.useState(false);
+  const popupId = React.useId();
   // The month currently shown in the grid — seeded from the selection or today.
   const [view, setView] = React.useState(() => {
     const base = selected || new Date();
@@ -151,6 +127,7 @@ export function DatePicker({
     return false;
   };
 
+  const goToMonth = (d: Date) => setView({ year: d.getFullYear(), month: d.getMonth() });
   const shiftMonth = (delta: any) => {
     setView((v) => {
       const d = new Date(v.year, v.month + delta, 1);
@@ -183,8 +160,14 @@ export function DatePicker({
       readOnly: true,
       disabled: disabled || undefined,
       name,
+      /* role=combobox, not the bare textbox this readOnly input would default
+         to: aria-expanded is not an allowed attribute on a textbox, which is
+         the invalid-ARIA violation the axe gate reports on this trigger. A
+         readOnly input that opens a chooser is exactly what combobox names. */
+      role: "combobox",
       "aria-haspopup": "dialog",
       "aria-expanded": open,
+      "aria-controls": popupId,
       autoComplete: "off",
       onClick: () => { if (!disabled) setOpen((o) => !o); },
       onKeyDown: (e: any) => {
@@ -198,6 +181,7 @@ export function DatePicker({
     open
       ? h("div", {
           className: "ds-calendar",
+          id: popupId,
           role: "dialog",
           "aria-label": "Choose date",
           style: { position: "absolute", top: "calc(100% + 6px)", left: 0 },
@@ -225,34 +209,27 @@ export function DatePicker({
               )
             )
           ),
-          h("div", { className: "ds-calendar__grid", role: "grid" },
-            WEEKDAYS.map((w) =>
+          h(MonthGrid, {
+            weeks,
+            gridClassName: "ds-calendar__grid",
+            rowClassName: "ds-calendar__row",
+            "aria-label": `${MONTHS[view.month]} ${view.year}`,
+            header: WEEKDAYS.map((w) =>
               h("div", { key: `wd-${w}`, className: "ds-calendar__weekday", role: "columnheader", "aria-hidden": "true" }, w)
             ),
-            weeks.map((row, wi) =>
-              row.map((cell, ci) => {
-                const outside = cell.getMonth() !== view.month;
-                const dis = isDisabledDay(cell);
-                const isSel = sameDay(cell, selected);
-                return h("button", {
-                  key: `d-${wi}-${ci}`,
-                  type: "button",
-                  className: cx(
-                    "ds-calendar__day",
-                    outside && "is-outside",
-                    sameDay(cell, today) && "is-today",
-                    isSel && "is-selected"
-                  ),
-                  role: "gridcell",
-                  disabled: dis || undefined,
-                  "aria-pressed": isSel,
-                  "aria-label": fmt(cell),
-                  tabIndex: dis ? -1 : 0,
-                  onClick: () => pick(cell),
-                }, cell.getDate());
-              })
-            )
-          )
+            cellClassName: (cell: Date) => cx(
+              "ds-calendar__day",
+              cell.getMonth() !== view.month && "is-outside",
+              sameDay(cell, today) && "is-today",
+              sameDay(cell, selected) && "is-selected"
+            ),
+            cellLabel: (cell: Date) => fmt(cell),
+            isSelected: (cell: Date) => sameDay(cell, selected),
+            isDisabled: isDisabledDay,
+            onPick: pick,
+            onNavigateTo: goToMonth,
+            renderCell: (cell: Date) => cell.getDate(),
+          })
         )
       : null
   );

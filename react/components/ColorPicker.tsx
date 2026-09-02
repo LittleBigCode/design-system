@@ -33,7 +33,7 @@ const h = React.createElement;
 /* Brand palette (charter-canonical) + white. */
 export const BRAND_SWATCHES = [
   "#161616", "#767884", "#9f8667", "#aab0a6", "#d5d3c4",
-  "#f4fbda", "#ff2a00", "#23e2ff", "#89fc79", "#fff73b", "#ffffff",
+  "#f4fbda", "#ff2a00", "#23e2ff", "#53ff64", "#fff73b", "#ffffff",
 ];
 
 /* Is `s` a complete #rgb or #rrggbb hex? (used to gate the native input). */
@@ -82,24 +82,52 @@ export function ColorPicker({
   const nativeValue = isHex(current) ? normHex(current) : "#000000";
   const selectedNorm = normHex(current);
 
+  /* Roving tabindex: the group is one tab stop and the arrows move inside it,
+     so Tab does not have to walk every swatch to reach the hex field. The stop
+     follows the selection, falling back to the first swatch when the current
+     value is not one of them. */
+  const swatchRefs = React.useRef<(HTMLButtonElement | null)[]>([]);
+  const selectedIndex = swatches.findIndex((sw) => normHex(sw) === selectedNorm);
+  const tabStop = selectedIndex === -1 ? 0 : selectedIndex;
+
+  /* Arrows select as they move, the way a radio group does — the swatches are
+     mutually exclusive, so focus without selection would leave aria-pressed
+     describing a swatch the user is no longer on. Both axes wrap, because the
+     grid reflows and a row is not a fixed length. */
+  const onSwatchKeyDown = (e: any, index: number) => {
+    const last = swatches.length - 1;
+    let next;
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") next = index === last ? 0 : index + 1;
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = index === 0 ? last : index - 1;
+    else if (e.key === "Home") next = 0;
+    else if (e.key === "End") next = last;
+    else return;
+    e.preventDefault();
+    swatchRefs.current[next]?.focus();
+    commit(normHex(swatches[next]));
+  };
+
   return h("div", {
     className: cx("ds-colorpicker", className),
     ...rest,
   },
     h("div", { className: "ds-colorpicker__swatches", role: "group", "aria-label": "Color swatches" },
-      swatches.map((sw) => {
+      swatches.map((sw, i) => {
         const norm = normHex(sw);
         const isSel = norm === selectedNorm;
         return h("button", {
           key: sw,
+          ref: (el: HTMLButtonElement | null): void => { swatchRefs.current[i] = el; },
           type: "button",
           className: cx("ds-colorpicker__swatch", isSel && "is-selected"),
           style: { background: sw },
           disabled: disabled || undefined,
+          tabIndex: i === tabStop ? 0 : -1,
           "aria-pressed": isSel,
           "aria-label": sw,
           title: sw,
           onClick: () => commit(norm),
+          onKeyDown: (e: any) => onSwatchKeyDown(e, i),
         });
       })
     ),

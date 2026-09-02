@@ -394,6 +394,12 @@ export const COMPONENTS: ComponentDoc[] = [
         description:
           "In-memory `rows` with a default sort. `rowKey` is what selection tracks — without it the index does, and a re-sort moves the ticks.",
       },
+      {
+        demo: "data-table/editable",
+        title: "Inline edit",
+        description:
+          "`editable` on the grid plus `editable` on a column opens the cell on double-click or Enter; `onCellEdit` receives the row, the column key and the new value. The grid does not mutate `rows` itself.",
+      },
     ],
   },
   {

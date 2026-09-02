@@ -2,4 +2,11 @@
 
 # Migrating from 0.11 to 1.0
 
-No renames recorded yet. The v1 absorption is additive so far — nothing a 0.11 consumer imports, targets or references has changed name.
+The v1 absorption renames 2 consumer-visible thing(s). Everything else is additive.
+
+### Tokens
+
+| 0.11 | 1.0 | batch | notes |
+| --- | --- | --- | --- |
+| `--ds-vert` | `--ds-vert` | 0.3 | Value corrected #89fc79 -> #53ff64. The 0.11 hex was eye-dropped from the charter PNG on the belief that the swatch label was a typo; the label was right. Name unchanged — re-check any hard-coded copy of the old hex. |
+| `--ds-accent (in charts, sparkline, bar-chart series)` | `--ds-chart-1` | 0.3 | Data series no longer read the themeable accent. Visually identical at the default theme (--ds-chart-1 is #ff2a00); a theme that overrode --ds-accent to recolour its charts must now override --ds-chart-*. |
