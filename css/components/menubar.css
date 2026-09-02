@@ -1,0 +1,110 @@
+/* Menubar — .ds-menubar (a horizontal bar of menus)
+   The bar and its triggers are net-new. Everything inside a menu rides this
+   repo's own menu vocabulary — .ds-menu, .ds-menu__item, .ds-menu__divider,
+   .ds-menu__header — which is what the re-wiring off the source's held
+   dropdown-menu means in CSS: the source's ds-dropdown-menu-* base never
+   lands, so only the rows this vocabulary has no shape for are defined here. */
+
+.ds-menubar {
+  display: flex;
+  height: 2.5rem;
+  align-items: center;
+  border-radius: 0;
+  border: 1px solid var(--ds-rule);
+  padding: 0.25rem;
+}
+
+.ds-menubar-trigger {
+  display: flex;
+  align-items: center;
+  border-radius: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding-inline: 0.5rem;
+  padding-block: 0.1875rem;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-sm);
+  font-weight: 500;
+  color: var(--ds-ink);
+  user-select: none;
+}
+.ds-menubar-trigger:hover {
+  background-color: var(--ds-bg-alt);
+}
+.ds-menubar-trigger[aria-expanded="true"] {
+  background-color: var(--ds-bg-alt);
+}
+.ds-menubar-trigger:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: -2px;
+}
+
+/* `inset` lines a plain row's label up with the checkable rows sharing the
+   menu. The source got this from its dropdown-menu base, which does not land;
+   scoped to the slot so it cannot reach another menu's rows. */
+[data-slot="menubar-item"][data-inset="true"],
+[data-slot="menubar-label"][data-inset="true"],
+[data-slot="menubar-sub-trigger"][data-inset="true"] {
+  padding-inline-start: 2.375rem;
+}
+
+/* Checkbox and radio rows are .ds-menu__item plus an indicator well: the row
+   keeps the menu's own type and hover, and the inline-start inset makes room
+   for the check. Without the inset the label would sit under the indicator. */
+.ds-menubar-checkbox-item,
+.ds-menubar-radio-item {
+  position: relative;
+  padding-inline-start: 2.375rem;
+  user-select: none;
+}
+.ds-menubar-checkbox-item[data-disabled],
+.ds-menubar-radio-item[data-disabled] {
+  pointer-events: none;
+  opacity: 0.45;
+}
+.ds-menubar-checkbox-item svg,
+.ds-menubar-radio-item svg {
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.ds-menubar-item-indicator {
+  pointer-events: none;
+  position: absolute;
+  inset-inline-start: 0.875rem;
+  display: flex;
+  width: 1rem;
+  height: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+.ds-menubar-item-indicator svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* A submenu row. Base UI marks it while its own submenu is open, and without
+   this the parent row un-highlights the moment the pointer moves into the
+   child — so the trail back up the menu disappears. */
+.ds-menubar-sub-trigger[data-popup-open] {
+  background: var(--ds-bg-alt);
+}
+
+/* The caret is pushed to the end edge, which is what marks the row apart from
+   a plain .ds-menu__item. */
+.ds-menubar-sub-trigger-icon {
+  margin-inline-start: auto;
+  width: 0.875rem;
+  height: 0.875rem;
+  flex-shrink: 0;
+}
+
+/* The keyboard hint on the end edge of a row — quiet, and never the thing the
+   eye lands on first. */
+.ds-menubar-shortcut {
+  margin-inline-start: auto;
+  font-size: var(--ds-text-2xs);
+  letter-spacing: 0.08em;
+  color: var(--ds-ink-faint);
+}

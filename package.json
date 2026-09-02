@@ -1,7 +1,7 @@
 {
   "name": "@diametral/design-system",
-  "version": "0.11.0",
-  "description": "Diametral Design System \u2014 a minimal, flat, buildless CSS + tokens + Web Components design system. Welcome to (the real).",
+  "version": "1.0.0-beta.1",
+  "description": "Diametral Design System — a minimal, flat, buildless CSS + tokens + Web Components design system. Welcome to (the real).",
   "license": "MIT",
   "type": "module",
   "keywords": [
@@ -109,5 +109,9 @@
     "react-dom": {
       "optional": true
     }
+  },
+  "dependencies": {
+    "@base-ui/react": "^1.7.0",
+    "@phosphor-icons/react": "^2.1.10"
   }
 }

@@ -20,11 +20,25 @@ import { Button, Status, Metric, Modal } from "@diametral/design-system/react";
 `react` / `react-dom` are **optional peer dependencies** — CSS-only and Web Component
 consumers don't pull them in.
 
+Since `1.0.0-beta.1` the React layer declares two real `dependencies`:
+`@base-ui/react` and `@phosphor-icons/react`. Base UI is where the behaviour of the
+absorbed components lives — focus management, dismissal, positioning, ARIA wiring — and it
+is adopted deliberately ([ADR 0001](adr/0001-base-ui-as-a-substrate.md)). The
+zero-dependency promise is restated rather than dropped: **CSS, tokens and Web Components
+import nothing**, which is what the three surfaces that cannot afford tooling consume, and a
+release-blocking `layer-purity` check keeps it a fact. A CSS-only npm consumer installs the
+graph but never loads it.
+
+Each component's **binding tier** is recorded in its
+[`docs/components.md`](components.md) entry: CSS parity is guaranteed for every binding,
+behaviour parity is React-only and named as such.
+
 ## How it works
 
-The components are authored as plain ES modules with `React.createElement` (no JSX), so:
+The components are authored in TypeScript and compiled by `tsc` alone — no bundler, no
+transform beyond JSX — so the emit under `dist/react/` is plain ES modules:
 
-- **No build step** is needed to ship or consume them — they are valid JS that any bundler
+- **No build step** is needed to *consume* them — they are valid JS that any bundler
   (Vite, Next, CRA, Remix, …) imports directly.
 - They render the same `.ds-*` markup as the rest of the system, so styling and theming come
   from the global stylesheet and the CSS variables — change a token, every React component
@@ -46,6 +60,17 @@ map — this is exactly what the live demo does:
   "react": "https://esm.sh/react@18.3.1",
   "react-dom": "https://esm.sh/react-dom@18.3.1?external=react",
   "react-dom/client": "https://esm.sh/react-dom@18.3.1/client?external=react"
+} }
+</script>```
+
+The absorbed components need their substrate mapped too — the barrel imports it, so an
+import map that omits these resolves nothing:
+
+```html
+<script type="importmap">
+{ "imports": {
+  "@base-ui/react/": "https://esm.sh/@base-ui/react@1.7.0/?external=react,react-dom",
+  "@phosphor-icons/react": "https://esm.sh/@phosphor-icons/react@2.1.10?external=react"
 } }
 </script>
 <script type="module">

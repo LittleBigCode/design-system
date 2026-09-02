@@ -486,6 +486,16 @@ export * from "./hooks/restLoadPage.js";
 export * from "./components/Icon.js";
 export * from "./components/icons.js";
 
+/* ---- Batch 1 — net-new overlays and menus (1.0.0-beta.1) ----------------
+   Absorbed from @diametral/ui. Behaviour is Base UI (ADR 0001), so these are
+   React-only: the CSS ships for every binding, the keyboard contract does not. */
+export * from "./components/context-menu.js";
+export * from "./components/navigation-menu.js";
+export * from "./components/menubar.js";
+export * from "./components/autocomplete.js";
+export * from "./components/speed-dial.js";
+export * from "./components/hover-card.js";
+
 /* Types several modules re-declare. Naming the canonical module here is what
    keeps `export *` unambiguous. */
 export type { DateLike } from "./components/DatePicker.js";

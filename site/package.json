@@ -16,6 +16,7 @@
     "test:regress": "playwright test tests/*-regress.spec.ts"
   },
   "dependencies": {
+    "@base-ui/react": "^1.7.0",
     "@diametral/design-system": "file:..",
     "@phosphor-icons/react": "^2.1.10",
     "react": "^19.2.8",
