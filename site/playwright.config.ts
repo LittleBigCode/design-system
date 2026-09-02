@@ -57,7 +57,8 @@ export default defineConfig({
     // suite injects cannot stop it and a screenshot would land on an arbitrary
     // frame. Reduced motion is the switch recharts itself reads, and it settles
     // charts on their final frame. tests/chart-marks.spec.ts opts back out, so
-    // the animation still has one gate that runs it for real.
+    // the animation still has one gate that runs it for real — it landed with
+    // the charts in 1.0.0-beta.4 and runs under `npm run test:regress`.
     contextOptions: { reducedMotion: "reduce" },
   },
 

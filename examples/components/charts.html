@@ -11,13 +11,6 @@
   <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
   <link rel="stylesheet" href="../../css/diametral.css">
   <link rel="stylesheet" href="../shell.css">
-  <script type="importmap">
-  { "imports": {
-    "react": "https://esm.sh/react@18.3.1",
-    "react-dom": "https://esm.sh/react-dom@18.3.1?external=react",
-    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client?external=react"
-  } }
-  </script>
   <script type="module" src="../showcase.js"></script>
 </head>
 <body data-page="components/charts">
@@ -27,250 +20,47 @@
       <header class="docs-head">
         <p class="ds-kicker">Components</p>
         <h1 class="ds-title ds-title--xl">Charts</h1>
-        <p class="docs-lede">A small set of pure-SVG charts — line, area, donut, pie, gauge and stacked bar — with no chart library. Each shares the flat <code>.ds-chart</code> wrapper, faint <code>.ds-chart__grid</code> gridlines, <code>.ds-chart__axis</code> labels and a wrap-friendly <code>.ds-chart-legend</code>. Series colors come from the categorical <code>--ds-chart-1</code>…<code>--ds-chart-6</code> token palette. Flat, sharp, no radius, no shadow.</p>
+        <p class="docs-lede">Six of the eight charts are <strong>React-only</strong> from 1.0.0-beta.4 on: line, area, bar, stacked bar, pie and donut draw their marks with <a href="https://recharts.org">recharts</a>, so there is no markup that reproduces them and no class per mark. What the stylesheet owns is the frame — <code>.ds-chart-container</code>, <code>.ds-chart-tooltip-content</code> and <code>.ds-chart-legend-content</code> — plus the descendant rules that repaint recharts' hard-coded <code>#ccc</code> gridlines and <code>#fff</code> outlines onto <code>--ds-*</code> tokens. Each of the six is documented, with a live playground, in the <a href="../../react-workbench/docs/line-chart">React workbench</a>.</p>
+        <p class="docs-note">The <strong>gauge</strong> below and the <a href="sparkline.html">sparkline</a> stay library-free — one arc pair and one polyline, drawable by hand — so they are the two charts a non-React binding can still render. 0.11's pure-SVG <code>.ds-chart</code>, <code>.ds-linechart</code>, <code>.ds-areachart</code>, <code>.ds-donut</code>, <code>.ds-piechart</code>, <code>.ds-stackedbar</code> and <code>.ds-barchart</code> classes were removed in the same release; <a href="../../docs/migration/from-0.11.md">from-0.11.md</a> maps every one.</p>
       </header>
 
       <section class="docs-section">
-        <h2>Line</h2>
-        <p class="docs-note">A <code>.ds-linechart</code> draws one <code>__line</code> polyline per series across a shared y-range, over optional gridlines and x-axis labels, with a dot on every point.</p>
-        <section class="ds-example">
-          <header class="ds-example__bar">
-            <span class="ds-label">Single series · grid · dots</span>
-            <button class="ds-button" data-copy-target="#c-line">Copy</button>
-          </header>
-          <div class="ds-example__preview ds-example__preview--block">
-            <div id="demo-line">Loading React…</div>
-          </div>
-          <pre class="ds-example__code"><code id="c-line">&lt;div class="ds-chart ds-linechart" role="img" aria-label="Line chart"&gt;
-  &lt;svg class="ds-chart__svg" viewBox="0 0 480 200" width="480" height="200"
-       preserveAspectRatio="none" aria-hidden="true"&gt;
-    &lt;line class="ds-chart__grid" x1="6" y1="8" x2="474" y2="8" /&gt;
-    &lt;!-- …more gridlines… --&gt;
-    &lt;text class="ds-chart__axis" x="6" y="194" text-anchor="start"&gt;Jan&lt;/text&gt;
-    &lt;!-- …more x labels… --&gt;
-    &lt;polyline class="ds-linechart__line"
-              points="6,156.55 72.86,109.64 …" style="stroke: var(--ds-chart-1)" /&gt;
-    &lt;circle class="ds-linechart__dot" cx="474" cy="8" r="2.5"
-            style="fill: var(--ds-chart-1)" /&gt;
-  &lt;/svg&gt;
-&lt;/div&gt;</code></pre>
-        </section>
-
-        <section class="ds-example">
-          <header class="ds-example__bar">
-            <span class="ds-label">Multi series · legend</span>
-            <button class="ds-button" data-copy-target="#c-line-multi">Copy</button>
-          </header>
-          <div class="ds-example__preview ds-example__preview--block">
-            <div id="demo-line-multi">Loading React…</div>
-          </div>
-          <pre class="ds-example__code"><code id="c-line-multi">&lt;div class="ds-chart ds-linechart" role="img" aria-label="Line chart with 2 series"&gt;
-  &lt;svg class="ds-chart__svg" viewBox="0 0 480 200" width="480" height="200"
-       preserveAspectRatio="none" aria-hidden="true"&gt;
-    &lt;!-- gridlines --&gt;
-    &lt;polyline class="ds-linechart__line" points="6,180 99.6,115.5 …"
-              style="stroke: var(--ds-chart-1)" /&gt;
-    &lt;polyline class="ds-linechart__line" points="6,51 99.6,94 …"
-              style="stroke: var(--ds-chart-2)" /&gt;
-    &lt;!-- dots per series --&gt;
-  &lt;/svg&gt;
-  &lt;div class="ds-chart-legend"&gt;
-    &lt;span class="ds-chart-legend__item"&gt;&lt;span class="ds-chart-legend__swatch"
-          style="background: var(--ds-chart-1)"&gt;&lt;/span&gt;Revenue&lt;/span&gt;
-    &lt;span class="ds-chart-legend__item"&gt;&lt;span class="ds-chart-legend__swatch"
-          style="background: var(--ds-chart-2)"&gt;&lt;/span&gt;Cost&lt;/span&gt;
-  &lt;/div&gt;
-&lt;/div&gt;</code></pre>
-        </section>
-
-        <section class="ds-example">
-          <header class="ds-example__bar">
-            <span class="ds-label">&lt;LineChart&gt;</span>
-            <button class="ds-button" data-copy-target="#c-line-react">Copy</button>
-          </header>
-          <pre class="ds-example__code"><code id="c-line-react">import { LineChart } from "@diametral/design-system/react";
-
-&lt;LineChart data={[12, 18, 9, 22, 17, 28, 24, 31]}
-           labels={["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"]} /&gt;
-
-&lt;LineChart
-  series={[
-    { name: "Revenue", data: [8, 14, 11, 19, 16, 24] },
-    { name: "Cost", data: [20, 16, 22, 13, 18, 12] },
-  ]}
-/&gt;</code></pre>
-        </section>
-      </section>
-
-      <section class="docs-section">
-        <h2>Area</h2>
-        <p class="docs-note">A <code>.ds-areachart</code> mirrors the line chart but fills a semi-transparent <code>__area</code> band from each line down to the baseline. The fill uses the series color via <code>fill-opacity</code>.</p>
-        <section class="ds-example">
-          <header class="ds-example__bar">
-            <span class="ds-label">Single series · filled band</span>
-            <button class="ds-button" data-copy-target="#c-area">Copy</button>
-          </header>
-          <div class="ds-example__preview ds-example__preview--block">
-            <div id="demo-area">Loading React…</div>
-          </div>
-          <pre class="ds-example__code"><code id="c-area">&lt;div class="ds-chart ds-areachart" role="img" aria-label="Area chart"&gt;
-  &lt;svg class="ds-chart__svg" viewBox="0 0 480 200" width="480" height="200"
-       preserveAspectRatio="none" aria-hidden="true"&gt;
-    &lt;!-- gridlines --&gt;
-    &lt;path class="ds-areachart__area"
-          d="M6,180 L6,180 72.86,145.6 … 474,8 L474,180 Z"
-          style="fill: var(--ds-chart-1)" /&gt;
-    &lt;polyline class="ds-areachart__line"
-              points="6,180 72.86,145.6 …" style="stroke: var(--ds-chart-1)" /&gt;
-    &lt;!-- dots --&gt;
-  &lt;/svg&gt;
-&lt;/div&gt;</code></pre>
-        </section>
-
-        <section class="ds-example">
-          <header class="ds-example__bar">
-            <span class="ds-label">&lt;AreaChart&gt;</span>
-            <button class="ds-button" data-copy-target="#c-area-react">Copy</button>
-          </header>
-          <pre class="ds-example__code"><code id="c-area-react">import { AreaChart } from "@diametral/design-system/react";
-
-&lt;AreaChart data={[6, 10, 8, 15, 13, 21, 18, 26]}
-           labels={["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"]} /&gt;
-
-&lt;AreaChart
-  series={[
-    { name: "2024", data: [6, 10, 8, 15, 13, 21] },
-    { name: "2025", data: [9, 7, 14, 12, 19, 24] },
-  ]}
-  dots={false}
-/&gt;</code></pre>
-        </section>
-      </section>
-
-      <section class="docs-section">
-        <h2>Donut</h2>
-        <p class="docs-note">A <code>.ds-donut</code> draws each segment as a <code>__segment</code> circle stroke with a <code>stroke-dasharray</code> arc, a faint <code>__track</code> behind, an optional big <code>__center</code> number, and a <code>.ds-chart-legend</code> of label + value.</p>
-        <section class="ds-example">
-          <header class="ds-example__bar">
-            <span class="ds-label">Segments · center label · legend</span>
-            <button class="ds-button" data-copy-target="#c-donut">Copy</button>
-          </header>
-          <div class="ds-example__preview ds-example__preview--center">
-            <div id="demo-donut">Loading React…</div>
-          </div>
-          <pre class="ds-example__code"><code id="c-donut">&lt;div class="ds-chart ds-donut" role="img" aria-label="Donut chart of 4 segments"&gt;
-  &lt;svg class="ds-donut__svg" viewBox="0 0 180 180" width="180" height="180"
-       aria-hidden="true"&gt;
-    &lt;g transform="rotate(-90 90 90)"&gt;
-      &lt;circle class="ds-donut__track" cx="90" cy="90" r="76" stroke-width="28" /&gt;
-      &lt;circle class="ds-donut__segment" cx="90" cy="90" r="76" stroke-width="28"
-              stroke-dasharray="214.88 262.64" stroke-dashoffset="0"
-              style="stroke: var(--ds-chart-1)" /&gt;
-      &lt;!-- …more segments… --&gt;
-    &lt;/g&gt;
-    &lt;text class="ds-donut__center" x="90" y="90"
-          dominant-baseline="central" font-size="46.8"&gt;100&lt;/text&gt;
-  &lt;/svg&gt;
-  &lt;div class="ds-chart-legend"&gt;
-    &lt;span class="ds-chart-legend__item"&gt;&lt;span class="ds-chart-legend__swatch"
-          style="background: var(--ds-chart-1)"&gt;&lt;/span&gt;Direct&lt;span
-          class="ds-chart-legend__value"&gt;45&lt;/span&gt;&lt;/span&gt;
-    &lt;!-- …more legend items… --&gt;
-  &lt;/div&gt;
-&lt;/div&gt;</code></pre>
-        </section>
-
-        <section class="ds-example">
-          <header class="ds-example__bar">
-            <span class="ds-label">&lt;DonutChart&gt;</span>
-            <button class="ds-button" data-copy-target="#c-donut-react">Copy</button>
-          </header>
-          <pre class="ds-example__code"><code id="c-donut-react">import { DonutChart } from "@diametral/design-system/react";
-
-&lt;DonutChart
-  centerLabel="100"
-  data={[
-    { label: "Direct", value: 45 },
-    { label: "Referral", value: 25 },
-    { label: "Organic", value: 20 },
-    { label: "Social", value: 10 },
-  ]}
-/&gt;</code></pre>
-        </section>
-      </section>
-
-      <section class="docs-section">
-        <h2>Pie</h2>
-        <p class="docs-note">A <code>.ds-piechart</code> draws each slice as a <code>__slice</code> <code>&lt;path&gt;</code> arc wedge (full pie, no hole), color set inline per datum, with a native <code>&lt;title&gt;</code> hover tooltip and a <code>.ds-chart-legend</code> of label + value.</p>
-        <section class="ds-example">
-          <header class="ds-example__bar">
-            <span class="ds-label">Slices · hover titles · legend</span>
-            <button class="ds-button" data-copy-target="#c-pie">Copy</button>
-          </header>
-          <div class="ds-example__preview ds-example__preview--center">
-            <div id="demo-pie">Loading React…</div>
-          </div>
-          <pre class="ds-example__code"><code id="c-pie">&lt;div class="ds-chart ds-piechart" role="img" aria-label="Pie chart of 4 segments"&gt;
-  &lt;svg class="ds-piechart__svg" viewBox="0 0 180 180" width="180" height="180"
-       aria-hidden="true"&gt;
-    &lt;path class="ds-piechart__slice"
-          d="M 90,90 L 90,0 A 90 90 0 0 1 117.81,175.6 Z"
-          style="fill: var(--ds-chart-1)"&gt;&lt;title&gt;Direct: 45&lt;/title&gt;&lt;/path&gt;
-    &lt;path class="ds-piechart__slice"
-          d="M 90,90 L 117.81,175.6 A 90 90 0 0 1 4.4,117.81 Z"
-          style="fill: var(--ds-chart-2)"&gt;&lt;title&gt;Referral: 25&lt;/title&gt;&lt;/path&gt;
-    &lt;!-- …more slices… --&gt;
-  &lt;/svg&gt;
-  &lt;div class="ds-chart-legend"&gt;
-    &lt;span class="ds-chart-legend__item"&gt;&lt;span class="ds-chart-legend__swatch"
-          style="background: var(--ds-chart-1)"&gt;&lt;/span&gt;Direct&lt;span
-          class="ds-chart-legend__value"&gt;45&lt;/span&gt;&lt;/span&gt;
-    &lt;!-- …more legend items… --&gt;
-  &lt;/div&gt;
-&lt;/div&gt;</code></pre>
-        </section>
-
-        <section class="ds-example">
-          <header class="ds-example__bar">
-            <span class="ds-label">&lt;PieChart&gt;</span>
-            <button class="ds-button" data-copy-target="#c-pie-react">Copy</button>
-          </header>
-          <pre class="ds-example__code"><code id="c-pie-react">import { PieChart } from "@diametral/design-system/react";
-
-&lt;PieChart
-  data={[
-    { label: "Direct", value: 45 },
-    { label: "Referral", value: 25 },
-    { label: "Organic", value: 20 },
-    { label: "Social", value: 10 },
-  ]}
-/&gt;</code></pre>
-        </section>
-      </section>
-
-      <section class="docs-section">
         <h2>Gauge</h2>
-        <p class="docs-note">A <code>.ds-gauge</code> draws a faint 270° <code>__track</code> arc behind a colored <code>__value</code> arc (length via <code>stroke-dasharray</code>), with a big <code>__center</code> number and an optional uppercase <code>__label</code>. The arc color defaults to <code>--ds-chart-1</code>; pass a color or value→color thresholds.</p>
+        <p class="docs-note">A <code>.ds-gauge</code> draws a faint 270° <code>-track</code> arc behind a coloured <code>-value</code> arc (length via <code>stroke-dasharray</code>, so the arc redraws without recomputing its path), with a big <code>-center</code> number and an optional uppercase <code>-label</code>. The arc colour defaults to <code>--ds-chart-1</code>; pass a colour or value→colour thresholds.</p>
         <section class="ds-example">
           <header class="ds-example__bar">
             <span class="ds-label">Single value · center number · label</span>
             <button class="ds-button" data-copy-target="#c-gauge">Copy</button>
           </header>
           <div class="ds-example__preview ds-example__preview--center">
-            <div id="demo-gauge">Loading React…</div>
+            <div class="ds-gauge" role="img" aria-label="Utilization: 72 of 100">
+              <svg class="ds-gauge-svg" viewBox="0 0 180 180" width="180" height="180" aria-hidden="true" focusable="false">
+                <path class="ds-gauge-track" stroke-width="16" fill="none" d="M 32.02,147.98 A 82 82 0 1 1 147.98,147.98"></path>
+                <path class="ds-gauge-value" stroke-width="16" fill="none" d="M 32.02,147.98 A 82 82 0 1 1 147.98,147.98" stroke-dasharray="278.22 386.42"></path>
+                <text class="ds-gauge-center" x="90" y="86.4" dominant-baseline="central" font-size="43.2">72</text>
+                <text class="ds-gauge-label" x="90" y="122.4" dominant-baseline="central">Utilization</text>
+              </svg>
+            </div>
+            <div class="ds-gauge" role="img" aria-label="Capacity: 88 of 100">
+              <svg class="ds-gauge-svg" viewBox="0 0 180 180" width="180" height="180" aria-hidden="true" focusable="false">
+                <path class="ds-gauge-track" stroke-width="16" fill="none" d="M 32.02,147.98 A 82 82 0 1 1 147.98,147.98"></path>
+                <path class="ds-gauge-value" stroke-width="16" fill="none" d="M 32.02,147.98 A 82 82 0 1 1 147.98,147.98" stroke-dasharray="340.05 386.42" style="stroke: var(--ds-chart-6)"></path>
+                <text class="ds-gauge-center" x="90" y="86.4" dominant-baseline="central" font-size="43.2">88</text>
+                <text class="ds-gauge-label" x="90" y="122.4" dominant-baseline="central">Capacity</text>
+              </svg>
+            </div>
           </div>
-          <pre class="ds-example__code"><code id="c-gauge">&lt;div class="ds-chart ds-gauge" role="img" aria-label="Utilization: 72 of 100"&gt;
-  &lt;svg class="ds-gauge__svg" viewBox="0 0 180 180" width="180" height="180"
+          <pre class="ds-example__code"><code id="c-gauge">&lt;div class="ds-gauge" role="img" aria-label="Utilization: 72 of 100"&gt;
+  &lt;svg class="ds-gauge-svg" viewBox="0 0 180 180" width="180" height="180"
        aria-hidden="true"&gt;
-    &lt;path class="ds-gauge__track" stroke-width="16"
+    &lt;path class="ds-gauge-track" stroke-width="16" fill="none"
           d="M 32.02,147.98 A 82 82 0 1 1 147.98,147.98" /&gt;
-    &lt;path class="ds-gauge__value" stroke-width="16"
+    &lt;path class="ds-gauge-value" stroke-width="16" fill="none"
           d="M 32.02,147.98 A 82 82 0 1 1 147.98,147.98"
-          stroke-dasharray="278.22 386.42"
-          style="stroke: var(--ds-chart-1)"&gt;&lt;title&gt;Utilization: 72 of 100&lt;/title&gt;&lt;/path&gt;
-    &lt;text class="ds-gauge__center" x="90" y="86.4"
+          stroke-dasharray="278.22 386.42" /&gt;
+    &lt;text class="ds-gauge-center" x="90" y="86.4"
           dominant-baseline="central" font-size="43.2"&gt;72&lt;/text&gt;
-    &lt;text class="ds-gauge__label" x="90" y="122.4"
+    &lt;text class="ds-gauge-label" x="90" y="122.4"
           dominant-baseline="central"&gt;Utilization&lt;/text&gt;
   &lt;/svg&gt;
 &lt;/div&gt;</code></pre>
@@ -278,14 +68,14 @@
 
         <section class="ds-example">
           <header class="ds-example__bar">
-            <span class="ds-label">&lt;GaugeChart&gt;</span>
+            <span class="ds-label">&lt;Gauge&gt;</span>
             <button class="ds-button" data-copy-target="#c-gauge-react">Copy</button>
           </header>
-          <pre class="ds-example__code"><code id="c-gauge-react">import { GaugeChart } from "@diametral/design-system/react";
+          <pre class="ds-example__code"><code id="c-gauge-react">import { Gauge } from "@diametral/design-system/react";
 
-&lt;GaugeChart value={72} label="Utilization" /&gt;
+&lt;Gauge value={72} label="Utilization" /&gt;
 
-&lt;GaugeChart
+&lt;Gauge
   value={88}
   label="Capacity"
   thresholds={[
@@ -298,200 +88,85 @@
       </section>
 
       <section class="docs-section">
-        <h2>Stacked bar</h2>
-        <p class="docs-note">A <code>.ds-stackedbar</code> lays each datum out as a <code>__row</code>: an optional <code>__label</code> and a 100%-wide <code>__track</code> of proportional <code>__seg</code> segments (width + color set inline, with a <code>title</code> hover tooltip). A shared <code>.ds-chart-legend</code> names the segments.</p>
+        <h2>The frame</h2>
+        <p class="docs-note">These three classes are what a recharts chart lands in, and the only chart classes a consumer writes by hand. <code>.ds-chart-container</code> is a 16/9 box; <code>--plot</code> swaps that for a fixed height and full width (the axis charts), <code>--square</code> for a 1:1 box (pie, donut), and both read <code>--ds-chart-height</code> — the knob that replaced the source's Tailwind height literals.</p>
         <section class="ds-example">
           <header class="ds-example__bar">
-            <span class="ds-label">Rows · proportional segments · legend</span>
-            <button class="ds-button" data-copy-target="#c-stacked">Copy</button>
+            <span class="ds-label">Tooltip · legend</span>
+            <button class="ds-button" data-copy-target="#c-frame">Copy</button>
           </header>
-          <div class="ds-example__preview ds-example__preview--block">
-            <div id="demo-stacked">Loading React…</div>
+          <div class="ds-example__preview ds-example__preview--center">
+            <div class="ds-chart-tooltip-content" style="min-width: 12rem">
+              <div class="ds-chart-tooltip-content-label">Week 12</div>
+              <div class="ds-chart-tooltip-content-items">
+                <div class="ds-chart-tooltip-content-item" data-indicator="dot">
+                  <div class="ds-chart-tooltip-content-indicator" data-indicator="dot" style="--ds-chart-indicator: var(--ds-chart-1)"></div>
+                  <div class="ds-chart-tooltip-content-item-body">
+                    <div class="ds-chart-tooltip-content-item-label-group">
+                      <span class="ds-chart-tooltip-content-item-name">Signups</span>
+                    </div>
+                    <span class="ds-chart-tooltip-content-item-value">1,284</span>
+                  </div>
+                </div>
+                <div class="ds-chart-tooltip-content-item" data-indicator="dot">
+                  <div class="ds-chart-tooltip-content-indicator" data-indicator="dot" style="--ds-chart-indicator: var(--ds-chart-2)"></div>
+                  <div class="ds-chart-tooltip-content-item-body">
+                    <div class="ds-chart-tooltip-content-item-label-group">
+                      <span class="ds-chart-tooltip-content-item-name">Activated</span>
+                    </div>
+                    <span class="ds-chart-tooltip-content-item-value">903</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ds-chart-legend-content" data-align="bottom">
+              <div class="ds-chart-legend-content-item">
+                <div class="ds-chart-legend-content-dot" style="background: var(--ds-chart-1)"></div>
+                Signups
+              </div>
+              <div class="ds-chart-legend-content-item">
+                <div class="ds-chart-legend-content-dot" style="background: var(--ds-chart-2)"></div>
+                Activated
+              </div>
+            </div>
           </div>
-          <pre class="ds-example__code"><code id="c-stacked">&lt;div class="ds-chart ds-stackedbar" role="img"&gt;
-  &lt;div class="ds-stackedbar__row"&gt;
-    &lt;span class="ds-stackedbar__label"&gt;Q1&lt;/span&gt;
-    &lt;div class="ds-stackedbar__track"&gt;
-      &lt;span class="ds-stackedbar__seg" title="Online: 62"
-            style="width: 56.36%; background: var(--ds-chart-1)"&gt;&lt;/span&gt;
-      &lt;span class="ds-stackedbar__seg" title="Retail: 30"
-            style="width: 27.27%; background: var(--ds-chart-2)"&gt;&lt;/span&gt;
-      &lt;span class="ds-stackedbar__seg" title="Wholesale: 18"
-            style="width: 16.36%; background: var(--ds-chart-3)"&gt;&lt;/span&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  &lt;!-- …more rows… --&gt;
-  &lt;div class="ds-chart-legend"&gt;
-    &lt;span class="ds-chart-legend__item"&gt;&lt;span class="ds-chart-legend__swatch"
-          style="background: var(--ds-chart-1)"&gt;&lt;/span&gt;Online&lt;/span&gt;
-    &lt;!-- …more legend items… --&gt;
+          <pre class="ds-example__code"><code id="c-frame">&lt;div class="ds-chart-container ds-chart-container--plot"
+     style="--ds-chart-height: 12rem"&gt;
+  &lt;!-- recharts renders the plot here --&gt;
+&lt;/div&gt;
+
+&lt;div class="ds-chart-legend-content" data-align="bottom"&gt;
+  &lt;div class="ds-chart-legend-content-item"&gt;
+    &lt;div class="ds-chart-legend-content-dot"
+         style="background: var(--ds-chart-1)"&gt;&lt;/div&gt;
+    Signups
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
         </section>
 
         <section class="ds-example">
           <header class="ds-example__bar">
-            <span class="ds-label">&lt;StackedBar&gt;</span>
-            <button class="ds-button" data-copy-target="#c-stacked-react">Copy</button>
+            <span class="ds-label">The six React charts</span>
+            <button class="ds-button" data-copy-target="#c-react-charts">Copy</button>
           </header>
-          <pre class="ds-example__code"><code id="c-stacked-react">import { StackedBar } from "@diametral/design-system/react";
+          <pre class="ds-example__code"><code id="c-react-charts">// recharts is an optional peer dependency, like react:
+//   npm i recharts
+import {
+  LineChart, AreaChart, BarChart, StackedBar, PieChart, DonutChart,
+} from "@diametral/design-system/react";
 
-&lt;StackedBar
-  data={[
-    { label: "Q1", segments: [
-      { label: "Online", value: 62 },
-      { label: "Retail", value: 30 },
-      { label: "Wholesale", value: 18 },
-    ] },
-    { label: "Q2", segments: [
-      { label: "Online", value: 74 },
-      { label: "Retail", value: 26 },
-      { label: "Wholesale", value: 22 },
-    ] },
-  ]}
-/&gt;</code></pre>
+const config = {
+  signups: { label: "Signups", color: "var(--ds-chart-2)" },
+  churn: { label: "Churn" },   // takes the next --ds-chart-* slot
+};
+
+&lt;LineChart config={config} data={rows} xAxisKey="week" /&gt;
+&lt;BarChart config={config} data={rows} xAxisKey="week" max={300} horizontal /&gt;
+&lt;DonutChart config={config} data={rows} valueKey="gb" nameKey="bucket"
+            centerLabel="8.2 GB" centerCaption="of 10 GB" /&gt;</code></pre>
         </section>
       </section>
-
-      <section class="docs-section">
-        <h2>Bar</h2>
-        <p class="docs-note">A <code>.ds-barchart</code> lays each datum out as a <code>__col</code>: an optional <code>__label</code>, a <code>__track</code> with a proportional <code>__bar</code> (length is value/max), and a <code>__value</code>. The default orientation is vertical; <code>horizontal</code> flips it to rows. A <code>status</code> recolors a bar (<code>.is-success</code>, <code>.is-danger</code>, …).</p>
-        <section class="ds-example">
-          <header class="ds-example__bar">
-            <span class="ds-label">Columns · proportional bars · status colors</span>
-            <button class="ds-button" data-copy-target="#c-bar">Copy</button>
-          </header>
-          <div class="ds-example__preview ds-example__preview--block">
-            <div id="demo-bar">Loading React…</div>
-          </div>
-          <pre class="ds-example__code"><code id="c-bar">&lt;div class="ds-barchart" role="img"&gt;
-  &lt;div class="ds-barchart__col"&gt;
-    &lt;span class="ds-barchart__label"&gt;Jan&lt;/span&gt;
-    &lt;div class="ds-barchart__track"&gt;
-      &lt;div class="ds-barchart__bar" style="height: 48%"&gt;&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;span class="ds-barchart__value"&gt;12&lt;/span&gt;
-  &lt;/div&gt;
-  &lt;!-- …more columns… --&gt;
-&lt;/div&gt;</code></pre>
-        </section>
-
-        <section class="ds-example">
-          <header class="ds-example__bar">
-            <span class="ds-label">&lt;BarChart&gt;</span>
-            <button class="ds-button" data-copy-target="#c-bar-react">Copy</button>
-          </header>
-          <pre class="ds-example__code"><code id="c-bar-react">import { BarChart } from "@diametral/design-system/react";
-
-&lt;BarChart
-  data={[
-    { label: "Jan", value: 12 },
-    { label: "Feb", value: 19 },
-    { label: "Mar", value: 9 },
-    { label: "Apr", value: 24, status: "success" },
-    { label: "May", value: 17 },
-    { label: "Jun", value: 6, status: "danger" },
-  ]}
-/&gt;</code></pre>
-        </section>
-      </section>
-
-      <footer class="docs-foot">
-        <span>Diametral Design System · v0.2.0</span>
-        <a href="../index.html">← Overview</a>
-        <a href="../kitchen-sink.html">Kitchen sink →</a>
-      </footer>
     </main>
   </div>
-
-  <script type="module">
-    import React from "react";
-    import { createRoot } from "react-dom/client";
-    import {
-      LineChart, AreaChart, DonutChart, PieChart, GaugeChart, StackedBar, BarChart,
-    } from "../../dist/react/index.js";
-
-    const h = React.createElement;
-    const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"];
-    const mount = (id, el) => {
-      const node = document.getElementById(id);
-      if (node) createRoot(node).render(el);
-    };
-
-    // Line — single series, month labels, grid + dots.
-    mount("demo-line", h(LineChart, {
-      data: [12, 18, 9, 22, 17, 28, 24, 31],
-      labels: MONTHS,
-      grid: true,
-      dots: true,
-    }));
-
-    // Line — multi series (legend appears).
-    mount("demo-line-multi", h(LineChart, {
-      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-      series: [
-        { name: "Revenue", data: [8, 14, 11, 19, 16, 24] },
-        { name: "Cost", data: [20, 16, 22, 13, 18, 12] },
-      ],
-    }));
-
-    // Area — single filled band.
-    mount("demo-area", h(AreaChart, {
-      data: [6, 10, 8, 15, 13, 21, 18, 26],
-      labels: MONTHS,
-    }));
-
-    // Donut — 4 segments, center label, hover <title> tooltips per slice.
-    mount("demo-donut", h(DonutChart, {
-      centerLabel: "100",
-      data: [
-        { label: "Direct", value: 45 },
-        { label: "Referral", value: 25 },
-        { label: "Organic", value: 20 },
-        { label: "Social", value: 10 },
-      ],
-    }));
-
-    // Pie — full pie with hover titles + legend.
-    mount("demo-pie", h(PieChart, {
-      data: [
-        { label: "Direct", value: 45 },
-        { label: "Referral", value: 25 },
-        { label: "Organic", value: 20 },
-        { label: "Social", value: 10 },
-      ],
-    }));
-
-    // Gauge — single value with label.
-    mount("demo-gauge", h(GaugeChart, { value: 68, label: "Utilization" }));
-
-    // Stacked bar — rows of proportional segments + legend.
-    mount("demo-stacked", h(StackedBar, {
-      data: [
-        { label: "Q1", segments: [
-          { label: "Online", value: 62 },
-          { label: "Retail", value: 30 },
-          { label: "Wholesale", value: 18 },
-        ] },
-        { label: "Q2", segments: [
-          { label: "Online", value: 74 },
-          { label: "Retail", value: 26 },
-          { label: "Wholesale", value: 22 },
-        ] },
-      ],
-    }));
-
-    // Bar — vertical columns with status colors.
-    mount("demo-bar", h(BarChart, {
-      data: [
-        { label: "Jan", value: 12 },
-        { label: "Feb", value: 19 },
-        { label: "Mar", value: 9 },
-        { label: "Apr", value: 24, status: "success" },
-        { label: "May", value: 17 },
-        { label: "Jun", value: 6, status: "danger" },
-      ],
-    }));
-  </script>
 </body>
 </html>

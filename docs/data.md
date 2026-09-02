@@ -166,15 +166,20 @@ The [demo app](../examples/demo.html) fetches static JSON files it ships in
 backend (it even adds a little latency so the loading states are visible).
 
 **A chart from an API call.** The Overview chart loads its series with
-`useResource`, shows a `Skeleton` while in flight, and an `Alert` on failure:
+`useResource`, shows a `Skeleton` while in flight, and an `Alert` on failure. The
+rows go straight from the endpoint into the chart: `config` names and colours the
+series (once, outside the component), and `xAxisKey` names the row field the axis
+reads — so the fetched shape is the chart's shape, with no reshaping step:
 
 ```jsx
+const CONFIG = { visits: { label: "Visits", color: "var(--ds-chart-2)" } };
+
 const { data, loading, error } = useResource(
   () => fetch("/api/metrics.json").then((r) => r.json()), []
 );
 return error   ? <Alert type="danger">Couldn’t load metrics.</Alert>
      : loading ? <Skeleton variant="block" height={240} />
-     :           <LineChart series={data.series} labels={data.labels} width={700} height={240} />;
+     :           <LineChart config={CONFIG} data={data.rows} xAxisKey="month" />;
 ```
 
 **A datatable from a static JSON.** When the data is a single JSON array (no

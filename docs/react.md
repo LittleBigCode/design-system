@@ -18,7 +18,19 @@ import { Button, Status, Metric, Modal } from "@diametral/design-system/react";
 ```
 
 `react` / `react-dom` are **optional peer dependencies** — CSS-only and Web Component
-consumers don't pull them in.
+consumers don't pull them in. Since `1.0.0-beta.4` **`recharts` (>= 3) is a third optional
+peer**, for the six charts that draw their marks with it:
+
+```bash
+npm i recharts   # only if you use LineChart / AreaChart / BarChart / StackedBar / PieChart / DonutChart
+```
+
+A peer rather than a dependency, because a chart's children are written by the consumer —
+`<ReferenceLine>`, a second `<YAxis>` — and those come from `recharts` directly. Two copies
+in one tree would put the children and `ChartContainer` on different recharts contexts, and
+the plot would render empty with no error. One copy, resolved by the consumer, is the only
+arrangement that works. `Sparkline` and `Gauge` need none of it: both are hand-rolled SVG
+and stay renderable as plain markup by any binding.
 
 Since `1.0.0-beta.1` the React layer declares two real `dependencies`:
 `@base-ui/react` and `@phosphor-icons/react`. Base UI is where the behaviour of the

@@ -44,10 +44,12 @@
   100% { transform: scale(2.6); opacity: 0; }
 }
 
-/* Sparkline / line draw-in — opt-in via .ds-sparkline--animate (the React
-   <Sparkline animate> sets pathLength="1" so the dash math is resolution-free). */
+/* Sparkline / line draw-in — opt-in via .ds-sparkline-line--animate (the React
+   <Sparkline animate> sets pathLength="1" so the dash math is resolution-free).
+   The modifier sits on the line, not the root, from 1.0.0-beta.4 on: the line is
+   the element the keyframe draws. */
 @keyframes ds-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
-.ds-sparkline--animate .ds-sparkline__line {
+.ds-sparkline-line--animate {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
   animation: ds-draw 0.9s ease forwards;
@@ -56,5 +58,5 @@
 @media (prefers-reduced-motion: reduce) {
   .ds-loadbar.is-loading::before { animation: none; opacity: 0; }
   .ds-pulse::after { display: none; }
-  .ds-sparkline--animate .ds-sparkline__line { animation: none; stroke-dashoffset: 0; }
+  .ds-sparkline-line--animate { animation: none; stroke-dashoffset: 0; }
 }

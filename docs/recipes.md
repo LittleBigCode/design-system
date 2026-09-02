@@ -240,10 +240,16 @@ Notes that keep this honest:
 ## 3. Dashboard
 
 A row of [`StatCard`](../react/components/StatCard.tsx)s over a chart
-([`LineChart`](../react/components/LineChart.tsx) /
-[`DonutChart`](../react/components/DonutChart.tsx)). `StatCard` takes a `label`,
+([`LineChart`](../react/components/line-chart.tsx) /
+[`DonutChart`](../react/components/donut-chart.tsx)). `StatCard` takes a `label`,
 `value`, and a signed `delta` (`deltaDir` colors it and prepends ▲/▼); drop a
 `Sparkline` in as its `children` for an inline trend.
+
+The charts take a `config` — one entry per series or slice, keyed by the field name
+in each data row — and the rows themselves. That object is the whole naming and
+coloring system: an entry with a `color` gets it, an entry without takes the next
+slot of the `--ds-chart-*` ramp, and the tooltip and legend read their labels from
+the same place. `recharts` is an optional peer dependency; install it to use them.
 
 ```jsx
 import {
@@ -268,22 +274,37 @@ export function Dashboard() {
       <div style={{ display: "grid", gap: 16, gridTemplateColumns: "2fr 1fr", marginTop: 16 }}>
         <Card title="Revenue trend">
           <LineChart
-            height={220}
-            labels={["Jan", "Feb", "Mar", "Apr", "May", "Jun"]}
-            series={[
-              { name: "2026", data: [82, 91, 88, 104, 118, 128] },
-              { name: "2025", data: [70, 74, 77, 81, 86, 92] },
+            config={{
+              y2026: { label: "2026", color: "var(--ds-chart-1)" },
+              y2025: { label: "2025", color: "var(--ds-chart-2)" },
+            }}
+            data={[
+              { month: "Jan", y2026: 82,  y2025: 70 },
+              { month: "Feb", y2026: 91,  y2025: 74 },
+              { month: "Mar", y2026: 88,  y2025: 77 },
+              { month: "Apr", y2026: 104, y2025: 81 },
+              { month: "May", y2026: 118, y2025: 86 },
+              { month: "Jun", y2026: 128, y2025: 92 },
             ]}
+            xAxisKey="month"
           />
         </Card>
         <Card title="Revenue by segment">
           <DonutChart
-            centerLabel="€128k"
+            config={{
+              Enterprise: { label: "Enterprise" },
+              "Mid-market": { label: "Mid-market" },
+              SMB: { label: "SMB" },
+            }}
             data={[
-              { label: "Enterprise", value: 64 },
-              { label: "Mid-market", value: 41 },
-              { label: "SMB",        value: 23 },
+              { segment: "Enterprise",  k: 64 },
+              { segment: "Mid-market",  k: 41 },
+              { segment: "SMB",         k: 23 },
             ]}
+            valueKey="k"
+            nameKey="segment"
+            centerLabel="€128k"
+            centerCaption="Revenue"
           />
         </Card>
       </div>
@@ -293,8 +314,12 @@ export function Dashboard() {
 ```
 
 `StatCard` deltas are colored by `deltaDir`, not by parsing the string — pass
-`"up"`/`"down"` to match the sign of your change. Charts default the series colors from
-the shared palette, so a single-series `LineChart` needs only `data={[…]}`.
+`"up"`/`"down"` to match the sign of your change. A `config` entry may carry only a
+label, as the donut's three do here: the colors then come from the shared
+`--ds-chart-*` ramp in config order, which is what makes a chart on-brand by default.
+
+Height comes from the container, not a prop: `--ds-chart-height` retunes one chart
+(the axis charts default to 14rem, the round ones to 16rem).
 
 ---
 

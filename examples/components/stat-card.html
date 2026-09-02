@@ -74,7 +74,7 @@
 
       <section class="docs-section">
         <h2>With sparkline</h2>
-        <p class="docs-note">The <code>__spark</code> slot under the value holds an inline chart — here a <code>.ds-sparkline</code>.</p>
+        <p class="docs-note">The <code>__spark</code> slot under the value holds an inline chart — here a <code>.ds-sparkline</code>, which with the gauge is one of the two charts that stayed library-free when the rest became recharts-bound React components in 1.0.0-beta.4.</p>
         <section class="ds-example">
           <header class="ds-example__bar">
             <span class="ds-label">__spark slot</span>
@@ -87,10 +87,10 @@
               <div class="ds-stat__delta is-up">12%</div>
               <div class="ds-stat__spark">
                 <span class="ds-sparkline" style="color: var(--ds-success)">
-                  <svg class="ds-sparkline__svg" width="160" height="32" viewBox="0 0 160 32" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-                    <path class="ds-sparkline__area" d="M2,30 L2,26 33.6,22 65.2,24 96.8,14 128.4,10 158,4 L158,30 Z" />
-                    <polyline class="ds-sparkline__line" points="2,26 33.6,22 65.2,24 96.8,14 128.4,10 158,4" />
-                    <circle class="ds-sparkline__dot" cx="158" cy="4" r="2" />
+                  <svg class="ds-sparkline-svg" width="160" height="32" viewBox="0 0 160 32" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                    <path class="ds-sparkline-area" d="M2,30 L2,26 33.6,22 65.2,24 96.8,14 128.4,10 158,4 L158,30 Z" />
+                    <polyline class="ds-sparkline-line" points="2,26 33.6,22 65.2,24 96.8,14 128.4,10 158,4" />
+                    <circle class="ds-sparkline-dot" cx="158" cy="4" r="2" />
                   </svg>
                 </span>
               </div>

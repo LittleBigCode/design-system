@@ -2169,6 +2169,330 @@ export const COMPONENTS: ComponentDoc[] = [
       },
     ],
   },
+  /* -- Data display — batch 4 charts -------------------------------------- */
+  {
+    slug: "chart",
+    name: "Chart",
+    category: "Data display",
+    exports: ["ChartContainer", "ChartTooltip", "ChartTooltipContent", "ChartLegend", "ChartLegendContent", "ChartStyle"],
+    description:
+      "Recharts wrapped so series colours come from a `ChartConfig` and resolve to brand chart tokens.",
+    intro: [
+      "Chart is a thin frame around Recharts: `ChartContainer` gives you the responsive box, themed axis and grid colours, and one place to declare the series. The chart itself is still Recharts, so its children are `BarChart`, `Line`, `XAxis` — this component adds no chart types of its own.",
+      "It is the layer the finished charts are built on, not a substitute for them: for the common forms reach for `Line Chart`, `Area Chart`, `Bar Chart`, `Stacked Bar`, `Pie Chart` or `Donut Chart`, which each take `config` and `data` and compose these parts for you. This page is for the chart none of them draw — a figure that mixes mark types, or a colour outside the ramp. A single figure with a trend hint is `Stat Card`.",
+      "`config` is the whole naming and colour system: an entry that carries a colour becomes a `--color-<key>` custom property scoped to that one chart, which the series reference by name, and the tooltip and legend read their labels from the same object — so a series is named and coloured once. An entry may carry only a label, naming a key without colouring it. The six `--ds-chart-*` tokens hold in both themes, so `theme` on an entry is the escape hatch for the colour that does not.",
+    ],
+    examples: [
+      {
+        demo: "chart/composed",
+        title: "Two mark types",
+        description:
+          "What no single-form component draws: a `ComposedChart` whose children are a `Bar` and a `Line`. Both series read the same `YAxis`, which is what keeps the comparison honest — a bar and a line on separate scales say whatever their domains happen to make them say.",
+      },
+      {
+        demo: "chart/theme",
+        title: "A colour outside the ramp",
+        description:
+          "`theme` replaces `color` when one value cannot serve both themes — a partner's navy here, legible on white and lost on the dark page. The two are mutually exclusive in the type, and the emitted rule is per-chart, so this override reaches nothing else.",
+      },
+    ],
+    parts: {
+      ChartContainer:
+        "Holds the config, the responsive box and the `--color-<key>` variables, so every other part has to be inside one — the tooltip and legend content read it from context and throw outside it. Its default box is 16/9; `.ds-chart-container--plot` swaps that for a fixed height and full width, `--square` for a 1:1 box, and `--ds-chart-height` retunes either.",
+      ChartTooltip:
+        "Recharts' own `Tooltip`, re-exported unchanged. It positions and toggles; what it renders is whatever you pass as `content`.",
+      ChartTooltipContent:
+        "Resolves each entry against `config`, so a series whose data key is not a config key needs `nameKey` or `labelKey` to redirect the lookup — the usual fix for a pie. Values print in tabular figures so the column of numbers stays aligned as the pointer moves.",
+      ChartLegend:
+        "Recharts' `Legend`, re-exported. Its `verticalAlign` is what the content part reads to decide which side its padding goes on.",
+      ChartLegendContent:
+        "Labels come from `config` alone, so a series with no config entry renders a swatch and no text.",
+      ChartStyle:
+        "The `style` element `ChartContainer` already renders for you — exported only for the case where you own the container. A config with no colours renders nothing at all.",
+    },
+  },
+
+  {
+    slug: "line-chart",
+    name: "Line Chart",
+    category: "Data display",
+    exports: ["LineChart"],
+    description:
+      "A finished line chart over the Chart primitives — grid, axis, tooltip and legend already wired to one `config`.",
+    intro: [
+      "Line Chart is the assembled version of what `Chart` leaves you to compose: pass `data` and a `config` and you get the grid, the x axis, the tooltip and the legend without naming a single recharts child. Reach for it for a value over time where the shape of the trend is the point. When the chart needs a shape this does not have — a brush, a second y axis, mixed marks — drop back to `Chart` and compose it yourself.",
+      "`config` is the whole naming and colouring system, one entry per series keyed by the field name in each `data` row. A series that names no colour takes the next slot of the `--ds-chart-*` ramp, so a config of bare labels still draws in brand colours. Sizing goes through `className` rather than `width`/`height` — the container underneath is responsive.",
+    ],
+    examples: [
+      {
+        demo: "line-chart/basic",
+        title: "Single series",
+        description:
+          "The minimum: rows, one `config` entry, and `xAxisKey` naming the field the ticks read. The series takes `--ds-chart-1` because the config entry carries only a label.",
+      },
+      {
+        demo: "line-chart/comparison",
+        title: "Comparing series",
+        description:
+          "Every extra `config` key draws another line and the legend turns itself on past one series. All series share one y scale, so the lines are comparable rather than each filling the box.",
+      },
+      {
+        demo: "line-chart/dense",
+        title: "Dense sampling",
+        description:
+          "`dots={false}` at high point counts — the tooltip tracks the nearest x rather than a marker, so nothing becomes unreachable. `grid={false}` drops the rules when the trend matters more than the reading.",
+      },
+      {
+        demo: "line-chart/target",
+        title: "Annotated against a target",
+        description:
+          "Children are appended inside the recharts chart, which is the escape hatch for anything the props do not cover — here a `ReferenceLine` for the SLA the series is read against.",
+      },
+    ],
+  },
+
+  {
+    slug: "area-chart",
+    name: "Area Chart",
+    category: "Data display",
+    exports: ["AreaChart"],
+    description:
+      "`Line Chart` read as a volume — the same props, with a filled band under each series.",
+    intro: [
+      "Area Chart is the volume reading of a trend: reach for it when the size of the quantity matters as much as its direction, or when several series are meant to sum. For a rate where only the shape of the line carries meaning, `Line Chart` says the same thing with less ink.",
+      "It shares `Line Chart`'s API exactly — the same `config`, `xAxisKey`, `grid` and `legend` — plus `stacked`. Overlaid is the default because it is the safe reading: two bands drawn over each other still compare, whereas stacking silently changes what the upper series means.",
+    ],
+    examples: [
+      {
+        demo: "area-chart/basic",
+        title: "Single series",
+        description:
+          "One series, read as a volume. The band is the series colour at a low `fillOpacity` while the stroke stays at full strength, so the boundary survives on both themes.",
+      },
+      {
+        demo: "area-chart/stacked",
+        title: "Stacked composition",
+        description:
+          "`stacked` sums the series into one band, so the top edge is the total and each layer is its contribution. Only reach for it when the parts genuinely add up — stacked series are read against a moving baseline, which makes the upper ones hard to compare.",
+      },
+      {
+        demo: "area-chart/overlaid",
+        title: "Forecast against actual",
+        description:
+          "Two series overlaid rather than stacked, which is what you want when they measure the same thing twice. `dots` is off by default here and switched back on, because at seven points the markers say where the readings actually are.",
+      },
+    ],
+  },
+
+  {
+    slug: "bar-chart",
+    name: "Bar Chart",
+    category: "Data display",
+    exports: ["BarChart"],
+    description:
+      "Categorical bars with a pinned value axis, a row layout, and per-bar semantic tinting.",
+    intro: [
+      "Bar Chart compares discrete categories rather than a run over time: revenue by quarter, sessions by channel, uptime by service. When the x axis is time and the shape of the trend is the point, `Line Chart` is the better read; when the question is what share of a whole, `Stacked Bar`.",
+      "Two props have no `Line Chart` equivalent. `max` pins the value axis so a chart does not silently rescale when its tallest bar changes, and `statusKey` names a row field carrying `success`, `warning`, `danger` or `info`, which tints that one bar from the semantic tokens rather than the chart ramp.",
+    ],
+    examples: [
+      {
+        demo: "bar-chart/basic",
+        title: "Single series",
+        description:
+          '`max` fixes the ceiling at 300, so the bars read against a constant scale instead of against each other — the difference between "Q4 was big" and "Q4 was 263 of a possible 300".',
+      },
+      {
+        demo: "bar-chart/status",
+        title: "Tinted by status",
+        description:
+          "`statusKey` names the row field holding the tone. It rides along as recharts' own `fill`, so it colours the whole row — pair it with a single-series `config`, as v1's data rows did.",
+      },
+      {
+        demo: "bar-chart/horizontal",
+        title: "Rows for long labels",
+        description:
+          '`horizontal` lays the bars out as rows, which is the fix for category names that would otherwise be rotated or truncated. Recharts calls the same thing `layout="vertical"`; the prop keeps v1\'s name.',
+      },
+      {
+        demo: "bar-chart/grouped",
+        title: "Grouped series",
+        description:
+          "A second `config` key puts two bars side by side per category and turns the legend on. Pass `stacked` instead when the two are parts of one total rather than rivals.",
+      },
+    ],
+  },
+
+  {
+    slug: "stacked-bar",
+    name: "Stacked Bar",
+    category: "Data display",
+    exports: ["StackedBar"],
+    description:
+      "Proportional bars — every row normalised to its own total, so only the split differs.",
+    intro: [
+      "Stacked Bar answers what share, not how much. Each row is normalised to its own total, so every bar is the same length and the eye compares splits rather than sizes: storage by kind, a test run by outcome, throughput by state across teams. When the absolute size of each row is the point, `Bar Chart` with `stacked` keeps the raw values.",
+      "That normalisation is the whole component, and it is why the tooltip reads percentages — the magnitudes are deliberately gone. `config` is the stacking dimension, one entry per segment, and `showLegend` is on by default because a proportional bar is unreadable without one.",
+    ],
+    examples: [
+      {
+        demo: "stacked-bar/basic",
+        title: "One row",
+        description:
+          "The single-bar case: no `labelKey`, so no row label and the whole width is the split. A row that sums to zero stays at zero rather than dividing by it.",
+      },
+      {
+        demo: "stacked-bar/by-team",
+        title: "Comparing rows",
+        description:
+          "`labelKey` names each row down the left. Because every row is normalised separately, a team shipping 22 items and one shipping 11 produce the same bar length — the comparison is of mix, not of volume.",
+      },
+      {
+        demo: "stacked-bar/inline",
+        title: "Inline in a summary",
+        description:
+          "`showLegend={false}` and a shorter `--ds-chart-height` turn it into a one-line proportion strip, with the figures carried by the prose beside it instead of a legend.",
+      },
+    ],
+  },
+
+  {
+    slug: "pie-chart",
+    name: "Pie Chart",
+    category: "Data display",
+    exports: ["PieChart"],
+    description:
+      "A whole split into slices, coloured per slice from a `config` keyed by slice name.",
+    intro: [
+      "Pie Chart is for a small number of parts that make up one whole and are meant to be read as fractions: four traffic channels, three plan tiers. Past five or six slices the wedges stop being comparable — `Bar Chart` with `horizontal` stays readable where a pie does not, and `Stacked Bar` is the better shape when several wholes must be compared to each other.",
+      "A pie is coloured per slice rather than per series, so `nameKey` names the row field holding the slice name, and that name is the key into `config` — it is what the tooltip and legend look their labels up by too. A slice whose name is not a `config` key renders a swatch and no text.",
+    ],
+    examples: [
+      {
+        demo: "pie-chart/basic",
+        title: "Share of traffic",
+        description:
+          "`valueKey` and `nameKey` are the two row fields the chart needs. The `config` entries carry only labels, so the slices take the `--ds-chart-*` ramp in row order.",
+      },
+      {
+        demo: "pie-chart/branded",
+        title: "Named colours",
+        description:
+          "A `config` entry that carries a colour wins over the ramp, and the legend swatch follows it — the colour is declared once and reaches the slice, the tooltip and the legend together.",
+      },
+      {
+        demo: "pie-chart/compact",
+        title: "With a figure list",
+        description:
+          "`legend={false}` when the numbers are already spelled out beside the chart. A pie is poor at conveying exact values, so pairing it with the list is usually better than making the pie carry both jobs.",
+      },
+    ],
+  },
+
+  {
+    slug: "donut-chart",
+    name: "Donut Chart",
+    category: "Data display",
+    exports: ["DonutChart"],
+    description:
+      "`Pie Chart` with the middle cut out, and a figure in the hole.",
+    intro: [
+      "Donut Chart is a pie whose hole earns its keep: the total, or the one number the split is about, sits in the middle where a pie wastes space. Reach for it over `Pie Chart` whenever there is a headline figure to show. For a single bounded value with no split at all, `Gauge` is the dial that does only that.",
+      "`thickness` is a percentage of the chart radius rather than v1's pixels, because the container is responsive and a fixed ring would not scale with it. The centre text follows `Gauge`: a title-voiced figure with an uppercase faint caption below it.",
+    ],
+    examples: [
+      {
+        demo: "donut-chart/basic",
+        title: "Total in the middle",
+        description:
+          "`centerLabel` and `centerCaption` are the reason to pick a donut over a pie. Neither is computed — the total is yours to pass, because the interesting figure is not always the sum.",
+      },
+      {
+        demo: "donut-chart/thin",
+        title: "Two-part ring",
+        description:
+          "A thin ring reads as a progress dial rather than a breakdown, which is what a used-against-free split wants. `legend={false}` because the centre already names both halves.",
+      },
+      {
+        demo: "donut-chart/breakdown",
+        title: "Cost breakdown",
+        description:
+          "Five segments is about the ceiling before the small slices stop being distinguishable. The ramp repeats past six entries, so a longer breakdown wants explicit colours or a different chart.",
+      },
+    ],
+  },
+
+  {
+    slug: "gauge",
+    name: "Gauge",
+    category: "Data display",
+    exports: ["Gauge", "type GaugeThreshold"],
+    description:
+      "A radial progress dial for a bounded value, with optional thresholds that recolour the arc.",
+    intro: [
+      "Gauge is the radial readout for one bounded value: a 270° dial with the figure in the middle. Reach for it when a single number wants to be read against its ceiling — utilisation, a score, a quota. For the same value inside a row or a list, `Progress` and `Meter` take far less room.",
+      'It is a single component, not a compound one: everything is props. The arc is drawn with `stroke-dasharray` over one fixed path, so the value animates with no path recomputation, and the whole dial is one `role="img"` whose label reads `label: value of max`.',
+    ],
+    examples: [
+      {
+        demo: "gauge/basic",
+        title: "Basic",
+        description:
+          "`max` defaults to 100 but takes any ceiling — the second dial reads 128 of 256 and fills by fraction, not by percentage.",
+      },
+      {
+        demo: "gauge/thresholds",
+        title: "Thresholds",
+        description:
+          "The last threshold the value reaches wins, so list them ascending. `color` overrides them outright, which is why the two are not usually passed together.",
+      },
+      {
+        demo: "gauge/formatted",
+        title: "Units and density",
+        description:
+          "`format` decides the centre text only — the `aria-label` still reads the raw value against `max`. The figure scales with `size`, so keep the formatted string short; `thickness` retunes the ring without touching the geometry.",
+      },
+    ],
+  },
+
+  {
+    slug: "sparkline",
+    name: "Sparkline",
+    category: "Data display",
+    exports: ["Sparkline"],
+    description:
+      "An inline mini line chart, small and cheap enough to sit in every row of a table.",
+    intro: [
+      "Sparkline is the trend you read at a glance next to the number it belongs to: a table's per-row history, a stat tile's last eight weeks, a figure with its own shape beside it. It has no axes, no ticks and no tooltip, because at this size none of them would be legible — for a chart meant to be read off, `Line Chart` is the full-size sibling.",
+      "It is hand-rolled SVG rather than a `Line Chart` shrunk down, and that is the whole point: one `polyline` per instance, no responsive observer, so a hundred of them in a table cost nothing. The line is `currentColor` until `stroke` names a colour, so a bare sparkline takes the colour of whatever it sits in.",
+    ],
+    examples: [
+      {
+        demo: "sparkline/basic",
+        title: "Beside a figure",
+        description:
+          "The default shape: line only, no fill, no dot. Give it an `aria-label` — the fallback reads `Sparkline of 8 values`, which says nothing about what the values are.",
+      },
+      {
+        demo: "sparkline/area",
+        title: "Area and end dot",
+        description:
+          "`fill` adds the area under the line at a low opacity and `showDot` marks the last point, which is the one a reader looks for. `fill` takes `true` to reuse the line colour, or a colour of its own.",
+      },
+      {
+        demo: "sparkline/table",
+        title: "Trend column",
+        description:
+          "The use the component is sized for. Drop `width` and `height` to fit the row rather than scaling with CSS — `preserveAspectRatio` is `none`, so a stretched sparkline distorts its stroke.",
+      },
+      {
+        demo: "sparkline/stat-card",
+        title: "Inside a stat card",
+        description:
+          "`StatCardSpark` is the slot this was built for, and the one place to pass `aria-hidden` instead of a label — the figure above already carries the number, so a second reading of it is noise. `animate` draws the line in once on mount, and stops itself under `prefers-reduced-motion` with the line fully drawn rather than blank.",
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [
@@ -2804,46 +3128,6 @@ export const PENDING: ComponentDoc[] = [
     },
   },
   {
-    slug: "chart",
-    name: "Chart",
-    category: "Data display",
-    description:
-      "Recharts wrapped so series colours come from a `ChartConfig` and resolve to brand chart tokens.",
-    intro: [
-      "Chart is a thin frame around Recharts: `ChartContainer` gives you the responsive box, themed axis and grid colours, and one place to declare the series. The chart itself is still Recharts, so its children are `BarChart`, `Line`, `XAxis` — this component adds no chart types of its own.",
-      "It is the layer the finished charts are built on, not a substitute for them: for the common forms reach for `Line Chart`, `Area Chart`, `Bar Chart`, `Stacked Bar`, `Pie Chart` or `Donut Chart`, which each take `config` and `data` and compose these parts for you. This page is for the chart none of them draw — a figure that mixes mark types, or a colour outside the ramp. A single figure with a trend hint is `Stat Card`.",
-      "`config` is the whole naming and colour system: an entry that carries a colour becomes a `--color-<key>` custom property scoped to that one chart, which the series reference by name, and the tooltip and legend read their labels from the same object — so a series is named and coloured once. An entry may carry only a label, naming a key without colouring it. The six `--ds-chart-*` tokens hold in both themes, so `theme` on an entry is the escape hatch for the colour that does not.",
-    ],
-    examples: [
-      {
-        demo: "chart/composed",
-        title: "Two mark types",
-        description:
-          "What no single-form component draws: a `ComposedChart` whose children are a `Bar` and a `Line`. Both series read the same `YAxis`, which is what keeps the comparison honest — a bar and a line on separate scales say whatever their domains happen to make them say.",
-      },
-      {
-        demo: "chart/theme",
-        title: "A colour outside the ramp",
-        description:
-          "`theme` replaces `color` when one value cannot serve both themes — a partner's navy here, legible on white and lost on the dark page. The two are mutually exclusive in the type, and the emitted rule is per-chart, so this override reaches nothing else.",
-      },
-    ],
-    parts: {
-      ChartContainer:
-        "Holds the config, the responsive box and the `--color-<key>` variables, so every other part has to be inside one — the tooltip and legend content read it from context and throw outside it. Its default size is `aspect-video`; a fixed height needs a `className`.",
-      ChartTooltip:
-        "Recharts' own `Tooltip`, re-exported unchanged. It positions and toggles; what it renders is whatever you pass as `content`.",
-      ChartTooltipContent:
-        "Resolves each entry against `config`, so a series whose data key is not a config key needs `nameKey` or `labelKey` to redirect the lookup — the usual fix for a pie. Values print in tabular figures so the column of numbers stays aligned as the pointer moves.",
-      ChartLegend:
-        "Recharts' `Legend`, re-exported. Its `verticalAlign` is what the content part reads to decide which side its padding goes on.",
-      ChartLegendContent:
-        "Labels come from `config` alone, so a series with no config entry renders a swatch and no text.",
-      ChartStyle:
-        "The `style` element `ChartContainer` already renders for you — exported only for the case where you own the container. A config with no colours renders nothing at all.",
-    },
-  },
-  {
     slug: "agenda",
     name: "Agenda",
     category: "Data display",
@@ -2871,204 +3155,6 @@ export const PENDING: ComponentDoc[] = [
         title: "Empty state",
         description:
           "No events renders `Empty` rather than a bespoke placeholder, so the voice matches every other empty surface in the system. `emptyMessage` is the one line you write.",
-      },
-    ],
-  },
-  {
-    slug: "line-chart",
-    name: "Line Chart",
-    category: "Data display",
-    description:
-      "A finished line chart over the Chart primitives — grid, axis, tooltip and legend already wired to one `config`.",
-    intro: [
-      "Line Chart is the assembled version of what `Chart` leaves you to compose: pass `data` and a `config` and you get the grid, the x axis, the tooltip and the legend without naming a single recharts child. Reach for it for a value over time where the shape of the trend is the point. When the chart needs a shape this does not have — a brush, a second y axis, mixed marks — drop back to `Chart` and compose it yourself.",
-      "`config` is the whole naming and colouring system, one entry per series keyed by the field name in each `data` row. A series that names no colour takes the next slot of the `--ds-chart-*` ramp, so a config of bare labels still draws in brand colours. Sizing goes through `className` rather than `width`/`height` — the container underneath is responsive.",
-    ],
-    examples: [
-      {
-        demo: "line-chart/basic",
-        title: "Single series",
-        description:
-          "The minimum: rows, one `config` entry, and `xAxisKey` naming the field the ticks read. The series takes `--ds-chart-1` because the config entry carries only a label.",
-      },
-      {
-        demo: "line-chart/comparison",
-        title: "Comparing series",
-        description:
-          "Every extra `config` key draws another line and the legend turns itself on past one series. All series share one y scale, so the lines are comparable rather than each filling the box.",
-      },
-      {
-        demo: "line-chart/dense",
-        title: "Dense sampling",
-        description:
-          "`dots={false}` at high point counts — the tooltip tracks the nearest x rather than a marker, so nothing becomes unreachable. `grid={false}` drops the rules when the trend matters more than the reading.",
-      },
-      {
-        demo: "line-chart/target",
-        title: "Annotated against a target",
-        description:
-          "Children are appended inside the recharts chart, which is the escape hatch for anything the props do not cover — here a `ReferenceLine` for the SLA the series is read against.",
-      },
-    ],
-  },
-  {
-    slug: "area-chart",
-    name: "Area Chart",
-    category: "Data display",
-    description:
-      "`Line Chart` read as a volume — the same props, with a filled band under each series.",
-    intro: [
-      "Area Chart is the volume reading of a trend: reach for it when the size of the quantity matters as much as its direction, or when several series are meant to sum. For a rate where only the shape of the line carries meaning, `Line Chart` says the same thing with less ink.",
-      "It shares `Line Chart`'s API exactly — the same `config`, `xAxisKey`, `grid` and `legend` — plus `stacked`. Overlaid is the default because it is the safe reading: two bands drawn over each other still compare, whereas stacking silently changes what the upper series means.",
-    ],
-    examples: [
-      {
-        demo: "area-chart/basic",
-        title: "Single series",
-        description:
-          "One series, read as a volume. The band is the series colour at a low `fillOpacity` while the stroke stays at full strength, so the boundary survives on both themes.",
-      },
-      {
-        demo: "area-chart/stacked",
-        title: "Stacked composition",
-        description:
-          "`stacked` sums the series into one band, so the top edge is the total and each layer is its contribution. Only reach for it when the parts genuinely add up — stacked series are read against a moving baseline, which makes the upper ones hard to compare.",
-      },
-      {
-        demo: "area-chart/overlaid",
-        title: "Forecast against actual",
-        description:
-          "Two series overlaid rather than stacked, which is what you want when they measure the same thing twice. `dots` is off by default here and switched back on, because at seven points the markers say where the readings actually are.",
-      },
-    ],
-  },
-  {
-    slug: "bar-chart",
-    name: "Bar Chart",
-    category: "Data display",
-    description:
-      "Categorical bars with a pinned value axis, a row layout, and per-bar semantic tinting.",
-    intro: [
-      "Bar Chart compares discrete categories rather than a run over time: revenue by quarter, sessions by channel, uptime by service. When the x axis is time and the shape of the trend is the point, `Line Chart` is the better read; when the question is what share of a whole, `Stacked Bar`.",
-      "Two props have no `Line Chart` equivalent. `max` pins the value axis so a chart does not silently rescale when its tallest bar changes, and `statusKey` names a row field carrying `success`, `warning`, `danger` or `info`, which tints that one bar from the semantic tokens rather than the chart ramp.",
-    ],
-    examples: [
-      {
-        demo: "bar-chart/basic",
-        title: "Single series",
-        description:
-          '`max` fixes the ceiling at 300, so the bars read against a constant scale instead of against each other — the difference between "Q4 was big" and "Q4 was 263 of a possible 300".',
-      },
-      {
-        demo: "bar-chart/status",
-        title: "Tinted by status",
-        description:
-          "`statusKey` names the row field holding the tone. It rides along as recharts' own `fill`, so it colours the whole row — pair it with a single-series `config`, as v1's data rows did.",
-      },
-      {
-        demo: "bar-chart/horizontal",
-        title: "Rows for long labels",
-        description:
-          '`horizontal` lays the bars out as rows, which is the fix for category names that would otherwise be rotated or truncated. Recharts calls the same thing `layout="vertical"`; the prop keeps v1\'s name.',
-      },
-      {
-        demo: "bar-chart/grouped",
-        title: "Grouped series",
-        description:
-          "A second `config` key puts two bars side by side per category and turns the legend on. Pass `stacked` instead when the two are parts of one total rather than rivals.",
-      },
-    ],
-  },
-  {
-    slug: "stacked-bar",
-    name: "Stacked Bar",
-    category: "Data display",
-    description:
-      "Proportional bars — every row normalised to its own total, so only the split differs.",
-    intro: [
-      "Stacked Bar answers what share, not how much. Each row is normalised to its own total, so every bar is the same length and the eye compares splits rather than sizes: storage by kind, a test run by outcome, throughput by state across teams. When the absolute size of each row is the point, `Bar Chart` with `stacked` keeps the raw values.",
-      "That normalisation is the whole component, and it is why the tooltip reads percentages — the magnitudes are deliberately gone. `config` is the stacking dimension, one entry per segment, and `showLegend` is on by default because a proportional bar is unreadable without one.",
-    ],
-    examples: [
-      {
-        demo: "stacked-bar/basic",
-        title: "One row",
-        description:
-          "The single-bar case: no `labelKey`, so no row label and the whole width is the split. A row that sums to zero stays at zero rather than dividing by it.",
-      },
-      {
-        demo: "stacked-bar/by-team",
-        title: "Comparing rows",
-        description:
-          "`labelKey` names each row down the left. Because every row is normalised separately, a team shipping 22 items and one shipping 11 produce the same bar length — the comparison is of mix, not of volume.",
-      },
-      {
-        demo: "stacked-bar/inline",
-        title: "Inline in a summary",
-        description:
-          "`showLegend={false}` and a short `className` height turn it into a one-line proportion strip, with the figures carried by the prose beside it instead of a legend.",
-      },
-    ],
-  },
-  {
-    slug: "pie-chart",
-    name: "Pie Chart",
-    category: "Data display",
-    description:
-      "A whole split into slices, coloured per slice from a `config` keyed by slice name.",
-    intro: [
-      "Pie Chart is for a small number of parts that make up one whole and are meant to be read as fractions: four traffic channels, three plan tiers. Past five or six slices the wedges stop being comparable — `Bar Chart` with `horizontal` stays readable where a pie does not, and `Stacked Bar` is the better shape when several wholes must be compared to each other.",
-      "A pie is coloured per slice rather than per series, so `nameKey` names the row field holding the slice name, and that name is the key into `config` — it is what the tooltip and legend look their labels up by too. A slice whose name is not a `config` key renders a swatch and no text.",
-    ],
-    examples: [
-      {
-        demo: "pie-chart/basic",
-        title: "Share of traffic",
-        description:
-          "`valueKey` and `nameKey` are the two row fields the chart needs. The `config` entries carry only labels, so the slices take the `--ds-chart-*` ramp in row order.",
-      },
-      {
-        demo: "pie-chart/branded",
-        title: "Named colours",
-        description:
-          "A `config` entry that carries a colour wins over the ramp, and the legend swatch follows it — the colour is declared once and reaches the slice, the tooltip and the legend together.",
-      },
-      {
-        demo: "pie-chart/compact",
-        title: "With a figure list",
-        description:
-          "`legend={false}` when the numbers are already spelled out beside the chart. A pie is poor at conveying exact values, so pairing it with the list is usually better than making the pie carry both jobs.",
-      },
-    ],
-  },
-  {
-    slug: "donut-chart",
-    name: "Donut Chart",
-    category: "Data display",
-    description:
-      "`Pie Chart` with the middle cut out, and a figure in the hole.",
-    intro: [
-      "Donut Chart is a pie whose hole earns its keep: the total, or the one number the split is about, sits in the middle where a pie wastes space. Reach for it over `Pie Chart` whenever there is a headline figure to show. For a single bounded value with no split at all, `Gauge` is the dial that does only that.",
-      "`thickness` is a percentage of the chart radius rather than v1's pixels, because the container is responsive and a fixed ring would not scale with it. The centre text follows `Gauge`: a title-voiced figure with an uppercase faint caption below it.",
-    ],
-    examples: [
-      {
-        demo: "donut-chart/basic",
-        title: "Total in the middle",
-        description:
-          "`centerLabel` and `centerCaption` are the reason to pick a donut over a pie. Neither is computed — the total is yours to pass, because the interesting figure is not always the sum.",
-      },
-      {
-        demo: "donut-chart/thin",
-        title: "Two-part ring",
-        description:
-          "A thin ring reads as a progress dial rather than a breakdown, which is what a used-against-free split wants. `legend={false}` because the centre already names both halves.",
-      },
-      {
-        demo: "donut-chart/breakdown",
-        title: "Cost breakdown",
-        description:
-          "Five segments is about the ceiling before the small slices stop being distinguishable. The ramp repeats past six entries, so a longer breakdown wants explicit colours or a different chart.",
       },
     ],
   },
@@ -3878,74 +3964,6 @@ export const PENDING: ComponentDoc[] = [
       StatCardSpark:
         "A slot with a top margin and nothing else. Keep whatever goes in it `aria-hidden`; the figure above already carries the number.",
     },
-  },
-  {
-    slug: "gauge",
-    name: "Gauge",
-    category: "Data display",
-    description:
-      "A radial progress dial for a bounded value, with optional thresholds that recolour the arc.",
-    intro: [
-      "Gauge is the radial readout for one bounded value: a 270° dial with the figure in the middle. Reach for it when a single number wants to be read against its ceiling — utilisation, a score, a quota. For the same value inside a row or a list, `Progress` and `Meter` take far less room.",
-      'It is a single component, not a compound one: everything is props. The arc is drawn with `stroke-dasharray` over one fixed path, so the value animates with no path recomputation, and the whole dial is one `role="img"` whose label reads `label: value of max`.',
-    ],
-    examples: [
-      {
-        demo: "gauge/basic",
-        title: "Basic",
-        description:
-          "`max` defaults to 100 but takes any ceiling — the second dial reads 128 of 256 and fills by fraction, not by percentage.",
-      },
-      {
-        demo: "gauge/thresholds",
-        title: "Thresholds",
-        description:
-          "The last threshold the value reaches wins, so list them ascending. `color` overrides them outright, which is why the two are not usually passed together.",
-      },
-      {
-        demo: "gauge/formatted",
-        title: "Units and density",
-        description:
-          "`format` decides the centre text only — the `aria-label` still reads the raw value against `max`. The figure scales with `size`, so keep the formatted string short; `thickness` retunes the ring without touching the geometry.",
-      },
-    ],
-  },
-  {
-    slug: "sparkline",
-    name: "Sparkline",
-    category: "Data display",
-    description:
-      "An inline mini line chart, small and cheap enough to sit in every row of a table.",
-    intro: [
-      "Sparkline is the trend you read at a glance next to the number it belongs to: a table's per-row history, a stat tile's last eight weeks, a figure with its own shape beside it. It has no axes, no ticks and no tooltip, because at this size none of them would be legible — for a chart meant to be read off, `Line Chart` is the full-size sibling.",
-      "It is hand-rolled SVG rather than a `Line Chart` shrunk down, and that is the whole point: one `polyline` per instance, no responsive observer, so a hundred of them in a table cost nothing. The line is `currentColor` until `stroke` names a colour, so a bare sparkline takes the colour of whatever it sits in.",
-    ],
-    examples: [
-      {
-        demo: "sparkline/basic",
-        title: "Beside a figure",
-        description:
-          "The default shape: line only, no fill, no dot. Give it an `aria-label` — the fallback reads `Sparkline of 8 values`, which says nothing about what the values are.",
-      },
-      {
-        demo: "sparkline/area",
-        title: "Area and end dot",
-        description:
-          "`fill` adds the area under the line at a low opacity and `showDot` marks the last point, which is the one a reader looks for. `fill` takes `true` to reuse the line colour, or a colour of its own.",
-      },
-      {
-        demo: "sparkline/table",
-        title: "Trend column",
-        description:
-          "The use the component is sized for. Drop `width` and `height` to fit the row rather than scaling with CSS — `preserveAspectRatio` is `none`, so a stretched sparkline distorts its stroke.",
-      },
-      {
-        demo: "sparkline/stat-card",
-        title: "Inside a stat card",
-        description:
-          "`StatCardSpark` is the slot this was built for, and the one place to pass `aria-hidden` instead of a label — the figure above already carries the number, so a second reading of it is noise. `animate` draws the line in once on mount, and stops itself under `prefers-reduced-motion` with the line fully drawn rather than blank.",
-      },
-    ],
   },
   {
     slug: "breadcrumb",

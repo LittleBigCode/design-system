@@ -13,12 +13,18 @@
   <!-- Opt-in themes for the demo's theme switcher (toggled via data-theme on <html>). -->
   <link rel="stylesheet" href="../css/themes/dark.css">
   <link rel="stylesheet" href="../css/themes/sepia.css">
-  <!-- Import map MUST precede any module script so bare "react" specifiers resolve. -->
+  <!-- Import map MUST precede any module script so bare "react" specifiers resolve.
+       KNOWN INCOMPLETE, since 1.0.0-beta.1: the barrel this demo imports also
+       reaches for "@base-ui/react/*" and "react/jsx-runtime", which are not
+       mapped here, so the app does not boot. Tracked with the a11y gate's
+       signed-in-console failure. The recharts entry below is the one batch 4
+       owed — added with the charts rather than left for whoever fixes the rest. -->
   <script type="importmap">
   { "imports": {
     "react": "https://esm.sh/react@18.3.1",
     "react-dom": "https://esm.sh/react-dom@18.3.1?external=react",
-    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client?external=react"
+    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client?external=react",
+    "recharts": "https://esm.sh/recharts@3.8.0?external=react,react-dom"
   } }
   </script>
   <style>

@@ -9,7 +9,7 @@ showcase page.
 
 ## React components
 
-The 65 components exported from [`@diametral/design-system/react`](react.md). Every row has a live page with runnable examples, and every page is what the visual and accessibility gates drive — so this table and the tested surface cannot disagree.
+The 74 components exported from [`@diametral/design-system/react`](react.md). Every row has a live page with runnable examples, and every page is what the visual and accessibility gates drive — so this table and the tested surface cannot disagree.
 
 > Generated from `site/src/registry/registry.ts` by `scripts/build-components-md.mjs`. Edit the registry, then run `npm run build`.
 
@@ -54,14 +54,23 @@ The 65 components exported from [`@diametral/design-system/react`](react.md). Ev
 
 | Component | Imports | What it is |
 | --- | --- | --- |
+| [Area Chart](https://littlebigcode.github.io/design-system/docs/area-chart) | `AreaChart` | `Line Chart` read as a volume — the same props, with a filled band under each series. |
+| [Bar Chart](https://littlebigcode.github.io/design-system/docs/bar-chart) | `BarChart` | Categorical bars with a pinned value axis, a row layout, and per-bar semantic tinting. |
+| [Chart](https://littlebigcode.github.io/design-system/docs/chart) | `ChartContainer`, `ChartTooltip`, `ChartTooltipContent`, `ChartLegend`, `ChartLegendContent`, `ChartStyle` | Recharts wrapped so series colours come from a `ChartConfig` and resolve to brand chart tokens. |
 | [CodeBlock](https://littlebigcode.github.io/design-system/docs/code-block) | `CodeBlock`, `type CodeBlockProps` | A source snippet with a filename strip and a copy button. |
 | [DataGrid](https://littlebigcode.github.io/design-system/docs/data-table) | `DataGrid`, `type DataGridProps`, `type DataGridColumn` | A real `<table>` with sorting, selection, filtering, inline edit and paging. |
+| [Donut Chart](https://littlebigcode.github.io/design-system/docs/donut-chart) | `DonutChart` | `Pie Chart` with the middle cut out, and a figure in the hole. |
+| [Gauge](https://littlebigcode.github.io/design-system/docs/gauge) | `Gauge`, `type GaugeThreshold` | A radial progress dial for a bounded value, with optional thresholds that recolour the arc. |
 | [Item](https://littlebigcode.github.io/design-system/docs/item) | `Item`, `ItemMedia`, `ItemContent`, `ItemActions`, `ItemGroup`, `ItemSeparator`, `ItemTitle`, `ItemDescription`, `ItemHeader`, `ItemFooter` | A list row with media, content and actions slots — lighter than a Card for repeated rows. |
+| [Line Chart](https://littlebigcode.github.io/design-system/docs/line-chart) | `LineChart` | A finished line chart over the Chart primitives — grid, axis, tooltip and legend already wired to one `config`. |
 | [Marker](https://littlebigcode.github.io/design-system/docs/marker) | `Marker`, `MarkerIcon`, `MarkerContent`, `markerVariants` | A small inline badge pairing an icon with a label. |
 | [Meter](https://littlebigcode.github.io/design-system/docs/meter) | `Meter`, `MeterTrack`, `MeterIndicator`, `MeterLabel`, `MeterValue`, `meterVariants` | Displays a measured value within a known range — capacity, not task progress. |
+| [Pie Chart](https://littlebigcode.github.io/design-system/docs/pie-chart) | `PieChart` | A whole split into slices, coloured per slice from a `config` keyed by slice name. |
 | [QR Code](https://littlebigcode.github.io/design-system/docs/qr-code) | `QrCode`, `type QrErrorCorrectionLevel` | Renders a QR code as inline SVG from a hand-rolled byte-mode encoder — no dependency, no network, no canvas. Versions 1-10, all four correction levels. |
 | [Relative Time](https://littlebigcode.github.io/design-system/docs/relative-time) | `RelativeTime`, `formatRelativeTime` | Renders "3 hours ago" from a date, inside a `time` element that keeps the machine-readable timestamp. |
 | [Snippet](https://littlebigcode.github.io/design-system/docs/snippet) | `Snippet` | A one-line copyable command. Shares Code Block's copy affordance rather than restating it. |
+| [Sparkline](https://littlebigcode.github.io/design-system/docs/sparkline) | `Sparkline` | An inline mini line chart, small and cheap enough to sit in every row of a table. |
+| [Stacked Bar](https://littlebigcode.github.io/design-system/docs/stacked-bar) | `StackedBar` | Proportional bars — every row normalised to its own total, so only the split differs. |
 | [Tree](https://littlebigcode.github.io/design-system/docs/tree) | `Tree`, `type TreeProps`, `type TreeNode` | A nested, expandable hierarchy — files, org units, categories. |
 
 ### Navigation
@@ -1977,25 +1986,30 @@ Live: [../examples/components/command-palette.html](../examples/components/comma
 ## Sparkline
 
 An inline SVG mini line chart — no axes, no grid, no library. The line is a single polyline scaled to
-fit its box and drawn with `currentColor` (accent by default), so setting `color` recolors it.
+fit its box and drawn with `currentColor`, so setting `color` recolors it; the wrapper's own default
+is `--ds-chart-1`, the first series color, because a themed accent must not repaint data.
 
 ```html
-<span class="ds-sparkline">
-  <svg class="ds-sparkline__svg" width="120" height="32" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true">
-    <path class="ds-sparkline__area" d="M2,30 L2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2 L118,30 Z" />
-    <polyline class="ds-sparkline__line" points="2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2" />
-    <circle class="ds-sparkline__dot" cx="118" cy="2" r="2" />
+<span class="ds-sparkline" role="img" aria-label="Sessions over 6 weeks">
+  <svg class="ds-sparkline-svg" width="120" height="32" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true">
+    <path class="ds-sparkline-area" d="M2,30 L2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2 L118,30 Z" />
+    <polyline class="ds-sparkline-line" points="2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2" />
+    <circle class="ds-sparkline-dot" cx="118" cy="2" r="2" />
   </svg>
 </span>
 ```
 
-**Parts:** `.ds-sparkline` (inline-block wrapper; set `color` to recolor), `.ds-sparkline__svg`, the
-`.ds-sparkline__line` polyline, an optional faint `.ds-sparkline__area` fill under it, and an optional
-`.ds-sparkline__dot` on the last point. All inherit the line color via `currentColor`.
+**Parts:** `.ds-sparkline` (inline-block wrapper; set `color` to recolor), `.ds-sparkline-svg`, the
+`.ds-sparkline-line` polyline, an optional faint `.ds-sparkline-area` fill under it, and an optional
+`.ds-sparkline-dot` on the last point. All inherit the line color via `currentColor`.
+`.ds-sparkline-line--animate` draws the line in on mount (and does nothing under
+`prefers-reduced-motion`). The parts were `__svg` / `__line` / `__area` / `__dot` before
+1.0.0-beta.4; the rename is mechanical, `__` for `-`.
 
 **React** — `<Sparkline>`. Props: `data` (a `number[]`, scaled to fit), `width` (default 120),
 `height` (default 32), `stroke` (line color), `fill` (`boolean | string` — a faint area under the
-line), `showDot`; forwards a ref and `<span>` attributes.
+line), `showDot`, `animate`. A flat series — or a single point — pins to the middle of the box; before
+1.0.0-beta.4 it drew along the floor and read as a minimum it was not.
 
 ```jsx
 <Sparkline data={[4, 8, 6, 14, 11, 20]} fill showDot />
@@ -2004,47 +2018,90 @@ line), `showDot`; forwards a ref and `<span>` attributes.
 
 Live: [../examples/components/sparkline.html](../examples/components/sparkline.html)
 
-## Bar chart
+## Charts
 
-A minimal flat bar chart — no library. The default is vertical: a flex-end row of columns whose
-heights are set inline as a percent of the max. The `--horizontal` modifier lays the same data out as
-rows. Bars fill with the accent or a status color.
+Every chart except the sparkline and the gauge is **React-only** from 1.0.0-beta.4 on: the marks are
+drawn by [recharts](https://recharts.org), so there is no static markup that reproduces them and no
+`.ds-*` class per mark. What the stylesheet owns is the frame — the plotting box, the tooltip and the
+legend — plus the descendant rules that repaint recharts' own hard-coded defaults (`#ccc` gridlines,
+`#fff` mark outlines) onto `--ds-*` tokens, in both themes.
+
+0.11's pure-SVG and CSS-flex charts (`.ds-chart`, `.ds-barchart`, `.ds-linechart`, `.ds-areachart`,
+`.ds-donut`, `.ds-piechart`, `.ds-stackedbar`) were removed in the same release. See
+[migration/from-0.11.md](migration/from-0.11.md) for the class-by-class map.
+
+**Parts:** `.ds-chart-container` (the plotting box, 16/9 by default) with `--plot` (a fixed height,
+full width — the axis charts) and `--square` (1:1 — pie, donut) modifiers, both reading
+`--ds-chart-height`; `.ds-chart-tooltip-content` and its label / item / indicator / value parts;
+`.ds-chart-legend-content` with `-item` and a 10px `-dot` swatch. `.ds-stacked-bar-root`,
+`.ds-pie-chart-root` and `.ds-donut-chart-root` size and centre their own charts, and
+`.ds-donut-chart-center-label` / `-center-caption` set the figure in the hole.
+
+**React** — `ChartContainer` + `ChartTooltip(Content)` + `ChartLegend(Content)` are the substrate; six
+finished charts compose them, each taking a `config` and rows of `data`:
+
+| component | for | the row fields it needs |
+| --- | --- | --- |
+| `LineChart` | a trend over a category axis | `xAxisKey` |
+| `AreaChart` | the same, read as a volume; `stacked` sums the series | `xAxisKey` |
+| `BarChart` | magnitudes; `horizontal`, `stacked`, `max`, `statusKey` | `xAxisKey` |
+| `StackedBar` | shares — every row normalised to its own total | `labelKey` |
+| `PieChart` | parts of one whole | `valueKey`, `nameKey` |
+| `DonutChart` | the same with a figure in the hole | `valueKey`, `nameKey` |
+
+`config` is the whole naming and coloring system: one entry per series or slice, keyed by the field
+name in the data row. An entry that carries a `color` becomes a `--color-<key>` custom property scoped
+to that one chart; an entry with no color takes the next slot of the six-color `--ds-chart-*` ramp.
+The tooltip and legend read their labels from the same object, so a series is named once.
+
+```jsx
+const config = {
+  signups: { label: "Signups", color: "var(--ds-chart-2)" },
+  churn: { label: "Churn" },   // takes the next ramp slot
+}
+
+<LineChart config={config} data={rows} xAxisKey="week" />
+<BarChart config={config} data={rows} xAxisKey="week" max={300} horizontal />
+<DonutChart config={config} data={rows} valueKey="gb" nameKey="bucket" centerLabel="8.2 GB" />
+```
+
+`recharts` is an optional peer dependency (`>= 3`), like `react`: install it to use these six, and
+nothing if you only consume the CSS. A chart whose shape none of them draws composes `ChartContainer`
+with recharts children directly — import those from `recharts`, not from this package.
+
+## Gauge
+
+A 270° radial gauge for one value: a faint full track arc behind a colored value arc, whose length is
+a `stroke-dasharray` so it redraws without recomputing the arc path. Library-free, like the
+sparkline — the markup below renders it with no React at all.
 
 ```html
-<div class="ds-barchart" role="img" aria-label="Status by region">
-  <div class="ds-barchart__col">
-    <span class="ds-barchart__label">EMEA</span>
-    <div class="ds-barchart__track"><div class="ds-barchart__bar is-success" style="height:80%"></div></div>
-    <span class="ds-barchart__value">80</span>
-  </div>
-  <!-- …more columns… -->
+<div class="ds-gauge" role="img" aria-label="Capacity: 68 of 100">
+  <svg class="ds-gauge-svg" width="180" height="180" viewBox="0 0 180 180" aria-hidden="true">
+    <path class="ds-gauge-track" d="M 24,148 A 82,82 0 1 1 156,148" fill="none" stroke-width="16" />
+    <path class="ds-gauge-value" d="M 24,148 A 82,82 0 1 1 156,148" fill="none" stroke-width="16"
+          stroke-dasharray="263 386" />
+    <text class="ds-gauge-center" x="90" y="86" font-size="43" text-anchor="middle">68</text>
+    <text class="ds-gauge-label" x="90" y="122" text-anchor="middle">Capacity</text>
+  </svg>
 </div>
 ```
 
-**Parts / variants:** `.ds-barchart` (vertical row of columns) holds `.ds-barchart__col`s, each an
-optional `.ds-barchart__label`, a `.ds-barchart__track` wrapping a `.ds-barchart__bar` (height set
-inline), and a tabular `.ds-barchart__value`. The bar takes a status color via `.is-success` /
-`.is-warning` / `.is-danger` / `.is-critical` / `.is-neutral` / `.is-info`. The `--horizontal`
-modifier turns the chart into `label · track · value` rows with the bar `width` as the data dimension.
+**Parts:** `.ds-gauge` (the inline-flex column), `.ds-gauge-svg`, `.ds-gauge-track` (the faint arc),
+`.ds-gauge-value` (the value arc — color set inline, length via `stroke-dasharray`),
+`.ds-gauge-center` (the figure) and `.ds-gauge-label` (the uppercase caption under it). The parts were
+`__svg` / `__track` / `__value` / `__center` / `__label` before 1.0.0-beta.4.
 
-**React** — `<BarChart>`. Props: `data` (a `{ label?, value, status? }[]`; `status` is one of the
-families above), `max` (value mapped to a full-length bar; defaults to the largest), `horizontal`;
-forwards a ref and `<div>` attributes.
+**React** — `<Gauge>`, renamed from 0.11's `GaugeChart` with every prop intact: `value`, `max`
+(default 100), `size` (default 180), `thickness` (default 16), `label`, `color`, `thresholds`
+(`{ at, color }[]`, last match wins) and `format`. It renders `role="img"` with the value and the
+maximum in the accessible name.
 
 ```jsx
-<BarChart data={[
-  { label: "EMEA", value: 80, status: "success" },
-  { label: "AMER", value: 55, status: "warning" },
-  { label: "APAC", value: 30, status: "danger" },
-]} />
-
-<BarChart horizontal max={100} data={[
-  { label: "Design", value: 72 },
-  { label: "Engineering", value: 98 },
-]} />
+<Gauge value={68} label="Capacity" />
+<Gauge value={92} max={120} thresholds={[{ at: 80, color: "var(--ds-warning)" }]}
+       format={(v) => `${v}%`} />
 ```
-
-Live: [../examples/components/bar-chart.html](../examples/components/bar-chart.html)
 
 ## Stat card
 

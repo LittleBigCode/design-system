@@ -20,12 +20,12 @@
       <header class="docs-head">
         <p class="ds-kicker">Components</p>
         <h1 class="ds-title ds-title--xl">Sparkline</h1>
-        <p class="docs-lede">An inline SVG mini line chart — no axes, no grid, no library. The line is a single polyline scaled to fit its box and drawn with currentColor, so it picks up the surrounding text color (accent by default). Add a faint area fill or an end-of-line dot.</p>
+        <p class="docs-lede">An inline SVG mini line chart — no axes, no grid, no library. The line is a single polyline scaled to fit its box and drawn with currentColor, so it picks up the surrounding text color — the wrapper's own default is <code>--ds-chart-1</code>, the first series colour, because a themed accent must not repaint data. Add a faint area fill or an end-of-line dot.</p>
       </header>
 
       <section class="docs-section">
         <h2>Basic line</h2>
-        <p class="docs-note">A bare <code>.ds-sparkline</code> wrapping an inline <code>&lt;svg&gt;</code> with a single <code>__line</code> polyline. Sits inline so it flows next to text.</p>
+        <p class="docs-note">A bare <code>.ds-sparkline</code> wrapping an inline <code>&lt;svg&gt;</code> with a single <code>.ds-sparkline-line</code> polyline. Sits inline so it flows next to text. (The parts were <code>__svg</code> / <code>__line</code> / <code>__area</code> / <code>__dot</code> before 1.0.0-beta.4 — the rename is mechanical, <code>__</code> for <code>-</code>.)</p>
         <section class="ds-example">
           <header class="ds-example__bar">
             <span class="ds-label">currentColor line</span>
@@ -33,15 +33,15 @@
           </header>
           <div class="ds-example__preview ds-example__preview--center">
             <span class="ds-sparkline">
-              <svg class="ds-sparkline__svg" width="120" height="32" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-                <polyline class="ds-sparkline__line" points="2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2" />
+              <svg class="ds-sparkline-svg" width="120" height="32" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                <polyline class="ds-sparkline-line" points="2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2" />
               </svg>
             </span>
           </div>
           <pre class="ds-example__code"><code id="c-basic">&lt;span class="ds-sparkline"&gt;
-  &lt;svg class="ds-sparkline__svg" width="120" height="32"
+  &lt;svg class="ds-sparkline-svg" width="120" height="32"
        viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"&gt;
-    &lt;polyline class="ds-sparkline__line"
+    &lt;polyline class="ds-sparkline-line"
               points="2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2" /&gt;
   &lt;/svg&gt;
 &lt;/span&gt;</code></pre>
@@ -58,21 +58,21 @@
           </header>
           <div class="ds-example__preview ds-example__preview--center">
             <span class="ds-sparkline">
-              <svg class="ds-sparkline__svg" width="120" height="32" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-                <path class="ds-sparkline__area" d="M2,30 L2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2 L118,30 Z" />
-                <polyline class="ds-sparkline__line" points="2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2" />
-                <circle class="ds-sparkline__dot" cx="118" cy="2" r="2" />
+              <svg class="ds-sparkline-svg" width="120" height="32" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                <path class="ds-sparkline-area" d="M2,30 L2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2 L118,30 Z" />
+                <polyline class="ds-sparkline-line" points="2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2" />
+                <circle class="ds-sparkline-dot" cx="118" cy="2" r="2" />
               </svg>
             </span>
           </div>
           <pre class="ds-example__code"><code id="c-area">&lt;span class="ds-sparkline"&gt;
-  &lt;svg class="ds-sparkline__svg" width="120" height="32"
+  &lt;svg class="ds-sparkline-svg" width="120" height="32"
        viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"&gt;
-    &lt;path class="ds-sparkline__area"
+    &lt;path class="ds-sparkline-area"
           d="M2,30 L2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2 L118,30 Z" /&gt;
-    &lt;polyline class="ds-sparkline__line"
+    &lt;polyline class="ds-sparkline-line"
               points="2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2" /&gt;
-    &lt;circle class="ds-sparkline__dot" cx="118" cy="2" r="2" /&gt;
+    &lt;circle class="ds-sparkline-dot" cx="118" cy="2" r="2" /&gt;
   &lt;/svg&gt;
 &lt;/span&gt;</code></pre>
         </section>
@@ -88,15 +88,15 @@
           </header>
           <div class="ds-example__preview ds-example__preview--center">
             <span class="ds-sparkline" style="color: var(--ds-success)">
-              <svg class="ds-sparkline__svg" width="120" height="32" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-                <polyline class="ds-sparkline__line" points="2,28 25.6,22 49.2,24 72.8,14 96.4,10 118,4" />
+              <svg class="ds-sparkline-svg" width="120" height="32" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                <polyline class="ds-sparkline-line" points="2,28 25.6,22 49.2,24 72.8,14 96.4,10 118,4" />
               </svg>
             </span>
           </div>
           <pre class="ds-example__code"><code id="c-color">&lt;span class="ds-sparkline" style="color: var(--ds-success)"&gt;
-  &lt;svg class="ds-sparkline__svg" width="120" height="32"
+  &lt;svg class="ds-sparkline-svg" width="120" height="32"
        viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"&gt;
-    &lt;polyline class="ds-sparkline__line"
+    &lt;polyline class="ds-sparkline-line"
               points="2,28 25.6,22 49.2,24 72.8,14 96.4,10 118,4" /&gt;
   &lt;/svg&gt;
 &lt;/span&gt;</code></pre>
@@ -115,7 +115,11 @@
 
 &lt;Sparkline data={[4, 8, 6, 14, 11, 20]} /&gt;
 &lt;Sparkline data={[4, 8, 6, 14, 11, 20]} fill showDot /&gt;
-&lt;Sparkline data={[2, 5, 4, 9, 11, 16]} stroke="var(--ds-success)" width={160} /&gt;</code></pre>
+&lt;Sparkline data={[2, 5, 4, 9, 11, 16]} stroke="var(--ds-success)" width={160} /&gt;
+
+// A flat series pins to the middle of the box. Before 1.0.0-beta.4 it drew
+// along the floor, which read as a minimum it was not.
+&lt;Sparkline data={[64, 64, 64, 64, 64]} /&gt;</code></pre>
         </section>
       </section>
 
