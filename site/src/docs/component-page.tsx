@@ -42,20 +42,24 @@ function ImportLine({
     ...(anatomy[slug]?.types ?? []).map(({ name }) => `type ${name}`),
   ]
   const statement = `import { ${names.join(", ")} } from "${IMPORT_PATH}"`
-  const shown = names.length
-    ? [
-        ...names.slice(0, SHOWN_EXPORTS),
-        ...(names.length > SHOWN_EXPORTS
-          ? [`+${names.length - SHOWN_EXPORTS}`]
-          : []),
-      ].join(", ")
-    : "…"
+  const shown = [
+    ...names.slice(0, SHOWN_EXPORTS),
+    ...(names.length > SHOWN_EXPORTS
+      ? [`+${names.length - SHOWN_EXPORTS}`]
+      : []),
+  ].join(", ")
 
   React.useEffect(() => {
     if (!copied) return
     const timer = window.setTimeout(() => setCopied(false), 2000)
     return () => window.clearTimeout(timer)
   }, [copied])
+
+  // A stylesheet-only component declares `exports: []` — its classes are the
+  // contract and there is nothing to import from the barrel, so no line at all
+  // beats an empty one. The intro paragraph says so in words. After the hooks,
+  // so the hook count does not depend on it.
+  if (!names.length) return null
 
   return (
     <div className="flex items-center gap-2 border border-border bg-muted/40 px-3 py-2">
@@ -68,9 +72,7 @@ function ImportLine({
         // The line is truncated for reading; what gets copied is the whole
         // statement, which is what the display has always implied.
         onClick={async () => {
-          await navigator.clipboard.writeText(
-            names.length ? statement : IMPORT_PATH
-          )
+          await navigator.clipboard.writeText(statement)
           setCopied(true)
         }}
       >

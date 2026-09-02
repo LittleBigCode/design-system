@@ -1,0 +1,241 @@
+/* ============================================================================
+   Bubble — .ds-bubble
+   ----------------------------------------------------------------------------
+   The speech-bubble surface a Message wraps around its text. Seven variants,
+   all keyed off `data-variant` on the root so the cva() call in bubble.tsx only
+   has to carry the variant names.
+
+   Three things are resolved on the way in rather than carried:
+
+   1. The `gap-2` dedupe exception. The source kept it a literal Tailwind
+      utility on BubbleGroup's own className so tailwind-merge could dedupe it
+      against the "with reactions" demo's `gap-6`. There is no tailwind-merge
+      here, so it becomes a real declaration and the demo's override becomes
+      `.ds-bubble-group--loose`.
+   2. `--secondary` and `--muted` are one token in this palette. Rather than
+      collapse two documented variants into the same look, `secondary` paints
+      the deeper --ds-grey-faint and `muted` keeps --ds-bg-alt — the same
+      primitive-as-fill move skeleton.css already makes.
+   3. `tinted` was `oklch(from var(--primary) 0.93 calc(c * 0.4) h)`, a relative
+      colour derived from shadcn's brand hue. Off this repo's near-neutral
+      --ds-ink that computes to a grey indistinguishable from `muted`, so it
+      reads --ds-accent-bg instead: the brand tint the variant name promises,
+      and a token the dark theme already flips.
+
+   One source rule is dropped rather than remapped: the dark-only `outline`
+   hover fill read shadcn's `--input`, which collapses onto --ds-rule here, and
+   --ds-rule in the dark theme (#2c2d31) is fainter than the --ds-bg-alt the
+   base rule already paints — the remap would have made the hover disappear.
+   ============================================================================ */
+.ds-bubble-group {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--ds-space-2);
+}
+.ds-bubble-group--loose {
+  gap: var(--ds-space-6);
+}
+
+.ds-bubble {
+  position: relative;
+  display: flex;
+  width: fit-content;
+  max-width: 80%;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+[data-slot="message"][data-align="end"] .ds-bubble {
+  align-self: flex-end;
+}
+.ds-bubble[data-align="end"] {
+  align-self: flex-end;
+}
+.ds-bubble[data-variant="ghost"] {
+  max-width: 100%;
+}
+
+/* --ds-bg, not --ds-on-accent, for text on the ink fill. --ds-on-accent is
+   pinned to --ds-blanc and the dark theme does not flip it, so on dark's
+   near-white --ds-ink it renders white on white — the same defect that reddens
+   .ds-button--primary and .ds-segmented__item.is-active in dark (issue #15).
+   --ds-bg is the token that inverts with the theme, which is what "the colour
+   that contrasts with the ink" actually means. */
+.ds-bubble[data-variant="default"] > [data-slot="bubble-content"] {
+  background-color: var(--ds-ink);
+  color: var(--ds-bg);
+}
+.ds-bubble[data-variant="default"]
+  > [data-slot="bubble-content"]:is(button, a):hover {
+  background-color: color-mix(in oklab, var(--ds-ink) 80%, transparent);
+}
+
+.ds-bubble[data-variant="secondary"] > [data-slot="bubble-content"] {
+  background-color: var(--ds-grey-faint);
+  color: var(--ds-ink);
+}
+.ds-bubble[data-variant="secondary"]
+  > [data-slot="bubble-content"]:is(button, a):hover {
+  background-color: color-mix(
+    in oklch,
+    var(--ds-grey-faint),
+    var(--ds-ink) 5%
+  );
+}
+
+.ds-bubble[data-variant="muted"] > [data-slot="bubble-content"] {
+  background-color: var(--ds-bg-alt);
+}
+.ds-bubble[data-variant="muted"]
+  > [data-slot="bubble-content"]:is(button, a):hover {
+  background-color: color-mix(in oklch, var(--ds-bg-alt), var(--ds-ink) 5%);
+}
+
+.ds-bubble[data-variant="tinted"] > [data-slot="bubble-content"] {
+  background-color: var(--ds-accent-bg);
+  color: var(--ds-ink);
+}
+.ds-bubble[data-variant="tinted"]
+  > [data-slot="bubble-content"]:is(button, a):hover {
+  background-color: color-mix(in oklab, var(--ds-accent) 16%, transparent);
+}
+
+.ds-bubble[data-variant="outline"] > [data-slot="bubble-content"] {
+  border-color: var(--ds-rule);
+  background-color: var(--ds-bg);
+}
+.ds-bubble[data-variant="outline"]
+  > [data-slot="bubble-content"]:is(button, a):hover {
+  background-color: var(--ds-bg-alt);
+  color: var(--ds-ink);
+}
+
+.ds-bubble[data-variant="ghost"] {
+  border-style: none;
+}
+.ds-bubble[data-variant="ghost"] > [data-slot="bubble-content"] {
+  border-radius: 0;
+  background-color: transparent;
+  padding: 0;
+}
+.ds-bubble[data-variant="ghost"]
+  > [data-slot="bubble-content"]:is(button, a):hover {
+  background-color: var(--ds-bg-alt);
+  color: var(--ds-ink);
+}
+/* The source keyed this to `.dark` alone; this repo's dark theme also answers
+   to [data-theme="dark"] and :root.dark-theme (css/themes/dark.css), and the
+   docs site uses the attribute — so on `.dark` only it never painted. */
+[data-theme="dark"]
+  .ds-bubble[data-variant="ghost"]
+  > [data-slot="bubble-content"]:is(button, a):hover,
+.dark
+  .ds-bubble[data-variant="ghost"]
+  > [data-slot="bubble-content"]:is(button, a):hover,
+:root.dark-theme
+  .ds-bubble[data-variant="ghost"]
+  > [data-slot="bubble-content"]:is(button, a):hover {
+  background-color: color-mix(in oklab, var(--ds-bg-alt) 50%, transparent);
+}
+
+.ds-bubble[data-variant="destructive"] > [data-slot="bubble-content"] {
+  background-color: color-mix(in oklab, var(--ds-danger) 10%, transparent);
+  color: var(--ds-danger);
+}
+.ds-bubble[data-variant="destructive"]
+  > [data-slot="bubble-content"]:is(button, a):hover {
+  background-color: color-mix(in oklab, var(--ds-danger) 20%, transparent);
+}
+[data-theme="dark"]
+  .ds-bubble[data-variant="destructive"]
+  > [data-slot="bubble-content"],
+.dark .ds-bubble[data-variant="destructive"] > [data-slot="bubble-content"],
+:root.dark-theme
+  .ds-bubble[data-variant="destructive"]
+  > [data-slot="bubble-content"] {
+  background-color: color-mix(in oklab, var(--ds-danger) 20%, transparent);
+}
+[data-theme="dark"]
+  .ds-bubble[data-variant="destructive"]
+  > [data-slot="bubble-content"]:is(button, a):hover,
+.dark
+  .ds-bubble[data-variant="destructive"]
+  > [data-slot="bubble-content"]:is(button, a):hover,
+:root.dark-theme
+  .ds-bubble[data-variant="destructive"]
+  > [data-slot="bubble-content"]:is(button, a):hover {
+  background-color: color-mix(in oklab, var(--ds-danger) 30%, transparent);
+}
+
+.ds-bubble-content {
+  width: fit-content;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 0;
+  border: 1px solid transparent;
+  padding-inline: 1rem;
+  padding-block: 0.75rem;
+  font-size: var(--ds-text-base);
+  line-height: 1.625;
+  overflow-wrap: break-word;
+}
+.ds-bubble[data-align="end"] > .ds-bubble-content {
+  align-self: flex-end;
+}
+.ds-bubble-content button {
+  text-align: start;
+}
+.ds-bubble-content :is(button, a) {
+  transition:
+    color var(--ds-transition),
+    background-color var(--ds-transition),
+    border-color var(--ds-transition);
+  outline: none;
+}
+/* Charte focus convention: a 2px outline on --ds-focus-ring, inset so it does
+   not add to the bubble's box. The source's tinted ring plus 2px glow is the
+   shadcn convention, not this one. */
+.ds-bubble-content :is(button, a):focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: -2px;
+}
+
+.ds-bubble-reactions {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  width: fit-content;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  border-radius: 0;
+  background-color: var(--ds-bg-alt);
+  padding-inline: 0.5rem;
+  padding-block: 0.125rem;
+  font-size: var(--ds-text-base);
+  line-height: 1.25rem;
+  /* Charte conformance: no drop shadows. The source used a 3px shadow in the
+     surface colour to punch the chip out of the bubble beneath it; a 3px solid
+     border in the same colour does the same job with a rule. */
+  border: 3px solid var(--ds-surface);
+}
+.ds-bubble-reactions:has(button) {
+  padding: 0;
+}
+.ds-bubble-reactions[data-side="top"] {
+  top: 0;
+  translate: 0 -75%;
+}
+.ds-bubble-reactions[data-side="bottom"] {
+  bottom: 0;
+  translate: 0 75%;
+}
+.ds-bubble-reactions[data-align="start"] {
+  inset-inline-start: 0.75rem;
+}
+.ds-bubble-reactions[data-align="end"] {
+  inset-inline-end: 0.75rem;
+}

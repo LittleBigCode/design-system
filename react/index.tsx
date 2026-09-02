@@ -496,6 +496,24 @@ export * from "./components/autocomplete.js";
 export * from "./components/speed-dial.js";
 export * from "./components/hover-card.js";
 
+/* ---- Batch 2 — net-new content and media (1.0.0-beta.2) -----------------
+   `message-scroller` and `resizable` are stylesheet-only: their bindings wrap
+   @shadcn/react and react-resizable-panels, and neither dependency is
+   acquired. Their class contract is in css/components/, documented there. */
+export * from "./components/separator.js";
+export * from "./components/aspect-ratio.js";
+export * from "./components/masonry.js";
+export * from "./components/scroll-area.js";
+export * from "./components/item.js";
+export * from "./components/marker.js";
+export * from "./components/message.js";
+export * from "./components/bubble.js";
+export * from "./components/attachment.js";
+export * from "./components/snippet.js";
+export * from "./components/qr-code.js";
+export * from "./components/toc.js";
+export * from "./components/theme-switcher.js";
+
 /* Types several modules re-declare. Naming the canonical module here is what
    keeps `export *` unambiguous. */
 export type { DateLike } from "./components/DatePicker.js";

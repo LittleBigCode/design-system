@@ -22,6 +22,10 @@ export type ComponentDoc = {
    * them. Required rather than derived: an incumbent's export name does not
    * follow from its slug — `data-table` documents `DataGrid` — and the anatomy
    * extractor only finds parts in components that compose from children.
+   *
+   * An empty array means stylesheet-only — the component's `.ds-*` classes are
+   * its whole contract and no binding ships, so the page prints no import line.
+   * `resizable` and `message-scroller` are the two.
    */
   exports?: string[]
   /**
@@ -527,6 +531,184 @@ export const COMPONENTS: ComponentDoc[] = [
       },
     ],
   },
+  {
+    slug: "item",
+    name: "Item",
+    category: "Data display",
+    exports: [
+      "Item",
+      "ItemMedia",
+      "ItemContent",
+      "ItemActions",
+      "ItemGroup",
+      "ItemSeparator",
+      "ItemTitle",
+      "ItemDescription",
+      "ItemHeader",
+      "ItemFooter",
+    ],
+    description:
+      "A list row with media, content and actions slots — lighter than a Card for repeated rows.",
+    intro: [
+      "Item is the repeated row: media, content and actions in one horizontal band, at three densities. Reach for it for lists of files, members, settings or results — anywhere the same shape repeats and a `Card` per row would be too much furniture. A region that owns the page rather than repeating inside it is still a `Card`.",
+      'ItemGroup is deliberately not a `role="list"`: a list may own only `listitem` children, and Item is polymorphic, so the group cannot assert that role for rows whose element it does not control — asserting it anyway is what produced a critical `aria-required-children` finding in axe. When list semantics matter, own the markup: `role="list"` on the group and `role="listitem"` on each row.',
+    ],
+    examples: [
+      {
+        demo: "item/variants",
+        title: "Variants",
+        description:
+          "Three surfaces: transparent, bordered and tinted. All three keep the same padding, so a list can mix them without jumping.",
+      },
+      {
+        demo: "item/with-media",
+        title: "Media and actions",
+        description:
+          "`ItemMedia` top-aligns itself once the row has a description, keeping icon and title on one line however long the description runs.",
+      },
+      {
+        demo: "item/sizes",
+        title: "Density, header and footer",
+        description:
+          "`ItemGroup` tightens its own gap when it contains `sm`/`xs` rows — density follows the items, with no matching prop on the group.",
+      },
+      {
+        demo: "item/as-link",
+        title: "Navigable rows",
+        description:
+          "`render` swaps the row's `div` for an anchor, which is what switches on the hover wash and the focus ring — both are keyed off the rendered element being an `a`, not off a prop.",
+      },
+    ],
+    parts: {
+      ItemGroup:
+        'A generic container, not a `role="list"` — it cannot vouch for what its polymorphic children render, so the roles are yours to write. It does tighten its own gap when it holds `sm` or `xs` rows, so density follows the items with no matching prop here.',
+      Item: "Polymorphic through `render`. The hover wash and the focus ring are keyed off the rendered element being an anchor, so a plain `div` row stays inert.",
+      ItemMedia:
+        "Top-aligns itself once the row has an `ItemDescription`, keeping icon and title on one line however long the description runs. The `image` variant is the one that sizes and crops.",
+      ItemContent:
+        "Takes the free space; a second `ItemContent` in the same row goes `flex-none`, which is how a trailing meta column keeps its natural width.",
+      ItemTitle:
+        "Uppercase and clamped to one line — a row label, not a heading, so a long name truncates instead of wrapping. Pass your own heading element when the level matters.",
+      ItemHeader:
+        "Full flex-basis, so it takes its own line inside the row's wrap — that is what lets one row carry a header above its content.",
+      ItemFooter: "Mirrors the header: full flex-basis, contents pushed apart.",
+      ItemSeparator:
+        "For inside a row, between header and footer — a `Separator` with its own block margin. The space between rows comes from the gap on `ItemGroup` instead.",
+    },
+  },
+  {
+    slug: "marker",
+    name: "Marker",
+    category: "Data display",
+    exports: [
+      "Marker",
+      "MarkerIcon",
+      "MarkerContent",
+      "markerVariants",
+    ],
+    description: "A small inline badge pairing an icon with a label.",
+    intro: [
+      "Marker is the caption above a group: uppercase, muted, full-width, optionally with a glyph. Reach for it to title a stack of rows, label a section of a form, or divide a feed by day — the small typographic heading that is not a heading element. `Badge` is the inline word of state; `Separator` is the rule with no label.",
+      "The root is full width, so a marker captions whatever follows rather than sitting inline, and the `separator` variant draws its two rules as `::before` and `::after` on that root — the label centres between them with no wrapper markup. Use `render` when the caption should be a real heading element.",
+    ],
+    examples: [
+      {
+        demo: "marker/variants",
+        title: "Variants",
+        description:
+          "`separator` draws rules either side of the label with pseudo-elements; `border` underlines the row instead.",
+      },
+      {
+        demo: "marker/with-icon",
+        title: "With an icon",
+        description:
+          "`MarkerIcon` is `aria-hidden`, so the meaning has to be in `MarkerContent` — the glyph is decoration.",
+      },
+      {
+        demo: "marker/section-labels",
+        title: "Section labels",
+        description:
+          "The `border` variant as the title of a settings group: the rule spans the full row, so it reads as the section boundary and the group needs no `Separator` of its own.",
+      },
+      {
+        demo: "marker/day-divider",
+        title: "Dividing a feed",
+        description:
+          "The `separator` variant between groups of a feed. Its rules flex into whatever the label leaves, so one marker centres a short day and a long date alike.",
+      },
+    ],
+    parts: {
+      Marker:
+        "Full width, and the owner of the pseudo-element rules the `separator` variant draws — the label only centres while the marker has its own line.",
+      MarkerIcon:
+        "`aria-hidden` and fixed at 1rem square: decoration. Whatever it means has to be in MarkerContent as well.",
+      MarkerContent:
+        "Stops flexing under the `separator` variant so the rules take the remaining width, and wraps rather than truncating.",
+    },
+  },
+  {
+    slug: "snippet",
+    name: "Snippet",
+    category: "Data display",
+    exports: [
+      "Snippet",
+    ],
+    description:
+      "A one-line copyable command. Shares Code Block's copy affordance rather than restating it.",
+    intro: [
+      "Snippet is the one-line copyable value: an install command, an API key, a connection string. Reach for it wherever the reader's next action is `copy this`. A multi-line sample belongs in `Code Block`, whose copy button this component reuses rather than restating — landing Snippet is what turned that button into a real export, `CodeBlockCopyButton`, instead of markup baked inside `CodeBlock`.",
+      "`value` is what reaches the clipboard and `children` is what renders, so a secret can show obscured while the full string still copies. The root is an inline flex box capped at the width it is given, so it sits inside a table cell or a `dd` without stretching it.",
+    ],
+    examples: [
+      {
+        demo: "snippet/basic",
+        title: "Basic",
+        description:
+          "With no `children`, `value` is both what shows and what copies — the common case for an install line.",
+      },
+      {
+        demo: "snippet/in-context",
+        title: "Obscured secret",
+        description:
+          "Where `children` earns its keep: the key renders masked in a record summary while `value` keeps the full string that reaches the clipboard.",
+      },
+    ],
+  },
+  {
+    slug: "qr-code",
+    name: "QR Code",
+    category: "Data display",
+    exports: [
+      "QrCode",
+      "type QrErrorCorrectionLevel",
+    ],
+    description:
+      "Renders a QR code as inline SVG from a hand-rolled byte-mode encoder — no dependency, no network, no canvas. Versions 1-10, all four correction levels.",
+    intro: [
+      "QR Code turns a string into a scannable inline SVG — a URL on a printed page, an `otpauth://` secret for two-factor enrolment, a token on a kiosk screen. Everything happens locally: no image service, no canvas, no network round trip, and nothing to configure but `value`.",
+      "The encoder is hand-rolled byte mode, versions 1 to 10, so the ceiling is 271 bytes at level L. Modules are fixed black on a white quiet zone rather than themed — a code has to hold its contrast to scan, which is the one deliberate exception to the token rule in this package. A payload over capacity renders a dashed error box instead of throwing.",
+    ],
+    examples: [
+      {
+        demo: "qr-code/basic",
+        title: "Basic",
+        description:
+          "`value` is effectively the whole API — the code is square, `size` is its rendered width in px, and the quiet zone is drawn inside that box.",
+      },
+      {
+        demo: "qr-code/levels",
+        title: "Correction levels",
+        description:
+          "Higher correction survives more damage — a logo overlay, a torn corner — but holds less data: L 271 bytes down to H 119.",
+      },
+      {
+        demo: "qr-code/in-card",
+        title: "Scan or type",
+        description:
+          "The two-factor shape: the same secret as a code and as a `Snippet`, since a reader on the device showing the code cannot scan their own screen. The quiet zone stays white on dark, which is what keeps it scannable.",
+      },
+    ],
+  },
   /* -- Navigation ---------------------------------------------------------- */
   {
     slug: "command",
@@ -712,6 +894,288 @@ export const COMPONENTS: ComponentDoc[] = [
           "`sublabel` carrying row and column counts, so the tab says what is behind it.",
       },
     ],
+  },
+  {
+    slug: "toc",
+    name: "Toc",
+    category: "Navigation",
+    exports: [
+      "Toc",
+      "TocLabel",
+      "TocList",
+      "TocItem",
+      "TocLink",
+    ],
+    description:
+      "The in-page anchor rail — a sticky list of the sections on the current page.",
+    intro: [
+      "Toc is the rail that lists the headings of the page you are already on, so a long document can be skimmed and re-entered anywhere. Reach for it for documentation, articles and reference pages — content read in pieces. It navigates within one page, which is what separates it from `Breadcrumb` (where the page sits) and `Sidebar` (where else you can go).",
+      "It is presentation only: no scroll-spy, no heading collection, no state. You pass the sections and mark the reader's own with `current` on the link, which writes `aria-current` and lights that segment — so the rail works the same whether the headings come from MDX frontmatter, an intersection observer or a hand-written array. The root is sticky by default; `.ds-toc--static` opts out.",
+    ],
+    examples: [
+      {
+        demo: "toc/basic",
+        title: "Basic",
+        description:
+          'The root is a `<nav>` labelled "On this page", so it lands in the landmark list; `TocLabel` is the visible echo of that name. Each link pulls its own left border back one pixel over the list\'s rail, so hovering lights a segment instead of drawing a second line beside it.',
+      },
+      {
+        demo: "toc/current-section",
+        title: "Current section",
+        description:
+          "No scroll-spy is built in — the component holds no state. Pass `current` on the active link: it writes `aria-current=\"location\"` and adds `.ds-toc-link--current`, which is the source's `border-foreground text-foreground` className override resolved into a class.",
+      },
+      {
+        demo: "toc/nested",
+        title: "Nested sections",
+        description:
+          "`level` is depth in the list, not heading rank — 1 is a section, 2 a subsection. It indents the link's text while leaving its border on the rail, so depth reads as one line with steps rather than a second, indented rail.",
+      },
+      {
+        demo: "toc/page-rail",
+        title: "Beside the article",
+        description:
+          "The placement the component is shaped for: a fixed-width rail next to the prose. This is the one example that keeps the root's default stickiness — the others add `.ds-toc--static`, since a preview that does not scroll has nothing to stick to.",
+      },
+    ],
+    parts: {
+      Toc: "A `<nav>` labelled “On this page”, so it reaches the landmark list without any markup of yours; `TocLabel` is the visible echo of that name, not its source. Sticky by default, which needs a scrolling ancestor to mean anything — add `.ds-toc--static` where there is none.",
+      TocList:
+        "Draws the rail itself — the continuous inline-start border belongs to the list, and each link only borrows the segment beside it. `.ds-toc-list--tight` is the closer spacing an inline table of contents wants.",
+      TocItem:
+        "`level` writes `data-level`, and toc.css indents the link from there (`[data-level=\"2\"] .ds-toc-link`). Styling depth on the item instead would move the border off the rail.",
+      TocLink:
+        "Pulls its own border back one pixel over the list's, so hovering or marking a link lights that segment of the rail rather than drawing a second line beside it. `current` is the prop for the reader's own section — it carries both `aria-current` and the lit style.",
+    },
+  },
+  /* -- Layout -------------------------------------------------------------- */
+  {
+    slug: "aspect-ratio",
+    name: "Aspect Ratio",
+    category: "Layout",
+    exports: [
+      "AspectRatio",
+    ],
+    description: "Constrains content to a fixed width-to-height ratio.",
+    intro: [
+      "Aspect Ratio holds a box at a fixed shape while its width comes from the layout around it — thumbnails, card covers, video frames, map tiles. Reach for it whenever the height should be derived from the width instead of guessed, so nothing reflows as an image or an embed loads.",
+      "`ratio` is written to a `--ratio` custom property that `.ds-aspect-ratio` reads through `aspect-ratio: var(--ratio)`, so any number works and there is no list of supported ratios to extend. The box owns the height and is `relative`, which is why children can fill it and why an overlay only needs `absolute` — no extra positioning wrapper.",
+    ],
+    examples: [
+      {
+        demo: "aspect-ratio/basic",
+        title: "Basic",
+        description:
+          "`ratio` takes the expression, not a string — `16 / 9` reaches the custom property as `1.7778`, so any number works.",
+      },
+      {
+        demo: "aspect-ratio/ratios",
+        title: "Common ratios",
+        description:
+          "The box owns the height, so children can be `size-full` and stop caring about it. Each tile takes its width from the grid, and the ratio does the rest.",
+      },
+      {
+        demo: "aspect-ratio/card-cover",
+        title: "Card cover",
+        description:
+          "The media shape at the top of a card: `object-cover` on a `size-full` image fills the box whatever the file's own dimensions are, and the text below never shifts while it loads. The card takes `pt-0` because the cover is wrapped rather than a direct `img` child.",
+      },
+      {
+        demo: "aspect-ratio/overlay",
+        title: "Overlaid caption",
+        description:
+          "The root is already `relative`, so a caption band is `absolute inset-x-0 bottom-0` and nothing else. The band is a solid surface rather than a faded one — text over media needs its own background to stay readable.",
+      },
+    ],
+  },
+  {
+    slug: "separator",
+    name: "Separator",
+    category: "Layout",
+    exports: [
+      "Separator",
+    ],
+    description:
+      "A rule between content. Base UI inverts the orientation semantics — a horizontal group takes vertical separators.",
+    intro: [
+      "Separator is the rule between things that are already grouped: a heading from its body, one card section from the next, items in a meta row. Reach for it when whitespace alone stops reading as a boundary — when the boundary belongs to a container instead, that container's own `border` is cheaper and cannot fall out of step with it.",
+      "`orientation` names the rule's own axis, not the group's, so a row of items is divided by `orientation=\"vertical\"` — the opposite of the container you are thinking about. It ships no margins at all: spacing is the caller's job, which is what lets the same component sit flush inside a card and spaced out between paragraphs. `.ds-separator--auto` is the one modifier: it drops the fill on the cross axis, for a rule that sizes itself to a button group rather than to its container.",
+    ],
+    examples: [
+      {
+        demo: "separator/basic",
+        title: "Basic",
+        description:
+          "Horizontal is the default: full width, one pixel tall. The `my-4` is on the separator here because nothing else in this block owns the gap.",
+      },
+      {
+        demo: "separator/vertical",
+        title: "Between inline items",
+        description:
+          "A vertical rule sizes itself with `self-stretch`, so the flex parent needs a height — `items-center` alone collapses it to zero and it reads as missing.",
+      },
+      {
+        demo: "separator/labelled",
+        title: "Labelled divider",
+        description:
+          "The `or` divider, without a second component: the rule is positioned `absolute top-1/2` inside a `relative` row and the label sits over it on a solid `bg-background`, which is what breaks the line rather than two half-width rules that never quite meet.",
+      },
+      {
+        demo: "separator/in-a-card",
+        title: "Card sections",
+        description:
+          "Edge-to-edge inside a padded container: the padding lives on CardHeader and CardContent, so a separator dropped between them as a direct Card child spans the full width with no negative margins.",
+      },
+    ],
+  },
+  {
+    slug: "scroll-area",
+    name: "Scroll Area",
+    category: "Layout",
+    exports: [
+      "ScrollArea",
+      "ScrollBar",
+    ],
+    description: "A scrollable region with styled, overlay scrollbars.",
+    intro: [
+      "Scroll Area is the bounded scrolling region: a commit list, a group of options, a long block of terms that has to live inside a fixed height instead of stretching the page. Reach for it when the content is unbounded but the layout is not — a dialog body, a sidebar tree, a command palette.",
+      "The root needs a height to scroll inside, from a class or from a flex parent, and with no cap it simply grows and the component looks absent. Children render into a viewport, so padding belongs on a wrapper inside the root; the scrollbar overlays instead of taking layout width, and Base UI gives that viewport a `tabIndex` of its own once it overflows, so keyboard users reach it without help.",
+    ],
+    examples: [
+      {
+        demo: "scroll-area/basic",
+        title: "Basic",
+        description:
+          "The everyday shape: a height on the root, a padded wrapper inside it. The bar overlays the content rather than reserving a gutter, so the rows keep their full width.",
+      },
+      {
+        demo: "scroll-area/with-headings",
+        title: "Grouped content",
+        description:
+          "Sticky-free grouping for a long list of options. `ScrollArea` renders only a vertical scrollbar today — horizontal overflow still scrolls, but without a styled bar, so keep the content in one column.",
+      },
+      {
+        demo: "scroll-area/in-a-dialog",
+        title: "Dialog body",
+        description:
+          "Where the height comes from the surface around it: capping the body keeps the dialog's header and footer on screen while the terms scroll between them.",
+      },
+    ],
+    parts: {
+      ScrollArea:
+        "Takes the height cap and the border. Its children land in an internal viewport, so padding goes on a wrapper inside rather than here — padding on the root would sit outside the scrolling box.",
+      ScrollBar:
+        "Rendered by ScrollArea itself, vertical only. It is exported for a custom bar, but the root does not accept one in its place today, so a second orientation means composing Base UI's primitive directly.",
+    },
+  },
+  {
+    slug: "resizable",
+    name: "Resizable",
+    category: "Layout",
+    exports: [],
+    description:
+      "Panel groups split by draggable handles. Stylesheet only — the drag needs a binding this package does not ship.",
+    intro: [
+      "Resizable splits a region into panes the reader can drag: an editor beside its preview, a file tree beside a document, a console under both. Reach for it when the split is the user's call — when it is the layout's, a grid is simpler and has no drag state to keep.",
+      "**This one is CSS without a React binding.** The source component wraps `react-resizable-panels`, and that dependency is not acquired — the narrow dep bought a drag loop and nothing else the system needs to own. So `.ds-resizable-panel-group`, `.ds-resizable-handle` and `.ds-resizable-handle-grip` ship, and any binding that renders them gets the look: a 1px rule with a 4px grab target over it, `aria-orientation` on the group choosing the axis and on the handle choosing the rule's own. What the stylesheet cannot supply is the pointer maths, the keyboard resize and the persisted layout.",
+    ],
+    examples: [
+      {
+        demo: "resizable/basic",
+        title: "The class contract",
+        description:
+          "The markup a binding has to produce, with the split fixed rather than draggable. The handle is `.ds-resizable-handle` — one pixel of visible rule, four pixels of pointer target from its `::after`, and `withHandle`'s grip as a child. `tabIndex={0}` on each pane's content is what keeps clipped content keyboard-reachable once a real binding is scrolling it.",
+      },
+    ],
+  },
+  {
+    slug: "masonry",
+    name: "Masonry",
+    category: "Layout",
+    exports: [
+      "Masonry",
+    ],
+    description:
+      "A multi-column layout that balances items of uneven height, via CSS columns rather than a JS measurement pass.",
+    intro: [
+      "Masonry packs children of uneven height into balanced columns — the pinboard layout a plain grid cannot produce without leaving gaps under the short items. Reach for it when the children are self-contained tiles (cards, images, notes) and reading order across columns does not matter.",
+      "It is CSS multi-column underneath, not a JS measurement pass: `columns` becomes a `--columns` custom property, so any integer works, and items flow down each column in source order — the first children fill the left column rather than the top row. Each child gets `break-inside-avoid`, so a tile never splits across two columns.",
+    ],
+    examples: [
+      {
+        demo: "masonry/basic",
+        title: "Basic",
+        description:
+          "Uneven blocks balancing into three columns. The numbering makes the column-first flow visible — item 2 sits below item 1, not beside it.",
+      },
+      {
+        demo: "masonry/with-cards",
+        title: "Card wall",
+        description:
+          "A wall of cards with bodies of different lengths — the case columns exist for, where a plain grid would leave ragged gaps under the short ones.",
+      },
+      {
+        demo: "masonry/gallery",
+        title: "Media gallery",
+        description:
+          "Mixed-ratio media tiles: each `AspectRatio` child sizes itself, so portrait and landscape frames interleave without a row grid forcing them to share a height.",
+      },
+    ],
+    parts: {
+      Masonry:
+        "Spacing lives on the children, applied by masonry.css as `.ds-masonry > *` — a bottom margin plus `break-inside: avoid`. A child carrying its own margin fights that rhythm, and source order flows down columns, not across rows.",
+    },
+  },
+  {
+    slug: "theme-switcher",
+    name: "Theme Switcher",
+    category: "Layout",
+    exports: [
+      "ThemeSwitcher",
+      "type ThemeSwitcherMode",
+    ],
+    description:
+      "A light/dark/system toggle, promoted from the docs app's own theme-toggle. Fully controlled — the consumer owns the theme hook.",
+    intro: [
+      "ThemeSwitcher is the light/dark/system control for wherever the theme choice lives — an app header, a settings page, a preferences dialog. Three forms share one contract: `segmented` (a three-cell `Segmented` row), `cycle` (one icon button that advances through the modes) and `dropdown` (an icon trigger opening a radio menu), so the footprint fits the placement without changing the wiring.",
+      "It is fully controlled: `value` and `onValueChange` are required, and storage, media-query sync and system resolution stay in the consumer's `useTheme()`-style hook — app wiring is not the design system's job. `Segmented` already treats a click on the pressed cell as a no-op, which is what a theme wants: a theme is never \"none\".",
+    ],
+    examples: [
+      {
+        demo: "theme-switcher/basic",
+        title: "Basic",
+        description:
+          "Fully controlled, so the demo holds its own state rather than touching the real app theme.",
+      },
+      {
+        demo: "theme-switcher/cycle",
+        title: "Compact cycle",
+        description:
+          "One 36px button for headers too tight for three cells. The icon shows the current mode; the `aria-label` announces the action, since a click advances to the next mode.",
+      },
+      {
+        demo: "theme-switcher/dropdown",
+        title: "Dropdown",
+        description:
+          "The discoverable compact form: an icon-and-caret trigger opening a radio menu on `.ds-menu`, so every mode is visible and one click away. The source built this on its own `dropdown-menu`, which is held — the rows are Base UI `Menu` radio items in this repo's menu vocabulary, the same re-wiring batch 1's menubar made.",
+      },
+      {
+        demo: "theme-switcher/in-toolbar",
+        title: "In a toolbar",
+        description:
+          "The typical chrome placement. The switcher sizes itself, so it sits flush beside a `sm` `IconButton` with no sizing props of its own.",
+      },
+      {
+        demo: "theme-switcher/settings-row",
+        title: "Settings row",
+        description:
+          'The settings-page placement: the switcher drops into a `Panel` row like any label-and-control pair. Its own group carries `aria-label="Theme"`, so the visible text needs no `htmlFor` wiring.',
+      },
+    ],
+    parts: {
+      ThemeSwitcher:
+        'Built on `Segmented` for the default variant, `IconButton` for `cycle` and Base UI `Menu` for `dropdown` — the source\'s own toggle-group and dropdown-menu are both held. The segmented cells carry a visible word beside the glyph rather than an icon-only `aria-label`, since `Segmented` takes a label node; the source\'s sliding indicator goes with the toggle cells it was pitched against.',
+    },
   },
   /* -- Disclosure ---------------------------------------------------------- */
   {
@@ -961,6 +1425,196 @@ export const COMPONENTS: ComponentDoc[] = [
           "Both raised through `useToast` against the provider in `main.tsx`.",
       },
     ],
+  },
+  /* -- Conversation -------------------------------------------------------- */
+  {
+    slug: "bubble",
+    name: "Bubble",
+    category: "Conversation",
+    exports: [
+      "BubbleGroup",
+      "Bubble",
+      "BubbleContent",
+      "BubbleReactions",
+      "type BubbleVariant",
+    ],
+    description: "Chat bubbles grouped by author.",
+    intro: [
+      "Bubble is the speech-balloon layer of a conversation: a `BubbleGroup` column of turns, each turn a `Bubble` wrapping one `BubbleContent`. Reach for it when the surface reads as a chat — a support thread, an assistant transcript, a row of suggested replies. For a turn that also needs an author and a timestamp, wrap it in Message rather than adding parts here.",
+      "The variant belongs to the wrapper, not the content: `Bubble` styles its own `BubbleContent` through `*:data-[slot=bubble-content]`. That is how `ghost` strips the padding and the background in one place, and how a bubble rendered as a `button` or an `a` picks up a matching hover state for free.",
+    ],
+    examples: [
+      {
+        demo: "bubble/variants",
+        title: "Variants",
+        description:
+          "The variant lives on `Bubble` and styles `BubbleContent` through `*:data-[slot=bubble-content]`, so the content part takes no variant of its own.",
+      },
+      {
+        demo: "bubble/conversation",
+        title: "A conversation",
+        description:
+          '`align="end"` moves the bubble to the far side with `self-end` — the group stays a plain column, with no per-row wrapper.',
+      },
+      {
+        demo: "bubble/with-reactions",
+        title: "With reactions",
+        description:
+          "Reactions overhang the bubble edge and are ringed in the card colour, so they read as punched through it rather than stacked beside it.",
+      },
+      {
+        demo: "bubble/quick-replies",
+        title: "Quick replies",
+        description:
+          "Suggested answers as tappable bubbles. `BubbleContent` takes a `render` prop, so it becomes a real `button` — and each variant already declares the hover colour that goes with it.",
+      },
+    ],
+    parts: {
+      BubbleGroup:
+        "A plain `gap-2` column: turns place themselves through their own `align`, so there is no per-row wrapper and nothing to justify here.",
+      Bubble:
+        "Owns the variant for the pair and styles `BubbleContent` through `*:data-[slot=bubble-content]` — a content part rendered outside a Bubble comes out unstyled. It also carries `max-w-[80%]`, which `ghost` lifts to full width. Inside a Message it follows the row's `align`, so it needs its own only when it stands outside one.",
+      BubbleContent:
+        "Pass `render` to make the bubble interactive: as a `button` or an `a` it picks up the hover colour its variant declares. Under `ghost` this part loses its padding and background, which is why an assistant-style answer needs no other override.",
+      BubbleReactions:
+        "Overhangs the bubble edge, ringed in `--card` so it reads as punched through it. On a surface that is not card-coloured, match the ring to that surface.",
+    },
+  },
+  {
+    slug: "message",
+    name: "Message",
+    category: "Conversation",
+    exports: [
+      "MessageGroup",
+      "Message",
+      "MessageAvatar",
+      "MessageContent",
+      "MessageHeader",
+      "MessageFooter",
+    ],
+    description: "A conversation row with avatar and content.",
+    intro: [
+      "Message is the row around a bubble: an avatar on one side, a column of content on the other, with an optional header for the author and footer for the timestamp or the read state. Reach for it when a transcript needs author identity or per-turn metadata — a plain `BubbleGroup` is enough when the turns speak for themselves.",
+      "`align` is set once, on the row, and every part follows it: the row reverses its own flex direction, `MessageContent` pushes each slotted child to the far side, and a Bubble inside reads `group-data-[align=end]/message`. No part below takes an alignment prop of its own.",
+    ],
+    examples: [
+      {
+        demo: "message/basic",
+        title: "Basic",
+        description:
+          '`Message` reverses its own flex direction on `align="end"`, so the avatar moves to the trailing side without reordering the markup.',
+      },
+      {
+        demo: "message/with-footer",
+        title: "With a footer",
+        description:
+          "When a footer is present the avatar lifts by 2rem so it stays level with the bubble rather than the timestamp.",
+      },
+      {
+        demo: "message/assistant",
+        title: "Assistant reply",
+        description:
+          "The full-width answer shape: a `ghost` Bubble drops the balloon entirely, and the header and footer lose their `px-4` in step through `group-has-data-[variant=ghost]/message`, so the whole turn keeps one text edge.",
+      },
+      {
+        demo: "message/attachments",
+        title: "With attachments",
+        description:
+          '`MessageContent` is a column, so a bubble, an `AttachmentGroup` and a footer stack inside one turn — and on `align="end"` every slotted child is pushed across, the attachment row included.',
+      },
+    ],
+    parts: {
+      MessageAvatar:
+        "`self-end` so it sits at the bottom of the turn, and it lifts by 2rem when the row contains a `MessageFooter` — it tracks the bubble, not the metadata line.",
+      MessageContent:
+        "The column the rest of the turn sits in. Its direct children that carry a `data-slot` follow the row's `align`, which is why bubbles and attachment rows need no alignment prop.",
+      MessageHeader:
+        "`px-4` lines the author up with the bubble's own text; a `ghost` bubble in the row zeroes it, since ghost content has no padding to match.",
+      MessageFooter:
+        "Mirrors the header, and its presence is what lifts `MessageAvatar` — a footer added late realigns the row rather than sitting under it.",
+    },
+  },
+  {
+    slug: "message-scroller",
+    name: "Message Scroller",
+    category: "Conversation",
+    exports: [],
+    description:
+      "A transcript viewport that keeps itself pinned to the latest message. Stylesheet only — the pinning needs a binding this package does not ship.",
+    intro: [
+      "MessageScroller is the viewport a transcript lives in: it holds the view at the newest message, releases that hold the moment the reader scrolls up, and offers a jump-back button while they are away. Reach for it whenever messages arrive after the first paint — a chat, a streaming answer, a live log — and for a static list Scroll Area is the lighter choice.",
+      "**This one is CSS without a React binding.** The source component wraps `@shadcn/react/message-scroller`, and that dependency is not acquired. So the classes ship and are the whole contract: `.ds-message-scroller` and its viewport, content, item and button parts, keyed off `data-active`, `data-direction` and `data-autoscrolling`. The scrolling, the bottom fade and the jump button's enter and exit transitions are all real here; what needs a binding is the state behind them — when the view is pinned, when the button is active, and preserving scroll position as older messages are prepended.",
+      "The button's own fill is deliberately not in the stylesheet. The source carried it as Tailwind literals precisely so it would lose to the button variant underneath, so `.ds-message-scroller-button` is position and motion only — pair it with `.ds-button`.",
+    ],
+    examples: [
+      {
+        demo: "message-scroller/basic",
+        title: "The class contract",
+        description:
+          "The markup a binding has to produce. The viewport really scrolls and really fades at the bottom — that fade replaces a `scroll-fade-b` Tailwind plugin class the source shipped with no plugin behind it. `--tight` on the content column is the `gap-2` several demos passed, resolved into a modifier rather than carried as a dedupe exception.",
+      },
+    ],
+  },
+  {
+    slug: "attachment",
+    name: "Attachment",
+    category: "Conversation",
+    exports: [
+      "Attachment",
+      "AttachmentGroup",
+      "AttachmentMedia",
+      "AttachmentContent",
+      "AttachmentTitle",
+      "AttachmentDescription",
+      "AttachmentActions",
+      "AttachmentAction",
+      "AttachmentTrigger",
+      "type AttachmentState",
+    ],
+    description:
+      "File metadata display for a message. Not an upload input — see File Upload.",
+    intro: [
+      "Attachment is the chip a file travels in: media thumbnail or icon, name, one line of metadata, and the actions that belong to that file. It only displays — picking files, progress and retry are File Upload's job — so this is what you render for each entry it hands you, in a message, a comment or a review panel.",
+      "Three data attributes on the root drive the whole chip: `size`, `orientation` and `state` are read by every part through `group-data-*`, so no child takes a state prop of its own.",
+    ],
+    examples: [
+      {
+        demo: "attachment/basic",
+        title: "Basic",
+        description:
+          "Padding comes from which slots are present (`has-data-[slot=…]`), so a media-only chip and a full row need no size prop between them.",
+      },
+      {
+        demo: "attachment/states",
+        title: "States and sizes",
+        description:
+          "`state` drives the border and media colour — `idle` goes dashed, `error` turns destructive — and nothing below needs to know which state it is in.",
+      },
+      {
+        demo: "attachment/vertical",
+        title: "Vertical cards",
+        description:
+          "`AttachmentGroup` is a snap-scrolling row with a faded edge, so a long list stays on one line instead of wrapping.",
+      },
+      {
+        demo: "attachment/clickable",
+        title: "Openable cards",
+        description:
+          "`AttachmentTrigger` is an `absolute inset-0` overlay, so the whole card is one hit target and `render` decides whether it is a link or a button. `AttachmentActions` sits a layer above it, which is how remove stays clickable inside a card that is itself a link.",
+      },
+    ],
+    parts: {
+      Attachment:
+        "Owns `state`, `size` and `orientation` as data attributes; every part below reads them through `group-data-*`, so they are set here and nowhere else.",
+      AttachmentMedia:
+        '`variant="image"` expects an `img` child and dims it to 60% while the file is in flight — only `done` and `idle` show the thumbnail in full. The default `icon` variant sizes a bare `svg` for you.',
+      AttachmentTitle:
+        "Truncates to one line, and shimmers while the root is `uploading` or `processing` — progress needs no extra element.",
+      AttachmentTrigger:
+        "An overlay covering the card at `z-10`. `AttachmentActions` is `z-20` so its buttons stay above it; anything else clickable inside the card needs the same lift.",
+      AttachmentGroup:
+        "A snap-scrolling row with faded edges, and `tabIndex={0}` so the list can be scrolled from the keyboard rather than by pointer only.",
+    },
   },
 ]
 
@@ -2634,103 +3288,6 @@ export const PENDING: ComponentDoc[] = [
     },
   },
   {
-    slug: "item",
-    name: "Item",
-    category: "Data display",
-    description:
-      "A list row with media, content and actions slots — lighter than a Card for repeated rows.",
-    intro: [
-      "Item is the repeated row: media, content and actions in one horizontal band, at three densities. Reach for it for lists of files, members, settings or results — anywhere the same shape repeats and a `Card` per row would be too much furniture. A region that owns the page rather than repeating inside it is still a `Card`.",
-      'ItemGroup is deliberately not a `role="list"`: a list may own only `listitem` children, and Item is polymorphic, so the group cannot assert that role for rows whose element it does not control — asserting it anyway is what produced a critical `aria-required-children` finding in axe. When list semantics matter, own the markup: `role="list"` on the group and `role="listitem"` on each row.',
-    ],
-    examples: [
-      {
-        demo: "item/variants",
-        title: "Variants",
-        description:
-          "Three surfaces: transparent, bordered and tinted. All three keep the same padding, so a list can mix them without jumping.",
-      },
-      {
-        demo: "item/with-media",
-        title: "Media and actions",
-        description:
-          "`ItemMedia` top-aligns itself once the row has a description, keeping icon and title on one line however long the description runs.",
-      },
-      {
-        demo: "item/sizes",
-        title: "Density, header and footer",
-        description:
-          "`ItemGroup` tightens its own gap when it contains `sm`/`xs` rows — density follows the items, with no matching prop on the group.",
-      },
-      {
-        demo: "item/as-link",
-        title: "Navigable rows",
-        description:
-          "`render` swaps the row's `div` for an anchor, which is what switches on the hover wash and the focus ring — both are keyed off the rendered element being an `a`, not off a prop.",
-      },
-    ],
-    parts: {
-      ItemGroup:
-        'A generic container, not a `role="list"` — it cannot vouch for what its polymorphic children render, so the roles are yours to write. It does tighten its own gap when it holds `sm` or `xs` rows, so density follows the items with no matching prop here.',
-      Item: "Polymorphic through `render`. The hover wash and the focus ring are keyed off the rendered element being an anchor, so a plain `div` row stays inert.",
-      ItemMedia:
-        "Top-aligns itself once the row has an `ItemDescription`, keeping icon and title on one line however long the description runs. The `image` variant is the one that sizes and crops.",
-      ItemContent:
-        "Takes the free space; a second `ItemContent` in the same row goes `flex-none`, which is how a trailing meta column keeps its natural width.",
-      ItemTitle:
-        "Uppercase and `line-clamp-1` — a row label, not a heading, so a long name truncates instead of wrapping. Pass your own heading element when the level matters.",
-      ItemHeader:
-        "`basis-full`, so it takes its own line inside the row's flex wrap — that is what lets one row carry a header above its content.",
-      ItemFooter: "Mirrors the header: `basis-full` and `justify-between`.",
-      ItemSeparator:
-        "For inside a row, between header and footer. The space between rows comes from the gap on `ItemGroup` instead.",
-    },
-  },
-  {
-    slug: "marker",
-    name: "Marker",
-    category: "Data display",
-    description: "A small inline badge pairing an icon with a label.",
-    intro: [
-      "Marker is the caption above a group: uppercase, muted, full-width, optionally with a glyph. Reach for it to title a stack of rows, label a section of a form, or divide a feed by day — the small typographic heading that is not a heading element. `Badge` is the inline word of state; `Separator` is the rule with no label.",
-      "The root is `w-full`, so a marker captions whatever follows rather than sitting inline, and the `separator` variant draws its two rules as `::before` and `::after` on that root — the label centres between them with no wrapper markup. Use `render` when the caption should be a real heading element.",
-    ],
-    examples: [
-      {
-        demo: "marker/variants",
-        title: "Variants",
-        description:
-          "`separator` draws rules either side of the label with pseudo-elements; `border` underlines the row instead.",
-      },
-      {
-        demo: "marker/with-icon",
-        title: "With an icon",
-        description:
-          "`MarkerIcon` is `aria-hidden`, so the meaning has to be in `MarkerContent` — the glyph is decoration.",
-      },
-      {
-        demo: "marker/section-labels",
-        title: "Section labels",
-        description:
-          "The `border` variant as the title of a settings group: the rule spans the full row, so it reads as the section boundary and the group needs no `Separator` of its own.",
-      },
-      {
-        demo: "marker/day-divider",
-        title: "Dividing a feed",
-        description:
-          "The `separator` variant between groups of a feed. Its rules flex into whatever the label leaves, so one marker centres a short day and a long date alike.",
-      },
-    ],
-    parts: {
-      Marker:
-        "`w-full`, and the owner of the pseudo-element rules the `separator` variant draws — the label only centres while the marker has its own line.",
-      MarkerIcon:
-        "`aria-hidden` and fixed at `size-4`: decoration. Whatever it means has to be in MarkerContent as well.",
-      MarkerContent:
-        "Goes `flex-none` under the `separator` variant so the rules take the remaining width, and wraps rather than truncating.",
-    },
-  },
-  {
     slug: "meter",
     name: "Meter",
     category: "Data display",
@@ -3254,62 +3811,6 @@ export const PENDING: ComponentDoc[] = [
     ],
   },
   {
-    slug: "snippet",
-    name: "Snippet",
-    category: "Data display",
-    description:
-      "A one-line copyable command. Shares Code Block's copy affordance rather than restating it.",
-    intro: [
-      "Snippet is the one-line copyable value: an install command, an API key, a connection string. Reach for it wherever the reader's next action is `copy this`. A multi-line sample belongs in `Code Block`, whose copy button this component reuses rather than restating.",
-      "`value` is what reaches the clipboard and `children` is what renders, so a secret can show obscured while the full string still copies. The root is `inline-flex max-w-full`, so it sits inside a table cell or a `dd` without stretching it.",
-    ],
-    examples: [
-      {
-        demo: "snippet/basic",
-        title: "Basic",
-        description:
-          "With no `children`, `value` is both what shows and what copies — the common case for an install line.",
-      },
-      {
-        demo: "snippet/in-context",
-        title: "Obscured secret",
-        description:
-          "Where `children` earns its keep: the key renders masked in a record summary while `value` keeps the full string that reaches the clipboard.",
-      },
-    ],
-  },
-  {
-    slug: "qr-code",
-    name: "QR Code",
-    category: "Data display",
-    description:
-      "Renders a QR code as inline SVG from a hand-rolled byte-mode encoder — no dependency, no network, no canvas. Versions 1-10, all four correction levels.",
-    intro: [
-      "QR Code turns a string into a scannable inline SVG — a URL on a printed page, an `otpauth://` secret for two-factor enrolment, a token on a kiosk screen. Everything happens locally: no image service, no canvas, no network round trip, and nothing to configure but `value`.",
-      "The encoder is hand-rolled byte mode, versions 1 to 10, so the ceiling is 271 bytes at level L. Modules are fixed black on a white quiet zone rather than themed — a code has to hold its contrast to scan, which is the one deliberate exception to the token rule in this package. A payload over capacity renders a dashed error box instead of throwing.",
-    ],
-    examples: [
-      {
-        demo: "qr-code/basic",
-        title: "Basic",
-        description:
-          "`value` is effectively the whole API — the code is square, `size` is its rendered width in px, and the quiet zone is drawn inside that box.",
-      },
-      {
-        demo: "qr-code/levels",
-        title: "Correction levels",
-        description:
-          "Higher correction survives more damage — a logo overlay, a torn corner — but holds less data: L 271 bytes down to H 119.",
-      },
-      {
-        demo: "qr-code/in-card",
-        title: "Scan or type",
-        description:
-          "The two-factor shape: the same secret as a code and as a `Snippet`, since a reader on the device showing the code cannot scan their own screen. The quiet zone stays white on dark, which is what keeps it scannable.",
-      },
-    ],
-  },
-  {
     slug: "breadcrumb",
     name: "Breadcrumb",
     category: "Navigation",
@@ -3348,52 +3849,6 @@ export const PENDING: ComponentDoc[] = [
         "A presentational list item, hidden from the accessibility tree so the trail reads as words rather than punctuation. Give it children to replace the default caret.",
       BreadcrumbEllipsis:
         "Also `aria-hidden`. Wrapping it in a control — a menu trigger — means the label has to be on that control, or the button reads as unnamed.",
-    },
-  },
-  {
-    slug: "toc",
-    name: "Toc",
-    category: "Navigation",
-    description:
-      "The in-page anchor rail — a sticky list of the sections on the current page.",
-    intro: [
-      "Toc is the rail that lists the headings of the page you are already on, so a long document can be skimmed and re-entered anywhere. Reach for it for documentation, articles and reference pages — content read in pieces. It navigates within one page, which is what separates it from `Breadcrumb` (where the page sits) and `Sidebar` (where else you can go).",
-      "It is presentation only: no scroll-spy, no heading collection, no state. You pass the sections, and you mark the current one with `aria-current` — which means the rail works the same whether the headings come from MDX frontmatter, an intersection observer or a hand-written array. The root is `sticky top-8` by default, so it holds its place while the article scrolls beside it.",
-    ],
-    examples: [
-      {
-        demo: "toc/basic",
-        title: "Basic",
-        description:
-          'The root is a `<nav>` labelled "On this page", so it lands in the landmark list; `TocLabel` is the visible echo of that name. Each link pulls its own border over the list\'s rail with `-ms-px`, so hovering lights a segment instead of drawing a second line.',
-      },
-      {
-        demo: "toc/current-section",
-        title: "Current section",
-        description:
-          "No scroll-spy is built in — the component holds no state. Mark the active entry with `aria-current` and style it with the `aria-[current]:` variant.",
-      },
-      {
-        demo: "toc/nested",
-        title: "Nested sections",
-        description:
-          "`level` is depth in the list, not heading rank — 1 is a section, 2 a subsection. It indents the link's text while leaving its border on the rail, so depth reads as one line with steps rather than a second, indented rail.",
-      },
-      {
-        demo: "toc/page-rail",
-        title: "Beside the article",
-        description:
-          "The placement the component is shaped for: a fixed-width rail next to the prose. This is the one example that keeps the root's default `sticky top-8` — the others pass `static`, since a preview that does not scroll has nothing to stick to.",
-      },
-    ],
-    parts: {
-      Toc: "A `<nav>` labelled “On this page”, so it reaches the landmark list without any markup of yours; `TocLabel` is the visible echo of that name, not its source. Sticky by default, which needs a scrolling ancestor to mean anything.",
-      TocList:
-        "Draws the rail itself (`border-s`) — the continuous line belongs to the list, and each link only borrows the segment beside it.",
-      TocItem:
-        "`level` writes `data-level`, and the indent is applied by TocLink through `group-data-[level=2]/toc-item:`. Styling depth on the item instead would move the border off the rail.",
-      TocLink:
-        "Pulls its own border back over the list's with `-ms-px`, so hovering or marking a link lights that segment of the rail rather than drawing a second line beside it.",
     },
   },
   {
@@ -3500,154 +3955,6 @@ export const PENDING: ComponentDoc[] = [
   },
 
   /* -- Layout ------------------------------------------------------------ */
-  {
-    slug: "aspect-ratio",
-    name: "Aspect Ratio",
-    category: "Layout",
-    description: "Constrains content to a fixed width-to-height ratio.",
-    intro: [
-      "Aspect Ratio holds a box at a fixed shape while its width comes from the layout around it — thumbnails, card covers, video frames, map tiles. Reach for it whenever the height should be derived from the width instead of guessed, so nothing reflows as an image or an embed loads.",
-      "`ratio` is written to a `--ratio` custom property that a plain `aspect-(--ratio)` utility consumes, so any number works and there is no list of supported ratios to extend. The box owns the height and is `relative`, which is why children can be `size-full` and why an overlay only needs `absolute` — no extra positioning wrapper.",
-    ],
-    examples: [
-      {
-        demo: "aspect-ratio/basic",
-        title: "Basic",
-        description:
-          "`ratio` takes the expression, not a string — `16 / 9` reaches the custom property as `1.7778`, so any number works.",
-      },
-      {
-        demo: "aspect-ratio/ratios",
-        title: "Common ratios",
-        description:
-          "The box owns the height, so children can be `size-full` and stop caring about it. Each tile takes its width from the grid, and the ratio does the rest.",
-      },
-      {
-        demo: "aspect-ratio/card-cover",
-        title: "Card cover",
-        description:
-          "The media shape at the top of a card: `object-cover` on a `size-full` image fills the box whatever the file's own dimensions are, and the text below never shifts while it loads. The card takes `pt-0` because the cover is wrapped rather than a direct `img` child.",
-      },
-      {
-        demo: "aspect-ratio/overlay",
-        title: "Overlaid caption",
-        description:
-          "The root is already `relative`, so a caption band is `absolute inset-x-0 bottom-0` and nothing else. The band is a solid surface rather than a faded one — text over media needs its own background to stay readable.",
-      },
-    ],
-  },
-  {
-    slug: "separator",
-    name: "Separator",
-    category: "Layout",
-    description:
-      "A rule between content. Base UI inverts the orientation semantics — a horizontal group takes vertical separators.",
-    intro: [
-      "Separator is the rule between things that are already grouped: a heading from its body, one card section from the next, items in a meta row. Reach for it when whitespace alone stops reading as a boundary — when the boundary belongs to a container instead, that container's own `border` is cheaper and cannot fall out of step with it.",
-      "`orientation` names the rule's own axis, not the group's, so a row of items is divided by `orientation=\"vertical\"` — the opposite of the container you are thinking about. It ships no margins at all: spacing is the caller's job, which is what lets the same component sit flush inside a card and spaced out between paragraphs.",
-    ],
-    examples: [
-      {
-        demo: "separator/basic",
-        title: "Basic",
-        description:
-          "Horizontal is the default: full width, one pixel tall. The `my-4` is on the separator here because nothing else in this block owns the gap.",
-      },
-      {
-        demo: "separator/vertical",
-        title: "Between inline items",
-        description:
-          "A vertical rule sizes itself with `self-stretch`, so the flex parent needs a height — `items-center` alone collapses it to zero and it reads as missing.",
-      },
-      {
-        demo: "separator/labelled",
-        title: "Labelled divider",
-        description:
-          "The `or` divider, without a second component: the rule is positioned `absolute top-1/2` inside a `relative` row and the label sits over it on a solid `bg-background`, which is what breaks the line rather than two half-width rules that never quite meet.",
-      },
-      {
-        demo: "separator/in-a-card",
-        title: "Card sections",
-        description:
-          "Edge-to-edge inside a padded container: the padding lives on CardHeader and CardContent, so a separator dropped between them as a direct Card child spans the full width with no negative margins.",
-      },
-    ],
-  },
-  {
-    slug: "scroll-area",
-    name: "Scroll Area",
-    category: "Layout",
-    description: "A scrollable region with styled, overlay scrollbars.",
-    intro: [
-      "Scroll Area is the bounded scrolling region: a commit list, a group of options, a long block of terms that has to live inside a fixed height instead of stretching the page. Reach for it when the content is unbounded but the layout is not — a dialog body, a sidebar tree, a command palette.",
-      "The root needs a height to scroll inside, from a class or from a flex parent, and with no cap it simply grows and the component looks absent. Children render into a viewport, so padding belongs on a wrapper inside the root; the scrollbar overlays instead of taking layout width, and Base UI gives that viewport a `tabIndex` of its own once it overflows, so keyboard users reach it without help.",
-    ],
-    examples: [
-      {
-        demo: "scroll-area/basic",
-        title: "Basic",
-        description:
-          "The everyday shape: a height on the root, a padded wrapper inside it. The bar overlays the content rather than reserving a gutter, so the rows keep their full width.",
-      },
-      {
-        demo: "scroll-area/with-headings",
-        title: "Grouped content",
-        description:
-          "Sticky-free grouping for a long list of options. `ScrollArea` renders only a vertical scrollbar today — horizontal overflow still scrolls, but without a styled bar, so keep the content in one column.",
-      },
-      {
-        demo: "scroll-area/in-a-dialog",
-        title: "Dialog body",
-        description:
-          "Where the height comes from the surface around it: capping the body keeps the dialog's header and footer on screen while the terms scroll between them.",
-      },
-    ],
-    parts: {
-      ScrollArea:
-        "Takes the height cap and the border. Its children land in an internal viewport, so padding goes on a wrapper inside rather than here — padding on the root would sit outside the scrolling box.",
-      ScrollBar:
-        "Rendered by ScrollArea itself, vertical only. It is exported for a custom bar, but the root does not accept one in its place today, so a second orientation means composing Base UI's primitive directly.",
-    },
-  },
-  {
-    slug: "resizable",
-    name: "Resizable",
-    category: "Layout",
-    description:
-      "Panel groups split by draggable handles, sized as percentages of the group.",
-    intro: [
-      "Resizable splits a region into panes the reader can drag: an editor beside its preview, a file tree beside a document, a console under both. Reach for it when the split is the user's call — when it is the layout's, a grid is simpler and has no drag state to keep.",
-      'Two facts decide how the code reads. The group takes `orientation`, not the `direction` older shadcn snippets pass, and it fills its parent, so it needs a height. Panel sizes are strings in this version: `"35%"` is a third of the group, while a bare `35` means 35 pixels — the unit is not optional. Nothing is persisted for you; `onLayoutChanged` hands you the layout to store and `defaultLayout` takes it back on the next mount.',
-    ],
-    examples: [
-      {
-        demo: "resizable/basic",
-        title: "Basic",
-        description:
-          "The two-pane split. `minSize` is what keeps a pane usable rather than draggable to nothing, and both sizes are percentage strings — a bare number would be read as pixels. The `tabIndex={0}` on each pane's content is deliberate: the library owns the scrolling div around it, so without a focusable descendant a keyboard user cannot reach whatever a drag clipped.",
-      },
-      {
-        demo: "resizable/nested",
-        title: "Nested groups",
-        description:
-          "A panel can hold another group on the opposite axis, which is how an IDE-style three-pane layout is built. Each group tracks its own sizes, so the inner split survives a drag of the outer one.",
-      },
-      {
-        demo: "resizable/collapsible",
-        title: "Collapsible tree",
-        description:
-          "`collapsible` snaps a pane to its `collapsedSize` once it is dragged under `minSize`, which leaves a rail you can drag back open. `onResize` reports the new size, so the pane's own content can drop to icons at the rail width.",
-      },
-    ],
-    parts: {
-      ResizablePanelGroup:
-        "Owns the axis (`orientation`) and fills its parent, so give it a height — with none, the whole group collapses. `defaultLayout` plus `onLayoutChanged` is how a layout is persisted; there is no auto-save.",
-      ResizablePanel:
-        'Sizes are percentage strings (`"35%"`); bare numbers are pixels. `className` lands on an inner div the library owns, and that div does the scrolling — so content that can clip needs a focusable descendant (`tabIndex={0}`) to stay keyboard-reachable.',
-      ResizableHandle:
-        "Must be a direct child of the group, between two panels. `withHandle` draws the grip; without it the hit area is still there, and it is a one-pixel rule the pointer has to find.",
-    },
-  },
   {
     slug: "carousel",
     name: "Carousel",
@@ -3777,41 +4084,6 @@ export const PENDING: ComponentDoc[] = [
     },
   },
   {
-    slug: "masonry",
-    name: "Masonry",
-    category: "Layout",
-    description:
-      "A multi-column layout that balances items of uneven height, via CSS columns rather than a JS measurement pass.",
-    intro: [
-      "Masonry packs children of uneven height into balanced columns — the pinboard layout a plain grid cannot produce without leaving gaps under the short items. Reach for it when the children are self-contained tiles (cards, images, notes) and reading order across columns does not matter.",
-      "It is CSS multi-column underneath, not a JS measurement pass: `columns` becomes a `--columns` custom property, so any integer works, and items flow down each column in source order — the first children fill the left column rather than the top row. Each child gets `break-inside-avoid`, so a tile never splits across two columns.",
-    ],
-    examples: [
-      {
-        demo: "masonry/basic",
-        title: "Basic",
-        description:
-          "Uneven blocks balancing into three columns. The numbering makes the column-first flow visible — item 2 sits below item 1, not beside it.",
-      },
-      {
-        demo: "masonry/with-cards",
-        title: "Card wall",
-        description:
-          "A wall of cards with bodies of different lengths — the case columns exist for, where a plain grid would leave ragged gaps under the short ones.",
-      },
-      {
-        demo: "masonry/gallery",
-        title: "Media gallery",
-        description:
-          "Mixed-ratio media tiles: each `AspectRatio` child sizes itself, so portrait and landscape frames interleave without a row grid forcing them to share a height.",
-      },
-    ],
-    parts: {
-      Masonry:
-        "Spacing lives on the children (`*:mb-4 *:break-inside-avoid`), so a child carrying its own margin fights the rhythm — and source order flows down columns, not across rows.",
-    },
-  },
-  {
     slug: "banner",
     name: "Banner",
     category: "Layout",
@@ -3883,53 +4155,6 @@ export const PENDING: ComponentDoc[] = [
     parts: {
       Wordmark:
         '`label` is the accessible name. Pass `label=""` to make the mark decorative when adjacent text already names it — otherwise screen readers hear "Diametral" twice.',
-    },
-  },
-  {
-    slug: "theme-switcher",
-    name: "Theme Switcher",
-    category: "Layout",
-    description:
-      "A light/dark/system toggle, promoted from the docs app's own theme-toggle. Fully controlled — the consumer owns the theme hook.",
-    intro: [
-      "ThemeSwitcher is the light/dark/system control for wherever the theme choice lives — an app header, a settings page, a preferences dialog. Three forms share one contract: `segmented` (a joined three-cell ToggleGroup), `cycle` (one icon button that advances through the modes) and `dropdown` (an icon trigger opening a radio menu), so the footprint fits the placement without changing the wiring.",
-      "It is fully controlled: `value` and `onValueChange` are required, and storage, media-query sync and system resolution stay in the consumer's `useTheme()`-style hook — app wiring is not the design system's job. One behaviour is built in: re-clicking the pressed mode is a no-op, because a theme is never \"none\".",
-    ],
-    examples: [
-      {
-        demo: "theme-switcher/basic",
-        title: "Basic",
-        description:
-          "Fully controlled, so the demo holds its own state rather than touching the real app theme.",
-      },
-      {
-        demo: "theme-switcher/cycle",
-        title: "Compact cycle",
-        description:
-          "One 36px button for headers too tight for three cells. The icon shows the current mode; the `aria-label` announces the action, since a click advances to the next mode.",
-      },
-      {
-        demo: "theme-switcher/dropdown",
-        title: "Dropdown",
-        description:
-          "The discoverable compact form: an icon-and-caret trigger opening a `DropdownMenuRadioGroup`, so every mode is visible and one click away.",
-      },
-      {
-        demo: "theme-switcher/in-toolbar",
-        title: "In a toolbar",
-        description:
-          "The typical chrome placement. The `outline` variant and `sm` size are baked in, so it sits flush beside `icon-sm` buttons with no sizing props.",
-      },
-      {
-        demo: "theme-switcher/settings-row",
-        title: "Settings row",
-        description:
-          'The settings-page placement: the switcher drops into a `PanelRow` like any label-and-control pair. The group already carries `aria-label="Theme"`, so the visible text needs no `htmlFor` wiring.',
-      },
-    ],
-    parts: {
-      ThemeSwitcher:
-        'Built on ToggleGroup, but re-pressing the active mode is swallowed — Base UI would otherwise empty the group, and a theme is never "none".',
     },
   },
   {
@@ -4108,200 +4333,6 @@ export const PENDING: ComponentDoc[] = [
         "`delay` and `closeDelay` are trigger props, so one control can be slower than the rest of its group. A tooltip on a `disabled` element never opens — the element emits no pointer events.",
       TooltipContent:
         "Renders the portal, positioner and arrow together, so positioning props belong here. A nested `Kbd` is re-styled and the trailing padding tightened by the popup's own `data-[slot=kbd]` rules — nothing to pass.",
-    },
-  },
-
-  /* -- Conversation ------------------------------------------------------ */
-  {
-    slug: "bubble",
-    name: "Bubble",
-    category: "Conversation",
-    description: "Chat bubbles grouped by author.",
-    intro: [
-      "Bubble is the speech-balloon layer of a conversation: a `BubbleGroup` column of turns, each turn a `Bubble` wrapping one `BubbleContent`. Reach for it when the surface reads as a chat — a support thread, an assistant transcript, a row of suggested replies. For a turn that also needs an author and a timestamp, wrap it in Message rather than adding parts here.",
-      "The variant belongs to the wrapper, not the content: `Bubble` styles its own `BubbleContent` through `*:data-[slot=bubble-content]`. That is how `ghost` strips the padding and the background in one place, and how a bubble rendered as a `button` or an `a` picks up a matching hover state for free.",
-    ],
-    examples: [
-      {
-        demo: "bubble/variants",
-        title: "Variants",
-        description:
-          "The variant lives on `Bubble` and styles `BubbleContent` through `*:data-[slot=bubble-content]`, so the content part takes no variant of its own.",
-      },
-      {
-        demo: "bubble/conversation",
-        title: "A conversation",
-        description:
-          '`align="end"` moves the bubble to the far side with `self-end` — the group stays a plain column, with no per-row wrapper.',
-      },
-      {
-        demo: "bubble/with-reactions",
-        title: "With reactions",
-        description:
-          "Reactions overhang the bubble edge and are ringed in the card colour, so they read as punched through it rather than stacked beside it.",
-      },
-      {
-        demo: "bubble/quick-replies",
-        title: "Quick replies",
-        description:
-          "Suggested answers as tappable bubbles. `BubbleContent` takes a `render` prop, so it becomes a real `button` — and each variant already declares the hover colour that goes with it.",
-      },
-    ],
-    parts: {
-      BubbleGroup:
-        "A plain `gap-2` column: turns place themselves through their own `align`, so there is no per-row wrapper and nothing to justify here.",
-      Bubble:
-        "Owns the variant for the pair and styles `BubbleContent` through `*:data-[slot=bubble-content]` — a content part rendered outside a Bubble comes out unstyled. It also carries `max-w-[80%]`, which `ghost` lifts to full width. Inside a Message it follows the row's `align`, so it needs its own only when it stands outside one.",
-      BubbleContent:
-        "Pass `render` to make the bubble interactive: as a `button` or an `a` it picks up the hover colour its variant declares. Under `ghost` this part loses its padding and background, which is why an assistant-style answer needs no other override.",
-      BubbleReactions:
-        "Overhangs the bubble edge, ringed in `--card` so it reads as punched through it. On a surface that is not card-coloured, match the ring to that surface.",
-    },
-  },
-  {
-    slug: "message",
-    name: "Message",
-    category: "Conversation",
-    description: "A conversation row with avatar and content.",
-    intro: [
-      "Message is the row around a bubble: an avatar on one side, a column of content on the other, with an optional header for the author and footer for the timestamp or the read state. Reach for it when a transcript needs author identity or per-turn metadata — a plain `BubbleGroup` is enough when the turns speak for themselves.",
-      "`align` is set once, on the row, and every part follows it: the row reverses its own flex direction, `MessageContent` pushes each slotted child to the far side, and a Bubble inside reads `group-data-[align=end]/message`. No part below takes an alignment prop of its own.",
-    ],
-    examples: [
-      {
-        demo: "message/basic",
-        title: "Basic",
-        description:
-          '`Message` reverses its own flex direction on `align="end"`, so the avatar moves to the trailing side without reordering the markup.',
-      },
-      {
-        demo: "message/with-footer",
-        title: "With a footer",
-        description:
-          "When a footer is present the avatar lifts by 2rem so it stays level with the bubble rather than the timestamp.",
-      },
-      {
-        demo: "message/assistant",
-        title: "Assistant reply",
-        description:
-          "The full-width answer shape: a `ghost` Bubble drops the balloon entirely, and the header and footer lose their `px-4` in step through `group-has-data-[variant=ghost]/message`, so the whole turn keeps one text edge.",
-      },
-      {
-        demo: "message/attachments",
-        title: "With attachments",
-        description:
-          '`MessageContent` is a column, so a bubble, an `AttachmentGroup` and a footer stack inside one turn — and on `align="end"` every slotted child is pushed across, the attachment row included.',
-      },
-    ],
-    parts: {
-      MessageAvatar:
-        "`self-end` so it sits at the bottom of the turn, and it lifts by 2rem when the row contains a `MessageFooter` — it tracks the bubble, not the metadata line.",
-      MessageContent:
-        "The column the rest of the turn sits in. Its direct children that carry a `data-slot` follow the row's `align`, which is why bubbles and attachment rows need no alignment prop.",
-      MessageHeader:
-        "`px-4` lines the author up with the bubble's own text; a `ghost` bubble in the row zeroes it, since ghost content has no padding to match.",
-      MessageFooter:
-        "Mirrors the header, and its presence is what lifts `MessageAvatar` — a footer added late realigns the row rather than sitting under it.",
-    },
-  },
-  {
-    slug: "message-scroller",
-    name: "Message Scroller",
-    category: "Conversation",
-    description:
-      "A transcript viewport that keeps itself pinned to the latest message.",
-    intro: [
-      "MessageScroller is the viewport a transcript lives in: it holds the view at the newest message, releases that hold the moment the reader scrolls up, and offers a jump-back button while they are away. Reach for it whenever messages arrive after the first paint — a chat, a streaming answer, a live log — and for a static list Scroll Area is the lighter choice.",
-      "All of the state lives in `MessageScrollerProvider`, which renders no DOM of its own: Root, Viewport, Button and the `useMessageScroller` hooks read it through context, and outside it they throw.",
-    ],
-    examples: [
-      {
-        demo: "message-scroller/basic",
-        title: "Basic",
-        description:
-          "`MessageScrollerProvider` is required — it holds the scroll state that Root, Viewport and Button all read. Without it they throw on a missing context.",
-      },
-      {
-        demo: "message-scroller/autoscroll",
-        title: "Following new messages",
-        description:
-          "`scrollAnchor` on the last item pins the view to the bottom as messages arrive, and releases it once the reader scrolls up.",
-      },
-      {
-        demo: "message-scroller/older-messages",
-        title: "Loading earlier messages",
-        description:
-          "Prepending history leaves the reader where they were. `preserveScrollOnPrepend` is already the Viewport's default and is written out here only to name it — the older items grow upward instead of shoving the thread down.",
-      },
-      {
-        demo: "message-scroller/jump-to-message",
-        title: "Jumping to a message",
-        description:
-          "`messageId` on each item is the handle `useMessageScroller().scrollToMessage` takes. The hook reads the provider's context, so the jump bar has to sit inside `MessageScrollerProvider` even though it renders outside the scroller.",
-      },
-    ],
-    parts: {
-      MessageScrollerProvider:
-        "Required, and renders no DOM: it owns the scroll state, so `autoScroll`, `defaultScrollPosition` and the scroll thresholds are all set here rather than on Root.",
-      MessageScroller:
-        "Fills its parent with `size-full min-h-0`, so the height comes from the box you put the scroller in — give that box one, or the transcript has nothing to scroll inside.",
-      MessageScrollerViewport:
-        'The scrolling box, and the accessible one: `role="region"`, focusable, labelled `Messages` unless you pass your own `aria-label`. `preserveScrollOnPrepend` defaults to true, which is what makes loading older messages painless.',
-      MessageScrollerContent:
-        'Carries `role="log"` and `aria-relevant="additions"`, so arriving messages are announced without an aria-live wrapper of your own. It also owns the gap between items.',
-      MessageScrollerItem:
-        "A block wrapper, so give it `flex flex-col` when the bubble inside should follow its own `align`. `messageId` is what `scrollToMessage` and visibility tracking key off; `scrollAnchor` marks the item the view holds on to.",
-      MessageScrollerButton:
-        "Stays mounted when there is nothing to scroll — it goes `inert` and fades out on `data-active=false` rather than unmounting, so nothing shifts under the pointer.",
-    },
-  },
-  {
-    slug: "attachment",
-    name: "Attachment",
-    category: "Conversation",
-    description:
-      "File metadata display for a message. Not an upload input — see File Upload.",
-    intro: [
-      "Attachment is the chip a file travels in: media thumbnail or icon, name, one line of metadata, and the actions that belong to that file. It only displays — picking files, progress and retry are File Upload's job — so this is what you render for each entry it hands you, in a message, a comment or a review panel.",
-      "Three data attributes on the root drive the whole chip: `size`, `orientation` and `state` are read by every part through `group-data-*`, so no child takes a state prop of its own.",
-    ],
-    examples: [
-      {
-        demo: "attachment/basic",
-        title: "Basic",
-        description:
-          "Padding comes from which slots are present (`has-data-[slot=…]`), so a media-only chip and a full row need no size prop between them.",
-      },
-      {
-        demo: "attachment/states",
-        title: "States and sizes",
-        description:
-          "`state` drives the border and media colour — `idle` goes dashed, `error` turns destructive — and nothing below needs to know which state it is in.",
-      },
-      {
-        demo: "attachment/vertical",
-        title: "Vertical cards",
-        description:
-          "`AttachmentGroup` is a snap-scrolling row with a faded edge, so a long list stays on one line instead of wrapping.",
-      },
-      {
-        demo: "attachment/clickable",
-        title: "Openable cards",
-        description:
-          "`AttachmentTrigger` is an `absolute inset-0` overlay, so the whole card is one hit target and `render` decides whether it is a link or a button. `AttachmentActions` sits a layer above it, which is how remove stays clickable inside a card that is itself a link.",
-      },
-    ],
-    parts: {
-      Attachment:
-        "Owns `state`, `size` and `orientation` as data attributes; every part below reads them through `group-data-*`, so they are set here and nowhere else.",
-      AttachmentMedia:
-        '`variant="image"` expects an `img` child and dims it to 60% while the file is in flight — only `done` and `idle` show the thumbnail in full. The default `icon` variant sizes a bare `svg` for you.',
-      AttachmentTitle:
-        "Truncates to one line, and shimmers while the root is `uploading` or `processing` — progress needs no extra element.",
-      AttachmentTrigger:
-        "An overlay covering the card at `z-10`. `AttachmentActions` is `z-20` so its buttons stay above it; anything else clickable inside the card needs the same lift.",
-      AttachmentGroup:
-        "A snap-scrolling row with faded edges, and `tabIndex={0}` so the list can be scrolled from the keyboard rather than by pointer only.",
     },
   },
 

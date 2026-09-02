@@ -111,6 +111,28 @@
 @import url("./components/speed-dial.css");
 @import url("./components/hover-card.css");
 
+/* Batch 2 — net-new content and media (1.0.0-beta.2)
+   separator.css leads: item.css's `.ds-item-separator` composes `.ds-separator`,
+   which is why the two land together. theme-switcher.css trails segmented.css
+   and menu.css — its segmented row and its dropdown both ride those surfaces
+   and their deltas have to win. snippet.css trails code-block.css for the same
+   reason: it undoes the dark-panel colours the shared copy button wears there. */
+@import url("./components/separator.css");
+@import url("./components/aspect-ratio.css");
+@import url("./components/masonry.css");
+@import url("./components/scroll-area.css");
+@import url("./components/resizable.css");
+@import url("./components/item.css");
+@import url("./components/marker.css");
+@import url("./components/message.css");
+@import url("./components/bubble.css");
+@import url("./components/message-scroller.css");
+@import url("./components/attachment.css");
+@import url("./components/snippet.css");
+@import url("./components/qr-code.css");
+@import url("./components/toc.css");
+@import url("./components/theme-switcher.css");
+
 /* Alternate themes — scoped to [data-theme="dark"|"sepia"], inert until a theme
    is set on a root element (e.g. by ConsoleLayout's Light/Dark/Sepia switcher). */
 @import url("./themes/dark.css");

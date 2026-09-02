@@ -35,7 +35,8 @@ function objectProperty(
 }
 
 /**
- * Pulls the variant axes out of every `cva()` call in a component file, keyed by
+ * Pulls the variant axes out of every `cva()`/`variants()` call in a component
+ * file, keyed by
  * the const it is assigned to — `buttonVariants`, `tabsListVariants`, … A file
  * can hold several (item, bubble, attachment, input-group each do), and some
  * belong to sub-parts rather than the root, which is why the caller has to name
@@ -55,7 +56,11 @@ export function extractVariants(
       node.initializer &&
       ts.isCallExpression(node.initializer) &&
       ts.isIdentifier(node.initializer.expression) &&
-      node.initializer.expression.text === "cva"
+      // `cva` on @diametral/ui's own sources; `variants` on the ones absorbed
+      // into @diametral/design-system, which declines cva (ADR 0001) and
+      // declares the same shape through react/lib/variants.ts instead.
+      (node.initializer.expression.text === "cva" ||
+        node.initializer.expression.text === "variants")
     ) {
       const config = node.initializer.arguments[1]
       // `cva("base classes")` with no config has no axes at all — skip it

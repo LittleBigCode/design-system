@@ -33,6 +33,14 @@ Each component's **binding tier** is recorded in its
 [`docs/components.md`](components.md) entry: CSS parity is guaranteed for every binding,
 behaviour parity is React-only and named as such.
 
+A handful of components go one step further and ship **no binding at all** — the stylesheet
+is the entire contract, and any markup rendering its `.ds-*` classes gets the look. Since
+`1.0.0-beta.2` these are `resizable` and `message-scroller`: each one's React binding
+existed only to wrap a narrow third-party dependency (`react-resizable-panels`,
+`@shadcn/react`), and acquiring a dependency to re-export its behaviour is the trade ADR
+0001 declines. Their docs pages print no import line and say so; batch 3 adds `carousel`
+and `input-otp` on the same rule.
+
 ## How it works
 
 The components are authored in TypeScript and compiled by `tsc` alone — no bundler, no

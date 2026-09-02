@@ -4,6 +4,83 @@ All notable changes to the Diametral Design System are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/), and the project
 adheres to [Semantic Versioning](https://semver.org/) — see [docs/versioning.md](docs/versioning.md).
 
+## [1.0.0-beta.2] — 2026-09-02
+
+The content and media family. Fifteen net-new components, all in a clean namespace, and
+the first two that ship a stylesheet with no React binding at all.
+Published on the `next` dist-tag — `latest` stays at 0.11.0 for the whole migration.
+
+### Added
+- **Thirteen net-new components with bindings:** `Attachment` (9 parts), `Item` (10),
+  `Bubble` (4), `Message` (6), `Toc` (5), `ThemeSwitcher`, `Marker` (3), `ScrollArea` (2),
+  `Separator`, `Snippet`, `QrCode`, `AspectRatio` and `Masonry`. Every `.ds-*` class is a
+  new name — nothing in 0.11 is renamed or replaced.
+- **Two stylesheet-only components:** `resizable` and `message-scroller`. Their bindings
+  wrapped `react-resizable-panels` and `@shadcn/react`, and neither dependency is
+  acquired, so the `.ds-resizable-*` and `.ds-message-scroller-*` classes are the whole
+  contract. Their docs pages print no import line and say why.
+- `CodeBlockCopyButton` — the copy affordance extracted out of `CodeBlock`, so `Snippet`
+  composes it instead of duplicating the clipboard fallback. `CodeBlock`'s own props and
+  markup are unchanged.
+- `QrCode` brings a hand-rolled ISO/IEC 18004 byte-mode encoder (`react/lib/qr-encode.ts`)
+  — versions 1–10, all four correction levels, no dependency, no network, no canvas.
+
+### Changed
+- **`class-variance-authority` still is not acquired** (ADR 0001, restated). The four
+  absorbed components that used it declare the same cva-shaped block through
+  `react/lib/variants.ts`, which the docs site's build-time playground extractor now reads
+  as well as `cva()` — so no batch has to restate its variant axes in `playgrounds.ts`.
+- `Segmented`, `IconButton`, `CodeBlock` and Base UI's `Menu` take over from four held or
+  not-yet-landed source components. See **Migration** below.
+- **Eight dedupe exceptions are resolved, not carried.** Each was a Tailwind literal left
+  in place upstream so `tailwind-merge` could dedupe it against a consumer override; with
+  no Tailwind here each becomes a real declaration plus a modifier for the override:
+  `.ds-toc--static`, `.ds-toc-label--tight`, `.ds-toc-list--tight`,
+  `.ds-toc-link--current`, `.ds-bubble-group--loose`,
+  `.ds-message-scroller-content--tight`, `.ds-separator--auto`, and `resizable`'s
+  `h-full w-full`, which become the group's own defaults.
+
+### Fixed
+- **Three Tailwind classes were shipping with nothing behind them.** `scroll-fade-b`,
+  `scroll-fade-x` and `scrollbar-none` came from shadcn's Tailwind plugin and Tailwind's
+  core; with no Tailwind in this package they were inert class names. The two scroll fades
+  are real `mask-image` gradients now and the hidden scrollbar is real CSS.
+- **A dead animation.** `attachment.css` ran `animation: shimmer …` on the title while a
+  file uploads, and no `shimmer` keyframe exists anywhere in the source — the documented
+  behaviour never happened. It is a real opacity pulse now, with a
+  `prefers-reduced-motion` branch.
+- **Six `svg:not([class*="size-"])` escape hatches** removed from `attachment`, `item` and
+  `marker`: nothing to escape without Tailwind, and they silently skipped any icon whose
+  class happened to contain `size-`.
+- **`Bubble`'s ghost and destructive dark states** were keyed to `.dark` alone; this
+  system's dark theme also answers to `[data-theme="dark"]`, which is what the docs site
+  sets, so they never painted. Same defect batch 1 fixed in `navigation-menu`.
+- **A selector that matched nothing.** `item.css` scoped a zero-padding rule to
+  `[data-slot="dropdown-menu-content"]`, the source's own held popup; it reads `.ds-menu`,
+  this repo's menu surface, instead.
+- **A white-on-white bubble in dark mode.** `Bubble`'s default variant reads `--ds-bg` for
+  its text rather than `--ds-on-accent`, which is pinned to white and is not flipped by
+  the dark theme.
+- Drop shadows on `.ds-bubble-reactions` and the source's `ring`-plus-glow focus styles
+  across all fifteen stylesheets: the charte separates by 1px rule and focuses with a 2px
+  `outline` on `--ds-focus-ring`.
+
+### Migration
+- **No renames.** Every class and export in this release is additive; see
+  [docs/migration/from-0.11.md](docs/migration/from-0.11.md).
+- Four re-wirings are recorded as notes rather than rows in
+  `docs/migration/renames.json`. `AttachmentAction` and `ThemeSwitcher`'s `cycle` variant
+  compose onto `IconButton` until batch 7 supplies the source's `Button` — `IconButton`
+  requires `label`, so an icon-only action now carries an accessible name the source's own
+  ghost button never had. `ThemeSwitcher`'s `segmented` variant is this repo's
+  `Segmented`: its cells show a visible word beside the glyph, and the source's sliding
+  indicator does not survive the toggle cells it was pitched against. Its `dropdown`
+  variant is Base UI's `Menu` wearing `.ds-menu`, the same re-wiring batch 1's `menubar`
+  made. `Snippet` composes `CodeBlockCopyButton`.
+- `separator` ships here rather than in batch 3: `item.tsx` imports `Separator`, and this
+  repo had no `Separator` and no `.ds-separator` rule to re-compose onto. Landing both
+  together dissolves the import instead of re-wiring it twice.
+
 ## [1.0.0-beta.1] — 2026-09-02
 
 The first absorption beta: `@diametral/ui`'s overlay and menu family enters the system.

@@ -1,0 +1,15 @@
+/* ============================================================================
+   Masonry — .ds-masonry
+   ----------------------------------------------------------------------------
+   A CSS multi-column layout for cards of uneven height. `--columns` sets the
+   count, so any integer works with no breakpoint list to maintain, and
+   `break-inside: avoid` keeps a child from splitting across two columns.
+   ============================================================================ */
+.ds-masonry {
+  columns: var(--columns);
+  gap: 1rem;
+}
+.ds-masonry > * {
+  margin-bottom: 1rem;
+  break-inside: avoid;
+}
