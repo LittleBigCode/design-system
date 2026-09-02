@@ -1,12 +1,16 @@
 name: Visual regression tests
 
-# Runs Playwright full-page screenshot tests against the showcase.
+# Runs Playwright full-page screenshot tests against the static `examples/` pages.
 #
 # IMPORTANT: baselines must be generated and committed first
 # (see tests/README.md — `npm run test:visual:update`, then commit
 # tests/__screenshots__/). CI only *compares* against the committed images;
 # if none exist, the run fails. Baselines should be generated on Linux so they
 # match this ubuntu-latest runner.
+
+# Scope: the root `tests/*.spec.js` suites over `examples/` — the CSS and
+# web-component layer. The React docs app has its own suites under
+# `site/tests/*.spec.ts`, run by the `site` job in ci.yml.
 
 on:
   pull_request:

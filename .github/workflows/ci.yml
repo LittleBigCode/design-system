@@ -37,6 +37,63 @@ jobs:
       - name: Contract checks
         run: node scripts/check-contracts.mjs
 
+  # site/ is load-bearing: it IS the verification gate every absorption batch is
+  # checked against, so it can never be dropped, left broken, or excluded here.
+  # As a deliverable it is a PR check, not a release gate — the components it
+  # renders are release-gated by their own batch.
+  site:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci || npm i
+
+      # A hard prerequisite, not an ordering preference: site/ installs the
+      # package as `file:..` and imports `dist/diametral.css` through its real
+      # exports map, and dist/ is gitignored.
+      - name: Build the package
+        run: npm run build
+
+      # Not a workspace member on purpose — its ~15 devDeps must never reach the
+      # zero-dep package's resolution graph.
+      - name: Install site/
+        run: cd site && npm ci || npm i
+
+      - name: Typecheck site/
+        run: npm --prefix site run typecheck
+
+      - name: Build site/
+        run: npm --prefix site run build
+
+      - name: Install Chromium
+        run: cd site && npx playwright install --with-deps chromium
+
+      # Reports rather than blocks, for now. The violations it finds are in the
+      # held components themselves — the picker `aria-allowed-attr` cluster, the
+      # Segmented dark-theme contrast pair, TagInput's unlabelable input — and
+      # batch 0.3 owns those fixes. Flip `continue-on-error` off in 0.3, once
+      # its in-place a11y work lands and the suite is green.
+      - name: Accessibility gate over the landed components
+        id: a11y
+        continue-on-error: true
+        run: npm --prefix site run test:a11y
+
+      - name: Upload the a11y report
+        if: steps.a11y.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-a11y-report
+          path: |
+            site/playwright-report/
+            site/test-results/
+          retention-days: 14
+          if-no-files-found: ignore
+
   package:
     runs-on: ubuntu-latest
     timeout-minutes: 10
