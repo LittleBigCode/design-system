@@ -103,17 +103,34 @@
             <span class="ds-label">&lt;Stepper /&gt;</span>
             <button class="ds-button" data-copy-target="#c-react">Copy</button>
           </header>
-          <pre class="ds-example__code"><code id="c-react">import { Stepper } from "@diametral/design-system/react";
+          <pre class="ds-example__code"><code id="c-react">import {
+  Stepper,
+  StepperItem,
+  StepperIndicator,
+  StepperContent,
+  StepperTitle,
+  StepperDescription,
+} from "@diametral/design-system/react";
 
-&lt;Stepper
-  active={2}
-  steps={[
-    { label: "Account", description: "Signed in" },
-    { label: "Entity", description: "Selected" },
-    { label: "Pricing", description: "In progress" },
-    { label: "Confirm", description: "Pending" },
-  ]}
-/&gt;</code></pre>
+{/* The classes below are 0.11's on purpose: Wizard renders the same block and
+    does not move in this migration, so the stylesheet is held. */}
+&lt;Stepper&gt;
+  &lt;StepperItem state="completed"&gt;
+    &lt;StepperIndicator&gt;1&lt;/StepperIndicator&gt;
+    &lt;StepperContent&gt;
+      &lt;StepperTitle&gt;Account&lt;/StepperTitle&gt;
+      &lt;StepperDescription&gt;Signed in&lt;/StepperDescription&gt;
+    &lt;/StepperContent&gt;
+  &lt;/StepperItem&gt;
+  &lt;StepperItem state="active"&gt;
+    &lt;StepperIndicator&gt;2&lt;/StepperIndicator&gt;
+    &lt;StepperContent&gt;&lt;StepperTitle&gt;Pricing&lt;/StepperTitle&gt;&lt;/StepperContent&gt;
+  &lt;/StepperItem&gt;
+  &lt;StepperItem&gt;
+    &lt;StepperIndicator&gt;3&lt;/StepperIndicator&gt;
+    &lt;StepperContent&gt;&lt;StepperTitle&gt;Confirm&lt;/StepperTitle&gt;&lt;/StepperContent&gt;
+  &lt;/StepperItem&gt;
+&lt;/Stepper&gt;</code></pre>
         </section>
       </section>
 

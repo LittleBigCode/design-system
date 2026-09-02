@@ -20,7 +20,7 @@
       <header class="docs-head">
         <p class="ds-kicker">Components</p>
         <h1 class="ds-title ds-title--xl">Description list</h1>
-        <p class="docs-lede">A <code>&lt;dl&gt;</code> laid out as a two-column grid — an auto-width uppercase <code>ds-dl__term</code> column and a <code>1fr</code> <code>ds-dl__desc</code> value column. Each pair is one row, divided from the next by a soft rule. Built for key/value detail readouts with tabular figures.</p>
+        <p class="docs-lede">A <code>&lt;dl&gt;</code> laid out as a two-column grid — an auto-width uppercase <code>ds-description-term</code> column and a <code>1fr</code> <code>ds-description-detail</code> value column. Each pair is one row, divided from the next by a soft rule. Built for key/value detail readouts with tabular figures.</p>
       </header>
 
       <section class="docs-section">
@@ -32,18 +32,18 @@
             <button class="ds-button" data-copy-target="#c-dl">Copy</button>
           </header>
           <div class="ds-example__preview ds-example__preview--block">
-            <dl class="ds-dl" style="max-width:420px">
-              <dt class="ds-dl__term">Day rate</dt><dd class="ds-dl__desc">€900</dd>
-              <dt class="ds-dl__term">Salary</dt><dd class="ds-dl__desc">€48,000</dd>
-              <dt class="ds-dl__term">Margin</dt><dd class="ds-dl__desc">32.5%</dd>
-              <dt class="ds-dl__term">Status</dt><dd class="ds-dl__desc">Confirmed</dd>
+            <dl class="ds-description-list" style="max-width:420px">
+              <dt class="ds-description-term">Day rate</dt><dd class="ds-description-detail">€900</dd>
+              <dt class="ds-description-term">Salary</dt><dd class="ds-description-detail">€48,000</dd>
+              <dt class="ds-description-term">Margin</dt><dd class="ds-description-detail">32.5%</dd>
+              <dt class="ds-description-term">Status</dt><dd class="ds-description-detail">Confirmed</dd>
             </dl>
           </div>
-          <pre class="ds-example__code"><code id="c-dl">&lt;dl class="ds-dl"&gt;
-  &lt;dt class="ds-dl__term"&gt;Day rate&lt;/dt&gt;&lt;dd class="ds-dl__desc"&gt;€900&lt;/dd&gt;
-  &lt;dt class="ds-dl__term"&gt;Salary&lt;/dt&gt;&lt;dd class="ds-dl__desc"&gt;€48,000&lt;/dd&gt;
-  &lt;dt class="ds-dl__term"&gt;Margin&lt;/dt&gt;&lt;dd class="ds-dl__desc"&gt;32.5%&lt;/dd&gt;
-  &lt;dt class="ds-dl__term"&gt;Status&lt;/dt&gt;&lt;dd class="ds-dl__desc"&gt;Confirmed&lt;/dd&gt;
+          <pre class="ds-example__code"><code id="c-dl">&lt;dl class="ds-description-list"&gt;
+  &lt;dt class="ds-description-term"&gt;Day rate&lt;/dt&gt;&lt;dd class="ds-description-detail"&gt;€900&lt;/dd&gt;
+  &lt;dt class="ds-description-term"&gt;Salary&lt;/dt&gt;&lt;dd class="ds-description-detail"&gt;€48,000&lt;/dd&gt;
+  &lt;dt class="ds-description-term"&gt;Margin&lt;/dt&gt;&lt;dd class="ds-description-detail"&gt;32.5%&lt;/dd&gt;
+  &lt;dt class="ds-description-term"&gt;Status&lt;/dt&gt;&lt;dd class="ds-description-detail"&gt;Confirmed&lt;/dd&gt;
 &lt;/dl&gt;</code></pre>
         </section>
       </section>
@@ -57,14 +57,14 @@
             <button class="ds-button" data-copy-target="#c-dl-long">Copy</button>
           </header>
           <div class="ds-example__preview ds-example__preview--block">
-            <dl class="ds-dl" style="max-width:420px">
-              <dt class="ds-dl__term">Client</dt><dd class="ds-dl__desc">Acme Consulting Group International</dd>
-              <dt class="ds-dl__term">Note</dt><dd class="ds-dl__desc">Rate includes rebilled travel expenses, capped at €200 per day.</dd>
+            <dl class="ds-description-list" style="max-width:420px">
+              <dt class="ds-description-term">Client</dt><dd class="ds-description-detail">Acme Consulting Group International</dd>
+              <dt class="ds-description-term">Note</dt><dd class="ds-description-detail">Rate includes rebilled travel expenses, capped at €200 per day.</dd>
             </dl>
           </div>
-          <pre class="ds-example__code"><code id="c-dl-long">&lt;dl class="ds-dl"&gt;
-  &lt;dt class="ds-dl__term"&gt;Client&lt;/dt&gt;&lt;dd class="ds-dl__desc"&gt;Acme Consulting Group International&lt;/dd&gt;
-  &lt;dt class="ds-dl__term"&gt;Note&lt;/dt&gt;&lt;dd class="ds-dl__desc"&gt;Rate includes rebilled travel expenses…&lt;/dd&gt;
+          <pre class="ds-example__code"><code id="c-dl-long">&lt;dl class="ds-description-list"&gt;
+  &lt;dt class="ds-description-term"&gt;Client&lt;/dt&gt;&lt;dd class="ds-description-detail"&gt;Acme Consulting Group International&lt;/dd&gt;
+  &lt;dt class="ds-description-term"&gt;Note&lt;/dt&gt;&lt;dd class="ds-description-detail"&gt;Rate includes rebilled travel expenses…&lt;/dd&gt;
 &lt;/dl&gt;</code></pre>
         </section>
       </section>
@@ -77,15 +77,20 @@
             <span class="ds-label">&lt;DescriptionList /&gt;</span>
             <button class="ds-button" data-copy-target="#c-react">Copy</button>
           </header>
-          <pre class="ds-example__code"><code id="c-react">import { DescriptionList } from "@diametral/design-system/react";
+          <pre class="ds-example__code"><code id="c-react">import {
+  DescriptionList,
+  DescriptionTerm,
+  DescriptionDetail,
+} from "@diametral/design-system/react";
 
-&lt;DescriptionList
-  items={[
-    { term: "Day rate", desc: "€900" },
-    { term: "Salary", desc: "€48,000" },
-    { term: "Margin", desc: "32.5%" },
-  ]}
-/&gt;</code></pre>
+&lt;DescriptionList&gt;
+  &lt;DescriptionTerm&gt;Day rate&lt;/DescriptionTerm&gt;
+  &lt;DescriptionDetail&gt;€900&lt;/DescriptionDetail&gt;
+  &lt;DescriptionTerm&gt;Salary&lt;/DescriptionTerm&gt;
+  &lt;DescriptionDetail&gt;€48,000&lt;/DescriptionDetail&gt;
+  &lt;DescriptionTerm&gt;Margin&lt;/DescriptionTerm&gt;
+  &lt;DescriptionDetail&gt;32.5%&lt;/DescriptionDetail&gt;
+&lt;/DescriptionList&gt;</code></pre>
         </section>
       </section>
 

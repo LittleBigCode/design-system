@@ -4,7 +4,14 @@ import { CheckIcon, CopyIcon } from "@phosphor-icons/react"
 
 import { anatomy } from "virtual:demo-source"
 
-import { Badge, Button, EmptyState } from "@diametral/design-system/react"
+import {
+  Badge,
+  Button,
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from "@diametral/design-system/react"
 
 import { Toc, TocItem, TocLabel, TocLink, TocList } from "@/chrome/toc"
 
@@ -94,11 +101,14 @@ export function ComponentPage() {
 
   if (!component) {
     return (
-      <EmptyState
-        className="mt-12"
-        title="Unknown component"
-        description={`No component is registered under “${slug}”.`}
-      />
+      <Empty className="mt-12">
+        <EmptyHeader>
+          <EmptyTitle>Unknown component</EmptyTitle>
+          <EmptyDescription>
+            No component is registered under “{slug}”.
+          </EmptyDescription>
+        </EmptyHeader>
+      </Empty>
     )
   }
 
@@ -156,11 +166,15 @@ export function ComponentPage() {
             Curated usages for {component.name} are still to be written.
           </p>
         ) : (
-          <EmptyState
-            className="border border-dashed border-border"
-            title="Usages not written yet"
-            description={`${component.name} ships and is exported — only its documented examples are pending.`}
-          />
+          <Empty className="border border-dashed border-border">
+            <EmptyHeader>
+              <EmptyTitle>Usages not written yet</EmptyTitle>
+              <EmptyDescription>
+                {component.name} ships and is exported — only its documented
+                examples are pending.
+              </EmptyDescription>
+            </EmptyHeader>
+          </Empty>
         )}
       </article>
 

@@ -6,9 +6,9 @@ import { cx } from "../lib/cx.js";
 import React from "react";
 import { Wordmark } from "../index.js";
 import { Badge } from "../index.js";
-import { Avatar } from "./Avatar.js";
+import { Avatar, AvatarFallback } from "./avatar.js";
 import { Tooltip } from "./Tooltip.js";
-import { Kbd } from "./Kbd.js";
+import { Kbd } from "./kbd.js";
 import { Segmented } from "../index.js";
 import { CommandPalette } from "./CommandPalette.js";
 
@@ -106,7 +106,7 @@ export function ConsoleLayout({
       h("div", { className: "ds-app-bar__actions" },
         themes ? h(Segmented, { items: [{ value: "light", label: "Light" }, { value: "dark", label: "Dark" }, { value: "sepia", label: "Sepia" }], value: theme, onChange: setTheme }) : null,
         actions || null,
-        user ? h(Tooltip, { label: user.signOutLabel || "Sign out" }, h("span", { onClick: user.onSignOut, style: { cursor: "pointer" } }, h(Avatar, { initials: user.initials, size: "sm" }))) : null))),
+        user ? h(Tooltip, { label: user.signOutLabel || "Sign out" }, h("span", { onClick: user.onSignOut, style: { cursor: "pointer" } }, h(Avatar, { size: "sm" }, h(AvatarFallback, null, user.initials)))) : null))),
     h("aside", { className: "ds-console__side" }, h("nav", { className: "ds-vnav" },
       nav.map((g, gi) => h("div", { key: g.group || gi, className: "ds-vnav__group" },
         g.group ? h("p", { className: "ds-label ds-console__navlabel" }, g.group) : null,

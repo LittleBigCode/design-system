@@ -1,4 +1,8 @@
-import { Avatar, Button } from "@diametral/design-system/react"
+import {
+  Avatar,
+  AvatarFallback,
+  Button,
+} from "@diametral/design-system/react"
 import {
   HoverCard,
   HoverCardContent,
@@ -9,12 +13,16 @@ export default function HoverCardWithAvatar() {
   return (
     <HoverCard>
       <HoverCardTrigger render={<Button size="sm" />}>
-        <Avatar size="sm" initials="CR" />
+        <Avatar size="sm">
+            <AvatarFallback>CR</AvatarFallback>
+          </Avatar>
         Camille Roux
       </HoverCardTrigger>
       <HoverCardContent side="top">
         <div className="flex items-start gap-3">
-          <Avatar size="lg" initials="CR" />
+          <Avatar size="lg">
+            <AvatarFallback>CR</AvatarFallback>
+          </Avatar>
           <div className="min-w-0">
             <p className="text-xs font-semibold tracking-wider uppercase">
               Camille Roux

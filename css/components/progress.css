@@ -1,62 +1,91 @@
 /* ============================================================================
-   Progress — .ds-progress
+   Progress — .ds-progress (a determinate task bar)
    ----------------------------------------------------------------------------
-   A flat determinate/indeterminate progress bar: a thin track (bg-alt) holding
-   a filled bar (accent, width set inline as a %). Status modifiers recolor the
-   bar; --indeterminate animates a sliding segment. An optional __label row sits
-   above with the caption and a tabular figure.
+   A 2px track with a label and a value that share the top row. Tone rides on
+   the root as --tone and the internally-rendered indicator reads it, because a
+   caller composing <Progress> never gets a handle on the indicator. Left unset
+   the bar paints --ds-accent.
+
+   Same tone resolution meter.css made in batch 3: the source keys the six tones
+   off the --ds-*-ink family, which is the text shade and only exists for four
+   of the six here, so these read --ds-*-solid instead — the family tuned for
+   fills, which has all six.
+
+   The indeterminate block at the bottom is KEPT, and it is the one place this
+   file goes beyond the source. The source has no indeterminate rendering at
+   all, so absorbing it verbatim would have dropped a state 0.11 could draw and
+   left `value={null}` — which Base UI marks with `data-indeterminate` — as a
+   blank track. It is keyed off both the attribute and 0.11's modifier class, so
+   the React binding and hand-written HTML land on the same animation.
    ============================================================================ */
 .ds-progress {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-family: var(--ds-font-sans);
+}
+.ds-progress--tone-neutral  { --tone: var(--ds-neutral-solid); }
+.ds-progress--tone-success  { --tone: var(--ds-success-solid); }
+.ds-progress--tone-warning  { --tone: var(--ds-warning-solid); }
+.ds-progress--tone-danger   { --tone: var(--ds-danger-solid); }
+.ds-progress--tone-critical { --tone: var(--ds-critical-solid); }
+.ds-progress--tone-info     { --tone: var(--ds-info-solid); }
+
+.ds-progress-track {
   position: relative;
+  display: flex;
+  height: 0.125rem;
   width: 100%;
-  height: 6px;
-  background: var(--ds-bg-alt);
-  overflow: hidden;
+  align-items: center;
+  overflow-x: hidden;
   border-radius: var(--ds-radius-none);
+  background-color: var(--ds-bg-alt);
 }
 
-.ds-progress__bar {
+.ds-progress-indicator {
   height: 100%;
-  width: 0;
-  background: var(--ds-accent);
-  border-radius: var(--ds-radius-none);
-  transition: width var(--ds-transition);
+  background-color: var(--tone, var(--ds-accent));
+  transition: all var(--ds-transition);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-progress-indicator { transition: none; }
 }
 
-/* ---- Status modifiers ---------------------------------------------------- */
-.ds-progress--success .ds-progress__bar { background: var(--ds-success); }
-.ds-progress--warning .ds-progress__bar { background: var(--ds-warning); }
-.ds-progress--danger  .ds-progress__bar { background: var(--ds-danger); }
+.ds-progress-label {
+  font-size: var(--ds-text-xs);
+  line-height: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+}
 
-/* ---- Indeterminate: a fixed-width segment slides across the track -------- */
+/* ---- Indeterminate ------------------------------------------------------- */
 @keyframes ds-progress-slide {
-  0%   { left: -40%; }
-  100% { left: 100%; }
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(350%); }
 }
-.ds-progress--indeterminate .ds-progress__bar {
+.ds-progress-track:has(> [data-indeterminate]),
+.ds-progress--indeterminate .ds-progress-track {
+  position: relative;
+  overflow: hidden;
+}
+.ds-progress-indicator[data-indeterminate],
+.ds-progress--indeterminate .ds-progress-indicator {
   position: absolute;
-  left: -40%;
+  inset-inline-start: -40%;
   width: 40%;
   transition: none;
   animation: ds-progress-slide 1.1s ease-in-out infinite;
 }
-
 @media (prefers-reduced-motion: reduce) {
-  .ds-progress--indeterminate .ds-progress__bar { animation-duration: 2.4s; }
+  .ds-progress-indicator[data-indeterminate],
+  .ds-progress--indeterminate .ds-progress-indicator { animation-duration: 2.4s; }
 }
 
-/* ---- Optional label row (caption + value) -------------------------------- */
-.ds-progress__label {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--ds-space-3);
-  margin-bottom: var(--ds-space-1);
-  font-size: var(--ds-text-sm);
-  color: var(--ds-ink-soft);
-}
-.ds-progress__value {
+.ds-progress-value {
+  margin-inline-start: auto;
+  font-size: var(--ds-text-base);
+  line-height: 1.25rem;
+  color: var(--ds-ink-faint);
   font-variant-numeric: tabular-nums;
-  font-weight: 500;
-  color: var(--ds-ink);
 }

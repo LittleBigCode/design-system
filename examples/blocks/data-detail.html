@@ -67,7 +67,7 @@
 
       <section class="docs-section">
         <h2>Detail layout</h2>
-        <p class="docs-note">A primary <code>.ds-card</code> for the record body beside a 320px <code>.ds-card</code> sidebar holding a <code>.ds-dl</code> key/value readout.</p>
+        <p class="docs-note">A primary <code>.ds-card</code> for the record body beside a 320px <code>.ds-card</code> sidebar holding a <code>.ds-description-list</code> key/value readout.</p>
         <section class="ds-example">
           <header class="ds-example__bar">
             <span class="ds-label">Main + detail sidebar</span>
@@ -85,11 +85,11 @@
               </article>
               <aside class="ds-card">
                 <div class="ds-card__block">
-                  <dl class="ds-dl">
-                    <dt class="ds-dl__term">Status</dt><dd class="ds-dl__desc"><span class="ds-tag ds-tag--success">Confirmed</span></dd>
-                    <dt class="ds-dl__term">Owner</dt><dd class="ds-dl__desc">Vincent Devillers</dd>
-                    <dt class="ds-dl__term">Created</dt><dd class="ds-dl__desc">2026-05-02</dd>
-                    <dt class="ds-dl__term">Updated</dt><dd class="ds-dl__desc">2026-06-17</dd>
+                  <dl class="ds-description-list">
+                    <dt class="ds-description-term">Status</dt><dd class="ds-description-detail"><span class="ds-tag ds-tag--success">Confirmed</span></dd>
+                    <dt class="ds-description-term">Owner</dt><dd class="ds-description-detail">Vincent Devillers</dd>
+                    <dt class="ds-description-term">Created</dt><dd class="ds-description-detail">2026-05-02</dd>
+                    <dt class="ds-description-term">Updated</dt><dd class="ds-description-detail">2026-06-17</dd>
                   </dl>
                 </div>
               </aside>
@@ -102,11 +102,11 @@
   &lt;/article&gt;
   &lt;aside class="ds-card"&gt;
     &lt;div class="ds-card__block"&gt;
-      &lt;dl class="ds-dl"&gt;
-        &lt;dt class="ds-dl__term"&gt;Status&lt;/dt&gt;&lt;dd class="ds-dl__desc"&gt;&lt;span class="ds-tag ds-tag--success"&gt;Confirmed&lt;/span&gt;&lt;/dd&gt;
-        &lt;dt class="ds-dl__term"&gt;Owner&lt;/dt&gt;&lt;dd class="ds-dl__desc"&gt;Vincent Devillers&lt;/dd&gt;
-        &lt;dt class="ds-dl__term"&gt;Created&lt;/dt&gt;&lt;dd class="ds-dl__desc"&gt;2026-05-02&lt;/dd&gt;
-        &lt;dt class="ds-dl__term"&gt;Updated&lt;/dt&gt;&lt;dd class="ds-dl__desc"&gt;2026-06-17&lt;/dd&gt;
+      &lt;dl class="ds-description-list"&gt;
+        &lt;dt class="ds-description-term"&gt;Status&lt;/dt&gt;&lt;dd class="ds-description-detail"&gt;&lt;span class="ds-tag ds-tag--success"&gt;Confirmed&lt;/span&gt;&lt;/dd&gt;
+        &lt;dt class="ds-description-term"&gt;Owner&lt;/dt&gt;&lt;dd class="ds-description-detail"&gt;Vincent Devillers&lt;/dd&gt;
+        &lt;dt class="ds-description-term"&gt;Created&lt;/dt&gt;&lt;dd class="ds-description-detail"&gt;2026-05-02&lt;/dd&gt;
+        &lt;dt class="ds-description-term"&gt;Updated&lt;/dt&gt;&lt;dd class="ds-description-detail"&gt;2026-06-17&lt;/dd&gt;
       &lt;/dl&gt;
     &lt;/div&gt;
   &lt;/aside&gt;
@@ -125,12 +125,14 @@
           <div class="ds-example__preview ds-example__preview--block">
             <div class="ds-card">
               <div class="ds-empty">
-                <div class="ds-empty__icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16"></rect><line x1="3" y1="9" x2="21" y2="9"></line></svg>
+                <div class="ds-empty-header">
+                <div class="ds-empty-media ds-empty-media--icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16"></rect><line x1="3" y1="9" x2="21" y2="9"></line></svg>
+                  </div>
+                  <p class="ds-empty-title">No missions yet</p>
+                  <p class="ds-empty-description">Create your first mission to compute a day rate, margin, and target salary.</p>
                 </div>
-                <p class="ds-empty__title">No missions yet</p>
-                <p class="ds-empty__desc">Create your first mission to compute a day rate, margin, and target salary.</p>
-                <div class="ds-empty__actions">
+                <div class="ds-empty-content">
                   <button class="ds-button ds-button--primary">New mission</button>
                 </div>
               </div>
@@ -138,10 +140,10 @@
           </div>
           <pre class="ds-example__code"><code id="c-empty">&lt;div class="ds-card"&gt;
   &lt;div class="ds-empty"&gt;
-    &lt;div class="ds-empty__icon" aria-hidden="true"&gt;&lt;svg&gt;…&lt;/svg&gt;&lt;/div&gt;
-    &lt;p class="ds-empty__title"&gt;No missions yet&lt;/p&gt;
-    &lt;p class="ds-empty__desc"&gt;Create your first mission to compute a day rate…&lt;/p&gt;
-    &lt;div class="ds-empty__actions"&gt;
+    &lt;div class="ds-empty-media ds-empty-media--icon" aria-hidden="true"&gt;&lt;svg&gt;…&lt;/svg&gt;&lt;/div&gt;
+    &lt;p class="ds-empty-title"&gt;No missions yet&lt;/p&gt;
+    &lt;p class="ds-empty-description"&gt;Create your first mission to compute a day rate…&lt;/p&gt;
+    &lt;div class="ds-empty-content"&gt;
       &lt;button class="ds-button ds-button--primary"&gt;New mission&lt;/button&gt;
     &lt;/div&gt;
   &lt;/div&gt;
@@ -206,7 +208,7 @@
 
       <section class="docs-section">
         <h2>Activity feed</h2>
-        <p class="docs-note">A <code>.ds-timeline</code> of record events; <code>is-*</code> recolors each <code>.ds-timeline__dot</code> by status.</p>
+        <p class="docs-note">A <code>.ds-timeline</code> of record events; <code>is-*</code> recolors each <code>.ds-timeline-indicator</code> by status.</p>
         <section class="ds-example">
           <header class="ds-example__bar">
             <span class="ds-label">.ds-timeline</span>
@@ -214,50 +216,64 @@
           </header>
           <div class="ds-example__preview ds-example__preview--block">
             <ol class="ds-timeline">
-              <li class="ds-timeline__item">
-                <span class="ds-timeline__dot is-success"></span>
-                <div class="ds-timeline__time">09:42</div>
-                <div class="ds-timeline__title">Mission confirmed</div>
-                <div class="ds-timeline__body">Day rate locked at €900 after Director sign-off.</div>
+              <li class="ds-timeline-item ds-timeline-item--success" data-state="completed">
+                <div class="ds-timeline-indicator"></div>
+                <div class="ds-timeline-content">
+                  <div class="ds-timeline-title">Mission confirmed</div>
+                  <time class="ds-timeline-time">09:42</time>
+                  <p class="ds-timeline-description">Day rate locked at €900 after Director sign-off.</p>
+                </div>
               </li>
-              <li class="ds-timeline__item">
-                <span class="ds-timeline__dot is-info"></span>
-                <div class="ds-timeline__time">09:30</div>
-                <div class="ds-timeline__title">Review requested</div>
-                <div class="ds-timeline__body">Sent to the Director for approval.</div>
+              <li class="ds-timeline-item ds-timeline-item--info" data-state="completed">
+                <div class="ds-timeline-indicator"></div>
+                <div class="ds-timeline-content">
+                  <div class="ds-timeline-title">Review requested</div>
+                  <time class="ds-timeline-time">09:30</time>
+                  <p class="ds-timeline-description">Sent to the Director for approval.</p>
+                </div>
               </li>
-              <li class="ds-timeline__item">
-                <span class="ds-timeline__dot is-warning"></span>
-                <div class="ds-timeline__time">08:15</div>
-                <div class="ds-timeline__title">Margin below target</div>
-                <div class="ds-timeline__body">Computed margin 28% — under the 30% floor.</div>
+              <li class="ds-timeline-item ds-timeline-item--warning" data-state="completed">
+                <div class="ds-timeline-indicator"></div>
+                <div class="ds-timeline-content">
+                  <div class="ds-timeline-title">Margin below target</div>
+                  <time class="ds-timeline-time">08:15</time>
+                  <p class="ds-timeline-description">Computed margin 28% — under the 30% floor.</p>
+                </div>
               </li>
-              <li class="ds-timeline__item">
-                <span class="ds-timeline__dot is-danger"></span>
-                <div class="ds-timeline__time">Yesterday</div>
-                <div class="ds-timeline__title">Currency missing</div>
-                <div class="ds-timeline__body">Salary entered without a currency.</div>
+              <li class="ds-timeline-item ds-timeline-item--danger" data-state="completed">
+                <div class="ds-timeline-indicator"></div>
+                <div class="ds-timeline-content">
+                  <div class="ds-timeline-title">Currency missing</div>
+                  <time class="ds-timeline-time">Yesterday</time>
+                  <p class="ds-timeline-description">Salary entered without a currency.</p>
+                </div>
               </li>
-              <li class="ds-timeline__item">
-                <span class="ds-timeline__dot"></span>
-                <div class="ds-timeline__time">2 days ago</div>
-                <div class="ds-timeline__title">Draft created</div>
-                <div class="ds-timeline__body">Imported from the Q3 template.</div>
+              <li class="ds-timeline-item">
+                <div class="ds-timeline-indicator"></div>
+                <div class="ds-timeline-content">
+                  <div class="ds-timeline-title">Draft created</div>
+                  <time class="ds-timeline-time">2 days ago</time>
+                  <p class="ds-timeline-description">Imported from the Q3 template.</p>
+                </div>
               </li>
             </ol>
           </div>
           <pre class="ds-example__code"><code id="c-feed">&lt;ol class="ds-timeline"&gt;
-  &lt;li class="ds-timeline__item"&gt;
-    &lt;span class="ds-timeline__dot is-success"&gt;&lt;/span&gt;
-    &lt;div class="ds-timeline__time"&gt;09:42&lt;/div&gt;
-    &lt;div class="ds-timeline__title"&gt;Mission confirmed&lt;/div&gt;
-    &lt;div class="ds-timeline__body"&gt;Day rate locked at €900 after Director sign-off.&lt;/div&gt;
+    &lt;li class="ds-timeline-item ds-timeline-item--success" data-state="completed"&gt;
+    &lt;div class="ds-timeline-indicator"&gt;&lt;/div&gt;
+    &lt;div class="ds-timeline-content"&gt;
+      &lt;div class="ds-timeline-title"&gt;Mission confirmed&lt;/div&gt;
+      &lt;time class="ds-timeline-time"&gt;09:42&lt;/time&gt;
+      &lt;p class="ds-timeline-description"&gt;Day rate locked at €900 after Director sign-off.&lt;/p&gt;
+    &lt;/div&gt;
   &lt;/li&gt;
-  &lt;li class="ds-timeline__item"&gt;
-    &lt;span class="ds-timeline__dot is-warning"&gt;&lt;/span&gt;
-    &lt;div class="ds-timeline__time"&gt;08:15&lt;/div&gt;
-    &lt;div class="ds-timeline__title"&gt;Margin below target&lt;/div&gt;
-    &lt;div class="ds-timeline__body"&gt;Computed margin 28% — under the 30% floor.&lt;/div&gt;
+    &lt;li class="ds-timeline-item ds-timeline-item--warning" data-state="completed"&gt;
+    &lt;div class="ds-timeline-indicator"&gt;&lt;/div&gt;
+    &lt;div class="ds-timeline-content"&gt;
+      &lt;div class="ds-timeline-title"&gt;Margin below target&lt;/div&gt;
+      &lt;time class="ds-timeline-time"&gt;08:15&lt;/time&gt;
+      &lt;p class="ds-timeline-description"&gt;Computed margin 28% — under the 30% floor.&lt;/p&gt;
+    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ol&gt;</code></pre>
         </section>

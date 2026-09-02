@@ -1,30 +1,66 @@
-/* Page header — .ds-page-header (breadcrumb + title + actions + optional tabs) */
+/* ============================================================================
+   Page header — .ds-page-header
+   ----------------------------------------------------------------------------
+   The title block at the top of a view: an optional icon, an h1, a description,
+   and an actions cluster that wraps to its own line when the row runs out of
+   width. A tab strip may follow, in which case the bottom rule sits flush under
+   the tabs instead of under the title row — that is what the `:has()` rule and
+   PageHeaderTabs' bare slot marker are for.
+
+   Renamed from 0.x's __top / __titles / __title / __subtitle / __actions /
+   __tabs. The --flush modifier is gone: the `:has()` rule now derives the same
+   thing from the markup, so there is nothing left for a caller to declare.
+   ============================================================================ */
 .ds-page-header {
-  border-bottom: 1px solid var(--ds-rule);
-  margin-bottom: 22px;
-}
-.ds-page-header__top {
   display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-bottom: 1px solid var(--ds-rule);
+  padding-bottom: 1.5rem;
+}
+.ds-page-header:has([data-slot="page-header-tabs"]) {
+  padding-bottom: 0;
+}
+
+.ds-page-header-heading {
+  display: flex;
+  flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 16px;
-  padding-bottom: 16px;
+  gap: 1rem;
 }
-.ds-page-header--flush .ds-page-header__top { padding-bottom: 0; }
-/* The title column beside __actions. min-width:0 is what lets a long title
-   truncate instead of pushing the actions out of the row. */
-.ds-page-header__titles { min-width: 0; }
-.ds-page-header__title {
+
+.ds-page-header-icon {
+  display: flex;
+  height: 2rem;
+  flex-shrink: 0;
+  align-items: center;
+  color: var(--ds-ink-faint);
+}
+.ds-page-header-icon svg {
+  pointer-events: none;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.ds-page-header-title {
+  margin: 0;
   font-family: var(--ds-font-title);
-  font-weight: var(--ds-font-weight-title);
-  font-size: 26px;
-  line-height: 1.1;
-  letter-spacing: -0.4px;
+  font-size: var(--ds-text-xl);
+  line-height: calc(2 / 1.5);
+  font-weight: 600;
+  letter-spacing: 0.025em;
 }
-.ds-page-header__subtitle { color: var(--ds-ink-soft); margin-top: 4px; }
-.ds-page-header__actions { display: flex; gap: 10px; flex: none; align-items: center; }
-.ds-page-header__tabs { margin-bottom: -1px; }
-@media (max-width: 680px) {
-  .ds-page-header__top { flex-direction: column; }
-  .ds-page-header__actions { width: 100%; }
+
+.ds-page-header-description {
+  margin: 0;
+  font-size: var(--ds-text-base);
+  line-height: calc(1.25 / 0.875);
+  color: var(--ds-ink-faint);
+}
+
+.ds-page-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }

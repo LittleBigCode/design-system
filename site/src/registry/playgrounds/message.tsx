@@ -1,6 +1,6 @@
 import type { ComponentProps } from "react"
 
-import { Avatar } from "@diametral/design-system/react"
+import { Avatar, AvatarFallback } from "@diametral/design-system/react"
 import { Bubble, BubbleContent } from "@diametral/design-system/react"
 import {
   Message,
@@ -19,7 +19,9 @@ export default function MessagePlayground({
     <MessageGroup className="w-full max-w-sm">
       <Message {...props}>
         <MessageAvatar>
-          <Avatar size="sm" initials="CR" />
+          <Avatar size="sm">
+            <AvatarFallback>CR</AvatarFallback>
+          </Avatar>
         </MessageAvatar>
         <MessageContent>
           <MessageHeader>Camille Ferrand</MessageHeader>

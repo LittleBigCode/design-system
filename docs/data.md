@@ -20,7 +20,7 @@ order so the user always sees the most specific signal first:
 | ----------- | ----------------------------------------- | -------------------------------------- |
 | **loading** | placeholder bars where content will land  | [`Skeleton`](../react/components/Skeleton.tsx) |
 | **error**   | a `danger` status message + retry         | [`Alert`](../react/components/Alert.tsx) |
-| **empty**   | a friendly "nothing here yet" panel       | [`EmptyState`](../react/components/EmptyState.tsx) |
+| **empty**   | a friendly "nothing here yet" panel       | [`Empty`](../react/components/empty.tsx) |
 | **data**    | the actual content                        | your view                              |
 
 Branch in that priority: `loading` → `error` → empty (`!data || data.length === 0`)
@@ -33,7 +33,8 @@ while the first request is still in flight.
   `width`, `height`, `count` (render N stacked lines).
 - **`Alert`** — `type` (`"info" | "success" | "warning" | "danger"`),
   `dismissible`, `onDismiss`, `icon`, `app`.
-- **`EmptyState`** — `icon`, `title`, `description`, `actions`.
+- **`Empty`** — parts, not props: `EmptyHeader` wraps `EmptyMedia` (`variant="icon"`),
+  `EmptyTitle` and `EmptyDescription`; `EmptyContent` holds whatever recovers from it.
 
 ## `useResource`
 
@@ -50,7 +51,16 @@ so a slow earlier request can never clobber a newer one.
 
 ```jsx
 import { useResource } from "@diametral/design-system/react";
-import { Skeleton, Alert, EmptyState, Button } from "@diametral/design-system/react";
+import {
+  Skeleton,
+  Alert,
+  Empty,
+  EmptyHeader,
+  EmptyTitle,
+  EmptyDescription,
+  EmptyContent,
+  Button,
+} from "@diametral/design-system/react";
 
 function ItemList() {
   const { data, error, loading, reload } = useResource(
@@ -72,11 +82,15 @@ function ItemList() {
   // 3. empty
   if (!data || data.length === 0)
     return (
-      <EmptyState
-        title="No items yet"
-        description="Items you create will show up here."
-        actions={<Button variant="primary">New item</Button>}
-      />
+      <Empty>
+        <EmptyHeader>
+          <EmptyTitle>No items yet</EmptyTitle>
+          <EmptyDescription>Items you create will show up here.</EmptyDescription>
+        </EmptyHeader>
+        <EmptyContent>
+          <Button variant="primary">New item</Button>
+        </EmptyContent>
+      </Empty>
     );
 
   // 4. data

@@ -205,17 +205,566 @@
     },
     {
       "kind": "token",
-      "from": "(none \u2014 the label and value column widths were Tailwind arbitrary-property classes in the source)",
+      "from": "(none — the label and value column widths were Tailwind arbitrary-property classes in the source)",
       "to": "--ds-bullet-label, --ds-bullet-value",
       "batch": "5",
-      "note": "The knobs that replaced the source's `[--bullet-label:7rem]` / `[--bullet-value:4rem]` literals on BulletChart's own className. `.ds-bullet-chart` declares both as its defaults and reads them in `grid-template-columns`; set either on the chart or on a wrapper to retune one bullet or a whole stack. Unprefixed `--bullet-*` is not read \u2014 every custom property in this package is `--ds-*`."
+      "note": "The knobs that replaced the source's `[--bullet-label:7rem]` / `[--bullet-value:4rem]` literals on BulletChart's own className. `.ds-bullet-chart` declares both as its defaults and reads them in `grid-template-columns`; set either on the chart or on a wrapper to retune one bullet or a whole stack. Unprefixed `--bullet-*` is not read — every custom property in this package is `--ds-*`."
     },
     {
       "kind": "token",
-      "from": "(none \u2014 net-new)",
-      "to": "--ds-heat-1 \u2026 --ds-heat-5",
+      "from": "(none — net-new)",
+      "to": "--ds-heat-1 … --ds-heat-5",
       "batch": "5",
-      "note": "The sequential ramp `.ds-heatmap` quantises into, one hue getting darker. Separate from the categorical `--ds-chart-*` ramp on purpose: reading a categorical ramp as a scale is the classic dataviz error. It is also the one Tier-1 primitive css/themes/dark.css overrides \u2014 a sequential ramp encodes magnitude, so \"more\" has to mean brighter on a dark page. A theme that recolours data now has two ramps to consider, not one."
+      "note": "The sequential ramp `.ds-heatmap` quantises into, one hue getting darker. Separate from the categorical `--ds-chart-*` ramp on purpose: reading a categorical ramp as a scale is the classic dataviz error. It is also the one Tier-1 primitive css/themes/dark.css overrides — a sequential ramp encodes magnitude, so \"more\" has to mean brighter on a dark page. A theme that recolours data now has two ramps to consider, not one."
+    },
+    {
+      "kind": "export",
+      "from": "EmptyState",
+      "to": "Empty",
+      "batch": "6",
+      "note": "Renamed with the split into parts. `icon`/`title`/`description`/`actions` become <EmptyMedia>, <EmptyTitle>, <EmptyDescription> and <EmptyContent>, all inside an <EmptyHeader> except the content."
+    },
+    {
+      "kind": "export",
+      "from": "Avatar (props src/alt/initials/size)",
+      "to": "Avatar + AvatarImage + AvatarFallback",
+      "batch": "6",
+      "note": "Base UI's Avatar. The fallback now appears only once the image has actually failed or is still loading; `size` survives and lands as data-size."
+    },
+    {
+      "kind": "export",
+      "from": "AvatarGroup (prop max)",
+      "to": "AvatarGroup + AvatarGroupCount",
+      "batch": "6",
+      "note": "The overflow count is written rather than computed: `max` is gone and <AvatarGroupCount>+N</AvatarGroupCount> is the tail."
+    },
+    {
+      "kind": "export",
+      "from": "Breadcrumb (prop items)",
+      "to": "Breadcrumb + BreadcrumbList + BreadcrumbItem + BreadcrumbLink + BreadcrumbPage + BreadcrumbSeparator + BreadcrumbEllipsis",
+      "batch": "6",
+      "note": "BreadcrumbLink is polymorphic through `render`, so a router's Link renders in its place with no wrapper."
+    },
+    {
+      "kind": "export",
+      "from": "DescriptionList (prop items)",
+      "to": "DescriptionList + DescriptionTerm + DescriptionDetail",
+      "batch": "6"
+    },
+    {
+      "kind": "export",
+      "from": "PageHeader (props title/subtitle/breadcrumb/actions/tabs/flush)",
+      "to": "PageHeader + PageHeaderHeading + PageHeaderTitle + PageHeaderDescription + PageHeaderActions + PageHeaderIcon + PageHeaderTabs",
+      "batch": "6",
+      "note": "`flush` has no replacement: page-header.css derives it from `:has([data-slot=page-header-tabs])`, so the markup says it."
+    },
+    {
+      "kind": "export",
+      "from": "Pagination (props page/pageCount/onChange/siblingCount)",
+      "to": "Pagination + PaginationContent + PaginationItem + PaginationLink + PaginationNext + PaginationPrevious + PaginationEllipsis + paginationRange",
+      "batch": "6",
+      "note": "No capability is lost: `paginationRange({ page, pageCount, siblingCount })` is the same window function, exported. Rebuilding the controlled pager is ~10 lines and is written out in from-0.11.md. What the parts buy is a page that can be a real <a href>."
+    },
+    {
+      "kind": "export",
+      "from": "Progress (props value/max/status/indeterminate/label)",
+      "to": "Progress + ProgressTrack + ProgressIndicator + ProgressLabel + ProgressValue",
+      "batch": "6",
+      "note": "Base UI's Progress. `status` is spelled `tone` and takes six values; `indeterminate` is `value={null}`; `label` is a <ProgressLabel> child."
+    },
+    {
+      "kind": "export",
+      "from": "Spinner (props size/inline)",
+      "to": "Spinner",
+      "batch": "6",
+      "note": "`label` survives. `size` and `inline` are gone: the component renders a Phosphor glyph and the .ds-spinner--sm/--lg/--inline classes size it."
+    },
+    {
+      "kind": "export",
+      "from": "Stepper (props steps/active/complete/circle)",
+      "to": "Stepper + StepperItem + StepperIndicator + StepperContent + StepperTitle + StepperDescription",
+      "batch": "6",
+      "note": "`circle` has no replacement — .ds-stepper--circle is still in the stylesheet and can be passed through className. There is no StepperSeparator: the connector is a ::after on the step."
+    },
+    {
+      "kind": "export",
+      "from": "Timeline (prop items)",
+      "to": "Timeline + TimelineItem + TimelineIndicator + TimelineContent + TimelineTitle + TimelineTime + TimelineDescription",
+      "batch": "6",
+      "note": "`status` becomes `tone` on the item, and data-state=\"completed\"|\"active\" fills or outlines the indicator."
+    },
+    {
+      "kind": "export",
+      "from": "Toolbar + ToolbarGroup + ToolbarSpacer",
+      "to": "Toolbar + ToolbarGroup + ToolbarButton + ToolbarLink + ToolbarInput + ToolbarSeparator",
+      "batch": "6",
+      "note": "Base UI's Toolbar: the strip is one tab stop with arrow-key navigation. `bordered` is gone (boxed by default) and ToolbarSpacer with it — the bar is width: fit-content."
+    },
+    {
+      "kind": "export",
+      "from": "Kbd",
+      "to": "Kbd + KbdGroup",
+      "batch": "6",
+      "note": "KbdGroup chains keys into one chord."
+    },
+    {
+      "kind": "export",
+      "from": "Banner",
+      "to": "Banner + BannerContent + BannerTitle + BannerDescription + BannerAction",
+      "batch": "6",
+      "note": "Moves out of react/index.tsx into its own module and gains the six-tone axis; the fixed-yellow identity is now `tone=\"warning\"`."
+    },
+    {
+      "kind": "component",
+      "from": null,
+      "to": "Table",
+      "batch": "6",
+      "note": "New: 0.11 shipped table.css with no React binding. Table + TableHeader + TableBody + TableFooter + TableRow + TableHead + TableCell + TableCaption. DataGrid is unaffected and stays the stateful table."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-dl",
+      "to": ".ds-description-list",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-dl__term",
+      "to": ".ds-description-term",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-dl__desc",
+      "to": ".ds-description-detail",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-page-header__top",
+      "to": ".ds-page-header-heading",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-page-header__titles",
+      "to": null,
+      "batch": "6",
+      "note": "No replacement — the title/description pair needs no class, only a wrapper element."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-page-header__title",
+      "to": ".ds-page-header-title",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-page-header__subtitle",
+      "to": ".ds-page-header-description",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-page-header__actions",
+      "to": ".ds-page-header-actions",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-page-header__tabs",
+      "to": "[data-slot=\"page-header-tabs\"]",
+      "batch": "6",
+      "note": "An attribute rather than a class: .ds-page-header reads it through :has() to move its bottom rule, and it styles nothing itself."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-page-header--flush",
+      "to": null,
+      "batch": "6",
+      "note": "Removed — derived from the tab slot's presence."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-breadcrumb",
+      "to": ".ds-breadcrumb-list",
+      "batch": "6",
+      "note": "The <nav> root carries no class now; the <ol> is the styled element."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-breadcrumb__item",
+      "to": ".ds-breadcrumb-item",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-breadcrumb__link",
+      "to": ".ds-breadcrumb-link",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": null,
+      "to": ".ds-breadcrumb-page",
+      "batch": "6",
+      "note": "New — the current page, which 0.11 marked with aria-current alone."
+    },
+    {
+      "kind": "class",
+      "from": null,
+      "to": ".ds-breadcrumb-separator",
+      "batch": "6",
+      "note": "New — the separator is its own presentational <li> rather than a ::after, so it flips for RTL and stays out of the neighbouring item's accessible name."
+    },
+    {
+      "kind": "class",
+      "from": null,
+      "to": ".ds-breadcrumb-ellipsis",
+      "batch": "6",
+      "note": "New — a collapsed middle of the trail."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-avatar__img",
+      "to": ".ds-avatar-image",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-avatar--sm",
+      "to": "[data-size=\"sm\"]",
+      "batch": "6",
+      "note": "Size is an attribute so a group can size its overflow count off its members with :has()."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-avatar--lg",
+      "to": "[data-size=\"lg\"]",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-avatar--count",
+      "to": ".ds-avatar-group-count",
+      "batch": "6",
+      "note": "No longer also carries .ds-avatar."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-avatar-group--sm",
+      "to": null,
+      "batch": "6",
+      "note": "Removed — the group reads its members' data-size."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-avatar-group--lg",
+      "to": null,
+      "batch": "6",
+      "note": "Removed — the group reads its members' data-size."
+    },
+    {
+      "kind": "class",
+      "from": null,
+      "to": ".ds-avatar-fallback",
+      "batch": "6",
+      "note": "New — bare initials inside .ds-avatar are no longer styled; they go in this slot."
+    },
+    {
+      "kind": "class",
+      "from": null,
+      "to": ".ds-avatar-badge",
+      "batch": "6",
+      "note": "New — the corner status dot."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-progress__bar",
+      "to": ".ds-progress-track > .ds-progress-indicator",
+      "batch": "6",
+      "note": "Two elements now: .ds-progress is the wrapping row that also holds the label and value."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-progress__label",
+      "to": ".ds-progress-label",
+      "batch": "6",
+      "note": "A sibling of the track inside .ds-progress, not a row above it."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-progress__value",
+      "to": ".ds-progress-value",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-progress--success",
+      "to": ".ds-progress--tone-success",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-progress--warning",
+      "to": ".ds-progress--tone-warning",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-progress--danger",
+      "to": ".ds-progress--tone-danger",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": null,
+      "to": ".ds-progress--tone-neutral / --tone-info / --tone-critical",
+      "batch": "6",
+      "note": "New — the tone axis is six-wide now."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-empty__icon",
+      "to": ".ds-empty-media",
+      "batch": "6",
+      "note": "Add --icon for the tinted tile; --default leaves it bare."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-empty__title",
+      "to": ".ds-empty-title",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-empty__desc",
+      "to": ".ds-empty-description",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-empty__actions",
+      "to": ".ds-empty-content",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": null,
+      "to": ".ds-empty-header",
+      "batch": "6",
+      "note": "New — groups the media, title and description and caps their width."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-timeline__item",
+      "to": ".ds-timeline-item",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-timeline__dot",
+      "to": ".ds-timeline-indicator",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-timeline__body",
+      "to": ".ds-timeline-content",
+      "batch": "6",
+      "note": "Now the wrapper around the title, time and description rather than the description itself."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-timeline__title",
+      "to": ".ds-timeline-title",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-timeline__time",
+      "to": ".ds-timeline-time",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-timeline__dot.is-success",
+      "to": ".ds-timeline-item--success + data-state=\"completed\"",
+      "batch": "6",
+      "note": "Tone moves from the dot to the item; the state attribute is what fills the indicator with it. Same for is-info / is-warning / is-danger / is-neutral."
+    },
+    {
+      "kind": "class",
+      "from": null,
+      "to": ".ds-timeline-description",
+      "batch": "6",
+      "note": "New — the supporting text under the title."
+    },
+    {
+      "kind": "token",
+      "from": "(pb-8 on .ds-timeline-item)",
+      "to": "--ds-timeline-gap",
+      "batch": "6",
+      "note": "The source kept the row spacing a Tailwind literal for a tailwind-merge dedupe. Baked into timeline.css; override with this custom property on an item or on the list."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-agenda__day",
+      "to": ".ds-agenda-day",
+      "batch": "6",
+      "note": "Now an <h3> over a <section> per day rather than a bare div."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-agenda__weekday",
+      "to": ".ds-agenda-day-weekday",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-agenda__date",
+      "to": null,
+      "batch": "6",
+      "note": "No replacement — the date is a bare <time datetime> inside the heading."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-agenda__event",
+      "to": ".ds-agenda-event",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-agenda__time",
+      "to": ".ds-agenda-event-time",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-agenda__marker",
+      "to": ".ds-agenda-event-status",
+      "batch": "6",
+      "note": "States move from .is-success to .ds-agenda-event-status--success. Batch 7 replaces the span with a real <Status>."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-agenda__body",
+      "to": ".ds-agenda-event-body",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-agenda__title",
+      "to": ".ds-agenda-event-title",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-agenda__meta",
+      "to": ".ds-agenda-event-meta",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-agenda__empty",
+      "to": ".ds-empty",
+      "batch": "6",
+      "note": "No bespoke empty class: the agenda renders the system's empty state."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-pagination__item",
+      "to": ".ds-button",
+      "batch": "6",
+      "note": "A page is a Button now — .ds-button, plus --icon for the square metric and --primary for the active page."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-pagination__nav",
+      "to": ".ds-button + .ds-pagination-previous / .ds-pagination-next",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-pagination__ellipsis",
+      "to": ".ds-pagination-ellipsis",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": null,
+      "to": ".ds-pagination-content",
+      "batch": "6",
+      "note": "New — the <ul> the page items sit in."
+    },
+    {
+      "kind": "class",
+      "from": null,
+      "to": ".ds-pagination-label",
+      "batch": "6",
+      "note": "New — the prev/next text, hidden below 640px."
+    },
+    {
+      "kind": "class",
+      "from": null,
+      "to": ".ds-pagination-caret",
+      "batch": "6",
+      "note": "New — the prev/next glyph, flipped for RTL."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-toolbar__group",
+      "to": ".ds-toolbar-group",
+      "batch": "6"
+    },
+    {
+      "kind": "class",
+      "from": ".ds-toolbar__spacer",
+      "to": ".ds-toolbar-spacer",
+      "batch": "6",
+      "note": "Kept, but the bar is width: fit-content now, so the spacer only does anything on a toolbar widened past its content."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-toolbar--bordered",
+      "to": null,
+      "batch": "6",
+      "note": "Removed — the bar is boxed by default, which is what --bordered opted into."
+    },
+    {
+      "kind": "class",
+      "from": null,
+      "to": ".ds-toolbar-button / -link / -input / -separator",
+      "batch": "6",
+      "note": "New parts."
+    },
+    {
+      "kind": "class",
+      "from": null,
+      "to": ".ds-table-container / -header / -body / -footer / -row / -head / -cell / -caption",
+      "batch": "6",
+      "note": "New — the part grammar the composed <Table> renders. 0.11's .ds-table th/td, --hover, __num, __name and __row-action are PRESERVED alongside it: four files under examples/ plus docs read them, and no React component on either side would have re-classed them."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-spinner (drawn ring)",
+      "to": ".ds-spinner",
+      "batch": "6",
+      "note": "Kept for hand-written HTML, scoped `:not(svg)`. The React binding spins a glyph instead, and the rotation is shared."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-banner (fixed yellow)",
+      "to": ".ds-banner--warning",
+      "batch": "6",
+      "note": "The bare class is now the neutral tone. The 0.11 identity is the warning tone."
+    },
+    {
+      "kind": "class",
+      "from": null,
+      "to": ".ds-banner-content / -title / -action",
+      "batch": "6",
+      "note": "New parts."
     }
   ],
   "notes": [

@@ -1,43 +1,78 @@
-/* Breadcrumb — .ds-breadcrumb (compact path trail; "/" separators)
-   An ordered list of links ending in the current page. Links are soft ink,
-   the current page is full ink, and a faint "/" separates the items. */
-.ds-breadcrumb {
+/* ============================================================================
+   Breadcrumb — .ds-breadcrumb-list
+   ----------------------------------------------------------------------------
+   A path trail: uppercase micro-caps links ending in the current page. The
+   separator is a caret element rather than 0.x's "/" pseudo-element, because a
+   caret can be flipped for RTL and a generated "/" cannot — and because the
+   separator is now its own <li role="presentation">, which is what keeps the
+   slash out of the accessible name of the item beside it.
+
+   Renamed from 0.x's .ds-breadcrumb / __item / __link. The root <nav> carries
+   no class of its own now; .ds-breadcrumb-list is the flex row.
+   ============================================================================ */
+.ds-breadcrumb-list {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0;
+  gap: 0.375rem;
   margin: 0;
   padding: 0;
   list-style: none;
+  overflow-wrap: break-word;
+  color: var(--ds-ink-faint);
   font-family: var(--ds-font-sans);
-  font-size: var(--ds-text-sm);
-  line-height: var(--ds-leading-tight);
+  font-size: var(--ds-text-xs);
+  line-height: 1rem;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+}
+@media (min-width: 640px) {
+  .ds-breadcrumb-list {
+    gap: 0.625rem;
+  }
 }
 
-.ds-breadcrumb__item {
+.ds-breadcrumb-item {
   display: inline-flex;
   align-items: center;
-  color: var(--ds-ink-soft);
+  gap: 0.375rem;
 }
-.ds-breadcrumb__item::after {
-  content: "/";
-  margin: 0 var(--ds-space-2);
-  color: var(--ds-ink-faint);
-}
-.ds-breadcrumb__item:last-child::after { content: none; }
 
-/* Links — soft ink, ink on hover, sharp focus ring */
-.ds-breadcrumb__link {
-  color: var(--ds-ink-soft);
+.ds-breadcrumb-link {
+  color: inherit;
   text-decoration: none;
   border-radius: var(--ds-radius-none);
   transition: color var(--ds-transition);
 }
-.ds-breadcrumb__link:hover { color: var(--ds-ink); }
-.ds-breadcrumb__link:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: 2px; }
-
-/* Current page — full ink, not a link */
-.ds-breadcrumb__item[aria-current="page"] {
+.ds-breadcrumb-link:hover {
   color: var(--ds-ink);
+}
+.ds-breadcrumb-link:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: 2px;
+}
+
+.ds-breadcrumb-page {
   font-weight: 500;
+  color: var(--ds-ink);
+}
+
+.ds-breadcrumb-separator > svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+:where([dir="rtl"], [dir="rtl"] *) .ds-breadcrumb-separator-icon {
+  rotate: 180deg;
+}
+
+.ds-breadcrumb-ellipsis {
+  display: flex;
+  width: 1.25rem;
+  height: 1.25rem;
+  align-items: center;
+  justify-content: center;
+}
+.ds-breadcrumb-ellipsis > svg {
+  width: 1rem;
+  height: 1rem;
 }

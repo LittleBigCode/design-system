@@ -4,6 +4,110 @@ All notable changes to the Diametral Design System are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/), and the project
 adheres to [Semantic Versioning](https://semver.org/) — see [docs/versioning.md](docs/versioning.md).
 
+## [1.0.0-beta.6] — 2026-09-02
+
+Fifteen components, and the batch where **appliers become parts**. Thirteen 0.11
+components that took an `items` array or a bag of content props are replaced by the
+source's composable parts; `Table` arrives with no incumbent at all; `Banner` moves out
+of the barrel into its own module and gains a tone axis. **This batch acquires no
+dependency** — `Avatar`, `Progress` and `Toolbar` reach for Base UI, already installed.
+Published on the `next` dist-tag; `latest` stays at 0.11.0 for the whole migration.
+
+Every removed prop has a replacement or a recipe in
+[`docs/migration/from-0.11.md`](docs/migration/from-0.11.md), generated from the 83 rows
+this batch adds to `renames.json` — the largest rename set in the migration.
+
+### Added
+- **`Table`** — the composed data table 0.11 never had a binding for: it shipped
+  `table.css` and nothing that rendered it. `Table` wraps itself in a scroll container
+  and its parts are `TableHeader` / `TableBody` / `TableFooter` / `TableRow` /
+  `TableHead` / `TableCell` / `TableCaption`. `DataGrid` is untouched and stays the
+  stateful table — sorting, selection, editing, its own state.
+- **`Banner`'s six-tone axis** — `BannerContent`, `BannerTitle`, `BannerDescription`
+  and `BannerAction`, with `tone` over the same `--ds-<tone>-bg` family every other
+  status surface reads. 0.11's fixed pale-yellow identity is now `tone="warning"`, and
+  the default is `neutral`, because a banner that is always shouting is a banner nobody
+  reads.
+- **`KbdGroup`**, **`AvatarBadge`**, **`AvatarGroupCount`**, **`BreadcrumbPage`**,
+  **`BreadcrumbSeparator`**, **`BreadcrumbEllipsis`**, **`EmptyMedia`**, **`EmptyHeader`**,
+  **`TimelineDescription`**, **`ToolbarButton` / `ToolbarLink` / `ToolbarInput` /
+  `ToolbarSeparator`**, **`ProgressTrack` / `ProgressIndicator` / `ProgressLabel` /
+  `ProgressValue`** — parts that had no 0.11 counterpart.
+- **`paginationRange({ page, pageCount, siblingCount })`** — 0.11's page-window logic,
+  exported as a pure function rather than buried in a controlled component.
+- **`--ds-timeline-gap`** — the row-spacing knob that replaced the source's `pb-8`
+  Tailwind literal.
+
+### Changed
+- **Three components gain behaviour, not only shape.** `Avatar` is Base UI's, so the
+  fallback appears only once the image has actually failed or is still loading, rather
+  than sitting under a transparent `<img>` that never arrives. `Progress` is Base UI's,
+  so `value={null}` is a real indeterminate state with the primitive's ARIA. `Toolbar`
+  is Base UI's, so the whole strip is **one** tab stop with arrow-key navigation —
+  0.11's flex row made every control in it its own stop.
+- **`EmptyState` → `Empty`**, with `icon`/`title`/`description`/`actions` becoming
+  `EmptyMedia` / `EmptyTitle` / `EmptyDescription` / `EmptyContent`.
+- **`Pagination` is parts.** `page` / `pageCount` / `onChange` are gone; the window
+  logic ships intact as `paginationRange()` and the recipe for rebuilding the
+  controlled pager is ~10 lines in the migration guide. What the parts buy is a page
+  that can be a real `<a href>` — crawlable and middle-clickable — which a button
+  cannot be.
+- **`Agenda`** keeps its `events` / `emptyMessage` API and gains `locale`, a `<section>`
+  per day under a real `<h3>`, and the system's `Empty` for its empty state. 0.11
+  hardcoded English weekday and month tables and emitted a flat run of divs.
+- **`Stepper` renders 0.11's classes on purpose.** `stepper.css` is a cross-boundary
+  pin — `Wizard` renders the whole `.ds-stepper__marker` / `__label` / `__step` block
+  and does not move in this migration — so the parts API is the source's and the class
+  grammar is the incumbent's. There is no `StepperSeparator`: the connector is a
+  `::after` on the step.
+- **`Toolbar` is boxed by default**, which is what `--bordered` used to opt into, and
+  is `width: fit-content`. `.ds-toolbar-spacer` survives for a hand-written bar you
+  widen yourself.
+- **`Progress`'s tones** are `--tone-*` and six wide; `status="success"` becomes
+  `tone="success"`.
+- **`Timeline`'s tone** moves from the dot to the item, where the semantics are, and
+  `data-state="completed" | "active"` fills or outlines the indicator with it.
+- **`Avatar`'s size** moves from `--sm`/`--lg` classes to `data-size`, so a group can
+  size its overflow count off its members with a `:has()` rule.
+- **`Breadcrumb`'s separator** is its own presentational `<li>` holding a caret rather
+  than a generated `::after`: an element can be flipped for RTL, and it stays out of
+  the accessible name of the item beside it.
+
+### Fixed
+- **The `kbd` / `input-group` cascade inversion, one batch early.** The source layers
+  `kbd.css` so `InputGroupAddon`'s Tailwind utility keeps outranking
+  `background: var(--input)`. This package has no `@layer` and no Tailwind, so
+  transcribing that would have inverted the cascade and shipped it inverted in beta.6
+  *and* beta.7. `kbd.css` carries what the utility resolved to as a plain rule instead,
+  and drops the losing declaration. Batch 7 has nothing to undo.
+- **`Progress`'s indeterminate state.** The source draws nothing for it; the animation
+  is kept and keyed off both Base UI's `data-indeterminate` and 0.11's modifier class.
+- **`EmptyDescription`** rendered a `<div>` while typed as a `<p>`, and `EmptyMedia`
+  emitted `data-slot="empty-icon"`. Both corrected.
+
+### Fixed (theme tokens)
+- **The dark theme had no status ink.** `css/themes/dark.css` overrode every
+  `--ds-*-bg` tint but left the `--ds-*-ink` shades at their light-theme values,
+  which are darker colours tuned to read on a *pale* tint. On dark that is dark
+  text on a dark tint: `.ds-tag--success` and `.ds-banner--info` measured under
+  2:1. The four ink tokens now have dark mirrors, each clearing 4.5:1 on its own
+  tint, on `--ds-bg` and on `--ds-surface`. Fixed in the token layer rather than
+  in `banner.css`, because `tag.css` and `chip.css` read the same family and
+  `tag.css` is frozen.
+
+### Preserved
+Three 0.11 renderings survive their wholesale replacement, each because no React
+component on either side would have re-classed their readers:
+- **`table.css`'s element grammar** — `.ds-table th`/`td`, `--hover`, `__num`, `__name`,
+  `__row-action` — read by four files under `examples/` plus `docs/`. It sits beside the
+  new part grammar, kept apart by `:not(.ds-table-head)` / `:not(.ds-table-cell)` guards
+  and a `.ds-table-container > .ds-table` rule that drops the frame for the composed
+  component.
+- **`.ds-spinner`'s drawn ring**, under `:not(svg)`. The React binding spins a Phosphor
+  glyph; hand-written HTML has no glyph to spin, and without the ring every non-React
+  consumer got an invisible rotating box.
+- **`.ds-toolbar-spacer`**, for a hand-written full-width bar.
+
 ## [1.0.0-beta.5] — 2026-09-02
 
 Eight net-new charts, all composing beta.4's substrate, all landing in clean

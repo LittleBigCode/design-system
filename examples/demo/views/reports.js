@@ -2,9 +2,19 @@ import React from "react";
 const { useState } = React;
 import { h, F } from "../ui.js";
 import {
-  PageHeader, Toolbar, DateRangePicker, Select, StatCard, Card,
-  BarChart, Gauge, LineChart, PieChart,
+  Toolbar,
+  DateRangePicker,
+  Select,
+  StatCard,
+  Card,
+  BarChart,
+  Gauge,
+  LineChart,
+  PieChart,
 } from "../../../dist/react/index.js";
+import {
+  PageHeader,
+} from "../compat.js";
 import { FUNNEL, UTIL_BY_DEPT, ENTITY_SPLIT, MARGIN_TREND, MONTHS } from "../data.js";
 
 const ENTITY_OPTS = [

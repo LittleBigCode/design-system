@@ -28,22 +28,23 @@
         <section class="ds-example">
           <header class="ds-example__bar"><span class="ds-label">.ds-page-header</span><button class="ds-button" data-copy-target="#c-ph">Copy</button></header>
           <div class="ds-example__preview ds-example__preview--block">
-            <header class="ds-page-header ds-page-header--flush">
-              <nav aria-label="Breadcrumb"><ol class="ds-breadcrumb">
-                <li class="ds-breadcrumb__item"><a class="ds-breadcrumb__link" href="#">Projects</a></li>
-                <li class="ds-breadcrumb__item" aria-current="page">Project Atlas</li>
+            <header class="ds-page-header">
+              <nav aria-label="breadcrumb"><ol class="ds-breadcrumb-list">
+                <li class="ds-breadcrumb-item"><a class="ds-breadcrumb-link" href="#">Projects</a></li>
+                <li class="ds-breadcrumb-separator" role="presentation" aria-hidden="true">›</li>
+                <li class="ds-breadcrumb-item"><span class="ds-breadcrumb-page" role="link" aria-disabled="true" aria-current="page">Project Atlas</span></li>
               </ol></nav>
-              <div class="ds-page-header__top">
+              <div class="ds-page-header-heading">
                 <div>
-                  <h1 class="ds-page-header__title">Project Atlas</h1>
-                  <p class="ds-page-header__subtitle">Acme · Build</p>
+                  <h1 class="ds-page-header-title">Project Atlas</h1>
+                  <p class="ds-page-header-description">Acme · Build</p>
                 </div>
-                <div class="ds-page-header__actions">
+                <div class="ds-page-header-actions">
                   <button class="ds-button">Edit</button>
                   <button class="ds-button ds-button--primary">New milestone</button>
                 </div>
               </div>
-              <div class="ds-page-header__tabs">
+              <div data-slot="page-header-tabs">
                 <div class="ds-tabs" role="tablist">
                   <button class="ds-tabs__tab is-active" role="tab" aria-selected="true">Overview</button>
                   <button class="ds-tabs__tab" role="tab" aria-selected="false">Activity</button>
@@ -52,19 +53,19 @@
               </div>
             </header>
           </div>
-          <pre class="ds-example__code"><code id="c-ph">&lt;header class="ds-page-header ds-page-header--flush"&gt;
-  &lt;nav class="ds-breadcrumb"&gt;…&lt;/nav&gt;
-  &lt;div class="ds-page-header__top"&gt;
+          <pre class="ds-example__code"><code id="c-ph">&lt;header class="ds-page-header"&gt;
+  &lt;nav aria-label="breadcrumb"&gt;&lt;ol class="ds-breadcrumb-list"&gt;…&lt;/ol&gt;&lt;/nav&gt;
+  &lt;div class="ds-page-header-heading"&gt;
     &lt;div&gt;
-      &lt;h1 class="ds-page-header__title"&gt;Project Atlas&lt;/h1&gt;
-      &lt;p class="ds-page-header__subtitle"&gt;Acme · Build&lt;/p&gt;
+      &lt;h1 class="ds-page-header-title"&gt;Project Atlas&lt;/h1&gt;
+      &lt;p class="ds-page-header-description"&gt;Acme · Build&lt;/p&gt;
     &lt;/div&gt;
-    &lt;div class="ds-page-header__actions"&gt;
+    &lt;div class="ds-page-header-actions"&gt;
       &lt;button class="ds-button"&gt;Edit&lt;/button&gt;
       &lt;button class="ds-button ds-button--primary"&gt;New milestone&lt;/button&gt;
     &lt;/div&gt;
   &lt;/div&gt;
-  &lt;div class="ds-page-header__tabs"&gt;&lt;div class="ds-tabs"&gt;…&lt;/div&gt;&lt;/div&gt;
+  &lt;div data-slot="page-header-tabs"&gt;&lt;div class="ds-tabs"&gt;…&lt;/div&gt;&lt;/div&gt;
 &lt;/header&gt;</code></pre>
         </section>
       </section>
@@ -73,14 +74,32 @@
         <h2>React</h2>
         <section class="ds-example">
           <header class="ds-example__bar"><span class="ds-label">&lt;PageHeader&gt;</span><button class="ds-button" data-copy-target="#c-ph-react">Copy</button></header>
-          <pre class="ds-example__code"><code id="c-ph-react">import { PageHeader, Breadcrumb, Button } from "@diametral/design-system/react";
+          <pre class="ds-example__code"><code id="c-ph-react">import {
+  PageHeader,
+  PageHeaderHeading,
+  PageHeaderTitle,
+  PageHeaderDescription,
+  PageHeaderActions,
+  PageHeaderTabs,
+  Button,
+} from "@diametral/design-system/react";
 
-&lt;PageHeader
-  breadcrumb={&lt;Breadcrumb items={[{ label: "Projects", href: "#" }, { label: "Project Atlas" }]} /&gt;}
-  title="Project Atlas"
-  subtitle="Acme · Build"
-  actions={&lt;&gt;&lt;Button&gt;Edit&lt;/Button&gt;&lt;Button variant="primary"&gt;New milestone&lt;/Button&gt;&lt;/&gt;}
-/&gt;</code></pre>
+{/* PageHeaderTabs is only a slot marker: its presence is what moves the bottom
+    rule under the strip, through a :has() rule. 0.11's `flush` prop is gone
+    because the markup now says it. */}
+&lt;PageHeader&gt;
+  &lt;PageHeaderHeading&gt;
+    &lt;div&gt;
+      &lt;PageHeaderTitle&gt;Project Atlas&lt;/PageHeaderTitle&gt;
+      &lt;PageHeaderDescription&gt;Acme · Build&lt;/PageHeaderDescription&gt;
+    &lt;/div&gt;
+    &lt;PageHeaderActions&gt;
+      &lt;Button&gt;Edit&lt;/Button&gt;
+      &lt;Button variant="primary"&gt;New milestone&lt;/Button&gt;
+    &lt;/PageHeaderActions&gt;
+  &lt;/PageHeaderHeading&gt;
+  &lt;PageHeaderTabs&gt;&lt;Tabs items={VIEWS} defaultValue="overview" /&gt;&lt;/PageHeaderTabs&gt;
+&lt;/PageHeader&gt;</code></pre>
         </section>
       </section>
 

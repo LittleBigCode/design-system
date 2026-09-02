@@ -1,76 +1,71 @@
-/* Pagination — .ds-pagination (numbered page strip with prev/next + ellipsis)
-   A flat row of 1px-bordered square buttons. The active page fills with ink;
-   prev/next nav buttons mirror that border and dim when disabled. */
+/* ============================================================================
+   Pagination — .ds-pagination
+   ----------------------------------------------------------------------------
+   A row of page links built out of Buttons, with prev/next controls whose text
+   label appears only once there is width for it. The window itself — which page
+   numbers show and where the ellipses fall — is `paginationRange()` in
+   pagination.tsx, a pure function rather than a prop.
+
+   The source left `mx-auto`, `w-full` and `justify-center` literal Tailwind
+   utilities on Pagination's own className so a demo could override all three.
+   Baked here instead: there is no tailwind-merge to dedupe against, and a
+   consumer overrides by setting margin/width/justify-content on .ds-pagination.
+
+   Renamed from 0.x's __item / __nav / __ellipsis. The page buttons are Buttons
+   now, so their metrics come from button.css and nothing is restated here.
+   ============================================================================ */
 .ds-pagination {
   display: flex;
-  align-items: center;
-  gap: var(--ds-space-1);
+  margin-inline: auto;
+  width: 100%;
+  justify-content: center;
   font-family: var(--ds-font-sans);
 }
 
-/* Page buttons — square, single border, tabular figures */
-.ds-pagination__item {
-  min-width: 32px;
-  height: 32px;
-  padding: 0 var(--ds-space-2);
-  display: inline-flex;
+.ds-pagination-content {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: var(--ds-text-sm);
-  font-variant-numeric: tabular-nums;
-  border: 1px solid var(--ds-rule);
-  background: var(--ds-surface);
-  color: var(--ds-ink-soft);
-  cursor: pointer;
-  border-radius: var(--ds-radius-none);
-  transition: background-color var(--ds-transition), color var(--ds-transition), border-color var(--ds-transition);
-}
-.ds-pagination__item:hover { background: var(--ds-bg-alt); color: var(--ds-ink); }
-.ds-pagination__item:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: 2px; }
-
-.ds-pagination__item.is-active,
-.ds-pagination__item[aria-current="page"] {
-  background: var(--ds-ink);
-  border-color: var(--ds-ink);
-  color: var(--ds-on-accent);
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-/* Prev / next nav buttons — same metrics, disabled state dims + locks */
-.ds-pagination__nav {
-  min-width: 32px;
-  height: 32px;
-  padding: 0 var(--ds-space-3);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--ds-text-sm);
-  border: 1px solid var(--ds-rule);
-  background: var(--ds-surface);
-  color: var(--ds-ink);
-  cursor: pointer;
-  border-radius: var(--ds-radius-none);
-  transition: background-color var(--ds-transition), color var(--ds-transition);
-}
-.ds-pagination__nav:hover { background: var(--ds-bg-alt); }
-.ds-pagination__nav:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: 2px; }
-.ds-pagination__nav:disabled,
-.ds-pagination__nav[disabled],
-.ds-pagination__nav[aria-disabled="true"] {
-  opacity: .45;
-  cursor: not-allowed;
-}
-.ds-pagination__nav:disabled:hover,
-.ds-pagination__nav[disabled]:hover,
-.ds-pagination__nav[aria-disabled="true"]:hover { background: var(--ds-surface); }
+/* The page links are anchors wearing .ds-button; anchors carry an underline
+   that a <button> does not. */
+.ds-pagination a.ds-button { text-decoration: none; }
 
-/* Ellipsis gap marker — non-interactive */
-.ds-pagination__ellipsis {
-  min-width: 32px;
-  height: 32px;
-  display: inline-flex;
+.ds-pagination-previous {
+  padding-inline-start: 0.5rem !important;
+}
+
+.ds-pagination-next {
+  padding-inline-end: 0.5rem !important;
+}
+
+:where([dir="rtl"], [dir="rtl"] *) .ds-pagination-caret {
+  rotate: 180deg;
+}
+
+.ds-pagination-label {
+  display: none;
+}
+@media (min-width: 640px) {
+  .ds-pagination-label {
+    display: block;
+  }
+}
+
+.ds-pagination-ellipsis {
+  display: flex;
+  width: 2.25rem;
+  height: 2.25rem;
   align-items: center;
   justify-content: center;
-  font-size: var(--ds-text-sm);
   color: var(--ds-ink-faint);
   user-select: none;
+}
+.ds-pagination-ellipsis svg {
+  width: 1rem;
+  height: 1rem;
 }

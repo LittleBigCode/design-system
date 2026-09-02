@@ -1,4 +1,4 @@
-import { Avatar } from "@diametral/design-system/react"
+import { Avatar, AvatarFallback } from "@diametral/design-system/react"
 import { Bubble, BubbleContent } from "@diametral/design-system/react"
 import {
   Message,
@@ -13,7 +13,9 @@ export default function MessageWithFooter() {
     <MessageGroup className="max-w-md">
       <Message>
         <MessageAvatar>
-          <Avatar size="sm" initials="CR" />
+          <Avatar size="sm">
+            <AvatarFallback>CR</AvatarFallback>
+          </Avatar>
         </MessageAvatar>
         <MessageContent>
           <Bubble variant="muted">
@@ -25,7 +27,9 @@ export default function MessageWithFooter() {
 
       <Message align="end">
         <MessageAvatar>
-          <Avatar size="sm" initials="AM" />
+          <Avatar size="sm">
+            <AvatarFallback>AM</AvatarFallback>
+          </Avatar>
         </MessageAvatar>
         <MessageContent>
           <Bubble>

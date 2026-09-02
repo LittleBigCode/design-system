@@ -1,12 +1,35 @@
 /* Core views: Overview, Inbox, Settings. */
 import React from "react";
 import {
-  StatCard, Sparkline, LineChart, DonutChart, Card,
-  Avatar, Tooltip, IconButton, Button, Field, Textarea, EmptyState,
-  Tabs, Input, FieldHint, Select, Switch, useToast,
-  useForm, FormField, ColorPicker, DatePicker, MultiSelect,
-  useResource, Skeleton, Alert,
+  StatCard,
+  Sparkline,
+  LineChart,
+  DonutChart,
+  Card,
+  Tooltip,
+  IconButton,
+  Button,
+  Field,
+  Textarea,
+  Tabs,
+  Input,
+  FieldHint,
+  Select,
+  Switch,
+  useToast,
+  useForm,
+  FormField,
+  ColorPicker,
+  DatePicker,
+  MultiSelect,
+  useResource,
+  Skeleton,
+  Alert,
 } from "../../../dist/react/index.js";
+import {
+  Avatar,
+  EmptyState,
+} from "../compat.js";
 import { h, F } from "../ui.js";
 import { MESSAGES } from "../data.js";
 import { fetchMetrics } from "../api.js";

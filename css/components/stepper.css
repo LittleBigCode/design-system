@@ -87,3 +87,59 @@
   font-size: var(--ds-text-sm);
 }
 .ds-stepper__step.is-complete .ds-stepper__label { color: var(--ds-ink); }
+
+/* ---- Additive, batch 6 ---------------------------------------------------
+   This file is HELD: `Wizard` renders the whole .ds-stepper__step / __marker /
+   __label block above and does not move in this migration, so none of it is
+   renamed. The two rules below are additions only, and neither can reach
+   Wizard's markup — it renders no wrapper element and no data-orientation.
+
+   `__content` is the source Stepper's transparent wrapper around a title and
+   its description; `display: contents` keeps both as direct flex children of
+   the step, so the spacing above stays the spacing that applies. */
+.ds-stepper__content { display: contents; }
+
+/* Vertical rail — steps stack, the connector runs down the marker column
+   instead of across it, and the labels sit beside the marker rather than under
+   it. Only the source's `orientation="vertical"` reaches this.
+
+   The step becomes a two-column grid rather than a flex row so that the title
+   and the description each land in the second column on their own line. That
+   holds whether or not the caller wrapped them in `__content`, which is
+   `display: contents` and therefore not a box that could stack them itself. */
+.ds-stepper[data-orientation="vertical"] {
+  flex-direction: column;
+  align-items: stretch;
+}
+.ds-stepper[data-orientation="vertical"] .ds-stepper__step {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: var(--ds-space-3);
+  align-items: start;
+  text-align: start;
+  padding-bottom: var(--ds-space-5);
+}
+.ds-stepper[data-orientation="vertical"] .ds-stepper__step:last-child {
+  padding-bottom: 0;
+}
+.ds-stepper[data-orientation="vertical"] .ds-stepper__marker {
+  grid-row: 1;
+  grid-column: 1;
+}
+.ds-stepper[data-orientation="vertical"] .ds-stepper__label,
+.ds-stepper[data-orientation="vertical"] .ds-stepper__desc {
+  grid-column: 2;
+  margin-top: 0;
+}
+.ds-stepper[data-orientation="vertical"] .ds-stepper__desc {
+  margin-top: var(--ds-space-1);
+}
+/* Connector runs down the marker column instead of across the row. */
+.ds-stepper[data-orientation="vertical"] .ds-stepper__step::after {
+  top: 28px;
+  left: 14px;
+  width: 1px;
+  height: auto;
+  bottom: 0;
+}

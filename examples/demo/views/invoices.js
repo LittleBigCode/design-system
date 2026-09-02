@@ -3,9 +3,18 @@ import React from "react";
 const { useState } = React;
 import { h, F, money, statusTag } from "../ui.js";
 import {
-  PageHeader, Button, StatCard, Card, BarChart, Timeline,
-  DataGrid, Drawer, DescriptionList,
+  Button,
+  StatCard,
+  Card,
+  BarChart,
+  DataGrid,
+  Drawer,
 } from "../../../dist/react/index.js";
+import {
+  PageHeader,
+  Timeline,
+  DescriptionList,
+} from "../compat.js";
 import { REVENUE_BARS } from "../data.js";
 import { jsonLoadPage } from "../api.js";
 
