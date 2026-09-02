@@ -1,7 +1,8 @@
 /* ============================================================================
    Dark theme
-   Overrides Tier-2 SEMANTIC tokens only — primitives and component rules are
-   untouched. Activates under any of the three conventions found in the wild,
+   Overrides Tier-2 SEMANTIC tokens, plus one primitive: the --ds-heat-* ramp,
+   which is sequential and has to invert. Component rules are untouched.
+   Activates under any of the three conventions found in the wild,
    so it is drop-in for apps using [data-theme], .dark, or :root.dark-theme.
 
    Opt-in: import this file, then set the attribute/class on a root element.
@@ -32,6 +33,17 @@
   --ds-info-bg:     rgba(20, 136, 166, .20);
   --ds-neutral-bg:  rgba(255, 255, 255, .08);
   --ds-critical-bg: rgba(255, 255, 255, .08);
+
+  /* The one primitive this theme overrides. A sequential ramp encodes magnitude
+     as colour, so "more" has to mean *further from the page* — on dark that is
+     brighter, and the light ramp's darkest step would sink into the background
+     instead of lifting off it. The categorical --ds-chart-* ramp needs no such
+     flip: its slots mean identity, not amount. */
+  --ds-heat-1: #1d4250;
+  --ds-heat-2: #275f73;
+  --ds-heat-3: #327f99;
+  --ds-heat-4: #47a3bd;
+  --ds-heat-5: #6ec6dd;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -52,5 +64,10 @@
     --ds-info-bg:     rgba(20, 136, 166, .20);
     --ds-neutral-bg:  rgba(255, 255, 255, .08);
     --ds-critical-bg: rgba(255, 255, 255, .08);
+    --ds-heat-1: #1d4250;
+    --ds-heat-2: #275f73;
+    --ds-heat-3: #327f99;
+    --ds-heat-4: #47a3bd;
+    --ds-heat-5: #6ec6dd;
   }
 }

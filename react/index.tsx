@@ -515,6 +515,22 @@ export * from "./components/gauge.js";
 export * from "./components/sparkline.js";
 export * from "./lib/chart-series.js";
 
+/* Batch 5 — net-new charts (1.0.0-beta.5)
+   Eight forms 0.11 had no answer for, and no new dependency: six of them are
+   recharts wrappers over batch 4's `ChartContainer`/`ChartTooltip`/
+   `ChartLegend`, so recharts is substrate already paid for. `Heatmap` and
+   `BulletChart` are the other two, and both are library-free CSS grid and divs
+   — like `Gauge` and `Sparkline`, their markup is reproducible by any binding.
+   `Treemap` is the chart, not the `Tree` navigation control. */
+export * from "./components/radar-chart.js";
+export * from "./components/combo-chart.js";
+export * from "./components/funnel-chart.js";
+export * from "./components/scatter-chart.js";
+export * from "./components/treemap.js";
+export * from "./components/waterfall-chart.js";
+export * from "./components/heatmap.js";
+export * from "./components/bullet-chart.js";
+
 /* Types several modules re-declare. Naming the canonical module here is what
    keeps `export *` unambiguous. */
 export type { DateLike } from "./components/DatePicker.js";

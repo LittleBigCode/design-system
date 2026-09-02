@@ -165,6 +165,22 @@
 @import url("./components/pie-chart.css");
 @import url("./components/donut-chart.css");
 
+/* Batch 5 — net-new charts (1.0.0-beta.5)
+   Eight net-new forms, all in clean namespace, and no new dependency: recharts
+   is the substrate batch 4 already paid for. Six of them are a
+   `.ds-chart-container` plus recharts nodes, so their stylesheets are thin —
+   the box, a couple of SVG label inks, one custom tooltip — and every one has
+   to load after .ds-chart-container is defined. heatmap.css and
+   bullet-chart.css are the exceptions: both are library-free CSS grid and divs
+   with no container and no SVG, so they stand alone. */
+@import url("./components/radar-chart.css");
+@import url("./components/scatter-chart.css");
+@import url("./components/funnel-chart.css");
+@import url("./components/treemap.css");
+@import url("./components/waterfall-chart.css");
+@import url("./components/heatmap.css");
+@import url("./components/bullet-chart.css");
+
 /* Alternate themes — scoped to [data-theme="dark"|"sepia"], inert until a theme
    is set on a root element (e.g. by ConsoleLayout's Light/Dark/Sepia switcher). */
 @import url("./themes/dark.css");

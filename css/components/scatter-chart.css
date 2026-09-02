@@ -1,0 +1,20 @@
+/* ============================================================================
+   Scatter chart — .ds-scatter-chart-root
+   ----------------------------------------------------------------------------
+   A `ScatterChart` is a `.ds-chart-container--plot` with one or more recharts
+   <Scatter> series in it, so the box is all this file owns — and of the box,
+   only the height: `--plot` already gives it its full width.
+
+   This is the file's dedupe exception, resolved. `h-64` was a literal Tailwind
+   class on the component's own className in the source, kept literal so
+   `tailwind-merge` could dedupe a caller's `h-72` override against it. Here it
+   is a default for `--ds-chart-height`, declared on the root rather than in
+   chart.css because a scatter is taller than the axis charts' 14rem — a cloud
+   needs vertical range to read as a cloud. A caller's inline
+   `--ds-chart-height` lands on this same element and so wins over this rule,
+   which is deterministic where two competing height classes would depend on
+   stylesheet order.
+   ============================================================================ */
+.ds-scatter-chart-root {
+  --ds-chart-height: 16rem;
+}

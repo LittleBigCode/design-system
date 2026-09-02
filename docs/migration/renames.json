@@ -202,6 +202,20 @@
       "to": "css/components/chart.css, css/components/gauge.css, css/components/stacked-bar.css, css/components/pie-chart.css, css/components/donut-chart.css",
       "batch": "4",
       "note": "Anyone importing css/diametral.css is unaffected. A consumer cherry-picking the two old files has to swap them for the five new ones (and keep css/components/sparkline.css, which was already separate)."
+    },
+    {
+      "kind": "token",
+      "from": "(none \u2014 the label and value column widths were Tailwind arbitrary-property classes in the source)",
+      "to": "--ds-bullet-label, --ds-bullet-value",
+      "batch": "5",
+      "note": "The knobs that replaced the source's `[--bullet-label:7rem]` / `[--bullet-value:4rem]` literals on BulletChart's own className. `.ds-bullet-chart` declares both as its defaults and reads them in `grid-template-columns`; set either on the chart or on a wrapper to retune one bullet or a whole stack. Unprefixed `--bullet-*` is not read \u2014 every custom property in this package is `--ds-*`."
+    },
+    {
+      "kind": "token",
+      "from": "(none \u2014 net-new)",
+      "to": "--ds-heat-1 \u2026 --ds-heat-5",
+      "batch": "5",
+      "note": "The sequential ramp `.ds-heatmap` quantises into, one hue getting darker. Separate from the categorical `--ds-chart-*` ramp on purpose: reading a categorical ramp as a scale is the classic dataviz error. It is also the one Tier-1 primitive css/themes/dark.css overrides \u2014 a sequential ramp encodes magnitude, so \"more\" has to mean brighter on a dark page. A theme that recolours data now has two ramps to consider, not one."
     }
   ],
   "notes": [

@@ -1,0 +1,104 @@
+/* ============================================================================
+   Bullet chart — .ds-bullet-chart
+   ----------------------------------------------------------------------------
+   Stephen Few's bullet graph: one measure bar, one target tick across it, and
+   two or three qualitative bands behind both. Library-free — plain divs and
+   percentages, no SVG and no chart library, so a non-React binding renders it
+   from the same markup.
+
+   Three columns, and both outer ones are a fixed width rather than sized to
+   their content. That is the point: the primary use is a *stack* of these, and
+   intrinsic columns would leave every row starting at a different x. The widths
+   are read through `--ds-bullet-label` and `--ds-bullet-value`, so a container
+   retunes a whole stack at once and a table cell collapses the label column to
+   zero.
+
+   Those two knobs are this file's dedupe exception, resolved. The source seeded
+   the defaults as literal Tailwind arbitrary-property classes
+   (`[--bullet-label:7rem]`) on the component's own className so `tailwind-merge`
+   could dedupe a caller's override against them. This package has no Tailwind
+   and no merge pass, so the defaults are real declarations here and the
+   override is the custom property — deterministic where two competing classes
+   would be settled by stylesheet order.
+
+   Band fills are set per band in bullet-chart.tsx, because which tone a band
+   carries is the caller's. They are always surface *tints*
+   (`--ds-success-bg` and kin), never a tone ink at reduced opacity: fading an
+   ink re-opens the AA failure the tone tokens exist to close, and a band sits
+   *under* the measure bar, so it has to behave like a surface.
+   ============================================================================ */
+.ds-bullet-chart {
+  --ds-bullet-label: 7rem;
+  --ds-bullet-value: 4rem;
+  display: grid;
+  grid-template-columns: var(--ds-bullet-label) 1fr var(--ds-bullet-value);
+  align-items: center;
+  gap: var(--ds-space-3);
+}
+
+.ds-bullet-chart-info {
+  min-width: 0;
+}
+
+.ds-bullet-chart-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--ds-text-base);
+  font-weight: 500;
+}
+
+.ds-bullet-chart-caption {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--ds-text-xs);
+  color: var(--ds-ink-faint);
+}
+
+/* The band/measure/target stack. `position: relative` is the containing block
+   all three read their percentages against. */
+.ds-bullet-chart-track {
+  position: relative;
+  block-size: 1rem;
+  inline-size: 100%;
+}
+
+/* A qualitative range. `left`/`width` are set per band; the fill is too. */
+.ds-bullet-chart-band {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: var(--ds-radius-none);
+}
+
+/* The actual, drawn as a bar narrower than the track so the bands stay visible
+   above and below it — that contrast is what makes the reading a judgement. */
+.ds-bullet-chart-measure {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  block-size: 0.375rem;
+  translate: 0 -50%;
+  border-radius: var(--ds-radius-none);
+  background-color: var(--ds-ink);
+}
+
+/* The target: full-height and on the accent, because it is the one mark on the
+   chart that is a goal rather than a reading. */
+.ds-bullet-chart-target {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  inline-size: 0.125rem;
+  translate: -50% 0;
+  border-radius: var(--ds-radius-none);
+  background-color: var(--ds-accent);
+}
+
+.ds-bullet-chart-value {
+  text-align: right;
+  font-size: var(--ds-text-base);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}

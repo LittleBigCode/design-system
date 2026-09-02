@@ -9,7 +9,7 @@ showcase page.
 
 ## React components
 
-The 74 components exported from [`@diametral/design-system/react`](react.md). Every row has a live page with runnable examples, and every page is what the visual and accessibility gates drive — so this table and the tested surface cannot disagree.
+The 82 components exported from [`@diametral/design-system/react`](react.md). Every row has a live page with runnable examples, and every page is what the visual and accessibility gates drive — so this table and the tested surface cannot disagree.
 
 > Generated from `site/src/registry/registry.ts` by `scripts/build-components-md.mjs`. Edit the registry, then run `npm run build`.
 
@@ -56,22 +56,30 @@ The 74 components exported from [`@diametral/design-system/react`](react.md). Ev
 | --- | --- | --- |
 | [Area Chart](https://littlebigcode.github.io/design-system/docs/area-chart) | `AreaChart` | `Line Chart` read as a volume — the same props, with a filled band under each series. |
 | [Bar Chart](https://littlebigcode.github.io/design-system/docs/bar-chart) | `BarChart` | Categorical bars with a pinned value axis, a row layout, and per-bar semantic tinting. |
+| [Bullet Chart](https://littlebigcode.github.io/design-system/docs/bullet-chart) | `BulletChart`, `type BulletBand` | An actual against its target and qualitative bands — what `meter`, `gauge` and `progress` cannot say. |
 | [Chart](https://littlebigcode.github.io/design-system/docs/chart) | `ChartContainer`, `ChartTooltip`, `ChartTooltipContent`, `ChartLegend`, `ChartLegendContent`, `ChartStyle` | Recharts wrapped so series colours come from a `ChartConfig` and resolve to brand chart tokens. |
 | [CodeBlock](https://littlebigcode.github.io/design-system/docs/code-block) | `CodeBlock`, `type CodeBlockProps` | A source snippet with a filename strip and a copy button. |
+| [Combo Chart](https://littlebigcode.github.io/design-system/docs/combo-chart) | `ComboChart`, `type ComboSeries` | Bars and a line on one x axis, with a second Y scale — the volume-plus-rate dashboard shape. |
 | [DataGrid](https://littlebigcode.github.io/design-system/docs/data-table) | `DataGrid`, `type DataGridProps`, `type DataGridColumn` | A real `<table>` with sorting, selection, filtering, inline edit and paging. |
 | [Donut Chart](https://littlebigcode.github.io/design-system/docs/donut-chart) | `DonutChart` | `Pie Chart` with the middle cut out, and a figure in the hole. |
+| [Funnel Chart](https://littlebigcode.github.io/design-system/docs/funnel-chart) | `FunnelChart`, `type FunnelConversion` | Ordered conversion stages with the drop-off derived for you from raw counts. |
 | [Gauge](https://littlebigcode.github.io/design-system/docs/gauge) | `Gauge`, `type GaugeThreshold` | A radial progress dial for a bounded value, with optional thresholds that recolour the arc. |
+| [Heatmap](https://littlebigcode.github.io/design-system/docs/heatmap) | `Heatmap`, `type HeatmapCell`, `type HeatmapDay` | Density across two axes as colour — CSS grid, not a chart library, and the only form here that encodes magnitude without position. |
 | [Item](https://littlebigcode.github.io/design-system/docs/item) | `Item`, `ItemMedia`, `ItemContent`, `ItemActions`, `ItemGroup`, `ItemSeparator`, `ItemTitle`, `ItemDescription`, `ItemHeader`, `ItemFooter` | A list row with media, content and actions slots — lighter than a Card for repeated rows. |
 | [Line Chart](https://littlebigcode.github.io/design-system/docs/line-chart) | `LineChart` | A finished line chart over the Chart primitives — grid, axis, tooltip and legend already wired to one `config`. |
 | [Marker](https://littlebigcode.github.io/design-system/docs/marker) | `Marker`, `MarkerIcon`, `MarkerContent`, `markerVariants` | A small inline badge pairing an icon with a label. |
 | [Meter](https://littlebigcode.github.io/design-system/docs/meter) | `Meter`, `MeterTrack`, `MeterIndicator`, `MeterLabel`, `MeterValue`, `meterVariants` | Displays a measured value within a known range — capacity, not task progress. |
 | [Pie Chart](https://littlebigcode.github.io/design-system/docs/pie-chart) | `PieChart` | A whole split into slices, coloured per slice from a `config` keyed by slice name. |
 | [QR Code](https://littlebigcode.github.io/design-system/docs/qr-code) | `QrCode`, `type QrErrorCorrectionLevel` | Renders a QR code as inline SVG from a hand-rolled byte-mode encoder — no dependency, no network, no canvas. Versions 1-10, all four correction levels. |
+| [Radar Chart](https://littlebigcode.github.io/design-system/docs/radar-chart) | `RadarChart` | A spider chart — how two or three entities compare across many dimensions at once. |
 | [Relative Time](https://littlebigcode.github.io/design-system/docs/relative-time) | `RelativeTime`, `formatRelativeTime` | Renders "3 hours ago" from a date, inside a `time` element that keeps the machine-readable timestamp. |
+| [Scatter Chart](https://littlebigcode.github.io/design-system/docs/scatter-chart) | `ScatterChart` | Quantity against quantity, with optional bubble sizing for a third variable. |
 | [Snippet](https://littlebigcode.github.io/design-system/docs/snippet) | `Snippet` | A one-line copyable command. Shares Code Block's copy affordance rather than restating it. |
 | [Sparkline](https://littlebigcode.github.io/design-system/docs/sparkline) | `Sparkline` | An inline mini line chart, small and cheap enough to sit in every row of a table. |
 | [Stacked Bar](https://littlebigcode.github.io/design-system/docs/stacked-bar) | `StackedBar` | Proportional bars — every row normalised to its own total, so only the split differs. |
 | [Tree](https://littlebigcode.github.io/design-system/docs/tree) | `Tree`, `type TreeProps`, `type TreeNode` | A nested, expandable hierarchy — files, org units, categories. |
+| [Treemap](https://littlebigcode.github.io/design-system/docs/treemap) | `Treemap`, `type TreemapDatum` | A weighted hierarchy as nested areas — where a pie stops working and a bar chart runs out of room. |
+| [Waterfall Chart](https://littlebigcode.github.io/design-system/docs/waterfall-chart) | `WaterfallChart` | Signed deltas accumulating to a total — the bridge a bar chart and a line chart each tell half of. |
 
 ### Navigation
 
