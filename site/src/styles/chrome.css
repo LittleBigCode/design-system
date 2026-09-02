@@ -1,0 +1,58 @@
+/* The docs app's own chrome layer. Tailwind lives here and only here: the
+   no-Tailwind rule is a *consumer* requirement, and a docs app is not a
+   consumer of its own output.
+
+   Every slot below maps straight onto a `--ds-*` token rather than through the
+   unprefixed shadcn tier (`--background`, `--muted`, …) that batch 0.3 deletes.
+   `@theme inline` is what makes that safe: the utility emits `var(--ds-bg)` at
+   the use site instead of freezing today's value, so the `[data-theme="dark"]`
+   block inside `dist/diametral.css` flips the chrome with the components. */
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: var(--ds-bg);
+  --color-foreground: var(--ds-ink);
+  --color-card: var(--ds-surface);
+  --color-muted: var(--ds-grey-bg);
+  --color-muted-foreground: var(--ds-ink-soft);
+  --color-accent: var(--ds-accent-bg);
+  --color-accent-foreground: var(--ds-accent-ink);
+  --color-destructive: var(--ds-danger);
+  --color-border: var(--ds-rule);
+  --color-input: var(--ds-rule);
+  --color-ring: var(--ds-focus-ring);
+
+  /* The nav column reads as a recessed surface, so it takes `bg-alt` rather
+     than a sidebar-specific token the charter does not define. */
+  --color-sidebar: var(--ds-bg-alt);
+  --color-sidebar-accent: var(--ds-grey-bg);
+  --color-sidebar-primary: var(--ds-accent);
+  --color-sidebar-primary-foreground: var(--ds-on-accent);
+
+  /* Only two faces are allowed: Ufficio for titles, Geist for everything else.
+     Tailwind's default --font-serif would otherwise leak Georgia in through a
+     slot we never declared, so it is pinned rather than left at its default. */
+  --font-heading: var(--ds-font-title);
+  --font-sans: var(--ds-font-sans);
+  --font-serif: var(--ds-font-sans);
+  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+/* The charter is square. Tailwind's radius scale is zeroed rather than left to
+   emit rounded corners on any utility the chrome happens to reach for. */
+@theme {
+  --radius-xs: 0;
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+  --radius-2xl: 0;
+  --radius-3xl: 0;
+  --radius-4xl: 0;
+}
+
+body {
+  background: var(--ds-bg);
+  color: var(--ds-ink);
+  font-family: var(--ds-font-sans);
+}

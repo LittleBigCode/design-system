@@ -72,7 +72,7 @@
     "./assets/*": "./assets/*"
   },
   "scripts": {
-    "build": "npm run build:react && node scripts/build-tokens.mjs && node scripts/build-css.mjs && node scripts/build-components.mjs && node scripts/build-figma.mjs && node scripts/build-migration-guide.mjs",
+    "build": "npm run build:react && node scripts/build-tokens.mjs && node scripts/build-css.mjs && node scripts/build-components.mjs && node scripts/build-figma.mjs && node scripts/build-migration-guide.mjs && node scripts/build-components-md.mjs",
     "build:react": "tsc -p tsconfig.build.json",
     "build:tokens": "node scripts/build-tokens.mjs",
     "build:figma": "node scripts/build-figma.mjs",
@@ -85,7 +85,8 @@
     "serve": "python3 -m http.server 8080",
     "test:visual": "playwright test tests/visual.spec.js",
     "test:visual:update": "playwright test tests/visual.spec.js --update-snapshots",
-    "test:a11y": "playwright test tests/a11y.spec.js"
+    "test:a11y": "playwright test tests/a11y.spec.js",
+    "build:components-md": "node scripts/build-components-md.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.0",
