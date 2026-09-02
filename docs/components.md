@@ -9,7 +9,7 @@ showcase page.
 
 ## React components
 
-The 35 components exported from [`@diametral/design-system/react`](react.md). Every row has a live page with runnable examples, and every page is what the visual and accessibility gates drive — so this table and the tested surface cannot disagree.
+The 50 components exported from [`@diametral/design-system/react`](react.md). Every row has a live page with runnable examples, and every page is what the visual and accessibility gates drive — so this table and the tested surface cannot disagree.
 
 > Generated from `site/src/registry/registry.ts` by `scripts/build-components-md.mjs`. Edit the registry, then run `npm run build`.
 
@@ -47,6 +47,10 @@ The 35 components exported from [`@diametral/design-system/react`](react.md). Ev
 | --- | --- | --- |
 | [CodeBlock](https://littlebigcode.github.io/design-system/docs/code-block) | `CodeBlock`, `type CodeBlockProps` | A source snippet with a filename strip and a copy button. |
 | [DataGrid](https://littlebigcode.github.io/design-system/docs/data-table) | `DataGrid`, `type DataGridProps`, `type DataGridColumn` | A real `<table>` with sorting, selection, filtering, inline edit and paging. |
+| [Item](https://littlebigcode.github.io/design-system/docs/item) | `Item`, `ItemMedia`, `ItemContent`, `ItemActions`, `ItemGroup`, `ItemSeparator`, `ItemTitle`, `ItemDescription`, `ItemHeader`, `ItemFooter` | A list row with media, content and actions slots — lighter than a Card for repeated rows. |
+| [Marker](https://littlebigcode.github.io/design-system/docs/marker) | `Marker`, `MarkerIcon`, `MarkerContent`, `markerVariants` | A small inline badge pairing an icon with a label. |
+| [QR Code](https://littlebigcode.github.io/design-system/docs/qr-code) | `QrCode`, `type QrErrorCorrectionLevel` | Renders a QR code as inline SVG from a hand-rolled byte-mode encoder — no dependency, no network, no canvas. Versions 1-10, all four correction levels. |
+| [Snippet](https://littlebigcode.github.io/design-system/docs/snippet) | `Snippet` | A one-line copyable command. Shares Code Block's copy affordance rather than restating it. |
 | [Tree](https://littlebigcode.github.io/design-system/docs/tree) | `Tree`, `type TreeProps`, `type TreeNode` | A nested, expandable hierarchy — files, org units, categories. |
 
 ### Navigation
@@ -57,7 +61,19 @@ The 35 components exported from [`@diametral/design-system/react`](react.md). Ev
 | [Menubar](https://littlebigcode.github.io/design-system/docs/menubar) | `Menubar`, `MenubarMenu`, `MenubarTrigger`, `MenubarContent`, `MenubarItem`, `MenubarCheckboxItem`, `MenubarRadioGroup`, `MenubarRadioItem`, `MenubarLabel`, `MenubarSeparator`, `MenubarShortcut`, `MenubarGroup`, `MenubarPortal`, `MenubarSub`, `MenubarSubTrigger`, `MenubarSubContent` | A desktop-style application menu bar with keyboard traversal. |
 | [Navigation Menu](https://littlebigcode.github.io/design-system/docs/navigation-menu) | `NavigationMenu`, `NavigationMenuList`, `NavigationMenuItem`, `NavigationMenuTrigger`, `NavigationMenuContent`, `NavigationMenuPositioner`, `NavigationMenuLink`, `NavigationMenuIndicator`, `navigationMenuTriggerStyle` | A horizontal site menu with optional rich dropdown panels. |
 | [Tabs](https://littlebigcode.github.io/design-system/docs/tabs) | `Tabs`, `type TabsProps`, `type TabItem` | Sibling views of one subject, one visible at a time. |
+| [Toc](https://littlebigcode.github.io/design-system/docs/toc) | `Toc`, `TocLabel`, `TocList`, `TocItem`, `TocLink` | The in-page anchor rail — a sticky list of the sections on the current page. |
 | [VerticalNav](https://littlebigcode.github.io/design-system/docs/sidebar) | `VerticalNav`, `type VerticalNavProps`, `type VerticalNavItem` | The app's own nav column: one level of nesting, one active row. |
+
+### Layout
+
+| Component | Imports | What it is |
+| --- | --- | --- |
+| [Aspect Ratio](https://littlebigcode.github.io/design-system/docs/aspect-ratio) | `AspectRatio` | Constrains content to a fixed width-to-height ratio. |
+| [Masonry](https://littlebigcode.github.io/design-system/docs/masonry) | `Masonry` | A multi-column layout that balances items of uneven height, via CSS columns rather than a JS measurement pass. |
+| [Resizable](https://littlebigcode.github.io/design-system/docs/resizable) |  | Panel groups split by draggable handles. Stylesheet only — the drag needs a binding this package does not ship. |
+| [Scroll Area](https://littlebigcode.github.io/design-system/docs/scroll-area) | `ScrollArea`, `ScrollBar` | A scrollable region with styled, overlay scrollbars. |
+| [Separator](https://littlebigcode.github.io/design-system/docs/separator) | `Separator` | A rule between content. Base UI inverts the orientation semantics — a horizontal group takes vertical separators. |
+| [Theme Switcher](https://littlebigcode.github.io/design-system/docs/theme-switcher) | `ThemeSwitcher`, `type ThemeSwitcherMode` | A light/dark/system toggle, promoted from the docs app's own theme-toggle. Fully controlled — the consumer owns the theme hook. |
 
 ### Disclosure
 
@@ -82,6 +98,15 @@ The 35 components exported from [`@diametral/design-system/react`](react.md). Ev
 | --- | --- | --- |
 | [Alert](https://littlebigcode.github.io/design-system/docs/alert) | `Alert`, `type AlertProps`, `type AlertType` | An inline message about the thing next to it. Four types, optionally dismissible. |
 | [Toast](https://littlebigcode.github.io/design-system/docs/toast) | `ToastProvider`, `useToast`, `Toast`, `type ToastOptions` | A transient confirmation that an action landed, raised from anywhere via `useToast`. |
+
+### Conversation
+
+| Component | Imports | What it is |
+| --- | --- | --- |
+| [Attachment](https://littlebigcode.github.io/design-system/docs/attachment) | `Attachment`, `AttachmentGroup`, `AttachmentMedia`, `AttachmentContent`, `AttachmentTitle`, `AttachmentDescription`, `AttachmentActions`, `AttachmentAction`, `AttachmentTrigger`, `type AttachmentState` | File metadata display for a message. Not an upload input — see File Upload. |
+| [Bubble](https://littlebigcode.github.io/design-system/docs/bubble) | `BubbleGroup`, `Bubble`, `BubbleContent`, `BubbleReactions`, `type BubbleVariant` | Chat bubbles grouped by author. |
+| [Message](https://littlebigcode.github.io/design-system/docs/message) | `MessageGroup`, `Message`, `MessageAvatar`, `MessageContent`, `MessageHeader`, `MessageFooter` | A conversation row with avatar and content. |
+| [Message Scroller](https://littlebigcode.github.io/design-system/docs/message-scroller) |  | A transcript viewport that keeps itself pinned to the latest message. Stylesheet only — the pinning needs a binding this package does not ship. |
 
 <!-- END generated: react-components -->
 

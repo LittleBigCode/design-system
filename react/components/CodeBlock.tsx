@@ -9,7 +9,7 @@ import { cx } from "../lib/cx.js";
    ---------------------------------------------------------------------------- */
 import React from "react";
 
-import type { HTMLAttributes } from "react";
+import type { HTMLAttributes, ReactNode } from "react";
 
 export interface CodeBlockProps extends HTMLAttributes<HTMLDivElement> {
   /** The code to display. Rendered as text content — never as HTML. */
@@ -46,6 +46,51 @@ function copyText(text: any) {
   });
 }
 
+export interface CodeBlockCopyButtonProps
+  extends Omit<HTMLAttributes<HTMLButtonElement>, "children" | "aria-label"> {
+  /** The text written to the clipboard. */
+  value?: string;
+  /** Accessible name while idle. Becomes "Copied" for a beat after a copy. */
+  label?: string;
+  /** Button contents. Defaults to the word Copy/Copied; pass an icon instead
+   *  for an icon-only button, and the accessible name comes from `label`. */
+  children?: ReactNode;
+}
+
+/* The copy affordance, extracted from CodeBlock so Snippet can compose it
+   rather than reimplement the clipboard fallback. Snippet is a light surface,
+   so it overrides the dark-panel colours through className — see
+   `.ds-snippet-copy-button` in css/components/snippet.css. */
+export function CodeBlockCopyButton({
+  value = "",
+  label = "Copy code",
+  className,
+  children,
+  ...rest
+}: CodeBlockCopyButtonProps) {
+  const [copied, setCopied] = React.useState(false);
+  const timer = React.useRef<any>(null);
+
+  React.useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
+
+  const onCopy = () => {
+    copyText(value).then(() => {
+      setCopied(true);
+      if (timer.current) clearTimeout(timer.current);
+      timer.current = setTimeout(() => setCopied(false), 1600);
+    }).catch(() => { /* swallow — nothing to copy to */ });
+  };
+
+  return h("button", {
+    type: "button",
+    className: cx("ds-button", "ds-button--sm", className),
+    ...rest,
+    // After `rest`, so a caller cannot pin the name and lose the copied state.
+    "aria-label": copied ? "Copied" : label,
+    onClick: onCopy,
+  }, children ?? (copied ? "Copied" : "Copy"));
+}
+
 export function CodeBlock({
   code = "",
   language,
@@ -53,19 +98,6 @@ export function CodeBlock({
   className,
   ...rest
 }: CodeBlockProps) {
-  const [copied, setCopied] = React.useState(false);
-  const timer = React.useRef<any>(null);
-
-  React.useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
-
-  const onCopy = () => {
-    copyText(code).then(() => {
-      setCopied(true);
-      if (timer.current) clearTimeout(timer.current);
-      timer.current = setTimeout(() => setCopied(false), 1600);
-    }).catch(() => { /* swallow — nothing to copy to */ });
-  };
-
   return h("div", {
     className: cx("ds-code", className),
     "data-language": language || undefined,
@@ -73,12 +105,7 @@ export function CodeBlock({
   },
     h("div", { className: "ds-code__head" },
       h("span", { className: "ds-code__filename" }, filename || language || "Snippet"),
-      h("button", {
-        type: "button",
-        className: "ds-button ds-button--sm",
-        "aria-label": copied ? "Copied" : "Copy code",
-        onClick: onCopy,
-      }, copied ? "Copied" : "Copy")
+      h(CodeBlockCopyButton, { value: code })
     ),
     // Code as TEXT content — never dangerouslySetInnerHTML. tabIndex makes the
     // scrollable region keyboard-focusable (scrollable-region-focusable).

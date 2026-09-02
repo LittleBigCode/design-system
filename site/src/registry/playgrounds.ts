@@ -415,16 +415,6 @@ export const PLAYGROUNDS: Record<string, PlaygroundConfig> = {
       { prop: "disabled", type: "boolean" },
     ],
   },
-  resizable: {
-    note: "The axis belongs to ResizablePanelGroup, which takes `orientation` — not the `direction` older shadcn snippets pass.",
-    extras: [
-      {
-        prop: "orientation",
-        type: "select",
-        options: ["horizontal", "vertical"],
-      },
-    ],
-  },
   carousel: {
     extras: [
       {
@@ -775,17 +765,6 @@ export const PLAYGROUNDS: Record<string, PlaygroundConfig> = {
       { prop: "loopFocus", type: "boolean" },
       { prop: "modal", type: "boolean" },
       { prop: "disabled", type: "boolean" },
-    ],
-  },
-  "message-scroller": {
-    note: "The controls drive the provider — Root, Viewport and Button all read its context, and without it they throw.",
-    extras: [
-      { prop: "autoScroll", type: "boolean" },
-      {
-        prop: "defaultScrollPosition",
-        type: "select",
-        options: ["end", "start"],
-      },
     ],
   },
   toast: {

@@ -47,6 +47,36 @@
       "subject": "context-menu",
       "batch": "1",
       "note": "The /docs/context-menu route documented `Dropdown` and the absence of a right-click menu. It now documents the real `ContextMenu`. Nothing a consumer imports changed name — `Dropdown` is unmoved and still documented at /docs/dropdown-menu — so this is not a rename row."
+    },
+    {
+      "kind": "export",
+      "subject": "AttachmentAction",
+      "batch": "2",
+      "note": "The source composes onto its own eight-tone Button at variant=\"ghost\" size=\"icon-xs\"; that component holds until batch 7, so it composes onto this repo's IconButton — which requires `label`, since an icon-only action needs an accessible name the source's own ghost button never carried. Batch 7 re-wires it back and owes the row."
+    },
+    {
+      "kind": "export",
+      "subject": "ThemeSwitcher",
+      "batch": "2",
+      "note": "All three variants are re-compositions. `segmented` was the source's own toggle-group (held) and is now this repo's Segmented: the cells carry a visible word beside the glyph rather than an icon-only aria-label, because Segmented takes a label node, and the source's sliding indicator goes with the toggle cells it was pitched against. `cycle` was the source's Button (batch 7) and is now IconButton. `dropdown` was the source's dropdown-menu (held) and is now Base UI's Menu wearing .ds-menu, the same re-wiring batch 1's menubar made. Batch 7 re-wires `cycle` back and owes the row."
+    },
+    {
+      "kind": "export",
+      "subject": "Snippet",
+      "batch": "2",
+      "note": "The source composes the held code-block's `CodeBlockCopyButton`. This repo's CodeBlock baked the same button inline, so landing Snippet extracted it into a real export rather than duplicating the clipboard fallback. `CodeBlockCopyButton` is therefore new public surface on an incumbent, not a rename — CodeBlock's own props and markup are unchanged."
+    },
+    {
+      "kind": "component",
+      "subject": "resizable, message-scroller",
+      "batch": "2",
+      "note": "Admit-CSS-only: the stylesheets ship, the React bindings do not (react-resizable-panels and @shadcn/react are not acquired, #156). Their registry entries declare `exports: []` and their pages print no import line — the .ds-resizable-* and .ds-message-scroller-* classes are the whole contract. Nothing a consumer of 0.x could import is affected, so no rename row is owed."
+    },
+    {
+      "kind": "class",
+      "subject": "batch 2 dedupe exceptions",
+      "batch": "2",
+      "note": "Eight Tailwind literals kept as dedupe exceptions upstream are resolved into real declarations plus a modifier class for each consumer override: .ds-toc--static, .ds-toc-label--tight, .ds-toc-list--tight, .ds-toc-link--current, .ds-bubble-group--loose, .ds-message-scroller-content--tight, .ds-separator--auto, and resizable's h-full/w-full which become the group's own defaults. All are net-new names in a clean namespace, so no 0.x class is renamed."
     }
   ]
 }

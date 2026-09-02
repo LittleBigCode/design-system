@@ -1,0 +1,36 @@
+/* ============================================================================
+   Separator — .ds-separator
+   ----------------------------------------------------------------------------
+   A 1px rule with an orientation. The source kept `bg-border` and the
+   data-horizontal/data-vertical sizing as literal Tailwind utilities on
+   separator.tsx's own className so tailwind-merge could dedupe them against
+   ButtonGroupSeparator's and SidebarSeparator's overrides. This package has
+   neither Tailwind nor tailwind-merge, so the exception is resolved: the
+   literals become real declarations here, and the sizing half of both
+   overrides becomes one modifier class, `--auto`. Their colour half needs no
+   modifier: `bg-input` and `bg-sidebar-border` both collapse onto --ds-rule in
+   this palette, which is what .ds-separator already paints. Both consumers
+   arrive later — button-group in batch 3, sidebar's cherry-pick in batch 8 —
+   and compose the modifier instead.
+   ============================================================================ */
+.ds-separator {
+  flex-shrink: 0;
+  background-color: var(--ds-rule);
+}
+.ds-separator[data-orientation="horizontal"] {
+  height: 1px;
+  width: 100%;
+}
+.ds-separator[data-orientation="vertical"] {
+  width: 1px;
+  align-self: stretch;
+}
+
+/* The ButtonGroupSeparator / SidebarSeparator override: a rule that sizes
+   itself to its container rather than filling the cross axis. */
+.ds-separator--auto[data-orientation="horizontal"] {
+  width: auto;
+}
+.ds-separator--auto[data-orientation="vertical"] {
+  height: auto;
+}
