@@ -29,7 +29,7 @@ The components are authored as plain ES modules with `React.createElement` (no J
 - They render the same `.ds-*` markup as the rest of the system, so styling and theming come
   from the global stylesheet and the CSS variables — change a token, every React component
   follows.
-- Full **TypeScript types** ship in [`react/index.d.ts`](../react/index.d.ts).
+- Full **TypeScript types** ship in [`react/index.tsx`](react/index.tsx).
 
 They are genuine React components: typed props, `children`, event handlers, `forwardRef`
 (`Button`, `Input`), controlled/uncontrolled state (`Switch`, `Tabs`, `Segmented`), and a
@@ -51,7 +51,7 @@ map — this is exactly what the live demo does:
 <script type="module">
   import React from "react";
   import { createRoot } from "react-dom/client";
-  import { Button } from "../react/index.js";
+  import { Button } from "../dist/react/index.js";
   createRoot(document.getElementById("app"))
     .render(React.createElement(Button, { variant: "primary" }, "Save"));
 </script>

@@ -4,7 +4,7 @@ import { h, F } from "../ui.js";
 import {
   PageHeader, Toolbar, DateRangePicker, Select, StatCard, Card,
   BarChart, StackedBar, GaugeChart, LineChart, PieChart, DonutChart,
-} from "../../../react/index.js";
+} from "../../../dist/react/index.js";
 import { FUNNEL, UTIL_BY_DEPT, ENTITY_SPLIT, MARGIN_TREND, MONTHS } from "../data.js";
 
 const ENTITY_OPTS = [

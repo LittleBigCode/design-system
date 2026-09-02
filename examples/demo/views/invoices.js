@@ -5,7 +5,7 @@ import { h, F, money, statusTag } from "../ui.js";
 import {
   PageHeader, Button, StatCard, Card, BarChart, Timeline,
   DataGrid, Drawer, DescriptionList,
-} from "../../../react/index.js";
+} from "../../../dist/react/index.js";
 import { REVENUE_BARS } from "../data.js";
 import { jsonLoadPage } from "../api.js";
 

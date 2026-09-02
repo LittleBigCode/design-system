@@ -1,7 +1,7 @@
 import React from "react";
 const { useState } = React;
 import { h, F } from "../ui.js";
-import { PageHeader, Toolbar, Select, Input, Card, Avatar, Progress, Tag, Button, DescriptionList, GaugeChart, Timeline, SectionHeading } from "../../../react/index.js";
+import { PageHeader, Toolbar, Select, Input, Card, Avatar, Progress, Tag, Button, DescriptionList, GaugeChart, Timeline, SectionHeading } from "../../../dist/react/index.js";
 import { TEAM, DEPTS } from "../data.js";
 
 const deptTag = (d) => h(Tag, { status: d === "Data" ? "info" : d === "Engineering" ? "success" : d === "Product" ? "warning" : null }, d);

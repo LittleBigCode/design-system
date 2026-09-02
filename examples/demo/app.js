@@ -3,7 +3,7 @@
    calls mount(); views live in ./views/*.js. Dogfoods <ConsoleLayout>. */
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { Wordmark, Button, Input, Badge, Card, Field, ToastProvider, ConsoleLayout } from "../../react/index.js";
+import { Wordmark, Button, Input, Badge, Card, Field, ToastProvider, ConsoleLayout } from "../../dist/react/index.js";
 import { h, F } from "./ui.js";
 import { Overview, Inbox, Settings } from "./views/core.js";
 import { Projects, Board } from "./views/work.js";

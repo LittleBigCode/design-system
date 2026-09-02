@@ -85,7 +85,7 @@ import { Button, Status, Metric } from "@diametral/design-system/react";</code><
   );
 }</code></pre>
         </section>
-        <p class="docs-note">Full component list and props: <a href="../react/README.md">react/README.md</a>. TypeScript types ship in <code>react/index.d.ts</code>.</p>
+        <p class="docs-note">Full component list and props: <a href="../react/README.md">react/README.md</a>. TypeScript types are generated into <code>dist/react/index.d.ts</code>.</p>
       </section>
 
       <footer class="docs-foot">
@@ -101,7 +101,7 @@ import { Button, Status, Metric } from "@diametral/design-system/react";</code><
     import { createRoot } from "react-dom/client";
     import {
       Button, Badge, Switch, Status, Metric, Callout, Tabs, Segmented, Modal,
-    } from "../react/index.js";
+    } from "../dist/react/index.js";
 
     const h = React.createElement;
 

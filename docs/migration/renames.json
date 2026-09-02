@@ -1,0 +1,16 @@
+{
+  "provenance": {
+    "purpose": "Every consumer-visible rename the v1 absorption makes, recorded as it happens.",
+    "created_by": "batch 0.1 — release and verification plumbing (LittleBigCode/design-system#4)",
+    "read_by": "scripts/build-migration-guide.mjs",
+    "rule": "A batch that renames anything a consumer can import, target or reference owes a row here, in the same PR. The batch plan lists the rows each batch owes."
+  },
+  "schema": {
+    "kind": "component | export | class | token | path — what is being renamed",
+    "from": "the 0.x name",
+    "to": "the 1.0 name, or null when the thing is removed with no replacement",
+    "batch": "the batch number that made the change",
+    "note": "optional — why, or what a consumer has to do beyond a find-and-replace"
+  },
+  "renames": []
+}

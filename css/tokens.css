@@ -91,6 +91,19 @@
   --ds-danger:     var(--ds-red);       --ds-danger-bg:   var(--ds-red-bg);
   --ds-critical:   var(--ds-noir);      --ds-critical-bg: var(--ds-grey-bg);
   --ds-neutral:    var(--ds-gris);      --ds-neutral-bg:  var(--ds-grey-bg);
+  /* Status SOLID — fills that must carry --ds-on-status (white) text. Three of
+     the six hues fail WCAG AA as a white-text background: warning #ff5500 at
+     3.21:1, info #1488a6 at 4.12:1, neutral/Gris #767884 at 4.38:1. These are
+     the smallest darkenings that clear 4.5:1; success, danger and critical
+     already pass and alias their base hue. Same move as --ds-accent-ink and the
+     --ds-*-ink shades — the a11y-safe variant is a new token, so the base hues
+     (and --ds-gris in particular) stay charter-canonical. */
+  --ds-success-solid:  var(--ds-success);
+  --ds-warning-solid:  #cf4500;
+  --ds-danger-solid:   var(--ds-danger);
+  --ds-critical-solid: var(--ds-critical);
+  --ds-neutral-solid:  #727480;
+  --ds-info-solid:     #137e9a;
   --ds-info-fg:    var(--ds-info);      /* --ds-info / --ds-info-bg defined as primitives above */
   /* Status INK — darker foregrounds for status TEXT on the soft tinted bgs.
      The solid status hues above are tuned as fills (white text on them); used as

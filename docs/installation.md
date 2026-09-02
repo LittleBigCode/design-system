@@ -400,7 +400,7 @@ drops in regardless of which convention your app uses. For OS-driven dark mode, 
 ## 7. TypeScript
 
 No extra setup. Types ship with the React entry and are wired through the package `exports` map
-(`react/index.d.ts`), so `import { Button } from "@diametral/design-system/react"` is fully typed
+(`react/index.tsx`), so `import { Button } from "@diametral/design-system/react"` is fully typed
 out of the box — typed props, `children`, event handlers, and `forwardRef` on `Button` / `Input`.
 
 ---

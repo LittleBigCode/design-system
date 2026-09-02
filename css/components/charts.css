@@ -75,6 +75,15 @@
 /* ----------------------------------------------------------------------------
    Line chart — .ds-linechart
    ---------------------------------------------------------------------------- */
+/* Both line and area are full-width block charts, so their sizing comes from
+   .ds-chart. The block selectors still have to exist: they are the marker a
+   non-React binding targets, and an undefined one is exactly what the
+   class-resolution check blocks a release on. */
+.ds-linechart,
+.ds-areachart {
+  display: block;
+}
+
 .ds-linechart__line {
   fill: none;
   stroke: var(--ds-accent);

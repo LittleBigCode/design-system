@@ -6,7 +6,7 @@ import {
   Tabs, Input, FieldHint, Select, Switch, useToast,
   useForm, FormField, ColorPicker, DatePicker, MultiSelect,
   useResource, Skeleton, Alert,
-} from "../../../react/index.js";
+} from "../../../dist/react/index.js";
 import { h, F } from "../ui.js";
 import { MESSAGES } from "../data.js";
 import { fetchMetrics } from "../api.js";
