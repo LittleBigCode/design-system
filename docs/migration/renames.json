@@ -1,16 +1,31 @@
 {
   "provenance": {
     "purpose": "Every consumer-visible rename the v1 absorption makes, recorded as it happens.",
-    "created_by": "batch 0.1 — release and verification plumbing (LittleBigCode/design-system#4)",
+    "created_by": "batch 0.1 \u2014 release and verification plumbing (LittleBigCode/design-system#4)",
     "read_by": "scripts/build-migration-guide.mjs",
     "rule": "A batch that renames anything a consumer can import, target or reference owes a row here, in the same PR. The batch plan lists the rows each batch owes."
   },
   "schema": {
-    "kind": "component | export | class | token | path — what is being renamed",
+    "kind": "component | export | class | token | path \u2014 what is being renamed",
     "from": "the 0.x name",
     "to": "the 1.0 name, or null when the thing is removed with no replacement",
     "batch": "the batch number that made the change",
-    "note": "optional — why, or what a consumer has to do beyond a find-and-replace"
+    "note": "optional \u2014 why, or what a consumer has to do beyond a find-and-replace"
   },
-  "renames": []
+  "renames": [
+    {
+      "kind": "token",
+      "from": "--ds-vert",
+      "to": "--ds-vert",
+      "batch": "0.3",
+      "note": "Value corrected #89fc79 -> #53ff64. The 0.11 hex was eye-dropped from the charter PNG on the belief that the swatch label was a typo; the label was right. Name unchanged \u2014 re-check any hard-coded copy of the old hex."
+    },
+    {
+      "kind": "token",
+      "from": "--ds-accent (in charts, sparkline, bar-chart series)",
+      "to": "--ds-chart-1",
+      "batch": "0.3",
+      "note": "Data series no longer read the themeable accent. Visually identical at the default theme (--ds-chart-1 is #ff2a00); a theme that overrode --ds-accent to recolour its charts must now override --ds-chart-*."
+    }
+  ]
 }

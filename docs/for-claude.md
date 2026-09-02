@@ -21,8 +21,9 @@ variables. No build step.
 - **Surfaces:** white `--ds-surface` on whitesmoke `--ds-bg`. Ink is black `--ds-ink`.
 - **Type:** headings use the title font (serif/Ufficio) via `.ds-title`; body is Geist.
   Labels are UPPERCASE, letter-spaced `0.08em`, faint (`.ds-label` / `.ds-kicker`).
-- **Accent** `--ds-accent` `#ff2a00` is for emphasis only: links, a key edge/tick, a
-  small badge. The **primary action is solid black** (`.ds-button--primary`), not accent.
+- **Accent** `--ds-accent` is for emphasis only: links, a key edge/tick, a small
+  badge. The **primary action is solid black** (`.ds-button--primary`), not accent.
+  There is no fixed accent value — it is themeable, so reference the token, never a hex.
 - **Numbers:** tabular — wrap figures in `.ds-numeric`.
 - Use `.ds-*` classes as-is. Don't invent class names or override them with ad-hoc CSS;
   for layout, use plain inline `style` (fl/grid/gap) around `.ds-*` elements.
@@ -34,7 +35,7 @@ variables. No build step.
 | `--ds-ink` `#161616` / `--ds-ink-soft` / `--ds-ink-faint` | text: primary / secondary / muted |
 | `--ds-bg` `#f4f4f5` / `--ds-bg-alt` / `--ds-surface` `#fff` | page / alt / card surface |
 | `--ds-rule` `#e5e5e5` / `--ds-rule-soft` | 1px borders |
-| `--ds-accent` `#ff2a00` / `--ds-accent-ink` `#db2400` | accent fill / accent text on light |
+| `--ds-accent` / `--ds-accent-ink` | accent fill / accent text on light (themeable — no fixed value) |
 | `--ds-success` `--ds-warning` `--ds-danger` `--ds-info` | status |
 | `--ds-space-*`, `--ds-text-*`, `--ds-radius-none` (=0) | scale |
 

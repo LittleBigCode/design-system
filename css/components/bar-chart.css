@@ -39,7 +39,7 @@
 
 .ds-barchart__bar {
   width: 100%;
-  background: var(--ds-accent);
+  background: var(--ds-chart-1);
   border-radius: var(--ds-radius-none);
   transition: height var(--ds-transition), width var(--ds-transition);
 }

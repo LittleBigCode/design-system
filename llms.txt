@@ -2,7 +2,7 @@
 
 > A flat, buildless design system: 1px rules, no shadows, no border-radius,
 > white/whitesmoke surfaces, black ink, serif/Ufficio headings over Geist body,
-> uppercase 0.08em labels, tabular numerals, accent #ff2a00. Every class is
+> uppercase 0.08em labels, tabular numerals, one themeable accent. Every class is
 > namespaced `.ds-*` and backed by `--ds-*` CSS custom properties.
 
 When generating UI for Diametral, include the stylesheet and use `.ds-*` classes.
@@ -22,7 +22,7 @@ No build step is required.
 ## Rules (must follow)
 - NO border-radius, NO box-shadow, NO gradients. Borders are 1px solid `var(--ds-rule)`.
 - Use `.ds-*` classes; do not invent class names or restyle them with ad-hoc CSS.
-- The accent `#ff2a00` is for emphasis only (links, key edges, the primary action is solid black `#161616`).
+- The accent `--ds-accent` is for emphasis only (links, key edges, the primary action is solid black `#161616`). It is themeable and has no fixed value — never hard-code it.
 - Headings use the title font; labels are uppercase, letter-spaced, faint.
 - Prefer semantic tokens (`--ds-ink`, `--ds-accent`, `--ds-rule`, …) over raw hex.
 

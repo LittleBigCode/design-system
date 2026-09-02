@@ -1,4 +1,5 @@
 import { cx } from "../lib/cx.js";
+import { MonthGrid, buildWeeks, sameDay, startOfDay, toISO } from "../lib/monthGrid.js";
 /* ----------------------------------------------------------------------------
    Calendar — a full-size month view that shows events inside day cells.
    Renders a 7-column month grid (with leading / trailing days from the
@@ -55,13 +56,6 @@ const MONTHS = [
   "July", "August", "September", "October", "November", "December",
 ];
 
-const pad = (n: any) => String(n).padStart(2, "0");
-
-/* yyyy-mm-dd for a Date (local — never UTC, to avoid an off-by-one near midnight). */
-function toISO(d: any) {
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-}
-
 /* Coerce a Date | ISO string | null/undefined into a Date (or null). */
 function toDate(v: any) {
   if (v == null || v === "") return null;
@@ -72,26 +66,6 @@ function toDate(v: any) {
   return Number.isNaN(d.getTime()) ? null : d;
 }
 
-const startOfDay = (d: any) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
-const sameDay = (a: any, b: any) =>
-  a && b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
-
-/* The 42 cells (6 weeks) covering `month`, with leading/trailing neighbour days.
-   `weekStartsOn` (0=Sun … 6=Sat) rotates the leading offset and the labels. */
-function buildWeeks(year: any, month: any, weekStartsOn: any) {
-  const first = new Date(year, month, 1);
-  const lead = (first.getDay() - weekStartsOn + 7) % 7;
-  const start = new Date(year, month, 1 - lead);
-  const weeks = [];
-  for (let w = 0; w < 6; w++) {
-    const row = [];
-    for (let d = 0; d < 7; d++) {
-      row.push(new Date(start.getFullYear(), start.getMonth(), start.getDate() + (w * 7 + d)));
-    }
-    weeks.push(row);
-  }
-  return weeks;
-}
 
 export function Calendar({
   month,
@@ -173,49 +147,40 @@ export function Calendar({
     h("div", { className: "ds-monthview__weekdays" },
       labels.map((w) => h("div", { key: `wd-${w}`, className: "ds-monthview__weekday" }, w))
     ),
-    h("div", { className: "ds-monthview__grid", role: "grid" },
-      weeks.map((row, wi) =>
-        // A role="row" wrapper per week so the grid has valid row > gridcell
-        // structure. display:contents (see calendar-view.css) keeps the day
-        // buttons as direct items of the 7-column grid.
-        h("div", { key: `r-${wi}`, className: "ds-monthview__row", role: "row" },
-        row.map((cell, ci) => {
-          const outside = cell.getMonth() !== view.month;
-          const isSel = sameDay(cell, selected);
-          const isToday = sameDay(cell, today);
-          const dayEvents = byDay.get(toISO(cell)) || [];
-          const shown = dayEvents.slice(0, maxPerDay);
-          const overflow = dayEvents.length - shown.length;
-          return h("button", {
-            key: `d-${wi}-${ci}`,
-            type: "button",
-            role: "gridcell",
-            "aria-label": toISO(cell),
-            // aria-selected is allowed on gridcell (aria-pressed is not).
-            "aria-selected": isSel,
-            className: cx(
-              "ds-monthview__day",
-              outside && "is-outside",
-              isToday && "is-today",
-              isSel && "is-selected"
-            ),
-            onClick: () => pick(cell),
-          },
-            h("span", { className: "ds-monthview__date" }, cell.getDate()),
-            dayEvents.length
-              ? h("div", { className: "ds-monthview__events" },
-                  shown.map((ev: any, i: any) => h("span", {
-                    key: i,
-                    className: cx("ds-monthview__event", ev.status && `is-${ev.status}`),
-                    title: ev.label,
-                  }, ev.label)),
-                  overflow > 0 ? h("span", { className: "ds-monthview__more" }, `+${overflow} more`) : null
-                )
-              : null
-          );
-        })
-        )
-      )
-    )
+    h(MonthGrid, {
+      weeks,
+      gridClassName: "ds-monthview__grid",
+      rowClassName: "ds-monthview__row",
+      "aria-label": `${MONTHS[view.month]} ${view.year}`,
+      cellClassName: (cell: Date) => cx(
+        "ds-monthview__day",
+        cell.getMonth() !== view.month && "is-outside",
+        sameDay(cell, today) && "is-today",
+        sameDay(cell, selected) && "is-selected"
+      ),
+      cellLabel: (cell: Date) => toISO(cell),
+      isSelected: (cell: Date) => sameDay(cell, selected),
+      onPick: pick,
+      // Arrowing off the painted range walks the view with it.
+      onNavigateTo: (cell: Date) => goToMonth(cell.getFullYear(), cell.getMonth()),
+      renderCell: (cell: Date) => {
+        const dayEvents = byDay.get(toISO(cell)) || [];
+        const shown = dayEvents.slice(0, maxPerDay);
+        const overflow = dayEvents.length - shown.length;
+        return [
+          h("span", { key: "date", className: "ds-monthview__date" }, cell.getDate()),
+          dayEvents.length
+            ? h("div", { key: "events", className: "ds-monthview__events" },
+                shown.map((ev: any, i: any) => h("span", {
+                  key: i,
+                  className: cx("ds-monthview__event", ev.status && `is-${ev.status}`),
+                  title: ev.label,
+                }, ev.label)),
+                overflow > 0 ? h("span", { className: "ds-monthview__more" }, `+${overflow} more`) : null
+              )
+            : null,
+        ];
+      },
+    })
   );
 }

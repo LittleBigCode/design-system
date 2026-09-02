@@ -33,7 +33,7 @@ const DARK = {
   fg: "#f3f3f1", // --ds-ink (dark)      15.34:1
   faint: "#8b8d97", // --ds-ink-faint     5.16:1
   keyword: "#23e2ff", // --ds-blue       10.87:1
-  string: "#89fc79", // --ds-green-brand        13.20:1
+  string: "#53ff64", // --ds-vert              12.87:1
   tag: "#ff2a00", // --ds-red-brand           4.53:1
   attr: "#d5d3c4", // --ds-beige         11.31:1
 }

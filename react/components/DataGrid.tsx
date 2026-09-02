@@ -206,16 +206,84 @@ export function DataGrid<Row = any>({
   const colSpan = visibleCols.length + (selectable ? 1 : 0) + (expandable ? 1 : 0);
   const anyFilter = filterable && visibleCols.some((c) => c.filterable);
 
+  /* ---- Grid keyboard model --------------------------------------------
+     The table is a real <table>, so role="grid" upgrades it from something a
+     reader walks linearly to something they can steer a cell at a time. That
+     needs exactly one tab stop, which is applied imperatively over
+     HTMLTableElement.rows rather than threaded through the renderers: the row
+     index of any given cell depends on whether the filter row, the skeleton
+     rows and each expanded detail row are present, and reproducing that
+     arithmetic in JSX is how it drifts. The effect has no dependency array
+     because a fresh render produces fresh cells with no tabIndex on them. */
+  const tableRef = React.useRef<HTMLTableElement | null>(null);
+  const [active, setActive] = React.useState({ r: 0, c: 0 });
+
+  React.useLayoutEffect(() => {
+    const table = tableRef.current;
+    if (!table) return;
+    for (const row of Array.from(table.rows)) {
+      for (const cell of Array.from(row.cells)) cell.tabIndex = -1;
+    }
+    const row = table.rows[Math.min(active.r, table.rows.length - 1)];
+    const cell = row && row.cells[Math.min(active.c, row.cells.length - 1)];
+    if (cell) cell.tabIndex = 0;
+  });
+
+  const focusCell = (r: number, c: number) => {
+    const table = tableRef.current;
+    if (!table || !table.rows.length) return;
+    const row = table.rows[Math.max(0, Math.min(r, table.rows.length - 1))];
+    if (!row || !row.cells.length) return;
+    const cell = row.cells[Math.max(0, Math.min(c, row.cells.length - 1))];
+    if (!cell) return;
+    setActive({ r: row.rowIndex, c: cell.cellIndex });
+    cell.focus();
+  };
+
+  const onCellKeyDown = (e: any) => {
+    /* Anything focusable inside the cell — the inline edit input, the row and
+       select-all checkboxes, the sort and expand buttons, the filter inputs —
+       owns its own keys. Without this guard the arrows would fight the edit
+       input's caret and Enter would never reach its commit handler. */
+    if (e.target !== e.currentTarget) return;
+    const cell = e.currentTarget as HTMLTableCellElement;
+    const r = (cell.parentElement as HTMLTableRowElement).rowIndex;
+    const c = cell.cellIndex;
+    switch (e.key) {
+      case "ArrowRight": focusCell(r, c + 1); break;
+      case "ArrowLeft": focusCell(r, c - 1); break;
+      case "ArrowDown": focusCell(r + 1, c); break;
+      case "ArrowUp": focusCell(r - 1, c); break;
+      case "Home": focusCell(e.ctrlKey ? 0 : r, 0); break;
+      case "End": focusCell(e.ctrlKey ? Number.MAX_SAFE_INTEGER : r, Number.MAX_SAFE_INTEGER); break;
+      /* Enter delegates to whatever the cell holds, so one key does the right
+         thing on a checkbox cell, a sort header and an editable cell alike. */
+      case "Enter": {
+        const control = cell.querySelector("button, input, a, select") as HTMLElement | null;
+        if (control) control.click();
+        else return;
+        break;
+      }
+      default: return;
+    }
+    e.preventDefault();
+  };
+
+  const cellNav = { onKeyDown: onCellKeyDown };
+
   // Renderers
   const renderHeader = () =>
-    h("tr", null,
-      expandable ? h("th", { className: "ds-datagrid__expandcell", key: "_x" }) : null,
-      selectable ? h("th", { className: "ds-datagrid__select", key: "_s" },
+    h("tr", { role: "row" },
+      expandable ? h("th", { className: "ds-datagrid__expandcell", key: "_x", role: "columnheader", ...cellNav }) : null,
+      selectable ? h("th", { className: "ds-datagrid__select", key: "_s", role: "columnheader", ...cellNav },
         h("input", { type: "checkbox", "aria-label": "Select all", checked: allOnPage, onChange: toggleAll })) : null,
       visibleCols.map((c) => {
         const sorted = sort && sort.key === c.key;
         return h("th", {
           key: c.key,
+          role: "columnheader",
+          "aria-sort": sorted ? (sort.dir === "asc" ? "ascending" : "descending") : undefined,
+          ...cellNav,
           className: cx("ds-datagrid__th", c.align === "right" && "ds-datagrid__th--num", sorted && "is-sorted",
             reorderable && "ds-datagrid__th--draggable", dragCol === c.key && "is-dragging"),
           style: c.width ? { width: c.width } : undefined,
@@ -235,10 +303,10 @@ export function DataGrid<Row = any>({
     );
 
   const renderFilters = () => !anyFilter ? null :
-    h("tr", { className: "ds-datagrid__filters" },
-      expandable ? h("th", { key: "_x" }) : null,
-      selectable ? h("th", { key: "_s" }) : null,
-      visibleCols.map((c) => h("th", { key: c.key },
+    h("tr", { className: "ds-datagrid__filters", role: "row" },
+      expandable ? h("th", { key: "_x", role: "columnheader", ...cellNav }) : null,
+      selectable ? h("th", { key: "_s", role: "columnheader", ...cellNav }) : null,
+      visibleCols.map((c) => h("th", { key: c.key, role: "columnheader", ...cellNav },
         c.filterable ? h("input", {
           className: "ds-datagrid__filter-input", type: "text", placeholder: "Filter…",
           value: filters[c.key] || "", "aria-label": `Filter ${c.header}`,
@@ -247,10 +315,10 @@ export function DataGrid<Row = any>({
     );
 
   const renderSkeleton = () => Array.from({ length: Math.min(pageSize, 6) }).map((_, i) =>
-    h("tr", { key: `skel${i}`, className: "ds-datagrid__row" },
-      expandable ? h("td", { className: "ds-datagrid__expandcell" }) : null,
-      selectable ? h("td", { className: "ds-datagrid__select" }) : null,
-      visibleCols.map((c) => h("td", { key: c.key }, h("span", { className: "ds-skeleton ds-skeleton--text", style: { width: "70%" } })))
+    h("tr", { key: `skel${i}`, className: "ds-datagrid__row", role: "row" },
+      expandable ? h("td", { className: "ds-datagrid__expandcell", role: "gridcell", ...cellNav }) : null,
+      selectable ? h("td", { className: "ds-datagrid__select", role: "gridcell", ...cellNav }) : null,
+      visibleCols.map((c) => h("td", { key: c.key, role: "gridcell", ...cellNav }, h("span", { className: "ds-skeleton ds-skeleton--text", style: { width: "70%" } })))
     ));
 
   const renderRows = () => pageRows.map((row: any, i: any) => {
@@ -258,16 +326,16 @@ export function DataGrid<Row = any>({
     const isSel = sel.has(k);
     const isExp = expanded.has(k);
     const detail = expandable ? (renderDetail ? renderDetail(row) : (typeof expandable === "function" ? expandable(row) : null)) : null;
-    const main = h("tr", { key: k, className: cx("ds-datagrid__row", isSel && "is-selected", isExp && "is-expanded") },
-      expandable ? h("td", { className: "ds-datagrid__expandcell" },
+    const main = h("tr", { key: k, role: "row", "aria-selected": selectable ? isSel : undefined, className: cx("ds-datagrid__row", isSel && "is-selected", isExp && "is-expanded") },
+      expandable ? h("td", { className: "ds-datagrid__expandcell", role: "gridcell", ...cellNav },
         detail != null ? h("button", { type: "button", className: "ds-datagrid__expand", "aria-expanded": isExp, "aria-label": "Toggle row", onClick: () => toggleExpand(k) },
           h("span", { className: "ds-datagrid__chevron" }, "▶")) : null) : null,
-      selectable ? h("td", { className: "ds-datagrid__select" },
+      selectable ? h("td", { className: "ds-datagrid__select", role: "gridcell", ...cellNav },
         h("input", { type: "checkbox", "aria-label": "Select row", checked: isSel, onChange: () => toggleRow(k) })) : null,
       visibleCols.map((c) => {
         const editingThis = editing && editing.rowKey === k && editing.colKey === c.key;
         if (editingThis) {
-          return h("td", { key: c.key, className: c.align === "right" ? "ds-datagrid__td--num" : undefined },
+          return h("td", { key: c.key, role: "gridcell", className: c.align === "right" ? "ds-datagrid__td--num" : undefined },
             h("input", {
               className: "ds-input ds-datagrid__edit", autoFocus: true,
               defaultValue: getVal(row, c.key),
@@ -281,14 +349,28 @@ export function DataGrid<Row = any>({
         const cellEditable = editable && c.editable;
         return h("td", {
           key: c.key,
+          role: "gridcell",
           className: cx(c.align === "right" && "ds-datagrid__td--num", cellEditable && "ds-datagrid__td--editable"),
           onDoubleClick: cellEditable ? () => setEditing({ rowKey: k, colKey: c.key }) : undefined,
-          title: cellEditable ? "Double-click to edit" : undefined,
+          /* Enter opens the editor the same way the double-click does, so the
+             cell is reachable without a pointer. The editor's own Enter/Escape
+             handler takes over once its input has focus. */
+          onKeyDown: cellEditable
+            ? (e: any) => {
+                if (e.target === e.currentTarget && e.key === "Enter") {
+                  e.preventDefault();
+                  setEditing({ rowKey: k, colKey: c.key });
+                  return;
+                }
+                onCellKeyDown(e);
+              }
+            : onCellKeyDown,
+          title: cellEditable ? "Double-click or press Enter to edit" : undefined,
         }, c.render ? c.render(row) : getVal(row, c.key));
       })
     );
     if (isExp && detail != null) {
-      return [main, h("tr", { key: `${k}__d`, className: "ds-datagrid__detail" }, h("td", { colSpan }, detail))];
+      return [main, h("tr", { key: `${k}__d`, className: "ds-datagrid__detail", role: "row" }, h("td", { colSpan, role: "gridcell", ...cellNav }, detail))];
     }
     return main;
   });
@@ -311,11 +393,11 @@ export function DataGrid<Row = any>({
       ) : null,
 
     h("div", { className: "ds-datagrid__scroll" },
-      h("table", { className: "ds-datagrid__table" },
+      h("table", { className: "ds-datagrid__table", role: "grid", ref: tableRef },
         h("thead", null, renderHeader(), renderFilters()),
         h("tbody", null,
           showSkeleton ? renderSkeleton()
-            : showEmpty ? h("tr", null, h("td", { className: "ds-datagrid__empty", colSpan }, emptyMessage))
+            : showEmpty ? h("tr", { role: "row" }, h("td", { className: "ds-datagrid__empty", colSpan, role: "gridcell", ...cellNav }, emptyMessage))
             : renderRows()
         )
       )

@@ -1,4 +1,5 @@
 import { cx } from "../lib/cx.js";
+import { MonthGrid, buildWeeks, sameDay, startOfDay, toISO } from "../lib/monthGrid.js";
 /* ----------------------------------------------------------------------------
    Date range picker — a .ds-input that opens a two-month .ds-daterange popover.
    Renders two side-by-side .ds-calendar month grids and selects a start+end
@@ -61,13 +62,6 @@ const MONTHS = [
   "July", "August", "September", "October", "November", "December",
 ];
 
-const pad = (n: any) => String(n).padStart(2, "0");
-
-/* yyyy-mm-dd for a Date (local — never UTC, to avoid an off-by-one near midnight). */
-function toISO(d: any) {
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-}
-
 /* Coerce a Date | ISO string | null/undefined into a Date (or null). */
 function toDate(v: any) {
   if (v == null || v === "") return null;
@@ -79,30 +73,10 @@ function toDate(v: any) {
   return Number.isNaN(d.getTime()) ? null : d;
 }
 
-const startOfDay = (d: any) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
-const sameDay = (a: any, b: any) =>
-  a && b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
-
 /* Coerce a { start, end } range (Date | ISO each) into normalized Dates (or null). */
 function toRange(v: any) {
   if (!v) return { start: null, end: null };
   return { start: toDate(v.start), end: toDate(v.end) };
-}
-
-/* The 42 cells (6 weeks) covering `month`, with leading/trailing neighbour days. */
-function buildWeeks(year: any, month: any) {
-  const first = new Date(year, month, 1);
-  const start = new Date(year, month, 1 - first.getDay()); // back up to the Sunday
-  const weeks = [];
-  for (let w = 0; w < 6; w++) {
-    const row = [];
-    for (let d = 0; d < 7; d++) {
-      const cell = new Date(start.getFullYear(), start.getMonth(), start.getDate() + (w * 7 + d));
-      row.push(cell);
-    }
-    weeks.push(row);
-  }
-  return weeks;
 }
 
 export function DateRangePicker({
@@ -127,6 +101,7 @@ export function DateRangePicker({
   const maxDate = React.useMemo(() => { const d = toDate(max); return d ? startOfDay(d) : null; }, [max]);
 
   const [open, setOpen] = React.useState(false);
+  const popupId = React.useId();
   // The left month shown in the grid; the right is always the following month.
   const [view, setView] = React.useState(() => {
     const base = range.start || new Date();
@@ -230,47 +205,50 @@ export function DateRangePicker({
     return sameDay(d, new Date(Math.max(...ends)));
   };
 
-  const renderMonth = (year: any, month: any) => {
-    const weeks = buildWeeks(year, month);
-    return h("div", { className: "ds-calendar", role: "grid", "aria-label": `${MONTHS[month]} ${year}` },
+  /* `paneOffset` is which of the two side-by-side months this is (0 = left),
+     so navigating off a pane's painted range moves the *pair* and keeps the
+     target in the pane the reader was already in. */
+  const renderMonth = (year: any, month: any, paneOffset: number) =>
+    h("div", { className: "ds-calendar", "aria-label": `${MONTHS[month]} ${year}` },
       h("div", { className: "ds-calendar__head" },
         h("div", { className: "ds-calendar__label" }, `${MONTHS[month]} ${year}`)
       ),
-      h("div", { className: "ds-calendar__grid" },
-        WEEKDAYS.map((w) =>
+      h(MonthGrid, {
+        weeks: buildWeeks(year, month),
+        gridClassName: "ds-calendar__grid",
+        rowClassName: "ds-calendar__row",
+        "aria-label": `${MONTHS[month]} ${year}`,
+        header: WEEKDAYS.map((w) =>
           h("div", { key: `wd-${year}-${month}-${w}`, className: "ds-calendar__weekday", role: "columnheader", "aria-hidden": "true" }, w)
         ),
-        weeks.map((row, wi) =>
-          row.map((cell, ci) => {
-            const outside = cell.getMonth() !== month;
-            const dis = isDisabledDay(cell);
-            const start = isStart(cell);
-            const end = isEnd(cell);
-            const mid = !start && !end && inSpan(cell);
-            return h("button", {
-              key: `d-${year}-${month}-${wi}-${ci}`,
-              type: "button",
-              className: cx(
-                "ds-calendar__day",
-                outside && "is-outside",
-                sameDay(cell, today) && "is-today",
-                start && "is-range-start",
-                end && "is-range-end",
-                mid && "is-in-range"
-              ),
-              role: "gridcell",
-              disabled: dis || undefined,
-              "aria-pressed": start || end,
-              "aria-label": fmt(cell),
-              tabIndex: dis ? -1 : 0,
-              onClick: () => pick(cell),
-              onMouseEnter: () => { if (!dis) setHovered(cell); },
-            }, cell.getDate());
-          })
-        )
-      )
+        cellClassName: (cell: Date) => {
+          const start = isStart(cell);
+          const end = isEnd(cell);
+          return cx(
+            "ds-calendar__day",
+            cell.getMonth() !== month && "is-outside",
+            sameDay(cell, today) && "is-today",
+            start && "is-range-start",
+            end && "is-range-end",
+            !start && !end && inSpan(cell) && "is-in-range"
+          );
+        },
+        cellLabel: (cell: Date) => fmt(cell),
+        isSelected: (cell: Date) => isStart(cell) || isEnd(cell),
+        isDisabled: isDisabledDay,
+        onPick: pick,
+        onNavigateTo: (cell: Date) => {
+          // Round-tripped through Date so a month of -1 or 12 normalises into
+          // the neighbouring year rather than indexing MONTHS out of range.
+          const d = new Date(cell.getFullYear(), cell.getMonth() - paneOffset, 1);
+          setView({ year: d.getFullYear(), month: d.getMonth() });
+        },
+        extraCellProps: (cell: Date) => ({
+          onMouseEnter: () => { if (!isDisabledDay(cell)) setHovered(cell); },
+        }),
+        renderCell: (cell: Date) => cell.getDate(),
+      })
     );
-  };
 
   const display = range.start
     ? range.end
@@ -294,8 +272,14 @@ export function DateRangePicker({
       readOnly: true,
       disabled: disabled || undefined,
       name,
+      /* role=combobox, not the bare textbox this readOnly input would default
+         to: aria-expanded is not an allowed attribute on a textbox, which is
+         the invalid-ARIA violation the axe gate reports on this trigger. A
+         readOnly input that opens a chooser is exactly what combobox names. */
+      role: "combobox",
       "aria-haspopup": "dialog",
       "aria-expanded": open,
+      "aria-controls": popupId,
       autoComplete: "off",
       onClick: () => { if (!disabled) setOpen((o) => !o); },
       onKeyDown: (e: any) => {
@@ -309,6 +293,7 @@ export function DateRangePicker({
     open
       ? h("div", {
           className: "ds-daterange__popover",
+          id: popupId,
           role: "dialog",
           "aria-label": "Choose date range",
           style: { position: "absolute", top: "calc(100% + 6px)", left: 0 },
@@ -337,8 +322,8 @@ export function DateRangePicker({
             )
           ),
           h("div", { className: "ds-daterange__months" },
-            renderMonth(view.year, view.month),
-            renderMonth(next.getFullYear(), next.getMonth())
+            renderMonth(view.year, view.month, 0),
+            renderMonth(next.getFullYear(), next.getMonth(), 1)
           )
         )
       : null
