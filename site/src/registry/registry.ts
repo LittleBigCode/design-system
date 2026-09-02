@@ -55,10 +55,7 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "speed-dial",
     name: "Speed Dial",
     category: "Actions",
-    exports: [
-      "SpeedDial",
-      "SpeedDialAction",
-    ],
+    exports: ["SpeedDial", "SpeedDialAction"],
     description:
       "A floating action button whose two-to-four actions fan out on open — the create button a whole view is about.",
     intro: [
@@ -148,6 +145,131 @@ export const COMPONENTS: ComponentDoc[] = [
         title: "Four steps",
         description:
           "`defaultActive={1}`, so the demo opens mid-sequence and the completed state is visible.",
+      },
+    ],
+  },
+
+  {
+    slug: "button-group",
+    name: "Button Group",
+    category: "Actions",
+    exports: [
+      "ButtonGroup",
+      "ButtonGroupSeparator",
+      "ButtonGroupText",
+      "buttonGroupVariants",
+    ],
+    description:
+      "Joins related buttons into a single segmented control with shared borders.",
+    intro: [
+      "Button Group welds controls that belong to one decision into a single object: a period switcher, a split primary action, a field with its submit beside it. Reach for it when the children share a subject — actions that merely sit near each other want a `gap`, not a seam.",
+      "The group owns that seam, and it owns it by removing the losing border outright rather than overlapping the members — the same result in LTR and the correct one in RTL. Every selector matches both the absorbed parts' `data-slot` and this package's own `.ds-button`, `.ds-input` and `.ds-select`, so hand-written markup with no `data-slot` at all keeps joining. There is no grouped variant to remember, and variants keep working inside it.",
+    ],
+    examples: [
+      {
+        demo: "button-group/basic",
+        title: "Basic",
+        description:
+          "The group owns the seam — children stay ordinary `Button`s, so variants and tones keep working inside it.",
+      },
+      {
+        demo: "button-group/split",
+        title: "Split action",
+        description:
+          "The default action stays one click away and its variations move into a menu. The menu is this package's `Dropdown`/`MenuItem` — the source's `dropdown-menu` holds — and its trigger is an `IconButton`, which is what keeps the caret inside the seam rather than beside it.",
+      },
+      {
+        demo: "button-group/with-text",
+        title: "With text and inputs",
+        description:
+          "`ButtonGroupText` prefixes a fixed label, and an `Input` can sit in the group to build a composed field.",
+      },
+      {
+        demo: "button-group/vertical",
+        title: "Vertical",
+        description:
+          '`orientation="vertical"` stacks the seam; `ButtonGroupSeparator` then needs the opposite orientation to draw across it.',
+      },
+    ],
+    parts: {
+      ButtonGroup:
+        "Collapses the borders of its children by matching either their `data-slot` or their `.ds-button` class, so a wrapper element carrying neither drops out of the seam and breaks the run.",
+      ButtonGroupText:
+        "A static label, not a control: no focus ring, no tab stop. Pass `render` to make it a `label` when it names the input beside it.",
+      ButtonGroupSeparator:
+        'A `Separator` defaulting to `vertical`, because it draws across the group rather than along it — a vertical group therefore needs `orientation="horizontal"`. It composes `.ds-separator--auto`, the modifier batch 2 landed for exactly this: the rule sizes itself to the group instead of filling the cross axis.',
+    },
+  },
+
+  {
+    slug: "icon-button",
+    name: "Icon Button",
+    category: "Actions",
+    exports: ["IconButton"],
+    description:
+      "`Button` for an icon alone, with an accessible name it cannot ship without.",
+    intro: [
+      "Icon Button is the square, label-required `Button`: a toolbar control, a row action, anything whose meaning is carried by a glyph. It takes `Button`'s `variant` and `disabled` and forwards everything else, so it is the same control with one rule added.",
+      "That rule is the whole component. `label` is required in the type and lands on both `aria-label` and `title`, which is the difference between this and an icon-only `Button` — the latter can render with no accessible name at all and nothing catches it until the a11y suite does. Write the label as the action, not the glyph: `Archive invoice`, not `Archive icon`.",
+      "`size` takes the source's four square spellings — `icon`, `icon-xs`, `icon-sm`, `icon-lg` — and also the bare `sm` and `lg` this package shipped in 0.x, since those have call sites in `examples/` and in the docs. They are the same four boxes either way: `icon-` is stripped, and `icon` alone is the 40px default. `variant` narrows to `primary` and `danger` until batch 7 lands the source's six-variant `Button`; omit it for the bordered ghost.",
+    ],
+    examples: [
+      {
+        demo: "icon-button/toolbar",
+        title: "Toolbar",
+        description:
+          "Inside a `ButtonGroup` the borders collapse into one seam, which is what makes a row of icons read as one control rather than four.",
+      },
+      {
+        demo: "icon-button/row-actions",
+        title: "Row actions",
+        description:
+          "Each label names its row — three identical `Delete` buttons are useless to anyone tabbing through a table. `icon-sm` is the 30px box that fits a table row.",
+      },
+      {
+        demo: "icon-button/sizes",
+        title: "Sizes",
+        description:
+          "`size` narrows to the square sizes; the text sizes would leave an icon floating in horizontal padding. `icon-xs` is 24px and shrinks the glyph with the box — it arrived with this component, and `editable` and `field-array` are what asked for it.",
+      },
+    ],
+  },
+  /* -- Forms ------------------------------------------------------------- */
+
+  {
+    slug: "toggle",
+    name: "Toggle",
+    category: "Actions",
+    exports: ["Toggle", "toggleVariants"],
+    description: "A two-state button for on/off formatting controls.",
+    intro: [
+      "Toggle is a button that stays down: bold, mute, pin, reveal. Reach for it when pressing it changes something the reader can see immediately. A preference a form submits later belongs to `Switch` or `Checkbox` — those carry a value into the submission, where a toggle carries none.",
+      "The pressed state lives on the button's own `aria-pressed`, which is also what the styling hooks, so `defaultPressed` is enough for the uncontrolled case and nothing needs to wrap it to read the state. `toggleVariants` is shared with Toggle Group, so a lone toggle and one inside a group are the same button.",
+    ],
+    examples: [
+      {
+        demo: "toggle/basic",
+        title: "Basic",
+        description:
+          "`defaultPressed` starts the toggle on. The pressed state lands on `aria-pressed`, which is what the styling hooks into.",
+      },
+      {
+        demo: "toggle/variants",
+        title: "Variants and sizes",
+        description:
+          "Two variants and three sizes. `outline` is the right choice when the toggle sits alone rather than in a group.",
+      },
+      {
+        demo: "toggle/controlled",
+        title: "Controlled",
+        description:
+          "Pass `pressed` with `onPressedChange` when the toggle drives something else on the page.",
+      },
+      {
+        demo: "toggle/row-action",
+        title: "Row action",
+        description:
+          "One toggle per row, holding its own state. The icon carries no text, so each one needs an `aria-label` naming its row — the pressed fill is the only other cue.",
       },
     ],
   },
@@ -467,6 +589,237 @@ export const COMPONENTS: ComponentDoc[] = [
       },
     ],
   },
+
+  {
+    slug: "label",
+    name: "Label",
+    category: "Forms",
+    exports: ["Label"],
+    description:
+      "An accessible label; pairs with a control via `htmlFor` and dims with its disabled state.",
+    intro: [
+      "Label is the plain `label` element wearing the system's field-heading type: 12px, uppercase and tracked out at `0.08em` in faint ink — the charte's signature small-caps treatment, which `.ds-label` already carried before this component landed. Reach for it when the control and its name are separate elements — a select, a textarea, a range, an input in a hand-built grid. It is *not* what this package's `Checkbox`, `Switch` and `Radio` want: each of those is itself a `<label>` around its own text, so a Label beside one would be a second label for a single control. `FormField` is the label-plus-control-plus-hint row when you want the whole thing in one prop set.",
+      'It restyles itself from the control it sits beside rather than taking a prop: a Label following a `[data-slot="checkbox"]`, `radio-group-item` or `switch` trades the heading treatment for sentence case, because a checkbox label is a sentence and a field heading is not. Sibling selectors only look backwards, so the control has to come before the label in the DOM — and those three controls arrive in batch 7, so the rule is written and dark until then.',
+      "Upstream those selectors were keyed to Tailwind's `.peer` and `.group` marker classes, and the three type properties sat in a `@layer components` block below Tailwind's utilities so a call site could override them. Neither mechanism exists here: the markers are gone in favour of the real `:disabled` and `data-slot` they stood for, and the override is plain specificity. The three type properties themselves are not restated at all — `.ds-label` was already defined in `base/typography.css`, and a batch landing in an occupied namespace merges rather than overwrites.",
+    ],
+    examples: [
+      {
+        demo: "label/basic",
+        title: "Basic",
+        description:
+          "Uppercase and tracked, which suits a field heading. A Label is a flex row, so a required badge or an `optional` aside can sit beside the words — and that aside is where the voice has to be overridable.",
+      },
+      {
+        demo: "label/with-controls",
+        title: "Checkbox and switch rows",
+        description:
+          "Which controls need a Label at all. This package's `Checkbox`, `Switch` and `Radio` each wrap their own text, so they take their words as children; a select, a range and a textarea are the ones that need a separate name pointed at them.",
+      },
+      {
+        demo: "label/inline-hints",
+        title: "Inline hints",
+        description:
+          "The root is `flex items-center gap-2`, so a badge or a hint sits inside the label with no extra wrapper. Plain text needs `normal-case font-normal tracking-normal` to opt out of the heading treatment it inherits.",
+      },
+      {
+        demo: "label/disabled",
+        title: "Disabled controls",
+        description:
+          'Two mechanisms, because the sibling selector only reaches a label that comes *after* the control: the first row fades from `:disabled ~ .ds-label`, and the second — label first — fades from an ancestor carrying `data-disabled="true"`, which is what a whole disabled field group wants.',
+      },
+    ],
+  },
+
+  {
+    slug: "form",
+    name: "Form",
+    category: "Forms",
+    exports: ["Form"],
+    description:
+      "A thin Base UI Form wrapper: the page-level `<form>` and its vertical rhythm. `FormField` owns everything inside it.",
+    intro: [
+      "Form is the outermost wrapper of a form page — a `<form>` element laid out as a flex column with a wide gap, so sections separate themselves without margins. Reach for it once per form; its own gap is what spaces the rows, so there is no inner grouping element to add. `FormField` owns a single field's label, hint and error.",
+      "Base UI's own conveniences here need `Field.Root` to register the controls, and this system's `FormField` is a plain div, so none of them see anything: `onFormSubmit` reports an empty object, the `errors` prop keys off names it never learns, and there is no first-invalid field to focus. Read the values with `FormData` in `onSubmit` and hold errors in state instead. The one behaviour that does reach you is that the element is rendered with `noValidate`, so browser constraint bubbles never appear and `required` blocks nothing on its own.",
+    ],
+    examples: [
+      {
+        demo: "form/basic",
+        title: "Basic",
+        description:
+          "`FormData` over `event.currentTarget` is the reliable read in this system — every control here is a native input with a `name`, so nothing else is needed.",
+      },
+      {
+        demo: "form/validation",
+        title: "Validation",
+        description:
+          "Wire errors yourself: state in, `FieldError` out, `aria-invalid` on the control. Nothing validates on submit until you do, since the form carries `noValidate`.",
+      },
+      {
+        demo: "form/sections",
+        title: "Sectioned form",
+        description:
+          "Form's own gap is what separates the sections — a plain `<fieldset>` and `<legend>` group them semantically, and the rows inside one space themselves.",
+      },
+      {
+        demo: "form/pending",
+        title: "Pending submit",
+        description:
+          "An async `onSubmit`: read the values before the first `await`, since `event.currentTarget` is null once the handler yields. The server's answer lands in the same error state a client check would use.",
+      },
+    ],
+  },
+
+  /* -- Data display ------------------------------------------------------ */
+
+  {
+    slug: "field-array",
+    name: "Field Array",
+    category: "Forms",
+    exports: [
+      "FieldArray",
+      "FieldArrayItem",
+      "FieldArrayItemContent",
+      "FieldArrayRemove",
+      "FieldArrayAdd",
+    ],
+    description:
+      "Repeated entries for an array of objects — one bordered block per entry, each removable, with one add button under the stack.",
+    intro: [
+      "Field Array is the repeat chrome for a section that collects several of the same object: a list of diplomas, of recipients, of quote lines. Each entry is a bordered block, `FieldArrayItemContent` lays out whatever controls that object needs, `FieldArrayRemove` drops the entry, and `FieldArrayAdd` closes the stack as a full-width outline button. Wrap the lot in a `<fieldset>` when the section wants a name — the legend then announces with every control inside it.",
+      "Every part is a plain styled box holding no state and asserting nothing about its contents, so an entry takes any control in any arrangement: pass a grid to the content part, or put the remove button in a header row above it rather than beside it. The array itself stays with you — this package owns no form state — which leaves add, remove, limits and the entry ids in your hands.",
+      "Submission needs no value state at all. Index each control's own `name` per entry (`lines[0].unit`) and a plain form submit carries the array; only the row list lives in React. Key each item off a stable entry id, never the index — keyed by index, removing a row makes React reuse the wrong DOM node and every uncontrolled value below it shifts up by one.",
+    ],
+    examples: [
+      {
+        demo: "field-array/basic",
+        title: "Basic",
+        description:
+          "One entry per diploma: an Input and a Select in the default content column, remove button beside them. Both carry an indexed `name`, so the section submits without any value state. Every control needs a name of its own — the entries are identical, so `Diploma 2 school` beats `School` for anyone hearing the form rather than seeing the block it sits in.",
+      },
+      {
+        demo: "field-array/submit",
+        title: "Any controls, one submit",
+        description:
+          "The part list is layout only, so an entry can hold anything: here a two-column grid of Input, Select and Checkbox through `--grid`, with the remove button moved into a header row through `--stacked` and `--stretch`. The output is the raw `FormData` the browser would post — an unchecked Checkbox contributes no entry, which is native behaviour rather than something the component decides.",
+      },
+      {
+        demo: "field-array/limits",
+        title: "Limits",
+        description:
+          "Neither bound is built in: `disabled` on `FieldArrayAdd` caps the stack, and rendering no `FieldArrayRemove` on a lone entry is what keeps one row mandatory.",
+      },
+    ],
+    parts: {
+      FieldArray:
+        'A `role="group"` column on `gap-3` — the add button is just its last child, not a separate slot.',
+      FieldArrayItem:
+        "The bordered block, a centred flex row. Add `.ds-field-array-item--stacked` and `--stretch` when the entry wants stacked sections instead of content-beside-button — the two modifiers that replaced the source's literal `flex-col items-stretch` override.",
+      FieldArrayItemContent:
+        "The column the controls go in. `min-w-0` is load-bearing: without it a long value refuses to shrink below its content width and pushes the remove button out of the block. Override `className` for any other arrangement — `.ds-field-array-item-content--grid`, the two-column case, is the common one.",
+      FieldArrayRemove:
+        "An `IconButton` at `icon-sm` carrying the trash glyph; `label` is its accessible name and should identify the entry, since a stack of them all reading `Remove` tells a screen reader user nothing. Pass children to swap the glyph.",
+      FieldArrayAdd:
+        "A full-width `Button` with the plus already in it — pass only the label as children. It is the bordered default rather than the source's `outline`, which is the same button under this package's two-variant axis.",
+    },
+  },
+  {
+    slug: "input-otp",
+    name: "Input OTP",
+    category: "Forms",
+    exports: [],
+    description:
+      "A segmented one-time-code field with per-character slots. Stylesheet only — the one-field-many-boxes behaviour needs a binding this package does not ship.",
+    intro: [
+      "Input OTP is for a code of known length that reads as separate characters: an SMS or authenticator confirmation, an email verification, an invite key. Reach for it when the length is fixed and the segmentation helps the reader keep their place — a plain `Input` is better as soon as the value could be any length, and `FormField` is what wraps either one with a label and an error.",
+      "**This one is CSS without a React binding.** The source component wraps the `input-otp` package, and that dependency is not acquired. What it buys is precisely the behaviour, not the look: one real transparent input behind the boxes, so paste, password managers and the OS one-time-code suggestion keep working, plus backspace across a slot boundary and the caret tracking. So `.ds-input-otp` and its group, slot, caret and separator classes ship, and any binding that renders them gets the look.",
+      "The structure is the part worth knowing even without a binding. There is exactly one `input`; every slot is a plain `div` painted from that input's state, which is why a slot carries no value and no `onChange`, why splitting the slots across groups is presentational and does not touch the value, and why the field is named on the input itself rather than on a group. `data-active` marks the slot the caret is in, and the caret is a painted line — the real one is invisible with the input.",
+    ],
+    examples: [
+      {
+        demo: "input-otp/basic",
+        title: "The class contract",
+        description:
+          "The markup a binding has to produce: one real input carrying the value and the accessible name, two groups of `.ds-input-otp-slot` boxes split 3–3 with a `.ds-input-otp-separator` between them, and `data-active` on the box the caret is in — which is what draws the focused underline and the blinking line. The boxes are `aria-hidden`, because the input already announces the value.",
+      },
+    ],
+  },
+
+  {
+    slug: "phone-input",
+    name: "Phone Input",
+    category: "Forms",
+    exports: ["PhoneInput"],
+    description:
+      "A country dial-code select paired with a national-number field, composing into one E.164-ish string value.",
+    intro: [
+      'Phone Input pairs a dial-code Select with a national-number Input inside a single underline, and hands back one string (`+33612345678`) rather than a country/number pair. Reach for it when a form needs a phone number in one field; when it only needs digits, a plain Input with `type="tel"` is enough.',
+      "The country picker is this package's native `Select` — the source's five-part one lands in batch 7 — which is arguably the better fit anyway: a dial-code list is exactly where a platform select's own mobile UI beats a custom listbox. The dial-code table is hand-rolled and covers ten markets, so there is no `libphonenumber` in the bundle, no per-country grouping and no length validation — `placeholder` only suggests the shape. The split is derived from the value on every render rather than held in state, which is why `US` and `CA` both write `+1` and a `+1…` value always reads back as `US`.",
+    ],
+    examples: [
+      {
+        demo: "phone-input/basic",
+        title: "Basic",
+        description:
+          "The value is a single string (`+33612345678`) — the dial code and national number are split from it for editing, then rejoined on change.",
+      },
+      {
+        demo: "phone-input/with-field",
+        title: "In a field",
+        description:
+          "`defaultCountry` seeds the dial code before any digits are typed, which is what an empty controlled field needs — the split falls back to it whenever the value carries no recognised dial code.",
+      },
+      {
+        demo: "phone-input/contact-form",
+        title: "Contact form",
+        description:
+          "Beside plain fields in a form: one value goes to the server, dial code included, so there is no second country field to keep in sync.",
+      },
+    ],
+    parts: {
+      PhoneInput:
+        "The two inner controls carry hardcoded `aria-label`s (`Country calling code`, `Phone number`) and accept no override, so a surrounding `Label` is a visual caption rather than a programmatic one. Typed characters are sanitised to digits and spaces, which is why the stored string is E.164-ish rather than strictly E.164.",
+    },
+  },
+
+  {
+    slug: "editable",
+    name: "Editable",
+    category: "Forms",
+    exports: ["Editable"],
+    description:
+      "Inline click-to-edit text — a preview with an edit affordance that swaps to a field, committed on Enter or blur, discarded on Escape.",
+    intro: [
+      "Editable turns a piece of text into its own editor: a preview with a pencil that surfaces on hover or focus, swapping in place for an `Input` with save and cancel beside it. Reach for it to rename something where it already sits — a document title, a board column, a row label — instead of sending someone to a dialog for one value. As soon as the edit touches more than one value, a `FormField` inside a form is the honest shape.",
+      "It is hand-rolled rather than composed, so the prop list is the whole surface and there are no parts to nest. Enter and blur commit, Escape discards, and `submitOnBlur={false}` makes blur discard too, which leaves the check button and Enter as the only ways through. Two details to know before styling it: the preview is a `span` rather than a button, so the pencil — not the text — is what opens the field, and the inner `Input` carries its own type size, so a heading-sized preview snaps back to field size while it is being edited.",
+      "The three affordances are `IconButton`s at `icon-xs`, re-composed onto this package's button until batch 7 supplies the source's — which means each one now carries a required accessible name (`Edit`, `Save`, `Cancel`) rather than relying on the source remembering an `aria-label`.",
+    ],
+    examples: [
+      {
+        demo: "editable/basic",
+        title: "Basic",
+        description:
+          "Uncontrolled, which is enough for most renames: the component holds the committed value itself. The pencil only appears on hover or focus, and Escape restores the previous value rather than committing the draft.",
+      },
+      {
+        demo: "editable/rows",
+        title: "Rows in a list",
+        description:
+          "One per row, each holding its own value, so nothing above them keeps state. The last row starts empty to show `placeholder`, which stands in for the value in muted text rather than sitting inside the field.",
+      },
+      {
+        demo: "editable/explicit-commit",
+        title: "Commit explicitly",
+        description:
+          "`submitOnBlur={false}` for a value a stray click must not rewrite: blur then runs `onCancel` rather than `onSubmit`, so the check button and Enter are the only ways to commit and a draft left behind is dropped.",
+      },
+      {
+        demo: "editable/controlled",
+        title: "Controlled",
+        description:
+          "`value` with `onSubmit` hands the commit to the page — and obliges it to write the value back, since a controlled Editable renders what it is given and would otherwise snap to the old text. `onValueChange` is the same moment, not the keystrokes: there is no callback for the draft.",
+      },
+    ],
+  },
   /* -- Data display -------------------------------------------------------- */
   {
     slug: "code-block",
@@ -600,12 +953,7 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "marker",
     name: "Marker",
     category: "Data display",
-    exports: [
-      "Marker",
-      "MarkerIcon",
-      "MarkerContent",
-      "markerVariants",
-    ],
+    exports: ["Marker", "MarkerIcon", "MarkerContent", "markerVariants"],
     description: "A small inline badge pairing an icon with a label.",
     intro: [
       "Marker is the caption above a group: uppercase, muted, full-width, optionally with a glyph. Reach for it to title a stack of rows, label a section of a form, or divide a feed by day — the small typographic heading that is not a heading element. `Badge` is the inline word of state; `Separator` is the rule with no label.",
@@ -650,9 +998,7 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "snippet",
     name: "Snippet",
     category: "Data display",
-    exports: [
-      "Snippet",
-    ],
+    exports: ["Snippet"],
     description:
       "A one-line copyable command. Shares Code Block's copy affordance rather than restating it.",
     intro: [
@@ -678,10 +1024,7 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "qr-code",
     name: "QR Code",
     category: "Data display",
-    exports: [
-      "QrCode",
-      "type QrErrorCorrectionLevel",
-    ],
+    exports: ["QrCode", "type QrErrorCorrectionLevel"],
     description:
       "Renders a QR code as inline SVG from a hand-rolled byte-mode encoder — no dependency, no network, no canvas. Versions 1-10, all four correction levels.",
     intro: [
@@ -706,6 +1049,97 @@ export const COMPONENTS: ComponentDoc[] = [
         title: "Scan or type",
         description:
           "The two-factor shape: the same secret as a code and as a `Snippet`, since a reader on the device showing the code cannot scan their own screen. The quiet zone stays white on dark, which is what keeps it scannable.",
+      },
+    ],
+  },
+
+  {
+    slug: "meter",
+    name: "Meter",
+    category: "Data display",
+    exports: [
+      "Meter",
+      "MeterTrack",
+      "MeterIndicator",
+      "MeterLabel",
+      "MeterValue",
+      "meterVariants",
+    ],
+    description:
+      "Displays a measured value within a known range — capacity, not task progress.",
+    intro: [
+      "Meter shows how full something is: disk used, budget consumed, seats taken. Reach for it when the value measures a fixed capacity and can move either way — work advancing towards done is `Progress`, and a single figure that deserves a dial of its own is `Gauge`.",
+      "`Meter` renders its own `MeterTrack` and `MeterIndicator` after whatever children you pass, so children are the label and the value only; writing a track yourself draws a second bar. With no `format`, the value reads as its percentage of the `min`–`max` range — pass a `format`, or a function child on `MeterValue`, when the readout should be the raw figure instead.",
+    ],
+    examples: [
+      {
+        demo: "meter/basic",
+        title: "Basic",
+        description:
+          "`format` takes `Intl.NumberFormatOptions` and applies to `MeterValue`, which is what makes the second row read `128 GB` instead of the `50%` of its range it would print by default.",
+      },
+      {
+        demo: "meter/thresholds",
+        title: "Colour by threshold",
+        description:
+          "Because the indicator is internal, per-row colour is a descendant selector on the root rather than a prop.",
+      },
+      {
+        demo: "meter/plan-usage",
+        title: "In a panel",
+        description:
+          "Where capacity readouts usually live: a plan summary with the action under it. Both rows pass a function child to `MeterValue`, which receives the formatted string and the raw number — the way to write `34 of 50 used` where the default would read `68%`.",
+      },
+    ],
+    parts: {
+      Meter:
+        "Renders the track and the indicator itself, after your children, and owns `format` — pass only a label and a value unless you want two bars.",
+      MeterTrack:
+        "Rendered for you. Restyle the bar through a descendant selector on the root rather than by adding a second track.",
+      MeterIndicator:
+        "Also internal, and Base UI sets its width inline, so colour is the one thing left to change from outside — which is why thresholds are a selector on the root.",
+      MeterLabel:
+        "Registers itself as the meter's accessible name, so a meter without one needs an `aria-label` on the root.",
+      MeterValue:
+        "`aria-hidden`: the root already announces the value through `aria-valuetext`, so this is the sighted readout only. A function child receives the formatted string and the raw number.",
+    },
+  },
+
+  {
+    slug: "relative-time",
+    name: "Relative Time",
+    category: "Data display",
+    exports: ["RelativeTime", "formatRelativeTime"],
+    description:
+      'Renders "3 hours ago" from a date, inside a `time` element that keeps the machine-readable timestamp.',
+    intro: [
+      "Relative Time turns a timestamp into `3 hours ago` and keeps it advancing while it is mounted. Reach for it in activity feeds, notification lists and updated-at columns, where distance from now is what a reader wants. Past a week it falls back to an absolute date, because `47 days ago` is worse than the date itself.",
+      "`date` takes what a row actually holds: a `Date`, epoch milliseconds, or a database string with a space separator, microseconds and a `+02` zone. A stamp carrying no zone counts as local time, so a column storing UTC has to append `Z`. What renders is a real `time` element with the ISO value in `dateTime` and the full local date in `title`, so the exact moment survives hover and copy.",
+    ],
+    examples: [
+      {
+        demo: "relative-time/basic",
+        title: "Basic",
+        description:
+          "The thresholds in one list: seconds, minutes, hours and days stay relative, and anything past a week renders as an absolute date instead.",
+      },
+      {
+        demo: "relative-time/static",
+        title: "In a table",
+        description:
+          "Where relative stamps earn their keep: a column of them scans faster than absolute dates. `live={false}` stops the re-render timer, for a snapshot or a server-rendered page that has no need to keep advancing.",
+      },
+      {
+        demo: "relative-time/inputs",
+        title: "What a column can hand over",
+        description:
+          "One instant in the four shapes an API or a database actually returns, all reading identically — plus an unparseable value, which is printed as it arrived under `data-invalid` rather than taking the tree down.",
+      },
+      {
+        demo: "relative-time/locales",
+        title: "Other locales",
+        description:
+          "`locale` goes straight to `Intl.RelativeTimeFormat`, and an invalid tag falls back to the browser instead of throwing. Leaving it unset follows the browser, which is usually what an app wants.",
       },
     ],
   },
@@ -899,13 +1333,7 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "toc",
     name: "Toc",
     category: "Navigation",
-    exports: [
-      "Toc",
-      "TocLabel",
-      "TocList",
-      "TocItem",
-      "TocLink",
-    ],
+    exports: ["Toc", "TocLabel", "TocList", "TocItem", "TocLink"],
     description:
       "The in-page anchor rail — a sticky list of the sections on the current page.",
     intro: [
@@ -923,7 +1351,7 @@ export const COMPONENTS: ComponentDoc[] = [
         demo: "toc/current-section",
         title: "Current section",
         description:
-          "No scroll-spy is built in — the component holds no state. Pass `current` on the active link: it writes `aria-current=\"location\"` and adds `.ds-toc-link--current`, which is the source's `border-foreground text-foreground` className override resolved into a class.",
+          'No scroll-spy is built in — the component holds no state. Pass `current` on the active link: it writes `aria-current="location"` and adds `.ds-toc-link--current`, which is the source\'s `border-foreground text-foreground` className override resolved into a class.',
       },
       {
         demo: "toc/nested",
@@ -943,7 +1371,7 @@ export const COMPONENTS: ComponentDoc[] = [
       TocList:
         "Draws the rail itself — the continuous inline-start border belongs to the list, and each link only borrows the segment beside it. `.ds-toc-list--tight` is the closer spacing an inline table of contents wants.",
       TocItem:
-        "`level` writes `data-level`, and toc.css indents the link from there (`[data-level=\"2\"] .ds-toc-link`). Styling depth on the item instead would move the border off the rail.",
+        '`level` writes `data-level`, and toc.css indents the link from there (`[data-level="2"] .ds-toc-link`). Styling depth on the item instead would move the border off the rail.',
       TocLink:
         "Pulls its own border back one pixel over the list's, so hovering or marking a link lights that segment of the rail rather than drawing a second line beside it. `current` is the prop for the reader's own section — it carries both `aria-current` and the lit style.",
     },
@@ -953,9 +1381,7 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "aspect-ratio",
     name: "Aspect Ratio",
     category: "Layout",
-    exports: [
-      "AspectRatio",
-    ],
+    exports: ["AspectRatio"],
     description: "Constrains content to a fixed width-to-height ratio.",
     intro: [
       "Aspect Ratio holds a box at a fixed shape while its width comes from the layout around it — thumbnails, card covers, video frames, map tiles. Reach for it whenever the height should be derived from the width instead of guessed, so nothing reflows as an image or an embed loads.",
@@ -992,9 +1418,7 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "separator",
     name: "Separator",
     category: "Layout",
-    exports: [
-      "Separator",
-    ],
+    exports: ["Separator"],
     description:
       "A rule between content. Base UI inverts the orientation semantics — a horizontal group takes vertical separators.",
     intro: [
@@ -1032,10 +1456,7 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "scroll-area",
     name: "Scroll Area",
     category: "Layout",
-    exports: [
-      "ScrollArea",
-      "ScrollBar",
-    ],
+    exports: ["ScrollArea", "ScrollBar"],
     description: "A scrollable region with styled, overlay scrollbars.",
     intro: [
       "Scroll Area is the bounded scrolling region: a commit list, a group of options, a long block of terms that has to live inside a fixed height instead of stretching the page. Reach for it when the content is unbounded but the layout is not — a dialog body, a sidebar tree, a command palette.",
@@ -1092,9 +1513,7 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "masonry",
     name: "Masonry",
     category: "Layout",
-    exports: [
-      "Masonry",
-    ],
+    exports: ["Masonry"],
     description:
       "A multi-column layout that balances items of uneven height, via CSS columns rather than a JS measurement pass.",
     intro: [
@@ -1130,10 +1549,7 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "theme-switcher",
     name: "Theme Switcher",
     category: "Layout",
-    exports: [
-      "ThemeSwitcher",
-      "type ThemeSwitcherMode",
-    ],
+    exports: ["ThemeSwitcher", "type ThemeSwitcherMode"],
     description:
       "A light/dark/system toggle, promoted from the docs app's own theme-toggle. Fully controlled — the consumer owns the theme hook.",
     intro: [
@@ -1174,7 +1590,67 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
     parts: {
       ThemeSwitcher:
-        'Built on `Segmented` for the default variant, `IconButton` for `cycle` and Base UI `Menu` for `dropdown` — the source\'s own toggle-group and dropdown-menu are both held. The segmented cells carry a visible word beside the glyph rather than an icon-only `aria-label`, since `Segmented` takes a label node; the source\'s sliding indicator goes with the toggle cells it was pitched against.',
+        "Built on `Segmented` for the default variant, `IconButton` for `cycle` and Base UI `Menu` for `dropdown` — the source's own toggle-group and dropdown-menu are both held. The segmented cells carry a visible word beside the glyph rather than an icon-only `aria-label`, since `Segmented` takes a label node; the source's sliding indicator goes with the toggle cells it was pitched against.",
+    },
+  },
+
+  {
+    slug: "carousel",
+    name: "Carousel",
+    category: "Layout",
+    exports: [],
+    description:
+      "A paged slide viewport with previous and next controls. Stylesheet only — the drag and snap need a binding this package does not ship.",
+    intro: [
+      "Carousel is the paged strip: screenshots, release cards, testimonials the reader steps through instead of scrolling past. Reach for it when horizontal room is the constraint and the items are peers — never for content the reader must not miss, since everything but the current page is off screen.",
+      "**This one is CSS without a React binding.** The source component wraps `embla-carousel-react`, and that dependency is not acquired — it is a drag, snap and autoplay engine, which is the whole component and none of the look. So `.ds-carousel`, `.ds-carousel-viewport`, `.ds-carousel-content`, `.ds-carousel-item` and the two `.ds-carousel-control` boxes ship, and any binding that renders them gets the look. What the stylesheet cannot supply is the pointer maths, the snap points and the disabled state at either end.",
+      "Two parts of the layout are a contract rather than a preference. The gap between slides is `.ds-carousel-content`'s negative margin paired with `.ds-carousel-item`'s padding, so a `gap` on the track doubles it; and the controls are absolutely positioned *outside* the viewport, so the wrapper needs horizontal room or they clip. `data-orientation` chooses the axis on both the track and each item, and the RTL rules mirror the vertical controls and turn the caret glyphs around.",
+    ],
+    examples: [
+      {
+        demo: "carousel/basic",
+        title: "The class contract",
+        description:
+          "The markup a binding has to produce, with the slides fixed rather than draggable. `--third` is the modifier that replaced the source's literal `basis-1/3` override — one slide per page is the default, `--half` and `--third` are the other two. The controls are `IconButton`s, whose required `label` supplies the accessible name the source hid in an `sr-only` span; this package has no such utility.",
+      },
+    ],
+  },
+
+  {
+    slug: "wordmark",
+    name: "Wordmark",
+    category: "Layout",
+    exports: ["Wordmark", "wordmarkVariants"],
+    description:
+      "The Diametral logo lockup, inlined as JSX so it recolours with the surrounding text.",
+    intro: [
+      "Wordmark renders the Diametral lockup as inline JSX, so app chrome — headers, footers, auth screens, empty states — never touches a raw asset file. Two lockups: `horizontal` is the full name, `square` sets it inside the symbol for avatar- and app-icon-sized placements. These are the produced lockups. 0.x drew the brand's three elements as primitives instead — a circle, a square and a diagonal line — which is still what `assets/logo/diametral-mark.svg` holds; that file has not been re-cut to match.",
+      "The paths are `currentColor`, so `text-*` utilities recolour the mark exactly like text and there is no light/dark SVG pair to swap. `assets/` remains the canonical source for non-React consumers such as email, the Keycloak theme and raster exports.",
+      '`name` and `sub` survive from 0.x, and they are the one part of the incumbent this component does not replace: the source\'s Wordmark is the mark alone, while `ConsoleLayout`, the Vite starter and the 0.x class table all read them. They render only when passed, and a name beside the mark wants `variant="square"` — the horizontal lockup already spells the word.',
+    ],
+    examples: [
+      {
+        demo: "wordmark/basic",
+        title: "Basic",
+        description:
+          "The lockup is `currentColor`, so it recolours with the surrounding text — no separate light/dark SVG to swap.",
+      },
+      {
+        demo: "wordmark/square",
+        title: "Square",
+        description:
+          "The wordmark set inside the symbol, for avatar and app-icon-style placements.",
+      },
+      {
+        demo: "wordmark/app-header",
+        title: "Beside a text label",
+        description:
+          'When the mark sits next to text that already says "Diametral", pass `label=""` — the SVG drops out of the accessibility tree instead of announcing the name twice.',
+      },
+    ],
+    parts: {
+      Wordmark:
+        '`label` is the accessible name. Pass `label=""` to make the mark decorative when adjacent text already names it — otherwise screen readers hear "Diametral" twice.',
     },
   },
   /* -- Disclosure ---------------------------------------------------------- */
@@ -1197,6 +1673,53 @@ export const COMPONENTS: ComponentDoc[] = [
           "Three rows, one open at mount. `defaultOpen` takes the item's `id`, not its index.",
       },
     ],
+  },
+
+  {
+    slug: "collapsible",
+    name: "Collapsible",
+    category: "Disclosure",
+    exports: ["Collapsible", "CollapsibleTrigger", "CollapsibleContent"],
+    description:
+      "A single show/hide region. Emits `data-open` / `data-closed`, not `data-state`.",
+    intro: [
+      "Collapsible is one region and one toggle: the show-more, the request detail, the advanced half of a form. Reach for it whenever there is a single thing to hide — several titled sections that stack is `Accordion`, and a region that floats over the page instead of pushing it down is `Popover`.",
+      "The wrapper is deliberately bare — no chrome, no caret, no padding — because the trigger is usually your own control: `CollapsibleTrigger` takes Base UI's `render` prop, so the trigger *is* a Button rather than wrapping one. State lands on the trigger as `aria-expanded` and `data-panel-open`, which is what a caret rotates off; the panel is the part carrying `data-open`/`data-closed` and publishing `--collapsible-panel-height`.",
+    ],
+    examples: [
+      {
+        demo: "collapsible/basic",
+        title: "Basic",
+        description:
+          "The trigger renders as a Button via `render`. The caret rotates off `aria-expanded`, which sits on the trigger rather than the root.",
+      },
+      {
+        demo: "collapsible/filter-group",
+        title: "Filter group",
+        description:
+          "The sidebar facet: the trigger is the section header itself — a plain full-width row, not a Button — so the whole strip is the hit target and the count sits inside the panel it belongs to.",
+      },
+      {
+        demo: "collapsible/optional-fields",
+        title: "Optional fields",
+        description:
+          "A form's advanced half. `keepMounted` leaves the panel in the DOM when it closes, so half-typed values survive a collapse and native submission still sees the inputs.",
+      },
+      {
+        demo: "collapsible/controlled",
+        title: "Controlled",
+        description:
+          "Driving `open` yourself lets the toggle live outside the collapsible — here a show-more button beneath the list.",
+      },
+    ],
+    parts: {
+      Collapsible:
+        "A grouping div with no styles of its own, so the gap between trigger and panel is yours to set — usually a margin on the panel.",
+      CollapsibleTrigger:
+        "The state lives here, not on the root: `aria-expanded` and `data-panel-open` are the trigger's, so caret rotation keys off the trigger's own group.",
+      CollapsibleContent:
+        "Unmounted while closed unless you pass `keepMounted` or `hiddenUntilFound`, and it publishes `--collapsible-panel-height` for height transitions.",
+    },
   },
   /* -- Overlays ------------------------------------------------------------ */
   {
@@ -1240,11 +1763,10 @@ export const COMPONENTS: ComponentDoc[] = [
       "ContextMenuSubTrigger",
       "ContextMenuSubContent",
     ],
-    description:
-      "Right-click's own menu, positioned at the pointer.",
+    description: "Right-click's own menu, positioned at the pointer.",
     intro: [
       "A context menu is for actions that belong to *this* row, *this* file, *this* selection — the subject is whatever was right-clicked, which is why the menu opens at the pointer rather than under a button. Reach for it in list and canvas views where every row would otherwise need its own visible affordance. It is a shortcut, never the only path: pointer-only means a keyboard or touch reader never finds it, so the same actions belong somewhere reachable too — a `Dropdown` on the row, or a toolbar above it.",
-      "`ContextMenuTrigger` is the region that answers the right-click, so it wraps the content rather than sitting beside it, and `render` is how it becomes the `li`, `div` or cell it is really guarding. `ContextMenuContent` mounts its own portal and positioner: the tree stops at Root → Trigger + Content. Rows come in four shapes — plain, checkbox, radio and submenu — and `variant=\"destructive\"` is the one that colours a row rather than a modifier class.",
+      '`ContextMenuTrigger` is the region that answers the right-click, so it wraps the content rather than sitting beside it, and `render` is how it becomes the `li`, `div` or cell it is really guarding. `ContextMenuContent` mounts its own portal and positioner: the tree stops at Root → Trigger + Content. Rows come in four shapes — plain, checkbox, radio and submenu — and `variant="destructive"` is the one that colours a row rather than a modifier class.',
     ],
     examples: [
       {
@@ -1280,7 +1802,7 @@ export const COMPONENTS: ComponentDoc[] = [
       ContextMenuLabel:
         "Names the menu's subject. A context menu's subject is whatever was clicked and nothing on screen says so once the menu covers it, which is why this earns its row here and not in a dropdown.",
       ContextMenuItem:
-        "`variant=\"destructive\"` colours the row; `inset` adds the indicator gutter, for when a plain item shares a menu with checkbox or radio rows.",
+        '`variant="destructive"` colours the row; `inset` adds the indicator gutter, for when a plain item shares a menu with checkbox or radio rows.',
       ContextMenuShortcut:
         "The keyboard equivalent, on the row's end edge. It is a label, not a binding — the shortcut itself is the page's to register.",
     },
@@ -1328,11 +1850,7 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "hover-card",
     name: "Hover Card",
     category: "Overlays",
-    exports: [
-      "HoverCard",
-      "HoverCardTrigger",
-      "HoverCardContent",
-    ],
+    exports: ["HoverCard", "HoverCardTrigger", "HoverCardContent"],
     description: "A preview surface shown on hover, for links and mentions.",
     intro: [
       "Hover Card is the preview that saves a click: hovering a mention, a link or an entity name expands it into just enough context to decide whether to follow it. Everything inside is supplementary by definition — a touch user never hovers, so anything a reader actually needs belongs on the page, and anything they need to act on belongs in a Popover.",
@@ -1616,6 +2134,54 @@ export const COMPONENTS: ComponentDoc[] = [
         "A snap-scrolling row with faded edges, and `tabIndex={0}` so the list can be scrolled from the keyboard rather than by pointer only.",
     },
   },
+
+  /* -- Utilities ----------------------------------------------------------- */
+
+  {
+    slug: "direction",
+    name: "Direction",
+    category: "Utilities",
+    exports: ["DirectionProvider", "useDirection"],
+    description:
+      "A provider that sets text direction (LTR/RTL) for every Base UI component beneath it.",
+    intro: [
+      "DirectionProvider tells every Base UI component beneath it which way the document reads. Mount it once at the app root — direction is a whole-tree fact rather than a per-component prop — and mount it again only inside a subtree that genuinely reads the other way, such as a quoted Arabic thread inside an LTR shell.",
+      "It is half of the answer and the `dir` attribute is the other half: the provider is what Base UI's JavaScript reads (floating panel placement, arrow-key order, which end of a `Range` is the minimum), while `dir` is what the CSS logical properties read. Set both, from the same value.",
+    ],
+    examples: [
+      {
+        demo: "direction/rtl",
+        title: "Side by side",
+        description:
+          "Components are written with logical properties throughout, so the same markup mirrors without a second stylesheet.",
+      },
+      {
+        demo: "direction/switching",
+        title: "Switching at runtime",
+        description:
+          "One piece of state drives the provider and the `dir` attribute together, which is all a runtime switch is. Components of your own read that value back with `useDirection` instead of threading a prop down.",
+      },
+      {
+        demo: "direction/axis",
+        title: "Controls with an axis",
+        description:
+          "Where the provider earns its keep: a range's track and thumb, and every composite's arrow-key order, take the direction from context — `dir` alone would mirror the paint and leave the keyboard running backwards. The segmented row is this package's `Segmented`, standing in for the source's `ToggleGroup`.",
+      },
+    ],
+  },
+]
+
+export const CATEGORIES = [
+  "Actions",
+  "Forms",
+  "Data display",
+  "Navigation",
+  "Layout",
+  "Disclosure",
+  "Overlays",
+  "Feedback",
+  "Conversation",
+  "Utilities",
 ]
 
 /**
@@ -1666,87 +2232,6 @@ export const PENDING: ComponentDoc[] = [
         title: "With icon and loading",
         description:
           "Icons are sized by the button's own `[&_svg]` rules — no wrapper classes needed.",
-      },
-    ],
-  },
-  {
-    slug: "button-group",
-    name: "Button Group",
-    category: "Actions",
-    description:
-      "Joins related buttons into a single segmented control with shared borders.",
-    intro: [
-      "Button Group welds controls that belong to one decision into a single object: a period switcher, a split primary action, a field with its submit beside it. Reach for it when the children share a subject — actions that merely sit near each other want a `gap`, not a seam.",
-      "The group owns that seam, and it owns it through the children's own `data-slot`: the selectors strip the inner radii and collapse each adjacent border, so the children stay ordinary `Button`s, `Input`s and `Select`s. There is no grouped variant to remember, and tones and variants keep working inside it.",
-    ],
-    examples: [
-      {
-        demo: "button-group/basic",
-        title: "Basic",
-        description:
-          "The group owns the seam — children stay ordinary `Button`s, so variants and tones keep working inside it.",
-      },
-      {
-        demo: "button-group/split",
-        title: "Split action",
-        description:
-          "The default action stays one click away and its variations move into a menu. The trigger renders a `Button` through `render`, which is what keeps it inside the seam rather than beside it.",
-      },
-      {
-        demo: "button-group/with-text",
-        title: "With text and inputs",
-        description:
-          "`ButtonGroupText` prefixes a fixed label, and an `Input` can sit in the group to build a composed field.",
-      },
-      {
-        demo: "button-group/vertical",
-        title: "Vertical",
-        description:
-          '`orientation="vertical"` stacks the seam; `ButtonGroupSeparator` then needs the opposite orientation to draw across it.',
-      },
-    ],
-    parts: {
-      ButtonGroup:
-        "Collapses the radii and borders of its children by matching their `data-slot`, so a wrapper element without one drops out of the seam and breaks the run.",
-      ButtonGroupText:
-        "A static label, not a control: no focus ring, no tab stop. Pass `render` to make it a `label` when it names the input beside it.",
-      ButtonGroupSeparator:
-        'A `Separator` defaulting to `vertical`, because it draws across the group rather than along it — a vertical group therefore needs `orientation="horizontal"`.',
-    },
-  },
-  {
-    slug: "toggle",
-    name: "Toggle",
-    category: "Actions",
-    description: "A two-state button for on/off formatting controls.",
-    intro: [
-      "Toggle is a button that stays down: bold, mute, pin, reveal. Reach for it when pressing it changes something the reader can see immediately. A preference a form submits later belongs to `Switch` or `Checkbox` — those carry a value into the submission, where a toggle carries none.",
-      "The pressed state lives on the button's own `aria-pressed`, which is also what the styling hooks, so `defaultPressed` is enough for the uncontrolled case and nothing needs to wrap it to read the state. `toggleVariants` is shared with Toggle Group, so a lone toggle and one inside a group are the same button.",
-    ],
-    examples: [
-      {
-        demo: "toggle/basic",
-        title: "Basic",
-        description:
-          "`defaultPressed` starts the toggle on. The pressed state lands on `aria-pressed`, which is what the styling hooks into.",
-      },
-      {
-        demo: "toggle/variants",
-        title: "Variants and sizes",
-        description:
-          "Two variants and three sizes. `outline` is the right choice when the toggle sits alone rather than in a group.",
-      },
-      {
-        demo: "toggle/controlled",
-        title: "Controlled",
-        description:
-          "Pass `pressed` with `onPressedChange` when the toggle drives something else on the page.",
-      },
-      {
-        demo: "toggle/row-action",
-        title: "Row action",
-        description:
-          "One toggle per row, holding its own state. The icon carries no text, so each one needs an `aria-label` naming its row — the pressed fill is the only other cue.",
       },
     ],
   },
@@ -1830,38 +2315,6 @@ export const PENDING: ComponentDoc[] = [
   },
 
   {
-    slug: "icon-button",
-    name: "Icon Button",
-    category: "Actions",
-    description:
-      "`Button` for an icon alone, with an accessible name it cannot ship without.",
-    intro: [
-      "Icon Button is the square, label-required `Button`: a toolbar control, a row action, anything whose meaning is carried by a glyph. It takes the same `variant`, `tone` and `disabled` as `Button` and forwards everything else, so it is the same control with one rule added.",
-      "That rule is the whole component. `label` is required in the type and lands on both `aria-label` and `title`, which is the difference between this and an icon-only `Button` — the latter can render with no accessible name at all and nothing catches it until the a11y suite does. Write the label as the action, not the glyph: `Archive invoice`, not `Archive icon`.",
-    ],
-    examples: [
-      {
-        demo: "icon-button/toolbar",
-        title: "Toolbar",
-        description:
-          "Inside a `ButtonGroup` the borders collapse into one seam, which is what makes a row of icons read as one control rather than four.",
-      },
-      {
-        demo: "icon-button/row-actions",
-        title: "Row actions",
-        description:
-          "`ghost` keeps the actions quiet until hovered. Each label names its row — four identical `Delete` buttons are useless to anyone tabbing through a table.",
-      },
-      {
-        demo: "icon-button/sizes",
-        title: "Sizes",
-        description:
-          "`size` narrows to `Button`'s four square sizes; the text sizes would leave an icon floating in horizontal padding. `icon-xs` and `icon-sm` shrink the glyph with the box.",
-      },
-    ],
-  },
-  /* -- Forms ------------------------------------------------------------- */
-  {
     slug: "input",
     name: "Input",
     category: "Forms",
@@ -1942,43 +2395,6 @@ export const PENDING: ComponentDoc[] = [
     ],
   },
   {
-    slug: "label",
-    name: "Label",
-    category: "Forms",
-    description:
-      "An accessible label; pairs with a control via `htmlFor` and dims with its disabled state.",
-    intro: [
-      "Label is the plain `label` element wearing the system's field-heading type: `text-xs`, semibold, uppercase and tracked out. Reach for it when you are wiring a control by hand. Inside a `Field`, prefer `FieldLabel` — it wraps this same component and adds the group's disabled and invalid wiring.",
-      "It restyles itself from the control it sits beside rather than taking a prop: `peer-data-[slot=checkbox]`, `peer-data-[slot=radio-group-item]` and `peer-data-[slot=switch]` trade the heading treatment for sentence case, because a checkbox label is a sentence and a field heading is not. Peer selectors only look backwards, so the control has to come before the label in the DOM.",
-    ],
-    examples: [
-      {
-        demo: "label/basic",
-        title: "Basic",
-        description:
-          "Uppercase and tracked, which suits a field heading. Inside a `Field`, prefer `FieldLabel` — it adds the disabled and invalid wiring.",
-      },
-      {
-        demo: "label/with-controls",
-        title: "Checkbox and switch rows",
-        description:
-          "Label restyles itself from the control it follows (`peer-data-[slot=checkbox]`), dropping the uppercase treatment — so the control must come first in the DOM.",
-      },
-      {
-        demo: "label/inline-hints",
-        title: "Inline hints",
-        description:
-          "The root is `flex items-center gap-2`, so a badge or a hint sits inside the label with no extra wrapper. Plain text needs `normal-case font-normal tracking-normal` to opt out of the heading treatment it inherits.",
-      },
-      {
-        demo: "label/disabled",
-        title: "Disabled controls",
-        description:
-          "Two mechanisms, because `peer-disabled` only reaches a label that comes after the control: the checkbox row fades from the peer, and the input row — label first — fades from a wrapper carrying `group` and `data-disabled`.",
-      },
-    ],
-  },
-  {
     slug: "field",
     name: "Field",
     category: "Forms",
@@ -2039,50 +2455,6 @@ export const PENDING: ComponentDoc[] = [
         "Sits in the group's existing gap with `-my-2` rather than adding a row of its own; the optional children print as a centred label over the rule.",
       FieldError:
         'Returns `null` with neither children nor a non-empty `errors`, so it can stay mounted through a valid state. `errors` de-duplicates by message and switches to a list past one; the root is `role="alert"`, which announces the message as it appears.',
-    },
-  },
-  {
-    slug: "field-array",
-    name: "Field Array",
-    category: "Forms",
-    description:
-      "Repeated entries for an array of objects — one bordered block per entry, each removable, with one add button under the stack.",
-    intro: [
-      "Field Array is the repeat chrome for a section that collects several of the same object: a list of diplomas, of recipients, of quote lines. Each entry is a bordered block, `FieldArrayItemContent` lays out whatever controls that object needs, `FieldArrayRemove` drops the entry, and `FieldArrayAdd` closes the stack as a full-width outline button. Wrap the lot in a `FieldSet` when the section wants a name — the legend then announces with every control inside it.",
-      "Every part is a plain styled box holding no state and asserting nothing about its contents, so an entry takes any control in any arrangement: pass a grid to the content part, or put the remove button in a header row above it rather than beside it. The array itself stays with you — this package owns no form state — which leaves add, remove, limits and the entry ids in your hands.",
-      "Submission needs no value state at all. Index each control's own `name` per entry (`lines[0].unit`) and a plain form submit carries the array; only the row list lives in React. Key each item off a stable entry id, never the index — keyed by index, removing a row makes React reuse the wrong DOM node and every uncontrolled value below it shifts up by one.",
-    ],
-    examples: [
-      {
-        demo: "field-array/basic",
-        title: "Basic",
-        description:
-          "One entry per diploma: an Input and a Select in the default content column, remove button beside them. Both carry an indexed `name`, so the section submits without any value state. Every control needs a name of its own — the entries are identical, so `Diploma 2 school` beats `School` for anyone hearing the form rather than seeing the block it sits in.",
-      },
-      {
-        demo: "field-array/submit",
-        title: "Any controls, one submit",
-        description:
-          "The part list is layout only, so an entry can hold anything: here a two-column grid of Input, Select and Checkbox, with the remove button moved into a header row. The output is the raw `FormData` the browser would post — an unchecked Checkbox contributes no entry, which is native behaviour rather than something the component decides.",
-      },
-      {
-        demo: "field-array/limits",
-        title: "Limits",
-        description:
-          "Neither bound is built in: `disabled` on `FieldArrayAdd` caps the stack, and rendering no `FieldArrayRemove` on a lone entry is what keeps one row mandatory.",
-      },
-    ],
-    parts: {
-      FieldArray:
-        'A `role="group"` column on `gap-3` — the add button is just its last child, not a separate slot.',
-      FieldArrayItem:
-        "The bordered block, a centred flex row. Add `flex-col items-stretch` when the entry wants stacked sections instead of content-beside-button.",
-      FieldArrayItemContent:
-        "The column the controls go in. `min-w-0` is load-bearing: without it a long value refuses to shrink below its content width and pushes the remove button out of the block. Override `className` for any other arrangement — `grid grid-cols-2` is the common one.",
-      FieldArrayRemove:
-        "A ghost icon `Button` carrying the trash glyph; `label` is its accessible name and should identify the entry, since a stack of them all reading `Remove` tells a screen reader user nothing. Pass children to swap the glyph.",
-      FieldArrayAdd:
-        "A full-width outline `Button` with the plus already in it — pass only the label as children.",
     },
   },
   {
@@ -2338,161 +2710,6 @@ export const PENDING: ComponentDoc[] = [
         "Muted text for a unit, prefix or suffix. It carries no `data-slot`, so the group treats it as decoration rather than as the control it reacts to.",
     },
   },
-  {
-    slug: "input-otp",
-    name: "Input OTP",
-    category: "Forms",
-    description: "A segmented one-time-code field with per-character slots.",
-    intro: [
-      "Input OTP is for a code of known length that reads as separate characters: an SMS or authenticator confirmation, an email verification, an invite key. Reach for it when the length is fixed and the segmentation helps the reader keep their place — a plain Input is better as soon as the value could be any length, and Field is what wraps either one with a label and an error.",
-      "There is exactly one real `input` behind the slots, transparent and full-width; every `InputOTPSlot` is a plain `div` painted from that input's state through context. That is what keeps paste, password managers and the OS one-time-code suggestion working, and it is why a slot takes an `index` rather than a value, why splitting slots across groups changes nothing about the code, and why the field is named with `aria-label` or an `id` on `InputOTP` itself — `className` reaches the input and `containerClassName` reaches the row around it.",
-    ],
-    examples: [
-      {
-        demo: "input-otp/basic",
-        title: "Basic",
-        description:
-          "Six slots generated from `maxLength`, each addressed by `index`. The value is the whole string, so there is nothing per-slot to collect.",
-      },
-      {
-        demo: "input-otp/with-separator",
-        title: "Grouped",
-        description:
-          "Indexes are absolute across every group, so splitting them 3–3 is presentational and does not touch the value — the readout below is the same string either way.",
-      },
-      {
-        demo: "input-otp/verify-form",
-        title: "Verification form",
-        description:
-          "The confirmation-screen shape: a labelled field, a Verify button held disabled until the code is complete, and a resend beside it. The rejected state is drawn per slot — `aria-invalid` on the root names the control for assistive tech, but the destructive underline lives on `InputOTPSlot`, so it goes to each one.",
-      },
-      {
-        demo: "input-otp/auto-submit",
-        title: "Auto-submit on complete",
-        description:
-          "`onComplete` fires the moment the last character lands, which removes the submit button entirely. Pair it with `disabled` while the request is in flight, or the user can keep typing into a code that is already being checked.",
-      },
-    ],
-    parts: {
-      InputOTP:
-        "The one real input is this part: `className` lands on it and `containerClassName` on the row, so `aria-label`, `id`, `inputMode` and `autoComplete` all belong here rather than on a group.",
-      InputOTPSlot:
-        "A `div` painted from the input's context by `index` — not a control, so it takes no value and no `onChange`, and an index past `maxLength` renders empty forever. The focus and `aria-invalid` underlines are drawn here, which is why an invalid state has to reach every slot.",
-      InputOTPSeparator:
-        'Always draws a dash: the icon is hardcoded, so children passed to it are ignored. It carries `role="separator"` and no tab stop, since it is punctuation rather than structure.',
-    },
-  },
-  {
-    slug: "phone-input",
-    name: "Phone Input",
-    category: "Forms",
-    description:
-      "A country dial-code select paired with a national-number field, composing into one E.164-ish string value.",
-    intro: [
-      'Phone Input pairs a dial-code Select with a national-number Input inside a single underline, and hands back one string (`+33612345678`) rather than a country/number pair. Reach for it when a form needs a phone number in one field; when it only needs digits, a plain Input with `type="tel"` is enough.',
-      "The dial-code table is hand-rolled and covers ten markets, so there is no `libphonenumber` in the bundle, no per-country grouping and no length validation — `placeholder` only suggests the shape. The split is derived from the value on every render rather than held in state, which is why `US` and `CA` both write `+1` and a `+1…` value always reads back as `US`.",
-    ],
-    examples: [
-      {
-        demo: "phone-input/basic",
-        title: "Basic",
-        description:
-          "The value is a single string (`+33612345678`) — the dial code and national number are split from it for editing, then rejoined on change.",
-      },
-      {
-        demo: "phone-input/with-field",
-        title: "In a field",
-        description:
-          "`defaultCountry` seeds the dial code before any digits are typed, which is what an empty controlled field needs — the split falls back to it whenever the value carries no recognised dial code.",
-      },
-      {
-        demo: "phone-input/contact-form",
-        title: "Contact form",
-        description:
-          "Beside plain fields in a form: one value goes to the server, dial code included, so there is no second country field to keep in sync.",
-      },
-    ],
-    parts: {
-      PhoneInput:
-        "The two inner controls carry hardcoded `aria-label`s (`Country calling code`, `Phone number`) and accept no override, so a surrounding `FieldLabel` is a visual caption rather than a programmatic one. Typed characters are sanitised to digits and spaces, which is why the stored string is E.164-ish rather than strictly E.164.",
-    },
-  },
-  {
-    slug: "editable",
-    name: "Editable",
-    category: "Forms",
-    description:
-      "Inline click-to-edit text — a preview with an edit affordance that swaps to a field, committed on Enter or blur, discarded on Escape.",
-    intro: [
-      "Editable turns a piece of text into its own editor: a preview with a pencil that surfaces on hover or focus, swapping in place for an `Input` with save and cancel beside it. Reach for it to rename something where it already sits — a document title, a board column, a row label — instead of sending someone to a dialog for one value. As soon as the edit touches more than one value, a Field inside a form is the honest shape.",
-      "It is hand-rolled rather than composed, so the prop list is the whole surface and there are no parts to nest. Enter and blur commit, Escape discards, and `submitOnBlur={false}` makes blur discard too, which leaves the check button and Enter as the only ways through. Two details to know before styling it: the preview is a `span` rather than a button, so the pencil — not the text — is what opens the field, and the inner `Input` carries its own type size, so a heading-sized preview snaps back to field size while it is being edited.",
-    ],
-    examples: [
-      {
-        demo: "editable/basic",
-        title: "Basic",
-        description:
-          "Uncontrolled, which is enough for most renames: the component holds the committed value itself. The pencil only appears on hover or focus, and Escape restores the previous value rather than committing the draft.",
-      },
-      {
-        demo: "editable/rows",
-        title: "Rows in a list",
-        description:
-          "One per row, each holding its own value, so nothing above them keeps state. The last row starts empty to show `placeholder`, which stands in for the value in muted text rather than sitting inside the field.",
-      },
-      {
-        demo: "editable/explicit-commit",
-        title: "Commit explicitly",
-        description:
-          "`submitOnBlur={false}` for a value a stray click must not rewrite: blur then runs `onCancel` rather than `onSubmit`, so the check button and Enter are the only ways to commit and a draft left behind is dropped.",
-      },
-      {
-        demo: "editable/controlled",
-        title: "Controlled",
-        description:
-          "`value` with `onSubmit` hands the commit to the page — and obliges it to write the value back, since a controlled Editable renders what it is given and would otherwise snap to the old text. `onValueChange` is the same moment, not the keystrokes: there is no callback for the draft.",
-      },
-    ],
-  },
-  {
-    slug: "form",
-    name: "Form",
-    category: "Forms",
-    description:
-      "A thin Base UI Form wrapper: the page-level `<form>` and its vertical rhythm. `Field` owns everything inside it.",
-    intro: [
-      "Form is the outermost wrapper of a form page — a `<form>` element laid out as a flex column with a wide gap, so sections separate themselves without margins. Reach for it once per form and let `FieldGroup` space the fields inside it; `Field` owns a single field's label, description and error.",
-      "Base UI's own conveniences here need `Field.Root` to register the controls, and this system's `Field` is a plain div, so none of them see anything: `onFormSubmit` reports an empty object, the `errors` prop keys off names it never learns, and there is no first-invalid field to focus. Read the values with `FormData` in `onSubmit` and hold errors in state instead. The one behaviour that does reach you is that the element is rendered with `noValidate`, so browser constraint bubbles never appear and `required` blocks nothing on its own.",
-    ],
-    examples: [
-      {
-        demo: "form/basic",
-        title: "Basic",
-        description:
-          "`FormData` over `event.currentTarget` is the reliable read in this system — every control here is a native input with a `name`, so nothing else is needed.",
-      },
-      {
-        demo: "form/validation",
-        title: "Validation",
-        description:
-          "Wire errors yourself: state in, `FieldError` out, `aria-invalid` on the control. Nothing validates on submit until you do, since the form carries `noValidate`.",
-      },
-      {
-        demo: "form/sections",
-        title: "Sectioned form",
-        description:
-          "Form's own `gap-10` is what separates the sections — `FieldSet` and `FieldLegend` group them semantically, `FieldGroup` handles the tighter spacing within one.",
-      },
-      {
-        demo: "form/pending",
-        title: "Pending submit",
-        description:
-          "An async `onSubmit`: read the values before the first `await`, since `event.currentTarget` is null once the handler yields. The server's answer lands in the same error state a client check would use.",
-      },
-    ],
-  },
-
-  /* -- Data display ------------------------------------------------------ */
   {
     slug: "table",
     name: "Table",
@@ -3288,49 +3505,6 @@ export const PENDING: ComponentDoc[] = [
     },
   },
   {
-    slug: "meter",
-    name: "Meter",
-    category: "Data display",
-    description:
-      "Displays a measured value within a known range — capacity, not task progress.",
-    intro: [
-      "Meter shows how full something is: disk used, budget consumed, seats taken. Reach for it when the value measures a fixed capacity and can move either way — work advancing towards done is `Progress`, and a single figure that deserves a dial of its own is `Gauge`.",
-      "`Meter` renders its own `MeterTrack` and `MeterIndicator` after whatever children you pass, so children are the label and the value only; writing a track yourself draws a second bar. With no `format`, the value reads as its percentage of the `min`–`max` range — pass a `format`, or a function child on `MeterValue`, when the readout should be the raw figure instead.",
-    ],
-    examples: [
-      {
-        demo: "meter/basic",
-        title: "Basic",
-        description:
-          "`format` takes `Intl.NumberFormatOptions` and applies to `MeterValue`, which is what makes the second row read `128 GB` instead of the `50%` of its range it would print by default.",
-      },
-      {
-        demo: "meter/thresholds",
-        title: "Colour by threshold",
-        description:
-          "Because the indicator is internal, per-row colour is a descendant selector on the root rather than a prop.",
-      },
-      {
-        demo: "meter/plan-usage",
-        title: "In a panel",
-        description:
-          "Where capacity readouts usually live: a plan summary with the action under it. Both rows pass a function child to `MeterValue`, which receives the formatted string and the raw number — the way to write `34 of 50 used` where the default would read `68%`.",
-      },
-    ],
-    parts: {
-      Meter:
-        "Renders the track and the indicator itself, after your children, and owns `format` — pass only a label and a value unless you want two bars.",
-      MeterTrack:
-        "Rendered for you. Restyle the bar through a descendant selector on the root rather than by adding a second track.",
-      MeterIndicator:
-        "Also internal, and Base UI sets its width inline, so colour is the one thing left to change from outside — which is why thresholds are a selector on the root.",
-      MeterLabel:
-        "Registers itself as the meter's accessible name, so a meter without one needs an `aria-label` on the root.",
-      MeterValue:
-        "`aria-hidden`: the root already announces the value through `aria-valuetext`, so this is the sighted readout only. A function child receives the formatted string and the raw number.",
-    },
-  },
-  {
     slug: "progress",
     name: "Progress",
     category: "Data display",
@@ -3706,43 +3880,6 @@ export const PENDING: ComponentDoc[] = [
     },
   },
   {
-    slug: "relative-time",
-    name: "Relative Time",
-    category: "Data display",
-    description:
-      'Renders "3 hours ago" from a date, inside a `time` element that keeps the machine-readable timestamp.',
-    intro: [
-      "Relative Time turns a timestamp into `3 hours ago` and keeps it advancing while it is mounted. Reach for it in activity feeds, notification lists and updated-at columns, where distance from now is what a reader wants. Past a week it falls back to an absolute date, because `47 days ago` is worse than the date itself.",
-      "`date` takes what a row actually holds: a `Date`, epoch milliseconds, or a database string with a space separator, microseconds and a `+02` zone. A stamp carrying no zone counts as local time, so a column storing UTC has to append `Z`. What renders is a real `time` element with the ISO value in `dateTime` and the full local date in `title`, so the exact moment survives hover and copy.",
-    ],
-    examples: [
-      {
-        demo: "relative-time/basic",
-        title: "Basic",
-        description:
-          "The thresholds in one list: seconds, minutes, hours and days stay relative, and anything past a week renders as an absolute date instead.",
-      },
-      {
-        demo: "relative-time/static",
-        title: "In a table",
-        description:
-          "Where relative stamps earn their keep: a column of them scans faster than absolute dates. `live={false}` stops the re-render timer, for a snapshot or a server-rendered page that has no need to keep advancing.",
-      },
-      {
-        demo: "relative-time/inputs",
-        title: "What a column can hand over",
-        description:
-          "One instant in the four shapes an API or a database actually returns, all reading identically — plus an unparseable value, which is printed as it arrived under `data-invalid` rather than taking the tree down.",
-      },
-      {
-        demo: "relative-time/locales",
-        title: "Other locales",
-        description:
-          "`locale` goes straight to `Intl.RelativeTimeFormat`, and an invalid tag falls back to the browser instead of throwing. Leaving it unset follows the browser, which is usually what an app wants.",
-      },
-    ],
-  },
-  {
     slug: "gauge",
     name: "Gauge",
     category: "Data display",
@@ -3956,48 +4093,6 @@ export const PENDING: ComponentDoc[] = [
 
   /* -- Layout ------------------------------------------------------------ */
   {
-    slug: "carousel",
-    name: "Carousel",
-    category: "Layout",
-    description: "A horizontal slide viewport with previous and next controls.",
-    intro: [
-      "Carousel is the paged strip: screenshots, release cards, testimonials the reader steps through instead of scrolling past. Reach for it when horizontal room is the constraint and the items are peers — never for content the reader must not miss, since everything but the current page is off screen.",
-      "Embla drives it, so the knobs are Embla's: `opts` goes straight through (`loop`, `align`, `slidesToScroll`) and `setApi` hands the instance back for your own indicators. Layout is a two-part contract — the previous and next buttons are positioned outside the viewport, so the wrapper needs horizontal room (`px-12`) or they clip, and the gap between slides comes from CarouselContent's negative margin paired with CarouselItem's padding rather than a `gap` utility.",
-    ],
-    examples: [
-      {
-        demo: "carousel/basic",
-        title: "Basic",
-        description:
-          "The arrows are absolutely positioned outside the viewport, so the carousel needs horizontal room around it or they clip.",
-      },
-      {
-        demo: "carousel/multiple",
-        title: "Several slides at once",
-        description:
-          'Items are `basis-full` by default — override the basis to show more, and pass `align: "start"` so the last page isn\'t centred.',
-      },
-      {
-        demo: "carousel/with-api",
-        title: "Custom controls",
-        description:
-          "`setApi` hands back the Embla instance, which is how you build your own indicators or drive it from elsewhere. Subscribe to `select` for the current index — the api holds it, and nothing re-renders without that listener.",
-      },
-    ],
-    parts: {
-      Carousel:
-        'The Embla context and the `role="region"` wrapper, and where left/right arrow keys are handled. `opts` and `plugins` pass straight to `useEmblaCarousel`; `orientation` sets Embla\'s axis, not just the styling.',
-      CarouselContent:
-        "Two boxes in one: an `overflow-hidden` clip carrying Embla's ref, and the flex track inside it that `className` reaches. Its negative margin makes the gap with CarouselItem's padding, so a `gap` utility here doubles the spacing.",
-      CarouselItem:
-        '`basis-full` by default, which is what makes one item a page. Override the basis to show several, and pair that with `align: "start"` so the short last page is not centred.',
-      CarouselPrevious:
-        "Absolutely positioned outside the viewport and disabled at the first page, so the wrapper needs matching horizontal room or it clips. Its label is an `sr-only` span, so an icon-only button still announces.",
-      CarouselNext:
-        "Mirrors CarouselPrevious on the end side; in vertical orientation both rotate and move to the top and bottom edges instead.",
-    },
-  },
-  {
     slug: "page-header",
     name: "Page Header",
     category: "Layout",
@@ -4120,86 +4215,6 @@ export const PENDING: ComponentDoc[] = [
         "Deliberately un-faded: the tone inks clear AA as bare text but drop under 4.5:1 behind opacity, so hierarchy comes from BannerTitle's `font-medium` instead.",
       BannerAction:
         "A flex sibling, not an absolutely-positioned corner — several controls fit beside long text without overlap.",
-    },
-  },
-  {
-    slug: "wordmark",
-    name: "Wordmark",
-    category: "Layout",
-    description:
-      "The Diametral logo lockup from @diametral/assets, inlined so it recolours with the surrounding text.",
-    intro: [
-      "Wordmark renders the Diametral lockup as inline JSX, so app chrome — headers, footers, auth screens, empty states — never touches a raw asset file. Two lockups: `horizontal` is the full name, `square` sets it inside the symbol for avatar- and app-icon-sized placements.",
-      "The paths are `currentColor`, so `text-*` utilities recolour the mark exactly like text and there is no light/dark SVG pair to swap. `@diametral/assets` remains the canonical source for non-React consumers such as email and raster exports.",
-    ],
-    examples: [
-      {
-        demo: "wordmark/basic",
-        title: "Basic",
-        description:
-          "The lockup is `currentColor`, so it recolours with the surrounding text — no separate light/dark SVG to swap.",
-      },
-      {
-        demo: "wordmark/square",
-        title: "Square",
-        description:
-          "The wordmark set inside the symbol, for avatar and app-icon-style placements.",
-      },
-      {
-        demo: "wordmark/app-header",
-        title: "Beside a text label",
-        description:
-          'When the mark sits next to text that already says "Diametral", pass `label=""` — the SVG drops out of the accessibility tree instead of announcing the name twice.',
-      },
-    ],
-    parts: {
-      Wordmark:
-        '`label` is the accessible name. Pass `label=""` to make the mark decorative when adjacent text already names it — otherwise screen readers hear "Diametral" twice.',
-    },
-  },
-  {
-    slug: "collapsible",
-    name: "Collapsible",
-    category: "Disclosure",
-    description:
-      "A single show/hide region. Emits `data-open` / `data-closed`, not `data-state`.",
-    intro: [
-      "Collapsible is one region and one toggle: the show-more, the request detail, the advanced half of a form. Reach for it whenever there is a single thing to hide — several titled sections that stack is `Accordion`, and a region that floats over the page instead of pushing it down is `Popover`.",
-      "The wrapper is deliberately bare — no chrome, no caret, no padding — because the trigger is usually your own control: `CollapsibleTrigger` takes Base UI's `render` prop, so the trigger *is* a Button rather than wrapping one. State lands on the trigger as `aria-expanded` and `data-panel-open`, which is what a caret rotates off; the panel is the part carrying `data-open`/`data-closed` and publishing `--collapsible-panel-height`.",
-    ],
-    examples: [
-      {
-        demo: "collapsible/basic",
-        title: "Basic",
-        description:
-          "The trigger renders as a Button via `render`. The caret rotates off `aria-expanded`, which sits on the trigger rather than the root.",
-      },
-      {
-        demo: "collapsible/filter-group",
-        title: "Filter group",
-        description:
-          "The sidebar facet: the trigger is the section header itself — a plain full-width row, not a Button — so the whole strip is the hit target and the count sits inside the panel it belongs to.",
-      },
-      {
-        demo: "collapsible/optional-fields",
-        title: "Optional fields",
-        description:
-          "A form's advanced half. `keepMounted` leaves the panel in the DOM when it closes, so half-typed values survive a collapse and native submission still sees the inputs.",
-      },
-      {
-        demo: "collapsible/controlled",
-        title: "Controlled",
-        description:
-          "Driving `open` yourself lets the toggle live outside the collapsible — here a show-more button beneath the list.",
-      },
-    ],
-    parts: {
-      Collapsible:
-        "A grouping div with no styles of its own, so the gap between trigger and panel is yours to set — usually a margin on the panel.",
-      CollapsibleTrigger:
-        "The state lives here, not on the root: `aria-expanded` and `data-panel-open` are the trigger's, so caret rotation keys off the trigger's own group.",
-      CollapsibleContent:
-        "Unmounted while closed unless you pass `keepMounted` or `hiddenUntilFound`, and it publishes `--collapsible-panel-height` for height transitions.",
     },
   },
   {
@@ -4337,50 +4352,6 @@ export const PENDING: ComponentDoc[] = [
   },
 
   /* -- Utilities --------------------------------------------------------- */
-  {
-    slug: "direction",
-    name: "Direction",
-    category: "Utilities",
-    description:
-      "A provider that sets text direction (LTR/RTL) for every Base UI component beneath it.",
-    intro: [
-      "DirectionProvider tells every Base UI component beneath it which way the document reads. Mount it once at the app root — direction is a whole-tree fact rather than a per-component prop — and mount it again only inside a subtree that genuinely reads the other way, such as a quoted Arabic thread inside an LTR shell.",
-      "It is half of the answer and the `dir` attribute is the other half: the provider is what Base UI's JavaScript reads (floating panel placement, arrow-key order, which end of a Slider is the minimum), while `dir` is what the CSS logical properties read. Set both, from the same value.",
-    ],
-    examples: [
-      {
-        demo: "direction/rtl",
-        title: "Side by side",
-        description:
-          "Components are written with logical properties throughout, so the same markup mirrors without a second stylesheet.",
-      },
-      {
-        demo: "direction/switching",
-        title: "Switching at runtime",
-        description:
-          "One piece of state drives the provider and the `dir` attribute together, which is all a runtime switch is. Components of your own read that value back with `useDirection` instead of threading a prop down.",
-      },
-      {
-        demo: "direction/axis",
-        title: "Controls with an axis",
-        description:
-          "Where the provider earns its keep: Slider's control and thumb, and every composite's arrow-key order, take the direction from context — `dir` alone would mirror the paint and leave the keyboard running backwards.",
-      },
-    ],
-  },
-]
-
-export const CATEGORIES = [
-  "Actions",
-  "Forms",
-  "Data display",
-  "Navigation",
-  "Layout",
-  "Disclosure",
-  "Overlays",
-  "Feedback",
-  "Conversation",
-  "Utilities",
 ] as const
 
 export function componentsByCategory() {

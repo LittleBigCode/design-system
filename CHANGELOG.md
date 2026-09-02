@@ -4,6 +4,137 @@ All notable changes to the Diametral Design System are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/), and the project
 adheres to [Semantic Versioning](https://semver.org/) — see [docs/versioning.md](docs/versioning.md).
 
+## [1.0.0-beta.3] — 2026-09-02
+
+Net-new form controls and primitives. Fifteen components, three of which replace a
+symbol this package already exported, and two more that ship a stylesheet with no
+React binding.
+Published on the `next` dist-tag — `latest` stays at 0.11.0 for the whole migration.
+
+### Added
+- **Ten net-new components:** `Toggle`, `Meter` (5 parts), `RelativeTime`,
+  `Editable`, `PhoneInput`, `FieldArray` (5 parts), `Label`, `Form`,
+  `Collapsible` (3 parts) and `DirectionProvider`. `Toggle`, `Meter` and `Form`
+  arrived through alias withdrawals: no incumbent renders a standalone
+  two-state button, a `role="meter"` track, or a form root with a validation
+  context.
+- **Two stylesheet-only components:** `carousel` and `input-otp`. Their
+  bindings wrapped `embla-carousel-react` and `input-otp`, and neither
+  dependency is acquired — in both cases the dependency *is* the component
+  (drag and snap; the hidden-input trick that makes a row of boxes behave like
+  one field), so the `.ds-carousel-*` and `.ds-input-otp-*` classes are the
+  whole contract. Same arrangement `resizable` and `message-scroller` landed
+  under in beta.2: `exports: []`, no import line on the page, and one demo that
+  is the markup a binding has to produce.
+- `useControllableValue` — the controlled/uncontrolled pattern as one hook,
+  which `Editable` and `PhoneInput` both need. `Rating` hand-rolled the same thing
+  and is a held component, so it is left alone.
+- `.ds-button--xs` and `.ds-button--icon.ds-button--xs` — the 24px square
+  `IconButton`'s new `icon-xs` size needs, which `Editable` and `FieldArray`
+  are what asked for.
+- **Six modifier classes**, each one a resolved dedupe exception:
+  `.ds-carousel-item--half` / `--third`, `.ds-field-array-item--stacked` /
+  `--stretch`, `.ds-field-array-item-content--grid` and `.ds-wordmark--lg`.
+
+### Changed
+- **`ButtonGroup` is replaced.** Its four-rule block leaves `button-extras.css`
+  for a `components/button-group.css` that adds a text cell, a separator and
+  `[data-orientation="vertical"]`, and collapses the shared edge by *removing*
+  the losing border rather than overlapping members with `margin-left: -1px` —
+  identical in LTR, correct in RTL. The class name and the published markup are
+  unchanged: every selector matches both the new parts' `data-slot` and this
+  package's own `.ds-button`, `.ds-input` and `.ds-select`, so the hand-written
+  groups in `examples/` and `docs/components.md` keep joining.
+- **`Wordmark` gets the produced lockups.** 0.x drew the brand's three elements
+  as primitives — a circle, a square and a diagonal line. What lands is the
+  finished artwork: the typographic wordmark, and the monogram that sets it
+  inside the symbol, both as `currentColor` paths, so ink colour recolours them
+  and they invert with the theme for free. `assets/logo/diametral-mark.svg`
+  still holds the geometric mark and has **not** been re-cut to match — the
+  React binding and that file now draw different marks, which is a brand-asset
+  decision rather than a code one. `name` and
+  `sub` are the one part of the incumbent this does **not** replace; see
+  **Migration**.
+- **`IconButton` moves and gains sizes.** Out of `ButtonExtras.tsx` into its own
+  `icon-button.tsx`, with the source's four square size spellings (`icon`,
+  `icon-xs`, `icon-sm`, `icon-lg`) accepted alongside the bare `sm` and `lg`
+  this package already shipped. The required `label` — which the source's own
+  file calls "the whole component" — was already required on both sides; the
+  react-ledger's "incumbent is a class-applier" premise does not hold here, in
+  the same way batch-plan §1.1 found for `stat-card`. Reported rather than
+  silently flipped.
+- **`.ds-label` merges into an occupied namespace.** The class was already
+  defined in `base/typography.css` as the charte's signature small-caps
+  treatment, and the ledgers read `label` as a clean addition because they
+  scanned `css/components/`. The incumbent's weight, tracking and colour are a
+  published contract and stay exactly as they are; `components/label.css` adds
+  only the flex row, `user-select: none` and the two state overrides.
+- **Six dedupe exceptions are resolved, not carried** — matching the plan's
+  count, and two of them in TSX rather than CSS. `field-array`'s two
+  (`flex items-center`, `flex`), `carousel`'s `basis-full`, `wordmark`'s svg
+  sizing, `phone-input`'s two-sided one, and `button-group.tsx`'s — which was
+  already paid, since beta.2 landed `.ds-separator--auto` for exactly this when
+  `separator` arrived early for `item`.
+- `class-variance-authority` still is not acquired (ADR 0001). The five
+  components that used it declare the same cva-shaped block through
+  `react/lib/variants.ts`.
+- `.ds-wordmark` and its `__mark` / `__name` / `__sub` parts move from
+  `app-bar.css` to `components/wordmark.css`, verbatim and with no visual
+  change.
+
+### Fixed
+- **A `@layer` bargain that no longer exists.** `label.css`'s opening comment
+  explained why three of its declarations sat below Tailwind's
+  `@layer utilities` so a call site could override the label's voice. With no
+  Tailwind and no layers the block merges into source order — but the intent
+  survives, because it was never about layers: the two overrides that mattered
+  are real rules winning on specificity, as they always did.
+- **Two selectors keyed to marker classes nothing applies.** `label.css` read
+  Tailwind's `.peer` and `.group`, so both rules would have landed inert — the
+  same defect beta.2 found in `item.css`. They read the real state instead:
+  `:disabled` on the sibling control and the `data-slot` a checkbox, radio or
+  switch carries.
+- **`.dark`-only rules that never painted**, in `toggle.css` and
+  `input-otp.css`: this system's dark theme also answers to
+  `[data-theme="dark"]`, which is what the docs site sets. Both were softened
+  alpha mixes of a colour the rule above already sets, so the solid 1px rule
+  carries the state on both themes rather than the pair being duplicated.
+- **Three more `svg:not([class*="size-"])` escape hatches** removed, from
+  `toggle`, `button-group` and `input-otp`, plus `:not([class*="w-"])` on
+  `button-group`'s select trigger. There is no Tailwind utility to escape, and
+  each negation silently skipped any element whose class merely contained the
+  fragment.
+- **A meter bar reading a text token.** The source's six tone keys read the
+  `--ds-*-ink` family — the shade tuned for small text on a tint — and only four
+  of the six exist here. They read `--ds-*-solid`, the family tuned for fills,
+  which is what a bar with nothing written on it wants and which has all six.
+- Focus rings and invalid glows across `toggle` and `input-otp`: the charte
+  focuses with a 2px `outline` on `--ds-focus-ring` and separates by a 1px rule,
+  not a colour ring in `box-shadow`.
+- `prefers-reduced-motion` branches for the OTP caret blink, the meter's value
+  transition and the editable pencil's fade.
+
+### Migration
+- **`Wordmark`'s `name` and `sub` survive**, and are the only part of the
+  incumbent this batch keeps: the source's Wordmark is the mark alone, while
+  `ConsoleLayout`, the Vite starter and `docs/migration.md`'s 0.x class table
+  all read them, and `.ds-wordmark__name` / `__sub` are a published contract.
+  Dropping them would be a regression rather than an absorption. They no longer
+  *default*, though — a bare `<Wordmark />` is now the lockup alone where it
+  used to print the word "Diametral" — and a name beside the mark wants
+  `variant="square"`, since the horizontal lockup already spells it.
+  `ConsoleLayout`'s `brand={{ name, sub }}` does that for you.
+- Four rows in [docs/migration/renames.json](docs/migration/renames.json), for
+  the three replaced applier symbols plus the `wordmark.css` file move.
+- Three re-wirings are recorded as notes rather than rows. `Editable`,
+  `FieldArray` and `IconButton` compose onto this repo's `Button` and
+  `IconButton` until batch 7 supplies the source's — which makes `Editable`'s
+  three affordances carry a required accessible name they did not have.
+  `PhoneInput`'s five-part Base UI select collapses onto the native `Select`,
+  which is also what dissolves this batch's largest dedupe exception: with
+  nothing literal on either side, the overrides win on specificity instead of
+  through a merge pass.
+
 ## [1.0.0-beta.2] — 2026-09-02
 
 The content and media family. Fifteen net-new components, all in a clean namespace, and

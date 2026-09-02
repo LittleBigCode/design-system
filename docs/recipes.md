@@ -381,7 +381,7 @@ function Login({ onSignIn }) {
       <form onSubmit={submit} style={{ width: 360, maxWidth: "100%" }}>
         <Card>
           <div style={{ padding: "26px 24px" }}>
-            <Wordmark name="Diametral" />
+            <Wordmark />
             <h1 className="ds-title ds-title--lg" style={{ margin: "16px 0 4px" }}>Sign in</h1>
             <p style={{ color: "var(--ds-ink-soft)", margin: "0 0 20px" }}>Welcome back to the Console.</p>
             <FormField label="Email" htmlFor="email">

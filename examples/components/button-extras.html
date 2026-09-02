@@ -55,19 +55,56 @@
 
       <section class="docs-section">
         <h2>Button group</h2>
+        <p class="docs-note">Buttons joined into one control. The group removes the losing border between members rather than overlapping them, so the seam is correct under <code>dir="rtl"</code> too. Since <code>1.0.0-beta.3</code> it also takes a <code>data-orientation</code>, a <code>.ds-button-group-text</code> cell and a <code>.ds-button-group-separator</code>.</p>
         <section class="ds-example">
           <header class="ds-example__bar"><span class="ds-label">.ds-button-group</span><button class="ds-button" data-copy-target="#c-group">Copy</button></header>
           <div class="ds-example__preview ds-example__preview--center">
-            <div class="ds-button-group">
+            <div class="ds-button-group" role="group" data-orientation="horizontal">
               <button class="ds-button">Day</button>
               <button class="ds-button">Week</button>
               <button class="ds-button">Month</button>
             </div>
           </div>
-          <pre class="ds-example__code"><code id="c-group">&lt;div class="ds-button-group"&gt;
+          <pre class="ds-example__code"><code id="c-group">&lt;div class="ds-button-group" role="group" data-orientation="horizontal"&gt;
   &lt;button class="ds-button"&gt;Day&lt;/button&gt;
   &lt;button class="ds-button"&gt;Week&lt;/button&gt;
   &lt;button class="ds-button"&gt;Month&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">.ds-button-group-text / -separator</span><button class="ds-button" data-copy-target="#c-group-parts">Copy</button></header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <div class="ds-button-group" role="group" data-orientation="horizontal">
+              <span class="ds-button-group-text">EUR</span>
+              <button class="ds-button">Copy</button>
+              <span class="ds-button-group-separator ds-separator ds-separator--auto" role="separator" data-orientation="vertical" aria-orientation="vertical"></span>
+              <button class="ds-button">Paste</button>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-group-parts">&lt;div class="ds-button-group" role="group" data-orientation="horizontal"&gt;
+  &lt;span class="ds-button-group-text"&gt;EUR&lt;/span&gt;
+  &lt;button class="ds-button"&gt;Copy&lt;/button&gt;
+  &lt;!-- --auto sizes the rule to the group instead of the cross axis --&gt;
+  &lt;span class="ds-button-group-separator ds-separator ds-separator--auto"
+        role="separator" data-orientation="vertical" aria-orientation="vertical"&gt;&lt;/span&gt;
+  &lt;button class="ds-button"&gt;Paste&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">[data-orientation="vertical"]</span><button class="ds-button" data-copy-target="#c-group-vert">Copy</button></header>
+          <div class="ds-example__preview ds-example__preview--center">
+            <div class="ds-button-group" role="group" data-orientation="vertical">
+              <button class="ds-button">Export as CSV</button>
+              <button class="ds-button">Export as JSON</button>
+              <button class="ds-button">Copy to clipboard</button>
+            </div>
+          </div>
+          <pre class="ds-example__code"><code id="c-group-vert">&lt;div class="ds-button-group" role="group" data-orientation="vertical"&gt;
+  &lt;button class="ds-button"&gt;Export as CSV&lt;/button&gt;
+  &lt;button class="ds-button"&gt;Export as JSON&lt;/button&gt;
+  &lt;button class="ds-button"&gt;Copy to clipboard&lt;/button&gt;
 &lt;/div&gt;</code></pre>
         </section>
       </section>
@@ -76,10 +113,18 @@
         <h2>React</h2>
         <section class="ds-example">
           <header class="ds-example__bar"><span class="ds-label">JSX</span><button class="ds-button" data-copy-target="#c-react">Copy</button></header>
-          <pre class="ds-example__code"><code id="c-react">import { ButtonGroup, IconButton, SplitButton } from "@diametral/design-system/react";
+          <pre class="ds-example__code"><code id="c-react">import { ButtonGroup, ButtonGroupSeparator, ButtonGroupText, IconButton, SplitButton } from "@diametral/design-system/react";
 
 &lt;ButtonGroup&gt;&lt;button className="ds-button"&gt;Day&lt;/button&gt;…&lt;/ButtonGroup&gt;
-&lt;IconButton label="Add" variant="primary"&gt;&lt;PlusIcon /&gt;&lt;/IconButton&gt;
+&lt;ButtonGroup orientation="vertical"&gt;
+  &lt;ButtonGroupText&gt;EUR&lt;/ButtonGroupText&gt;
+  &lt;Button&gt;Copy&lt;/Button&gt;
+  &lt;ButtonGroupSeparator /&gt;
+&lt;/ButtonGroup&gt;
+
+// `size` is one of the four square sizes: icon | icon-xs | icon-sm | icon-lg
+// (the bare sm / lg from 0.x still work). `label` is required.
+&lt;IconButton label="Add" variant="primary" size="icon-sm"&gt;&lt;PlusIcon /&gt;&lt;/IconButton&gt;
 &lt;SplitButton variant="primary" onMain={save} menu={&lt;div className="ds-menu"&gt;…&lt;/div&gt;}&gt;Save&lt;/SplitButton&gt;
 
 // the base Button also takes size / loading / block:

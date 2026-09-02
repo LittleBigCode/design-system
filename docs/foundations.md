@@ -84,9 +84,17 @@ Live: [../examples/foundations/motion.html](../examples/foundations/motion.html)
 
 The Diametral mark is three elements: the **circle** (the space of intelligence and
 complexity), the **square** (the structure that brings stability), and the **line**
-(Diametral's clear positioning). In product it appears as the `.ds-wordmark` — a square
-`.ds-wordmark__mark` SVG beside the Ufficio `.ds-wordmark__name`, optionally with an uppercase
-`.ds-wordmark__sub`. The mark inherits ink color and stays flat and monochrome.
+(Diametral's clear positioning). In product it appears as the `.ds-wordmark`, in two lockups
+chosen by `data-variant`: `horizontal` is the full name set as one path, `square` sets it inside
+the symbol for avatar- and app-icon-sized placements. Both are `currentColor`, so the mark
+inherits ink color and stays flat and monochrome — there is no light/dark pair to swap.
+
+The React `<Wordmark>` emits those paths itself. Hand-written markup supplies its own SVG as
+`.ds-wordmark__mark` — `assets/logo/diametral-mark.svg` is the three elements drawn as
+primitives, which is what `examples/` uses and what the React binding drew before
+`1.0.0-beta.3`. Either form can set a product name beside the mark with the Ufficio
+`.ds-wordmark__name` and an uppercase `.ds-wordmark__sub` — pair those with the `square`
+lockup, since the horizontal one already spells the word.
 
 Key tokens: `--ds-font-title`, `--ds-font-weight-title`, `--ds-ink`, `--ds-rule`.
 

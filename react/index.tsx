@@ -135,12 +135,6 @@ export interface ModalProps {
   children?: ReactNode;
 }
 
-export interface WordmarkProps {
-  name?: string;
-  sub?: ReactNode;
-  className?: string;
-}
-
 /* ---- Extended component library (separate modules) ----------------------- */
 export * from "./components/Accordion.js";
 export * from "./components/Alert.js";
@@ -401,21 +395,8 @@ export function Modal({ open, onClose, heading, footer, className, children }: M
   return createPortal(node, document.body);
 }
 
-/* ---- Wordmark ------------------------------------------------------------ */
-export function Wordmark({ name = "Diametral", sub, className }: WordmarkProps) {
-  return h("span", { className: cx("ds-wordmark", className) },
-    h("svg", {
-      className: "ds-wordmark__mark", viewBox: "0 0 56 56", fill: "none",
-      stroke: "currentColor", strokeWidth: 1.5, "aria-hidden": "true",
-    },
-      h("circle", { cx: 28, cy: 28, r: 24 }),
-      h("rect", { x: 12, y: 12, width: 32, height: 32 }),
-      h("line", { x1: 12, y1: 44, x2: 44, y2: 12 })
-    ),
-    h("span", { className: "ds-wordmark__name" }, name),
-    sub != null ? h("span", { className: "ds-wordmark__sub" }, sub) : null
-  );
-}
+/* Wordmark moved to components/wordmark.tsx in 1.0.0-beta.3, when the real
+   lockup replaced the placeholder mark. `name` and `sub` are unchanged. */
 
 /* ---- Extended component library (separate modules) ----------------------- */
 export * from "./components/Accordion.js";
@@ -513,6 +494,22 @@ export * from "./components/snippet.js";
 export * from "./components/qr-code.js";
 export * from "./components/toc.js";
 export * from "./components/theme-switcher.js";
+
+/* Batch 3 — net-new form controls and primitives (1.0.0-beta.3) */
+export * from "./components/label.js";
+export * from "./components/form.js";
+export * from "./components/button-group.js";
+export * from "./components/icon-button.js";
+export * from "./components/wordmark.js";
+export * from "./components/toggle.js";
+export * from "./components/meter.js";
+export * from "./components/relative-time.js";
+export * from "./components/editable.js";
+export * from "./components/field-array.js";
+export * from "./components/phone-input.js";
+export * from "./components/collapsible.js";
+export * from "./components/direction.js";
+export * from "./hooks/useControllableValue.js";
 
 /* Types several modules re-declare. Naming the canonical module here is what
    keeps `export *` unambiguous. */

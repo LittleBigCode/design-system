@@ -91,8 +91,12 @@ export function ConsoleLayout({
 
   const flat = nav.flatMap((g) => g.items || []);
   const cmds = commands || flat.map((n) => ({ id: n.id, label: n.label, group: "Go to", onRun: () => onNavigate && onNavigate(n.id) }));
+  /* A `{ name, sub }` brand pairs the words with the square monogram: the
+     horizontal lockup already spells "Diametral", so setting it beside the name
+     would say it twice. With no brand at all the horizontal lockup stands alone. */
   const brandNode = brand && typeof brand === "object" && !React.isValidElement(brand)
-    ? h(Wordmark, { name: (brand as any).name, sub: (brand as any).sub }) : (brand || h(Wordmark, null));
+    ? h(Wordmark, { variant: "square", name: (brand as any).name ?? "Diametral", sub: (brand as any).sub })
+    : (brand || h(Wordmark, null));
 
   return h("div", { className: cx("ds-console", className) },
     h("header", { className: "ds-app-bar ds-console__bar" }, h("div", { className: "ds-app-bar__inner" },

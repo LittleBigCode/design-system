@@ -9,7 +9,7 @@ showcase page.
 
 ## React components
 
-The 50 components exported from [`@diametral/design-system/react`](react.md). Every row has a live page with runnable examples, and every page is what the visual and accessibility gates drive — so this table and the tested surface cannot disagree.
+The 65 components exported from [`@diametral/design-system/react`](react.md). Every row has a live page with runnable examples, and every page is what the visual and accessibility gates drive — so this table and the tested surface cannot disagree.
 
 > Generated from `site/src/registry/registry.ts` by `scripts/build-components-md.mjs`. Edit the registry, then run `npm run build`.
 
@@ -17,9 +17,12 @@ The 50 components exported from [`@diametral/design-system/react`](react.md). Ev
 
 | Component | Imports | What it is |
 | --- | --- | --- |
+| [Button Group](https://littlebigcode.github.io/design-system/docs/button-group) | `ButtonGroup`, `ButtonGroupSeparator`, `ButtonGroupText`, `buttonGroupVariants` | Joins related buttons into a single segmented control with shared borders. |
+| [Icon Button](https://littlebigcode.github.io/design-system/docs/icon-button) | `IconButton` | `Button` for an icon alone, with an accessible name it cannot ship without. |
 | [Segmented](https://littlebigcode.github.io/design-system/docs/toggle-group) | `Segmented`, `type SegmentedProps`, `type SegmentedItem` | A short row of mutually exclusive options, all visible at once. |
 | [Speed Dial](https://littlebigcode.github.io/design-system/docs/speed-dial) | `SpeedDial`, `SpeedDialAction` | A floating action button whose two-to-four actions fan out on open — the create button a whole view is about. |
 | [SplitButton](https://littlebigcode.github.io/design-system/docs/split-button) | `SplitButton`, `IconButton`, `ButtonGroup` | One primary action, with its variants behind an attached caret. |
+| [Toggle](https://littlebigcode.github.io/design-system/docs/toggle) | `Toggle`, `toggleVariants` | A two-state button for on/off formatting controls. |
 | [Wizard](https://littlebigcode.github.io/design-system/docs/wizard) | `Wizard`, `type WizardProps`, `type WizardStep` | An ordered sequence of steps, with the progress and the navigation handled. |
 
 ### Forms
@@ -33,9 +36,15 @@ The 50 components exported from [`@diametral/design-system/react`](react.md). Ev
 | [DatePicker](https://littlebigcode.github.io/design-system/docs/date-picker) | `DatePicker`, `type DatePickerProps`, `type DateLike` | One date, from a field with a calendar under it. |
 | [DateRangePicker](https://littlebigcode.github.io/design-system/docs/date-range-picker) | `DateRangePicker`, `type DateRangePickerProps`, `type DateRange` | A start and an end, picked together in one calendar. |
 | [DateTimePicker](https://littlebigcode.github.io/design-system/docs/date-time-picker) | `DateTimePicker`, `type DateTimePickerProps` | A date and a time in one field, on the native `datetime-local` control. |
+| [Editable](https://littlebigcode.github.io/design-system/docs/editable) | `Editable` | Inline click-to-edit text — a preview with an edit affordance that swaps to a field, committed on Enter or blur, discarded on Escape. |
+| [Field Array](https://littlebigcode.github.io/design-system/docs/field-array) | `FieldArray`, `FieldArrayItem`, `FieldArrayItemContent`, `FieldArrayRemove`, `FieldArrayAdd` | Repeated entries for an array of objects — one bordered block per entry, each removable, with one add button under the stack. |
 | [FileUpload](https://littlebigcode.github.io/design-system/docs/file-upload) | `FileUpload`, `type FileUploadProps` | A drop zone that is also a file button, with the picked files listed under it. |
+| [Form](https://littlebigcode.github.io/design-system/docs/form) | `Form` | A thin Base UI Form wrapper: the page-level `<form>` and its vertical rhythm. `FormField` owns everything inside it. |
+| [Input OTP](https://littlebigcode.github.io/design-system/docs/input-otp) |  | A segmented one-time-code field with per-character slots. Stylesheet only — the one-field-many-boxes behaviour needs a binding this package does not ship. |
+| [Label](https://littlebigcode.github.io/design-system/docs/label) | `Label` | An accessible label; pairs with a control via `htmlFor` and dims with its disabled state. |
 | [MultiSelect](https://littlebigcode.github.io/design-system/docs/multi-select) | `MultiSelect`, `type MultiSelectProps`, `type MultiSelectOption` | Several values from a fixed list, shown as removable chips. |
 | [NumberInput](https://littlebigcode.github.io/design-system/docs/number-field) | `NumberInput`, `type NumberInputProps` | A numeric field with stepper buttons and a real `null` for empty. |
+| [Phone Input](https://littlebigcode.github.io/design-system/docs/phone-input) | `PhoneInput` | A country dial-code select paired with a national-number field, composing into one E.164-ish string value. |
 | [RadioGroup](https://littlebigcode.github.io/design-system/docs/radio-group) | `RadioGroup`, `Radio`, `type RadioGroupProps` | One choice from a few, over native `<input type="radio">`. |
 | [Rating](https://littlebigcode.github.io/design-system/docs/rating) | `Rating`, `type RatingProps` | A star scale, as an input or as a read-only display. |
 | [TagInput](https://littlebigcode.github.io/design-system/docs/tags-input) | `TagInput`, `type TagInputProps` | Free-form labels, entered one at a time and shown as removable chips. |
@@ -49,7 +58,9 @@ The 50 components exported from [`@diametral/design-system/react`](react.md). Ev
 | [DataGrid](https://littlebigcode.github.io/design-system/docs/data-table) | `DataGrid`, `type DataGridProps`, `type DataGridColumn` | A real `<table>` with sorting, selection, filtering, inline edit and paging. |
 | [Item](https://littlebigcode.github.io/design-system/docs/item) | `Item`, `ItemMedia`, `ItemContent`, `ItemActions`, `ItemGroup`, `ItemSeparator`, `ItemTitle`, `ItemDescription`, `ItemHeader`, `ItemFooter` | A list row with media, content and actions slots — lighter than a Card for repeated rows. |
 | [Marker](https://littlebigcode.github.io/design-system/docs/marker) | `Marker`, `MarkerIcon`, `MarkerContent`, `markerVariants` | A small inline badge pairing an icon with a label. |
+| [Meter](https://littlebigcode.github.io/design-system/docs/meter) | `Meter`, `MeterTrack`, `MeterIndicator`, `MeterLabel`, `MeterValue`, `meterVariants` | Displays a measured value within a known range — capacity, not task progress. |
 | [QR Code](https://littlebigcode.github.io/design-system/docs/qr-code) | `QrCode`, `type QrErrorCorrectionLevel` | Renders a QR code as inline SVG from a hand-rolled byte-mode encoder — no dependency, no network, no canvas. Versions 1-10, all four correction levels. |
+| [Relative Time](https://littlebigcode.github.io/design-system/docs/relative-time) | `RelativeTime`, `formatRelativeTime` | Renders "3 hours ago" from a date, inside a `time` element that keeps the machine-readable timestamp. |
 | [Snippet](https://littlebigcode.github.io/design-system/docs/snippet) | `Snippet` | A one-line copyable command. Shares Code Block's copy affordance rather than restating it. |
 | [Tree](https://littlebigcode.github.io/design-system/docs/tree) | `Tree`, `type TreeProps`, `type TreeNode` | A nested, expandable hierarchy — files, org units, categories. |
 
@@ -69,17 +80,20 @@ The 50 components exported from [`@diametral/design-system/react`](react.md). Ev
 | Component | Imports | What it is |
 | --- | --- | --- |
 | [Aspect Ratio](https://littlebigcode.github.io/design-system/docs/aspect-ratio) | `AspectRatio` | Constrains content to a fixed width-to-height ratio. |
+| [Carousel](https://littlebigcode.github.io/design-system/docs/carousel) |  | A paged slide viewport with previous and next controls. Stylesheet only — the drag and snap need a binding this package does not ship. |
 | [Masonry](https://littlebigcode.github.io/design-system/docs/masonry) | `Masonry` | A multi-column layout that balances items of uneven height, via CSS columns rather than a JS measurement pass. |
 | [Resizable](https://littlebigcode.github.io/design-system/docs/resizable) |  | Panel groups split by draggable handles. Stylesheet only — the drag needs a binding this package does not ship. |
 | [Scroll Area](https://littlebigcode.github.io/design-system/docs/scroll-area) | `ScrollArea`, `ScrollBar` | A scrollable region with styled, overlay scrollbars. |
 | [Separator](https://littlebigcode.github.io/design-system/docs/separator) | `Separator` | A rule between content. Base UI inverts the orientation semantics — a horizontal group takes vertical separators. |
 | [Theme Switcher](https://littlebigcode.github.io/design-system/docs/theme-switcher) | `ThemeSwitcher`, `type ThemeSwitcherMode` | A light/dark/system toggle, promoted from the docs app's own theme-toggle. Fully controlled — the consumer owns the theme hook. |
+| [Wordmark](https://littlebigcode.github.io/design-system/docs/wordmark) | `Wordmark`, `wordmarkVariants` | The Diametral logo lockup, inlined as JSX so it recolours with the surrounding text. |
 
 ### Disclosure
 
 | Component | Imports | What it is |
 | --- | --- | --- |
 | [Accordion](https://littlebigcode.github.io/design-system/docs/accordion) | `Accordion`, `type AccordionProps`, `type AccordionItem` | A stack of disclosure rows, driven by an `items` array rather than composed from children. |
+| [Collapsible](https://littlebigcode.github.io/design-system/docs/collapsible) | `Collapsible`, `CollapsibleTrigger`, `CollapsibleContent` | A single show/hide region. Emits `data-open` / `data-closed`, not `data-state`. |
 
 ### Overlays
 
@@ -107,6 +121,12 @@ The 50 components exported from [`@diametral/design-system/react`](react.md). Ev
 | [Bubble](https://littlebigcode.github.io/design-system/docs/bubble) | `BubbleGroup`, `Bubble`, `BubbleContent`, `BubbleReactions`, `type BubbleVariant` | Chat bubbles grouped by author. |
 | [Message](https://littlebigcode.github.io/design-system/docs/message) | `MessageGroup`, `Message`, `MessageAvatar`, `MessageContent`, `MessageHeader`, `MessageFooter` | A conversation row with avatar and content. |
 | [Message Scroller](https://littlebigcode.github.io/design-system/docs/message-scroller) |  | A transcript viewport that keeps itself pinned to the latest message. Stylesheet only — the pinning needs a binding this package does not ship. |
+
+### Utilities
+
+| Component | Imports | What it is |
+| --- | --- | --- |
+| [Direction](https://littlebigcode.github.io/design-system/docs/direction) | `DirectionProvider`, `useDirection` | A provider that sets text direction (LTR/RTL) for every Base UI component beneath it. |
 
 <!-- END generated: react-components -->
 
@@ -1393,20 +1413,35 @@ Sizes, full-width, icon-only, loading, button groups, and split buttons — all 
 </div>
 ```
 
-**Modifiers:** sizes `--sm` / `--lg`; `--block` (full-width); `--icon` (square; pair with an
-`aria-label`); `--loading` (hides the label and shows a centered spinner). `.ds-button-group` joins
-buttons sharing borders; `.ds-split` joins a main action to a caret (`.ds-split__menu` holds its
-dropdown).
+**Modifiers:** sizes `--xs` / `--sm` / `--lg`; `--block` (full-width); `--icon` (square; pair with
+an `aria-label`); `--loading` (hides the label and shows a centered spinner). `.ds-split` joins a
+main action to a caret (`.ds-split__menu` holds its dropdown).
+
+`.ds-button-group` joins buttons sharing borders. Since `1.0.0-beta.3` it lives in its own
+`components/button-group.css`, gained `[data-orientation="vertical"]`, a `.ds-button-group-text`
+cell and a `.ds-button-group-separator`, and collapses the shared edge by *removing* the losing
+border rather than overlapping members — so it is correct under `dir="rtl"`. The class name and the
+markup above are unchanged.
+
+```html
+<div class="ds-button-group" role="group" data-orientation="horizontal">
+  <button class="ds-button">Copy</button>
+  <span class="ds-button-group-separator ds-separator ds-separator--auto" data-orientation="vertical"></span>
+  <button class="ds-button">Paste</button>
+</div>
+```
 
 **React** — the base `<Button>` takes `variant` (`"primary" | "danger"`), `size` (`"sm" | "lg"`),
-`loading`, and `block`. Plus `<ButtonGroup>`, `<IconButton>` (props: `label` — accessible name +
-title, `variant`, `size`), and `<SplitButton>` (props: `onMain`, `variant`, `size`, `menu`).
+`loading`, and `block`. Plus `<ButtonGroup>` (props: `orientation`) with `<ButtonGroupText>` and
+`<ButtonGroupSeparator>`, `<IconButton>` (props: `label` — accessible name + title, `variant`,
+`size` — the four square sizes `"icon" | "icon-xs" | "icon-sm" | "icon-lg"`, or the bare
+`"sm" | "lg"`), and `<SplitButton>` (props: `onMain`, `variant`, `size`, `menu`).
 
 ```jsx
 import { Button, ButtonGroup, IconButton, SplitButton } from "@diametral/design-system/react";
 
 <Button size="lg" loading>Saving</Button>
-<IconButton label="Add" variant="primary"><PlusIcon /></IconButton>
+<IconButton label="Add" variant="primary" size="icon-sm"><PlusIcon /></IconButton>
 <SplitButton variant="primary" onMain={save} menu={<div className="ds-menu">…</div>}>Save</SplitButton>
 ```
 
@@ -1750,7 +1785,7 @@ the sidebar collapses behind a `☰` toggle.
 <div class="ds-shell">
   <header class="ds-shell__header">
     <button class="ds-shell__toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
-    <span class="ds-wordmark">…</span>
+    <span class="ds-wordmark" data-variant="horizontal"><svg>…</svg></span>
   </header>
   <aside class="ds-shell__sidebar">
     <nav class="ds-vnav" aria-label="Sidebar">

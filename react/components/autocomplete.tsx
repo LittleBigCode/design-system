@@ -5,7 +5,7 @@ import { Autocomplete as AutocompletePrimitive } from "@base-ui/react/autocomple
 import { XIcon } from "@phosphor-icons/react"
 
 import { InputGroup } from "./InputGroup.js"
-import { IconButton } from "./ButtonExtras.js"
+import { IconButton } from "./icon-button.js"
 import { bcx } from "../lib/baseClass.js"
 
 const Autocomplete = AutocompletePrimitive.Root

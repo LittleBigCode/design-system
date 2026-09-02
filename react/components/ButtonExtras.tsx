@@ -1,18 +1,8 @@
 import { cx } from "../lib/cx.js";
 import React from "react";
 
-import type {
-  ButtonHTMLAttributes, HTMLAttributes, ReactNode,
-  ForwardRefExoticComponent, RefAttributes,
-} from "react";
+import type { ReactNode } from "react";
 
-
-export interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  /** Accessible name (also used as the title tooltip). */
-  label: string;
-  variant?: "primary" | "danger";
-  size?: "sm" | "lg";
-}
 
 export interface SplitButtonProps {
   children?: ReactNode;
@@ -25,20 +15,11 @@ export interface SplitButtonProps {
 }
 const h = React.createElement;
 
-export function ButtonGroup({ className, children, ...rest }: HTMLAttributes<HTMLDivElement>) {
-  return h("div", { className: cx("ds-button-group", className), role: "group", ...rest }, children);
-}
+/* ButtonGroup moved to components/button-group.tsx in 1.0.0-beta.3, which adds
+   the text and separator parts and the vertical orientation. */
 
-export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(function IconButton(
-  { label, variant, size, className, type = "button", children, ...rest }, ref
-) {
-  return h("button", {
-    ref, type, "aria-label": label, title: label,
-    className: cx("ds-button", "ds-button--icon",
-      variant && `ds-button--${variant}`, size && `ds-button--${size}`, className),
-    ...rest,
-  }, children);
-});
+/* IconButton moved to components/icon-button.tsx in 1.0.0-beta.3, when the
+   source's four square sizes landed. Its props are unchanged. */
 
 export function SplitButton({ children, onMain, variant, size, menu, className }: SplitButtonProps) {
   const [open, setOpen] = React.useState(false);
