@@ -3,6 +3,7 @@
 import * as React from "react"
 
 import { cx } from "../lib/cx.js"
+import { Status, StatusIndicator } from "./status.js"
 import { Empty, EmptyDescription, EmptyHeader } from "./empty.js"
 
 export interface AgendaEvent {
@@ -55,11 +56,12 @@ function toDate(input: Date | string): Date | null {
    before it lies about the rest. A list has no such ceiling, and the two
    compose — select a day there, list it here.
 
-   CROSS-BATCH: the source renders the status dot as <Status><StatusIndicator/>,
-   which arrives in batch 7. The incumbent `Status` in react/index.tsx is a
-   different component entirely — a status *panel* with a kicker and a heading —
-   so there is nothing here to compose onto. The dot is a span carrying its own
-   tone class until batch 7 re-wires it. */
+   Re-wired onto <Status><StatusIndicator/> in 1.0.0-beta.7, the second and
+   final half of batch 6's forward cross-batch import. The dot was a span with
+   six tone rules of its own in agenda.css, because the `Status` that existed
+   then was a different component — a panel with a kicker and a heading — with
+   no dot to compose onto. Now it is the absorbed inline indicator, so the six
+   tone rules leave agenda.css and one status means one colour system-wide. */
 function Agenda({
   className,
   events,
@@ -133,13 +135,12 @@ function Agenda({
               className="ds-agenda-event"
             >
               <span className="ds-agenda-event-time">{event.time}</span>
-              <span
-                aria-hidden
-                className={cx(
-                  "ds-agenda-event-status",
-                  `ds-agenda-event-status--${event.status ?? "neutral"}`,
-                )}
-              />
+              <Status
+                tone={event.status ?? "neutral"}
+                className="ds-agenda-event-status"
+              >
+                <StatusIndicator />
+              </Status>
               <div className="ds-agenda-event-body">
                 <div className="ds-agenda-event-title">{event.title}</div>
                 {event.meta != null ? (

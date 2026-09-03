@@ -5,6 +5,7 @@ import { Menu as MenuPrimitive } from "@base-ui/react/menu"
 import { XIcon } from "@phosphor-icons/react"
 
 import { IconButton } from "./icon-button.js"
+import type { ButtonVariant } from "./button.js"
 import { bcx } from "../lib/baseClass.js"
 import { cx } from "../lib/cx.js"
 
@@ -36,9 +37,9 @@ function SpeedDial({
   label: string
   /** The closed-state glyph. Swapped for an X while open. */
   icon?: React.ReactNode
-  /** Re-wired onto `IconButton`'s `variant` until batch 7 lands the source's
-   *  eight-tone `Button`. The incumbent has two. */
-  tone?: "primary" | "danger"
+  /** The trigger's `Button` variant. Widened from two to the full eight in
+   *  1.0.0-beta.7, when `IconButton` was re-wired onto `Button`. */
+  tone?: ButtonVariant
   /** Which way the column fans out. `align` is fixed to the trigger's end
    *  edge — that edge is what the action boxes line up against. */
   side?: "top" | "bottom"

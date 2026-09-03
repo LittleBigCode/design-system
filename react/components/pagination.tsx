@@ -1,5 +1,4 @@
 import * as React from "react"
-import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
 import {
   CaretLeftIcon,
@@ -8,6 +7,7 @@ import {
 } from "@phosphor-icons/react"
 
 import { cx } from "../lib/cx.js"
+import { Button } from "./button.js"
 
 /**
  * Which page numbers to render, and where the ellipses fall — 0.11's
@@ -61,11 +61,13 @@ const range = (from: number, to: number) =>
    `paginationRange` above, exported, and the recipe for rebuilding the
    controlled component out of it is in docs/migration/from-0.11.md.
 
-   CROSS-BATCH: the source composes PaginationLink onto its own `Button`, whose
-   `render` + `tone` API arrives in batch 7. The incumbent Button is a class
-   applier with no `render`, and it lives in react/index.tsx — importing it here
-   would be a cycle. So the link applies `.ds-button`'s classes directly, which
-   is the same visual contract, and batch 7 re-wires it to the symbol. */
+   Re-wired onto `Button` in 1.0.0-beta.7, the second and final half of batch
+   6's forward cross-batch import. The link applied `.ds-button`'s classes by
+   hand, because the Button that existed then was a class applier with no
+   `render` living in react/index.tsx, where importing it would have been a
+   cycle. `Button` is now its own module on Base UI, whose `render` is exactly
+   what a pager needs: the page stays a real `<a href>` and still gets the
+   button's whole variant grammar. */
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   return (
     <nav
@@ -102,23 +104,17 @@ function PaginationLink({
   isActive?: boolean
   size?: "icon" | "default"
 }) {
-  return useRender({
-    defaultTagName: "a",
-    props: mergeProps<"a">(
-      {
-        className: cx(
-          "ds-button",
-          isActive && "ds-button--primary",
-          size === "icon" && "ds-button--icon",
-          className,
-        ),
-        "aria-current": isActive ? "page" : undefined,
-      },
-      props,
-    ),
-    render,
-    state: { slot: "pagination-link", active: Boolean(isActive) },
-  })
+  return (
+    <Button
+      render={(render as React.ReactElement) ?? <a />}
+      data-slot="pagination-link"
+      variant={isActive ? "primary" : undefined}
+      size={size}
+      aria-current={isActive ? "page" : undefined}
+      className={typeof className === "string" ? className : undefined}
+      {...(props as React.ComponentProps<typeof Button>)}
+    />
+  )
 }
 
 function PaginationPrevious({

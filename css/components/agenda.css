@@ -4,7 +4,7 @@
    A day heading, then one row per event: a tabular time column, a status dot,
    and a body with a title and an optional meta line. The empty state is a real
    .ds-empty rather than a bespoke __empty block — which is most of why the
-   source wins here. The status dot follows in batch 7, when .ds-status lands.
+   source wins here. The status dot is a <Status><StatusIndicator/> since beta.7.
 
    Renamed from 0.x's __day / __weekday / __date / __event / __time / __marker /
    __body / __title / __meta. __empty has no replacement: the empty state is
@@ -48,27 +48,14 @@
   border-bottom: none;
 }
 
-/* Status dot — a small square, neutral by default. Batch 7 replaces this span
-   with a real <Status><StatusIndicator/>, at which point these six tone rules
-   become status.css's job and this block goes. Until then the dot carries its
-   own tone, because the incumbent `Status` is a different component (a panel
-   with a kicker and a heading) with no dot to compose onto. */
+/* The status dot is a <Status><StatusIndicator/> since 1.0.0-beta.7, so its
+   six tone rules left for status-panel.css — one status is one colour
+   system-wide. What stays is the row's own business: the indicator must not be
+   stretched by the flex row it sits in. */
 .ds-agenda-event-status {
   flex: none;
   align-self: center;
-  width: 9px;
-  height: 9px;
-  box-sizing: border-box;
-  border: 1px solid currentColor;
-  border-radius: var(--ds-radius-none);
-  background: currentColor;
-  color: var(--ds-neutral);
 }
-.ds-agenda-event-status--info     { color: var(--ds-info); }
-.ds-agenda-event-status--success  { color: var(--ds-success); }
-.ds-agenda-event-status--warning  { color: var(--ds-warning); }
-.ds-agenda-event-status--danger   { color: var(--ds-danger); }
-.ds-agenda-event-status--critical { color: var(--ds-critical); }
 
 .ds-agenda-event-time {
   width: 3.5rem;

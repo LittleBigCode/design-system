@@ -15,10 +15,11 @@ import { IconButton } from "./icon-button.js"
    Two re-wirings, both paid twice by design:
 
    - `AttachmentAction` was the source's `Button` at `variant="ghost"
-     size="icon-xs"`. That is `IconButton` here, whose tone narrows to
+     size="icon-xs"`. That is `IconButton` here, whose tone narrowed to
      primary|danger and which requires a `label` — an icon-only action needs an
      accessible name, and the source's ghost icon button carried none of its
-     own. Batch 7 supplies `Button` and re-wires this back.
+     own. Re-wired in 1.0.0-beta.7: `IconButton` composes `Button` now, so the
+     action reaches the source's symbol and its full variant set through it.
    - The source's cva() call carried only the variant *keys* (its option values
      were empty strings — attachment.css keys off `data-size`/`data-orientation`)
      so class-variance-authority is not acquired for it either; `variants()`

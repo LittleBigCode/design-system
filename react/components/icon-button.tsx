@@ -2,9 +2,7 @@
 
 import * as React from "react";
 
-import { cx } from "../lib/cx.js";
-
-import type { ButtonHTMLAttributes } from "react";
+import { Button, type ButtonSize, type ButtonVariant } from "./button.js";
 
 /* IconButton — a square Button with an accessible name it cannot ship without.
    ---------------------------------------------------------------------------
@@ -27,55 +25,47 @@ import type { ButtonHTMLAttributes } from "react";
    batches 1 and 2, so they keep working rather than being broken for a rename.
    `icon-` is simply stripped, and `icon` alone is the 40px default.
 
-   `variant` still narrows to the two the incumbent has — the source composes
-   onto its own six-variant Button, which holds until batch 7. Same narrowing
-   batch 1 made for `SpeedDial` and batch 2 for `AttachmentAction`. */
+   Re-wired onto `Button` in 1.0.0-beta.7 — the second and final half of batch
+   3's forward cross-batch import, and the one that clears four other rows with
+   it. `SpeedDial`, `AttachmentAction`, `Editable` and `FieldArray` all compose
+   *this*, so re-wiring here re-wires them, and each keeps the required `label`
+   that made `IconButton` worth having in the first place: an icon-only button
+   whose accessible name is checked by the type system rather than remembered.
+
+   `variant` widens from the two the incumbent had to the source's full eight,
+   which is the half of the re-wiring that was actually deferred. */
 
 /** The square sizes. `icon` is the 40px default; `icon-xs` is 24px. */
-export type IconButtonSize =
-  | "icon"
-  | "icon-xs"
-  | "icon-sm"
-  | "icon-lg"
-  | "xs"
-  | "sm"
-  | "lg";
+export type IconButtonSize = Extract<
+  ButtonSize,
+  "icon" | "icon-xs" | "icon-sm" | "icon-lg" | "xs" | "sm" | "lg"
+>;
 
 export interface IconButtonProps
-  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "aria-label"> {
+  extends Omit<React.ComponentProps<typeof Button>, "aria-label" | "size"> {
   /** The accessible name. Required — that is the point of this component. */
   label: string;
-  /** Re-wired onto the incumbent Button's two variants until batch 7 lands the
-   *  source's own. `primary` is the source's `default`, `danger` its
-   *  `destructive`; omit for the ghost button both call `ghost`. */
-  variant?: "primary" | "danger";
+  variant?: ButtonVariant;
   size?: IconButtonSize;
 }
 
 export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
-  function IconButton(
-    { label, variant, size = "icon", className, type = "button", children, ...rest },
-    ref
-  ) {
-    const step = size.replace(/^icon-?/, "");
+  function IconButton({ label, size = "icon", ...rest }, ref) {
+    /* Both spellings resolve to the same square: the bare `sm`/`lg` are a
+       published 0.x API and `icon-sm`/`icon-lg` are the source's, so `icon-`
+       is simply prefixed back on where it is missing. */
+    const squareSize = (
+      size.startsWith("icon") ? size : `icon-${size}`
+    ) as ButtonSize;
     return (
-      <button
+      <Button
         ref={ref}
-        type={type}
         data-slot="icon-button"
         aria-label={label}
         title={label}
-        className={cx(
-          "ds-button",
-          "ds-button--icon",
-          variant && `ds-button--${variant}`,
-          step && `ds-button--${step}`,
-          className
-        )}
+        size={squareSize}
         {...rest}
-      >
-        {children}
-      </button>
+      />
     );
   }
 );

@@ -1,6 +1,13 @@
 import { Link } from "react-router"
 
-import { Badge, Card } from "@diametral/design-system/react"
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@diametral/design-system/react"
 
 import { COMPONENTS, componentsByCategory } from "@/registry/registry"
 
@@ -86,12 +93,11 @@ export function Overview() {
         </h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           {componentsByCategory().map((group) => (
-            <Card
-              key={group.category}
-              title={group.category}
-              footer={`${group.items.length} components`}
-            >
-              <div className="flex flex-wrap gap-x-3 gap-y-1.5">
+            <Card key={group.category}>
+              <CardHeader>
+                <CardTitle>{group.category}</CardTitle>
+              </CardHeader>
+              <CardContent className="flex flex-wrap gap-x-3 gap-y-1.5">
                 {group.items.map((component) => (
                   <Link
                     key={component.slug}
@@ -101,7 +107,8 @@ export function Overview() {
                     {component.name}
                   </Link>
                 ))}
-              </div>
+              </CardContent>
+              <CardFooter>{`${group.items.length} components`}</CardFooter>
             </Card>
           ))}
         </div>

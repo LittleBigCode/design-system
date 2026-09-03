@@ -1,4 +1,4 @@
-import { Editable, FieldHint } from "@diametral/design-system/react"
+import { Editable, FieldDescription } from "@diametral/design-system/react"
 import * as React from "react"
 
 export default function EditableControlled() {
@@ -7,7 +7,7 @@ export default function EditableControlled() {
   return (
     <div className="flex flex-col gap-1">
       <Editable value={saved} onSubmit={setSaved} />
-      <FieldHint>Last saved: {saved}</FieldHint>
+      <FieldDescription>Last saved: {saved}</FieldDescription>
     </div>
   )
 }

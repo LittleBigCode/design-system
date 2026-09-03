@@ -1,6 +1,12 @@
 import * as React from "react"
 
-import { Button, Field, Input, Modal } from "@diametral/design-system/react"
+import {
+  Button,
+  Field,
+  FieldLabel,
+  Input,
+  Modal,
+} from "@diametral/design-system/react"
 
 export default function DialogBasic() {
   const [open, setOpen] = React.useState(false)
@@ -21,7 +27,8 @@ export default function DialogBasic() {
           </>
         }
       >
-        <Field label="Project name" htmlFor="dialog-project-name">
+        <Field>
+          <FieldLabel htmlFor="dialog-project-name">Project name</FieldLabel>
           <Input id="dialog-project-name" defaultValue="Atlas" />
         </Field>
       </Modal>

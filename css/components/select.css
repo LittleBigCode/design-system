@@ -1,0 +1,275 @@
+/* ============================================================================
+   Select — .ds-select (native, preserved) + .ds-select-* (absorbed popup)
+   ----------------------------------------------------------------------------
+   Sixth of `form-controls.css`'s seven destinations (batch-plan §1.3).
+
+   Two components, one name-stem, no collision: 0.11's `.ds-select` is a
+   wrapper around a **native `<select>`** and the source defines no `.ds-select`
+   rule at all — only `.ds-select-trigger`, `-content`, `-item` and kin. A `.`
+   selector does not bleed across a hyphen, so the two grammars coexist without
+   the `:has()` guards `checkbox.css` and `input-group.css` need.
+
+   `.ds-select` is preserved for the reason `.ds-range` is: three committed
+   fixtures render it as bare HTML — `examples/components/form-controls.html`,
+   `examples/kitchen-sink.html`, `examples/blocks/app-chrome.html` — plus
+   `docs/for-claude.md` and `site/src/registry/demos/label/disabled.tsx`, and a
+   native select is still the right answer on a hand-written form. The absorbed
+   popup buys what a native select cannot: grouped items with labels, a
+   separator, an icon per row, and a checked indicator.
+
+   **Dedupe exception resolved** (3 of batch 7's 6). `select.tsx` kept `width`,
+   `border-width` and `padding-inline` as literal Tailwind on the trigger so
+   `phone-input.tsx` could dedupe them with `w-fit shrink-0 border-0 ps-0
+   pe-2`. All three become real declarations here, and `phone-input.css` — which
+   already loads after this file, exactly as its batch-3 header comment
+   anticipated — carries the override as a class.
+
+   **2 of the 18 `z-index: 50` remaps** land here: `.ds-select-positioner` and
+   `.ds-select-content` both take `--ds-z-popover`.
+
+   Charte edits, the same set every absorbed popup has taken since beta.1: the
+   two shadow layers plus the 10%-ink ring become one 1px `--ds-ink` border;
+   rems become px; `--popover` resolves to `--ds-surface`, `--accent` to
+   `--ds-bg-alt`, `--muted-foreground` to `--ds-ink-faint`, `--ring` to the 2px
+   `outline` idiom; and `svg:not([class*="size-"])` loses its negation, which
+   had no Tailwind `size-*` class left to escape and silently skipped any icon
+   whose class happened to contain `size-`.
+   ============================================================================ */
+
+/* ---- 0.11's native select, preserved ------------------------------------- */
+.ds-select {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+}
+.ds-select select {
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-base);
+  font-weight: 400;
+  color: var(--ds-ink);
+  font-variant-numeric: tabular-nums;
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-rule);
+  border-radius: var(--ds-radius-none);
+  padding: 10px 36px 10px 12px;
+  min-width: 200px;
+  cursor: pointer;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+/* Custom chevron — a masked glyph painted with a token (no hard-coded color:
+   the SVG carries geometry only, the color comes from --ds-ink-faint). */
+.ds-select::after {
+  content: "";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 8px;
+  pointer-events: none;
+  background-color: var(--ds-ink-faint);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none' stroke='black' stroke-width='1.5'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5'/%3E%3C/svg%3E") no-repeat center / contain;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none' stroke='black' stroke-width='1.5'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+.ds-select select:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: -2px;
+}
+.ds-select select:disabled { opacity: .55; cursor: not-allowed; }
+/* Optional explicit chevron element (purely decorative; the select handles it). */
+.ds-select__chevron {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 8px;
+  pointer-events: none;
+  color: var(--ds-ink-faint);
+}
+/* If an explicit chevron element is provided, suppress the default ::after. */
+.ds-select:has(.ds-select__chevron)::after { content: none; }
+.ds-select--block { display: flex; }
+.ds-select--block select { width: 100%; min-width: 0; }
+
+/* ---- The absorbed popup -------------------------------------------------- */
+.ds-select-trigger {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-base);
+  color: var(--ds-ink);
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-rule);
+  border-radius: var(--ds-radius-none);
+  padding-inline: 12px;
+  white-space: nowrap;
+  cursor: pointer;
+  outline: none;
+  transition: border-color var(--ds-transition), color var(--ds-transition);
+}
+.ds-select-trigger[data-size="default"] { height: 40px; }
+.ds-select-trigger[data-size="sm"] { height: 36px; }
+.ds-select-trigger:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: -2px;
+}
+.ds-select-trigger:disabled { cursor: not-allowed; opacity: .55; }
+.ds-select-trigger[aria-invalid] { border-color: var(--ds-danger); }
+.ds-select-trigger[data-placeholder] { color: var(--ds-ink-faint); }
+.ds-select-trigger svg {
+  pointer-events: none;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+}
+
+.ds-select-trigger-icon {
+  pointer-events: none;
+  width: 14px;
+  height: 14px;
+  color: var(--ds-ink-faint);
+}
+
+.ds-select-value {
+  display: flex;
+  flex: 1 1 0%;
+  align-items: center;
+  gap: 6px;
+  text-align: start;
+}
+
+.ds-select-positioner {
+  isolation: isolate;
+  z-index: var(--ds-z-popover);
+}
+
+.ds-select-content {
+  position: relative;
+  isolation: isolate;
+  z-index: var(--ds-z-popover);
+  max-height: var(--available-height);
+  width: var(--anchor-width);
+  min-width: 144px;
+  transform-origin: var(--transform-origin);
+  overflow-x: hidden;
+  overflow-y: auto;
+  border-radius: var(--ds-radius-none);
+  background: var(--ds-surface);
+  color: var(--ds-ink);
+  /* Charte conformance: no drop shadows. A popup is a bordered flat surface,
+     the same 1px solid ink .ds-menu uses. */
+  border: 1px solid var(--ds-ink);
+  --ds-select-slide-x: 0;
+  --ds-select-slide-y: 0;
+}
+
+/* Slide direction mirrors ds-autocomplete-content: each side enters from the
+   opposite edge, 8px away. */
+.ds-select-content[data-side="bottom"] { --ds-select-slide-y: -8px; }
+.ds-select-content[data-side="top"] { --ds-select-slide-y: 8px; }
+.ds-select-content[data-side="left"] { --ds-select-slide-x: 8px; }
+.ds-select-content[data-side="right"] { --ds-select-slide-x: -8px; }
+.ds-select-content[data-side="inline-end"] { --ds-select-slide-x: -8px; }
+:where([dir="rtl"], [dir="rtl"] *).ds-select-content[data-side="inline-end"] {
+  --ds-select-slide-x: 8px;
+}
+.ds-select-content[data-side="inline-start"] { --ds-select-slide-x: 8px; }
+:where([dir="rtl"], [dir="rtl"] *).ds-select-content[data-side="inline-start"] {
+  --ds-select-slide-x: -8px;
+}
+
+@keyframes ds-select-enter {
+  from {
+    opacity: 0;
+    scale: 0.95;
+    translate: var(--ds-select-slide-x) var(--ds-select-slide-y);
+  }
+}
+@keyframes ds-select-exit {
+  to { opacity: 0; scale: 0.95; }
+}
+.ds-select-content[data-open] { animation: ds-select-enter 100ms ease; }
+.ds-select-content[data-closed] { animation: ds-select-exit 100ms ease; }
+/* When the popup aligns an item over the trigger (native-select-like) it
+   appears in place with no motion, and that must win over both animations
+   above regardless of data-open / data-closed. */
+.ds-select-content[data-align-trigger="true"] { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .ds-select-content[data-open],
+  .ds-select-content[data-closed] { animation: none; }
+}
+
+.ds-select-group {
+  scroll-margin-block: 6px;
+  padding: 6px;
+}
+
+.ds-select-label {
+  padding: 8px 12px;
+  font-size: var(--ds-text-2xs);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ds-ink-faint);
+}
+
+.ds-select-item {
+  position: relative;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 10px;
+  border-radius: var(--ds-radius-none);
+  padding: 8px 32px 8px 12px;
+  font-size: var(--ds-text-base);
+  color: var(--ds-ink);
+  cursor: default;
+  user-select: none;
+  outline: none;
+}
+.ds-select-item:focus {
+  background: var(--ds-bg-alt);
+  color: var(--ds-ink);
+}
+.ds-select-item[data-disabled] { pointer-events: none; opacity: .5; }
+.ds-select-item svg {
+  pointer-events: none;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+}
+
+.ds-select-item-text {
+  display: flex;
+  flex: 1 1 0%;
+  flex-shrink: 0;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.ds-select-item-indicator {
+  pointer-events: none;
+  position: absolute;
+  inset-inline-end: 8px;
+  display: flex;
+  width: 16px;
+  height: 16px;
+  align-items: center;
+  justify-content: center;
+}
+.ds-select-item-indicator-icon { pointer-events: none; }
+
+.ds-select-separator {
+  pointer-events: none;
+  margin-inline: -6px;
+  margin-block: 6px;
+  height: 1px;
+  background: var(--ds-rule);
+}

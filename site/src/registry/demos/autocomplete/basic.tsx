@@ -5,8 +5,9 @@ import {
   AutocompleteInput,
   AutocompleteItem,
   AutocompleteList,
+  FieldLabel,
 } from "@diametral/design-system/react"
-import { Field, FieldHint } from "@diametral/design-system/react"
+import { Field, FieldDescription } from "@diametral/design-system/react"
 
 const TAGS = [
   "accessibility",
@@ -20,7 +21,8 @@ const TAGS = [
 
 export default function AutocompleteBasic() {
   return (
-    <Field className="max-w-sm" label="Tag">
+    <Field className="max-w-sm">
+      <FieldLabel>Tag</FieldLabel>
       <Autocomplete items={TAGS}>
         <AutocompleteInput placeholder="Start typing…" showClear />
         <AutocompleteContent>
@@ -34,9 +36,9 @@ export default function AutocompleteBasic() {
           </AutocompleteList>
         </AutocompleteContent>
       </Autocomplete>
-      <FieldHint>
+      <FieldDescription>
         Pick a suggestion, or invent a new tag.
-      </FieldHint>
+      </FieldDescription>
     </Field>
   )
 }

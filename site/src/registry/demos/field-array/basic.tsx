@@ -8,6 +8,10 @@ import {
   FieldArrayRemove,
   Input,
   Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@diametral/design-system/react"
 import * as React from "react"
 import { GraduationCapIcon } from "@phosphor-icons/react"
@@ -55,10 +59,18 @@ export default function FieldArrayBasic() {
               <Select
                 name={`diplomas[${index}].school`}
                 defaultValue={diploma.school}
-                aria-label={`Diploma ${index + 1} school`}
-                options={SCHOOLS}
-                block
-              />
+              >
+                <SelectTrigger aria-label={`Diploma ${index + 1} school`}>
+                  <SelectValue placeholder="School" />
+                </SelectTrigger>
+                <SelectContent>
+                  {SCHOOLS.map((school) => (
+                    <SelectItem key={school.value} value={school.value}>
+                      {school.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </FieldArrayItemContent>
             <FieldArrayRemove
               label={`Remove diploma ${index + 1}`}

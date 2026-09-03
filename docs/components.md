@@ -9,7 +9,7 @@ showcase page.
 
 ## React components
 
-The 97 components exported from [`@diametral/design-system/react`](react.md). Every row has a live page with runnable examples, and every page is what the visual and accessibility gates drive — so this table and the tested surface cannot disagree.
+The 113 components exported from [`@diametral/design-system/react`](react.md). Every row has a live page with runnable examples, and every page is what the visual and accessibility gates drive — so this table and the tested surface cannot disagree.
 
 > Generated from `site/src/registry/registry.ts` by `scripts/build-components-md.mjs`. Edit the registry, then run `npm run build`.
 
@@ -17,6 +17,7 @@ The 97 components exported from [`@diametral/design-system/react`](react.md). Ev
 
 | Component | Imports | What it is |
 | --- | --- | --- |
+| [Button](https://littlebigcode.github.io/design-system/docs/button) | `Button`, `buttonVariants` | The primary action trigger. Eight variants and an eight-colour brand tone axis that compose independently. |
 | [Button Group](https://littlebigcode.github.io/design-system/docs/button-group) | `ButtonGroup`, `ButtonGroupSeparator`, `ButtonGroupText`, `buttonGroupVariants` | Joins related buttons into a single segmented control with shared borders. |
 | [Icon Button](https://littlebigcode.github.io/design-system/docs/icon-button) | `IconButton` | `Button` for an icon alone, with an accessible name it cannot ship without. |
 | [Kbd](https://littlebigcode.github.io/design-system/docs/kbd) | `Kbd`, `KbdGroup` | Renders a keyboard key or chord inline, sized to sit in a line of text. |
@@ -33,15 +34,20 @@ The 97 components exported from [`@diametral/design-system/react`](react.md). Ev
 | --- | --- | --- |
 | [Autocomplete](https://littlebigcode.github.io/design-system/docs/autocomplete) | `Autocomplete`, `AutocompleteInput`, `AutocompleteClear`, `AutocompleteContent`, `AutocompleteList`, `AutocompleteItem`, `AutocompleteGroup`, `AutocompleteLabel`, `AutocompleteCollection`, `AutocompleteEmpty`, `AutocompleteStatus`, `AutocompleteSeparator` | Free-text input with suggestions — unlike Combobox, the typed value need not come from the list. |
 | [Calendar](https://littlebigcode.github.io/design-system/docs/calendar) | `Calendar`, `type CalendarProps`, `type CalendarEvent` | A month grid with dated events, statuses and a selected day. |
+| [Checkbox](https://littlebigcode.github.io/design-system/docs/checkbox) | `Checkbox` | A single boolean control, with indeterminate support via the `parent` prop inside a group. |
+| [Checkbox Group](https://littlebigcode.github.io/design-system/docs/checkbox-group) | `CheckboxGroup` | Manages a set of checkbox values, including the parent select-all relationship. |
 | [ColorPicker](https://littlebigcode.github.io/design-system/docs/color-picker) | `ColorPicker`, `type ColorPickerProps` | A swatch group over the brand palette, with a free-form hex field beside it. |
 | [Combobox](https://littlebigcode.github.io/design-system/docs/combobox) | `Combobox`, `type ComboboxProps`, `type ComboboxOption` | A text field that filters a list as you type, and settles on one value. |
 | [DatePicker](https://littlebigcode.github.io/design-system/docs/date-picker) | `DatePicker`, `type DatePickerProps`, `type DateLike` | One date, from a field with a calendar under it. |
 | [DateRangePicker](https://littlebigcode.github.io/design-system/docs/date-range-picker) | `DateRangePicker`, `type DateRangePickerProps`, `type DateRange` | A start and an end, picked together in one calendar. |
 | [DateTimePicker](https://littlebigcode.github.io/design-system/docs/date-time-picker) | `DateTimePicker`, `type DateTimePickerProps` | A date and a time in one field, on the native `datetime-local` control. |
 | [Editable](https://littlebigcode.github.io/design-system/docs/editable) | `Editable` | Inline click-to-edit text — a preview with an edit affordance that swaps to a field, committed on Enter or blur, discarded on Escape. |
+| [Field](https://littlebigcode.github.io/design-system/docs/field) | `Field`, `FieldSet`, `FieldLegend`, `FieldGroup`, `FieldContent`, `FieldLabel`, `FieldTitle`, `FieldDescription`, `FieldSeparator`, `FieldError` | The form row primitive — label, control, description and error in one accessible group. Replaces the retired `form` component in this system. |
 | [Field Array](https://littlebigcode.github.io/design-system/docs/field-array) | `FieldArray`, `FieldArrayItem`, `FieldArrayItemContent`, `FieldArrayRemove`, `FieldArrayAdd` | Repeated entries for an array of objects — one bordered block per entry, each removable, with one add button under the stack. |
 | [FileUpload](https://littlebigcode.github.io/design-system/docs/file-upload) | `FileUpload`, `type FileUploadProps` | A drop zone that is also a file button, with the picked files listed under it. |
 | [Form](https://littlebigcode.github.io/design-system/docs/form) | `Form` | A thin Base UI Form wrapper: the page-level `<form>` and its vertical rhythm. `FormField` owns everything inside it. |
+| [Input](https://littlebigcode.github.io/design-system/docs/input) | `Input` | The single-line text field, and the base every other text control borrows its focus ring and invalid styling from. |
+| [Input Group](https://littlebigcode.github.io/design-system/docs/input-group) | `InputGroup`, `InputGroupAddon`, `InputGroupButton`, `InputGroupText`, `InputGroupInput`, `InputGroupTextarea`, `inputGroupAddonVariants` | Composes addons, icons and buttons around an input inside a single bordered box. |
 | [Input OTP](https://littlebigcode.github.io/design-system/docs/input-otp) |  | A segmented one-time-code field with per-character slots. Stylesheet only — the one-field-many-boxes behaviour needs a binding this package does not ship. |
 | [Label](https://littlebigcode.github.io/design-system/docs/label) | `Label` | An accessible label; pairs with a control via `htmlFor` and dims with its disabled state. |
 | [MultiSelect](https://littlebigcode.github.io/design-system/docs/multi-select) | `MultiSelect`, `type MultiSelectProps`, `type MultiSelectOption` | Several values from a fixed list, shown as removable chips. |
@@ -49,7 +55,11 @@ The 97 components exported from [`@diametral/design-system/react`](react.md). Ev
 | [Phone Input](https://littlebigcode.github.io/design-system/docs/phone-input) | `PhoneInput` | A country dial-code select paired with a national-number field, composing into one E.164-ish string value. |
 | [RadioGroup](https://littlebigcode.github.io/design-system/docs/radio-group) | `RadioGroup`, `Radio`, `type RadioGroupProps` | One choice from a few, over native `<input type="radio">`. |
 | [Rating](https://littlebigcode.github.io/design-system/docs/rating) | `Rating`, `type RatingProps` | A star scale, as an input or as a read-only display. |
+| [Select](https://littlebigcode.github.io/design-system/docs/select) | `Select`, `SelectTrigger`, `SelectValue`, `SelectContent`, `SelectGroup`, `SelectLabel`, `SelectItem`, `SelectSeparator` | A Base UI listbox for choosing one option from a set, with a rendered trigger and portalled popup. |
+| [Slider](https://littlebigcode.github.io/design-system/docs/slider) | `Slider` | Selects a number, or a range, by dragging along a track. |
+| [Switch](https://littlebigcode.github.io/design-system/docs/switch) | `Switch` | An immediate on/off toggle for settings that apply on change. |
 | [TagInput](https://littlebigcode.github.io/design-system/docs/tags-input) | `TagInput`, `type TagInputProps` | Free-form labels, entered one at a time and shown as removable chips. |
+| [Textarea](https://littlebigcode.github.io/design-system/docs/textarea) | `Textarea` | A multi-line text field sharing Input's focus and invalid states. |
 | [TimePicker](https://littlebigcode.github.io/design-system/docs/time-picker) | `TimePicker`, `type TimePickerProps` | A time of day, in 24-hour `HH:mm`. |
 
 ### Data display
@@ -59,8 +69,10 @@ The 97 components exported from [`@diametral/design-system/react`](react.md). Ev
 | [Agenda](https://littlebigcode.github.io/design-system/docs/agenda) | `Agenda` | A chronological list of events grouped by day — the list half of a calendar, and where v2 keeps event display. |
 | [Area Chart](https://littlebigcode.github.io/design-system/docs/area-chart) | `AreaChart` | `Line Chart` read as a volume — the same props, with a filled band under each series. |
 | [Avatar](https://littlebigcode.github.io/design-system/docs/avatar) | `Avatar`, `AvatarImage`, `AvatarFallback`, `AvatarBadge`, `AvatarGroup`, `AvatarGroupCount` | A user image with a text fallback, and a group with overflow count. |
+| [Badge](https://littlebigcode.github.io/design-system/docs/badge) | `Badge`, `badgeVariants` | A compact status or category label. |
 | [Bar Chart](https://littlebigcode.github.io/design-system/docs/bar-chart) | `BarChart` | Categorical bars with a pinned value axis, a row layout, and per-bar semantic tinting. |
 | [Bullet Chart](https://littlebigcode.github.io/design-system/docs/bullet-chart) | `BulletChart`, `type BulletBand` | An actual against its target and qualitative bands — what `meter`, `gauge` and `progress` cannot say. |
+| [Card](https://littlebigcode.github.io/design-system/docs/card) | `Card`, `CardMedia`, `CardHeader`, `CardTitle`, `CardDescription`, `CardAction`, `CardContent`, `CardBlock`, `CardFooter` | A bordered surface with header, content and footer slots — the default container for grouped content. |
 | [Chart](https://littlebigcode.github.io/design-system/docs/chart) | `ChartContainer`, `ChartTooltip`, `ChartTooltipContent`, `ChartLegend`, `ChartLegendContent`, `ChartStyle` | Recharts wrapped so series colours come from a `ChartConfig` and resolve to brand chart tokens. |
 | [CodeBlock](https://littlebigcode.github.io/design-system/docs/code-block) | `CodeBlock`, `type CodeBlockProps` | A source snippet with a filename strip and a copy button. |
 | [Combo Chart](https://littlebigcode.github.io/design-system/docs/combo-chart) | `ComboChart`, `type ComboSeries` | Bars and a line on one x axis, with a second Y scale — the volume-plus-rate dashboard shape. |
@@ -85,7 +97,9 @@ The 97 components exported from [`@diametral/design-system/react`](react.md). Ev
 | [Sparkline](https://littlebigcode.github.io/design-system/docs/sparkline) | `Sparkline` | An inline mini line chart, small and cheap enough to sit in every row of a table. |
 | [Spinner](https://littlebigcode.github.io/design-system/docs/spinner) | `Spinner` | An indeterminate loading indicator, sized to the current text. |
 | [Stacked Bar](https://littlebigcode.github.io/design-system/docs/stacked-bar) | `StackedBar` | Proportional bars — every row normalised to its own total, so only the split differs. |
+| [Status](https://littlebigcode.github.io/design-system/docs/status) | `Status`, `StatusIndicator`, `StatusLabel`, `StatusPanel`, `Metric`, `statusVariants` | A dot-and-label state indicator across the shared six-tone family — success, warning, danger, critical, neutral, info. |
 | [Table](https://littlebigcode.github.io/design-system/docs/table) | `Table`, `TableHeader`, `TableBody`, `TableFooter`, `TableRow`, `TableHead`, `TableCell`, `TableCaption` | The static table primitives. For sorting, filtering and pagination use Data Table. |
+| [Tag](https://littlebigcode.github.io/design-system/docs/tag) | `Tag`, `tagVariants` | A boxed, tinted label across the shared six-tone family. Absorbs v1's Chip, whose one boolean `warn` axis is now `tone="warning"`. |
 | [Timeline](https://littlebigcode.github.io/design-system/docs/timeline) | `Timeline`, `TimelineItem`, `TimelineIndicator`, `TimelineContent`, `TimelineTitle`, `TimelineTime`, `TimelineDescription` | A vertical sequence of events with completed, active and inactive states. |
 | [Tree](https://littlebigcode.github.io/design-system/docs/tree) | `Tree`, `type TreeProps`, `type TreeNode` | A nested, expandable hierarchy — files, org units, categories. |
 | [Treemap](https://littlebigcode.github.io/design-system/docs/treemap) | `Treemap`, `type TreemapDatum` | A weighted hierarchy as nested areas — where a pie stops working and a bar chart runs out of room. |
@@ -114,6 +128,7 @@ The 97 components exported from [`@diametral/design-system/react`](react.md). Ev
 | [Carousel](https://littlebigcode.github.io/design-system/docs/carousel) |  | A paged slide viewport with previous and next controls. Stylesheet only — the drag and snap need a binding this package does not ship. |
 | [Masonry](https://littlebigcode.github.io/design-system/docs/masonry) | `Masonry` | A multi-column layout that balances items of uneven height, via CSS columns rather than a JS measurement pass. |
 | [Page Header](https://littlebigcode.github.io/design-system/docs/page-header) | `PageHeader`, `PageHeaderHeading`, `PageHeaderIcon`, `PageHeaderTitle`, `PageHeaderDescription`, `PageHeaderActions`, `PageHeaderTabs` | Breadcrumb, title, description and actions for the top of a page, with an optional flush tab strip. |
+| [Panel](https://littlebigcode.github.io/design-system/docs/panel) | `Panel`, `PanelHeader`, `PanelTitle`, `PanelContent`, `PanelFooter`, `PanelRow` | A sunken section container — the flat sibling of Card, plus a row part for tightly-packed settings lists. |
 | [Resizable](https://littlebigcode.github.io/design-system/docs/resizable) |  | Panel groups split by draggable handles. Stylesheet only — the drag needs a binding this package does not ship. |
 | [Scroll Area](https://littlebigcode.github.io/design-system/docs/scroll-area) | `ScrollArea`, `ScrollBar` | A scrollable region with styled, overlay scrollbars. |
 | [Separator](https://littlebigcode.github.io/design-system/docs/separator) | `Separator` | A rule between content. Base UI inverts the orientation semantics — a horizontal group takes vertical separators. |
@@ -159,6 +174,7 @@ The 97 components exported from [`@diametral/design-system/react`](react.md). Ev
 | Component | Imports | What it is |
 | --- | --- | --- |
 | [Direction](https://littlebigcode.github.io/design-system/docs/direction) | `DirectionProvider`, `useDirection` | A provider that sets text direction (LTR/RTL) for every Base UI component beneath it. |
+| [Icon](https://littlebigcode.github.io/design-system/docs/icon) | `Icon`, `icons` | The built-in glyph set — 34 Phosphor icons, keyed by name, shared by the React binding and the `<ds-icon>` web component. |
 
 <!-- END generated: react-components -->
 

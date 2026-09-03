@@ -1,6 +1,6 @@
 import {
   Button,
-  FieldHint,
+  FieldDescription,
   Form,
   FormField,
   Input,
@@ -20,7 +20,7 @@ export default function FormSections() {
         </FormField>
         <FormField label="SIRET" htmlFor="form-s-siret">
           <Input id="form-s-siret" name="siret" defaultValue="81234567800019" />
-          <FieldHint>Fourteen digits, no spaces.</FieldHint>
+          <FieldDescription>Fourteen digits, no spaces.</FieldDescription>
         </FormField>
       </fieldset>
 

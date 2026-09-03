@@ -1,6 +1,8 @@
 import * as React from "react"
 import {
   Panel,
+  PanelHeader,
+  PanelTitle,
   Timeline,
   TimelineContent,
   TimelineIndicator,
@@ -19,10 +21,14 @@ const STAGES = [
 /* The tighter row spacing is `--ds-timeline-gap`, not a `pb-4` utility: the
    source relied on tailwind-merge to dedupe that literal against the
    component's own `pb-8`, and there is no tailwind-merge in this package.
-   Panel is the incumbent until batch 7 lands the source's parts. */
+   Panel is the absorbed parts since 1.0.0-beta.7, so its heading is a
+   PanelTitle element rather than a `title` prop. */
 export default function TimelineInPanel() {
   return (
-    <Panel className="w-full max-w-xs" title="Shipment">
+    <Panel className="w-full max-w-xs">
+      <PanelHeader>
+        <PanelTitle>Shipment</PanelTitle>
+      </PanelHeader>
       <Timeline style={{ "--ds-timeline-gap": "1rem" } as React.CSSProperties}>
         {STAGES.map((stage) => (
           <TimelineItem key={stage.title} data-state={stage.state}>

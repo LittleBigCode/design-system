@@ -4,8 +4,14 @@ import * as React from "react";
 
 import { cx } from "../lib/cx.js";
 import { useControllableValue } from "../hooks/useControllableValue.js";
-import { Input } from "../index.js";
-import { Select } from "./Select.js";
+import { Input } from "./input.js";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./select.js";
 
 /* PhoneInput — a dial-code select joined to a national-number field.
    ---------------------------------------------------------------------------
@@ -18,22 +24,19 @@ import { Select } from "./Select.js";
    trade-off as `qr-code`'s hand-rolled encoder in batch 2. It covers
    Diametral's live markets and is a plain array a consumer can read.
 
-   Two forward cross-batch imports re-wired, both to be paid again in batch 7.
-   `Input` is this package's `.ds-input`. `Select` is the bigger change: the
-   source composes a five-part Base UI select (`Select`/`SelectTrigger`/
-   `SelectContent`/`SelectItem`/`SelectValue`), and the incumbent is a native
-   `<select>` taking its options as a prop — so the five parts collapse into one
-   `options` array. The native control is arguably the better fit here anyway:
-   a dial-code picker is exactly the case where a platform select's own mobile
-   UI beats a custom listbox.
+   Both forward cross-batch imports are re-wired **back** in 1.0.0-beta.7, the
+   second and final half of each: `Input` and the five-part `Select` are the
+   source's own now, not the incumbents batch 3 composed onto. The dial-code
+   picker gains what the native `<select>` could not show — the country name
+   beside the code in the list, while the closed trigger stays as narrow as
+   `+352`.
 
-   That collapse is also what dissolves this batch's largest dedupe exception.
-   Upstream the trigger kept `w-fit shrink-0 border-0 ps-0 pe-2` and the input
-   `flex-1 border-0 ps-2` literal, because `select.css` and `input.css` kept
-   their own competing defaults literal in turn so tailwind-merge could delete
-   the loser. Nothing here is literal: `.ds-phone-input__country` and
-   `__number` carry those overrides as real declarations and win on
-   specificity. */
+   The dedupe exception this file dissolved in beta.3 stays dissolved. Upstream
+   the trigger kept `w-fit shrink-0 border-0 ps-0 pe-2` and the input `flex-1
+   border-0 ps-2` literal, because `select.css` and `input.css` kept their own
+   competing defaults literal in turn so tailwind-merge could delete the loser.
+   Nothing here is literal: `.ds-phone-input__country` and `__number` carry
+   those overrides as real declarations and win on specificity. */
 const COUNTRIES = [
   { code: "FR", label: "France", dialCode: "+33" },
   { code: "BE", label: "Belgique", dialCode: "+32" },
@@ -111,19 +114,27 @@ function PhoneInput({
       className={cx("ds-phone-input", className)}
     >
       <Select
-        data-slot="phone-input-country"
-        aria-label="Country calling code"
-        className="ds-phone-input__country"
-        // The label is the dial code, because that is what the collapsed
-        // trigger has room for; the option text carries the country name.
-        options={COUNTRIES.map((c) => ({
-          value: c.code,
-          label: `${c.label} (${c.dialCode})`,
-        }))}
         value={country}
         disabled={disabled}
-        onChange={(event) => setCountry(event.target.value)}
-      />
+        onValueChange={(next) => setCountry(next ?? "")}
+      >
+        <SelectTrigger
+          data-slot="phone-input-country"
+          aria-label="Country calling code"
+          className="ds-phone-input__country"
+        >
+          {/* The trigger shows the dial code, because that is all a collapsed
+              trigger has room for; the list carries the country name. */}
+          <SelectValue>{() => dialCode}</SelectValue>
+        </SelectTrigger>
+        <SelectContent>
+          {COUNTRIES.map((c) => (
+            <SelectItem key={c.code} value={c.code}>
+              {c.label} ({c.dialCode})
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
       <Input
         data-slot="phone-input-number"
         type="tel"

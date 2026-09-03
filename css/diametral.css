@@ -46,7 +46,22 @@
 @import url("./components/spinner.css");
 @import url("./components/progress.css");
 @import url("./components/toast.css");
+/* Batch 7 — the form-controls seven-way split (1.0.0-beta.7)
+   form-controls.css kept only the radio block; its six other React readers
+   left as their own source-named files. They land HERE, at the import the
+   split file already held, so every cascade relationship that depended on
+   loading after it still does: combobox, date-picker, time-picker,
+   color-picker, date-range, tag-input, multi-select, number-input and kbd all
+   follow, and batch 3's phone-input.css — whose header comment already said it
+   trails input.css and select.css — finally has them to trail. */
 @import url("./components/form-controls.css");
+@import url("./components/input.css");
+@import url("./components/textarea.css");
+@import url("./components/checkbox.css");
+@import url("./components/checkbox-group.css");
+@import url("./components/slider.css");
+@import url("./components/select.css");
+@import url("./components/input-group.css");
 @import url("./components/breadcrumb.css");
 @import url("./components/pagination.css");
 @import url("./components/vertical-nav.css");

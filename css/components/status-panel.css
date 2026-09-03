@@ -1,11 +1,31 @@
 /* ============================================================================
-   Status panel — .ds-status   ★ the signature component
+   Status — .ds-status   ★ the signature component, and now two components
    ----------------------------------------------------------------------------
-   A result / status / scoring panel: a solid colored head whose background
-   switches with the semantic status modifier, an optional key (legend) strip,
-   metric rows, and a note footer. De-domained from the app's "verdict" card.
+   Frozen (css-ledger §1), and frozen as a *family*: `<ds-status>` writes
+   `class="ds-status ds-status--<tone>"` by concatenation, plus `__head`,
+   `__kicker`, `__title`, `__subtitle`, `__key`, `__body` and `__note`. Every
+   one of those is a contract.
+
+   0.11's status is a **panel**: a solid coloured head, a legend strip, metric
+   rows, a note. The source's is an **inline indicator**: a 6px square and a
+   label, the thing that sits in a table cell saying "running". They share the
+   class stem and the six tone modifiers, and they are not the same component.
+
+   Both ship, told apart by what they contain — the same mechanism `table.css`
+   used in beta.6 and `checkbox.css` and `input-group.css` use in this batch. A
+   panel has a `__head`; an indicator has a `.ds-status-indicator` or a
+   `.ds-status-label`. The tone modifiers serve both at once and collide with
+   neither: for the panel `.ds-status--success` is only ever read through a
+   descendant selector, and for the indicator it only sets `--tone`.
+
+   The React names had to move, because there `Status` is one symbol and the
+   ledger gives it to the source. The panel becomes **`StatusPanel`** — the name
+   its props interface and this stylesheet already carried — and `Status`,
+   `StatusIndicator`, `StatusLabel` are the absorbed inline set. The web
+   component is untouched: `<ds-status>` is still the panel, and no consumer of
+   it has to change anything.
    ============================================================================ */
-.ds-status {
+.ds-status:not(:has(.ds-status-indicator, .ds-status-label)) {
   background: var(--ds-surface);
   border: 1px solid var(--ds-ink);
   border-radius: var(--ds-radius-none);
@@ -103,3 +123,58 @@
 }
 .ds-metric--sub .ds-metric__k { padding-left: 14px; font-size: 12.5px; color: var(--ds-ink-faint); }
 .ds-metric--sub .ds-metric__v { font-size: 12.5px; font-weight: 300; color: var(--ds-ink-soft); }
+
+/* ----------------------------------------------------------------------------
+   The absorbed inline indicator — .ds-status + .ds-status-indicator/-label
+   ----------------------------------------------------------------------------
+   Charte edits: rems → px; `--ds-*-ink` rather than the base hue, so the label
+   clears AA as small text; and the ping animation gains the reduced-motion
+   opt-out every animated surface in this package carries.
+   ---------------------------------------------------------------------------- */
+.ds-status:has(.ds-status-indicator, .ds-status-label) {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Sets --tone for the square and the label to share. The same six tones every
+   other status surface here takes, so a status reading "danger" means the same
+   colour on a tag, a banner and an alert.
+
+   The `:has()` guard is load-bearing, not symmetry: `--tone` inherits, and
+   `progress.css` and `meter.css` both read a bare `var(--tone, --ds-accent)`
+   on an untoned indicator. Declared on the panel form as well, a `<Progress>`
+   inside a `.ds-status--success` panel would silently take the panel's tone
+   instead of the accent. The panel never sets it. */
+.ds-status--success:has(.ds-status-indicator, .ds-status-label)  { --tone: var(--ds-success-ink); }
+.ds-status--warning:has(.ds-status-indicator, .ds-status-label)  { --tone: var(--ds-warning-ink); }
+.ds-status--danger:has(.ds-status-indicator, .ds-status-label)   { --tone: var(--ds-danger-ink); }
+.ds-status--critical:has(.ds-status-indicator, .ds-status-label) { --tone: var(--ds-ink); }
+.ds-status--neutral:has(.ds-status-indicator, .ds-status-label)  { --tone: var(--ds-ink-faint); }
+.ds-status--info:has(.ds-status-indicator, .ds-status-label)     { --tone: var(--ds-info-ink); }
+
+.ds-status-indicator {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  background: var(--tone, var(--ds-ink-faint));
+}
+.ds-status-indicator-ping {
+  position: absolute;
+  inset: 0;
+  background: var(--tone, var(--ds-ink-faint));
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ds-status-indicator-ping { animation: ds-status-ping 1s cubic-bezier(0, 0, .2, 1) infinite; }
+}
+@keyframes ds-status-ping {
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+
+.ds-status-label {
+  font-size: var(--ds-text-base);
+  line-height: var(--ds-leading-normal);
+  color: var(--tone, var(--ds-ink));
+}

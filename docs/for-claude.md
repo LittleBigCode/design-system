@@ -94,7 +94,7 @@ variables. No build step.
   <label class="ds-label" for="role">Role</label>
   <select class="ds-select" id="role"><option>Director</option><option>Manager</option></select>
 </div>
-<label class="ds-input-row"><span>Email digests</span><span class="ds-switch"><input type="checkbox" checked><span></span></span></label>
+<label class="ds-input-row"><span>Email digests</span><span class="ds-switch"><input type="checkbox" checked><span class="ds-switch__track"></span></span></label>
 ```
 
 ### Table
@@ -114,9 +114,9 @@ variables. No build step.
 <div class="ds-alert ds-alert--danger">Couldn’t load data.</div>
 ```
 
-### Icons (Lucide-compatible)
+### Icons (Phosphor, regular weight)
 ```html
-<svg class="ds-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+<svg class="ds-icon" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/></svg>
 ```
 
 ## The visible grid system (a brand signature)

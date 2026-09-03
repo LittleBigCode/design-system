@@ -7,6 +7,8 @@ import {
   EmptyMedia,
   EmptyTitle,
   Panel,
+  PanelHeader,
+  PanelTitle,
 } from "@diametral/design-system/react"
 import { UserPlusIcon, UsersIcon } from "@phosphor-icons/react"
 
@@ -14,7 +16,10 @@ import { UserPlusIcon, UsersIcon } from "@phosphor-icons/react"
    arrives as `title` rather than as a PanelHeader/PanelTitle pair. */
 export default function EmptyInCard() {
   return (
-    <Panel className="w-full max-w-md" title="Team">
+    <Panel className="w-full max-w-md">
+      <PanelHeader>
+        <PanelTitle>Team</PanelTitle>
+      </PanelHeader>
       <Empty>
         <EmptyHeader>
           <EmptyMedia variant="icon">

@@ -1,6 +1,6 @@
 import {
   Button,
-  FieldHint,
+  FieldDescription,
   Form,
   FormField,
   Input,
@@ -26,7 +26,9 @@ export default function FormBasic() {
 
       <FormField label="Brief" htmlFor="form-brief">
         <Textarea id="form-brief" name="brief" rows={3} />
-        <FieldHint>Submitting logs the collected values below.</FieldHint>
+        <FieldDescription>
+          Submitting logs the collected values below.
+        </FieldDescription>
       </FormField>
 
       <Button type="submit" className="self-start">

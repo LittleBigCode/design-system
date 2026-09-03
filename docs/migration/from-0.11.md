@@ -2,7 +2,7 @@
 
 # Migrating from 0.11 to 1.0
 
-The v1 absorption renames 112 consumer-visible thing(s). Everything else is additive.
+The v1 absorption renames 133 consumer-visible thing(s). Everything else is additive.
 
 ### Components
 
@@ -38,6 +38,10 @@ The v1 absorption renames 112 consumer-visible thing(s). Everything else is addi
 | `Toolbar + ToolbarGroup + ToolbarSpacer` | `Toolbar + ToolbarGroup + ToolbarButton + ToolbarLink + ToolbarInput + ToolbarSeparator` | 6 | Base UI's Toolbar: the strip is one tab stop with arrow-key navigation. `bordered` is gone (boxed by default) and ToolbarSpacer with it — the bar is width: fit-content. |
 | `Kbd` | `Kbd + KbdGroup` | 6 | KbdGroup chains keys into one chord. |
 | `Banner` | `Banner + BannerContent + BannerTitle + BannerDescription + BannerAction` | 6 | Moves out of react/index.tsx into its own module and gains the six-tone axis; the fixed-yellow identity is now `tone="warning"`. |
+| `Status` | `StatusPanel` | 7 | 0.11's status *panel* — the coloured head with a kicker, heading and subtitle. `Status` is now the source's inline dot-and-label indicator, and one barrel cannot export both under one name. `<ds-status>` is unchanged and still renders the panel, so no web-component consumer moves. |
+| `Status (the tone union type)` | `StatusTone` | 7 | It could not stay as a deprecated alias: a type alias named `Status` in the barrel shadows the `Status` *component* for every consumer. |
+| `Range` | `Slider` | 7 | On Base UI, so a range is one control with two thumbs rather than two inputs kept in order by the caller. `.ds-range` — the native `<input type=range>` — is still defined in `slider.css` for hand-written HTML. |
+| `FieldHint` | _removed_ | 7 | Replaced by `FieldDescription` (neutral) and `FieldError` (`role="alert"`, so a validation message is announced when it appears — `FieldHint` was a bare span and never was). `.ds-field__hint` stays defined in `field.css` for hand-written HTML. `<FormField>` absorbs the swap: its own props are unchanged. |
 
 ### Classes
 
@@ -123,6 +127,13 @@ The v1 absorption renames 112 consumer-visible thing(s). Everything else is addi
 | `.ds-spinner (drawn ring)` | `.ds-spinner` | 6 | Kept for hand-written HTML, scoped `:not(svg)`. The React binding spins a glyph instead, and the rotation is shared. |
 | `.ds-banner (fixed yellow)` | `.ds-banner--warning` | 6 | The bare class is now the neutral tone. The 0.11 identity is the warning tone. |
 | `null` | `.ds-banner-content / -title / -action` | 6 | New parts. |
+| `.ds-card-content (source spelling)` | `.ds-card__body` | 7 | The absorbed part is renamed into the frozen grammar: `__body` is what this system already called that region. |
+| `.ds-card-header / -title / -footer (source spelling)` | `.ds-card__header / __title / __footer` | 7 | Renamed into the frozen BEM grammar `Card.js` and `docs/components.md` already taught. |
+| `.ds-panel-header / -title / -content / -footer / -row (source spelling)` | `.ds-panel__header / __title / __content / __footer / __row` | 7 | Same rename. `__title` is what `<ds-panel title>` writes, so it is a contract and the other four follow it. |
+| `.ds-input (defined in field.css)` | `.ds-input (defined in input.css)` | 7 | Declarations moved file, name unchanged. Four stylesheets override it by descent — `color-picker.css`, `time-picker.css`, `date-picker.css`, `date-range.css` — and all four win on specificity, so none of them moved. |
+| `.ds-checkbox / .ds-textarea / .ds-select / .ds-range / .ds-input-group (defined in form-controls.css)` | `the same names, in checkbox.css / textarea.css / select.css / slider.css / input-group.css` | 7 | `form-controls.css` split seven ways and kept only the radio block. Every class name is unchanged; only the file it lives in moved. `.ds-field--error`, `.ds-field--success` and `.ds-field__hint` moved to `field.css`. |
+| `.ds-agenda-event-status--info / --success / --warning / --danger / --critical` | `.ds-status--info / --success / --warning / --danger / --critical` | 7 | The agenda's status dot is a `<Status><StatusIndicator/>` now, so its six private tone rules left `agenda.css`. One status is one colour system-wide. |
+| `<svg class="ds-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">` | `<svg class="ds-icon" viewBox="0 0 256 256" fill="currentColor">` | 7 | Lucide -> Phosphor. Every icon **name** is unchanged, so no `<Icon>` or `<ds-icon>` call moves; hand-written `<svg class="ds-icon">` does, because the wrapper attributes and the geometry both change. |
 
 ### Tokens
 

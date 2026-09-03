@@ -1,4 +1,11 @@
-import { AspectRatio, Card } from "@diametral/design-system/react"
+import {
+  AspectRatio,
+  Card,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  CardTitle,
+} from "@diametral/design-system/react"
 
 const COVER =
   "data:image/svg+xml;utf8," +
@@ -12,10 +19,8 @@ const COVER =
 
 export default function AspectRatioCardCover() {
   return (
-    <Card
-      className="w-full max-w-sm"
-      title="Charter 2026"
-      media={
+    <Card className="w-full max-w-sm">
+      <CardMedia>
         <AspectRatio ratio={16 / 9}>
           <img
             src={COVER}
@@ -23,12 +28,16 @@ export default function AspectRatioCardCover() {
             className="size-full object-cover"
           />
         </AspectRatio>
-      }
-    >
-      <p className="text-muted-foreground text-sm">
-        Tone scales, motion and typography. Published in March, alongside the
-        token export.
-      </p>
+      </CardMedia>
+      <CardHeader>
+        <CardTitle>Charter 2026</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p className="text-sm text-muted-foreground">
+          Tone scales, motion and typography. Published in March, alongside the
+          token export.
+        </p>
+      </CardContent>
     </Card>
   )
 }

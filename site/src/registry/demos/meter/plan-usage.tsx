@@ -1,6 +1,10 @@
 import {
   Button,
   Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
   Meter,
   MeterLabel,
   MeterValue,
@@ -10,16 +14,15 @@ import {
    the number can be phrased rather than printed bare: the first formats through
    the root's `format` (Intl units — "182 GB"), the second reads the raw value.
 
-   `Panel`'s compound parts are batch 7; this package's `Card` takes its title
-   and footer as props, which is the same composition in fewer elements. */
+   `Card`'s compound parts landed in 1.0.0-beta.7, so the title and the footer
+   action are elements rather than props. */
 export default function MeterPlanUsage() {
   return (
-    <Card
-      className="w-full max-w-sm"
-      title="Plan usage"
-      footer={<Button>Upgrade plan</Button>}
-    >
-      <div className="flex flex-col gap-6">
+    <Card className="w-full max-w-sm">
+      <CardHeader>
+        <CardTitle>Plan usage</CardTitle>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-6">
         <Meter
           value={182}
           max={250}
@@ -32,7 +35,10 @@ export default function MeterPlanUsage() {
           <MeterLabel>Seats</MeterLabel>
           <MeterValue>{(_, value) => `${value} of 50 used`}</MeterValue>
         </Meter>
-      </div>
+      </CardContent>
+      <CardFooter>
+        <Button>Upgrade plan</Button>
+      </CardFooter>
     </Card>
   )
 }

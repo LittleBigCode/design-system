@@ -1,10 +1,10 @@
 "use client"
 
-import * as React from "react"
 import { Toolbar as ToolbarPrimitive } from "@base-ui/react/toolbar"
 
 import { bcx } from "../lib/baseClass.js"
-import { cx } from "../lib/cx.js"
+import { Button, type ButtonSize, type ButtonVariant } from "./button.js"
+import { Input } from "./input.js"
 
 /* Toolbar — a strip of controls with roving focus.
    ---------------------------------------------------------------------------
@@ -12,12 +12,14 @@ import { cx } from "../lib/cx.js"
    0.11's Toolbar was a flex row, so every control in it was its own tab stop.
    This one is one stop, and the arrow keys walk it.
 
-   CROSS-BATCH: the source composes ToolbarButton onto its own `Button` and
-   ToolbarInput onto its own `Input`, both of which arrive in batch 7. The
-   incumbents are class appliers with no `render` and they live in
-   react/index.tsx, so importing them here would be a cycle. The parts apply
-   `.ds-button` / `.ds-input` directly instead — the same visual contract, no
-   new element — and batch 7 re-wires them to the symbols. */
+   Re-wired onto `Button` and `Input` in 1.0.0-beta.7 — two of batch 6's four
+   forward cross-batch imports, and the second and final half of each. Until now
+   the parts applied `.ds-button` / `.ds-input` by hand, because both incumbents
+   were class appliers with no `render` living in react/index.tsx, where
+   importing them would have been a cycle. Both are their own Base UI modules
+   now, so the toolbar composes the symbols through `render` and keeps its
+   roving focus: the strip is still one tab stop. ToolbarButton's `variant`
+   widens to the full eight with them. */
 function Toolbar({ className, ...props }: ToolbarPrimitive.Root.Props) {
   return (
     <ToolbarPrimitive.Root
@@ -48,25 +50,14 @@ function ToolbarButton({
   size = "icon-sm",
   ...props
 }: ToolbarPrimitive.Button.Props & {
-  /** Re-wired onto the incumbent Button's two variants until batch 7 lands the
-   *  source's own. Omit for the ghost button the source calls `ghost`. */
-  variant?: "primary" | "danger"
-  size?: "icon" | "icon-xs" | "icon-sm" | "icon-lg" | "xs" | "sm" | "lg"
+  variant?: ButtonVariant
+  size?: ButtonSize
 }) {
-  const step = size.replace(/^icon-?/, "")
   return (
     <ToolbarPrimitive.Button
       data-slot="toolbar-button"
-      className={bcx(
-        cx(
-          "ds-button",
-          size.startsWith("icon") && "ds-button--icon",
-          variant && `ds-button--${variant}`,
-          step && `ds-button--${step}`,
-          "ds-toolbar-button",
-        ),
-        className,
-      )}
+      render={<Button variant={variant} size={size} />}
+      className={bcx("ds-toolbar-button", className)}
       {...props}
     />
   )
@@ -86,7 +77,8 @@ function ToolbarInput({ className, ...props }: ToolbarPrimitive.Input.Props) {
   return (
     <ToolbarPrimitive.Input
       data-slot="toolbar-input"
-      className={bcx("ds-input ds-toolbar-input", className)}
+      render={<Input />}
+      className={bcx("ds-toolbar-input", className)}
       {...props}
     />
   )

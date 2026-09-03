@@ -8,6 +8,7 @@ import {
   AutocompleteItem,
   AutocompleteLabel,
   AutocompleteList,
+  FieldLabel,
 } from "@diametral/design-system/react"
 import { Field } from "@diametral/design-system/react"
 
@@ -21,7 +22,8 @@ const GROUPED: Category[] = [
 
 export default function AutocompleteGrouped() {
   return (
-    <Field className="max-w-sm" label="Component">
+    <Field className="max-w-sm">
+      <FieldLabel>Component</FieldLabel>
       <Autocomplete items={GROUPED}>
         <AutocompleteInput placeholder="Search components…" showClear />
         <AutocompleteContent>

@@ -1,0 +1,132 @@
+/* ============================================================================
+   Slider — .ds-slider (+ .ds-range, preserved)
+   ----------------------------------------------------------------------------
+   Fifth of `form-controls.css`'s seven destinations (batch-plan §1.3). The two
+   grammars have different names, so unlike `checkbox` this file needs no guard
+   — they simply sit side by side.
+
+   `.ds-range` is 0.11's native `<input type="range">` and it is **preserved**,
+   for the reason `spinner.css` kept its drawn ring in beta.6: two committed
+   fixtures render it as bare HTML — `examples/components/form-controls.html`
+   and `examples/kitchen-sink.html` — and there is no React component on either
+   side that would re-class them. It also stays the honest answer for a
+   hand-written form: a native range is one element and needs no JavaScript.
+
+   `.ds-slider` is the absorbed Base UI composition — root, control, track,
+   range fill, thumb — which is what a native input cannot do: multiple thumbs,
+   a vertical orientation, and a thumb that can be labelled.
+
+   Charte edits: rems → px; the hover/focus `box-shadow` halo becomes the
+   system's 2px `outline` on `--ds-focus-ring` (the source drew *both* a halo
+   and `outline: 2px solid transparent`, Tailwind's `outline-hidden` idiom,
+   which paints nothing — the same defect corrected on `sparkline` in beta.4);
+   `--primary` resolves to `--ds-ink` and `--input` to `--ds-rule`.
+   ============================================================================ */
+
+/* ---- The absorbed composition ------------------------------------------- */
+.ds-slider:where([data-orientation="horizontal"]) { width: 100%; }
+.ds-slider:where([data-orientation="vertical"]) { height: 100%; }
+
+.ds-slider-control {
+  position: relative;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  touch-action: none;
+  user-select: none;
+}
+.ds-slider-control[data-disabled] { opacity: .5; }
+.ds-slider-control:where([data-orientation="vertical"]) {
+  height: 100%;
+  min-height: 160px;
+  width: auto;
+  flex-direction: column;
+}
+
+.ds-slider-track {
+  position: relative;
+  flex-grow: 1;
+  overflow: hidden;
+  background: var(--ds-rule);
+  border-radius: var(--ds-radius-none);
+  user-select: none;
+}
+.ds-slider-track:where([data-orientation="horizontal"]) { height: 4px; width: 100%; }
+.ds-slider-track:where([data-orientation="vertical"]) { height: 100%; width: 4px; }
+
+.ds-slider-range {
+  background: var(--ds-ink);
+  user-select: none;
+}
+.ds-slider-range:where([data-orientation="horizontal"]) { height: 100%; }
+.ds-slider-range:where([data-orientation="vertical"]) { width: 100%; }
+
+/* Square, ink-filled, no radius — the same thumb .ds-range draws, so the two
+   sliders read as one control however they are built. */
+.ds-slider-thumb {
+  display: block;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  border: 0;
+  border-radius: var(--ds-radius-none);
+  background: var(--ds-ink);
+  transition: background-color var(--ds-transition);
+  user-select: none;
+}
+.ds-slider-thumb:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: 2px;
+}
+.ds-slider-thumb:disabled { pointer-events: none; opacity: .5; }
+
+/* ---- 0.11's native range, preserved -------------------------------------- */
+.ds-range {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 14px; /* room for the thumb */
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+}
+.ds-range::-webkit-slider-runnable-track {
+  height: 4px;
+  background: var(--ds-rule);
+  border: 0;
+  border-radius: var(--ds-radius-none);
+}
+.ds-range::-moz-range-track {
+  height: 4px;
+  background: var(--ds-rule);
+  border: 0;
+  border-radius: var(--ds-radius-none);
+}
+/* -5px centers the 14px thumb on the 4px track. */
+.ds-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--ds-ink);
+  border: 0;
+  border-radius: var(--ds-radius-none);
+  margin-top: -5px;
+}
+.ds-range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--ds-ink);
+  border: 0;
+  border-radius: var(--ds-radius-none);
+}
+.ds-range:focus-visible::-webkit-slider-thumb {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: 2px;
+}
+.ds-range:focus-visible::-moz-range-thumb {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: 2px;
+}
+.ds-range:disabled { opacity: .55; cursor: not-allowed; }

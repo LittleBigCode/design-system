@@ -2,8 +2,12 @@ import {
   Checkbox,
   Label,
   RadioGroup,
-  Range,
   Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Slider,
   Switch,
   Textarea,
 } from "@diametral/design-system/react"
@@ -24,19 +28,19 @@ export default function LabelWithControls() {
     <div className="flex w-full max-w-sm flex-col gap-6">
       <div className="flex flex-col gap-2">
         <Label htmlFor="label-cadence">Billing cadence</Label>
-        <Select
-          id="label-cadence"
-          defaultValue="monthly"
-          options={[
-            { value: "monthly", label: "Bill monthly" },
-            { value: "yearly", label: "Bill yearly" },
-          ]}
-          block
-        />
+        <Select defaultValue="monthly">
+          <SelectTrigger id="label-cadence">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="monthly">Bill monthly</SelectItem>
+            <SelectItem value="yearly">Bill yearly</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor="label-seats">Seats</Label>
-        <Range id="label-seats" defaultValue={12} min={1} max={50} />
+        <Slider id="label-seats" defaultValue={12} min={1} max={50} />
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor="label-brief">Brief</Label>

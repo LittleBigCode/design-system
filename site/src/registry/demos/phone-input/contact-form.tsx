@@ -1,6 +1,6 @@
 import {
   Button,
-  FieldHint,
+  FieldDescription,
   FormField,
   Input,
   PhoneInput,
@@ -20,7 +20,7 @@ export default function PhoneInputContactForm() {
       </FormField>
       <FormField label="Phone">
         <PhoneInput defaultValue="+32470123456" />
-        <FieldHint>Dial code included in the value.</FieldHint>
+        <FieldDescription>Dial code included in the value.</FieldDescription>
       </FormField>
       <Button size="sm" className="self-start">
         Save contact

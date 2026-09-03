@@ -1,4 +1,4 @@
-import { Field, MultiSelect } from "@diametral/design-system/react"
+import { Field, FieldLabel, MultiSelect } from "@diametral/design-system/react"
 
 const SCOPES = [
   { value: "read", label: "Read" },
@@ -10,7 +10,8 @@ const SCOPES = [
 
 export default function MultiSelectBasic() {
   return (
-    <Field label="Token scopes" htmlFor="ms-scopes">
+    <Field>
+      <FieldLabel htmlFor="ms-scopes">Token scopes</FieldLabel>
       <MultiSelect
         id="ms-scopes"
         options={SCOPES}
