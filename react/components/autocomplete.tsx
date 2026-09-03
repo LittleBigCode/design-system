@@ -4,16 +4,20 @@ import { Autocomplete as AutocompletePrimitive } from "@base-ui/react/autocomple
 
 import { XIcon } from "@phosphor-icons/react"
 
-import { InputGroup } from "./InputGroup.js"
-import { IconButton } from "./icon-button.js"
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "./input-group.js"
 import { bcx } from "../lib/baseClass.js"
 
 const Autocomplete = AutocompletePrimitive.Root
 
-/* Re-wired onto `IconButton` — the source's `InputGroupButton` has no
-   counterpart here, and batch 7 re-wires it back. `sm` rather than the
-   source's `icon-xs`: 30px is the smallest square the incumbent has, and it
-   still clears the 40px control it sits beside. */
+/* Re-wired back onto `InputGroupButton` in 1.0.0-beta.7, the second and final
+   half of batch 1's forward cross-batch import. It was `IconButton size="sm"`
+   while the source's own input-group held; the size is `icon-xs` again, which
+   is the 24px square the addon was designed around. */
 function AutocompleteClear({
   className,
   ...props
@@ -21,7 +25,7 @@ function AutocompleteClear({
   return (
     <AutocompletePrimitive.Clear
       data-slot="autocomplete-clear"
-      render={<IconButton label="Clear" size="sm" />}
+      render={<InputGroupButton aria-label="Clear" size="icon-xs" />}
       className={className}
       {...props}
     >
@@ -30,10 +34,11 @@ function AutocompleteClear({
   )
 }
 
-/* Re-wired onto the incumbent `InputGroup`, whose addon is the `after` slot
-   rather than a child component, and onto `Input` for the control. The
-   source's `w-auto` literal is gone with it: `.ds-input-group` is already
-   `inline-flex`, so it sizes to its content without help. */
+/* Re-wired back onto the absorbed `InputGroup` in 1.0.0-beta.7. The addon is a
+   child part again rather than the incumbent's `after` prop, and the control is
+   `InputGroupInput`, so the group draws the box and the input drops its own —
+   which is what makes the clear button sit *inside* the field rather than
+   welded to its edge. */
 function AutocompleteInput({
   className,
   children,
@@ -44,14 +49,16 @@ function AutocompleteInput({
   showClear?: boolean
 }) {
   return (
-    <InputGroup
-      className={typeof className === "string" ? className : undefined}
-      after={showClear ? <AutocompleteClear disabled={disabled} /> : undefined}
-    >
+    <InputGroup className={typeof className === "string" ? className : undefined}>
       <AutocompletePrimitive.Input
-        render={<input className="ds-input" disabled={disabled} />}
+        render={<InputGroupInput disabled={disabled} />}
         {...props}
       />
+      {showClear ? (
+        <InputGroupAddon align="inline-end">
+          <AutocompleteClear disabled={disabled} />
+        </InputGroupAddon>
+      ) : null}
       {children}
     </InputGroup>
   )

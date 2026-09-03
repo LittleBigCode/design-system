@@ -1,8 +1,11 @@
 import {
   Checkbox,
   DirectionProvider,
-  Input,
+  Field,
+  FieldLabel,
   InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
   Segmented,
 } from "@diametral/design-system/react"
 import * as React from "react"
@@ -33,10 +36,16 @@ export default function DirectionSwitching() {
 
       <DirectionProvider direction={direction}>
         <div dir={direction} className="flex flex-col gap-4">
-          <InputGroup before={<MagnifyingGlassIcon />}>
-            <Input placeholder="بحث…" aria-label="بحث" />
+          <InputGroup>
+            <InputGroupAddon>
+              <MagnifyingGlassIcon />
+            </InputGroupAddon>
+            <InputGroupInput placeholder="بحث…" aria-label="بحث" />
           </InputGroup>
-          <Checkbox defaultChecked>أوافق على الشروط</Checkbox>
+          <Field orientation="horizontal">
+            <Checkbox id="direction-terms" defaultChecked />
+            <FieldLabel htmlFor="direction-terms">أوافق على الشروط</FieldLabel>
+          </Field>
         </div>
       </DirectionProvider>
     </div>

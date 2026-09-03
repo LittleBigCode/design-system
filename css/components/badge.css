@@ -1,22 +1,89 @@
-/* Badge — .ds-badge (bordered uppercase pill) */
+/* ============================================================================
+   Badge — .ds-badge
+   ----------------------------------------------------------------------------
+   Frozen (css-ledger §1), and frozen as a *family*: `<ds-badge>` sets
+   `class="ds-badge"` and concatenates `ds-badge--${variant}` from a
+   pass-through attribute, so every modifier name a consumer writes has to
+   resolve, not just `--solid` and `--accent`.
+
+   The base stays 0.11's bordered uppercase pill. The source's badge is the
+   opposite — bare type, no border, no padding — so absorbing it over the top
+   would have silently un-boxed every badge already rendered. It lands as a
+   variant instead (`--ghost`), and the rest of the source's axis lands beside
+   it: `--default`, `--secondary`, `--destructive`, `--outline`, `--link`.
+
+   **The red strip** (batch-plan §1.4) is a no-op here, and for the reason
+   batch 0.3 recorded for the eleven held files: the only red in this file is
+   `--accent`'s, it already routes through `--ds-accent` / `--ds-accent-ink`,
+   and the modifier is named for it. The source's own `badge.css` brings no red
+   at all — its warning colour is `--destructive`. Nothing to strip; recorded in
+   `docs/absorption/corrections.md` rather than left as a silently skipped task.
+
+   Charte edits: the focus `box-shadow` ring becomes the 2px `outline` on
+   `--ds-focus-ring`; the `[aria-invalid]` glow goes, the border carries it;
+   the `.dark` rules go, the theme lives in the token layer; and the two
+   `!important`s on the source's `> svg` sizing go with the Tailwind they were
+   fighting.
+   ============================================================================ */
 .ds-badge {
-  display: inline-block;
+  display: inline-flex;
+  width: fit-content;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   font-size: var(--ds-text-2xs);
   font-weight: 400;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  white-space: nowrap;
   color: var(--ds-ink-soft);
   border: 1px solid var(--ds-rule);
   padding: 6px 10px;
-  white-space: nowrap;
   border-radius: var(--ds-radius-none);
+  transition: background-color var(--ds-transition), color var(--ds-transition),
+    border-color var(--ds-transition);
 }
+.ds-badge > svg { pointer-events: none; width: 12px; height: 12px; }
+/* A glyph at one end sits flush with it. */
+.ds-badge:has([data-icon="inline-end"]) { padding-inline-end: 6px; }
+.ds-badge:has([data-icon="inline-start"]) { padding-inline-start: 6px; }
+.ds-badge:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: 2px; }
+.ds-badge[aria-invalid="true"] { border-color: var(--ds-danger); }
+
+/* ---- 0.11's two modifiers ------------------------------------------------ */
+/* --ds-bg rather than --ds-on-accent: the latter is pinned to --ds-blanc and
+   does not flip, so on dark's near-white --ds-ink it is white on white (issue
+   #15, the finding bubble.css recorded in beta.2). */
 .ds-badge--solid {
   background: var(--ds-ink);
   border-color: var(--ds-ink);
-  color: var(--ds-on-accent);
+  color: var(--ds-bg);
 }
 .ds-badge--accent {
   color: var(--ds-accent-ink);   /* deeper red so the pill label clears AA on white */
   border-color: var(--ds-accent);
 }
+
+/* ---- The absorbed variant axis ------------------------------------------- */
+.ds-badge--default { color: var(--ds-ink-soft); }
+.ds-badge--secondary { color: var(--ds-ink-faint); }
+.ds-badge--secondary:is(a):hover { color: var(--ds-ink); }
+.ds-badge--outline { color: var(--ds-ink); border-color: var(--ds-ink); }
+.ds-badge--destructive { color: var(--ds-danger-ink); border-color: var(--ds-danger); }
+
+/* The source's own base: bare type, no box. */
+.ds-badge--ghost {
+  border-color: transparent;
+  padding: 0;
+  color: var(--ds-ink-faint);
+}
+.ds-badge--ghost:hover { color: var(--ds-ink); }
+
+.ds-badge--link {
+  border-color: transparent;
+  padding: 0;
+  color: var(--ds-ink);
+  text-underline-offset: 4px;
+}
+.ds-badge--link:hover { text-decoration-line: underline; }

@@ -2174,7 +2174,14 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "chart",
     name: "Chart",
     category: "Data display",
-    exports: ["ChartContainer", "ChartTooltip", "ChartTooltipContent", "ChartLegend", "ChartLegendContent", "ChartStyle"],
+    exports: [
+      "ChartContainer",
+      "ChartTooltip",
+      "ChartTooltipContent",
+      "ChartLegend",
+      "ChartLegendContent",
+      "ChartStyle",
+    ],
     description:
       "Recharts wrapped so series colours come from a `ChartConfig` and resolve to brand chart tokens.",
     intro: [
@@ -2841,7 +2848,7 @@ export const COMPONENTS: ComponentDoc[] = [
         demo: "stepper/vertical",
         title: "Vertical",
         description:
-          "`orientation=\"vertical\"` re-lays the step as a two-column grid: marker beside the text rather than above it, and the connector running down the marker column. No change to the items.",
+          '`orientation="vertical"` re-lays the step as a two-column grid: marker beside the text rather than above it, and the connector running down the marker column. No change to the items.',
       },
       {
         demo: "stepper/icon-indicators",
@@ -2854,7 +2861,7 @@ export const COMPONENTS: ComponentDoc[] = [
       Stepper:
         "An `<ol>` that owns `data-orientation`. It renders 0.11's class grammar on purpose — `Wizard` renders the same `.ds-stepper__step` / `__marker` / `__label` block and does not move in this migration, so the stylesheet is pinned and the React is what changed.",
       StepperItem:
-        "Where `state` lives, as `is-active` / `is-complete` on the `<li>`; it also sets `aria-current=\"step\"` on the active one. A part outside an item stays in the inactive look.",
+        'Where `state` lives, as `is-active` / `is-complete` on the `<li>`; it also sets `aria-current="step"` on the active one. A part outside an item stays in the inactive look.',
       StepperIndicator:
         "The numbered marker. Its children are hidden on `completed` and a check is drawn in their place by a `::after` in the stylesheet — which is why nothing here imports a check icon.",
       StepperTitle:
@@ -3566,45 +3573,69 @@ export const COMPONENTS: ComponentDoc[] = [
       },
     ],
   },
-]
 
-export const CATEGORIES = [
-  "Actions",
-  "Forms",
-  "Data display",
-  "Navigation",
-  "Layout",
-  "Disclosure",
-  "Overlays",
-  "Feedback",
-  "Conversation",
-  "Utilities",
-]
-
-/**
- * The entries waiting on their absorption batch, kept here rather than deleted:
- * the prose is measured work, and a batch that lands a component wants its page
- * copy already written. Nothing reads this array — it is a holding pen, and the
- * batch that lands a slug moves its entry into `COMPONENTS` above.
- */
-export const PENDING: ComponentDoc[] = [
+  /* -- Batch 7 — frozen contracts and the form-controls split -------------
+     Every class name on these sixteen is fixed by a surface outside the
+     package — a `<ds-*>` web component, a Streamlit page, or `Card.js` — so
+     their CSS was absorbed *into* the existing contract rather than
+     replacing it. */
+  {
+    slug: "icon",
+    name: "Icon",
+    category: "Utilities",
+    exports: ["Icon", "icons"],
+    description:
+      "The built-in glyph set — 34 Phosphor icons, keyed by name, shared by the React binding and the `<ds-icon>` web component.",
+    intro: [
+      "Icon draws one glyph from a name. The set is [Phosphor](https://phosphoricons.com) at regular weight: 256×256 filled geometry, `fill: currentColor`, no stroke. Reach for it when the glyph is part of the system's own vocabulary; import a component straight from `@phosphor-icons/react` when you need one the set does not carry, and add it here when a second place needs the same glyph.",
+      'The set moved from Lucide to Phosphor in `1.0.0-beta.7`. **Every name is unchanged** — `search`, `chevron-down`, `log-out` all still resolve — so no `<Icon>` or `<ds-icon>` call has to be rewritten. Hand-written `<svg class="ds-icon">` does: the wrapper is now `viewBox="0 0 256 256" fill="currentColor"` with no stroke attributes. `strokeWidth` is still accepted on both bindings and no longer does anything, because filled geometry has no stroke to widen.',
+      "One geometry map serves both bindings. `icons` is exported as plain inner-SVG strings rather than as React components, which is what lets `<ds-icon>` — zero-dependency JavaScript with no React to render — read the same set instead of carrying a second copy of it.",
+    ],
+    examples: [
+      {
+        demo: "icon/basic",
+        title: "The set",
+        description:
+          "Six of the 34. A name that is not in the map renders a blank SVG rather than throwing, so a typo degrades to a gap instead of a crash.",
+      },
+      {
+        demo: "icon/sizing",
+        title: "Sizing and colour",
+        description:
+          "`size` fixes the square; omit it and the glyph is `1em`, so it tracks the surrounding font-size and takes its colour from `currentColor`.",
+      },
+      {
+        demo: "icon/accessible-name",
+        title: "Accessible name",
+        description:
+          '`title` makes the icon `role="img"` with a name. Omit it and the icon is `aria-hidden` — which is correct whenever a label or an `aria-label` beside it already says the same thing, because two names read as two things.',
+      },
+    ],
+    parts: {
+      Icon: 'A `name` from the `icons` map and nothing else required. `title` decides whether it is `role="img"` or `aria-hidden`; there is no third state, and no name is the default.',
+      icons:
+        "The map itself, exported so a consumer can enumerate the set or paste one glyph's geometry into static HTML. Values are the *inner* markup only — the `<svg>` wrapper belongs to whichever binding draws it.",
+    },
+  },
   /* -- Actions ----------------------------------------------------------- */
   {
     slug: "button",
     name: "Button",
     category: "Actions",
+    exports: ["Button", "buttonVariants"],
     description:
-      "The primary action trigger. Six variants and an eight-colour brand tone axis that compose independently.",
+      "The primary action trigger. Eight variants and an eight-colour brand tone axis that compose independently.",
     intro: [
-      "Button is the trigger everything else defers to: submit, confirm, open, cancel. `variant` places it in the emphasis order — `default` for the one action a view is about, `secondary`, `outline` and `ghost` for the ones beside it, `link` for navigation that has to read as prose. `destructive` is the functional red and is deliberately not a tone.",
-      "`variant` and `tone` are independent axes rather than a matrix. A tone only sets the fill `--btn` and its contrast pair `--btn-fg`, and every variant composes off those two variables, so a ninth palette colour would work across solid, outline and ghost without a single compound variant.",
+      "Button is the trigger everything else defers to: submit, confirm, open, cancel. `variant` places it in the emphasis order — `default` (or its 0.11 spelling `primary`, the same rule) for the one action a view is about, `secondary`, `outline` and `ghost` for the ones beside it, `link` for navigation that has to read as prose. `destructive` and 0.11's `danger` are both the functional red and both stay: one is a tinted fill, the other a bordered warning, and both names are published.",
+      "`variant` and `tone` are independent axes rather than a matrix. A tone only sets the fill `--btn`, its contrast pair `--btn-fg` and its `--btn-hover`, and every variant composes off those three variables, so a ninth palette colour would work across solid, outline and ghost without a single compound variant.",
+      "`variant` has no default, and that is deliberate. `<ds-button>` with no attribute renders a bare `ds-button` class, which is 0.11's white ink-bordered button — so omitting the prop has to render that same button, or the two bindings would disagree about the same absence.",
     ],
     examples: [
       {
         demo: "button/variants",
         title: "Variants",
         description:
-          "The six shadcn variants, mapped onto Diametral slots — `default` is the neutral action surface, `destructive` the functional red.",
+          "The absorbed variants, mapped onto charte tokens — `default` is the solid action fill, `destructive` the tinted red. Omit `variant` entirely and you get 0.11's bordered button, which is what `<ds-button>` renders with no attribute.",
       },
       {
         demo: "button/tones",
@@ -3636,11 +3667,12 @@ export const PENDING: ComponentDoc[] = [
     slug: "input",
     name: "Input",
     category: "Forms",
+    exports: ["Input"],
     description:
       "The single-line text field, and the base every other text control borrows its focus ring and invalid styling from.",
     intro: [
       "Input is the single-line text control and nothing more — one wrapper over Base UI's input primitive. Reach for it for any value a keyboard produces. It stays deliberately bare: the label, helper text and error message come from `Field`, and anything that has to sit inside the field box — an icon, a unit, a reveal button — comes from `InputGroup`.",
-      "The border is bottom-only, a transparent box with `border-b-input`, so the control reads as a ruled line and focus recolours that rule with `--color-ring`. Invalid styling hangs off `aria-invalid` rather than a prop, which makes the accessibility attribute the switch — and Textarea, InputGroupInput and the pickers all copy this treatment, so it is worth changing in one place.",
+      "The box is a full 1px rule on `--ds-rule`, no radius, and focus draws the system's 2px outline on `--ds-focus-ring` — the charte's box, not the source's underline. `.ds-input` is the most-published class in the package, so absorbing the source's borderless field over it would have unstyled every hand-written form in `examples/`. Invalid styling hangs off `aria-invalid` rather than a prop, which makes the accessibility attribute the switch — and Textarea, InputGroupInput and the pickers all copy this treatment, so it is worth changing in one place.",
     ],
     examples: [
       {
@@ -3679,18 +3711,19 @@ export const PENDING: ComponentDoc[] = [
     slug: "textarea",
     name: "Textarea",
     category: "Forms",
+    exports: ["Textarea"],
     description:
       "A multi-line text field sharing Input's focus and invalid states.",
     intro: [
       "Textarea is the multi-line field: Input's bottom rule, focus and invalid treatment, measured in rows instead of characters. Reach for it when the answer is prose — a description, a message, a set of notes. For a composer whose buttons live inside the field, `InputGroup` takes an `InputGroupTextarea` instead.",
-      "There is no resize handle. `resize-none` is on the box and `field-sizing-content` grows it to fit what is typed, so `rows` sets a floor rather than a height. That growth has no ceiling of its own — cap it with `max-h-*` and `overflow-y-auto` wherever the field sits in a fixed layout.",
+      "`field-sizing: content` grows the box to fit what is typed, so `rows` sets a floor rather than a height. The resize grip stays — the source dropped it, and on a class `docs/components.md` already teaches that would have taken away an affordance. Growth has no ceiling of its own: cap it with a `max-height` wherever the field sits in a fixed layout.",
     ],
     examples: [
       {
         demo: "textarea/basic",
         title: "Basic",
         description:
-          "`field-sizing-content` grows the box with its content, so `rows` sets a floor rather than a fixed height — and there is no resize handle.",
+          "`field-sizing: content` grows the box with its content, so `rows` sets a floor rather than a fixed height. The grip is still there for a reader who wants more room than the content asks for.",
       },
       {
         demo: "textarea/with-field",
@@ -3716,6 +3749,18 @@ export const PENDING: ComponentDoc[] = [
     slug: "field",
     name: "Field",
     category: "Forms",
+    exports: [
+      "Field",
+      "FieldSet",
+      "FieldLegend",
+      "FieldGroup",
+      "FieldContent",
+      "FieldLabel",
+      "FieldTitle",
+      "FieldDescription",
+      "FieldSeparator",
+      "FieldError",
+    ],
     description:
       "The form row primitive — label, control, description and error in one accessible group. Replaces the retired `form` component in this system.",
     intro: [
@@ -3779,6 +3824,16 @@ export const PENDING: ComponentDoc[] = [
     slug: "select",
     name: "Select",
     category: "Forms",
+    exports: [
+      "Select",
+      "SelectTrigger",
+      "SelectValue",
+      "SelectContent",
+      "SelectGroup",
+      "SelectLabel",
+      "SelectItem",
+      "SelectSeparator",
+    ],
     description:
       "A Base UI listbox for choosing one option from a set, with a rendered trigger and portalled popup.",
     intro: [
@@ -3802,7 +3857,7 @@ export const PENDING: ComponentDoc[] = [
         demo: "select/with-field",
         title: "In a field",
         description:
-          "Give the trigger `w-full` to fill the field width — the trigger is `w-fit` by default.",
+          "The trigger fills its column by default, which is what a field wants; narrow it with a width of your own where it sits beside something else.",
       },
       {
         demo: "select/status",
@@ -3821,7 +3876,7 @@ export const PENDING: ComponentDoc[] = [
       Select:
         "Where `items` goes — the map every `SelectValue` reads to turn a stored value into a label. It is also the state owner: `defaultValue`, `value` and `onValueChange` live here, not on the trigger.",
       SelectTrigger:
-        '`w-fit` by default, so widen it yourself (`w-full`) inside a field. It has `role="combobox"`, which is not named from its content, so it points `aria-labelledby` at the SelectValue it renders — passing your own `aria-label` overrides that.',
+        'Full-width by default. It has `role="combobox"`, which is not named from its content, so it points `aria-labelledby` at the SelectValue it renders — passing your own `aria-label` overrides that.',
       SelectValue:
         "Prints the label for the current value by looking it up in the root's `items`; with no `items` it prints the raw value. `placeholder` covers the empty state, and a function child replaces both.",
       SelectContent:
@@ -3834,11 +3889,13 @@ export const PENDING: ComponentDoc[] = [
     slug: "checkbox",
     name: "Checkbox",
     category: "Forms",
+    exports: ["Checkbox"],
     description:
       "A single boolean control, with indeterminate support via the `parent` prop inside a group.",
     intro: [
       "Checkbox is the single yes-or-no: accept, include, opt in. Reach for it when the answer travels with a form and applies on submit — Switch is the sibling for a setting that takes effect the moment it changes. When several boxes answer one question, put them in a Checkbox Group so the group holds the array instead of one boolean per box.",
       'Base UI renders the box as a `span` with `role="checkbox"` and a visually hidden `input` beside it. The span is the thing you style — through `data-checked` and `data-indeterminate`, never `:checked` — while the hidden input carries `name` for form submission and takes the `id` you pass, which is what keeps a plain `htmlFor` label working. The box itself is 18px, but an invisible `::after` stretches the hit area well past it: a comfortable target without a bigger visual.',
+      "0.11's markup still works and is still styled: a `label.ds-checkbox` wrapping a hidden input and a drawn `span.ds-checkbox__box` is what three committed fixtures render, and `checkbox.css` tells the two grammars apart by whether the root has a `__box` child.",
     ],
     examples: [
       {
@@ -3871,11 +3928,12 @@ export const PENDING: ComponentDoc[] = [
     slug: "checkbox-group",
     name: "Checkbox Group",
     category: "Forms",
+    exports: ["CheckboxGroup"],
     description:
       "Manages a set of checkbox values, including the parent select-all relationship.",
     intro: [
       "Checkbox Group owns the array behind a set of boxes that answer one question — permissions, notification topics, the labels a list is filtered by. Children declare a `value` and nothing else; the group holds which ones are on. Reach for it instead of a boolean per box, and for one answer out of many reach for Radio Group.",
-      "Select-all is built in rather than derived: give the group `allValues` and mark one child `parent`, and that box works out checked, unchecked and indeterminate from the others. `disabled` cascades the same way, through `data-disabled` on the group, so no child needs the prop. Layout is a plain flex column — any other arrangement is a `className` on the group.",
+      "Select-all is built in rather than derived: give the group `allValues` and mark one child `parent`, and that box works out checked, unchecked and indeterminate from the others. `disabled` cascades the same way, through `data-disabled` on the group, so no child needs the prop. Layout is a flex column by default and a `horizontal` orientation is the wrapping row — an axis rather than a `className`, because this package has no `tailwind-merge` to arbitrate a class race with the group's own default.",
     ],
     examples: [
       {
@@ -3908,11 +3966,13 @@ export const PENDING: ComponentDoc[] = [
     slug: "switch",
     name: "Switch",
     category: "Forms",
+    exports: ["Switch"],
     description:
       "An immediate on/off toggle for settings that apply on change.",
     intro: [
       "Switch is the setting that applies as it changes: no save button, no submit, the state is live the moment the thumb moves. Reach for it in preference panels and settings rows, and keep Checkbox for an answer that travels with a form — or for anything that needs an indeterminate state, which a switch has no way to show.",
-      "It is square like the rest of the system: the thumb translates rather than sliding along a pill, so there is no radius to keep in sync, and `size` is a plain prop writing `data-size` rather than a cva axis — `sm` for dense rows. The control carries no label of its own; pair it with a `Label` through `htmlFor`, or give it `aria-label` when the text beside it lives in a `FieldContent`.",
+      "It is square like the rest of the system: the thumb translates rather than sliding along a pill, so there is no radius to keep in sync, and `size` is a plain prop writing `data-size` — `sm` for dense rows. The control carries no label of its own; pair it with a `Label` through `htmlFor`, or give it `aria-label` when the text beside it lives in a `FieldContent`.",
+      "0.11's markup still works and is still styled: `<ds-switch>` renders a `label.ds-switch` around a hidden input and a `span.ds-switch__track`, which is a frozen contract. `switch.css` tells the two apart by whether the root has a `__track` child, so both a form-submitting checkbox and the absorbed `role=switch` button get the same look.",
     ],
     examples: [
       {
@@ -3945,6 +4005,7 @@ export const PENDING: ComponentDoc[] = [
     slug: "slider",
     name: "Slider",
     category: "Forms",
+    exports: ["Slider"],
     description: "Selects a number, or a range, by dragging along a track.",
     intro: [
       "Slider picks a number, or a pair of them, by dragging along a track. Reach for it when the position matters more than the figure — opacity, a volume, a price band — and where someone would rather type the exact number, reach for Number Field instead.",
@@ -3981,11 +4042,21 @@ export const PENDING: ComponentDoc[] = [
     slug: "input-group",
     name: "Input Group",
     category: "Forms",
+    exports: [
+      "InputGroup",
+      "InputGroupAddon",
+      "InputGroupButton",
+      "InputGroupText",
+      "InputGroupInput",
+      "InputGroupTextarea",
+      "inputGroupAddonVariants",
+    ],
     description:
       "Composes addons, icons and buttons around an input inside a single bordered box.",
     intro: [
       "Input Group is the bordered box that holds a control plus whatever belongs inside the field with it — a search icon, a currency suffix, a reveal button, a composer's toolbar. Reach for it when the affordance sits within the field's boundary; a control that belongs beside the field is a plain `Button` next to an `Input`.",
-      'The group owns the border and the focus rule, so its control has to be `InputGroupInput` or `InputGroupTextarea` — the same Input and Textarea with their own border stripped and a `data-slot="input-group-control"` for the group to find. Everything else is `has-*` selectors on the root: an `aria-invalid` control anywhere inside turns the rule destructive, and a block-aligned addon releases the fixed height and switches the box to a column.',
+      'The group owns the border and the focus outline, so its control has to be `InputGroupInput` or `InputGroupTextarea` — the same Input and Textarea with their own border stripped and a `data-slot="input-group-control"` for the group to find. Everything else is `:has()` on the root: an `aria-invalid` control anywhere inside turns the rule destructive, and a block-aligned addon releases the fixed height and switches the box to a column.',
+      "0.11's group still works and is still styled — an `inline-flex` strip of bordered `.ds-input-group__addon` children overlapping by a pixel, which two committed fixtures render. `input-group.css` tells the two apart by whether the group has an `__addon` child.",
     ],
     examples: [
       {
@@ -4029,6 +4100,280 @@ export const PENDING: ComponentDoc[] = [
     },
   },
   {
+    slug: "card",
+    name: "Card",
+    category: "Data display",
+    exports: [
+      "Card",
+      "CardMedia",
+      "CardHeader",
+      "CardTitle",
+      "CardDescription",
+      "CardAction",
+      "CardContent",
+      "CardBlock",
+      "CardFooter",
+    ],
+    description:
+      "A bordered surface with header, content and footer slots — the default container for grouped content.",
+    intro: [
+      "Card is the default container for something that reads as its own object: a record on an index, a tile on a dashboard, a summary you could drag elsewhere and still understand. When the region belongs to the page rather than sitting on it, `Panel` is the flat sibling with the same header, content and footer skeleton.",
+      'The root owns `--ds-card-pad-x` / `--ds-card-pad-y` and every part reads them, so `size="sm"` retunes the whole card from one place. Rules are opt-in through a `ruled` prop on the header rather than a Tailwind utility this package does not define. The root is `overflow: hidden`, which is what lets `CardMedia` bleed to the edges.',
+    ],
+    examples: [
+      {
+        demo: "card/basic",
+        title: "Basic",
+        description:
+          "Title, description, content — the minimum useful card. No rules are drawn: the header takes its bottom rule only with `ruled`, so an undivided card is spaced by its parts' own padding alone.",
+      },
+      {
+        demo: "card/with-action",
+        title: "With header action",
+        description:
+          "`CardAction` is positioned by the header grid, so it stays top-right without absolute positioning. The header grows that second column only when an action is present, which is why a card without one needs no change.",
+      },
+      {
+        demo: "card/stat",
+        title: "Stat card",
+        description:
+          "The dashboard tile built from Card's own slots: description as the label, title as the figure. Titles use the Ufficio heading face; figures use tabular digits. Reach for `Stat Card` once the tile also wants a delta or a sparkline.",
+      },
+      {
+        demo: "card/media",
+        title: "With cover media",
+        description:
+          "`CardMedia` bleeds to the edges — the root's `overflow: hidden` clips it to the border. Pass `src` for the common case and it renders the `img` itself; pass children and it wraps them, which is how an `AspectRatio` gets in.",
+      },
+      {
+        demo: "card/blocks",
+        title: "Divided blocks",
+        description:
+          "`CardBlock` is the stacked region: each one draws a soft rule above it and the first drops its own, so a list of key/value lines needs no separators of its own.",
+      },
+      {
+        demo: "card/with-chart",
+        title: "With a chart",
+        description:
+          "`CardContent` is horizontal padding and nothing else — no height, no gap — so the `ChartContainer` brings its own `h-40 w-full`. Left to itself the chart's `aspect-video` would decide how tall the card is.",
+      },
+    ],
+    parts: {
+      CardMedia:
+        "Full-bleed by design, and the only part with no inner padding. `src` renders the image itself; children are wrapped instead, which is what lets an `AspectRatio` reserve the height before the image arrives.",
+      CardBlock:
+        "A stacked region with a soft rule above it. The first one drops its rule, so blocks can be mapped without an index check.",
+      Card: "Owns `--ds-card-pad-x` / `--ds-card-pad-y`, which every part reads for its padding, and `size` is the one knob that rewrites them. `overflow: hidden` is deliberate: it lets `CardMedia` reach the edges and keeps anything else from escaping them. `clickable` is a prop rather than a part because it is what the whole card *is* — it carries the `tabIndex` and the `role` with it.",
+      CardHeader:
+        "A grid rather than a stack — it grows a second column when a `CardAction` is present and a second row when a `CardDescription` is, so neither needs a wrapper. `ruled` draws the bottom rule.",
+      CardTitle:
+        "Type styles only: heading face, uppercase, tracked out, with no padding and no heading element of its own. Add an `h2` or `h3` when the level matters to the page outline.",
+      CardDescription:
+        "Its presence is what grows the header's second row — the rule is a `:has()` on its `data-slot`, so the description can sit inside a wrapper and the row still appears.",
+      CardAction:
+        "Placed by the header grid at row 1, column 2 — top-right with no absolute positioning, and nothing outside a `CardHeader`.",
+      CardContent:
+        "Horizontal padding and nothing else. It sets no height and no gap, so a chart, a list or a form brings its own.",
+      CardFooter:
+        "A flex row on the alt background with its own top rule, pushed to the bottom of the card. Items are start-aligned, so a pair of buttons that belong at the end needs a justification of your own.",
+    },
+  },
+  {
+    slug: "badge",
+    name: "Badge",
+    category: "Data display",
+    exports: ["Badge", "badgeVariants"],
+    description: "A compact status or category label.",
+    intro: [
+      "Badge is the typographic state label: uppercase, letterspaced and boxless. Reach for it when one word of state has to sit inside something that already has a boundary — the status column of a row, a suffix after a heading, a qualifier in running text. `Tag` is the boxed, tinted version for when the label should read as an object you can scan a column of, and `Status` is the dot-and-word pair.",
+      "It contributes no fill, border or padding of its own, so `variant` is a colour axis only and a badge takes exactly the width of its text. It renders a `span` by default and any element through `render`, which is what the `link` variant exists for.",
+    ],
+    examples: [
+      {
+        demo: "badge/variants",
+        title: "Variants",
+        description:
+          "Badge here is typographic, not a pill — no border, fill or padding. The variants change colour only, so it sits inline in running text.",
+      },
+      {
+        demo: "badge/with-icon",
+        title: "With an icon",
+        description:
+          "Keep a glyph small enough not to outweigh the uppercase label beside it — 12px is the size the badge next door uses.",
+      },
+      {
+        demo: "badge/in-context",
+        title: "In a list",
+        description: "Where badges usually live: the status column of a row.",
+      },
+    ],
+  },
+  {
+    slug: "status",
+    name: "Status",
+    category: "Data display",
+    exports: [
+      "Status",
+      "StatusIndicator",
+      "StatusLabel",
+      "StatusPanel",
+      "Metric",
+      "statusVariants",
+    ],
+    description:
+      "A dot-and-label state indicator across the shared six-tone family — success, warning, danger, critical, neutral, info.",
+    intro: [
+      "Status is the smallest state readout in the system: a coloured dot and a word, sized to sit inline in a table cell, a list row or a page header. Reach for it when the state is a fact about one thing — a service, a job, a deployment. A boxed, filled label is `Tag`; a full-width coloured strip is `Banner`.",
+      "`tone` sets a single `--tone` variable on the root that both parts read, so the dot and the label can never drift apart. The tones are the `-ink` values, tuned to pass AA as text on both themes — keep the label at full opacity and use weight for hierarchy.",
+    ],
+    examples: [
+      {
+        demo: "status/tones",
+        title: "Tones",
+        description:
+          "The six tones of the shared family. The dot and label share one `--tone` variable, so they never drift from each other.",
+      },
+      {
+        demo: "status/pulse",
+        title: "Pulse",
+        description:
+          "`pulse` lives on `StatusIndicator`, not `Status` — a live state can still pair with a static label, and the ping only runs under `motion-safe`.",
+      },
+      {
+        demo: "status/in-service-list",
+        title: "In a service list",
+        description:
+          "Where statuses earn their keep: a column of them scans in one pass. The root is `inline-flex`, so it drops into a row without a wrapper.",
+      },
+      {
+        demo: "status/panel",
+        title: "Status panel",
+        description:
+          "`StatusPanel` is 0.11's signature component and a different thing entirely — a solid coloured head over a body of `Metric` rows. It kept the `.ds-status` class stem, because `<ds-status>` writes it; the two are told apart in CSS by whether the element has a `__head`.",
+      },
+    ],
+    parts: {
+      Status:
+        "Sets `--tone` and nothing else — both parts read it, so a part rendered outside a Status comes out uncoloured.",
+      StatusIndicator:
+        "`aria-hidden`, so colour is never the only cue — the label carries the meaning. `pulse` belongs here, not on the root.",
+      StatusLabel:
+        "Bare text at `--tone`. Fading it with opacity re-opens the contrast failure the `-ink` tones were chosen to fix.",
+      StatusPanel:
+        "0.11's signature panel, renamed from `Status` in `1.0.0-beta.7` when the inline indicator took that name. `<ds-status>` is unchanged and still renders this one, so no consumer of the web component has to move. Still a prop bag — `kicker`, `heading`, `subtitle` — because the head is one fixed shape, not a composition.",
+      Metric:
+        "The row that fills a StatusPanel's body: a key on the left, a figure on the right, ruled between. `sign` colours the figure — positive success, negative danger — and `variant` sets the hierarchy, `hero` for the one number the panel is about.",
+    },
+  },
+  {
+    slug: "tag",
+    name: "Tag",
+    category: "Data display",
+    exports: ["Tag", "tagVariants"],
+    description:
+      'A boxed, tinted label across the shared six-tone family. Absorbs v1\'s Chip, whose one boolean `warn` axis is now `tone="warning"`.',
+    intro: [
+      "Tag is the boxed, tinted label: a filled background with matching ink, sized for a status column or a row of attributes. Reach for it when the label should read as an object you can scan a column of — `Badge` is the bare typographic emphasis, and `Status` is the dot-and-word that sits inline in running text.",
+      "Each tone sets `--tone-bg` and `--tone-ink` as a pair, so a tone can never be half-applied. The six tones are the same family `status`, `banner` and `alert` draw from, which is what lets a danger tag and a danger banner mean the same thing on the same page.",
+    ],
+    examples: [
+      {
+        demo: "tag/tones",
+        title: "Tones",
+        description:
+          "The six tones of the shared family. Each sets `--tone-bg` and `--tone-ink` together — v1's boolean `warn` axis is the `warning` tone here.",
+      },
+      {
+        demo: "tag/in-context",
+        title: "In a list",
+        description:
+          "Where tags usually live: the status column of a row. The root is inline and never stretches to the row.",
+      },
+      {
+        demo: "tag/with-icon",
+        title: "With a leading icon",
+        description:
+          "The root's `gap-1.5` is there for a glyph. Keep the icon `aria-hidden` — the word carries the meaning, so the tag still reads without it.",
+      },
+    ],
+  },
+  /* -- Layout ------------------------------------------------------------ */
+  {
+    slug: "panel",
+    name: "Panel",
+    category: "Layout",
+    exports: [
+      "Panel",
+      "PanelHeader",
+      "PanelTitle",
+      "PanelContent",
+      "PanelFooter",
+      "PanelRow",
+    ],
+    description:
+      "A sunken section container — the flat sibling of Card, plus a row part for tightly-packed settings lists.",
+    intro: [
+      "Panel is the flat sibling of Card: the same header, content and footer skeleton, but a plain border instead of elevation. Reach for it when a region needs a boundary without needing to float — settings sections, form groups, tiles that sit inside the page rather than on top of it.",
+      "The root carries the padding, not the parts, because `<ds-panel>` wraps arbitrary light-DOM children and a bare paragraph inside one has no part to pad it. A `sm` size retunes it. For tightly-packed label-and-control lists, `PanelRow` is the part; `rows` survives beside it because the web component writes that modifier itself.",
+    ],
+    examples: [
+      {
+        demo: "panel/basic",
+        title: "Basic",
+        description:
+          "A self-contained summary block: header, prose content, one footer action. Rules are opt-in through `ruled` on the header and the footer — a modifier this package defines, rather than a Tailwind utility it does not.",
+      },
+      {
+        demo: "panel/rows",
+        title: "Settings rows",
+        description:
+          "The settings-page shape: `PanelRow` packs each label-and-control pair into a divided list. Rows carry their own padding, so PanelContent passes `px-0` rather than stacking the two.",
+      },
+      {
+        demo: "panel/form-section",
+        title: "Form section",
+        description:
+          "A form group with its actions kept inside the boundary: fields in PanelContent, cancel/save in a ruled PanelFooter — the footer earns its keep instead of decorating.",
+      },
+    ],
+    parts: {
+      Panel:
+        "Carries the panel's padding itself. `<ds-panel>` renders arbitrary children with no parts at all, so the padding cannot live on them.",
+      PanelHeader:
+        "`ruled` draws the bottom rule and the padding that goes with it, so a header without one stays tight.",
+      PanelTitle:
+        "Type styles only, with no padding of its own — that is why it sits inside PanelHeader. Add your own heading element when the level matters.",
+      PanelContent:
+        "Horizontal padding and nothing else. Pass `px-0` when the children carry their own, as PanelRow does.",
+      PanelFooter:
+        "Mirrors the header: `ruled` draws the top rule and its padding.",
+      PanelRow:
+        "Carries its own padding and divider; the last row drops its rule so it does not double up with the footer's.",
+    },
+  },
+]
+
+export const CATEGORIES = [
+  "Actions",
+  "Forms",
+  "Data display",
+  "Navigation",
+  "Layout",
+  "Disclosure",
+  "Overlays",
+  "Feedback",
+  "Conversation",
+  "Utilities",
+]
+
+/**
+ * The entries waiting on their absorption batch, kept here rather than deleted:
+ * the prose is measured work, and a batch that lands a component wants its page
+ * copy already written. Nothing reads this array — it is a holding pen, and the
+ * batch that lands a slug moves its entry into `COMPONENTS` above.
+ */
+export const PENDING: ComponentDoc[] = [
+  {
     slug: "kanban",
     name: "Kanban",
     category: "Data display",
@@ -4067,93 +4412,6 @@ export const PENDING: ComponentDoc[] = [
     },
   },
   {
-    slug: "card",
-    name: "Card",
-    category: "Data display",
-    description:
-      "A bordered surface with header, content and footer slots — the default container for grouped content.",
-    intro: [
-      "Card is the default container for something that reads as its own object: a record on an index, a tile on a dashboard, a summary you could drag elsewhere and still understand. When the region belongs to the page rather than sitting on it, `Panel` is the flat sibling with the same header, content and footer skeleton.",
-      'The root owns `--card-spacing` and every part reads it for padding, so `size="sm"` retunes the whole card from one place. Rules are opt-in the same way Panel\'s are: the header and footer only take their inner padding once you add `.border-b` or `.border-t`. The root is also `overflow-hidden`, which is what lets a first-child image sit flush against the edges.',
-    ],
-    examples: [
-      {
-        demo: "card/basic",
-        title: "Basic",
-        description:
-          "Title, description, content — the minimum useful card. No rules are drawn: the header only takes its bottom padding when you add `.border-b`, so an undivided card is spaced by the root's gap alone.",
-      },
-      {
-        demo: "card/with-action",
-        title: "With header action",
-        description:
-          "`CardAction` is positioned by the header grid, so it stays top-right without absolute positioning. The header grows that second column only when an action is present, which is why a card without one needs no change.",
-      },
-      {
-        demo: "card/stat",
-        title: "Stat card",
-        description:
-          "The dashboard tile built from Card's own slots: description as the label, title as the figure. Titles use the Ufficio heading face; figures use tabular digits. Reach for `Stat Card` once the tile also wants a delta or a sparkline.",
-      },
-      {
-        demo: "card/media",
-        title: "With cover media",
-        description:
-          "An `img` as the Card's direct first child bleeds to the edges: the root drops its own top padding for exactly that case and clips the image to the border. Wrap the image in a div and it becomes ordinary content again, padding and all.",
-      },
-      {
-        demo: "card/with-chart",
-        title: "With a chart",
-        description:
-          "`CardContent` is horizontal padding and nothing else — no height, no gap — so the `ChartContainer` brings its own `h-40 w-full`. Left to itself the chart's `aspect-video` would decide how tall the card is.",
-      },
-    ],
-    parts: {
-      Card: "Owns `--card-spacing`, which every part reads for its padding, and `size` is the one knob that rewrites it. `overflow-hidden` is deliberate: it lets a first-child image reach the edges and keeps anything else from escaping them.",
-      CardHeader:
-        "A grid rather than a stack — it grows a second column when a `CardAction` is present and a second row when a `CardDescription` is, so neither needs a wrapper. Bottom padding is keyed off `.border-b`.",
-      CardTitle:
-        "Type styles only: heading face, uppercase, tracked out, with no padding and no heading element of its own. Add an `h2` or `h3` when the level matters to the page outline.",
-      CardDescription:
-        "Its presence is what grows the header's second row — the rule is a `:has()` on its `data-slot`, so the description can sit inside a wrapper and the row still appears.",
-      CardAction:
-        "Placed by the header grid at row 1, column 2 — top-right with no absolute positioning, and nothing outside a `CardHeader`.",
-      CardContent:
-        "Horizontal padding and nothing else. It sets no height and no gap, so a chart, a list or a form brings its own.",
-      CardFooter:
-        "A flex row mirroring the header: top padding is keyed off `.border-t`. Items are start-aligned, so a pair of buttons that belong at the end needs `justify-end`.",
-    },
-  },
-  {
-    slug: "badge",
-    name: "Badge",
-    category: "Data display",
-    description: "A compact status or category label.",
-    intro: [
-      "Badge is the typographic state label: uppercase, letterspaced and boxless. Reach for it when one word of state has to sit inside something that already has a boundary — the status column of a row, a suffix after a heading, a qualifier in running text. `Tag` is the boxed, tinted version for when the label should read as an object you can scan a column of, and `Status` is the dot-and-word pair.",
-      "It contributes no fill, border or padding of its own, so `variant` is a colour axis only and a badge takes exactly the width of its text. It renders a `span` by default and any element through `render`, which is what the `link` variant exists for.",
-    ],
-    examples: [
-      {
-        demo: "badge/variants",
-        title: "Variants",
-        description:
-          "Badge here is typographic, not a pill — no border, fill or padding. The variants change colour only, so it sits inline in running text.",
-      },
-      {
-        demo: "badge/with-icon",
-        title: "With an icon",
-        description:
-          "Icons are forced to `size-3` so they never outweigh the uppercase label beside them.",
-      },
-      {
-        demo: "badge/in-context",
-        title: "In a list",
-        description: "Where badges usually live: the status column of a row.",
-      },
-    ],
-  },
-  {
     slug: "skeleton",
     name: "Skeleton",
     category: "Data display",
@@ -4186,76 +4444,6 @@ export const PENDING: ComponentDoc[] = [
         title: "Announcing the wait",
         description:
           'Skeleton has no ARIA of its own: `aria-busy` on the region plus one `role="status"` line says what is loading, and the bars go `aria-hidden` so a screen reader never walks a wall of empty divs.',
-      },
-    ],
-  },
-  {
-    slug: "status",
-    name: "Status",
-    category: "Data display",
-    description:
-      "A dot-and-label state indicator across the shared six-tone family — success, warning, danger, critical, neutral, info.",
-    intro: [
-      "Status is the smallest state readout in the system: a coloured dot and a word, sized to sit inline in a table cell, a list row or a page header. Reach for it when the state is a fact about one thing — a service, a job, a deployment. A boxed, filled label is `Tag`; a full-width coloured strip is `Banner`.",
-      "`tone` sets a single `--tone` variable on the root that both parts read, so the dot and the label can never drift apart. The tones are the `-ink` values, tuned to pass AA as text on both themes — keep the label at full opacity and use weight for hierarchy.",
-    ],
-    examples: [
-      {
-        demo: "status/tones",
-        title: "Tones",
-        description:
-          "The six tones of the shared family. The dot and label share one `--tone` variable, so they never drift from each other.",
-      },
-      {
-        demo: "status/pulse",
-        title: "Pulse",
-        description:
-          "`pulse` lives on `StatusIndicator`, not `Status` — a live state can still pair with a static label, and the ping only runs under `motion-safe`.",
-      },
-      {
-        demo: "status/in-service-list",
-        title: "In a service list",
-        description:
-          "Where statuses earn their keep: a column of them scans in one pass. The root is `inline-flex`, so it drops into a row without a wrapper.",
-      },
-    ],
-    parts: {
-      Status:
-        "Sets `--tone` and nothing else — both parts read it, so a part rendered outside a Status comes out uncoloured.",
-      StatusIndicator:
-        "`aria-hidden`, so colour is never the only cue — the label carries the meaning. `pulse` belongs here, not on the root.",
-      StatusLabel:
-        "Bare text at `--tone`. Fading it with opacity re-opens the contrast failure the `-ink` tones were chosen to fix.",
-    },
-  },
-  {
-    slug: "tag",
-    name: "Tag",
-    category: "Data display",
-    description:
-      'A boxed, tinted label across the shared six-tone family. Absorbs v1\'s Chip, whose one boolean `warn` axis is now `tone="warning"`.',
-    intro: [
-      "Tag is the boxed, tinted label: a filled background with matching ink, sized for a status column or a row of attributes. Reach for it when the label should read as an object you can scan a column of — `Badge` is the bare typographic emphasis, and `Status` is the dot-and-word that sits inline in running text.",
-      "Each tone sets `--tone-bg` and `--tone-ink` as a pair, so a tone can never be half-applied. The six tones are the same family `status`, `banner` and `alert` draw from, which is what lets a danger tag and a danger banner mean the same thing on the same page.",
-    ],
-    examples: [
-      {
-        demo: "tag/tones",
-        title: "Tones",
-        description:
-          "The six tones of the shared family. Each sets `--tone-bg` and `--tone-ink` together — v1's boolean `warn` axis is the `warning` tone here.",
-      },
-      {
-        demo: "tag/in-context",
-        title: "In a list",
-        description:
-          "Where tags usually live: the status column of a row. The root is `w-fit shrink-0`, so it never stretches to the row and never gets squeezed by the label beside it.",
-      },
-      {
-        demo: "tag/with-icon",
-        title: "With a leading icon",
-        description:
-          "The root's `gap-1.5` is there for a glyph. Keep the icon `aria-hidden` — the word carries the meaning, so the tag still reads without it.",
       },
     ],
   },
@@ -4300,51 +4488,6 @@ export const PENDING: ComponentDoc[] = [
         "`direction` is the whole axis and it draws the arrow itself — pass the signed figure as children so the direction survives without colour.",
       StatCardSpark:
         "A slot with a top margin and nothing else. Keep whatever goes in it `aria-hidden`; the figure above already carries the number.",
-    },
-  },
-  /* -- Layout ------------------------------------------------------------ */
-  {
-    slug: "panel",
-    name: "Panel",
-    category: "Layout",
-    description:
-      "A flat, bordered section container — Card without the shadow, plus a row part for tightly-packed settings lists.",
-    intro: [
-      "Panel is the flat sibling of Card: the same header, content and footer skeleton, but a plain border instead of elevation. Reach for it when a region needs a boundary without needing to float — settings sections, form groups, tiles that sit inside the page rather than on top of it.",
-      "The root owns `--panel-spacing`, which every part reads for its padding, so density changes in one place. For tightly-packed label-and-control lists, `PanelRow` replaces v1's `rows` boolean with a part you compose in.",
-    ],
-    examples: [
-      {
-        demo: "panel/basic",
-        title: "Basic",
-        description:
-          "A self-contained summary block: header, prose content, one footer action. Rules are opt-in — PanelHeader and PanelFooter borrow Card's `.border-b`/`.border-t` convention, so add the utility yourself to draw them.",
-      },
-      {
-        demo: "panel/rows",
-        title: "Settings rows",
-        description:
-          "The settings-page shape: `PanelRow` packs each label-and-control pair into a divided list. Rows carry their own padding, so PanelContent passes `px-0` rather than stacking the two.",
-      },
-      {
-        demo: "panel/form-section",
-        title: "Form section",
-        description:
-          "A form group with its actions kept inside the boundary: fields in PanelContent, cancel/save in a ruled PanelFooter — the footer earns its keep instead of decorating.",
-      },
-    ],
-    parts: {
-      Panel:
-        "Owns `--panel-spacing`, which every part reads for its padding — a part rendered outside a Panel comes out flush.",
-      PanelHeader:
-        "Bottom padding is keyed off `.border-b`, so a header with no rule stays tight.",
-      PanelTitle:
-        "Type styles only, with no padding of its own — that is why it sits inside PanelHeader. Add your own heading element when the level matters.",
-      PanelContent:
-        "Horizontal padding and nothing else. Pass `px-0` when the children carry their own, as PanelRow does.",
-      PanelFooter: "Mirrors the header: top padding is keyed off `.border-t`.",
-      PanelRow:
-        "Carries its own padding and divider; `last:border-b-0` stops the trailing rule doubling up with the footer's.",
     },
   },
   {
@@ -4480,8 +4623,6 @@ export const PENDING: ComponentDoc[] = [
         "Renders the portal, positioner and arrow together, so positioning props belong here. A nested `Kbd` is re-styled and the trailing padding tightened by the popup's own `data-[slot=kbd]` rules — nothing to pass.",
     },
   },
-
-  /* -- Utilities --------------------------------------------------------- */
 ] as const
 
 export function componentsByCategory() {

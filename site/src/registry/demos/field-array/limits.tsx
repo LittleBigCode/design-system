@@ -6,7 +6,7 @@ import {
   FieldArrayItem,
   FieldArrayItemContent,
   FieldArrayRemove,
-  FieldHint,
+  FieldDescription,
   FormField,
   Input,
 } from "@diametral/design-system/react"
@@ -60,9 +60,9 @@ export default function FieldArrayLimits() {
           Add a recipient
         </FieldArrayAdd>
       </FieldArray>
-      <FieldHint>
+      <FieldDescription>
         {recipients.length} of {MAX} recipients. The last one cannot be removed.
-      </FieldHint>
+      </FieldDescription>
     </div>
   )
 }

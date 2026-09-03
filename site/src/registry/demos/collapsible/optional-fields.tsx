@@ -3,7 +3,7 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-  FieldHint,
+  FieldDescription,
   FormField,
   Input,
   Textarea,
@@ -50,7 +50,9 @@ export default function CollapsibleOptionalFields() {
               rows={3}
               placeholder="Delivered against the July milestone."
             />
-            <FieldHint>Printed under the invoice total.</FieldHint>
+            <FieldDescription>
+              Printed under the invoice total.
+            </FieldDescription>
           </FormField>
         </CollapsibleContent>
       </Collapsible>

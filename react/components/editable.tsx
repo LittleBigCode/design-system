@@ -5,7 +5,7 @@ import { CheckIcon, PencilSimpleIcon, XIcon } from "@phosphor-icons/react";
 
 import { cx } from "../lib/cx.js";
 import { useControllableValue } from "../hooks/useControllableValue.js";
-import { Input } from "../index.js";
+import { Input } from "./input.js";
 import { IconButton } from "./icon-button.js";
 
 /* Editable — click-to-edit text in place.
@@ -19,13 +19,14 @@ import { IconButton } from "./icon-button.js";
    the button blurs the input first, and the blur handler commits or discards
    before the button's own `onClick` ever runs.
 
-   Two forward cross-batch imports re-wired onto the incumbents, each to be
-   paid again in batch 7. `Input` is this package's `.ds-input`. The three
-   `Button variant="ghost" size="icon-xs"` calls are `IconButton`, which is the
-   same move batch 2 made for `AttachmentAction` — and it is an upgrade here
-   too: `IconButton` requires `label`, so each of the three now carries an
-   accessible name in the type system rather than by the source remembering to
-   pass `aria-label`. */
+   Both forward cross-batch imports are re-wired **back** in 1.0.0-beta.7, the
+   second and final half of each. `Input` is the absorbed Base UI one, which is
+   what keeps a controlled caret from jumping on re-render — the exact case
+   click-to-edit hits. The three `Button variant="ghost" size="icon-xs"` calls
+   stay `IconButton`, which now composes `Button` itself: the symbol is the
+   source's and the required `label` survives, so each of the three still
+   carries an accessible name in the type system rather than by the source
+   remembering to pass `aria-label`. */
 export interface EditableProps
   extends Omit<
     React.ComponentProps<"div">,

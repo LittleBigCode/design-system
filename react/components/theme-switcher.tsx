@@ -11,7 +11,8 @@ import {
 } from "@phosphor-icons/react"
 
 import { cx } from "../lib/cx.js"
-import { Button, Segmented } from "../index.js"
+import { Segmented } from "../index.js"
+import { Button } from "./button.js"
 import { IconButton } from "./icon-button.js"
 
 /* ThemeSwitcher — three modes in one of three footprints.
@@ -42,7 +43,9 @@ import { IconButton } from "./icon-button.js"
      UI's `Menu` — the primitive the source's own dropdown-menu wraps — wearing
      this repo's `.ds-menu` vocabulary. Same move batch 1's menubar made.
 
-   Batch 7 supplies `Button` and re-wires the `cycle` trigger back. */
+   Re-wired in 1.0.0-beta.7: `Button` is the source's own module now, and
+   `IconButton` composes it, so the `cycle` trigger reaches the symbol through
+   the one part of it that was worth keeping — the required `label`. */
 type ThemeSwitcherMode = "light" | "dark" | "system"
 
 const MODES = [

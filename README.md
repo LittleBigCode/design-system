@@ -109,7 +109,7 @@ A kit to stand up an app fast on top of the components:
   `useResource` + `restLoadPage` ([`docs/data.md`](docs/data.md)).
 - **Theme generator** — turn a brand color into a `data-theme` ([`docs/theme-generator.md`](docs/theme-generator.md)).
 - **Shared configs** — ESLint, Prettier, base tsconfig and VS Code snippets in [`configs/`](configs/).
-- **Icons** — a Lucide-compatible `<Icon>` / `<ds-icon>` line-icon set; any 24×24 stroke SVG drops in.
+- **Icons** — a Phosphor `<Icon>` / `<ds-icon>` icon set (regular weight); any 256×256 filled Phosphor SVG drops in.
 - **Emails** — on-brand, email-safe transactional templates (welcome, reset, OTP, notification, invoice, invite, digest, alert) in [`docs/emails.md`](docs/emails.md).
 - **Streamlit (Python)** — theme config + CSS injection + `.ds-*` HTML blocks: [`docs/streamlit.md`](docs/streamlit.md).
 - **Keycloak** — a drop-in theme for the login flow + transactional emails: [`keycloak/`](keycloak/).

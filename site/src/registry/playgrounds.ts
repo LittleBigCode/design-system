@@ -154,6 +154,32 @@ export const PLAYGROUNDS: Record<string, PlaygroundConfig> = {
   "button-group": {
     variantsFrom: "buttonGroupVariants",
   },
+  icon: {
+    note: "The set is Phosphor, regular weight, keyed by 0.11's own names — `search`, `chevron-down`, `log-out`. `strokeWidth` is still accepted and no longer does anything: filled geometry has no stroke to widen.",
+    extras: [
+      {
+        prop: "name",
+        type: "select",
+        always: true,
+        options: [
+          "search",
+          "bell",
+          "calendar",
+          "check",
+          "chevron-down",
+          "download",
+          "external-link",
+          "folder",
+          "settings",
+          "sun",
+          "trash",
+          "user",
+        ],
+      },
+      { prop: "size", type: "select", options: ["16", "20", "24", "32", "48"] },
+      { prop: "title", type: "text" },
+    ],
+  },
   "icon-button": {
     note: "The axes belong to `Button` and are forwarded, so they are listed here rather than parsed — icon-button.tsx declares no cva of its own. `label` is deliberately not drivable: a control whose whole point is having an accessible name should not be steerable into having none.",
     extras: [

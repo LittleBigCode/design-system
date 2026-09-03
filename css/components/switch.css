@@ -1,5 +1,31 @@
-/* Toggle switch — .ds-switch */
-.ds-switch {
+/* ============================================================================
+   Switch — .ds-switch
+   ----------------------------------------------------------------------------
+   Frozen (css-ledger §1). `<ds-switch>` renders a hidden `<input>` plus a
+   `span.ds-switch__track` inside a `label.ds-switch`, and reads this file for
+   both. That markup is the contract and it does not move.
+
+   The source's switch is Base UI's: the root **is** the track (a `<button
+   role="switch">` carrying `data-checked` / `data-unchecked`) with a
+   `.ds-switch-thumb` inside, and no input at all. So `.ds-switch` means the
+   label in one grammar and the track in the other — the third name collision
+   of this batch, after `checkbox` and `input-group`, and told apart the same
+   way: a 0.11 switch has a `> .ds-switch__track` child, an absorbed one never
+   does.
+
+   What the source buys is the `data-size` axis and a thumb that can be
+   transitioned independently; what 0.11 keeps is a real form control that
+   submits, which is why the label form is not merely tolerated here but is
+   still the one the web component and every hand-written form use.
+
+   Charte edits: rems → px; the focus `box-shadow` halo becomes the 2px
+   `outline` on `--ds-focus-ring`; the `[aria-invalid]` glow goes, the border
+   carries it; the `.dark` rules go, the theme lives in the token layer; and
+   `--primary` resolves to `--ds-ink`, `--input` to `--ds-grey`.
+   ============================================================================ */
+
+/* ---- The 0.11 grammar: label + hidden input + drawn track ---------------- */
+.ds-switch:has(> .ds-switch__track) {
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -9,7 +35,7 @@
   font-weight: 400;
   color: var(--ds-ink-soft);
 }
-.ds-switch input {
+.ds-switch > input {
   position: absolute;
   opacity: 0;
   width: 1px;
@@ -41,3 +67,46 @@
 }
 .ds-switch input:disabled + .ds-switch__track { opacity: .5; }
 .ds-switch:has(input:disabled) { cursor: not-allowed; color: var(--ds-ink-faint); }
+
+/* ---- The absorbed grammar: the root IS the track ------------------------- */
+.ds-switch:not(:has(> .ds-switch__track)) {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  padding: 0;
+  border: 1px solid var(--ds-grey);
+  border-radius: var(--ds-radius-none);
+  background: var(--ds-grey);
+  cursor: pointer;
+  transition: background-color var(--ds-transition), border-color var(--ds-transition);
+  outline: none;
+}
+/* A 18px-tall track is under the 24px hit-target minimum, so it carries an
+   invisible one that overflows it. Source rule, kept. */
+.ds-switch:not(:has(> .ds-switch__track))::after {
+  content: "";
+  position: absolute;
+  inset-inline: -12px;
+  inset-block: -8px;
+}
+.ds-switch[data-size="default"] { height: 18px; width: 33px; }
+.ds-switch[data-size="sm"] { height: 14px; width: 25px; }
+.ds-switch[data-checked] { border-color: var(--ds-ink); background: var(--ds-ink); }
+.ds-switch[data-unchecked] { border-color: var(--ds-grey); background: var(--ds-grey); }
+.ds-switch:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: 2px; }
+.ds-switch[aria-invalid="true"] { border-color: var(--ds-danger); }
+.ds-switch[data-disabled] { cursor: not-allowed; opacity: .5; }
+
+.ds-switch-thumb {
+  display: block;
+  pointer-events: none;
+  background: var(--ds-blanc);
+  transition: translate var(--ds-transition);
+}
+:where(.ds-switch[data-size="default"]) .ds-switch-thumb { width: 14px; height: 14px; }
+:where(.ds-switch[data-size="sm"]) .ds-switch-thumb { width: 10px; height: 10px; }
+.ds-switch-thumb[data-checked] { translate: calc(100% + 2px) 0; }
+.ds-switch-thumb[data-unchecked] { translate: 1px 0; }
+:where([dir="rtl"], [dir="rtl"] *) .ds-switch-thumb[data-checked] { translate: calc(-100% - 2px) 0; }
+:where([dir="rtl"], [dir="rtl"] *) .ds-switch-thumb[data-unchecked] { translate: -1px 0; }

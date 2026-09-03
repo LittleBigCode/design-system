@@ -34,7 +34,8 @@
   color: var(--ds-ink);
   animation: ds-spin .6s linear infinite;
 }
-.ds-button--primary.ds-button--loading::after { color: var(--ds-on-accent); }
+/* --ds-bg, the pair of the ink fill, for the same reason button.css gives. */
+.ds-button--primary.ds-button--loading::after { color: var(--ds-bg); }
 @keyframes ds-spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .ds-button--loading::after { animation-duration: 1.6s; } }
 

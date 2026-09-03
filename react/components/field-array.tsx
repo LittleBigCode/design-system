@@ -26,10 +26,12 @@ import { IconButton } from "./icon-button.js";
    `grid` overrides are the `--stacked`, `--stretch` and `--grid` modifiers. No
    literal crosses over.
 
-   `Button` and `IconButton` are the re-wired forward imports — the source
-   composes onto its own six-variant Button, which lands in batch 7. `outline`
-   is the incumbent's default bordered button, so the add button passes no
-   variant at all. */
+   `Button` and `IconButton` were batch 3's forward cross-batch imports, and
+   both are re-wired **back** in 1.0.0-beta.7: `IconButton` now composes
+   `Button` itself, so the remove control reaches the source's symbol through
+   it and keeps the required `label`. The add button still passes no variant —
+   a bare `.ds-button` is this system's bordered button, which is what the
+   source spells `outline`. */
 function FieldArray({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div

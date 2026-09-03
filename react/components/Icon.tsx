@@ -15,22 +15,30 @@ export interface IconProps
   /** Edge length. Number (px) or any CSS length. Defaults to "1em" so the icon
    *  follows the surrounding font-size. */
   size?: number | string;
-  /** Stroke width of the line geometry. Defaults to 2 (the Lucide standard). */
+  /** @deprecated No effect since 1.0.0-beta.7. The set is Phosphor, which is
+   *  filled geometry — there is no stroke to widen. Still accepted so callers
+   *  written against the Lucide set keep compiling; use `weight` on a
+   *  `@phosphor-icons/react` component if you need a lighter or bolder glyph. */
   strokeWidth?: number | string;
   /** Accessible name. When set, the icon is exposed as role="img" with a
    *  <title>; when omitted the icon is decorative and aria-hidden. */
   title?: string;
 }
 
-/** A Lucide-compatible 24×24 stroked line icon. */
 const h = React.createElement;
 
 /* ---- Icon ----------------------------------------------------------------
-   A Lucide-compatible 24×24 line icon. Looks `name` up in the `icons` map and
-   draws it inside a <svg> with the shared stroke conventions (fill none,
-   stroke currentColor, round caps/joins). Size defaults to "1em" so the icon
-   tracks the surrounding font-size; pass `size` (number or CSS length) to fix
-   it. Set `strokeWidth` to thin/thicken the lines.
+   A Phosphor 256×256 filled icon. Looks `name` up in the `icons` map and draws
+   it inside a <svg> with the shared conventions (viewBox "0 0 256 256", fill
+   currentColor, no stroke). Size defaults to "1em" so the icon tracks the
+   surrounding font-size; pass `size` (number or CSS length) to fix it.
+
+   The set moved from Lucide to Phosphor in 1.0.0-beta.7 (batch-plan §1.4). The
+   names did not: `search`, `chevron-down`, `log-out` and the rest all still
+   resolve, so no caller has to be rewritten. `strokeWidth` no longer does
+   anything — filled geometry has no stroke — but it is still accepted rather
+   than removed, because it is published API and silently ignoring it costs a
+   caller nothing while a hard error costs them a build.
 
    Provide a `title` to give the icon an accessible name (role="img" + an inline
    <title>); omit it for decorative icons, which are then aria-hidden. Unknown
@@ -38,17 +46,16 @@ const h = React.createElement;
 export function Icon({
   name,
   size = "1em",
-  strokeWidth = 2,
+  strokeWidth: _strokeWidth,
   title,
   className,
   ...rest
 }: IconProps) {
   return h("svg", {
     className: cx("ds-icon", className),
-    viewBox: "0 0 24 24",
+    viewBox: "0 0 256 256",
     width: size,
     height: size,
-    "stroke-width": strokeWidth,
     role: title ? "img" : undefined,
     "aria-hidden": title ? undefined : "true",
     dangerouslySetInnerHTML: {

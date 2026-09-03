@@ -765,6 +765,153 @@
       "to": ".ds-banner-content / -title / -action",
       "batch": "6",
       "note": "New parts."
+    },
+    {
+      "kind": "export",
+      "from": "Status",
+      "to": "StatusPanel",
+      "batch": "7",
+      "note": "0.11's status *panel* — the coloured head with a kicker, heading and subtitle. `Status` is now the source's inline dot-and-label indicator, and one barrel cannot export both under one name. `<ds-status>` is unchanged and still renders the panel, so no web-component consumer moves."
+    },
+    {
+      "kind": "export",
+      "from": "Status (the tone union type)",
+      "to": "StatusTone",
+      "batch": "7",
+      "note": "It could not stay as a deprecated alias: a type alias named `Status` in the barrel shadows the `Status` *component* for every consumer."
+    },
+    {
+      "kind": "export",
+      "from": "Range",
+      "to": "Slider",
+      "batch": "7",
+      "note": "On Base UI, so a range is one control with two thumbs rather than two inputs kept in order by the caller. `.ds-range` — the native `<input type=range>` — is still defined in `slider.css` for hand-written HTML."
+    },
+    {
+      "kind": "export",
+      "from": "FieldHint",
+      "to": null,
+      "batch": "7",
+      "note": "Replaced by `FieldDescription` (neutral) and `FieldError` (`role=\"alert\"`, so a validation message is announced when it appears — `FieldHint` was a bare span and never was). `.ds-field__hint` stays defined in `field.css` for hand-written HTML. `<FormField>` absorbs the swap: its own props are unchanged."
+    },
+    {
+      "kind": "prop",
+      "from": "Card `title` / `media` / `footer`",
+      "to": "CardHeader + CardTitle / CardMedia / CardFooter",
+      "batch": "7",
+      "note": "Composition replaces configuration. `clickable` survives as a prop, because it is what the whole card *is* — it carries the `tabIndex` and the `role` with it."
+    },
+    {
+      "kind": "prop",
+      "from": "Panel `title`",
+      "to": "PanelHeader + PanelTitle",
+      "batch": "7",
+      "note": "`rows` survives: `<ds-panel rows>` writes `ds-panel--rows` itself, so the modifier is a frozen contract."
+    },
+    {
+      "kind": "prop",
+      "from": "Field `label` / `htmlFor`",
+      "to": "FieldLabel",
+      "batch": "7",
+      "note": "The label is an element, which is what lets a field also carry a description, an error and an orientation."
+    },
+    {
+      "kind": "prop",
+      "from": "Select `options` / `block`",
+      "to": "SelectTrigger + SelectContent + SelectItem",
+      "batch": "7",
+      "note": "The parts buy what a native `<select>` cannot render: a group label, a separator, an icon in a row, a checked indicator. `.ds-select` — the native wrapper — is still defined in `select.css` for hand-written HTML."
+    },
+    {
+      "kind": "prop",
+      "from": "InputGroup `before` / `after`",
+      "to": "InputGroupAddon",
+      "batch": "7",
+      "note": "An addon can now sit above or below the control (`align=\"block-start\"` / `\"block-end\"`), which a two-slot prop pair could not express."
+    },
+    {
+      "kind": "prop",
+      "from": "Checkbox `children` / `onChange`",
+      "to": "FieldLabel + `onCheckedChange`",
+      "batch": "7",
+      "note": "The root is the box now, not a label around one. Pair it with a `<FieldLabel htmlFor>`; `indeterminate` is a real third state."
+    },
+    {
+      "kind": "prop",
+      "from": "Switch `children` / `onChange`",
+      "to": "Label + `onCheckedChange`",
+      "batch": "7",
+      "note": "Same shape change as Checkbox: the root is the track, and its name is a `<Label htmlFor>` beside it."
+    },
+    {
+      "kind": "prop",
+      "from": "Tag `status`",
+      "to": "tone",
+      "batch": "7",
+      "note": "Widened from four values to the same six every other status surface takes. `status` is still accepted and still maps."
+    },
+    {
+      "kind": "prop",
+      "from": "Icon `strokeWidth`",
+      "to": null,
+      "batch": "7",
+      "note": "Accepted and ignored since the set became Phosphor: filled geometry has no stroke to widen. Still accepted rather than removed, because removing it costs a caller a build for no gain."
+    },
+    {
+      "kind": "prop",
+      "from": "IconButton / SpeedDial / ToolbarButton `variant`",
+      "to": "the full eight-value `ButtonVariant`",
+      "batch": "7",
+      "note": "Widened, not renamed: these narrowed to `primary | danger` while they were composed onto the incumbent Button. The second half of batches 1, 3 and 6's forward cross-batch imports."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-card-content (source spelling)",
+      "to": ".ds-card__body",
+      "batch": "7",
+      "note": "The absorbed part is renamed into the frozen grammar: `__body` is what this system already called that region."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-card-header / -title / -footer (source spelling)",
+      "to": ".ds-card__header / __title / __footer",
+      "batch": "7",
+      "note": "Renamed into the frozen BEM grammar `Card.js` and `docs/components.md` already taught."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-panel-header / -title / -content / -footer / -row (source spelling)",
+      "to": ".ds-panel__header / __title / __content / __footer / __row",
+      "batch": "7",
+      "note": "Same rename. `__title` is what `<ds-panel title>` writes, so it is a contract and the other four follow it."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-input (defined in field.css)",
+      "to": ".ds-input (defined in input.css)",
+      "batch": "7",
+      "note": "Declarations moved file, name unchanged. Four stylesheets override it by descent — `color-picker.css`, `time-picker.css`, `date-picker.css`, `date-range.css` — and all four win on specificity, so none of them moved."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-checkbox / .ds-textarea / .ds-select / .ds-range / .ds-input-group (defined in form-controls.css)",
+      "to": "the same names, in checkbox.css / textarea.css / select.css / slider.css / input-group.css",
+      "batch": "7",
+      "note": "`form-controls.css` split seven ways and kept only the radio block. Every class name is unchanged; only the file it lives in moved. `.ds-field--error`, `.ds-field--success` and `.ds-field__hint` moved to `field.css`."
+    },
+    {
+      "kind": "class",
+      "from": ".ds-agenda-event-status--info / --success / --warning / --danger / --critical",
+      "to": ".ds-status--info / --success / --warning / --danger / --critical",
+      "batch": "7",
+      "note": "The agenda's status dot is a `<Status><StatusIndicator/>` now, so its six private tone rules left `agenda.css`. One status is one colour system-wide."
+    },
+    {
+      "kind": "class",
+      "from": "<svg class=\"ds-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">",
+      "to": "<svg class=\"ds-icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\">",
+      "batch": "7",
+      "note": "Lucide -> Phosphor. Every icon **name** is unchanged, so no `<Icon>` or `<ds-icon>` call moves; hand-written `<svg class=\"ds-icon\">` does, because the wrapper attributes and the geometry both change."
     }
   ],
   "notes": [

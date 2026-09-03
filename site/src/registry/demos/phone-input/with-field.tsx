@@ -1,5 +1,5 @@
 import {
-  FieldHint,
+  FieldDescription,
   FormField,
   PhoneInput,
 } from "@diametral/design-system/react"
@@ -11,7 +11,7 @@ export default function PhoneInputWithField() {
   return (
     <FormField label="Mobile">
       <PhoneInput value={value} onValueChange={setValue} defaultCountry="BE" />
-      <FieldHint>{value || "No number yet."}</FieldHint>
+      <FieldDescription>{value || "No number yet."}</FieldDescription>
     </FormField>
   )
 }

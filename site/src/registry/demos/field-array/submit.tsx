@@ -3,15 +3,21 @@
 import {
   Button,
   Checkbox,
+  Field,
   FieldArray,
   FieldArrayAdd,
   FieldArrayItem,
   FieldArrayItemContent,
   FieldArrayRemove,
+  FieldLabel,
   Form,
   FormField,
   Input,
   Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@diametral/design-system/react"
 import * as React from "react"
 
@@ -78,18 +84,30 @@ export default function FieldArraySubmit() {
                   />
                 </FormField>
                 <FormField label="Unit" htmlFor={`quote-line-${line.id}-unit`}>
-                  <Select
-                    id={`quote-line-${line.id}-unit`}
-                    name={`lines[${index}].unit`}
-                    defaultValue="day"
-                    options={UNITS}
-                    block
-                  />
+                  <Select name={`lines[${index}].unit`} defaultValue="day">
+                    <SelectTrigger id={`quote-line-${line.id}-unit`}>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {UNITS.map((unit) => (
+                        <SelectItem key={unit.value} value={unit.value}>
+                          {unit.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </FormField>
                 <div className="col-span-2">
-                  <Checkbox name={`lines[${index}].billable`} defaultChecked>
-                    Billable
-                  </Checkbox>
+                  <Field orientation="horizontal">
+                    <Checkbox
+                      id={`quote-line-${line.id}-billable`}
+                      name={`lines[${index}].billable`}
+                      defaultChecked
+                    />
+                    <FieldLabel htmlFor={`quote-line-${line.id}-billable`}>
+                      Billable
+                    </FieldLabel>
+                  </Field>
                 </div>
               </FieldArrayItemContent>
             </FieldArrayItem>

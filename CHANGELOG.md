@@ -4,6 +4,107 @@ All notable changes to the Diametral Design System are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/), and the project
 adheres to [Semantic Versioning](https://semver.org/) — see [docs/versioning.md](docs/versioning.md).
 
+## [1.0.0-beta.7] — 2026-09-03
+
+Sixteen components, and the batch where **every class name is already spoken for**. A
+`<ds-*>` web component, a published Streamlit page or `react/components/Card.js` fixes
+the grammar of each one from outside this package, so the source's CSS is absorbed
+*into* the existing contract rather than over it: names and structure hold, everything
+else about the file is fair game. Nothing a consumer writes by hand has to change.
+
+### The form-controls seven-way split
+
+`form-controls.css` had seven React readers and they disagreed — six go to the source,
+`Radio`/`RadioGroup` holds, because a real `<input type=radio>` sharing a `name` gets
+the APG arrow keys from the browser. So the file keeps only the radio block and its six
+other readers leave as their own source-named files: `input.css`, `textarea.css`,
+`checkbox.css`, `checkbox-group.css`, `slider.css`, `select.css`, `input-group.css`.
+They land at the import `form-controls.css` already held, so every cascade relationship
+that depended on loading after it still does.
+
+`.ds-input`'s declarations move out of `field.css` and into `input.css`. The class name
+does not change, which is why the ledger's "four-way dedupe" row was withdrawn as
+one-way — and why the four stylesheets that override it by descent (`color-picker`,
+`time-picker`, `date-picker`, `date-range`) needed no edit: they win on specificity,
+not load order.
+
+### Three class names now carry two grammars
+
+`.ds-checkbox`, `.ds-switch` and `.ds-input-group` mean one thing in 0.11's markup and
+another in the absorbed one — a label around a hidden input versus the control itself.
+Both ship, told apart by what the element contains (`> .ds-checkbox__box`,
+`> .ds-switch__track`, `> .ds-input-group__addon`), the same mechanism `table.css` used
+in beta.6. `<ds-switch>` writes the 0.11 form itself, and committed fixtures under
+`examples/` write the other two.
+
+`.ds-select` and `.ds-range` needed no guard: the source defines neither name, so the
+native `<select>` wrapper and the native range sit beside `.ds-select-*` and
+`.ds-slider-*` without collision. Both are kept, because a hand-written form still
+wants a control that needs no JavaScript.
+
+### Breaking
+
+Every removed prop has a replacement or a recipe in `docs/migration/from-0.11.md`.
+
+- **`Status` changes hands.** It is now the source's inline dot-and-label indicator;
+  0.11's status *panel* is **`StatusPanel`**, the name its props interface and its
+  stylesheet already used. `<ds-status>` is untouched and still renders the panel.
+  The `Status` union *type* is `StatusTone` — it could not stay as an alias, because a
+  type of that name in the barrel shadows the component for every consumer.
+- **`Range` is `Slider`**, on Base UI, so a range is one control with two thumbs.
+- **`FieldHint` is gone**, replaced by `FieldDescription` and `FieldError`. The error
+  carries `role="alert"`, so a validation message is now announced when it appears —
+  `FieldHint` was a bare span and never was. `<FormField>` absorbs the swap; its own
+  props are unchanged.
+- **`Card`, `Panel`, `Field`, `Select`, `InputGroup`, `Checkbox` and `Switch` take
+  parts rather than props.** Composition replaces configuration, the trade every
+  applier in this migration makes.
+- **`Button` has no default variant.** `<ds-button>` with no attribute renders a bare
+  `ds-button`, which is 0.11's white ink-bordered button, so `<Button />` renders the
+  same. `variant="default"` is the source's solid fill and is the same rule as
+  `primary`.
+
+### Lucide → Phosphor
+
+The icon set is Phosphor at regular weight — 256×256 filled geometry, `fill:
+currentColor`, no stroke. **Every icon name is unchanged**, so no `<Icon>` or
+`<ds-icon>` call moves; hand-written `<svg class="ds-icon">` does, because the wrapper
+attributes change with the geometry. `strokeWidth` is still accepted on both bindings
+and no longer does anything: filled geometry has no stroke to widen.
+
+`Icon` itself holds against its ledger verdict. The source's is a three-glyph registry
+over `@phosphor-icons/react` and cannot serve `<ds-icon>` at all, which is
+zero-dependency JavaScript reading the same geometry map. One map, two bindings, as
+before.
+
+### Fixed
+
+- **Dark-theme contrast on every ink-filled surface** ([#15](https://github.com/LittleBigCode/design-system/issues/15)).
+  `--ds-on-accent` is pinned to `--ds-blanc` and the dark theme does not flip it, so on
+  dark's near-white `--ds-ink` it rendered white on white. `.ds-button--primary`,
+  `.ds-badge--solid`, both checkbox check marks and the loading spinner now take
+  `--ds-bg`, the token that inverts with the theme. `split-button` goes green with them.
+- **Field error text on dark.** `.ds-field-error` and `.ds-field__hint--error` used the
+  base `--ds-danger`, which is tuned as a fill; as small text on the dark background it
+  measured under 4.5:1. Both take `--ds-danger-ink`.
+- `docs/for-claude.md` taught a switch whose track span carried no
+  `ds-switch__track` class, so it had always been unstyled.
+
+### Notes
+
+- **`ds-open` / `ds-close` are CustomEvent names, not classes.** The plan asked this
+  batch to implement or delete them as dead classes in a frozen surface; they are
+  events, documented as such, and a `ds-[a-z-]+` scan simply cannot tell the two apart.
+  Neither implemented nor deleted.
+- **`.ds-card` is deliberately not a flex column.** The source's is, and
+  `docs/streamlit.md` publishes a `.ds-card` holding inline content with no parts —
+  which a flex column would stack. The same constraint keeps `.ds-panel`'s padding on
+  the root: `<ds-panel>` wraps arbitrary light DOM and a bare paragraph has no part to
+  pad it.
+- Six dedupe exceptions resolved, 14 forward cross-batch imports re-wired back onto
+  their source symbols, and 2 of the 18 `z-index: 50` remaps carried (`select`).
+- Batch 7 acquires no dependency.
+
 ## [1.0.0-beta.6] — 2026-09-02
 
 Fifteen components, and the batch where **appliers become parts**. Thirteen 0.11

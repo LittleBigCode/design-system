@@ -1,7 +1,7 @@
 import {
   DirectionProvider,
   FormField,
-  Range,
+  Slider,
   Segmented,
 } from "@diametral/design-system/react"
 
@@ -19,7 +19,7 @@ export default function DirectionAxis() {
     <DirectionProvider direction="rtl">
       <div dir="rtl" className="flex w-full max-w-sm flex-col gap-8">
         <FormField label="مستوى الصوت" htmlFor="direction-axis-volume">
-          <Range id="direction-axis-volume" defaultValue={30} />
+          <Slider id="direction-axis-volume" defaultValue={30} />
         </FormField>
         <FormField label="المدى" htmlFor="direction-axis-range">
           <Segmented

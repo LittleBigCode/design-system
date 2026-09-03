@@ -1,8 +1,10 @@
 import {
   Button,
   Field,
+  FieldLabel,
   Input,
   Panel,
+  PanelContent,
   Stepper,
   StepperContent,
   StepperIndicator,
@@ -56,16 +58,18 @@ export default function StepperWizard() {
         ))}
       </Stepper>
 
-      {/* Panel and Field are the incumbents until batch 7 lands the source's
-          own parts; the incumbent Field carries its own label. */}
+      {/* Panel and Field are the absorbed parts since 1.0.0-beta.7: the label
+          is a FieldLabel element rather than a prop, and the rows region is a
+          PanelContent. */}
       <Panel rows>
-        <div className="flex flex-col gap-4">
+        <PanelContent className="flex flex-col gap-4">
           {STEPS[current].fields.map((field) => (
-            <Field key={field.id} label={field.label} htmlFor={field.id}>
+            <Field key={field.id}>
+              <FieldLabel htmlFor={field.id}>{field.label}</FieldLabel>
               <Input id={field.id} defaultValue={field.value} />
             </Field>
           ))}
-        </div>
+        </PanelContent>
         <div className="flex justify-end gap-2 border-t border-border pt-4">
           <Button
             size="sm"

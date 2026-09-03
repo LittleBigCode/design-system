@@ -9,7 +9,12 @@ import {
   Button,
   cx,
   Input,
+  Label,
   Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
   Switch,
 } from "@diametral/design-system/react"
 
@@ -182,20 +187,29 @@ export function usePlaygroundControls(slug: string) {
 
           if (control.type === "boolean") {
             // The name is the Switch's own children, not a sibling <label>
-            // pointing at it: `.ds-switch` *is* a <label> wrapping its input,
-            // and it takes no `id`, so the old `htmlFor={`pg-${prop}`}` pointed
-            // at nothing and every boolean control was an unnamed checkbox to
-            // axe. `flex-row-reverse` keeps the name on the left and the track
-            // on the right, which is the layout the sibling gave.
+            // Since 1.0.0-beta.7 the absorbed Switch IS the track — a Base UI
+            // `role="switch"` button that does take an `id` — so the name goes
+            // back to being a real <Label htmlFor>. Before that, `.ds-switch`
+            // was a <label> wrapping its own input and took no `id`, so a
+            // sibling label pointed at nothing and every boolean control was an
+            // unnamed checkbox to axe.
             return (
-              <Switch
+              <div
                 key={control.prop}
-                className="w-full flex-row-reverse justify-between gap-3 font-mono text-xs"
-                checked={value === true}
-                onChange={(checked) => set(control.prop, checked)}
+                className="flex w-full items-center justify-between gap-3"
               >
-                {label}
-              </Switch>
+                <Label
+                  htmlFor={`pg-${control.prop}`}
+                  className="font-mono text-xs"
+                >
+                  {label}
+                </Label>
+                <Switch
+                  id={`pg-${control.prop}`}
+                  checked={value === true}
+                  onCheckedChange={(checked) => set(control.prop, checked)}
+                />
+              </div>
             )
           }
 
@@ -263,16 +277,18 @@ function PanelSelect({
   onValueChange: (value: string) => void
 }) {
   return (
-    <Select
-      block
-      aria-label={label}
-      value={value}
-      onChange={(event) => onValueChange(event.target.value)}
-      options={options.map((option) => ({
-        value: optionValue(option),
-        label: optionLabel(option),
-      }))}
-    />
+    <Select value={value} onValueChange={(next) => onValueChange(next ?? "")}>
+      <SelectTrigger aria-label={label}>
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        {options.map((option) => (
+          <SelectItem key={optionValue(option)} value={optionValue(option)}>
+            {optionLabel(option)}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   )
 }
 

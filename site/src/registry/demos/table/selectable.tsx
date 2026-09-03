@@ -31,12 +31,16 @@ export default function TableSelectable() {
       <TableHeader>
         <TableRow>
           <TableHead className="w-0">
-            {/* The incumbent Checkbox has no indeterminate state; batch 7
-                lands the source's, and the partial state comes with it. */}
+            {/* The absorbed Checkbox has a real third state, so "some but not
+                all selected" is `indeterminate` rather than an unchecked box
+                that lies about the rows below it. */}
             <Checkbox
               aria-label="Select all assets"
               checked={selected.length === ASSETS.length}
-              onChange={(checked) =>
+              indeterminate={
+                selected.length > 0 && selected.length < ASSETS.length
+              }
+              onCheckedChange={(checked) =>
                 setSelected(checked ? ASSETS.map((asset) => asset.id) : [])
               }
             />
@@ -55,7 +59,7 @@ export default function TableSelectable() {
               <Checkbox
                 aria-label={`Select ${asset.name}`}
                 checked={selected.includes(asset.id)}
-                onChange={() => toggle(asset.id)}
+                onCheckedChange={() => toggle(asset.id)}
               />
             </TableCell>
             <TableCell>{asset.name}</TableCell>

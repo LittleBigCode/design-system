@@ -5,8 +5,9 @@ import {
   AutocompleteInput,
   AutocompleteItem,
   AutocompleteList,
+  FieldLabel,
 } from "@diametral/design-system/react"
-import { Field, FieldHint } from "@diametral/design-system/react"
+import { Field, FieldDescription } from "@diametral/design-system/react"
 
 const TIMEZONES = [
   "Africa/Casablanca",
@@ -22,7 +23,8 @@ const TIMEZONES = [
 
 export default function AutocompleteInline() {
   return (
-    <Field className="max-w-sm" label="Timezone">
+    <Field className="max-w-sm">
+      <FieldLabel>Timezone</FieldLabel>
       <Autocomplete items={TIMEZONES} mode="both" autoHighlight>
         <AutocompleteInput placeholder="Europe/Paris" showClear />
         <AutocompleteContent>
@@ -36,10 +38,10 @@ export default function AutocompleteInline() {
           </AutocompleteList>
         </AutocompleteContent>
       </Autocomplete>
-      <FieldHint>
+      <FieldDescription>
         Type eur and the rest of the first match appears in the field. Enter
         keeps it; carry on typing and it is replaced.
-      </FieldHint>
+      </FieldDescription>
     </Field>
   )
 }
