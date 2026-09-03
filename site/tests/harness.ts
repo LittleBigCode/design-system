@@ -6,7 +6,7 @@
 
 import type { Page } from "@playwright/test"
 
-import { COMPONENTS } from "../src/registry/registry"
+import { COMPONENTS } from "../../examples/registry/registry"
 
 export type Route = { name: string; path: string }
 

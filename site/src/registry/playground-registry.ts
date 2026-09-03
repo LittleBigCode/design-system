@@ -2,7 +2,7 @@ import type { ComponentType } from "react"
 
 import { templates, variants } from "virtual:demo-source"
 
-import { PLAYGROUNDS, type Control } from "@/registry/playgrounds"
+import { PLAYGROUNDS, type Control } from "@registry/playgrounds"
 
 /**
  * The panel drives an arbitrary prop bag, while each playground file is typed
@@ -28,11 +28,12 @@ export type Playground = {
   note?: string
 }
 
-const modules = import.meta.glob<{ default: Subject }>("./playgrounds/*.tsx", {
-  eager: true,
-})
+const modules = import.meta.glob<{ default: Subject }>(
+  "../../../examples/registry/playgrounds/*.tsx",
+  { eager: true }
+)
 
-const KEY = /^\.\/playgrounds\/(.*)\.tsx$/
+const KEY = /^\.\.\/\.\.\/\.\.\/examples\/registry\/playgrounds\/(.*)\.tsx$/
 
 const playgrounds = new Map<string, Playground>()
 

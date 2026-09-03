@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@diametral/design-system/react"
 
-import { COMPONENTS, componentsByCategory } from "@/registry/registry"
+import { COMPONENTS, componentsByCategory } from "@registry/registry"
 
 const SWATCHES = [
   { name: "black", token: "--ds-noir" },

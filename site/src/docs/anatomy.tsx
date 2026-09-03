@@ -8,7 +8,7 @@ import { cx } from "@diametral/design-system/react"
 
 import { Toc, TocItem, TocLabel, TocLink, TocList } from "@/chrome/toc"
 
-import { exampleTitle, type Example } from "@/registry/registry"
+import { exampleTitle, type Example } from "@registry/registry"
 
 export function anatomyFor(slug: string) {
   return ANATOMY[slug]

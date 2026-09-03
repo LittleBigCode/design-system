@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "dist/docs",
+    "rootDir": "examples/registry",
+    "paths": {
+      "@diametral/design-system/react": ["./dist/react/index.d.ts"]
+    }
+  },
+  "include": ["examples/registry"]
+}

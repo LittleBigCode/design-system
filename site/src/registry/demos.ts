@@ -10,11 +10,11 @@ type DemoModule = { default: ComponentType }
  * `modules` is the executed component; `sources` (built by the demo-source Vite
  * plugin) is that file's text, highlighted at build time.
  */
-const modules = import.meta.glob<DemoModule>("./demos/**/*.tsx", {
+const modules = import.meta.glob<DemoModule>("../../../examples/registry/demos/**/*.tsx", {
   eager: true,
 })
 
-const KEY = /^\.\/demos\/(.*)\.tsx$/
+const KEY = /^\.\.\/\.\.\/\.\.\/examples\/registry\/demos\/(.*)\.tsx$/
 
 export type Demo = {
   key: string

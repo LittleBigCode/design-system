@@ -11,7 +11,7 @@ showcase page.
 
 The 118 components exported from [`@diametral/design-system/react`](react.md). Every row has a live page with runnable examples, and every page is what the visual and accessibility gates drive — so this table and the tested surface cannot disagree.
 
-> Generated from `site/src/registry/registry.ts` by `scripts/build-components-md.mjs`. Edit the registry, then run `npm run build`.
+> Generated from `examples/registry/registry.ts` by `scripts/build-components-md.mjs`. Edit the registry, then run `npm run build`.
 
 ### Actions
 

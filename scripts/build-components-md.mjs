@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Regenerates the React-component index inside docs/components.md from
- * site/src/registry/registry.ts — the same array that generates the docs-site
+ * examples/registry/registry.ts — the same array that generates the docs
  * routes and, through them, the visual and a11y gates.
  *
  * One source, so drift is structurally impossible: a component cannot appear in
@@ -14,7 +14,7 @@
  */
 import { readFileSync, writeFileSync } from "node:fs";
 
-const REGISTRY = "site/src/registry/registry.ts";
+const REGISTRY = "examples/registry/registry.ts";
 const TARGET = "docs/components.md";
 const BEGIN = "<!-- BEGIN generated: react-components (npm run build) -->";
 const END = "<!-- END generated: react-components -->";
@@ -91,7 +91,7 @@ function render(components) {
       "accessibility gates drive — so this table and the tested surface cannot " +
       "disagree.",
     "",
-    "> Generated from `site/src/registry/registry.ts` by " +
+    "> Generated from `examples/registry/registry.ts` by " +
       "`scripts/build-components-md.mjs`. Edit the registry, then run " +
       "`npm run build`.",
     "",

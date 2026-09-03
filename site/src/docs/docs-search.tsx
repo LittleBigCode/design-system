@@ -4,7 +4,7 @@ import { MagnifyingGlassIcon } from "@phosphor-icons/react"
 
 import { CommandPalette, Kbd } from "@diametral/design-system/react"
 
-import { componentsByCategory } from "@/registry/registry"
+import { componentsByCategory } from "@registry/registry"
 
 /**
  * CommandPalette filters the flat list itself, so the grouped registry is

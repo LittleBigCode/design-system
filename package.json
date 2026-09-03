@@ -69,8 +69,9 @@
     "./assets/*": "./assets/*"
   },
   "scripts": {
-    "build": "npm run build:react && node scripts/build-tokens.mjs && node scripts/build-css.mjs && node scripts/build-components.mjs && node scripts/build-figma.mjs && node scripts/build-migration-guide.mjs && node scripts/build-components-md.mjs",
+    "build": "npm run build:react && node scripts/build-tokens.mjs && node scripts/build-css.mjs && node scripts/build-components.mjs && node scripts/build-figma.mjs && node scripts/build-migration-guide.mjs && node scripts/build-components-md.mjs && npm run build:docs && node scripts/build-docs.mjs",
     "build:react": "tsc -p tsconfig.build.json",
+    "build:docs": "tsc -p tsconfig.docs.json",
     "build:tokens": "node scripts/build-tokens.mjs",
     "build:figma": "node scripts/build-figma.mjs",
     "build:css": "node scripts/build-css.mjs",
