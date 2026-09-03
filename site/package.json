@@ -16,7 +16,7 @@
     "test:regress": "playwright test tests/*-regress.spec.ts tests/chart-marks.spec.ts"
   },
   "dependencies": {
-    "@base-ui/react": "^1.7.0",
+    "@base-ui/react": "^1.6.0",
     "@diametral/design-system": "file:..",
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",

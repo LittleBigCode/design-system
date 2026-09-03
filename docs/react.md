@@ -113,7 +113,7 @@ import map that omits these resolves nothing:
 ```html
 <script type="importmap">
 { "imports": {
-  "@base-ui/react/": "https://esm.sh/@base-ui/react@1.7.0/?external=react,react-dom",
+  "@base-ui/react/": "https://esm.sh/@base-ui/react@1.6.0/?external=react,react-dom",
   "@phosphor-icons/react": "https://esm.sh/@phosphor-icons/react@2.1.10?external=react"
 } }
 </script>
