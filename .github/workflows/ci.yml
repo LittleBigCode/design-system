@@ -130,10 +130,10 @@ jobs:
             "skipLibCheck":true }, "include":["src"] }
           JSON
           cat > src/app.tsx <<'TSX'
-          import { Button, Card, Status, cx } from "@diametral/design-system/react"
+          import { Button, Card, StatusPanel, cx } from "@diametral/design-system/react"
           export const App = () => (
             <Card className={cx("ds-card")}>
-              <Status status="warning" kicker="Approval" heading="Manager review" />
+              <StatusPanel status="warning" kicker="Approval" heading="Manager review" />
               <Button variant="primary">Escalate</Button>
             </Card>
           )
