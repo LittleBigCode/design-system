@@ -172,10 +172,10 @@ A buildless, multi-page showcase that dogfoods the system lives in [`examples/`]
 ```bash
 # from the repo root
 python3 -m http.server 8080
-# then open http://localhost:8080/examples/
+# then open http://localhost:8080/
 ```
 
-It also works straight from the filesystem — open `examples/index.html` in a browser.
+It also works straight from the filesystem — open `index.html` in a browser.
 `examples/kitchen-sink.html` renders every component on one page.
 
 ## Token model

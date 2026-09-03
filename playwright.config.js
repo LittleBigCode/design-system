@@ -30,7 +30,7 @@ export default defineConfig({
   // reuseExistingServer lets you keep a `npm run serve` running locally.
   webServer: {
     command: "python3 -m http.server 8080",
-    url: "http://localhost:8080/examples/index.html",
+    url: "http://localhost:8080/index.html",
     reuseExistingServer: true,
     timeout: 60_000,
   },

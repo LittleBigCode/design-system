@@ -2,11 +2,12 @@
 # css/ and components/ work with no build, so dist/ is not committed.
 dist/
 
-# Docs generator output (scripts/build-docs.mjs). Only switch.html exists so far
-# (issue #30, the tracer bullet) — this list grows slug by slug until the rest
-# of examples/components/ is generator-owned too, at which point this narrows
-# to the other direction (hand-authored pages listed instead).
-examples/components/switch.html
+# Docs generator output (scripts/build-docs.mjs). examples/components/ is now
+# fully generator-owned (issue #31) — the hand-authored pages it used to share
+# the directory with live in examples/css/ instead. The generated home page at
+# the repo root is build output too.
+examples/components/
+/index.html
 
 # Dependencies (the system itself has none)
 node_modules/
