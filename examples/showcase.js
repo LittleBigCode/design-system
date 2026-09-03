@@ -98,7 +98,11 @@ function renderTopbar() {
     <button class="docs-topbar__search" type="button" id="docsSearchBtn" aria-haspopup="dialog">
       <span>Search components…</span><span class="ds-kbd">⌘K</span>
     </button>
-    <button class="ds-button" id="theme-toggle" type="button">Dark theme</button>
+    <div class="ds-segmented" id="theme-toggle" role="group" aria-label="Theme">
+      <button class="ds-segmented__item" type="button" data-theme-choice="light">Light</button>
+      <button class="ds-segmented__item" type="button" data-theme-choice="dark">Dark</button>
+      <button class="ds-segmented__item" type="button" data-theme-choice="auto">Auto</button>
+    </div>
   `;
   document.body.prepend(header);
 }
@@ -166,20 +170,31 @@ function renderRail(registry) {
 function wireTheme() {
   const KEY = "ds-theme";
   const html = document.documentElement;
-  try {
-    if (localStorage.getItem(KEY) === "dark") html.setAttribute("data-theme", "dark");
-  } catch {}
-  const btn = document.getElementById("theme-toggle");
-  if (!btn) return;
+
+  const apply = (choice) => {
+    html.classList.toggle("ds-auto-dark", choice === "auto");
+    if (choice === "dark") html.setAttribute("data-theme", "dark");
+    else html.removeAttribute("data-theme"); // "light" and "auto" both clear the explicit override
+  };
+
+  let choice = "light";
+  try { choice = localStorage.getItem(KEY) || "light"; } catch {}
+  apply(choice);
+
+  const group = document.getElementById("theme-toggle");
+  if (!group) return;
   const sync = () => {
-    btn.textContent = html.getAttribute("data-theme") === "dark" ? "Light theme" : "Dark theme";
+    group.querySelectorAll("[data-theme-choice]").forEach((btn) => {
+      btn.classList.toggle("is-active", btn.dataset.themeChoice === choice);
+    });
   };
   sync();
-  btn.addEventListener("click", () => {
-    const isDark = html.getAttribute("data-theme") === "dark";
-    if (isDark) html.removeAttribute("data-theme");
-    else html.setAttribute("data-theme", "dark");
-    try { localStorage.setItem(KEY, isDark ? "light" : "dark"); } catch {}
+  group.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-theme-choice]");
+    if (!btn) return;
+    choice = btn.dataset.themeChoice;
+    apply(choice);
+    try { localStorage.setItem(KEY, choice); } catch {}
     sync();
   });
 }
