@@ -94,17 +94,29 @@
 
       <section class="docs-section">
         <h2>React</h2>
-        <p class="docs-note">The <code>Tooltip</code> wraps a trigger and shows the label on hover / focus, positioned with inline styles.</p>
+        <p class="docs-note"><strong>Changed in 1.0.</strong> <code>Tooltip</code> is now a composition — trigger and content are separate parts — and it renders <code>.ds-tooltip-content</code>, not the <code>.ds-tooltip-host</code> markup above. It dismisses on <kbd>Esc</kbd> and the popup stays open while the pointer is over it, both of which WCAG 1.4.13 requires and neither of which 0.11 did.</p>
+        <p class="docs-note"><strong>Name the trigger yourself.</strong> A tooltip is a visual supplement: it wires no <code>aria-describedby</code>, so a screen reader gets only the trigger&rsquo;s own accessible name. Give an icon-only trigger an <code>aria-label</code> that says the same thing the tooltip says. If the text is essential rather than supplementary, it does not belong in a tooltip at all — put it inline, or in a <code>Popover</code>.</p>
         <section class="ds-example">
           <header class="ds-example__bar">
             <span class="ds-label">&lt;Tooltip&gt;</span>
             <button class="ds-button" data-copy-target="#c-react">Copy</button>
           </header>
-          <pre class="ds-example__code"><code id="c-react">import { Tooltip, Button } from "@diametral/design-system/react";
+          <pre class="ds-example__code"><code id="c-react">import {
+  Tooltip, TooltipTrigger, TooltipContent, TooltipProvider, Button,
+} from "@diametral/design-system/react";
 
-&lt;Tooltip label="Recalculates the full pricing matrix" placement="top"&gt;
-  &lt;Button&gt;Hover me&lt;/Button&gt;
-&lt;/Tooltip&gt;</code></pre>
+// One Provider per screen shares the open/close delay across every tooltip.
+&lt;TooltipProvider delay={200}&gt;
+  &lt;Tooltip&gt;
+    &lt;TooltipTrigger render={&lt;Button aria-label="Recalculate pricing" /&gt;}&gt;
+      Recalculate
+    &lt;/TooltipTrigger&gt;
+    &lt;TooltipContent side="top"&gt;Recalculate pricing&lt;/TooltipContent&gt;
+  &lt;/Tooltip&gt;
+&lt;/TooltipProvider&gt;
+
+// 0.11: &lt;Tooltip label="…" placement="top"&gt;&lt;Button/&gt;&lt;/Tooltip&gt;
+// `placement` is `side` on TooltipContent, and `label` is its child.</code></pre>
         </section>
       </section>
 

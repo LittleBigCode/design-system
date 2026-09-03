@@ -37,6 +37,7 @@ import {
   PageHeaderDescription,
   PageHeaderHeading,
   PageHeaderTitle,
+  Kanban as DsKanban,
   Stepper as DsStepper,
   StepperContent,
   StepperIndicator,
@@ -139,4 +140,13 @@ export function PageHeader({ title, subtitle, breadcrumb, actions, children, ...
         subtitle != null ? h(PageHeaderDescription, null, subtitle) : null),
       actions ? h(PageHeaderActions, null, actions) : null),
     children);
+}
+
+/* Kanban's swap is beta.8's, not beta.6's, but it lands here for the same
+   reason. 0.11's board seeded itself from `items` and owned the order after
+   that; the absorbed one is a proper controlled/uncontrolled pair, so the same
+   seeding behaviour is spelled `defaultItems`. Passing `items` to the new board
+   would pin it — every card would snap back on drop. */
+export function Kanban({ items, ...rest }) {
+  return h(DsKanban, { defaultItems: items, ...rest });
 }

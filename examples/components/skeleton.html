@@ -102,7 +102,8 @@
 
       <section class="docs-section">
         <h2>React</h2>
-        <p class="docs-note">The <code>Skeleton</code> component picks a <code>variant</code>, accepts inline <code>width</code>/<code>height</code>, and renders N stacked lines via <code>count</code>.</p>
+        <p class="docs-note"><strong>Changed in 1.0.</strong> <code>Skeleton</code> takes a <code>className</code> and a <code>style</code> rather than <code>variant</code>, <code>width</code>, <code>height</code> and <code>count</code> props — composition replacing configuration, the same trade every applier in this release makes. Every class above still exists, so a <code>variant</code> becomes the modifier it already named.</p>
+        <p class="docs-note">It renders a <code>&lt;div&gt;</code> now, and it no longer sets <code>aria-hidden</code> on itself. That is the better default: hide the whole loading <em>region</em> and give it a <code>role="status"</code> label, so a screen reader hears &ldquo;Loading invoices&rdquo; once instead of nothing at all.</p>
         <section class="ds-example">
           <header class="ds-example__bar">
             <span class="ds-label">&lt;Skeleton /&gt;</span>
@@ -110,9 +111,13 @@
           </header>
           <pre class="ds-example__code"><code id="c-react">import { Skeleton } from "@diametral/design-system/react";
 
-&lt;Skeleton variant="circle" /&gt;
-&lt;Skeleton variant="line" width="60%" /&gt;
-&lt;Skeleton variant="text" count={3} /&gt;</code></pre>
+&lt;Skeleton className="ds-skeleton--circle" /&gt;              {/* was variant="circle" */}
+&lt;Skeleton style={{ width: "60%" }} /&gt;                     {/* was variant="line" width="60%" */}
+
+{/* was variant="text" count={3} */}
+&lt;div role="status" aria-label="Loading"&gt;
+  {[0, 1, 2].map((i) =&gt; &lt;Skeleton key={i} className="ds-skeleton--text" /&gt;)}
+&lt;/div&gt;</code></pre>
         </section>
       </section>
 

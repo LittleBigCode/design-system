@@ -4351,32 +4351,18 @@ export const COMPONENTS: ComponentDoc[] = [
         "Carries its own padding and divider; the last row drops its rule so it does not double up with the footer's.",
     },
   },
-]
 
-export const CATEGORIES = [
-  "Actions",
-  "Forms",
-  "Data display",
-  "Navigation",
-  "Layout",
-  "Disclosure",
-  "Overlays",
-  "Feedback",
-  "Conversation",
-  "Utilities",
-]
-
-/**
- * The entries waiting on their absorption batch, kept here rather than deleted:
- * the prose is measured work, and a batch that lands a component wants its page
- * copy already written. Nothing reads this array — it is a holding pen, and the
- * batch that lands a slug moves its entry into `COMPONENTS` above.
- */
-export const PENDING: ComponentDoc[] = [
+  /* -- Batch 8 — defect swaps ------------------------------------------- */
+  /* Three of these five replace an incumbent whose measured accessibility
+     defect earned the swap, and each of the three owes a regress spec:
+     tooltip (never announced), drawer + sheet (no focus trap, no portal),
+     kanban (no keyboard path at all). skeleton is the cross-boundary pin —
+     its React moves, its stylesheet is held by DataGrid. */
   {
     slug: "kanban",
     name: "Kanban",
     category: "Data display",
+    exports: ["Kanban", "KanbanCardTitle"],
     description:
       "A board of columns holding cards that move between them by drag or by arrow key.",
     intro: [
@@ -4415,6 +4401,7 @@ export const PENDING: ComponentDoc[] = [
     slug: "skeleton",
     name: "Skeleton",
     category: "Data display",
+    exports: ["Skeleton"],
     description: "A placeholder block for content that has not loaded.",
     intro: [
       "Skeleton is one pulsing block; a placeholder is several of them arranged like the content that will replace them. Reach for it when the shape of what is arriving is already known — a row, a card, a table body — so the layout holds its place and nothing jumps when the data lands. When the shape is unknown, or the wait belongs to one action rather than a region, that is `Spinner`.",
@@ -4448,52 +4435,19 @@ export const PENDING: ComponentDoc[] = [
     ],
   },
   {
-    slug: "stat-card",
-    name: "Stat Card",
-    category: "Data display",
-    description:
-      "A single headline figure with an optional signed delta and sparkline.",
-    intro: [
-      "Stat Card is the dashboard tile: one label, one headline figure, and optionally how it moved and where it has been. Reach for it for the KPI row at the top of a page. When the numbers themselves have to be read rather than glanced at, that is `Chart`.",
-      "Every part is optional and carries its own top margin, so the vertical rhythm holds whichever ones you leave out. The card sets no width — size it from the grid it sits in.",
-    ],
-    examples: [
-      {
-        demo: "stat-card/basic",
-        title: "Basic",
-        description:
-          "Label and figure only, which is most of the use. The tiles take their width from the row, not from the component.",
-      },
-      {
-        demo: "stat-card/with-delta",
-        title: "With a delta",
-        description:
-          "The arrow is `aria-hidden` — the signed figure carries the direction, so colour is never the only cue. `direction` uses the `-ink` tones, the text-weight values that pass AA on both themes.",
-      },
-      {
-        demo: "stat-card/with-spark",
-        title: "With a sparkline",
-        description:
-          "The spark is a trend hint, not a chart: no axes, no tooltip. `StatCardSpark` is a bare slot, so a hand-drawn polyline needs no chart dependency — reach for `chart` when values must be read.",
-      },
-    ],
-    parts: {
-      StatCard:
-        "Border, surface and padding, with no width of its own — the grid around it decides the size.",
-      StatCardLabel:
-        "The caption, not a heading: uppercase and muted at 11px, and it takes no heading element.",
-      StatCardValue:
-        "Heading face and `tabular-nums`. Its `mt-2` is what separates it from the label, so a card without one closes up on its own.",
-      StatCardDelta:
-        "`direction` is the whole axis and it draws the arrow itself — pass the signed figure as children so the direction survives without colour.",
-      StatCardSpark:
-        "A slot with a top margin and nothing else. Keep whatever goes in it `aria-hidden`; the figure above already carries the number.",
-    },
-  },
-  {
     slug: "sheet",
     name: "Sheet",
     category: "Overlays",
+    exports: [
+      "Sheet",
+      "SheetTrigger",
+      "SheetClose",
+      "SheetContent",
+      "SheetHeader",
+      "SheetFooter",
+      "SheetTitle",
+      "SheetDescription",
+    ],
     description:
       "A panel that slides in from an edge — Dialog's modal contract, sized to a column instead of a centred box.",
     intro: [
@@ -4541,6 +4495,19 @@ export const PENDING: ComponentDoc[] = [
     slug: "drawer",
     name: "Drawer",
     category: "Overlays",
+    exports: [
+      "Drawer",
+      "DrawerTrigger",
+      "DrawerPortal",
+      "DrawerOverlay",
+      "DrawerSwipeHandle",
+      "DrawerClose",
+      "DrawerContent",
+      "DrawerHeader",
+      "DrawerFooter",
+      "DrawerTitle",
+      "DrawerDescription",
+    ],
     description:
       "A bottom sheet with drag-to-dismiss and snap points — Sheet's gesture-driven sibling, tuned for touch.",
     intro: [
@@ -4588,6 +4555,7 @@ export const PENDING: ComponentDoc[] = [
     slug: "tooltip",
     name: "Tooltip",
     category: "Overlays",
+    exports: ["Tooltip", "TooltipTrigger", "TooltipContent", "TooltipProvider"],
     description:
       "A short label on hover or focus. Never put interactive content in one.",
     intro: [
@@ -4621,6 +4589,71 @@ export const PENDING: ComponentDoc[] = [
         "`delay` and `closeDelay` are trigger props, so one control can be slower than the rest of its group. A tooltip on a `disabled` element never opens — the element emits no pointer events.",
       TooltipContent:
         "Renders the portal, positioner and arrow together, so positioning props belong here. A nested `Kbd` is re-styled and the trailing padding tightened by the popup's own `data-[slot=kbd]` rules — nothing to pass.",
+    },
+  },
+]
+
+export const CATEGORIES = [
+  "Actions",
+  "Forms",
+  "Data display",
+  "Navigation",
+  "Layout",
+  "Disclosure",
+  "Overlays",
+  "Feedback",
+  "Conversation",
+  "Utilities",
+]
+
+/**
+ * The entries waiting on their absorption batch, kept here rather than deleted:
+ * the prose is measured work, and a batch that lands a component wants its page
+ * copy already written. Nothing reads this array — it is a holding pen, and the
+ * batch that lands a slug moves its entry into `COMPONENTS` above.
+ */
+export const PENDING: ComponentDoc[] = [
+  {
+    slug: "stat-card",
+    name: "Stat Card",
+    category: "Data display",
+    description:
+      "A single headline figure with an optional signed delta and sparkline.",
+    intro: [
+      "Stat Card is the dashboard tile: one label, one headline figure, and optionally how it moved and where it has been. Reach for it for the KPI row at the top of a page. When the numbers themselves have to be read rather than glanced at, that is `Chart`.",
+      "Every part is optional and carries its own top margin, so the vertical rhythm holds whichever ones you leave out. The card sets no width — size it from the grid it sits in.",
+    ],
+    examples: [
+      {
+        demo: "stat-card/basic",
+        title: "Basic",
+        description:
+          "Label and figure only, which is most of the use. The tiles take their width from the row, not from the component.",
+      },
+      {
+        demo: "stat-card/with-delta",
+        title: "With a delta",
+        description:
+          "The arrow is `aria-hidden` — the signed figure carries the direction, so colour is never the only cue. `direction` uses the `-ink` tones, the text-weight values that pass AA on both themes.",
+      },
+      {
+        demo: "stat-card/with-spark",
+        title: "With a sparkline",
+        description:
+          "The spark is a trend hint, not a chart: no axes, no tooltip. `StatCardSpark` is a bare slot, so a hand-drawn polyline needs no chart dependency — reach for `chart` when values must be read.",
+      },
+    ],
+    parts: {
+      StatCard:
+        "Border, surface and padding, with no width of its own — the grid around it decides the size.",
+      StatCardLabel:
+        "The caption, not a heading: uppercase and muted at 11px, and it takes no heading element.",
+      StatCardValue:
+        "Heading face and `tabular-nums`. Its `mt-2` is what separates it from the label, so a card without one closes up on its own.",
+      StatCardDelta:
+        "`direction` is the whole axis and it draws the arrow itself — pass the signed figure as children so the direction survives without colour.",
+      StatCardSpark:
+        "A slot with a top margin and nothing else. Keep whatever goes in it `aria-hidden`; the figure above already carries the number.",
     },
   },
 ] as const

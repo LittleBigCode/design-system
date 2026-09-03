@@ -7,7 +7,7 @@ import React from "react";
 import { Wordmark } from "../index.js";
 import { Badge } from "../index.js";
 import { Avatar, AvatarFallback } from "./avatar.js";
-import { Tooltip } from "./Tooltip.js";
+import { Tooltip, TooltipTrigger, TooltipContent } from "./tooltip.js";
 import { Kbd } from "./kbd.js";
 import { Segmented } from "../index.js";
 import { CommandPalette } from "./CommandPalette.js";
@@ -106,7 +106,20 @@ export function ConsoleLayout({
       h("div", { className: "ds-app-bar__actions" },
         themes ? h(Segmented, { items: [{ value: "light", label: "Light" }, { value: "dark", label: "Dark" }, { value: "sepia", label: "Sepia" }], value: theme, onChange: setTheme }) : null,
         actions || null,
-        user ? h(Tooltip, { label: user.signOutLabel || "Sign out" }, h("span", { onClick: user.onSignOut, style: { cursor: "pointer" } }, h(Avatar, { size: "sm" }, h(AvatarFallback, null, user.initials)))) : null))),
+        /* Re-wired in 1.0.0-beta.8 onto the absorbed Tooltip's composition:
+           the old `label` prop is a <TooltipContent> child now. The trigger was
+           a <span onClick> — not focusable, so the sign-out control was mouse
+           only. TooltipTrigger renders a real <button>, which fixes that on the
+           way past; the aria-label is what actually names it, since the popup
+           is visual-only and wires no description. */
+        user ? h(Tooltip, null,
+          h(TooltipTrigger, {
+            onClick: user.onSignOut,
+            "aria-label": user.signOutLabel || "Sign out",
+            style: { cursor: "pointer", background: "none", border: 0, padding: 0 },
+          }, h(Avatar, { size: "sm" }, h(AvatarFallback, null, user.initials))),
+          h(TooltipContent, null, user.signOutLabel || "Sign out")
+        ) : null))),
     h("aside", { className: "ds-console__side" }, h("nav", { className: "ds-vnav" },
       nav.map((g, gi) => h("div", { key: g.group || gi, className: "ds-vnav__group" },
         g.group ? h("p", { className: "ds-label ds-console__navlabel" }, g.group) : null,

@@ -1,6 +1,5 @@
 /* Talent views: Candidates pipeline, CV. (Team + person profile live in team.js.) */
 import {
-  Kanban,
   Button,
   Card,
   Tag,
@@ -8,6 +7,7 @@ import {
   StatCard,
 } from "../../../dist/react/index.js";
 import {
+  Kanban,
   Avatar,
   Timeline,
   Progress,
@@ -23,9 +23,9 @@ export function Candidates({ go, select }) {
       columns: CAND_COLS, items: CANDIDATES,
       renderCard: (c) => h("div", null,
         h("div", { className: "row" }, h(Avatar, { initials: c.init, size: "sm" }),
-          h("div", { style: { minWidth: 0 } }, h("div", { className: "ds-kanban__card-title" }, c.name),
+          h("div", { style: { minWidth: 0 } }, h("div", { className: "ds-kanban-card-title" }, c.name),
             h("div", { style: { fontSize: "12px", color: "var(--ds-ink-faint)" } }, c.role))),
-        h("div", { className: "ds-kanban__card-meta" }, h("span", null, c.loc),
+        h("div", { className: "ds-kanban-card-meta" }, h("span", null, c.loc),
           h(Button, { variant: "primary", size: "sm", onClick: () => { select({ candidate: c }); go("cv"); } }, "CV →"))),
     }));
 }

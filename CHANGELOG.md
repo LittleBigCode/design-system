@@ -4,6 +4,118 @@ All notable changes to the Diametral Design System are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/), and the project
 adheres to [Semantic Versioning](https://semver.org/) — see [docs/versioning.md](docs/versioning.md).
 
+## [1.0.0-beta.8] — 2026-09-03
+
+**The last beta, and the only batch that buys a dependency or changes behaviour on a
+contested component.** Five components, three of them defect swaps — each earned on a
+measured accessibility failure in the incumbent, and each now pinned by its own
+`<component>-regress.spec.ts`. Fifteen new assertions, all green.
+
+### The three swaps
+
+**`Tooltip` never announced anything.** 0.11 put `role="tooltip"` on a sibling `<span>`
+with no `id` and no `aria-describedby` on the trigger — it claimed an association that
+did not exist, which is worse than claiming none — and had no Escape dismissal. The
+absorbed one composes: `Tooltip` / `TooltipTrigger` / `TooltipContent`, dismissible on
+Escape and hoverable, both halves of WCAG 1.4.13.
+
+One thing to know, and it is not what the plan predicted: Base UI wires **no**
+`aria-describedby`, deliberately. A tooltip is a visual supplement, so the *trigger*
+must carry its own accessible name matching the tooltip's text. Give an icon-only
+trigger an `aria-label`. If the text is essential rather than supplementary, it does not
+belong in a tooltip.
+
+**`Drawer` had no focus trap and no portal.** Tab walked straight out of an open drawer
+into the page behind it — and nothing in 0.11 implemented a trap to copy, `Modal`
+included. This is also **a merge, and the one change worth grepping for by hand**:
+0.11's single `Drawer` did two jobs and 1.0 splits it in two.
+
+- **`Sheet`** is the edge-docked panel `placement` meant. **A 0.11 `<Drawer>` call site
+  goes here**, with `placement="right"` becoming `side="right"`.
+- **`Drawer`** keeps the name but is now the *swipeable* sheet — snap points, a swipe
+  axis, an optional grab handle, uncontrolled by default.
+
+Because the name survives, `<Drawer open placement="right">` may not fail to compile; it
+will render the wrong thing. Recipe in `docs/migration/from-0.11.md`.
+
+**`Kanban` had no keyboard path at all** — 49 lines of HTML5 drag with zero ARIA. That
+is not something an `onKeyDown` fixes: accessible drag-and-drop is a lift/move/drop
+state machine with live regions. The board is now `@dnd-kit`, the grip is a real
+`<button>`, and Space lifts, arrows move, Space drops, Escape cancels.
+
+`items` is now genuinely **controlled**: pass it without `onItemsChange` and every card
+snaps back. Seeding is `defaultItems`. `onMove` fires on a column change, never on a
+reorder.
+
+### The migration's entire new dependency bill
+
+`@dnd-kit/core` + `/sortable` + `/utilities`, for `kanban` alone. Nothing else in the
+absorption acquires anything.
+
+### Also
+
+- **`Skeleton`** takes a `className` and a `style` rather than `variant` / `width` /
+  `height` / `count` — composition replacing configuration, the trade every applier in
+  this release makes. `skeleton.css` is **held** (`DataGrid` renders
+  `.ds-skeleton--text`), so every modifier a 0.11 call site named still exists. It
+  renders a `<div>` now and sets no `aria-hidden`: mark the loading *region* with
+  `role="status"` instead, which is what a screen reader actually needs.
+- **`AppShell`** gains `sidebar`'s two cherry-picks — `persist` (a week-long cookie) and
+  `shortcut` (⌘B / Ctrl+B), both default on, both additive. The toggle announces the
+  shortcut with `aria-keyshortcuts`. The other 23 of `sidebar`'s parts do not port.
+- **`ConsoleLayout`**'s sign-out control was a `<span onClick>` — not focusable, so it
+  was mouse-only. Re-wiring it onto the new tooltip made it a real button.
+- **9 of the 18 `z-index: 50` remaps** land here: `drawer` 3 and `sheet` 2 on
+  `--ds-z-overlay`, `tooltip` 4 on `--ds-z-popover`.
+- The **`sheet` dedupe exception is resolved rather than carried**, which finishes
+  #157's Tailwind-literal work: the count across the package is now zero.
+
+### Fixed beyond the absorption
+
+**The docs site's dark theme was painting `bg-muted` near-white.** `chrome.css` bound
+`--color-muted` to `--ds-grey-bg`, which the dark theme does not override, so every
+muted surface in the docs app froze at `#ececec` — the one thing that block's own
+`@theme inline` note exists to prevent. It is what put the dark syntax palette on a
+light wash and produced the `.code-tokens` colour-contrast failure batches 6 and 7 both
+recorded and deferred. Measured, root-caused and fixed at the binding; the palette
+needed no edit. **The dark routes are now axe-clean**, which was the last thing standing
+between the project and the 1.0 cutover's full unfiltered gate.
+
+### Kept, on purpose
+
+0.11's `.ds-drawer` and `.ds-tooltip-host` grammars **still ship** beside the absorbed
+ones. `examples/` and `kitchen-sink.html` write both by hand and no React component can
+re-class them, so replacing the stylesheets wholesale would have unstyled a committed
+fixture. The two tooltip grammars share no class name; the drawer pair shares only
+`.ds-drawer-overlay`, told apart by whether it wraps a `> .ds-drawer`. `kanban` is the
+opposite case and *is* replaced outright — its three readers are re-classed to flat
+kebab in this batch.
+
+### Verification
+
+`npm run check` clean — 818 defined classes, 258 source files. The docs site builds.
+**15 new regress assertions green** across `kanban-regress` (5, three of them keyboard),
+`tooltip-regress` (4) and `drawer-regress` (6, run against both halves of the merge).
+Axe clean on all 10 route/theme combinations for this batch's five components.
+
+The full unfiltered a11y suite — 238 tests, every route in both themes — was run on this
+branch **and on a clean worktree at the beta.7 commit**, and diffed:
+
+| | passed | failed |
+| --- | --- | --- |
+| beta.7 | 151 | 77 |
+| beta.8 | **216** | **22** |
+
+**Zero regressions**: not one test that passed on beta.7 fails here. 55 are newly
+passing, all of them dark routes freed by the `bg-muted` fix. The 22 that remain fail
+identically on both commits and belong to other batches — `aria-allowed-attr` on the
+time pickers, `label` on `tags-input` and `direction`, `aria-toggle-field-name` on
+`collapsible` and `marker`, and the dark-theme `--ds-button--danger` / `--link` contrast
+of [#15](https://github.com/LittleBigCode/design-system/issues/15). Four assertions in
+the batch 1 and batch 3 rewiring specs fail the same way, same four by name on the
+baseline. All of it is recorded in `docs/absorption/corrections.md`; closing it out is
+the 1.0 cutover's first gate, not this batch's.
+
 ## [1.0.0-beta.7] — 2026-09-03
 
 Sixteen components, and the batch where **every class name is already spoken for**. A

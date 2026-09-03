@@ -2,7 +2,7 @@
 
 # Migrating from 0.11 to 1.0
 
-The v1 absorption renames 133 consumer-visible thing(s). Everything else is additive.
+The v1 absorption renames 149 consumer-visible thing(s). Everything else is additive.
 
 ### Components
 
@@ -42,6 +42,12 @@ The v1 absorption renames 133 consumer-visible thing(s). Everything else is addi
 | `Status (the tone union type)` | `StatusTone` | 7 | It could not stay as a deprecated alias: a type alias named `Status` in the barrel shadows the `Status` *component* for every consumer. |
 | `Range` | `Slider` | 7 | On Base UI, so a range is one control with two thumbs rather than two inputs kept in order by the caller. `.ds-range` — the native `<input type=range>` — is still defined in `slider.css` for hand-written HTML. |
 | `FieldHint` | _removed_ | 7 | Replaced by `FieldDescription` (neutral) and `FieldError` (`role="alert"`, so a validation message is announced when it appears — `FieldHint` was a bare span and never was). `.ds-field__hint` stays defined in `field.css` for hand-written HTML. `<FormField>` absorbs the swap: its own props are unchanged. |
+| `Tooltip (label + placement props)` | `Tooltip + TooltipTrigger + TooltipContent + TooltipProvider` | 8 | A defect swap, not a rename of convenience. 0.11's Tooltip put role="tooltip" on a sibling span with no id and no aria-describedby on the trigger, and had no Escape dismissal. `<Tooltip label="Save" placement="bottom"><IconButton/></Tooltip>` becomes `<Tooltip><TooltipTrigger render={<IconButton aria-label="Save"/>}/><TooltipContent side="bottom">Save</TooltipContent></Tooltip>`. The trigger MUST carry its own accessible name: the popup is visual-only by design and wires no description. Pinned by site/tests/tooltip-regress.spec.ts. |
+| `Drawer (open/onClose/placement/heading/footer props)` | `Sheet + SheetTrigger + SheetContent + SheetHeader + SheetTitle + SheetDescription + SheetFooter + SheetClose` | 8 | THE MERGE. 0.11's one Drawer did two jobs and the absorption splits it, so `placement` lands on Sheet, not on the new Drawer. `<Drawer open placement="right" heading="Filters" footer={…}>` becomes `<Sheet open><SheetContent side="right"><SheetHeader><SheetTitle>Filters</SheetTitle></SheetHeader>…<SheetFooter>…</SheetFooter></SheetContent></Sheet>`. Earned on a measured defect: 0.11 had no focus trap and no portal, so Tab walked out of an open drawer. Pinned by site/tests/drawer-regress.spec.ts. |
+| `Drawer` | `Drawer (a different component)` | 8 | The name survives but the component behind it does not. The 1.0 Drawer is the swipeable sheet — snap points, a swipe axis, an optional grab handle — and is uncontrolled by default. A 0.11 `<Drawer open placement>` call site must move to `Sheet` (row above); it will not fail to compile on `open` alone, so this is the one row worth grepping for by hand. |
+| `Kanban (items prop, seeded and then self-owned)` | `Kanban (items + onItemsChange, or defaultItems)` | 8 | A defect swap: 0.11 was 49 lines of HTML5 drag with zero ARIA and no keyboard path at all. The board is now a @dnd-kit lift/move/drop state machine — the grip is a real button, so Space lifts, arrows move, Space drops, Escape cancels. `items` is now genuinely CONTROLLED: passing it without `onItemsChange` pins every card. Seeding behaviour is `defaultItems`. `onMove` reports (itemKey, toColumnId) and fires only on a column change, not a reorder. Pinned by site/tests/kanban-regress.spec.ts. |
+| `Skeleton (variant/width/height/count props)` | `Skeleton (className + style)` | 8 | Composition replacing configuration, the trade every applier in this migration makes. `variant` is the held stylesheet's own modifier — `<Skeleton variant="text"/>` becomes `<Skeleton className="ds-skeleton--text"/>`; `width`/`height` become `style`; `count={3}` becomes a map. skeleton.css is HELD (DataGrid renders .ds-skeleton--text), so every modifier a 0.11 call site used still exists. It also renders a <div> now, not a <span>, and carries no aria-hidden — mark the loading REGION with aria-hidden or role="status", which is what a screen reader actually needs. |
+| `AppShell` | `AppShell (+ persist, + shortcut)` | 8 | Additive, no call site moves. `sidebar`'s two cherry-picks (#164 A3): `persist` remembers the collapsed state in a week-long cookie, `shortcut` binds Cmd/Ctrl+B to the toggle. Both default on and both are no-ops without a `sidebar`. The other 23 of sidebar's composition parts do not port. |
 
 ### Classes
 
@@ -134,6 +140,16 @@ The v1 absorption renames 133 consumer-visible thing(s). Everything else is addi
 | `.ds-checkbox / .ds-textarea / .ds-select / .ds-range / .ds-input-group (defined in form-controls.css)` | `the same names, in checkbox.css / textarea.css / select.css / slider.css / input-group.css` | 7 | `form-controls.css` split seven ways and kept only the radio block. Every class name is unchanged; only the file it lives in moved. `.ds-field--error`, `.ds-field--success` and `.ds-field__hint` moved to `field.css`. |
 | `.ds-agenda-event-status--info / --success / --warning / --danger / --critical` | `.ds-status--info / --success / --warning / --danger / --critical` | 7 | The agenda's status dot is a `<Status><StatusIndicator/>` now, so its six private tone rules left `agenda.css`. One status is one colour system-wide. |
 | `<svg class="ds-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">` | `<svg class="ds-icon" viewBox="0 0 256 256" fill="currentColor">` | 7 | Lucide -> Phosphor. Every icon **name** is unchanged, so no `<Icon>` or `<ds-icon>` call moves; hand-written `<svg class="ds-icon">` does, because the wrapper attributes and the geometry both change. |
+| `.ds-tooltip-host + .ds-tooltip` | `.ds-tooltip-content (+ .ds-tooltip-positioner, .ds-tooltip-arrow)` | 8 | Both grammars ship. The 0.11 pair is the CSS-only hover host and still works for hand-written HTML; the React <Tooltip> renders only the absorbed one. They share no class name, so no guard was needed. |
+| `.ds-drawer + .ds-drawer--right|left|top|bottom + .ds-drawer__head|__title|__close|__body|__foot|__spacer` | `.ds-sheet-content[data-side] + .ds-sheet-header|-title|-close|-footer (React), or unchanged (hand-written)` | 8 | The 0.11 grammar is NOT removed — examples/components/drawer.html, kitchen-sink.html and the demo's files.js write it by hand and nothing re-classes them. Only .ds-drawer-overlay is shared between the two grammars, told apart by whether it wraps a `> .ds-drawer`. |
+| `(none)` | `.ds-sheet-overlay, .ds-sheet-content, .ds-sheet-header, .ds-sheet-footer, .ds-sheet-title, .ds-sheet-description, .ds-sheet-close` | 8 | Net-new file, css/components/sheet.css, imported after drawer.css. |
+| `.ds-kanban__col` | `.ds-kanban-column` | 8 | Flat kebab, per #157's C2. The three committed readers are re-classed in this batch. |
+| `.ds-kanban__col-head` | `.ds-kanban-column-header` | 8 | The column label now takes .ds-kanban-column-title rather than a bare span. |
+| `.ds-kanban__count` | `.ds-kanban-column-count` | 8 |  |
+| `.ds-kanban__list` | `.ds-kanban-column-list` | 8 | The drop-target highlight moves from `.is-over` to `[data-over]`, which is what dnd-kit sets. |
+| `.ds-kanban__card` | `.ds-kanban-card` | 8 | Now a flex row of a grip and a `.ds-kanban-card-body`; hand-written content belongs in the body or it sits beside the grip. |
+| `.ds-kanban__card-title` | `.ds-kanban-card-title` | 8 |  |
+| `.ds-kanban__card-meta` | `.ds-kanban-card-meta` | 8 | Carried over from the 0.11 grammar rather than dropped: the source defines no meta part, and the re-classed fixtures needed somewhere to land. |
 
 ### Tokens
 

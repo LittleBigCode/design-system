@@ -13,7 +13,15 @@
   --color-background: var(--ds-bg);
   --color-foreground: var(--ds-ink);
   --color-card: var(--ds-surface);
-  --color-muted: var(--ds-grey-bg);
+  /* --ds-bg-alt, not --ds-grey-bg. The dark theme overrides --ds-bg-alt
+     (#f5f5f5 -> #1b1c1f) and does NOT override --ds-grey-bg (#ececec), so the
+     old binding froze every `bg-muted` surface at a near-white grey in dark —
+     the one thing the @theme inline note above exists to prevent. It is what
+     put the dark syntax palette on a light wash: shiki-theme.ts computes every
+     dark role against "bg-muted, i.e. --ds-bg-alt (#1b1c1f)" and was measured
+     against #676768 instead. Found in 1.0.0-beta.8; batches 6 and 7 both
+     recorded the axe failure without measuring the surface under it. */
+  --color-muted: var(--ds-bg-alt);
   --color-muted-foreground: var(--ds-ink-soft);
   --color-accent: var(--ds-accent-bg);
   --color-accent-foreground: var(--ds-accent-ink);

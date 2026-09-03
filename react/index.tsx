@@ -201,12 +201,12 @@ export * from "./components/pagination.js";
 export * from "./components/Popover.js";
 export * from "./components/progress.js";
 export * from "./components/Radio.js";
-export * from "./components/Skeleton.js";
+export * from "./components/skeleton.js";
 export * from "./components/spinner.js";
 export * from "./components/stepper.js";
 export * from "./components/timeline.js";
 export * from "./components/ToastProvider.js";
-export * from "./components/Tooltip.js";
+export * from "./components/tooltip.js";
 export * from "./components/Tree.js";
 export * from "./components/VerticalNav.js";
 export * from "./components/Combobox.js";
@@ -217,7 +217,11 @@ export * from "./components/FileUpload.js";
 export * from "./components/toolbar.js";
 export * from "./components/AppShell.js";
 export * from "./components/Wizard.js";
-export * from "./components/Drawer.js";
+/* Two symbols, one 1.0 merge: 0.11's single `Drawer` became the source's
+   swipeable `Drawer` plus the edge-docked `Sheet` its `placement` prop meant.
+   They export together because the merge only makes sense whole. */
+export * from "./components/drawer.js";
+export * from "./components/sheet.js";
 export * from "./components/CommandPalette.js";
 export * from "./components/StatCard.js";
 export * from "./components/Rating.js";
@@ -232,7 +236,7 @@ export * from "./components/Calendar.js";
 export * from "./components/agenda.js";
 export * from "./components/banner.js";
 export * from "./components/table.js";
-export * from "./components/Kanban.js";
+export * from "./components/kanban.js";
 export * from "./components/page-header.js";
 export * from "./components/ConsoleLayout.js";
 export * from "./components/FormField.js";

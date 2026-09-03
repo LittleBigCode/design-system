@@ -134,31 +134,40 @@
 
       <section class="docs-section">
         <h2>React</h2>
-        <p class="docs-note">The <code>Drawer</code> component portals to <code>&lt;body&gt;</code> and is controlled via <code>open</code>; it closes on <kbd>Escape</kbd> and a backdrop click. Pass <code>placement</code>, a <code>heading</code>, and optional <code>footer</code> actions.</p>
+        <p class="docs-note"><strong>Changed in 1.0, and this one needs reading.</strong> 0.11&rsquo;s one <code>Drawer</code> did two jobs, and 1.0 splits it in two. <code>Sheet</code> is the edge-docked panel that <code>placement</code> meant — that is where a 0.11 call site goes. <code>Drawer</code> keeps its name but is now the <em>swipeable</em> sheet: snap points, a swipe axis, an optional grab handle, uncontrolled by default.</p>
+        <p class="docs-note">Because the name survives, a 0.11 <code>&lt;Drawer open placement="right"&gt;</code> will not necessarily fail to compile — it will just render the wrong thing. This is the one 1.0 change worth grepping for by hand.</p>
+        <p class="docs-note">Both are Base UI dialogs, so both add what 0.11 never had: a real focus trap (Tab cycles inside the panel instead of walking out into the page behind it) and a portal. The classes above are 0.11&rsquo;s and still work for hand-written HTML; the React components render <code>.ds-sheet-*</code> / <code>.ds-drawer-popup</code> instead.</p>
         <section class="ds-example">
           <header class="ds-example__bar">
             <span class="ds-label">&lt;Drawer&gt;</span>
             <button class="ds-button" data-copy-target="#c-react">Copy</button>
           </header>
-          <pre class="ds-example__code"><code id="c-react">import { Drawer, Button } from "@diametral/design-system/react";
+          <pre class="ds-example__code"><code id="c-react">import {
+  Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle,
+  SheetDescription, SheetFooter, SheetClose, Button,
+} from "@diametral/design-system/react";
 
-function Filters() {
-  const [open, setOpen] = React.useState(false);
-  return (
-    &lt;&gt;
-      &lt;Button variant="primary" onClick={() =&gt; setOpen(true)}&gt;Open drawer&lt;/Button&gt;
-      &lt;Drawer
-        open={open}
-        onClose={() =&gt; setOpen(false)}
-        placement="right"
-        heading="Filters"
-        footer={&lt;Button variant="primary" onClick={() =&gt; setOpen(false)}&gt;Apply&lt;/Button&gt;}
-      &gt;
-        &lt;p&gt;Body content…&lt;/p&gt;
-      &lt;/Drawer&gt;
-    &lt;/&gt;
-  );
-}</code></pre>
+// The 0.11 &lt;Drawer placement="right"&gt; lands HERE, on Sheet.
+// No `open` needed: the trigger owns it. Pass `open`/`onOpenChange` to control.
+&lt;Sheet&gt;
+  &lt;SheetTrigger render={&lt;Button variant="primary" /&gt;}&gt;Open drawer&lt;/SheetTrigger&gt;
+  &lt;SheetContent side="right"&gt;
+    &lt;SheetHeader&gt;
+      &lt;SheetTitle&gt;Filters&lt;/SheetTitle&gt;
+      &lt;SheetDescription&gt;Narrow the result set.&lt;/SheetDescription&gt;
+    &lt;/SheetHeader&gt;
+    &lt;p&gt;Body content…&lt;/p&gt;
+    &lt;SheetFooter&gt;
+      &lt;SheetClose render={&lt;Button variant="primary" /&gt;}&gt;Apply&lt;/SheetClose&gt;
+    &lt;/SheetFooter&gt;
+  &lt;/SheetContent&gt;
+&lt;/Sheet&gt;
+
+// And the OTHER one — the swipeable sheet that now owns the name `Drawer`:
+//   &lt;Drawer showSwipeHandle snapPoints={[0.4, 1]}&gt;
+//     &lt;DrawerTrigger render={&lt;Button /&gt;}&gt;Open&lt;/DrawerTrigger&gt;
+//     &lt;DrawerContent&gt;…&lt;/DrawerContent&gt;
+//   &lt;/Drawer&gt;</code></pre>
         </section>
       </section>
 

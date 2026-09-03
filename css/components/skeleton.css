@@ -29,6 +29,29 @@
   animation: ds-shimmer 1.4s ease-in-out infinite;
 }
 
+/* An unmodified .ds-skeleton takes the line size. Additive, landed in
+   1.0.0-beta.8 alongside the React swap: the absorbed <Skeleton> is a shadcn
+   component sized by Tailwind utilities (`h-4 w-full`) and this package ships
+   none, so without this `<Skeleton />` with no className rendered a zero-height
+   box — 0.11's binding defaulted to variant="line" and never could.
+
+   The :not() is load-bearing, not defensive. Every modifier below is a single
+   class, exactly as specific as `.ds-skeleton`, so a bare rule placed after
+   them would silently win — including over `--text`, which is the one this
+   file is HELD for: DataGrid.tsx:321 writes `ds-skeleton ds-skeleton--text`
+   for its loading rows and would have had its row height overridden. Excluding
+   anything carrying a modifier makes the default unreachable from the pin.
+
+   The :where() around the argument is what keeps this a DEFAULT rather than an
+   override: a bare :not([class*=…]) scores 0,2,0 and would outrank not only the
+   modifiers but any single-class rule a consumer writes to size one. :where()
+   contributes nothing, so the selector stays at 0,1,0 — the modifiers below win
+   on source order, and anything loaded later wins the way it should. */
+.ds-skeleton:not(:where([class*="ds-skeleton--"])) {
+  width: 100%;
+  height: 12px;
+}
+
 /* Text line — a short line at roughly text height. */
 .ds-skeleton--text {
   height: 0.8em;

@@ -88,6 +88,11 @@
 
 /* Wave 3 — overlays, data-viz, advanced pickers, utilities */
 @import url("./components/drawer.css");
+/* sheet.css is the other half of beta.8's drawer merge — one 0.11 `Drawer`
+   symbol became the source's `Drawer` (swipeable) plus `Sheet` (edge-docked).
+   It trails drawer.css so the pair reads in the order the merge describes; the
+   two share no class name, so the order is documentation, not cascade. */
+@import url("./components/sheet.css");
 @import url("./components/command-palette.css");
 @import url("./components/sparkline.css");
 @import url("./components/stat-card.css");
