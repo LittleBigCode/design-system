@@ -5,9 +5,10 @@
 // must run first so dist/docs/registry.js and dist/docs/demos/**/*.js exist, and
 // `npm run build:react` so dist/react exists (both are earlier steps in `npm run
 // build`).
-import { readFileSync, writeFileSync, mkdirSync, readdirSync } from "node:fs"
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync } from "node:fs"
 import { join, dirname } from "node:path"
 import { fileURLToPath } from "node:url"
+import ts from "typescript"
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)))
 
@@ -160,9 +161,195 @@ function legacySlugFor(slug, legacySlugs) {
   return null
 }
 
+// -- workbench: ported from site/plugins/extract-variants.ts (issue #32). Runs
+// at `npm run build` time instead of Vite build time, over the same TS compiler
+// API and the same react/components/*.tsx sources. --
+function propertyName(name) {
+  if (ts.isIdentifier(name)) return name.text
+  if (ts.isStringLiteral(name)) return name.text
+  return undefined
+}
+
+function objectProperty(object, key) {
+  for (const property of object.properties) {
+    if (!ts.isPropertyAssignment(property)) continue
+    if (propertyName(property.name) === key) return property.initializer
+  }
+  return undefined
+}
+
+/** Pulls the variant axes out of every `cva()`/`variants()` call in a component
+ *  file, keyed by the const it is assigned to (e.g. `buttonVariants`). */
+function extractVariants(fileName, text) {
+  const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX)
+  const found = {}
+
+  const visit = (node) => {
+    if (
+      ts.isVariableDeclaration(node) &&
+      ts.isIdentifier(node.name) &&
+      node.initializer &&
+      ts.isCallExpression(node.initializer) &&
+      ts.isIdentifier(node.initializer.expression) &&
+      (node.initializer.expression.text === "cva" || node.initializer.expression.text === "variants")
+    ) {
+      const config = node.initializer.arguments[1]
+      if (config && ts.isObjectLiteralExpression(config)) {
+        const variantsNode = objectProperty(config, "variants")
+        if (variantsNode && ts.isObjectLiteralExpression(variantsNode)) {
+          const variants = {}
+          for (const axis of variantsNode.properties) {
+            if (!ts.isPropertyAssignment(axis)) continue
+            const axisName = propertyName(axis.name)
+            if (!axisName || !ts.isObjectLiteralExpression(axis.initializer)) continue
+            const values = axis.initializer.properties
+              .filter(ts.isPropertyAssignment)
+              .map((value) => propertyName(value.name))
+              .filter((value) => Boolean(value))
+            if (values.length > 0) variants[axisName] = values
+          }
+
+          const defaults = {}
+          const defaultsNode = objectProperty(config, "defaultVariants")
+          if (defaultsNode && ts.isObjectLiteralExpression(defaultsNode)) {
+            for (const entry of defaultsNode.properties) {
+              if (!ts.isPropertyAssignment(entry)) continue
+              const axisName = propertyName(entry.name)
+              if (axisName && ts.isStringLiteral(entry.initializer)) defaults[axisName] = entry.initializer.text
+            }
+          }
+
+          if (Object.keys(variants).length > 0) found[node.name.text] = { variants, defaults }
+        }
+      }
+    }
+    ts.forEachChild(node, visit)
+  }
+
+  visit(source)
+  return found
+}
+
+function dedent(text) {
+  const lines = text.split("\n")
+  const indents = lines.slice(1).filter((line) => line.trim()).map((line) => line.match(/^ */)?.[0].length ?? 0)
+  const shift = indents.length ? Math.min(...indents) : 0
+  return [lines[0], ...lines.slice(1).map((line) => line.slice(shift))].join("\n")
+}
+
+/** Returns the JSX a playground file's default export renders, still carrying
+ *  its `{...props}` marker. */
+function extractTemplate(fileName, text) {
+  const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX)
+  let template
+
+  const fromBody = (body) => {
+    let result
+    const walk = (node) => {
+      if (result) return
+      if (ts.isReturnStatement(node) && node.expression) {
+        let expression = node.expression
+        while (ts.isParenthesizedExpression(expression)) expression = expression.expression
+        result = dedent(expression.getText(source))
+        return
+      }
+      ts.forEachChild(node, walk)
+    }
+    walk(body)
+    return result
+  }
+
+  const visit = (node) => {
+    if (template) return
+    const modifiers = ts.canHaveModifiers(node) ? ts.getModifiers(node) : undefined
+    const isDefaultExport = modifiers?.some((modifier) => modifier.kind === ts.SyntaxKind.DefaultKeyword)
+    if (ts.isFunctionDeclaration(node) && isDefaultExport && node.body) {
+      template = fromBody(node.body)
+      return
+    }
+    ts.forEachChild(node, visit)
+  }
+
+  visit(source)
+  return template
+}
+
+function toPascal(slug) {
+  return slug.replace(/(^|-)([a-z])/g, (_, __, letter) => letter.toUpperCase())
+}
+
+/** `react/components/<slug>.tsx` or its PascalCase spelling — mirrors
+ *  site/plugins/demo-source.ts's resolveComponent(). */
+function resolveComponentFile(slug) {
+  for (const name of [slug, toPascal(slug)]) {
+    const file = join(ROOT, "react/components", `${name}.tsx`)
+    if (existsSync(file)) return file
+  }
+  return undefined
+}
+
+const PLAYGROUNDS_DIR = join(ROOT, "examples/registry/playgrounds")
+const playgroundSlugs = new Set(
+  readdirSync(PLAYGROUNDS_DIR).filter((f) => f.endsWith(".tsx")).map((f) => f.slice(0, -".tsx".length))
+)
+
+/**
+ * The small JSON payload the Workbench section reads at runtime: the JSX
+ * template, its variant axes (extracted, not declared), the plain-prop
+ * controls and editable text markers a `PlaygroundConfig` declares. `undefined`
+ * for any slug with no landed playground file (still `_pending`) or no
+ * declaration in examples/registry/playgrounds.ts.
+ */
+function buildWorkbenchPayload(slug) {
+  if (!playgroundSlugs.has(slug)) return undefined
+  const config = PLAYGROUNDS[slug]
+  if (!config) return undefined
+
+  const playgroundFile = join(PLAYGROUNDS_DIR, `${slug}.tsx`)
+  const template = extractTemplate(playgroundFile, readFileSync(playgroundFile, "utf8"))
+  if (!template) return undefined
+
+  let axes = []
+  if (config.variantsFrom) {
+    const componentFile = resolveComponentFile(slug)
+    const meta = componentFile && extractVariants(componentFile, readFileSync(componentFile, "utf8"))[config.variantsFrom]
+    if (meta) {
+      axes = Object.entries(meta.variants).map(([prop, options]) => ({ prop, options, default: meta.defaults[prop] }))
+    }
+  }
+
+  return {
+    template,
+    axes,
+    extras: config.extras ?? [],
+    children: config.children,
+    texts: config.texts,
+    note: config.note,
+  }
+}
+
 function buildImportLine(doc) {
   if (!doc.exports?.length) return null
   return `import { ${doc.exports.join(", ")} } from "${IMPORT_PATH}"`
+}
+
+function buildWorkbenchSection(workbench) {
+  if (!workbench) return ""
+  return `      <section class="docs-section" id="ex-workbench">
+        <h2>Workbench</h2>
+        ${workbench.note ? `<p class="docs-note">${prose(workbench.note)}</p>` : ""}
+        <section class="ds-example">
+          <header class="ds-example__bar">
+            <span class="ds-label">Workbench</span>
+            <button class="ds-button" type="button" data-copy-target="#workbench-code-out">Copy</button>
+          </header>
+          <div class="ds-workbench">
+            <div class="ds-workbench__preview" id="workbench-preview">Loading…</div>
+            <aside class="ds-workbench__rail" id="workbench-rail"></aside>
+          </div>
+          <pre class="ds-example__code" tabindex="0"><code id="workbench-code-out">Loading…</code></pre>
+        </section>
+      </section>`
 }
 
 function buildPage(doc, legacySlug) {
@@ -170,8 +357,9 @@ function buildPage(doc, legacySlug) {
   const intro = (doc.intro ?? []).map((p) => `        <p class="docs-note">${prose(p)}</p>`).join("\n")
   const importLine = buildImportLine(doc)
   const examples = doc.examples ?? []
+  const workbench = buildWorkbenchPayload(doc.slug)
 
-  const sections = examples.map((example) => {
+  const exampleSections = examples.map((example) => {
     const anchor = example.demo.replace("/", "-")
     const source = readFileSync(join(ROOT, "examples/registry/demos", `${example.demo}.tsx`), "utf8")
     return `      <section class="docs-section" id="ex-${anchor}">
@@ -192,12 +380,17 @@ function buildPage(doc, legacySlug) {
           <pre class="ds-example__code" data-panel="html" tabindex="0" hidden><code id="h-${anchor}">Loading…</code></pre>
         </section>
       </section>`
-  }).join("\n\n")
+  })
+  const sections = [buildWorkbenchSection(workbench), ...exampleSections].filter(Boolean).join("\n\n")
 
-  const toc = examples.length > 1
+  const tocLinks = [
+    ...(workbench ? [`        <a href="#ex-workbench">Workbench</a>`] : []),
+    ...examples.map((e) => `        <a href="#ex-${e.demo.replace("/", "-")}">${escapeHtml(e.title)}</a>`),
+  ]
+  const toc = tocLinks.length > 1
     ? `      <nav class="docs-toc" aria-label="On this page">
         <p class="docs-toc__label ds-label">On this page</p>
-${examples.map((e) => `        <a href="#ex-${e.demo.replace("/", "-")}">${escapeHtml(e.title)}</a>`).join("\n")}
+${tocLinks.join("\n")}
       </nav>`
     : ""
 
@@ -227,6 +420,21 @@ ${examples.map((e) => `        <a href="#ex-${e.demo.replace("/", "-")}">${escap
         if (el.innerHTML !== "Loading…") { capture(); mo.disconnect() }
       }
     }`).join("\n")
+
+  const workbenchImport = workbench
+    ? `\n    import WorkbenchSubject from "../../dist/docs/playgrounds/${doc.slug}.js"\n    import { mountWorkbench } from "../docs.js"`
+    : ""
+  // `<` guarded so a text/note field can never accidentally close the script
+  // element early — none do today, but the payload is otherwise unescaped.
+  const workbenchMount = workbench
+    ? `\n    mountWorkbench({
+      Subject: WorkbenchSubject,
+      payload: ${JSON.stringify(workbench).replace(/</g, "\\u003c")},
+      preview: document.getElementById("workbench-preview"),
+      rail: document.getElementById("workbench-rail"),
+      code: document.getElementById("workbench-code-out"),
+    })`
+    : ""
 
   const importMap = JSON.stringify(buildImportMap(), null, 2).replace(/\n/g, "\n  ")
 
@@ -267,7 +475,7 @@ ${intro}
         </div>` : ""}
       </header>
 
-      <div class="docs-examplesrow${examples.length > 1 ? "" : " docs-examplesrow--single"}">
+      <div class="docs-examplesrow${tocLinks.length > 1 ? "" : " docs-examplesrow--single"}">
         <div class="docs-examplesrow__main">
 ${sections}
         </div>
@@ -284,9 +492,9 @@ ${toc}
     import { createRoot } from "react-dom/client"
     import { createElement as h } from "react"
     import { ToastProvider } from "${IMPORT_PATH}"
-${imports}
+${imports}${workbenchImport}
 
-${renders}
+${renders}${workbenchMount}
   </script>
   <!-- The theme toggle itself lives in the sticky top bar showcase.js renders
        on every page — see wireTheme() there — not per-page any more. -->
@@ -486,6 +694,7 @@ ${categoryCards}
 }
 
 const { COMPONENTS, CATEGORIES } = await import(join(ROOT, "dist/docs/registry.js"))
+const { PLAYGROUNDS } = await import(join(ROOT, "dist/docs/playgrounds.js"))
 
 const legacySlugs = new Set(
   readdirSync(join(ROOT, "examples/css")).filter((f) => f.endsWith(".html")).map((f) => f.slice(0, -".html".length))

@@ -158,6 +158,26 @@ details[open] > .docs-nav__label::before { transform: rotate(90deg); }
 .ds-example__tabs .ds-tabs__tab { padding: 4px 10px; font-family: inherit; font-size: 12px; font-weight: 400; letter-spacing: 0; }
 .ds-example__tabs .ds-tabs__tab[aria-selected="true"]::after { bottom: -11px; }
 
+/* ---- Workbench: live playground controls (issue #32) --------------------- */
+.ds-workbench { display: grid; grid-template-columns: minmax(0, 1fr) 220px; align-items: stretch; }
+.ds-workbench__preview {
+  display: flex; flex-wrap: wrap; gap: 16px; align-items: center;
+  padding: 32px 24px;
+  background: var(--ds-bg-alt);
+}
+.ds-workbench__rail {
+  display: flex; flex-direction: column; gap: 16px;
+  padding: 16px;
+  border-left: 1px solid var(--ds-rule);
+  background: var(--ds-surface);
+}
+.ds-workbench__row { display: flex; flex-direction: column; gap: 6px; }
+.ds-workbench__row--switch { flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; }
+@media (max-width: 720px) {
+  .ds-workbench { grid-template-columns: minmax(0, 1fr); }
+  .ds-workbench__rail { border-left: none; border-top: 1px solid var(--ds-rule); }
+}
+
 /* ---- Generated component page furniture (category badge, import line, TOC) */
 .docs-head .ds-badge { margin-bottom: 14px; }
 .docs-crosslink { margin-top: -6px; }
