@@ -1,3 +1,5 @@
+"use client"
+
 import { cx } from "../lib/cx.js";
 /* ----------------------------------------------------------------------------
    Dropdown — a trigger that toggles a .ds-menu of actions.

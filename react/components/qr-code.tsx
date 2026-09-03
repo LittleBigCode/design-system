@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from "react"
 
 import { encodeQr, type QrErrorCorrectionLevel } from "../lib/qr-encode.js"

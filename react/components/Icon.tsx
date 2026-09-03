@@ -1,3 +1,5 @@
+"use client"
+
 import { cx } from "../lib/cx.js";
 import React from "react";
 import { icons } from "./icons.js";

@@ -1,3 +1,5 @@
+"use client"
+
 import { Collapsible as CollapsiblePrimitive } from "@base-ui/react/collapsible";
 
 /* Collapsible — a trigger and the panel it shows or hides.

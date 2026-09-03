@@ -1,3 +1,5 @@
+"use client"
+
 /* Direction — the RTL/LTR provider.
    ---------------------------------------------------------------------------
    A straight re-export of Base UI's direction provider, and the only component

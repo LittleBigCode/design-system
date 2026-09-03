@@ -1,3 +1,5 @@
+"use client"
+
 import { cx } from "../lib/cx.js";
 /* ----------------------------------------------------------------------------
    Date-time picker — composes a DatePicker and a TimePicker side by side.

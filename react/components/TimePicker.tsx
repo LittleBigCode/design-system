@@ -1,3 +1,5 @@
+"use client"
+
 import { cx } from "../lib/cx.js";
 /* ----------------------------------------------------------------------------
    Time picker — a .ds-input that opens an HH:MM popover.

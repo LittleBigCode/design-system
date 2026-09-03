@@ -1,3 +1,5 @@
+"use client"
+
 import { cx } from "../lib/cx.js";
 import { MonthGrid, buildWeeks, sameDay, startOfDay, toISO } from "../lib/monthGrid.js";
 /* ----------------------------------------------------------------------------

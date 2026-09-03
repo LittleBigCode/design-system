@@ -1,3 +1,5 @@
+"use client"
+
 
 
 /** Name of a built-in icon (a key of the `icons` map). */

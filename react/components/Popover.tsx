@@ -1,3 +1,5 @@
+"use client"
+
 import { cx } from "../lib/cx.js";
 /* ----------------------------------------------------------------------------
    Popover / Signpost — a trigger that toggles a bordered .ds-popover panel.

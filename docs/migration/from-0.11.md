@@ -2,7 +2,7 @@
 
 # Migrating from 0.11 to 1.0
 
-The v1 absorption renames 149 consumer-visible thing(s). Everything else is additive.
+The v1 absorption renames 150 consumer-visible thing(s). Everything else is additive.
 
 ### Components
 

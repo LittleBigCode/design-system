@@ -1,3 +1,5 @@
+"use client"
+
 import { cx } from "../lib/cx.js";
 /* ----------------------------------------------------------------------------
    Tree view — a nested, expand/collapse disclosure list with single selection.

@@ -1,7 +1,7 @@
 /* ============================================================================
    check-contracts.mjs — the release-blocking contract checks.
 
-   Three assertions, all cheap, all zero-dependency. They exist because each one
+   Four assertions, all cheap, all zero-dependency. They exist because each one
    guards a failure that is invisible in a diff and only shows up in a consumer's
    browser:
 
@@ -20,6 +20,10 @@
         `@layer utilities` strip is paid once upstream on `migration-source-v1`,
         so this is not an enforcement mechanism forcing every batch to strip: it
         is an invariant guard that should never fire.
+
+     4. use-client — every file in react/components/ starts with a `"use client"`
+        directive. Without this, a Next App Router consumer's server-component
+        graph silently absorbs a stateful component instead of erroring.
 
    Usage: node scripts/check-contracts.mjs   (run `npm run build` first)
    Exits 1 on any failure.
@@ -197,6 +201,16 @@ for (const file of walk(join(root, "css"), [".css"])) {
       "no-cascade-layers",
       `${relative(root, file)}: contains @layer — the strip is paid upstream; this should never fire`,
     );
+  }
+}
+
+/* -- 4. use-client directive ----------------------------------------------- */
+
+for (const file of walk(join(root, "react", "components"), [".tsx"])) {
+  const src = readFileSync(file, "utf8");
+  const firstLine = src.split("\n").find((l) => l.trim() !== "") ?? "";
+  if (!/^["']use client["'];?$/.test(firstLine.trim())) {
+    fail("use-client", `${relative(root, file)}: missing "use client" as the first line`);
   }
 }
 

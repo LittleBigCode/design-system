@@ -1,3 +1,5 @@
+"use client"
+
 import { cx } from "../lib/cx.js"
 
 import type * as React from "react"
