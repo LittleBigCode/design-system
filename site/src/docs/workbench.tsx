@@ -12,7 +12,7 @@ import {
 } from "@/docs/anatomy"
 import { GeneratedCode, usePlaygroundControls } from "@/docs/playground"
 import { Prose } from "@/docs/prose"
-import type { ComponentDoc } from "@/registry/registry"
+import type { ComponentDoc } from "@registry/registry"
 
 /**
  * One surface for exploring a component: an index of its parts, the playground

@@ -19,10 +19,13 @@ import { diametralDark, diametralLight, palette } from "./shiki-theme"
 
 const VIRTUAL_ID = "virtual:demo-source"
 const RESOLVED_ID = "\0" + VIRTUAL_ID
-const APP_SRC = path.resolve(import.meta.dirname, "../src")
-const DEMOS_DIR = path.join(APP_SRC, "registry/demos")
-const PLAYGROUNDS_DIR = path.join(APP_SRC, "registry/playgrounds")
-const DECLARATIONS = path.join(APP_SRC, "registry/playgrounds.ts")
+// registry.ts, demos/ and playgrounds/{,.ts} moved to examples/registry/
+// (issue #30, the docs-generator tracer bullet) — this plugin reads them from
+// there now instead of from under site/src.
+const REGISTRY = path.resolve(import.meta.dirname, "../../examples/registry")
+const DEMOS_DIR = path.join(REGISTRY, "demos")
+const PLAYGROUNDS_DIR = path.join(REGISTRY, "playgrounds")
+const DECLARATIONS = path.join(REGISTRY, "playgrounds.ts")
 /**
  * Two levels up, not three: `site/plugins` sits one directory below the repo
  * root, where `apps/web/plugins` sat two below it. The components are the TSX

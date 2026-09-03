@@ -3,7 +3,7 @@ import { Tabs } from "@diametral/design-system/react"
 import { CodeBlock } from "@/docs/code-block"
 import { Prose } from "@/docs/prose"
 import { getDemo } from "@/registry/demos"
-import { exampleAnchor, type Example } from "@/registry/registry"
+import { exampleAnchor, type Example } from "@registry/registry"
 
 export function ExampleBlock({ example }: { example: Example }) {
   const demo = getDemo(example.demo)

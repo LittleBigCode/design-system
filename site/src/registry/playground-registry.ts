@@ -2,7 +2,7 @@ import type { ComponentType } from "react"
 
 import { templates, variants } from "virtual:demo-source"
 
-import { PLAYGROUNDS, type Control } from "@/registry/playgrounds"
+import { PLAYGROUNDS, type Control } from "@registry/playgrounds"
 
 /**
  * The panel drives an arbitrary prop bag, while each playground file is typed

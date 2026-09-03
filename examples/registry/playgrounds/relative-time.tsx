@@ -1,7 +1,7 @@
 import { RelativeTime } from "@diametral/design-system/react"
 import type { ComponentProps } from "react"
 
-import { TWELVE_MINUTES_AGO } from "@/registry/playgrounds"
+import { TWELVE_MINUTES_AGO } from "../playgrounds"
 
 // The raw stamp goes straight to the component — parsing a row value is the
 // component's job, so the panel hands it over untouched.

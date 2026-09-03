@@ -21,7 +21,7 @@ import {
   CATEGORIES,
   COMPONENTS,
   componentsByCategory,
-} from "@/registry/registry"
+} from "@registry/registry"
 
 // The nav is the complete map of the system and never narrows in place — ⌘K
 // (DocsSearch) is the only search surface — so the grouping is built once.

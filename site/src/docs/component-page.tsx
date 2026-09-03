@@ -25,7 +25,7 @@ import {
   exampleTitle,
   findComponent,
   IMPORT_PATH,
-} from "@/registry/registry"
+} from "@registry/registry"
 
 /** Enough names to recognise the module, before a 23-export line stops reading. */
 const SHOWN_EXPORTS = 4

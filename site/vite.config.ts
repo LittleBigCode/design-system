@@ -42,6 +42,10 @@ export default defineConfig({
     dedupe: ["react", "react-dom", "recharts"],
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      // registry.ts, demos/ and playgrounds/{,.ts} moved to examples/registry/
+      // (issue #30, the docs-generator tracer bullet) — everything left under
+      // src/registry/ (demos.ts, playground-registry.ts) still resolves via "@".
+      "@registry": path.resolve(__dirname, "../examples/registry"),
     },
   },
 })

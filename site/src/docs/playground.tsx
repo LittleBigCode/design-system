@@ -22,7 +22,7 @@ import { formatJsx } from "@/docs/format-jsx"
 import { tokenizeJsx, type Token, type TokenKind } from "@/docs/tokenize-jsx"
 import { useCopy } from "@/docs/use-copy"
 import { getPlayground, type Axis } from "@/registry/playground-registry"
-import type { Control, SelectOption } from "@/registry/playgrounds"
+import type { Control, SelectOption } from "@registry/playgrounds"
 
 const UNSET = "—"
 
