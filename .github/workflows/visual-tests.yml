@@ -51,7 +51,15 @@ jobs:
       - name: Install site dependencies
         run: npm --prefix site ci || npm --prefix site i
 
-      - name: Install Chromium
+      # Two installs, not one. The root pins @playwright/test ^1.48 and site/
+      # pins ^1.62, and each version wants its own browser build — installing
+      # only at the root leaves the docs-app suite looking for a
+      # chrome-headless-shell revision that was never downloaded.
+      - name: Install Chromium (root suite)
+        run: npx playwright install --with-deps chromium
+
+      - name: Install Chromium (docs-app suite)
+        working-directory: site
         run: npx playwright install --with-deps chromium
 
       # --- Are there baselines to compare against? -------------------------
@@ -71,11 +79,13 @@ jobs:
         run: npm run test:visual:update
 
       - name: Generate baselines (docs app)
-        if: inputs.update_baselines
+        # `always()`-guarded on the input rather than on success: if one suite
+        # fails to generate, the other's baselines are still worth having.
+        if: ${{ inputs.update_baselines && !cancelled() }}
         run: npm --prefix site run test:visual:update
 
       - name: Upload generated baselines
-        if: inputs.update_baselines
+        if: ${{ inputs.update_baselines && !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
           name: visual-baselines
