@@ -47,6 +47,14 @@ const BLOCKS_ITEMS = [
 
 const MARK = '<svg class="ds-wordmark__mark" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="28" cy="28" r="24"/><rect x="12" y="12" width="32" height="32"/><line x1="12" y1="44" x2="44" y2="12"/></svg>';
 
+const GRID_ICON = '<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="1" y="1" width="6" height="6"/><rect x="9" y="1" width="6" height="6"/><rect x="1" y="9" width="6" height="6"/><rect x="9" y="9" width="6" height="6"/></svg>';
+const SEARCH_ICON = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="7" cy="7" r="5.5"/><line x1="11" y1="11" x2="15" y2="15"/></svg>';
+const THEME_ICONS = {
+  light: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="8" cy="8" r="3.2"/><path d="M8 1v1.5M8 13.5V15M2.6 2.6l1.1 1.1M12.3 12.3l1.1 1.1M1 8h1.5M13.5 8H15M2.6 13.4l1.1-1.1M12.3 3.7l1.1-1.1"/></svg>',
+  dark: '<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M14 9.3A6 6 0 1 1 6.7 2 4.7 4.7 0 0 0 14 9.3Z"/></svg>',
+  auto: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="9" rx="0.5"/><line x1="5.5" y1="13.5" x2="10.5" y2="13.5"/><line x1="8" y1="11.5" x2="8" y2="13.5"/></svg>',
+};
+
 const CURRENT = document.body.dataset.page || "index";
 // "index" is the one page living at the repo root; every other data-page is
 // examples-relative ("demo", "components/x", "foundations/x"…).
@@ -74,9 +82,10 @@ async function loadRegistry() {
 }
 
 function navLinks(items) {
-  return items.map(({ path, label }) => {
+  return items.map(({ path, label, count }) => {
     const cur = path === CURRENT ? ' aria-current="page"' : "";
-    return `<a href="${hrefFor(path)}"${cur}>${escapeHtml(label)}</a>`;
+    const badge = count ? `<span class="docs-nav__count">${count}</span>` : "";
+    return `<a href="${hrefFor(path)}"${cur}><span class="docs-nav__label-text">${escapeHtml(label)}</span>${badge}</a>`;
   }).join("");
 }
 
@@ -88,20 +97,26 @@ function navGroup(label, items, { forceOpen = false } = {}) {
   </details>`;
 }
 
-function renderTopbar() {
+function renderTopbar(registry) {
+  const count = registry ? Object.keys(registry.COMPONENTS).length : null;
   const header = document.createElement("header");
   header.className = "docs-topbar";
   header.innerHTML = `
     <a class="docs-topbar__brand" href="${hrefFor("index")}" style="text-decoration:none;color:inherit">
-      ${MARK}<span class="ds-wordmark__name ds-title">Diametral</span>
+      <span class="docs-topbar__brand-icon">${GRID_ICON}</span>
+      <span class="docs-topbar__brand-text">
+        <span class="ds-wordmark__name ds-title">DIAMETRAL</span>
+        <span class="docs-topbar__brand-sub">Design system${count != null ? ` · ${count} components` : ""}</span>
+      </span>
     </a>
     <button class="docs-topbar__search" type="button" id="docsSearchBtn" aria-haspopup="dialog">
+      <span class="docs-topbar__search-icon">${SEARCH_ICON}</span>
       <span>Search components…</span><span class="ds-kbd">⌘K</span>
     </button>
     <div class="ds-segmented" id="theme-toggle" role="group" aria-label="Theme">
-      <button class="ds-segmented__item" type="button" data-theme-choice="light">Light</button>
-      <button class="ds-segmented__item" type="button" data-theme-choice="dark">Dark</button>
-      <button class="ds-segmented__item" type="button" data-theme-choice="auto">Auto</button>
+      <button class="ds-segmented__item" type="button" data-theme-choice="light" aria-label="Light theme" title="Light">${THEME_ICONS.light}</button>
+      <button class="ds-segmented__item" type="button" data-theme-choice="dark" aria-label="Dark theme" title="Dark">${THEME_ICONS.dark}</button>
+      <button class="ds-segmented__item" type="button" data-theme-choice="auto" aria-label="Match system theme" title="Auto">${THEME_ICONS.auto}</button>
     </div>
   `;
   document.body.prepend(header);
@@ -121,6 +136,7 @@ function renderRail(registry) {
       const items = cat.slugs.map((slug) => ({
         path: `components/${slug}`,
         label: registry.COMPONENTS[slug]?.name ?? slug,
+        count: registry.COMPONENTS[slug]?.exampleCount ?? 0,
       }));
       return navGroup(cat.name, items);
     }).join("");
@@ -167,34 +183,37 @@ function renderRail(registry) {
   );
 }
 
-function wireTheme() {
-  const KEY = "ds-theme";
+const THEME_KEY = "ds-theme";
+
+function applyTheme(choice) {
   const html = document.documentElement;
+  html.classList.toggle("ds-auto-dark", choice === "auto");
+  if (choice === "dark") html.setAttribute("data-theme", "dark");
+  else html.removeAttribute("data-theme"); // "light" and "auto" both clear the explicit override
+}
 
-  const apply = (choice) => {
-    html.classList.toggle("ds-auto-dark", choice === "auto");
-    if (choice === "dark") html.setAttribute("data-theme", "dark");
-    else html.removeAttribute("data-theme"); // "light" and "auto" both clear the explicit override
-  };
+// Applied synchronously (before the registry import resolves) so there is no
+// flash of the wrong theme; the toggle itself is wired once it exists (renderTopbar
+// runs after the async registry load).
+let themeChoice = "light";
+try { themeChoice = localStorage.getItem(THEME_KEY) || "light"; } catch {}
+applyTheme(themeChoice);
 
-  let choice = "light";
-  try { choice = localStorage.getItem(KEY) || "light"; } catch {}
-  apply(choice);
-
+function wireTheme() {
   const group = document.getElementById("theme-toggle");
   if (!group) return;
   const sync = () => {
     group.querySelectorAll("[data-theme-choice]").forEach((btn) => {
-      btn.classList.toggle("is-active", btn.dataset.themeChoice === choice);
+      btn.classList.toggle("is-active", btn.dataset.themeChoice === themeChoice);
     });
   };
   sync();
   group.addEventListener("click", (e) => {
     const btn = e.target.closest("[data-theme-choice]");
     if (!btn) return;
-    choice = btn.dataset.themeChoice;
-    apply(choice);
-    try { localStorage.setItem(KEY, choice); } catch {}
+    themeChoice = btn.dataset.themeChoice;
+    applyTheme(themeChoice);
+    try { localStorage.setItem(THEME_KEY, themeChoice); } catch {}
     sync();
   });
 }
@@ -339,9 +358,9 @@ function prettyHtml(html) {
 }
 window.__dsPrettyHtml = prettyHtml;
 
-renderTopbar();
-wireTheme();
 loadRegistry().then((registry) => {
+  renderTopbar(registry);
+  wireTheme();
   renderRail(registry);
   wireSearch(registry);
 });
