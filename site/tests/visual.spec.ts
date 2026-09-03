@@ -16,9 +16,28 @@
 
 import { expect, test } from "@playwright/test"
 
-import { expectTheme, pinTheme, settle, THEMES, type Route } from "./harness"
+import {
+  expectTheme,
+  pinTheme,
+  routePath,
+  settle,
+  THEMES,
+  type Route,
+} from "./harness"
 
-const ROUTES: Route[] = [
+/* Router paths, prefixed with Vite's `base` at the bottom of this list. The
+   a11y suite gets that for free — COMPONENT_ROUTES is built with routePath() in
+   the harness — and this list, being hand-written, did not.
+
+   That was not a cosmetic slip. `vite preview` serves the SPA under the same
+   project subpath GitHub Pages does, so an unprefixed `page.goto("/")` lands on
+   a 404 with no app on it. The dark half then failed loudly ("Theme did not
+   apply"), but the LIGHT half passed: a 404 page carries no `dark` class, which
+   is exactly what expectTheme() checks for light. Under --update-snapshots that
+   is a suite that writes seventeen baselines of a 404 page and reports success.
+   Caught in 1.0.0-beta.8, the batch that first ran this suite anywhere but a
+   laptop and the one that arms tier 5. */
+const RAW_ROUTES: Route[] = [
   { name: "overview", path: "/" },
   { name: "showcase", path: "/showcase" },
   // Tone axis + variant matrix: the densest colour surface in the system.
@@ -45,6 +64,11 @@ const ROUTES: Route[] = [
   // Date surfaces: the most grid-heavy component.
   { name: "calendar", path: "/docs/calendar" },
 ]
+
+const ROUTES: Route[] = RAW_ROUTES.map((route) => ({
+  ...route,
+  path: routePath(route.path),
+}))
 
 // Neutralise anything that would make a screenshot flake: in-flight animation,
 // transitions, and the blinking caret. Injected after load so it wins on
