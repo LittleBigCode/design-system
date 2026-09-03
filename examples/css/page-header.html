@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page header · Diametral Design System</title>
+  <link rel="icon" href="../../assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
+  <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../../css/themes/dark.css">
+  <link rel="stylesheet" href="../shell.css">
+  <script type="module" src="../showcase.js"></script>
+</head>
+<body data-page="css/page-header">
+  <div class="docs">
+    <aside class="docs-rail" id="docsRail"></aside>
+    <main class="docs-main">
+      <header class="docs-head">
+        <p class="ds-kicker">Components · layout</p>
+        <h1 class="ds-title ds-title--xl">Page header</h1>
+        <p class="docs-lede">The standard top of a page: an optional breadcrumb, a title with a subtitle, an actions slot, and an optional tabs row flush with the bottom rule (<code>.ds-page-header</code> / React <code>&lt;PageHeader&gt;</code>).</p>
+      </header>
+
+      <section class="docs-section">
+        <h2>Header with breadcrumb, actions &amp; tabs</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">.ds-page-header</span><button class="ds-button" data-copy-target="#c-ph">Copy</button></header>
+          <div class="ds-example__preview ds-example__preview--block">
+            <header class="ds-page-header">
+              <nav aria-label="breadcrumb"><ol class="ds-breadcrumb-list">
+                <li class="ds-breadcrumb-item"><a class="ds-breadcrumb-link" href="#">Projects</a></li>
+                <li class="ds-breadcrumb-separator" role="presentation" aria-hidden="true">›</li>
+                <li class="ds-breadcrumb-item"><span class="ds-breadcrumb-page" role="link" aria-disabled="true" aria-current="page">Project Atlas</span></li>
+              </ol></nav>
+              <div class="ds-page-header-heading">
+                <div>
+                  <h1 class="ds-page-header-title">Project Atlas</h1>
+                  <p class="ds-page-header-description">Acme · Build</p>
+                </div>
+                <div class="ds-page-header-actions">
+                  <button class="ds-button">Edit</button>
+                  <button class="ds-button ds-button--primary">New milestone</button>
+                </div>
+              </div>
+              <div data-slot="page-header-tabs">
+                <div class="ds-tabs" role="tablist">
+                  <button class="ds-tabs__tab is-active" role="tab" aria-selected="true">Overview</button>
+                  <button class="ds-tabs__tab" role="tab" aria-selected="false">Activity</button>
+                  <button class="ds-tabs__tab" role="tab" aria-selected="false">Files</button>
+                </div>
+              </div>
+            </header>
+          </div>
+          <pre class="ds-example__code"><code id="c-ph">&lt;header class="ds-page-header"&gt;
+  &lt;nav aria-label="breadcrumb"&gt;&lt;ol class="ds-breadcrumb-list"&gt;…&lt;/ol&gt;&lt;/nav&gt;
+  &lt;div class="ds-page-header-heading"&gt;
+    &lt;div&gt;
+      &lt;h1 class="ds-page-header-title"&gt;Project Atlas&lt;/h1&gt;
+      &lt;p class="ds-page-header-description"&gt;Acme · Build&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="ds-page-header-actions"&gt;
+      &lt;button class="ds-button"&gt;Edit&lt;/button&gt;
+      &lt;button class="ds-button ds-button--primary"&gt;New milestone&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div data-slot="page-header-tabs"&gt;&lt;div class="ds-tabs"&gt;…&lt;/div&gt;&lt;/div&gt;
+&lt;/header&gt;</code></pre>
+        </section>
+      </section>
+
+      <section class="docs-section">
+        <h2>React</h2>
+        <section class="ds-example">
+          <header class="ds-example__bar"><span class="ds-label">&lt;PageHeader&gt;</span><button class="ds-button" data-copy-target="#c-ph-react">Copy</button></header>
+          <pre class="ds-example__code"><code id="c-ph-react">import {
+  PageHeader,
+  PageHeaderHeading,
+  PageHeaderTitle,
+  PageHeaderDescription,
+  PageHeaderActions,
+  PageHeaderTabs,
+  Button,
+} from "@diametral/design-system/react";
+
+{/* PageHeaderTabs is only a slot marker: its presence is what moves the bottom
+    rule under the strip, through a :has() rule. 0.11's `flush` prop is gone
+    because the markup now says it. */}
+&lt;PageHeader&gt;
+  &lt;PageHeaderHeading&gt;
+    &lt;div&gt;
+      &lt;PageHeaderTitle&gt;Project Atlas&lt;/PageHeaderTitle&gt;
+      &lt;PageHeaderDescription&gt;Acme · Build&lt;/PageHeaderDescription&gt;
+    &lt;/div&gt;
+    &lt;PageHeaderActions&gt;
+      &lt;Button&gt;Edit&lt;/Button&gt;
+      &lt;Button variant="primary"&gt;New milestone&lt;/Button&gt;
+    &lt;/PageHeaderActions&gt;
+  &lt;/PageHeaderHeading&gt;
+  &lt;PageHeaderTabs&gt;&lt;Tabs items={VIEWS} defaultValue="overview" /&gt;&lt;/PageHeaderTabs&gt;
+&lt;/PageHeader&gt;</code></pre>
+        </section>
+      </section>
+
+      <footer class="docs-foot">
+        <span>Diametral Design System · v0.3.0</span>
+        <a href="../../index.html">← Overview</a>
+        <a href="../blocks/index.html">Blocks →</a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
