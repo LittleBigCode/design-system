@@ -1,3 +1,5 @@
+"use client"
+
 import { cx } from "../lib/cx.js";
 /* ----------------------------------------------------------------------------
    Command palette — a ⌘K-style centered dialog. Renders a .ds-cmdk surface over

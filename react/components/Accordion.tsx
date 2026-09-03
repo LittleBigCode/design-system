@@ -1,3 +1,5 @@
+"use client"
+
 import { cx } from "../lib/cx.js";
 /* ----------------------------------------------------------------------------
    Accordion — a stack of disclosure rows. Each item is a header button + panel;

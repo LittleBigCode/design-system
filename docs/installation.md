@@ -430,7 +430,7 @@ out of the box — typed props, `children`, event handlers, and `forwardRef` on 
 ## See also
 
 - [getting-started.md](getting-started.md) — the from-the-repo buildless path.
-- [react.md](react.md) · [react/README.md](../react/README.md) — the React layer.
+- [react.md](react.md) — the React layer.
 - [components/README.md](../components/README.md) — the Web Components layer.
 - [tokens/README.md](../tokens/README.md) — the token model.
 - [theming.md](theming.md) — themes and per-stack consumption.

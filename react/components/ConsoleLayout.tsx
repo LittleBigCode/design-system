@@ -1,3 +1,5 @@
+"use client"
+
 import { cx } from "../lib/cx.js";
 /* ConsoleLayout — turnkey application chrome.
    Give it a `nav` (grouped items), the `active` id and `onNavigate`, and it

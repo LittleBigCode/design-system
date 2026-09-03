@@ -1,3 +1,5 @@
+"use client"
+
 import { cx } from "../lib/cx.js";
 /* ----------------------------------------------------------------------------
    Color picker — a flat .ds-colorpicker pairing a swatch grid with a hex input

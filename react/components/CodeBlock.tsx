@@ -1,3 +1,5 @@
+"use client"
+
 import { cx } from "../lib/cx.js";
 /* ----------------------------------------------------------------------------
    Code block — a flat .ds-code panel: a head bar (filename + Copy button) over a

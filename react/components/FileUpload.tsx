@@ -1,3 +1,5 @@
+"use client"
+
 import { cx } from "../lib/cx.js";
 /* ----------------------------------------------------------------------------
    File upload / dropzone — a clickable, keyboard-accessible .ds-dropzone wrapping

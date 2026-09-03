@@ -1,8 +1,8 @@
 # React
 
-Real React components live in [`react/`](../react/) and are documented in
-[`react/README.md`](../react/README.md). A live, buildless demo is at
-[`examples/react.html`](../examples/react.html).
+Real React components live in [`react/`](../react/) and are documented on the live
+[component pages](https://littlebigcode.github.io/design-system/). A live, buildless demo
+is at [`examples/react.html`](../examples/react.html).
 
 ## Install
 
@@ -18,21 +18,17 @@ import { Button, Status, Metric, Modal } from "@diametral/design-system/react";
 ```
 
 `react` / `react-dom` are **optional peer dependencies** — CSS-only and Web Component
-consumers don't pull them in. Since `1.0.0-beta.4` **`recharts` (>= 3) is a third optional
-peer**, for the charts that draw their marks with it — six then, twelve since
-`1.0.0-beta.5`:
+consumers don't pull them in. `recharts` (>= 3) is a regular **dependency** since
+`1.0.0-beta.8` — it installs automatically with the package, no separate `npm i recharts`
+step, for the twelve charts that draw their marks with it: `LineChart` / `AreaChart` /
+`BarChart` / `StackedBar` / `PieChart` / `DonutChart` / `RadarChart` / `ComboChart` /
+`FunnelChart` / `ScatterChart` / `Treemap` / `WaterfallChart`.
 
-```bash
-# only if you use LineChart / AreaChart / BarChart / StackedBar / PieChart / DonutChart /
-# RadarChart / ComboChart / FunnelChart / ScatterChart / Treemap / WaterfallChart
-npm i recharts
-```
-
-A peer rather than a dependency, because a chart's children are written by the consumer —
-`<ReferenceLine>`, a second `<YAxis>` — and those come from `recharts` directly. Two copies
-in one tree would put the children and `ChartContainer` on different recharts contexts, and
-the plot would render empty with no error. One copy, resolved by the consumer, is the only
-arrangement that works.
+A chart's children are still written by the consumer — `<ReferenceLine>`, a second
+`<YAxis>` — and those come from `recharts` directly, so a project that also depends on
+`recharts` itself resolves to whichever version npm hoists to a single copy. Two divergent
+copies in one tree would put the children and `ChartContainer` on different recharts
+contexts, and the plot would render empty with no error.
 
 Four charts need none of it and stay renderable as plain markup by any binding:
 `Sparkline` and `Gauge` are hand-rolled SVG, `Heatmap` and `BulletChart` are CSS grid and
@@ -130,4 +126,4 @@ import map that omits these resolves nothing:
 </script>
 ```
 
-See the full component table in [`react/README.md`](../react/README.md).
+Browse every component on the [live showcase](https://littlebigcode.github.io/design-system/).

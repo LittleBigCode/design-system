@@ -6,7 +6,7 @@
     "rule": "A batch that renames anything a consumer can import, target or reference owes a row here, in the same PR. The batch plan lists the rows each batch owes."
   },
   "schema": {
-    "kind": "component | export | class | token | path — what is being renamed",
+    "kind": "component | export | class | token | path | dependency — what is being renamed",
     "from": "the 0.x name",
     "to": "the 1.0 name, or null when the thing is removed with no replacement",
     "batch": "the batch number that made the change",
@@ -1022,6 +1022,13 @@
       "to": "AppShell (+ persist, + shortcut)",
       "batch": "8",
       "note": "Additive, no call site moves. `sidebar`'s two cherry-picks (#164 A3): `persist` remembers the collapsed state in a week-long cookie, `shortcut` binds Cmd/Ctrl+B to the toggle. Both default on and both are no-ops without a `sidebar`. The other 23 of sidebar's composition parts do not port."
+    },
+    {
+      "kind": "dependency",
+      "from": "recharts (peerDependencies, optional)",
+      "to": "recharts (dependencies)",
+      "batch": "8",
+      "note": "recharts is now installed automatically with the package instead of requiring a separate `npm i recharts`. No import path changes."
     }
   ],
   "notes": [

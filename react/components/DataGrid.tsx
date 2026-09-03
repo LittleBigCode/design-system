@@ -1,3 +1,5 @@
+"use client"
+
 import { cx } from "../lib/cx.js";
 /* DataGrid — sortable, filterable, selectable, expandable, paginated, and
    LAZY-LOADABLE data grid. Two data modes:
