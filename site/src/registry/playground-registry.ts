@@ -28,11 +28,12 @@ export type Playground = {
   note?: string
 }
 
-const modules = import.meta.glob<{ default: Subject }>("./playgrounds/*.tsx", {
-  eager: true,
-})
+const modules = import.meta.glob<{ default: Subject }>(
+  "../../../examples/registry/playgrounds/*.tsx",
+  { eager: true }
+)
 
-const KEY = /^\.\/playgrounds\/(.*)\.tsx$/
+const KEY = /^\.\.\/\.\.\/\.\.\/examples\/registry\/playgrounds\/(.*)\.tsx$/
 
 const playgrounds = new Map<string, Playground>()
 
