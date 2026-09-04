@@ -1,79 +1,156 @@
-/* Avatar — .ds-avatar (square initials/image) + .ds-avatar-group (overlap stack)
-   A flat, sharp square: a 1px bordered tile showing uppercase initials on the
-   alt surface, or a cover-fit image clipped to the square. Sizes sm/default/lg. */
+/* ============================================================================
+   Avatar — .ds-avatar
+   ----------------------------------------------------------------------------
+   A square portrait with an image, a fallback and an optional corner badge,
+   plus a group that overlaps several of them and counts the overflow. Square,
+   not round: the flat parti pris holds here, so every radius is 0.
+
+   The inner ::after rule is the hairline: it is drawn over the image rather
+   than as a border on the box so it never eats a pixel of the portrait, and it
+   blends darken on light / lighten on dark so it reads against both a pale and
+   a dark photo. 0.x used --sm/--lg modifier classes; sizing is data-size now.
+   ============================================================================ */
 .ds-avatar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  flex: none;
-  overflow: hidden;
-  border: 1px solid var(--ds-rule);
-  background: var(--ds-bg-alt);
-  color: var(--ds-ink-soft);
-  font-family: var(--ds-font-sans);
-  font-size: var(--ds-text-sm);
-  font-weight: 500;
-  line-height: 1;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  user-select: none;
+  position: relative;
+  display: flex;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
   border-radius: var(--ds-radius-none);
+  user-select: none;
+}
+.ds-avatar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--ds-radius-none);
+  border: 1px solid var(--ds-rule);
+  mix-blend-mode: darken;
+}
+[data-theme="dark"] .ds-avatar::after,
+.dark .ds-avatar::after,
+:root.dark-theme .ds-avatar::after {
+  mix-blend-mode: lighten;
+}
+.ds-avatar[data-size="lg"] {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.ds-avatar[data-size="sm"] {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
-.ds-avatar__img {
-  display: block;
+.ds-avatar-image {
+  aspect-ratio: 1 / 1;
   width: 100%;
   height: 100%;
+  border-radius: var(--ds-radius-none);
   object-fit: cover;
 }
 
-/* Sizes — default is 36px (no modifier) */
-.ds-avatar--sm {
-  width: 24px;
-  height: 24px;
-  font-size: var(--ds-text-2xs);
-}
-.ds-avatar--lg {
-  width: 56px;
-  height: 56px;
+.ds-avatar-fallback {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--ds-radius-none);
+  background: var(--ds-bg-alt);
+  font-family: var(--ds-font-sans);
   font-size: var(--ds-text-base);
+  line-height: 1.25rem;
+  color: var(--ds-ink-faint);
+}
+.ds-avatar[data-size="sm"] .ds-avatar-fallback {
+  font-size: var(--ds-text-xs);
+  line-height: 1rem;
 }
 
-/* Focusable avatars (e.g. clickable / link) */
-.ds-avatar:focus-visible {
-  outline: 2px solid var(--ds-focus-ring);
-  outline-offset: 2px;
-}
-
-/* ----------------------------------------------------------------------------
-   Group — overlapping stack. Each avatar carries a 2px surface outline so the
-   overlaps read as crisp separations (no box-shadow), and later tiles sit on
-   top of earlier ones.
-   ---------------------------------------------------------------------------- */
-.ds-avatar-group {
+.ds-avatar-badge {
+  position: absolute;
+  z-index: 10;
+  inset-inline-end: 0;
+  bottom: 0;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  border-radius: var(--ds-radius-none);
+  background: var(--ds-accent);
+  color: var(--ds-on-accent);
+  box-shadow: 0 0 0 2px var(--ds-bg);
+  user-select: none;
 }
-.ds-avatar-group .ds-avatar {
-  outline: 2px solid var(--ds-surface);
-  position: relative;
-  z-index: 1;
+.ds-avatar[data-size="sm"] .ds-avatar-badge {
+  width: 0.375rem;
+  height: 0.375rem;
 }
-.ds-avatar-group .ds-avatar + .ds-avatar {
-  margin-left: -8px;
+.ds-avatar[data-size="sm"] .ds-avatar-badge svg {
+  display: none;
 }
-.ds-avatar-group--sm .ds-avatar + .ds-avatar {
-  margin-left: -6px;
+.ds-avatar[data-size="default"] .ds-avatar-badge {
+  width: 0.5rem;
+  height: 0.5rem;
 }
-.ds-avatar-group--lg .ds-avatar + .ds-avatar {
-  margin-left: -12px;
+.ds-avatar[data-size="default"] .ds-avatar-badge svg {
+  width: 0.375rem;
+  height: 0.375rem;
+}
+.ds-avatar[data-size="lg"] .ds-avatar-badge {
+  width: 0.625rem;
+  height: 0.625rem;
+}
+.ds-avatar[data-size="lg"] .ds-avatar-badge svg {
+  width: 0.375rem;
+  height: 0.375rem;
 }
 
-/* Overflow count chip — reuses .ds-avatar styling, set off as a count tile. */
-.ds-avatar-group .ds-avatar--count {
-  background: var(--ds-surface);
+.ds-avatar-group {
+  display: flex;
+}
+.ds-avatar-group > * + * {
+  margin-inline-start: -0.5rem;
+}
+/* Matches the class as well as the slot: hand-written HTML has no data-slot,
+   and the ring is what separates one overlapping tile from the next. */
+.ds-avatar-group > [data-slot="avatar"],
+.ds-avatar-group > .ds-avatar {
+  box-shadow: 0 0 0 2px var(--ds-bg);
+}
+
+.ds-avatar-group-count {
+  position: relative;
+  display: flex;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--ds-radius-none);
+  background: var(--ds-bg-alt);
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-base);
+  line-height: 1.25rem;
   color: var(--ds-ink-faint);
-  z-index: 0;
+  box-shadow: 0 0 0 2px var(--ds-bg);
+}
+.ds-avatar-group-count svg {
+  width: 1rem;
+  height: 1rem;
+}
+.ds-avatar-group:has([data-size="lg"]) .ds-avatar-group-count {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.ds-avatar-group:has([data-size="lg"]) .ds-avatar-group-count svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.ds-avatar-group:has([data-size="sm"]) .ds-avatar-group-count {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.ds-avatar-group:has([data-size="sm"]) .ds-avatar-group-count svg {
+  width: 0.75rem;
+  height: 0.75rem;
 }

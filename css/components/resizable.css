@@ -1,0 +1,73 @@
+/* ============================================================================
+   Resizable panels — .ds-resizable-panel-group
+   ----------------------------------------------------------------------------
+   Two or more panels split by a draggable 1px handle.
+
+   **Stylesheet only.** The React binding is not admitted: it wraps
+   `react-resizable-panels`, and that dependency is not acquired. These classes
+   are the contract — any binding that renders them, driving `aria-orientation`
+   on the group and the handle, gets the look.
+
+   One dedupe exception is resolved rather than carried: `h-full w-full` sat as
+   literal Tailwind utilities on the group's own className so tailwind-merge
+   could dedupe them against each demo's `h-48`/`h-56`/`h-64`. They become real
+   declarations here, and a caller that wants a fixed height sets one — an
+   inline `height` or its own class both beat a single-class rule.
+   ============================================================================ */
+.ds-resizable-panel-group {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+.ds-resizable-panel-group[aria-orientation="vertical"] {
+  flex-direction: column;
+}
+
+.ds-resizable-handle {
+  position: relative;
+  display: flex;
+  width: 1px;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--ds-rule);
+}
+.ds-resizable-handle:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: 1px;
+}
+/* The grab target: 4px wide, centred over the 1px rule, so the handle is
+   pointer-reachable without being 4px of visible chrome. */
+.ds-resizable-handle::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 50%;
+  width: 0.25rem;
+  translate: -50% 0;
+}
+:where([dir="rtl"], [dir="rtl"] *) .ds-resizable-handle::after {
+  translate: 50% 0;
+}
+.ds-resizable-handle[aria-orientation="horizontal"] {
+  height: 1px;
+  width: 100%;
+}
+.ds-resizable-handle[aria-orientation="horizontal"]::after {
+  inset-inline-start: 0;
+  height: 0.25rem;
+  width: 100%;
+  translate: 0 -50%;
+}
+.ds-resizable-handle[aria-orientation="horizontal"] > div {
+  rotate: 90deg;
+}
+
+.ds-resizable-handle-grip {
+  z-index: 10;
+  display: flex;
+  height: 1.5rem;
+  width: 0.25rem;
+  flex-shrink: 0;
+  border-radius: 0;
+  background-color: var(--ds-rule);
+}

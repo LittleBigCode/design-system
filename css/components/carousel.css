@@ -1,0 +1,101 @@
+/* ============================================================================
+   Carousel — .ds-carousel  (stylesheet only)
+   ----------------------------------------------------------------------------
+   No React binding ships. The source's `carousel.tsx` wraps
+   `embla-carousel-react` for its drag, snap and autoplay engine, and that
+   dependency is not acquired — so these classes are the whole contract, the
+   same arrangement `resizable` and `message-scroller` landed under in batch 2.
+   Any binding, or a hand-written slider, gets the look by producing the markup
+   the demo prints.
+
+   The layout is a negative-margin gutter: the track pulls back by one gutter
+   and each item pads forward by one, so the slides are separated without a gap
+   before the first or after the last. It works on either axis — the axis is
+   `data-orientation` on the track and on each item.
+
+   The controls are `.ds-button.ds-button--icon` boxes parked outside the
+   viewport, absolutely positioned against `.ds-carousel`. Give each one an
+   `aria-label` ("Previous slide" / "Next slide"): the source hid that name in
+   an `sr-only` span, and this package has no such utility — an `aria-label` is
+   what `IconButton` and every other icon-only control here uses.
+
+   One dedupe exception is resolved. The source kept `basis-full` literal on
+   `CarouselItem`'s own className so tailwind-merge could dedupe it against
+   `basis-1/3` in the multi-slide demo. It is a real declaration now, and the
+   override is a class: `--half` and `--third` show two or three slides at a
+   time. Anything else is a `flex-basis` of the consumer's own.
+
+   The RTL rules are the source's, kept as-is: a vertical control is rotated
+   90deg, which flips the wrong way under `dir="rtl"` unless the translate is
+   mirrored, and the caret glyph itself has to turn around.
+   ============================================================================ */
+.ds-carousel {
+  position: relative;
+}
+
+.ds-carousel-viewport {
+  overflow: hidden;
+}
+
+.ds-carousel-content {
+  display: flex;
+}
+.ds-carousel-content[data-orientation="horizontal"] {
+  margin-inline-start: calc(var(--ds-space-4) * -1);
+}
+.ds-carousel-content[data-orientation="vertical"] {
+  flex-direction: column;
+  margin-top: calc(var(--ds-space-4) * -1);
+}
+
+.ds-carousel-item {
+  min-width: 0;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: 100%;
+}
+.ds-carousel-item--half  { flex-basis: 50%; }
+.ds-carousel-item--third { flex-basis: 33.333333%; }
+.ds-carousel-item[data-orientation="horizontal"] {
+  padding-inline-start: var(--ds-space-4);
+}
+.ds-carousel-item[data-orientation="vertical"] {
+  padding-top: var(--ds-space-4);
+}
+
+.ds-carousel-control {
+  position: absolute;
+  touch-action: manipulation;
+}
+.ds-carousel-control[data-orientation="horizontal"] {
+  top: 0;
+  bottom: 0;
+  margin-block: auto;
+}
+.ds-carousel-control[data-orientation="vertical"] {
+  inset-inline-start: 50%;
+  translate: -50%;
+  rotate: 90deg;
+}
+:where([dir="rtl"], [dir="rtl"] *).ds-carousel-control[data-orientation="vertical"] {
+  translate: 50%;
+}
+.ds-carousel-control[data-slot="carousel-previous"][data-orientation="horizontal"] {
+  inset-inline-start: -48px;
+}
+.ds-carousel-control[data-slot="carousel-next"][data-orientation="horizontal"] {
+  inset-inline-end: -48px;
+}
+.ds-carousel-control[data-slot="carousel-previous"][data-orientation="vertical"] {
+  top: -48px;
+}
+.ds-carousel-control[data-slot="carousel-next"][data-orientation="vertical"] {
+  bottom: -48px;
+}
+
+.ds-carousel-control-icon {
+  rotate: 0deg;
+}
+:where([dir="rtl"], [dir="rtl"] *) .ds-carousel-control-icon {
+  rotate: 180deg;
+}

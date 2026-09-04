@@ -1,7 +1,15 @@
 import React from "react";
 const { useState } = React;
 import { h, F } from "../ui.js";
-import { PageHeader, Button, Tabs, Calendar, Agenda } from "../../../react/index.js";
+import {
+  Button,
+  Tabs,
+  Calendar,
+  Agenda,
+} from "../../../dist/react/index.js";
+import {
+  PageHeader,
+} from "../compat.js";
 import { EVENTS, AGENDA } from "../data.js";
 
 // Calendar event statuses are limited to success | warning | danger | info; the

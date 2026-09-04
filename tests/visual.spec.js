@@ -48,6 +48,21 @@ for (const { name, path } of PAGES) {
     // Inject the stabilizing stylesheet after content has loaded so it wins.
     await page.addStyleTag({ content: STABILIZE_CSS });
 
+    // Pin the document to an integral height before capturing.
+    //
+    // A full-page screenshot is rejected outright on a size mismatch — no
+    // maxDiffPixelRatio applies — and Playwright requires two consecutive
+    // captures of the same size. kitchen-sink is 12,738px tall and something in
+    // it has a fractional height, so consecutive layout passes rounded to
+    // 12737 and 12738 alternately and the assertion could never converge:
+    // deterministic, not flaky, and neither a retry nor a longer timeout
+    // touches it. Rounding the height up once makes both passes agree.
+    await page.evaluate(() => {
+      document.documentElement.style.height = `${Math.ceil(
+        document.documentElement.getBoundingClientRect().height
+      )}px`;
+    });
+
     await expect(page).toHaveScreenshot(`${name}.png`, { fullPage: true });
   });
 }

@@ -5,6 +5,11 @@ name: Publish to npm (public)
 # no auth. Requires an NPM_TOKEN repo secret (an npm automation token for an
 # account that owns the @diametral scope/org). Triggered by publishing a
 # GitHub Release, or manually. See RELEASE.md.
+#
+# DIST-TAG. A prerelease version (one carrying a `-` — `1.0.0-beta.3`) publishes
+# to `next`; a stable version publishes to `latest`. This is what keeps the v1
+# absorption betas off `latest` while `main` stays at 0.11.0: a bare
+# `npm publish` would move `latest` to a beta on the first tag.
 
 on:
   push:
@@ -16,6 +21,11 @@ on:
 permissions:
   contents: read
   id-token: write   # for npm provenance
+
+# Serialize, don't cancel: a second run must not race an in-flight `npm publish`
+# and leave a half-published version.
+concurrency:
+  group: ${{ github.workflow }}
 
 jobs:
   publish:
@@ -36,7 +46,20 @@ jobs:
       - name: Build distributable artifacts
         run: npm run build
 
+      - name: Resolve the dist-tag from the version
+        id: disttag
+        run: |
+          set -euo pipefail
+          version=$(node -p "require('./package.json').version")
+          case "$version" in
+            *-*) tag=next ;;
+            *)   tag=latest ;;
+          esac
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "::notice::Publishing $version to dist-tag '$tag'."
+
       - name: Publish (public, with provenance)
-        run: npm publish --access public --provenance
+        run: npm publish --access public --provenance --tag "${{ steps.disttag.outputs.tag }}"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

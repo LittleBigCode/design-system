@@ -1,0 +1,58 @@
+/* ============================================================================
+   Gauge — .ds-gauge
+   ----------------------------------------------------------------------------
+   A 270° radial gauge for one value: a faint full track arc behind a coloured
+   value arc, whose length is a stroke-dasharray so it redraws without any arc
+   path recomputation. Library-free, like .ds-sparkline — hand-written markup
+   renders it identically, which is what keeps it available to a non-React
+   binding now that the axis charts are recharts-bound.
+
+   The parts were `__svg` / `__track` / `__value` / `__center` / `__label` in
+   0.11 and are flat kebab from 1.0.0-beta.4 on. The arc colour is set inline
+   per instance (a threshold, or the caller's `color`), so this file styles
+   everything except that one declaration.
+   ============================================================================ */
+.ds-gauge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ds-gauge-svg {
+  display: block;
+  overflow: visible;
+}
+
+/* The faint full track arc behind the value. */
+.ds-gauge-track {
+  fill: none;
+  stroke: var(--ds-rule-soft);
+  stroke-linecap: butt;
+}
+
+/* The value arc — colour set inline; length via stroke-dasharray. */
+.ds-gauge-value {
+  fill: none;
+  stroke: var(--ds-chart-1);
+  stroke-linecap: butt;
+  transition: stroke-dasharray var(--ds-transition);
+}
+
+/* The figure in the middle. */
+.ds-gauge-center {
+  fill: var(--ds-ink);
+  font-family: var(--ds-font-title);
+  font-weight: var(--ds-font-weight-title);
+  font-variant-numeric: tabular-nums;
+  text-anchor: middle;
+}
+
+/* The caption under it, in the small-caps register .ds-label uses. */
+.ds-gauge-label {
+  fill: var(--ds-ink-faint);
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-2xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-anchor: middle;
+}

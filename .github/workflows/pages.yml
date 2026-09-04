@@ -1,4 +1,4 @@
-name: Deploy showcase to GitHub Pages
+name: Deploy site to GitHub Pages
 
 on:
   push:
@@ -21,11 +21,37 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci || npm i
+
+      # The React layer is authored in TSX and served from the emit, so the site
+      # cannot be assembled from the working tree alone any more. It is also a
+      # hard prerequisite for site/: its `file:..` install resolves
+      # `dist/diametral.css` through the package's own exports map, and dist/ is
+      # gitignored, so a fresh checkout has no stylesheet until this runs.
+      - name: Build the package
+        run: npm run build
+
+      # site/ is deliberately not a workspace member — its ~15 devDeps must
+      # never reach the zero-dep package's resolution graph — so it installs
+      # and builds on its own.
+      - name: Build site/
+        run: |
+          set -euo pipefail
+          cd site
+          npm ci || npm i
+          npm run build
+
       - name: Assemble _site
         run: |
           set -euo pipefail
           mkdir -p _site
-          cp -r css assets components react examples emails _site/
+          cp -r css assets components examples emails dist _site/
 
           # The Ufficio title font is served here under Diametral's own font license
           # (see NOTICE.md). To publish a license-safe build that excludes it instead,
@@ -33,8 +59,25 @@ jobs:
           #   rm -f _site/assets/fonts/Ufficio-300.woff2 _site/assets/fonts/ufficio.css
           #   grep -rl "assets/fonts/ufficio.css" _site --include='*.html' | xargs -r sed -i 's#assets/fonts/ufficio.css#assets/fonts/fallback.css#g'
 
-          # Landing redirect at the site root -> the showcase.
+          # The buildless showcase owns `/`: this repo's served layout mirrors
+          # its own directory layout, and examples/*.html reach up into the real
+          # published paths (../css/diametral.css) the way a consumer would.
           cp deploy/pages-redirect.html _site/index.html
+
+          # The React workbench is the verification harness for the TSX layer,
+          # which static HTML cannot exercise. It mounts under a subpath rather
+          # than the root so it never displaces the showcase. Its own hashed
+          # bundles land in `_app/` (vite.config.ts build.assetsDir), a second
+          # guard against merging into the `assets/` copied above.
+          mkdir -p _site/react-workbench
+          cp -r site/dist/* _site/react-workbench/
+
+          # SPA fallback. Pages serves the site-root 404.html for any unmatched
+          # path anywhere, so the workbench's deep links — /react-workbench/docs/tabs,
+          # the link a reader shares — only survive a reload if that one file is
+          # the workbench's index. Its asset URLs are absolute (Vite `base`), so
+          # it boots correctly from any path Pages serves it at.
+          cp _site/react-workbench/index.html _site/404.html
 
           # Disable Jekyll processing.
           touch _site/.nojekyll

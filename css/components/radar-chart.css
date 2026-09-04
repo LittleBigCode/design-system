@@ -1,0 +1,19 @@
+/* ============================================================================
+   Radar chart — .ds-radar-chart-root
+   ----------------------------------------------------------------------------
+   A `RadarChart` is a `.ds-chart-container--square` with one recharts
+   <RadarChart> in it, so this file holds only the centring. The square box is
+   the load-bearing part and it lives in chart.css: the polar radius resolves
+   against the shorter side, and capping only the height leaves both axes
+   indefinite, the container measures 0 and recharts never draws.
+
+   The source spent `aspect-square h-64` as literal Tailwind classes here so
+   `tailwind-merge` could dedupe a caller's `h-72`/`h-48` override — and so
+   `aspect-square` could dedupe against ChartContainer's own literal
+   `aspect-video`. There is no Tailwind in this package: the ratio and the
+   height are real declarations on the `--square` modifier and a caller retunes
+   the height through `--ds-chart-height`.
+   ============================================================================ */
+.ds-radar-chart-root {
+  margin-inline: auto;
+}

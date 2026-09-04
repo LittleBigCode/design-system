@@ -10,9 +10,16 @@
 
 /* Icon-only (square) — pair with an aria-label */
 .ds-button--icon { width: 40px; padding: 0; }
+.ds-button--icon.ds-button--xs { width: 24px; }
 .ds-button--icon.ds-button--sm { width: 30px; }
 .ds-button--icon.ds-button--lg { width: 48px; }
 .ds-button--icon svg { width: 18px; height: 18px; }
+.ds-button--icon.ds-button--xs svg { width: 14px; height: 14px; }
+
+/* --xs arrived in 1.0.0-beta.3 with the source's IconButton, whose `icon-xs`
+   size the absorbed editable and field-array both ask for. It is icon-only:
+   24px leaves no room for a label, so there is no square-less --xs. */
+.ds-button--xs { height: 24px; padding: 0 8px; font-size: var(--ds-text-2xs); }
 
 /* Loading — hides the label and shows a centered spinner */
 .ds-button--loading { position: relative; color: transparent !important; pointer-events: none; }
@@ -27,16 +34,14 @@
   color: var(--ds-ink);
   animation: ds-spin .6s linear infinite;
 }
-.ds-button--primary.ds-button--loading::after { color: var(--ds-on-accent); }
+/* --ds-bg, the pair of the ink fill, for the same reason button.css gives. */
+.ds-button--primary.ds-button--loading::after { color: var(--ds-bg); }
 @keyframes ds-spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .ds-button--loading::after { animation-duration: 1.6s; } }
 
-/* Button group — joined buttons sharing borders */
-.ds-button-group { display: inline-flex; }
-.ds-button-group > .ds-button { border-radius: var(--ds-radius-none); }
-.ds-button-group > .ds-button:not(:first-child) { margin-left: -1px; }
-.ds-button-group > .ds-button:hover,
-.ds-button-group > .ds-button:focus-visible { position: relative; z-index: 1; }
+/* Button group — see components/button-group.css. Its four rules here were
+   replaced wholesale in 1.0.0-beta.3; the class name and its contract are
+   unchanged. */
 
 /* Split button — a main action joined to a caret */
 .ds-split { display: inline-flex; position: relative; }

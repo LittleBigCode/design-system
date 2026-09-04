@@ -2,10 +2,24 @@ import React from "react";
 const { useState } = React;
 import { h, F, stageTag } from "../ui.js";
 import {
-  PageHeader, Breadcrumb, Button, Stepper, AreaChart, Timeline,
-  DescriptionList, Avatar, AvatarGroup, GaugeChart, Callout, Card,
-  Drawer, Field, Input,
-} from "../../../react/index.js";
+  Button,
+  AreaChart,
+  Gauge,
+  Callout,
+  Card,
+  Drawer,
+  Field,
+  Input,
+} from "../../../dist/react/index.js";
+import {
+  PageHeader,
+  Breadcrumb,
+  Stepper,
+  Timeline,
+  DescriptionList,
+  Avatar,
+  AvatarGroup,
+} from "../compat.js";
 import { PROJECTS, STAGES, BURNDOWN, SPRINTS, RISKS, ACTIVITY, PEOPLE } from "../data.js";
 
 export function ProjectDetail({ go, sel }) {
@@ -63,7 +77,7 @@ export function ProjectDetail({ go, sel }) {
 
         h(Card, { title: "Progress", className: "card-pad", style: { marginTop: "20px" } },
           h("div", { style: { display: "flex", justifyContent: "center" } },
-            h(GaugeChart, {
+            h(Gauge, {
               value: p.progress, max: 100, size: 200, label: "complete",
               thresholds: [
                 { at: 0, color: "var(--ds-danger)" },

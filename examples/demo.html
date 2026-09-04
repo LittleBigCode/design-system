@@ -13,12 +13,47 @@
   <!-- Opt-in themes for the demo's theme switcher (toggled via data-theme on <html>). -->
   <link rel="stylesheet" href="../css/themes/dark.css">
   <link rel="stylesheet" href="../css/themes/sepia.css">
-  <!-- Import map MUST precede any module script so bare "react" specifiers resolve. -->
+  <!-- Import map MUST precede any module script so bare "react" specifiers resolve.
+       Versions pinned to match the ranges in package.json. -->
   <script type="importmap">
   { "imports": {
     "react": "https://esm.sh/react@18.3.1",
+    "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime?external=react",
     "react-dom": "https://esm.sh/react-dom@18.3.1?external=react",
-    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client?external=react"
+    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client?external=react",
+    "recharts": "https://esm.sh/recharts@3.8.0?external=react,react-dom",
+    "@base-ui/react/autocomplete": "https://esm.sh/@base-ui/react@1.6.0/autocomplete?external=react,react-dom",
+    "@base-ui/react/avatar": "https://esm.sh/@base-ui/react@1.6.0/avatar?external=react,react-dom",
+    "@base-ui/react/button": "https://esm.sh/@base-ui/react@1.6.0/button?external=react,react-dom",
+    "@base-ui/react/checkbox-group": "https://esm.sh/@base-ui/react@1.6.0/checkbox-group?external=react,react-dom",
+    "@base-ui/react/checkbox": "https://esm.sh/@base-ui/react@1.6.0/checkbox?external=react,react-dom",
+    "@base-ui/react/collapsible": "https://esm.sh/@base-ui/react@1.6.0/collapsible?external=react,react-dom",
+    "@base-ui/react/context-menu": "https://esm.sh/@base-ui/react@1.6.0/context-menu?external=react,react-dom",
+    "@base-ui/react/dialog": "https://esm.sh/@base-ui/react@1.6.0/dialog?external=react,react-dom",
+    "@base-ui/react/direction-provider": "https://esm.sh/@base-ui/react@1.6.0/direction-provider?external=react,react-dom",
+    "@base-ui/react/drawer": "https://esm.sh/@base-ui/react@1.6.0/drawer?external=react,react-dom",
+    "@base-ui/react/form": "https://esm.sh/@base-ui/react@1.6.0/form?external=react,react-dom",
+    "@base-ui/react/input": "https://esm.sh/@base-ui/react@1.6.0/input?external=react,react-dom",
+    "@base-ui/react/menu": "https://esm.sh/@base-ui/react@1.6.0/menu?external=react,react-dom",
+    "@base-ui/react/menubar": "https://esm.sh/@base-ui/react@1.6.0/menubar?external=react,react-dom",
+    "@base-ui/react/merge-props": "https://esm.sh/@base-ui/react@1.6.0/merge-props?external=react,react-dom",
+    "@base-ui/react/meter": "https://esm.sh/@base-ui/react@1.6.0/meter?external=react,react-dom",
+    "@base-ui/react/navigation-menu": "https://esm.sh/@base-ui/react@1.6.0/navigation-menu?external=react,react-dom",
+    "@base-ui/react/preview-card": "https://esm.sh/@base-ui/react@1.6.0/preview-card?external=react,react-dom",
+    "@base-ui/react/progress": "https://esm.sh/@base-ui/react@1.6.0/progress?external=react,react-dom",
+    "@base-ui/react/scroll-area": "https://esm.sh/@base-ui/react@1.6.0/scroll-area?external=react,react-dom",
+    "@base-ui/react/select": "https://esm.sh/@base-ui/react@1.6.0/select?external=react,react-dom",
+    "@base-ui/react/separator": "https://esm.sh/@base-ui/react@1.6.0/separator?external=react,react-dom",
+    "@base-ui/react/slider": "https://esm.sh/@base-ui/react@1.6.0/slider?external=react,react-dom",
+    "@base-ui/react/switch": "https://esm.sh/@base-ui/react@1.6.0/switch?external=react,react-dom",
+    "@base-ui/react/toggle": "https://esm.sh/@base-ui/react@1.6.0/toggle?external=react,react-dom",
+    "@base-ui/react/toolbar": "https://esm.sh/@base-ui/react@1.6.0/toolbar?external=react,react-dom",
+    "@base-ui/react/tooltip": "https://esm.sh/@base-ui/react@1.6.0/tooltip?external=react,react-dom",
+    "@base-ui/react/use-render": "https://esm.sh/@base-ui/react@1.6.0/use-render?external=react,react-dom",
+    "@dnd-kit/core": "https://esm.sh/@dnd-kit/core@6.3.1?external=react,react-dom",
+    "@dnd-kit/sortable": "https://esm.sh/@dnd-kit/sortable@10.0.0?external=react,react-dom,@dnd-kit/core,@dnd-kit/utilities",
+    "@dnd-kit/utilities": "https://esm.sh/@dnd-kit/utilities@3.2.2?external=react",
+    "@phosphor-icons/react": "https://esm.sh/@phosphor-icons/react@2.1.10?external=react,react-dom"
   } }
   </script>
   <style>
@@ -64,7 +99,7 @@
   </style>
 </head>
 <body>
-  <a class="demo-back" href="index.html">← Design system</a>
+  <a class="demo-back" href="../index.html">← Design system</a>
   <div id="app" style="display:grid;place-items:center;color:var(--ds-ink-faint)">Loading the live React demo…</div>
   <script type="module">
     import { mount } from "./demo/app.js";

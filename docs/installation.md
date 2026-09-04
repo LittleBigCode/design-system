@@ -400,7 +400,7 @@ drops in regardless of which convention your app uses. For OS-driven dark mode, 
 ## 7. TypeScript
 
 No extra setup. Types ship with the React entry and are wired through the package `exports` map
-(`react/index.d.ts`), so `import { Button } from "@diametral/design-system/react"` is fully typed
+(`react/index.tsx`), so `import { Button } from "@diametral/design-system/react"` is fully typed
 out of the box — typed props, `children`, event handlers, and `forwardRef` on `Button` / `Input`.
 
 ---
@@ -430,7 +430,7 @@ out of the box — typed props, `children`, event handlers, and `forwardRef` on 
 ## See also
 
 - [getting-started.md](getting-started.md) — the from-the-repo buildless path.
-- [react.md](react.md) · [react/README.md](../react/README.md) — the React layer.
+- [react.md](react.md) — the React layer.
 - [components/README.md](../components/README.md) — the Web Components layer.
 - [tokens/README.md](../tokens/README.md) — the token model.
 - [theming.md](theming.md) — themes and per-stack consumption.

@@ -1,0 +1,9 @@
+dist/
+node_modules/
+
+# Demos for components no batch has landed yet. They travel verbatim from the
+# source so their diff stays reviewable when a batch moves one up; reformatting
+# them here would churn 410 files that nothing compiles.
+src/registry/_pending/
+test-results/
+playwright-report/

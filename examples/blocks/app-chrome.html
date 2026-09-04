@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../assets/fonts/ufficio.css">
   <link rel="stylesheet" href="../../css/diametral.css">
+  <link rel="stylesheet" href="../../css/themes/dark.css">
   <link rel="stylesheet" href="../shell.css">
   <script type="module" src="../showcase.js"></script>
   <style>
@@ -30,20 +31,20 @@
 
       <section class="docs-section">
         <h2>Page header</h2>
-        <p class="docs-note">A <code>.ds-page-header</code> stacks a <code>.ds-breadcrumb</code>, a <code>.ds-page-header__top</code> (title + actions) and a <code>.ds-page-header__tabs</code> row of <code>.ds-tabs</code>.</p>
+        <p class="docs-note">A <code>.ds-page-header</code> stacks a <code>.ds-breadcrumb-list</code>, a <code>.ds-page-header-heading</code> (title + actions) and a <code>data-slot="page-header-tabs"</code> row of <code>.ds-tabs</code>.</p>
         <section class="ds-example">
           <header class="ds-example__bar"><span class="ds-label">.ds-page-header</span><button class="ds-button" data-copy-target="#c-header">Copy</button></header>
           <div class="ds-example__preview ds-example__preview--block">
             <header class="ds-page-header">
-              <nav aria-label="Breadcrumb"><ol class="ds-breadcrumb"><li class="ds-breadcrumb__item"><a class="ds-breadcrumb__link" href="#">Home</a></li><li class="ds-breadcrumb__item"><a class="ds-breadcrumb__link" href="#">Pricing</a></li><li class="ds-breadcrumb__item" aria-current="page">Matrix</li></ol></nav>
-              <div class="ds-page-header__top">
-                <h1 class="ds-page-header__title">Pricing matrix</h1>
-                <div class="ds-page-header__actions">
+              <nav aria-label="breadcrumb"><ol class="ds-breadcrumb-list"><li class="ds-breadcrumb-item"><a class="ds-breadcrumb-link" href="#">Home</a></li><li class="ds-breadcrumb-separator" role="presentation" aria-hidden="true">›</li><li class="ds-breadcrumb-item"><a class="ds-breadcrumb-link" href="#">Pricing</a></li><li class="ds-breadcrumb-separator" role="presentation" aria-hidden="true">›</li><li class="ds-breadcrumb-item"><span class="ds-breadcrumb-page" role="link" aria-disabled="true" aria-current="page">Matrix</span></li></ol></nav>
+              <div class="ds-page-header-heading">
+                <h1 class="ds-page-header-title">Pricing matrix</h1>
+                <div class="ds-page-header-actions">
                   <button class="ds-button">Export</button>
                   <button class="ds-button ds-button--primary">New rate</button>
                 </div>
               </div>
-              <div class="ds-page-header__tabs">
+              <div data-slot="page-header-tabs">
                 <div class="ds-tabs">
                   <button class="ds-tabs__tab is-active">Rates</button>
                   <button class="ds-tabs__tab">Profiles</button>
@@ -53,21 +54,21 @@
             </header>
           </div>
           <pre class="ds-example__code"><code id="c-header">&lt;header class="ds-page-header"&gt;
-  &lt;nav aria-label="Breadcrumb"&gt;
-    &lt;ol class="ds-breadcrumb"&gt;
-      &lt;li class="ds-breadcrumb__item"&gt;&lt;a class="ds-breadcrumb__link" href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
-      &lt;li class="ds-breadcrumb__item"&gt;&lt;a class="ds-breadcrumb__link" href="#"&gt;Pricing&lt;/a&gt;&lt;/li&gt;
-      &lt;li class="ds-breadcrumb__item" aria-current="page"&gt;Matrix&lt;/li&gt;
+  &lt;nav aria-label="breadcrumb"&gt;
+    &lt;ol class="ds-breadcrumb-list"&gt;
+      &lt;li class="ds-breadcrumb-item"&gt;&lt;a class="ds-breadcrumb-link" href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
+      &lt;li class="ds-breadcrumb-item"&gt;&lt;a class="ds-breadcrumb-link" href="#"&gt;Pricing&lt;/a&gt;&lt;/li&gt;
+      &lt;li class="ds-breadcrumb-item"&gt;&lt;span class="ds-breadcrumb-page" aria-current="page"&gt;Matrix&lt;/span&gt;&lt;/li&gt;
     &lt;/ol&gt;
   &lt;/nav&gt;
-  &lt;div class="ds-page-header__top"&gt;
-    &lt;h1 class="ds-page-header__title"&gt;Pricing matrix&lt;/h1&gt;
-    &lt;div class="ds-page-header__actions"&gt;
+  &lt;div class="ds-page-header-heading"&gt;
+    &lt;h1 class="ds-page-header-title"&gt;Pricing matrix&lt;/h1&gt;
+    &lt;div class="ds-page-header-actions"&gt;
       &lt;button class="ds-button"&gt;Export&lt;/button&gt;
       &lt;button class="ds-button ds-button--primary"&gt;New rate&lt;/button&gt;
     &lt;/div&gt;
   &lt;/div&gt;
-  &lt;div class="ds-page-header__tabs"&gt;
+  &lt;div data-slot="page-header-tabs"&gt;
     &lt;div class="ds-tabs"&gt;
       &lt;button class="ds-tabs__tab is-active"&gt;Rates&lt;/button&gt;
       &lt;button class="ds-tabs__tab"&gt;Profiles&lt;/button&gt;
@@ -80,24 +81,24 @@
 
       <section class="docs-section">
         <h2>Toolbar</h2>
-        <p class="docs-note">A <code>.ds-toolbar</code> with a search <code>.ds-input</code> on the left, a <code>.ds-toolbar__spacer</code>, and a right <code>.ds-toolbar__group</code> of actions ending in a <code>.ds-button--primary</code>.</p>
+        <p class="docs-note">A <code>.ds-toolbar</code> with a search <code>.ds-input</code> on the left, a <code>.ds-toolbar-spacer</code> (the bar is <code>fit-content</code> by default, so it is widened inline here), and a right <code>.ds-toolbar-group</code> of actions ending in a <code>.ds-button--primary</code>.</p>
         <section class="ds-example">
           <header class="ds-example__bar"><span class="ds-label">.ds-toolbar</span><button class="ds-button" data-copy-target="#c-toolbar">Copy</button></header>
           <div class="ds-example__preview ds-example__preview--block">
-            <div class="ds-toolbar ds-toolbar--bordered" role="toolbar">
+            <div class="ds-toolbar" role="toolbar" style="width:100%">
               <input class="ds-input" type="search" placeholder="Search rates…" aria-label="Search">
-              <div class="ds-toolbar__spacer" aria-hidden="true"></div>
-              <div class="ds-toolbar__group">
+              <div class="ds-toolbar-spacer" aria-hidden="true"></div>
+              <div class="ds-toolbar-group">
                 <button class="ds-button">Columns</button>
                 <button class="ds-button">Export</button>
                 <button class="ds-button ds-button--primary">New rate</button>
               </div>
             </div>
           </div>
-          <pre class="ds-example__code"><code id="c-toolbar">&lt;div class="ds-toolbar ds-toolbar--bordered" role="toolbar"&gt;
+          <pre class="ds-example__code"><code id="c-toolbar">&lt;div class="ds-toolbar" role="toolbar" style="width:100%"&gt;
   &lt;input class="ds-input" type="search" placeholder="Search rates…" aria-label="Search"&gt;
-  &lt;div class="ds-toolbar__spacer" aria-hidden="true"&gt;&lt;/div&gt;
-  &lt;div class="ds-toolbar__group"&gt;
+  &lt;div class="ds-toolbar-spacer" aria-hidden="true"&gt;&lt;/div&gt;
+  &lt;div class="ds-toolbar-group"&gt;
     &lt;button class="ds-button"&gt;Columns&lt;/button&gt;
     &lt;button class="ds-button"&gt;Export&lt;/button&gt;
     &lt;button class="ds-button ds-button--primary"&gt;New rate&lt;/button&gt;

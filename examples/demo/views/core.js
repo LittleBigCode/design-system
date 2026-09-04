@@ -1,12 +1,36 @@
 /* Core views: Overview, Inbox, Settings. */
 import React from "react";
 import {
-  StatCard, Sparkline, LineChart, DonutChart, Card,
-  Avatar, Tooltip, IconButton, Button, Field, Textarea, EmptyState,
-  Tabs, Input, FieldHint, Select, Switch, useToast,
-  useForm, FormField, ColorPicker, DatePicker, MultiSelect,
-  useResource, Skeleton, Alert,
-} from "../../../react/index.js";
+  StatCard,
+  Sparkline,
+  LineChart,
+  DonutChart,
+  Card,
+  CardHeader,
+  CardTitle,
+  Tooltip,
+  IconButton,
+  Button,
+  Field,
+  Textarea,
+  Tabs,
+  Input,
+  Select,
+  Switch,
+  useToast,
+  useForm,
+  FormField,
+  ColorPicker,
+  DatePicker,
+  MultiSelect,
+  useResource,
+  Skeleton,
+  Alert,
+} from "../../../dist/react/index.js";
+import {
+  Avatar,
+  EmptyState,
+} from "../compat.js";
 import { h, F } from "../ui.js";
 import { MESSAGES } from "../data.js";
 import { fetchMetrics } from "../api.js";
@@ -25,12 +49,25 @@ export function Overview() {
       h(StatCard, { label: "At-risk rate", value: "5.2 %", delta: "0.4 pts", deltaDir: "down", animate: true }),
       h(StatCard, { label: "Revenue · 30d", value: "€4.51M", animate: true }, h(Sparkline, { data: [40, 44, 42, 50, 48, 57, 54, 62, 60, 71, 68, 80], fill: true, animate: true, width: 200, height: 36 }))),
     h("div", { className: "grid2", style: { marginTop: "16px" } },
-      h(Card, { title: "Revenue vs cost" }, h("div", { className: "card-pad" },
+      h(Card, null, h(CardHeader, null, h(CardTitle, null, "Revenue vs cost")), h("div", { className: "card-pad" },
         error ? h(Alert, { type: "danger" }, "Couldn't load metrics. Please retry.")
           : loading ? h(Skeleton, { variant: "block", height: 240 })
-            : h(LineChart, { series: metrics.series, labels: metrics.labels, width: 700, height: 240 }))),
-      h(Card, { title: "Revenue by entity" }, h("div", { className: "card-pad", style: { display: "grid", placeItems: "center" } },
-        h(DonutChart, { data: [{ label: "LBC_FR", value: 46 }, { label: "LBC_BE", value: 28 }, { label: "LBC_US", value: 19 }, { label: "LBC_CH", value: 11 }], centerLabel: "104", size: 200 })))));
+            : h(LineChart, {
+              config: Object.fromEntries(metrics.series.map((s) => [s.name, { label: s.name }])),
+              data: metrics.labels.map((month, i) => ({
+                month,
+                ...Object.fromEntries(metrics.series.map((s) => [s.name, s.data[i]])),
+              })),
+              xAxisKey: "month",
+            }))),
+      h(Card, null, h(CardHeader, null, h(CardTitle, null, "Revenue by entity")), h("div", { className: "card-pad", style: { display: "grid", placeItems: "center" } },
+        h(DonutChart, {
+          config: { LBC_FR: { label: "LBC_FR" }, LBC_BE: { label: "LBC_BE" }, LBC_US: { label: "LBC_US" }, LBC_CH: { label: "LBC_CH" } },
+          data: [{ label: "LBC_FR", value: 46 }, { label: "LBC_BE", value: 28 }, { label: "LBC_US", value: 19 }, { label: "LBC_CH", value: 11 }],
+          valueKey: "value",
+          nameKey: "label",
+          centerLabel: "104",
+        })))));
 }
 
 export function Inbox() {

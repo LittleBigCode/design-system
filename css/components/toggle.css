@@ -1,0 +1,103 @@
+/* ============================================================================
+   Toggle — .ds-toggle
+   ----------------------------------------------------------------------------
+   One two-state button. Not a Segmented: Segmented is a group of mutually
+   exclusive cells with a selected one, this is a single button that is either
+   pressed or not — bold, italic, mute, a filter chip that stays down.
+
+   `aria-pressed` is the whole state, so the pressed fill is keyed to the
+   attribute rather than to a modifier class: any binding that sets the ARIA
+   contract correctly gets the look for free.
+
+   Two axes, both from the source: variant (`default` transparent, `outline`
+   bordered) and size (default 40px, sm 36px, lg 44px). Each size tightens its
+   inline padding on the side an icon sits, so a label-plus-icon toggle reads
+   as one unit instead of a wide gap.
+
+   Three charte edits on the way in. The source's focus ring was a 3px colour
+   ring in `box-shadow`; this system focuses with a 2px `outline` on
+   --ds-focus-ring. Its invalid state added a second colour glow on top of the
+   red border, and the charte separates by rule, not glow — the border alone
+   carries it, which also drops the `.dark`-only glow variant that never
+   painted here anyway. And its `svg:not([class*="size-"])` sizing escape hatch
+   is gone: there is no Tailwind `size-*` class to escape, and the negation
+   silently skipped any icon whose class happened to contain `size-`.
+   ============================================================================ */
+.ds-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid transparent;
+  border-radius: var(--ds-radius-none);
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  text-transform: uppercase;
+  color: var(--ds-ink);
+  cursor: pointer;
+  transition: background-color var(--ds-transition), color var(--ds-transition),
+    border-color var(--ds-transition);
+}
+.ds-toggle svg {
+  pointer-events: none;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+}
+.ds-toggle:hover {
+  background: var(--ds-bg-alt);
+  color: var(--ds-ink);
+}
+.ds-toggle:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: 2px;
+}
+.ds-toggle:disabled,
+.ds-toggle[aria-disabled="true"] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.ds-toggle[aria-invalid="true"] {
+  border-color: var(--ds-danger);
+}
+.ds-toggle[aria-pressed="true"] {
+  background: var(--ds-bg-alt);
+}
+
+/* Variant axis */
+.ds-toggle--default {
+  background: transparent;
+}
+.ds-toggle--outline {
+  border-color: var(--ds-rule);
+  background: transparent;
+}
+
+/* Size axis. The `:has([data-icon])` narrowing pulls the padding in on
+   whichever side the icon sits, so the glyph is not marooned. */
+.ds-toggle--size-default {
+  height: 40px;
+  min-width: 40px;
+  padding-inline: var(--ds-space-5);
+}
+.ds-toggle--size-default:has([data-icon="inline-end"]) { padding-inline-end: var(--ds-space-4); }
+.ds-toggle--size-default:has([data-icon="inline-start"]) { padding-inline-start: var(--ds-space-4); }
+
+.ds-toggle--size-sm {
+  height: 36px;
+  min-width: 36px;
+  padding-inline: var(--ds-space-4);
+}
+.ds-toggle--size-sm:has([data-icon="inline-end"]) { padding-inline-end: var(--ds-space-3); }
+.ds-toggle--size-sm:has([data-icon="inline-start"]) { padding-inline-start: var(--ds-space-3); }
+
+.ds-toggle--size-lg {
+  height: 44px;
+  min-width: 44px;
+  padding-inline: var(--ds-space-6);
+}
+.ds-toggle--size-lg:has([data-icon="inline-end"]) { padding-inline-end: 20px; }
+.ds-toggle--size-lg:has([data-icon="inline-start"]) { padding-inline-start: 20px; }

@@ -2,8 +2,16 @@ import React from "react";
 const { useState } = React;
 import { h, F } from "../ui.js";
 import {
-  PageHeader, Tree, CodeBlock, Accordion, SectionHeading, EmptyState, Tag,
-} from "../../../react/index.js";
+  Tree,
+  CodeBlock,
+  Accordion,
+  SectionHeading,
+  Tag,
+} from "../../../dist/react/index.js";
+import {
+  PageHeader,
+  EmptyState,
+} from "../compat.js";
 import { KB_TREE, KB_ARTICLES } from "../data.js";
 
 // Parent (group) label for a leaf id — used as a small Tag in the reader head.

@@ -1,0 +1,230 @@
+/* ============================================================================
+   Chart — .ds-chart-container · .ds-chart-tooltip-content · .ds-chart-legend-content
+   ----------------------------------------------------------------------------
+   The substrate every finished chart composes: a responsive plotting surface,
+   the tooltip and the legend. It replaced 0.11's `charts.css` and
+   `bar-chart.css`, whose pure-SVG and CSS-flex marks the React bindings drew by
+   hand — the marks now come from recharts, so what is left to style is the
+   frame around them and recharts' own generated SVG.
+
+   That is why the descendant selectors below target `.recharts-*`: those nodes
+   are generated inside the library's own SVG and cannot carry a `ds-*` class.
+   Each one repaints a hard-coded default — recharts ships `#ccc` gridlines and
+   `#fff` mark outlines — onto a token, so both themes track.
+
+   Sizing is a class, not a utility. The source shipped `aspect-video` as a
+   literal Tailwind class so `tailwind-merge` could dedupe a caller's override
+   against it; there is no Tailwind here, so the ratio is a real declaration and
+   the two other shapes are modifiers: `--plot` for the axis charts (a fixed
+   height, full width) and `--square` for the round ones. Height is read through
+   `--ds-chart-height`, so a caller retunes one chart without depending on
+   stylesheet order the way a competing class would.
+   ============================================================================ */
+.ds-chart-container {
+  display: flex;
+  justify-content: center;
+  aspect-ratio: 16 / 9;
+  font-size: var(--ds-text-xs);
+  line-height: var(--ds-leading-normal);
+}
+
+/* The axis charts — line, area, bar, combo. A definite height with an
+   indefinite width is what lets the container fill its column and still give
+   recharts a box to measure. */
+.ds-chart-container--plot {
+  aspect-ratio: auto;
+  block-size: var(--ds-chart-height, 14rem);
+  inline-size: 100%;
+}
+
+/* The round ones — pie, donut, radar. A definite height is what the ratio
+   resolves the width against: cap only the height and both axes stay
+   indefinite, the container measures 0 and recharts never draws. */
+.ds-chart-container--square {
+  aspect-ratio: 1 / 1;
+  block-size: var(--ds-chart-height, 16rem);
+  margin-inline: auto;
+}
+
+.ds-chart-container .recharts-cartesian-axis-tick text {
+  fill: var(--ds-ink-faint);
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-2xs);
+  font-variant-numeric: tabular-nums;
+}
+.ds-chart-container .recharts-cartesian-grid line[stroke="#ccc"] {
+  stroke: var(--ds-rule-soft);
+  shape-rendering: crispEdges;
+}
+.ds-chart-container .recharts-curve.recharts-tooltip-cursor {
+  stroke: var(--ds-rule);
+}
+.ds-chart-container .recharts-dot[stroke="#fff"] {
+  stroke: transparent;
+}
+.ds-chart-container .recharts-polar-grid [stroke="#ccc"] {
+  stroke: var(--ds-rule);
+}
+.ds-chart-container .recharts-radial-bar-background-sector {
+  fill: var(--ds-bg-alt);
+}
+.ds-chart-container .recharts-rectangle.recharts-tooltip-cursor {
+  fill: var(--ds-grey-bg);
+}
+.ds-chart-container .recharts-reference-line [stroke="#ccc"] {
+  stroke: var(--ds-rule);
+}
+/* recharts draws a white hairline around pie slices; the charte separates
+   adjacent slices with the surface colour instead, flat and sharp. */
+.ds-chart-container .recharts-sector[stroke="#fff"] {
+  stroke: var(--ds-surface);
+}
+/* recharts' accessibility layer moves keyboard focus onto these three, and the
+   source reserved a transparent 2px outline on them — Tailwind's
+   `outline-hidden` idiom, which draws nothing. This system focuses with a real
+   2px outline, so the ring is bound to :focus-visible instead of reserved. */
+.ds-chart-container
+  :is(.recharts-layer, .recharts-sector, .recharts-surface):focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: 2px;
+}
+
+/* ----------------------------------------------------------------------------
+   Tooltip — the hovered/focused reading. A bordered flat surface, the same 1px
+   solid ink `.ds-menu` and `.ds-hover-card-content` use; charte conformance
+   means no drop shadow where the source lifted the panel with two layers.
+   ---------------------------------------------------------------------------- */
+.ds-chart-tooltip-content {
+  display: grid;
+  min-width: 8rem;
+  align-items: start;
+  gap: 0.375rem;
+  background-color: var(--ds-surface);
+  border: 1px solid var(--ds-ink);
+  border-radius: var(--ds-radius-none);
+  padding-inline: 0.625rem;
+  padding-block: 0.375rem;
+  font-size: var(--ds-text-xs);
+  color: var(--ds-ink);
+}
+
+.ds-chart-tooltip-content-label {
+  font-weight: 500;
+}
+
+.ds-chart-tooltip-content-items {
+  display: grid;
+  gap: 0.375rem;
+}
+
+.ds-chart-tooltip-content-item {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: var(--ds-space-2);
+}
+.ds-chart-tooltip-content-item[data-indicator="dot"] {
+  align-items: center;
+}
+.ds-chart-tooltip-content-item > svg {
+  height: 0.625rem;
+  width: 0.625rem;
+  color: var(--ds-ink-soft);
+}
+
+/* The swatch. Its colour is the series colour, handed down inline as
+   --ds-chart-indicator because only the binding knows which series this row
+   is; the source spent two unprefixed variables (--color-bg, --color-border)
+   on the same job, and batch 0.3 deleted that tier. */
+.ds-chart-tooltip-content-indicator {
+  flex-shrink: 0;
+  border-radius: var(--ds-radius-none);
+  border-color: var(--ds-chart-indicator);
+  background-color: var(--ds-chart-indicator);
+}
+.ds-chart-tooltip-content-indicator[data-indicator="dot"] {
+  height: 0.625rem;
+  width: 0.625rem;
+}
+.ds-chart-tooltip-content-indicator[data-indicator="line"] {
+  width: 0.25rem;
+}
+.ds-chart-tooltip-content-indicator[data-indicator="dashed"] {
+  width: 0;
+  border-width: 1.5px;
+  border-style: dashed;
+  background-color: transparent;
+}
+.ds-chart-tooltip-content-indicator[data-indicator="dashed"][data-nested] {
+  margin-block: 0.125rem;
+}
+
+.ds-chart-tooltip-content-item-body {
+  display: flex;
+  flex: 1 1 0%;
+  justify-content: space-between;
+  align-items: center;
+  line-height: var(--ds-leading-tight);
+  gap: var(--ds-space-3);
+}
+.ds-chart-tooltip-content-item-body[data-nested] {
+  align-items: flex-end;
+}
+
+.ds-chart-tooltip-content-item-label-group {
+  display: grid;
+  gap: 0.375rem;
+}
+
+.ds-chart-tooltip-content-item-name {
+  color: var(--ds-ink-soft);
+}
+
+.ds-chart-tooltip-content-item-value {
+  /* `var(--font-mono)` has no equivalent token here: mono type in this system
+     is the platform stack, the way .ds-kbd and .ds-snippet spell it. */
+  font-family: ui-monospace, "SF Mono", "Geist Mono", Menlo, Consolas, monospace;
+  font-weight: 500;
+  color: var(--ds-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ----------------------------------------------------------------------------
+   Legend — a wrap-friendly row of swatch + label under (or over) the plot.
+   ---------------------------------------------------------------------------- */
+.ds-chart-legend-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-space-2) var(--ds-space-4);
+  padding-top: var(--ds-space-3);
+}
+.ds-chart-legend-content[data-align="top"] {
+  padding-top: 0;
+  padding-bottom: var(--ds-space-3);
+}
+
+.ds-chart-legend-content-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: var(--ds-text-xs);
+  color: var(--ds-ink-soft);
+}
+.ds-chart-legend-content-item > svg {
+  height: var(--ds-text-xs);
+  width: var(--ds-text-xs);
+  color: var(--ds-ink-soft);
+}
+
+/* 10px, the swatch size 0.11's `.ds-chart-legend__swatch` set — the legend is
+   the one part of the old charts.css whose markup a consumer could keep. */
+.ds-chart-legend-content-dot {
+  height: 10px;
+  width: 10px;
+  flex: 0 0 auto;
+  background: var(--ds-chart-1);
+  border-radius: var(--ds-radius-none);
+}

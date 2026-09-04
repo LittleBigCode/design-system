@@ -1,0 +1,114 @@
+/* ============================================================================
+   Message scroller — .ds-message-scroller
+   ----------------------------------------------------------------------------
+   A conversation viewport that pins to the newest message and offers a
+   scroll-to-end button when the reader has scrolled away from it.
+
+   **Stylesheet only.** The React binding is not admitted: it wraps
+   `@shadcn/react/message-scroller`, and that dependency is not acquired. These
+   classes are the contract — any binding that renders them (or hand-written
+   markup driving the same `data-active` / `data-direction` / `data-autoscrolling`
+   attributes) gets the look and the transitions.
+
+   Two Tailwind literals are resolved rather than carried:
+
+   1. `gap-8` on the content column was a dedupe exception, kept literal so
+      tailwind-merge could dedupe it against the demos' `gap-2`. It becomes a
+      real declaration, and the tighter case becomes `--tight`.
+   2. `scroll-fade-b` on the viewport came from shadcn's Tailwind plugin, which
+      does not exist here. It is re-implemented directly as a bottom mask —
+      eight lines of `mask-image`, no plugin, and no silently-missing fade.
+
+   The button's own surface colours are deliberately NOT baked here. The source
+   carried them as literals precisely so they would lose to the Button variant
+   underneath; with the binding gone, `.ds-message-scroller-button` is purely
+   position and transition, and the caller pairs it with `.ds-button` for the
+   fill. Baking them would win the cascade over whatever button class it wraps.
+   ============================================================================ */
+.ds-message-scroller {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.ds-message-scroller-viewport {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  contain: content;
+  /* The scroll-fade-b replacement: the last 2rem of the column fades out, so a
+     message cut off by the bottom edge reads as continuing rather than ending. */
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 2rem), transparent);
+}
+
+.ds-message-scroller-viewport[data-autoscrolling] {
+  scrollbar-color: transparent transparent;
+}
+
+.ds-message-scroller-content {
+  display: flex;
+  height: max-content;
+  min-height: 100%;
+  flex-direction: column;
+  gap: var(--ds-space-6);
+}
+.ds-message-scroller-content--tight {
+  gap: var(--ds-space-2);
+}
+
+.ds-message-scroller-item {
+  min-width: 0;
+  flex-shrink: 0;
+  contain-intrinsic-size: auto 10rem;
+  content-visibility: auto;
+}
+
+.ds-message-scroller-button {
+  --ds-message-scroller-button-x: -50%;
+  --ds-message-scroller-button-y: 0px;
+  position: absolute;
+  inset-inline-start: 50%;
+  translate: var(--ds-message-scroller-button-x)
+    var(--ds-message-scroller-button-y);
+  transition-property: translate, scale, opacity;
+  transition-duration: 200ms;
+}
+:where([dir="rtl"], [dir="rtl"] *).ds-message-scroller-button {
+  --ds-message-scroller-button-x: 50%;
+}
+.ds-message-scroller-button[data-active="false"] {
+  pointer-events: none;
+  scale: 0.95;
+  opacity: 0;
+  transition-duration: 400ms;
+  transition-timing-function: cubic-bezier(0.7, 0, 0.84, 0);
+}
+.ds-message-scroller-button[data-active="true"] {
+  scale: 1;
+  opacity: 1;
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+.ds-message-scroller-button[data-direction="end"] {
+  bottom: 1rem;
+}
+.ds-message-scroller-button[data-direction="end"][data-active="false"] {
+  --ds-message-scroller-button-y: 100%;
+}
+.ds-message-scroller-button[data-direction="start"] {
+  top: 1rem;
+}
+.ds-message-scroller-button[data-direction="start"][data-active="false"] {
+  --ds-message-scroller-button-y: -100%;
+}
+.ds-message-scroller-button[data-direction="start"] svg {
+  rotate: 180deg;
+}

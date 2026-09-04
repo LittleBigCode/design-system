@@ -5,6 +5,184 @@ Component on top (see [`../components/README.md`](../components/README.md)). All
 copied from the live showcase — class and modifier names are exact. Each section links to its
 showcase page.
 
+<!-- BEGIN generated: react-components (npm run build) -->
+
+## React components
+
+The 118 components exported from [`@diametral/design-system/react`](react.md). Every row has a live page with runnable examples, and every page is what the visual and accessibility gates drive — so this table and the tested surface cannot disagree.
+
+> Generated from `examples/registry/registry.ts` by `scripts/build-components-md.mjs`. Edit the registry, then run `npm run build`.
+
+### Actions
+
+| Component | Imports | What it is |
+| --- | --- | --- |
+| [Button](https://littlebigcode.github.io/design-system/docs/button) | `Button`, `buttonVariants` | The primary action trigger. Eight variants and an eight-colour brand tone axis that compose independently. |
+| [Button Group](https://littlebigcode.github.io/design-system/docs/button-group) | `ButtonGroup`, `ButtonGroupSeparator`, `ButtonGroupText`, `buttonGroupVariants` | Joins related buttons into a single segmented control with shared borders. |
+| [Icon Button](https://littlebigcode.github.io/design-system/docs/icon-button) | `IconButton` | `Button` for an icon alone, with an accessible name it cannot ship without. |
+| [Kbd](https://littlebigcode.github.io/design-system/docs/kbd) | `Kbd`, `KbdGroup` | Renders a keyboard key or chord inline, sized to sit in a line of text. |
+| [Segmented](https://littlebigcode.github.io/design-system/docs/toggle-group) | `Segmented`, `type SegmentedProps`, `type SegmentedItem` | A short row of mutually exclusive options, all visible at once. |
+| [Speed Dial](https://littlebigcode.github.io/design-system/docs/speed-dial) | `SpeedDial`, `SpeedDialAction` | A floating action button whose two-to-four actions fan out on open — the create button a whole view is about. |
+| [SplitButton](https://littlebigcode.github.io/design-system/docs/split-button) | `SplitButton`, `IconButton`, `ButtonGroup` | One primary action, with its variants behind an attached caret. |
+| [Toggle](https://littlebigcode.github.io/design-system/docs/toggle) | `Toggle`, `toggleVariants` | A two-state button for on/off formatting controls. |
+| [Toolbar](https://littlebigcode.github.io/design-system/docs/toolbar) | `Toolbar`, `ToolbarGroup`, `ToolbarButton`, `ToolbarLink`, `ToolbarInput`, `ToolbarSeparator` | A Base UI toolbar with arrow-key navigation across grouped buttons, inputs and separators. |
+| [Wizard](https://littlebigcode.github.io/design-system/docs/wizard) | `Wizard`, `type WizardProps`, `type WizardStep` | An ordered sequence of steps, with the progress and the navigation handled. |
+
+### Forms
+
+| Component | Imports | What it is |
+| --- | --- | --- |
+| [Autocomplete](https://littlebigcode.github.io/design-system/docs/autocomplete) | `Autocomplete`, `AutocompleteInput`, `AutocompleteClear`, `AutocompleteContent`, `AutocompleteList`, `AutocompleteItem`, `AutocompleteGroup`, `AutocompleteLabel`, `AutocompleteCollection`, `AutocompleteEmpty`, `AutocompleteStatus`, `AutocompleteSeparator` | Free-text input with suggestions — unlike Combobox, the typed value need not come from the list. |
+| [Calendar](https://littlebigcode.github.io/design-system/docs/calendar) | `Calendar`, `type CalendarProps`, `type CalendarEvent` | A month grid with dated events, statuses and a selected day. |
+| [Checkbox](https://littlebigcode.github.io/design-system/docs/checkbox) | `Checkbox` | A single boolean control, with indeterminate support via the `parent` prop inside a group. |
+| [Checkbox Group](https://littlebigcode.github.io/design-system/docs/checkbox-group) | `CheckboxGroup` | Manages a set of checkbox values, including the parent select-all relationship. |
+| [ColorPicker](https://littlebigcode.github.io/design-system/docs/color-picker) | `ColorPicker`, `type ColorPickerProps` | A swatch group over the brand palette, with a free-form hex field beside it. |
+| [Combobox](https://littlebigcode.github.io/design-system/docs/combobox) | `Combobox`, `type ComboboxProps`, `type ComboboxOption` | A text field that filters a list as you type, and settles on one value. |
+| [DatePicker](https://littlebigcode.github.io/design-system/docs/date-picker) | `DatePicker`, `type DatePickerProps`, `type DateLike` | One date, from a field with a calendar under it. |
+| [DateRangePicker](https://littlebigcode.github.io/design-system/docs/date-range-picker) | `DateRangePicker`, `type DateRangePickerProps`, `type DateRange` | A start and an end, picked together in one calendar. |
+| [DateTimePicker](https://littlebigcode.github.io/design-system/docs/date-time-picker) | `DateTimePicker`, `type DateTimePickerProps` | A date and a time in one field, on the native `datetime-local` control. |
+| [Editable](https://littlebigcode.github.io/design-system/docs/editable) | `Editable` | Inline click-to-edit text — a preview with an edit affordance that swaps to a field, committed on Enter or blur, discarded on Escape. |
+| [Field](https://littlebigcode.github.io/design-system/docs/field) | `Field`, `FieldSet`, `FieldLegend`, `FieldGroup`, `FieldContent`, `FieldLabel`, `FieldTitle`, `FieldDescription`, `FieldSeparator`, `FieldError` | The form row primitive — label, control, description and error in one accessible group. Replaces the retired `form` component in this system. |
+| [Field Array](https://littlebigcode.github.io/design-system/docs/field-array) | `FieldArray`, `FieldArrayItem`, `FieldArrayItemContent`, `FieldArrayRemove`, `FieldArrayAdd` | Repeated entries for an array of objects — one bordered block per entry, each removable, with one add button under the stack. |
+| [FileUpload](https://littlebigcode.github.io/design-system/docs/file-upload) | `FileUpload`, `type FileUploadProps` | A drop zone that is also a file button, with the picked files listed under it. |
+| [Form](https://littlebigcode.github.io/design-system/docs/form) | `Form` | A thin Base UI Form wrapper: the page-level `<form>` and its vertical rhythm. `FormField` owns everything inside it. |
+| [Input](https://littlebigcode.github.io/design-system/docs/input) | `Input` | The single-line text field, and the base every other text control borrows its focus ring and invalid styling from. |
+| [Input Group](https://littlebigcode.github.io/design-system/docs/input-group) | `InputGroup`, `InputGroupAddon`, `InputGroupButton`, `InputGroupText`, `InputGroupInput`, `InputGroupTextarea`, `inputGroupAddonVariants` | Composes addons, icons and buttons around an input inside a single bordered box. |
+| [Input OTP](https://littlebigcode.github.io/design-system/docs/input-otp) |  | A segmented one-time-code field with per-character slots. Stylesheet only — the one-field-many-boxes behaviour needs a binding this package does not ship. |
+| [Label](https://littlebigcode.github.io/design-system/docs/label) | `Label` | An accessible label; pairs with a control via `htmlFor` and dims with its disabled state. |
+| [MultiSelect](https://littlebigcode.github.io/design-system/docs/multi-select) | `MultiSelect`, `type MultiSelectProps`, `type MultiSelectOption` | Several values from a fixed list, shown as removable chips. |
+| [NumberInput](https://littlebigcode.github.io/design-system/docs/number-field) | `NumberInput`, `type NumberInputProps` | A numeric field with stepper buttons and a real `null` for empty. |
+| [Phone Input](https://littlebigcode.github.io/design-system/docs/phone-input) | `PhoneInput` | A country dial-code select paired with a national-number field, composing into one E.164-ish string value. |
+| [RadioGroup](https://littlebigcode.github.io/design-system/docs/radio-group) | `RadioGroup`, `Radio`, `type RadioGroupProps` | One choice from a few, over native `<input type="radio">`. |
+| [Rating](https://littlebigcode.github.io/design-system/docs/rating) | `Rating`, `type RatingProps` | A star scale, as an input or as a read-only display. |
+| [Select](https://littlebigcode.github.io/design-system/docs/select) | `Select`, `SelectTrigger`, `SelectValue`, `SelectContent`, `SelectGroup`, `SelectLabel`, `SelectItem`, `SelectSeparator` | A Base UI listbox for choosing one option from a set, with a rendered trigger and portalled popup. |
+| [Slider](https://littlebigcode.github.io/design-system/docs/slider) | `Slider` | Selects a number, or a range, by dragging along a track. |
+| [Switch](https://littlebigcode.github.io/design-system/docs/switch) | `Switch` | An immediate on/off toggle for settings that apply on change. |
+| [TagInput](https://littlebigcode.github.io/design-system/docs/tags-input) | `TagInput`, `type TagInputProps` | Free-form labels, entered one at a time and shown as removable chips. |
+| [Textarea](https://littlebigcode.github.io/design-system/docs/textarea) | `Textarea` | A multi-line text field sharing Input's focus and invalid states. |
+| [TimePicker](https://littlebigcode.github.io/design-system/docs/time-picker) | `TimePicker`, `type TimePickerProps` | A time of day, in 24-hour `HH:mm`. |
+
+### Data display
+
+| Component | Imports | What it is |
+| --- | --- | --- |
+| [Agenda](https://littlebigcode.github.io/design-system/docs/agenda) | `Agenda` | A chronological list of events grouped by day — the list half of a calendar, and where v2 keeps event display. |
+| [Area Chart](https://littlebigcode.github.io/design-system/docs/area-chart) | `AreaChart` | `Line Chart` read as a volume — the same props, with a filled band under each series. |
+| [Avatar](https://littlebigcode.github.io/design-system/docs/avatar) | `Avatar`, `AvatarImage`, `AvatarFallback`, `AvatarBadge`, `AvatarGroup`, `AvatarGroupCount` | A user image with a text fallback, and a group with overflow count. |
+| [Badge](https://littlebigcode.github.io/design-system/docs/badge) | `Badge`, `badgeVariants` | A compact status or category label. |
+| [Bar Chart](https://littlebigcode.github.io/design-system/docs/bar-chart) | `BarChart` | Categorical bars with a pinned value axis, a row layout, and per-bar semantic tinting. |
+| [Bullet Chart](https://littlebigcode.github.io/design-system/docs/bullet-chart) | `BulletChart`, `type BulletBand` | An actual against its target and qualitative bands — what `meter`, `gauge` and `progress` cannot say. |
+| [Card](https://littlebigcode.github.io/design-system/docs/card) | `Card`, `CardMedia`, `CardHeader`, `CardTitle`, `CardDescription`, `CardAction`, `CardContent`, `CardBlock`, `CardFooter` | A bordered surface with header, content and footer slots — the default container for grouped content. |
+| [Chart](https://littlebigcode.github.io/design-system/docs/chart) | `ChartContainer`, `ChartTooltip`, `ChartTooltipContent`, `ChartLegend`, `ChartLegendContent`, `ChartStyle` | Recharts wrapped so series colours come from a `ChartConfig` and resolve to brand chart tokens. |
+| [CodeBlock](https://littlebigcode.github.io/design-system/docs/code-block) | `CodeBlock`, `type CodeBlockProps` | A source snippet with a filename strip and a copy button. |
+| [Combo Chart](https://littlebigcode.github.io/design-system/docs/combo-chart) | `ComboChart`, `type ComboSeries` | Bars and a line on one x axis, with a second Y scale — the volume-plus-rate dashboard shape. |
+| [DataGrid](https://littlebigcode.github.io/design-system/docs/data-table) | `DataGrid`, `type DataGridProps`, `type DataGridColumn` | A real `<table>` with sorting, selection, filtering, inline edit and paging. |
+| [Description List](https://littlebigcode.github.io/design-system/docs/description-list) | `DescriptionList`, `DescriptionTerm`, `DescriptionDetail` | Term/detail pairs for record summaries. Renders a real `dl`, so the pairing survives without sight of the layout. |
+| [Donut Chart](https://littlebigcode.github.io/design-system/docs/donut-chart) | `DonutChart` | `Pie Chart` with the middle cut out, and a figure in the hole. |
+| [Empty](https://littlebigcode.github.io/design-system/docs/empty) | `Empty`, `EmptyHeader`, `EmptyMedia`, `EmptyTitle`, `EmptyDescription`, `EmptyContent` | The empty-state block: media, title, description and an action. |
+| [Funnel Chart](https://littlebigcode.github.io/design-system/docs/funnel-chart) | `FunnelChart`, `type FunnelConversion` | Ordered conversion stages with the drop-off derived for you from raw counts. |
+| [Gauge](https://littlebigcode.github.io/design-system/docs/gauge) | `Gauge`, `type GaugeThreshold` | A radial progress dial for a bounded value, with optional thresholds that recolour the arc. |
+| [Heatmap](https://littlebigcode.github.io/design-system/docs/heatmap) | `Heatmap`, `type HeatmapCell`, `type HeatmapDay` | Density across two axes as colour — CSS grid, not a chart library, and the only form here that encodes magnitude without position. |
+| [Item](https://littlebigcode.github.io/design-system/docs/item) | `Item`, `ItemMedia`, `ItemContent`, `ItemActions`, `ItemGroup`, `ItemSeparator`, `ItemTitle`, `ItemDescription`, `ItemHeader`, `ItemFooter` | A list row with media, content and actions slots — lighter than a Card for repeated rows. |
+| [Kanban](https://littlebigcode.github.io/design-system/docs/kanban) | `Kanban`, `KanbanCardTitle` | A board of columns holding cards that move between them by drag or by arrow key. |
+| [Line Chart](https://littlebigcode.github.io/design-system/docs/line-chart) | `LineChart` | A finished line chart over the Chart primitives — grid, axis, tooltip and legend already wired to one `config`. |
+| [Marker](https://littlebigcode.github.io/design-system/docs/marker) | `Marker`, `MarkerIcon`, `MarkerContent`, `markerVariants` | A small inline badge pairing an icon with a label. |
+| [Meter](https://littlebigcode.github.io/design-system/docs/meter) | `Meter`, `MeterTrack`, `MeterIndicator`, `MeterLabel`, `MeterValue`, `meterVariants` | Displays a measured value within a known range — capacity, not task progress. |
+| [Pie Chart](https://littlebigcode.github.io/design-system/docs/pie-chart) | `PieChart` | A whole split into slices, coloured per slice from a `config` keyed by slice name. |
+| [Progress](https://littlebigcode.github.io/design-system/docs/progress) | `Progress`, `ProgressTrack`, `ProgressIndicator`, `ProgressLabel`, `ProgressValue` | Task completion, with optional label and value slots. |
+| [QR Code](https://littlebigcode.github.io/design-system/docs/qr-code) | `QrCode`, `type QrErrorCorrectionLevel` | Renders a QR code as inline SVG from a hand-rolled byte-mode encoder — no dependency, no network, no canvas. Versions 1-10, all four correction levels. |
+| [Radar Chart](https://littlebigcode.github.io/design-system/docs/radar-chart) | `RadarChart` | A spider chart — how two or three entities compare across many dimensions at once. |
+| [Relative Time](https://littlebigcode.github.io/design-system/docs/relative-time) | `RelativeTime`, `formatRelativeTime` | Renders "3 hours ago" from a date, inside a `time` element that keeps the machine-readable timestamp. |
+| [Scatter Chart](https://littlebigcode.github.io/design-system/docs/scatter-chart) | `ScatterChart` | Quantity against quantity, with optional bubble sizing for a third variable. |
+| [Skeleton](https://littlebigcode.github.io/design-system/docs/skeleton) | `Skeleton` | A placeholder block for content that has not loaded. |
+| [Snippet](https://littlebigcode.github.io/design-system/docs/snippet) | `Snippet` | A one-line copyable command. Shares Code Block's copy affordance rather than restating it. |
+| [Sparkline](https://littlebigcode.github.io/design-system/docs/sparkline) | `Sparkline` | An inline mini line chart, small and cheap enough to sit in every row of a table. |
+| [Spinner](https://littlebigcode.github.io/design-system/docs/spinner) | `Spinner` | An indeterminate loading indicator, sized to the current text. |
+| [Stacked Bar](https://littlebigcode.github.io/design-system/docs/stacked-bar) | `StackedBar` | Proportional bars — every row normalised to its own total, so only the split differs. |
+| [Status](https://littlebigcode.github.io/design-system/docs/status) | `Status`, `StatusIndicator`, `StatusLabel`, `StatusPanel`, `Metric`, `statusVariants` | A dot-and-label state indicator across the shared six-tone family — success, warning, danger, critical, neutral, info. |
+| [Table](https://littlebigcode.github.io/design-system/docs/table) | `Table`, `TableHeader`, `TableBody`, `TableFooter`, `TableRow`, `TableHead`, `TableCell`, `TableCaption` | The static table primitives. For sorting, filtering and pagination use Data Table. |
+| [Tag](https://littlebigcode.github.io/design-system/docs/tag) | `Tag`, `tagVariants` | A boxed, tinted label across the shared six-tone family. Absorbs v1's Chip, whose one boolean `warn` axis is now `tone="warning"`. |
+| [Timeline](https://littlebigcode.github.io/design-system/docs/timeline) | `Timeline`, `TimelineItem`, `TimelineIndicator`, `TimelineContent`, `TimelineTitle`, `TimelineTime`, `TimelineDescription` | A vertical sequence of events with completed, active and inactive states. |
+| [Tree](https://littlebigcode.github.io/design-system/docs/tree) | `Tree`, `type TreeProps`, `type TreeNode` | A nested, expandable hierarchy — files, org units, categories. |
+| [Treemap](https://littlebigcode.github.io/design-system/docs/treemap) | `Treemap`, `type TreemapDatum` | A weighted hierarchy as nested areas — where a pie stops working and a bar chart runs out of room. |
+| [Waterfall Chart](https://littlebigcode.github.io/design-system/docs/waterfall-chart) | `WaterfallChart` | Signed deltas accumulating to a total — the bridge a bar chart and a line chart each tell half of. |
+
+### Navigation
+
+| Component | Imports | What it is |
+| --- | --- | --- |
+| [Breadcrumb](https://littlebigcode.github.io/design-system/docs/breadcrumb) | `Breadcrumb`, `BreadcrumbList`, `BreadcrumbItem`, `BreadcrumbLink`, `BreadcrumbPage`, `BreadcrumbSeparator`, `BreadcrumbEllipsis` | The trail to the current page, with the last item as plain text. |
+| [CommandPalette](https://littlebigcode.github.io/design-system/docs/command) | `CommandPalette`, `type CommandPaletteProps`, `type Command` | The ⌘K surface: one flat list of commands, grouped and filtered as you type. |
+| [Menubar](https://littlebigcode.github.io/design-system/docs/menubar) | `Menubar`, `MenubarMenu`, `MenubarTrigger`, `MenubarContent`, `MenubarItem`, `MenubarCheckboxItem`, `MenubarRadioGroup`, `MenubarRadioItem`, `MenubarLabel`, `MenubarSeparator`, `MenubarShortcut`, `MenubarGroup`, `MenubarPortal`, `MenubarSub`, `MenubarSubTrigger`, `MenubarSubContent` | A desktop-style application menu bar with keyboard traversal. |
+| [Navigation Menu](https://littlebigcode.github.io/design-system/docs/navigation-menu) | `NavigationMenu`, `NavigationMenuList`, `NavigationMenuItem`, `NavigationMenuTrigger`, `NavigationMenuContent`, `NavigationMenuPositioner`, `NavigationMenuLink`, `NavigationMenuIndicator`, `navigationMenuTriggerStyle` | A horizontal site menu with optional rich dropdown panels. |
+| [Pagination](https://littlebigcode.github.io/design-system/docs/pagination) | `Pagination`, `PaginationContent`, `PaginationItem`, `PaginationLink`, `PaginationPrevious`, `PaginationNext`, `PaginationEllipsis`, `paginationRange` | Page links with previous, next and ellipsis. |
+| [Stepper](https://littlebigcode.github.io/design-system/docs/stepper) | `Stepper`, `StepperItem`, `StepperIndicator`, `StepperContent`, `StepperTitle`, `StepperDescription` | Progress through a multi-step flow, with per-step state and orientation support. |
+| [Tabs](https://littlebigcode.github.io/design-system/docs/tabs) | `Tabs`, `type TabsProps`, `type TabItem` | Sibling views of one subject, one visible at a time. |
+| [Toc](https://littlebigcode.github.io/design-system/docs/toc) | `Toc`, `TocLabel`, `TocList`, `TocItem`, `TocLink` | The in-page anchor rail — a sticky list of the sections on the current page. |
+| [VerticalNav](https://littlebigcode.github.io/design-system/docs/sidebar) | `VerticalNav`, `type VerticalNavProps`, `type VerticalNavItem` | The app's own nav column: one level of nesting, one active row. |
+
+### Layout
+
+| Component | Imports | What it is |
+| --- | --- | --- |
+| [Aspect Ratio](https://littlebigcode.github.io/design-system/docs/aspect-ratio) | `AspectRatio` | Constrains content to a fixed width-to-height ratio. |
+| [Banner](https://littlebigcode.github.io/design-system/docs/banner) | `Banner`, `BannerContent`, `BannerTitle`, `BannerDescription`, `BannerAction` | A full-width, tone-coloured message bar over the shared six-tone family — the same tokens button.tsx's `tone` axis reads. |
+| [Carousel](https://littlebigcode.github.io/design-system/docs/carousel) |  | A paged slide viewport with previous and next controls. Stylesheet only — the drag and snap need a binding this package does not ship. |
+| [Masonry](https://littlebigcode.github.io/design-system/docs/masonry) | `Masonry` | A multi-column layout that balances items of uneven height, via CSS columns rather than a JS measurement pass. |
+| [Page Header](https://littlebigcode.github.io/design-system/docs/page-header) | `PageHeader`, `PageHeaderHeading`, `PageHeaderIcon`, `PageHeaderTitle`, `PageHeaderDescription`, `PageHeaderActions`, `PageHeaderTabs` | Breadcrumb, title, description and actions for the top of a page, with an optional flush tab strip. |
+| [Panel](https://littlebigcode.github.io/design-system/docs/panel) | `Panel`, `PanelHeader`, `PanelTitle`, `PanelContent`, `PanelFooter`, `PanelRow` | A sunken section container — the flat sibling of Card, plus a row part for tightly-packed settings lists. |
+| [Resizable](https://littlebigcode.github.io/design-system/docs/resizable) |  | Panel groups split by draggable handles. Stylesheet only — the drag needs a binding this package does not ship. |
+| [Scroll Area](https://littlebigcode.github.io/design-system/docs/scroll-area) | `ScrollArea`, `ScrollBar` | A scrollable region with styled, overlay scrollbars. |
+| [Separator](https://littlebigcode.github.io/design-system/docs/separator) | `Separator` | A rule between content. Base UI inverts the orientation semantics — a horizontal group takes vertical separators. |
+| [Theme Switcher](https://littlebigcode.github.io/design-system/docs/theme-switcher) | `ThemeSwitcher`, `type ThemeSwitcherMode` | A light/dark/system toggle, promoted from the docs app's own theme-toggle. Fully controlled — the consumer owns the theme hook. |
+| [Wordmark](https://littlebigcode.github.io/design-system/docs/wordmark) | `Wordmark`, `wordmarkVariants` | The Diametral logo lockup, inlined as JSX so it recolours with the surrounding text. |
+
+### Disclosure
+
+| Component | Imports | What it is |
+| --- | --- | --- |
+| [Accordion](https://littlebigcode.github.io/design-system/docs/accordion) | `Accordion`, `type AccordionProps`, `type AccordionItem` | A stack of disclosure rows, driven by an `items` array rather than composed from children. |
+| [Collapsible](https://littlebigcode.github.io/design-system/docs/collapsible) | `Collapsible`, `CollapsibleTrigger`, `CollapsibleContent` | A single show/hide region. Emits `data-open` / `data-closed`, not `data-state`. |
+
+### Overlays
+
+| Component | Imports | What it is |
+| --- | --- | --- |
+| [ContextMenu](https://littlebigcode.github.io/design-system/docs/context-menu) | `ContextMenu`, `ContextMenuTrigger`, `ContextMenuContent`, `ContextMenuItem`, `ContextMenuCheckboxItem`, `ContextMenuRadioGroup`, `ContextMenuRadioItem`, `ContextMenuLabel`, `ContextMenuSeparator`, `ContextMenuShortcut`, `ContextMenuGroup`, `ContextMenuPortal`, `ContextMenuSub`, `ContextMenuSubTrigger`, `ContextMenuSubContent` | Right-click's own menu, positioned at the pointer. |
+| [Drawer](https://littlebigcode.github.io/design-system/docs/drawer) | `Drawer`, `DrawerTrigger`, `DrawerPortal`, `DrawerOverlay`, `DrawerSwipeHandle`, `DrawerClose`, `DrawerContent`, `DrawerHeader`, `DrawerFooter`, `DrawerTitle`, `DrawerDescription` | A bottom sheet with drag-to-dismiss and snap points — Sheet's gesture-driven sibling, tuned for touch. |
+| [Dropdown](https://littlebigcode.github.io/design-system/docs/dropdown-menu) | `Dropdown`, `MenuItem`, `MenuHeader`, `MenuDivider` | A menu of actions hanging off a trigger. |
+| [Hover Card](https://littlebigcode.github.io/design-system/docs/hover-card) | `HoverCard`, `HoverCardTrigger`, `HoverCardContent` | A preview surface shown on hover, for links and mentions. |
+| [Modal](https://littlebigcode.github.io/design-system/docs/alert-dialog) | `Modal`, `type ModalProps` | The destructive-confirmation shape of `Modal`: a heading, the consequence, and two buttons. |
+| [Modal](https://littlebigcode.github.io/design-system/docs/dialog) | `Modal`, `type ModalProps` | A focused task on top of the page: heading, body, footer actions. |
+| [Popover](https://littlebigcode.github.io/design-system/docs/popover) | `Popover`, `type PopoverProps`, `type PopoverPlacement` | A small panel anchored to a trigger, for detail that would crowd the page. |
+| [Sheet](https://littlebigcode.github.io/design-system/docs/sheet) | `Sheet`, `SheetTrigger`, `SheetClose`, `SheetContent`, `SheetHeader`, `SheetFooter`, `SheetTitle`, `SheetDescription` | A panel that slides in from an edge — Dialog's modal contract, sized to a column instead of a centred box. |
+| [Tooltip](https://littlebigcode.github.io/design-system/docs/tooltip) | `Tooltip`, `TooltipTrigger`, `TooltipContent`, `TooltipProvider` | A short label on hover or focus. Never put interactive content in one. |
+
+### Feedback
+
+| Component | Imports | What it is |
+| --- | --- | --- |
+| [Alert](https://littlebigcode.github.io/design-system/docs/alert) | `Alert`, `type AlertProps`, `type AlertType` | An inline message about the thing next to it. Four types, optionally dismissible. |
+| [Toast](https://littlebigcode.github.io/design-system/docs/toast) | `ToastProvider`, `useToast`, `Toast`, `type ToastOptions` | A transient confirmation that an action landed, raised from anywhere via `useToast`. |
+
+### Conversation
+
+| Component | Imports | What it is |
+| --- | --- | --- |
+| [Attachment](https://littlebigcode.github.io/design-system/docs/attachment) | `Attachment`, `AttachmentGroup`, `AttachmentMedia`, `AttachmentContent`, `AttachmentTitle`, `AttachmentDescription`, `AttachmentActions`, `AttachmentAction`, `AttachmentTrigger`, `type AttachmentState` | File metadata display for a message. Not an upload input — see File Upload. |
+| [Bubble](https://littlebigcode.github.io/design-system/docs/bubble) | `BubbleGroup`, `Bubble`, `BubbleContent`, `BubbleReactions`, `type BubbleVariant` | Chat bubbles grouped by author. |
+| [Message](https://littlebigcode.github.io/design-system/docs/message) | `MessageGroup`, `Message`, `MessageAvatar`, `MessageContent`, `MessageHeader`, `MessageFooter` | A conversation row with avatar and content. |
+| [Message Scroller](https://littlebigcode.github.io/design-system/docs/message-scroller) |  | A transcript viewport that keeps itself pinned to the latest message. Stylesheet only — the pinning needs a binding this package does not ship. |
+
+### Utilities
+
+| Component | Imports | What it is |
+| --- | --- | --- |
+| [Direction](https://littlebigcode.github.io/design-system/docs/direction) | `DirectionProvider`, `useDirection` | A provider that sets text direction (LTR/RTL) for every Base UI component beneath it. |
+| [Icon](https://littlebigcode.github.io/design-system/docs/icon) | `Icon`, `icons` | The built-in glyph set — 34 Phosphor icons, keyed by name, shared by the React binding and the `<ds-icon>` web component. |
+
+<!-- END generated: react-components -->
+
 ## Status panel
 
 **The signature component.** A result / status / scoring panel: a solid colored head whose
@@ -235,15 +413,25 @@ Live: [../examples/components/chips.html](../examples/components/chips.html)
 
 ## Banner
 
-A full-width, fixed-identity notice. It stays pale yellow with dark ink in **every** theme,
-making it the right home for a persistent, machine-level message.
+A full-width notice with a six-tone axis. The tone sets the tint and the ink; `neutral` is the
+default, because a banner that is always shouting is a banner nobody reads.
 
 ```html
-<div class="ds-banner">Settings <b>modified locally</b> on this machine — values differ from the shared reference. Use Settings → Reset to restore.</div>
+<div class="ds-banner ds-banner--info" role="status">
+  <div class="ds-banner-content">
+    <div class="ds-banner-title">Scheduled maintenance</div>
+    <div>Staging is unavailable from 10pm to midnight UTC.</div>
+  </div>
+  <div class="ds-banner-action"><button class="ds-button ds-button--sm">Details</button></div>
+</div>
 ```
 
-**Variants / state:** single `.ds-banner`; emphasize words with `<b>`; add the `hidden`
-attribute to dismiss it.
+**Parts / variants:** `.ds-banner` with `--neutral` (default), `--info`, `--success`, `--warning`,
+`--danger`, `--critical`. `.ds-banner-content` holds `.ds-banner-title` and the description;
+`.ds-banner-action` is the trailing control cluster. Add `hidden` to dismiss it.
+
+**React** — `<Banner>` (prop: `tone`), `<BannerContent>`, `<BannerTitle>`, `<BannerDescription>`,
+`<BannerAction>`.
 
 Live: [../examples/components/banner.html](../examples/components/banner.html)
 
@@ -608,24 +796,26 @@ A `<dl>` laid out as a two-column grid — an auto-width uppercase term column a
 column — for key/value detail readouts. Each pair is a row separated by a soft rule.
 
 ```html
-<dl class="ds-dl">
-  <dt class="ds-dl__term">Entity</dt><dd class="ds-dl__desc">LBC_FR</dd>
-  <dt class="ds-dl__term">Day rate</dt><dd class="ds-dl__desc">€900</dd>
-  <dt class="ds-dl__term">Margin</dt><dd class="ds-dl__desc">38.0 %</dd>
+<dl class="ds-description-list">
+  <dt class="ds-description-term">Entity</dt><dd class="ds-description-detail">LBC_FR</dd>
+  <dt class="ds-description-term">Day rate</dt><dd class="ds-description-detail">€900</dd>
+  <dt class="ds-description-term">Margin</dt><dd class="ds-description-detail">38.0 %</dd>
 </dl>
 ```
 
-**Parts:** `.ds-dl` (the grid), `.ds-dl__term` (uppercase label `<dt>`), `.ds-dl__desc` (tabular
+**Parts:** `.ds-description-list` (the grid), `.ds-description-term` (uppercase label `<dt>`), `.ds-description-detail` (tabular
 value `<dd>`). The first row drops its leading rule.
 
-**React** — `<DescriptionList>`. Prop: `items` (a `{ term, desc }[]`); forwards a ref and `<dl>`
-attributes.
+**React** — `<DescriptionList>`, `<DescriptionTerm>`, `<DescriptionDetail>`. Parts rather than an
+`items` array, so a detail cell can hold a Tag, a Snippet or a link.
 
 ```jsx
-<DescriptionList items={[
-  { term: "Entity", desc: "LBC_FR" },
-  { term: "Day rate", desc: "€900" },
-]} />
+<DescriptionList>
+  <DescriptionTerm>Entity</DescriptionTerm>
+  <DescriptionDetail>LBC_FR</DescriptionDetail>
+  <DescriptionTerm>Day rate</DescriptionTerm>
+  <DescriptionDetail>€900</DescriptionDetail>
+</DescriptionList>
 ```
 
 Live: [../examples/components/description-list.html](../examples/components/description-list.html)
@@ -636,29 +826,35 @@ A flat, sharp square showing uppercase initials or a cover-fit image clipped to 
 tile, plus an overlapping group with a "+N" overflow count.
 
 ```html
-<span class="ds-avatar ds-avatar--sm">VD</span>
-<span class="ds-avatar">VD</span>
-<span class="ds-avatar ds-avatar--lg"><img class="ds-avatar__img" src="…" alt="Leo Marsh"></span>
+<span class="ds-avatar" data-size="sm"><span class="ds-avatar-fallback">VD</span></span>
+<span class="ds-avatar"><span class="ds-avatar-fallback">VD</span></span>
+<span class="ds-avatar" data-size="lg"><img class="ds-avatar-image" src="…" alt="Leo Marsh"></span>
 
 <div class="ds-avatar-group">
-  <span class="ds-avatar"><img class="ds-avatar__img" src="…" alt="Maria Vance"></span>
-  <span class="ds-avatar">JL</span>
-  <span class="ds-avatar ds-avatar--count" aria-label="3 more">+3</span>
+  <span class="ds-avatar"><img class="ds-avatar-image" src="…" alt="Maria Vance"></span>
+  <span class="ds-avatar"><span class="ds-avatar-fallback">JL</span></span>
+  <span class="ds-avatar-group-count" aria-label="3 more">+3</span>
 </div>
 ```
 
-**Parts / variants:** `.ds-avatar` (tile) with an optional `.ds-avatar__img`; sizes `--sm` / `--lg`
-(default 36px, no modifier). `.ds-avatar-group` overlaps avatars (`--sm` / `--lg` tune the overlap);
-`.ds-avatar--count` styles the trailing "+N" tile.
+**Parts / variants:** `.ds-avatar` (tile) holding a `.ds-avatar-image` and/or a
+`.ds-avatar-fallback`; size is `data-size="sm" | "lg"` (default 32px, no attribute).
+`.ds-avatar-badge` is the corner dot. `.ds-avatar-group` overlaps tiles and sizes its trailing
+`.ds-avatar-group-count` off its members.
 
-**React** — `<Avatar>` (props: `src`, `alt`, `initials`, `size` `"sm" | "lg"`) and `<AvatarGroup>`
-(prop: `max` — caps visible avatars, the rest collapse into a "+N" tile).
+**React** — `<Avatar>` (prop: `size`), `<AvatarImage>`, `<AvatarFallback>`, `<AvatarBadge>`,
+`<AvatarGroup>`, `<AvatarGroupCount>`. Base UI underneath, so the fallback appears only once the
+image has actually failed or is still loading. The count is written, not computed.
 
 ```jsx
-<Avatar initials="VD" size="lg" />
-<Avatar src="https://i.pravatar.cc/96?img=32" alt="Leo Marsh" />
-<AvatarGroup max={3}>
-  <Avatar src="…" alt="Maria Vance" /><Avatar initials="JL" /><Avatar initials="AO" />
+<Avatar size="lg"><AvatarFallback>VD</AvatarFallback></Avatar>
+<Avatar>
+  <AvatarImage src="https://i.pravatar.cc/96?img=32" alt="Leo Marsh" />
+  <AvatarFallback>LM</AvatarFallback>
+</Avatar>
+<AvatarGroup>
+  <Avatar><AvatarFallback>MV</AvatarFallback></Avatar>
+  <AvatarGroupCount aria-label="3 more">+3</AvatarGroupCount>
 </AvatarGroup>
 ```
 
@@ -694,37 +890,48 @@ Live: [../examples/components/tag.html](../examples/components/tag.html)
 
 ## Timeline
 
-A vertical event list: a 1px rule runs down the left as a rail, each item hangs a small square dot
-on it, and stacks a faint timestamp, a title, and supporting body text.
+A vertical event list: a 1px rail runs down the indicator column, and each item stacks a title, a
+timestamp and supporting text beside it.
 
 ```html
 <ol class="ds-timeline">
-  <li class="ds-timeline__item">
-    <span class="ds-timeline__dot is-success"></span>
-    <div class="ds-timeline__time">09:42</div>
-    <div class="ds-timeline__title">Matrix published</div>
-    <div class="ds-timeline__body">All 1,204 rates synced to production.</div>
+  <li class="ds-timeline-item ds-timeline-item--success" data-state="completed">
+    <div class="ds-timeline-indicator"></div>
+    <div class="ds-timeline-content">
+      <div class="ds-timeline-title">Matrix published</div>
+      <time class="ds-timeline-time">09:42</time>
+      <p class="ds-timeline-description">All 1,204 rates synced to production.</p>
+    </div>
   </li>
-  <li class="ds-timeline__item">
-    <span class="ds-timeline__dot"></span>
-    <div class="ds-timeline__time">Yesterday</div>
-    <div class="ds-timeline__title">Draft created</div>
+  <li class="ds-timeline-item">
+    <div class="ds-timeline-indicator"></div>
+    <div class="ds-timeline-content">
+      <div class="ds-timeline-title">Draft created</div>
+      <time class="ds-timeline-time">Yesterday</time>
+    </div>
   </li>
 </ol>
 ```
 
-**Parts / variants:** `.ds-timeline` (`<ol>` rail), `.ds-timeline__item`, `.ds-timeline__dot`,
-`.ds-timeline__time`, `.ds-timeline__title`, `.ds-timeline__body`. The dot recolors via `is-success`
-/ `is-warning` / `is-danger` / `is-info` / `is-neutral` (default is the neutral rule color).
+**Parts / variants:** `.ds-timeline` (`<ol>` rail), `.ds-timeline-item`, `.ds-timeline-indicator`,
+`.ds-timeline-content`, `.ds-timeline-title`, `.ds-timeline-time`, `.ds-timeline-description`.
+Tone rides on the **item** — `--neutral`, `--info`, `--success`, `--warning`, `--danger`,
+`--critical` — and `data-state="completed" | "active"` fills or outlines the indicator with it.
+Row spacing is `--ds-timeline-gap`, settable on an item or on the list.
 
-**React** — `<Timeline>`. Prop: `items` (a `{ time?, title?, body?, status? }[]`; `status` maps to
-the dot's `is-*` class).
+**React** — `<Timeline>`, `<TimelineItem>` (prop: `tone`), `<TimelineIndicator>`,
+`<TimelineContent>`, `<TimelineTitle>`, `<TimelineTime>`, `<TimelineDescription>`.
 
 ```jsx
-<Timeline items={[
-  { time: "09:42", title: "Matrix published", body: "All 1,204 rates synced.", status: "success" },
-  { time: "Yesterday", title: "Draft created", body: "Imported from the Q3 template." },
-]} />
+<Timeline>
+  <TimelineItem tone="success" data-state="completed">
+    <TimelineIndicator />
+    <TimelineContent>
+      <TimelineTitle>Matrix published</TimelineTitle>
+      <TimelineTime>09:42</TimelineTime>
+    </TimelineContent>
+  </TimelineItem>
+</Timeline>
 ```
 
 Live: [../examples/components/timeline.html](../examples/components/timeline.html)
@@ -904,8 +1111,9 @@ Live: [../examples/components/alert.html](../examples/components/alert.html)
 
 ## Spinner
 
-A circular loading indicator: a 2px ruled ring whose top segment is the accent color, rotating
-continuously (`border-radius:50%` is a sanctioned exception; honors `prefers-reduced-motion`).
+A circular loading indicator. Written by hand it is a 2px ruled ring whose top segment is the accent
+color; the React binding spins a glyph instead. Both rotate off the same class
+(`border-radius:50%` is a sanctioned exception; honors `prefers-reduced-motion`).
 
 ```html
 <span class="ds-spinner ds-spinner--sm"></span>
@@ -916,35 +1124,38 @@ continuously (`border-radius:50%` is a sanctioned exception; honors `prefers-red
 **Variants:** sizes `--sm` / `--lg` (default 20px); `--inline` aligns it to the text baseline beside
 a label.
 
-**React** — `<Spinner>`. Props: `size` (`"sm" | "lg"`), `inline`, `label` (accessible name via
-`aria-label`, default `"Loading"`).
+**React** — `<Spinner>`. Prop: `label` (accessible name via `aria-label`, default `"Loading"`).
+It renders a Phosphor spinner glyph and takes no size prop — the size classes above apply to it.
 
 ```jsx
-<Spinner size="lg" />
-<Spinner inline label="Saving" />
+<Spinner className="ds-spinner--lg" />
+<Spinner className="ds-spinner--sm ds-spinner--inline" label="Saving" />
 ```
 
 Live: [../examples/components/spinner.html](../examples/components/spinner.html)
 
 ## Progress
 
-A flat progress bar: a thin track holding a filled bar whose width is set inline as a percent.
-Status modifiers recolor the bar; `--indeterminate` animates a sliding segment.
+A determinate task bar: a `.ds-progress` row holding an optional label and value, then a track with
+an indicator whose width is set inline as a percent. Tone modifiers recolor the fill;
+`--indeterminate` animates a sliding segment.
 
 ```html
 <div>
-  <div class="ds-progress__label"><span>Uploading</span><span class="ds-progress__value">62%</span></div>
-  <div class="ds-progress"><div class="ds-progress__bar" style="width:62%"></div></div>
+  <div class="ds-progress-label"><span>Uploading</span><span class="ds-progress-value">62%</span></div>
+  <div class="ds-progress"><div class="ds-progress-track"><div class="ds-progress-indicator" style="width:62%"></div></div></div>
 </div>
-<div class="ds-progress ds-progress--indeterminate"><div class="ds-progress__bar"></div></div>
+<div class="ds-progress ds-progress--indeterminate"><div class="ds-progress-track"><div class="ds-progress-indicator"></div></div></div>
 ```
 
-**Parts / variants:** `.ds-progress` (track) + `.ds-progress__bar` (fill). Status modifiers
-`--success`, `--warning`, `--danger`; `--indeterminate` for the sliding segment. An optional
-`.ds-progress__label` row (with `.ds-progress__value`) sits above.
+**Parts / variants:** `.ds-progress` (the wrapping row), `.ds-progress-track` and
+`.ds-progress-indicator` (the fill). Tone modifiers `--tone-neutral`, `--tone-info`,
+`--tone-success`, `--tone-warning`, `--tone-danger`, `--tone-critical`; `--indeterminate` for the
+sliding segment. `.ds-progress-label` and `.ds-progress-value` are siblings of the track.
 
-**React** — `<Progress>`. Props: `value` (default 0), `max` (default 100), `status` (`"success" |
-"warning" | "danger"`), `indeterminate`, `label` (caption row, shown with the percentage).
+**React** — `<Progress>` (Base UI). Props: `value` (`null` is indeterminate), `max`, `tone`. It
+renders its own `<ProgressTrack>` and `<ProgressIndicator>`; `<ProgressLabel>` and
+`<ProgressValue>` are its children.
 
 ```jsx
 <Progress value={62} label="Uploading" />
@@ -1002,58 +1213,72 @@ Live: [../examples/components/toast.html](../examples/components/toast.html)
 
 ## Breadcrumb
 
-A compact path trail rendered as an ordered list. Links are soft ink, a faint `/` separates the
-items, and the current page sits in full ink.
+A path trail rendered as an ordered list in micro-caps. The separator is its own presentational
+`<li>` holding a caret, so it flips for RTL and stays out of the accessible name of the item beside
+it — which a generated `/` could not do.
 
 ```html
-<nav aria-label="Breadcrumb">
-  <ol class="ds-breadcrumb">
-    <li class="ds-breadcrumb__item"><a class="ds-breadcrumb__link" href="#">Home</a></li>
-    <li class="ds-breadcrumb__item"><a class="ds-breadcrumb__link" href="#">Pricing</a></li>
-    <li class="ds-breadcrumb__item" aria-current="page">Matrix</li>
+<nav aria-label="breadcrumb">
+  <ol class="ds-breadcrumb-list">
+    <li class="ds-breadcrumb-item"><a class="ds-breadcrumb-link" href="/">Home</a></li>
+    <li class="ds-breadcrumb-separator" role="presentation" aria-hidden="true">›</li>
+    <li class="ds-breadcrumb-item"><a class="ds-breadcrumb-link" href="/pricing">Pricing</a></li>
+    <li class="ds-breadcrumb-separator" role="presentation" aria-hidden="true">›</li>
+    <li class="ds-breadcrumb-item">
+      <span class="ds-breadcrumb-page" role="link" aria-disabled="true" aria-current="page">Matrix</span>
+    </li>
   </ol>
 </nav>
 ```
 
-**Parts:** `.ds-breadcrumb` (`<ol>`), `.ds-breadcrumb__item` (the separator is drawn with `::after`
-and hidden on the last item), `.ds-breadcrumb__link` for intermediate steps; mark the last item
-`aria-current="page"`.
+**Parts:** `.ds-breadcrumb-list` (the `<ol>` — the `<nav>` root carries no class),
+`.ds-breadcrumb-item`, `.ds-breadcrumb-link`, `.ds-breadcrumb-page` (the current page),
+`.ds-breadcrumb-separator`, `.ds-breadcrumb-ellipsis` (a collapsed middle).
 
-**React** — `<Breadcrumb>`. Prop: `items` (a `{ label, href? }[]`; the last item — or any without an
-`href` — renders as plain text); forwards a ref and `<nav>` attributes.
+**React** — `<Breadcrumb>`, `<BreadcrumbList>`, `<BreadcrumbItem>`, `<BreadcrumbLink>`,
+`<BreadcrumbPage>`, `<BreadcrumbSeparator>`, `<BreadcrumbEllipsis>`. `BreadcrumbLink` is
+polymorphic through `render`, so a router's own Link renders in its place.
 
 ```jsx
-<Breadcrumb items={[
-  { label: "Home", href: "/" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "Matrix" },
-]} />
+<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem><BreadcrumbLink href="/">Home</BreadcrumbLink></BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem><BreadcrumbPage>Matrix</BreadcrumbPage></BreadcrumbItem>
+  </BreadcrumbList>
+</Breadcrumb>
 ```
 
 Live: [../examples/components/breadcrumb.html](../examples/components/breadcrumb.html)
 
 ## Pagination
 
-A flat strip of square, 1px-bordered page buttons with prev/next controls and an ellipsis where the
-run is collapsed. The active page fills with ink; nav buttons dim when there is nowhere to go.
+A strip of page controls with prev/next and an ellipsis where the run is collapsed. Each page is a
+`.ds-button` inside a list, so a page can be a real link; the active one takes `--primary`.
 
 ```html
-<nav class="ds-pagination" aria-label="Pagination">
-  <button class="ds-pagination__nav" aria-label="Previous page" disabled>Prev</button>
-  <button class="ds-pagination__item is-active" aria-current="page">1</button>
-  <button class="ds-pagination__item">2</button>
-  <span class="ds-pagination__ellipsis" aria-hidden="true">…</span>
-  <button class="ds-pagination__item">24</button>
-  <button class="ds-pagination__nav" aria-label="Next page">Next</button>
+<nav class="ds-pagination" role="navigation" aria-label="Pagination">
+  <ul class="ds-pagination-content">
+    <li><a class="ds-button ds-pagination-previous" href="?page=1" aria-label="Go to previous page">
+      <span class="ds-pagination-label">Previous</span></a></li>
+    <li><a class="ds-button ds-button--icon ds-button--primary" href="?page=1" aria-current="page">1</a></li>
+    <li><a class="ds-button ds-button--icon" href="?page=2">2</a></li>
+    <li><span class="ds-pagination-ellipsis" aria-hidden="true">…</span></li>
+    <li><a class="ds-button ds-button--icon" href="?page=24">24</a></li>
+    <li><a class="ds-button ds-pagination-next" href="?page=2" aria-label="Go to next page">
+      <span class="ds-pagination-label">Next</span></a></li>
+  </ul>
 </nav>
 ```
 
-**Parts / state:** `.ds-pagination` (row), `.ds-pagination__item` (page button; active with
-`.is-active` or `[aria-current="page"]`), `.ds-pagination__nav` (prev/next; `disabled` at the ends),
-`.ds-pagination__ellipsis` (non-interactive gap marker).
+**Parts / state:** `.ds-pagination` (the nav), `.ds-pagination-content` (the list),
+`.ds-pagination-previous` / `.ds-pagination-next` (the end controls),
+`.ds-pagination-label` (their text, hidden below 640px), `.ds-pagination-ellipsis` (gap marker).
+The page controls are `.ds-button`s; the active one carries `--primary` and `aria-current="page"`.
 
-**React** — `<Pagination>`. Props: `page` (1-based), `pageCount`, `onChange(page)`, `siblingCount`
-(pages shown each side of the current, default 1). The component computes the window + ellipses.
+**React** — parts, not a controlled component. `paginationRange({ page, pageCount, siblingCount })`
+is exported and returns the run of page numbers and `"ellipsis"` markers; you render it with
+`<PaginationLink isActive>`. That is what lets a page be an `<a href>`.
 
 ```jsx
 <Pagination page={page} pageCount={24} siblingCount={1} onChange={setPage} />
@@ -1288,20 +1513,35 @@ Sizes, full-width, icon-only, loading, button groups, and split buttons — all 
 </div>
 ```
 
-**Modifiers:** sizes `--sm` / `--lg`; `--block` (full-width); `--icon` (square; pair with an
-`aria-label`); `--loading` (hides the label and shows a centered spinner). `.ds-button-group` joins
-buttons sharing borders; `.ds-split` joins a main action to a caret (`.ds-split__menu` holds its
-dropdown).
+**Modifiers:** sizes `--xs` / `--sm` / `--lg`; `--block` (full-width); `--icon` (square; pair with
+an `aria-label`); `--loading` (hides the label and shows a centered spinner). `.ds-split` joins a
+main action to a caret (`.ds-split__menu` holds its dropdown).
+
+`.ds-button-group` joins buttons sharing borders. Since `1.0.0-beta.3` it lives in its own
+`components/button-group.css`, gained `[data-orientation="vertical"]`, a `.ds-button-group-text`
+cell and a `.ds-button-group-separator`, and collapses the shared edge by *removing* the losing
+border rather than overlapping members — so it is correct under `dir="rtl"`. The class name and the
+markup above are unchanged.
+
+```html
+<div class="ds-button-group" role="group" data-orientation="horizontal">
+  <button class="ds-button">Copy</button>
+  <span class="ds-button-group-separator ds-separator ds-separator--auto" data-orientation="vertical"></span>
+  <button class="ds-button">Paste</button>
+</div>
+```
 
 **React** — the base `<Button>` takes `variant` (`"primary" | "danger"`), `size` (`"sm" | "lg"`),
-`loading`, and `block`. Plus `<ButtonGroup>`, `<IconButton>` (props: `label` — accessible name +
-title, `variant`, `size`), and `<SplitButton>` (props: `onMain`, `variant`, `size`, `menu`).
+`loading`, and `block`. Plus `<ButtonGroup>` (props: `orientation`) with `<ButtonGroupText>` and
+`<ButtonGroupSeparator>`, `<IconButton>` (props: `label` — accessible name + title, `variant`,
+`size` — the four square sizes `"icon" | "icon-xs" | "icon-sm" | "icon-lg"`, or the bare
+`"sm" | "lg"`), and `<SplitButton>` (props: `onMain`, `variant`, `size`, `menu`).
 
 ```jsx
 import { Button, ButtonGroup, IconButton, SplitButton } from "@diametral/design-system/react";
 
 <Button size="lg" loading>Saving</Button>
-<IconButton label="Add" variant="primary"><PlusIcon /></IconButton>
+<IconButton label="Add" variant="primary" size="icon-sm"><PlusIcon /></IconButton>
 <SplitButton variant="primary" onMain={save} menu={<div className="ds-menu">…</div>}>Save</SplitButton>
 ```
 
@@ -1318,29 +1558,38 @@ faint icon, a title-voiced heading, a soft constrained description, and an optio
 
 ```html
 <div class="ds-empty">
-  <div class="ds-empty__icon" aria-hidden="true"><svg>…</svg></div>
-  <p class="ds-empty__title">No missions yet</p>
-  <p class="ds-empty__desc">Create your first mission to compute a day rate, margin, and target salary.</p>
-  <div class="ds-empty__actions">
+  <div class="ds-empty-header">
+  <div class="ds-empty-media ds-empty-media--icon" aria-hidden="true"><svg>…</svg></div>
+    <p class="ds-empty-title">No missions yet</p>
+    <p class="ds-empty-description">Create your first mission to compute a day rate, margin, and target salary.</p>
+  </div>
+  <div class="ds-empty-content">
     <button class="ds-button ds-button--primary">New mission</button>
     <button class="ds-button">Import</button>
   </div>
 </div>
 ```
 
-**Parts:** `.ds-empty` (centered column), `.ds-empty__icon`, `.ds-empty__title`, `.ds-empty__desc`,
-and an optional `.ds-empty__actions` row.
+**Parts:** `.ds-empty` (centered column), `.ds-empty-header` (media + title + description),
+`.ds-empty-media` with `--icon` for the tinted tile or `--default` for a bare illustration,
+`.ds-empty-title`, `.ds-empty-description`, and an optional `.ds-empty-content` for what recovers
+from the empty state.
 
-**React** — `<EmptyState>`. Props: `icon`, `title`, `description`, `actions`; forwards a ref and
-`<div>` attributes.
+**React** — `<Empty>`, `<EmptyHeader>`, `<EmptyMedia>` (prop: `variant`), `<EmptyTitle>`,
+`<EmptyDescription>`, `<EmptyContent>`. Parts rather than props, which is what lets the media slot
+hold an illustration and the content slot hold a form.
 
 ```jsx
-<EmptyState
-  icon={<InboxIcon />}
-  title="No missions yet"
-  description="Create your first mission to compute a day rate, margin, and target salary."
-  actions={<Button variant="primary">New mission</Button>}
-/>
+<Empty>
+  <EmptyHeader>
+    <EmptyMedia variant="icon"><InboxIcon /></EmptyMedia>
+    <EmptyTitle>No missions yet</EmptyTitle>
+    <EmptyDescription>Create your first mission to compute a day rate.</EmptyDescription>
+  </EmptyHeader>
+  <EmptyContent>
+    <Button variant="primary">New mission</Button>
+  </EmptyContent>
+</Empty>
 ```
 
 Live: [../examples/components/empty-state.html](../examples/components/empty-state.html)
@@ -1560,7 +1809,7 @@ the border and background shift to the accent. Selected files list below in a `.
       <span class="ds-filelist__name">price-matrix-export.csv</span>
       <span class="ds-filelist__size">1.4 MB</span>
       <div class="ds-progress" role="progressbar" aria-valuenow="62">
-        <div class="ds-progress__bar" style="width:62%"></div>
+        <div class="ds-progress-track"><div class="ds-progress-indicator" style="width:62%"></div></div>
       </div>
       <button class="ds-filelist__remove" type="button" aria-label="Remove price-matrix-export.csv">×</button>
     </li>
@@ -1589,46 +1838,48 @@ Live: [../examples/components/file-upload.html](../examples/components/file-uplo
 ## Toolbar
 
 A horizontal bar that aligns controls on one row — buttons, a segmented control, a search field.
-Cluster related controls with `.ds-toolbar__group` and push the rest to the far edge with a flexible
-`.ds-toolbar__spacer`.
+Cluster related controls with `.ds-toolbar-group` and push the rest to the far edge with a flexible
 
 ```html
 <div class="ds-toolbar" role="toolbar">
-  <div class="ds-toolbar__group">
+  <div class="ds-toolbar-group">
     <button class="ds-button ds-button--primary">New</button>
     <button class="ds-button">Import</button>
   </div>
-  <div class="ds-toolbar__spacer" aria-hidden="true"></div>
-  <div class="ds-toolbar__group">
+  
+  <div class="ds-toolbar-group">
     <button class="ds-button">Export</button>
     <button class="ds-button ds-button--danger">Delete</button>
   </div>
 </div>
 ```
 
-**Parts / variants:** `.ds-toolbar` (the row; a 1px bottom rule by default), `.ds-toolbar__group`
-(a tight cluster of controls), `.ds-toolbar__spacer` (eats the free space, pushing what follows to
-the opposite edge). The `--bordered` modifier boxes the bar in a 1px rule all around; drop a search
-`.ds-input` or a `.ds-segmented` control inline.
+**Parts / variants:** `.ds-toolbar` (a boxed strip, `width: fit-content`; `data-orientation="vertical"`
+stacks it), `.ds-toolbar-group` (a tight cluster), `.ds-toolbar-separator` (rules between groups),
+`.ds-toolbar-button`, `.ds-toolbar-link`, `.ds-toolbar-input`. `.ds-toolbar-spacer` still eats the
+free space, but only on a bar you have widened past its content — the strip sizes to its contents by
+default, where 0.11's stretched to its container.
 
 ```html
-<div class="ds-toolbar ds-toolbar--bordered" role="toolbar">
+<div class="ds-toolbar" role="toolbar">
   <input class="ds-input" type="search" placeholder="Search rows…" aria-label="Search">
-  <div class="ds-toolbar__spacer" aria-hidden="true"></div>
+  
   <button class="ds-button">Filters</button>
 </div>
 ```
 
-**React** — compose `<Toolbar>` (prop: `bordered`) with `<ToolbarGroup>` and `<ToolbarSpacer>`; drop
-any controls (`Button`, `Segmented`, `Input`) inside. All forward a ref and `<div>` attributes.
+**React** — `<Toolbar>`, `<ToolbarGroup>`, `<ToolbarButton>` (props: `variant`, `size`),
+`<ToolbarLink>`, `<ToolbarInput>`, `<ToolbarSeparator>`. Base UI's Toolbar underneath, so the whole
+strip is **one** tab stop and the arrow keys walk it — where 0.11's flex row made every control its
+own stop.
 
 ```jsx
-<Toolbar bordered>
-  <Input type="search" placeholder="Search rows…" />
-  <ToolbarSpacer />
+<Toolbar>
+  <ToolbarInput type="search" placeholder="Search rows…" aria-label="Search" />
+  <ToolbarSeparator />
   <ToolbarGroup>
-    <Button>Export</Button>
-    <Button variant="primary">New</Button>
+    <ToolbarButton aria-label="Export"><DownloadIcon /></ToolbarButton>
+    <ToolbarButton aria-label="Delete" variant="danger"><TrashIcon /></ToolbarButton>
   </ToolbarGroup>
 </Toolbar>
 ```
@@ -1645,7 +1896,7 @@ the sidebar collapses behind a `☰` toggle.
 <div class="ds-shell">
   <header class="ds-shell__header">
     <button class="ds-shell__toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
-    <span class="ds-wordmark">…</span>
+    <span class="ds-wordmark" data-variant="horizontal"><svg>…</svg></span>
   </header>
   <aside class="ds-shell__sidebar">
     <nav class="ds-vnav" aria-label="Sidebar">
@@ -1837,25 +2088,30 @@ Live: [../examples/components/command-palette.html](../examples/components/comma
 ## Sparkline
 
 An inline SVG mini line chart — no axes, no grid, no library. The line is a single polyline scaled to
-fit its box and drawn with `currentColor` (accent by default), so setting `color` recolors it.
+fit its box and drawn with `currentColor`, so setting `color` recolors it; the wrapper's own default
+is `--ds-chart-1`, the first series color, because a themed accent must not repaint data.
 
 ```html
-<span class="ds-sparkline">
-  <svg class="ds-sparkline__svg" width="120" height="32" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true">
-    <path class="ds-sparkline__area" d="M2,30 L2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2 L118,30 Z" />
-    <polyline class="ds-sparkline__line" points="2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2" />
-    <circle class="ds-sparkline__dot" cx="118" cy="2" r="2" />
+<span class="ds-sparkline" role="img" aria-label="Sessions over 6 weeks">
+  <svg class="ds-sparkline-svg" width="120" height="32" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true">
+    <path class="ds-sparkline-area" d="M2,30 L2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2 L118,30 Z" />
+    <polyline class="ds-sparkline-line" points="2,24 25.6,18 49.2,26 72.8,8 96.4,14 118,2" />
+    <circle class="ds-sparkline-dot" cx="118" cy="2" r="2" />
   </svg>
 </span>
 ```
 
-**Parts:** `.ds-sparkline` (inline-block wrapper; set `color` to recolor), `.ds-sparkline__svg`, the
-`.ds-sparkline__line` polyline, an optional faint `.ds-sparkline__area` fill under it, and an optional
-`.ds-sparkline__dot` on the last point. All inherit the line color via `currentColor`.
+**Parts:** `.ds-sparkline` (inline-block wrapper; set `color` to recolor), `.ds-sparkline-svg`, the
+`.ds-sparkline-line` polyline, an optional faint `.ds-sparkline-area` fill under it, and an optional
+`.ds-sparkline-dot` on the last point. All inherit the line color via `currentColor`.
+`.ds-sparkline-line--animate` draws the line in on mount (and does nothing under
+`prefers-reduced-motion`). The parts were `__svg` / `__line` / `__area` / `__dot` before
+1.0.0-beta.4; the rename is mechanical, `__` for `-`.
 
 **React** — `<Sparkline>`. Props: `data` (a `number[]`, scaled to fit), `width` (default 120),
 `height` (default 32), `stroke` (line color), `fill` (`boolean | string` — a faint area under the
-line), `showDot`; forwards a ref and `<span>` attributes.
+line), `showDot`, `animate`. A flat series — or a single point — pins to the middle of the box; before
+1.0.0-beta.4 it drew along the floor and read as a minimum it was not.
 
 ```jsx
 <Sparkline data={[4, 8, 6, 14, 11, 20]} fill showDot />
@@ -1864,47 +2120,90 @@ line), `showDot`; forwards a ref and `<span>` attributes.
 
 Live: [../examples/components/sparkline.html](../examples/components/sparkline.html)
 
-## Bar chart
+## Charts
 
-A minimal flat bar chart — no library. The default is vertical: a flex-end row of columns whose
-heights are set inline as a percent of the max. The `--horizontal` modifier lays the same data out as
-rows. Bars fill with the accent or a status color.
+Every chart except the sparkline and the gauge is **React-only** from 1.0.0-beta.4 on: the marks are
+drawn by [recharts](https://recharts.org), so there is no static markup that reproduces them and no
+`.ds-*` class per mark. What the stylesheet owns is the frame — the plotting box, the tooltip and the
+legend — plus the descendant rules that repaint recharts' own hard-coded defaults (`#ccc` gridlines,
+`#fff` mark outlines) onto `--ds-*` tokens, in both themes.
+
+0.11's pure-SVG and CSS-flex charts (`.ds-chart`, `.ds-barchart`, `.ds-linechart`, `.ds-areachart`,
+`.ds-donut`, `.ds-piechart`, `.ds-stackedbar`) were removed in the same release. See
+[migration/from-0.11.md](migration/from-0.11.md) for the class-by-class map.
+
+**Parts:** `.ds-chart-container` (the plotting box, 16/9 by default) with `--plot` (a fixed height,
+full width — the axis charts) and `--square` (1:1 — pie, donut) modifiers, both reading
+`--ds-chart-height`; `.ds-chart-tooltip-content` and its label / item / indicator / value parts;
+`.ds-chart-legend-content` with `-item` and a 10px `-dot` swatch. `.ds-stacked-bar-root`,
+`.ds-pie-chart-root` and `.ds-donut-chart-root` size and centre their own charts, and
+`.ds-donut-chart-center-label` / `-center-caption` set the figure in the hole.
+
+**React** — `ChartContainer` + `ChartTooltip(Content)` + `ChartLegend(Content)` are the substrate; six
+finished charts compose them, each taking a `config` and rows of `data`:
+
+| component | for | the row fields it needs |
+| --- | --- | --- |
+| `LineChart` | a trend over a category axis | `xAxisKey` |
+| `AreaChart` | the same, read as a volume; `stacked` sums the series | `xAxisKey` |
+| `BarChart` | magnitudes; `horizontal`, `stacked`, `max`, `statusKey` | `xAxisKey` |
+| `StackedBar` | shares — every row normalised to its own total | `labelKey` |
+| `PieChart` | parts of one whole | `valueKey`, `nameKey` |
+| `DonutChart` | the same with a figure in the hole | `valueKey`, `nameKey` |
+
+`config` is the whole naming and coloring system: one entry per series or slice, keyed by the field
+name in the data row. An entry that carries a `color` becomes a `--color-<key>` custom property scoped
+to that one chart; an entry with no color takes the next slot of the six-color `--ds-chart-*` ramp.
+The tooltip and legend read their labels from the same object, so a series is named once.
+
+```jsx
+const config = {
+  signups: { label: "Signups", color: "var(--ds-chart-2)" },
+  churn: { label: "Churn" },   // takes the next ramp slot
+}
+
+<LineChart config={config} data={rows} xAxisKey="week" />
+<BarChart config={config} data={rows} xAxisKey="week" max={300} horizontal />
+<DonutChart config={config} data={rows} valueKey="gb" nameKey="bucket" centerLabel="8.2 GB" />
+```
+
+`recharts` is an optional peer dependency (`>= 3`), like `react`: install it to use these six, and
+nothing if you only consume the CSS. A chart whose shape none of them draws composes `ChartContainer`
+with recharts children directly — import those from `recharts`, not from this package.
+
+## Gauge
+
+A 270° radial gauge for one value: a faint full track arc behind a colored value arc, whose length is
+a `stroke-dasharray` so it redraws without recomputing the arc path. Library-free, like the
+sparkline — the markup below renders it with no React at all.
 
 ```html
-<div class="ds-barchart" role="img" aria-label="Status by region">
-  <div class="ds-barchart__col">
-    <span class="ds-barchart__label">EMEA</span>
-    <div class="ds-barchart__track"><div class="ds-barchart__bar is-success" style="height:80%"></div></div>
-    <span class="ds-barchart__value">80</span>
-  </div>
-  <!-- …more columns… -->
+<div class="ds-gauge" role="img" aria-label="Capacity: 68 of 100">
+  <svg class="ds-gauge-svg" width="180" height="180" viewBox="0 0 180 180" aria-hidden="true">
+    <path class="ds-gauge-track" d="M 24,148 A 82,82 0 1 1 156,148" fill="none" stroke-width="16" />
+    <path class="ds-gauge-value" d="M 24,148 A 82,82 0 1 1 156,148" fill="none" stroke-width="16"
+          stroke-dasharray="263 386" />
+    <text class="ds-gauge-center" x="90" y="86" font-size="43" text-anchor="middle">68</text>
+    <text class="ds-gauge-label" x="90" y="122" text-anchor="middle">Capacity</text>
+  </svg>
 </div>
 ```
 
-**Parts / variants:** `.ds-barchart` (vertical row of columns) holds `.ds-barchart__col`s, each an
-optional `.ds-barchart__label`, a `.ds-barchart__track` wrapping a `.ds-barchart__bar` (height set
-inline), and a tabular `.ds-barchart__value`. The bar takes a status color via `.is-success` /
-`.is-warning` / `.is-danger` / `.is-critical` / `.is-neutral` / `.is-info`. The `--horizontal`
-modifier turns the chart into `label · track · value` rows with the bar `width` as the data dimension.
+**Parts:** `.ds-gauge` (the inline-flex column), `.ds-gauge-svg`, `.ds-gauge-track` (the faint arc),
+`.ds-gauge-value` (the value arc — color set inline, length via `stroke-dasharray`),
+`.ds-gauge-center` (the figure) and `.ds-gauge-label` (the uppercase caption under it). The parts were
+`__svg` / `__track` / `__value` / `__center` / `__label` before 1.0.0-beta.4.
 
-**React** — `<BarChart>`. Props: `data` (a `{ label?, value, status? }[]`; `status` is one of the
-families above), `max` (value mapped to a full-length bar; defaults to the largest), `horizontal`;
-forwards a ref and `<div>` attributes.
+**React** — `<Gauge>`, renamed from 0.11's `GaugeChart` with every prop intact: `value`, `max`
+(default 100), `size` (default 180), `thickness` (default 16), `label`, `color`, `thresholds`
+(`{ at, color }[]`, last match wins) and `format`. It renders `role="img"` with the value and the
+maximum in the accessible name.
 
 ```jsx
-<BarChart data={[
-  { label: "EMEA", value: 80, status: "success" },
-  { label: "AMER", value: 55, status: "warning" },
-  { label: "APAC", value: 30, status: "danger" },
-]} />
-
-<BarChart horizontal max={100} data={[
-  { label: "Design", value: 72 },
-  { label: "Engineering", value: 98 },
-]} />
+<Gauge value={68} label="Capacity" />
+<Gauge value={92} max={120} thresholds={[{ at: 80, color: "var(--ds-warning)" }]}
+       format={(v) => `${v}%`} />
 ```
-
-Live: [../examples/components/bar-chart.html](../examples/components/bar-chart.html)
 
 ## Stat card
 
@@ -2107,14 +2406,14 @@ no radius. The flat take on a keycap; combine them with a plain `+` separator fo
 <p>Press <kbd class="ds-kbd">⌘</kbd> + <kbd class="ds-kbd">K</kbd> to open the command palette.</p>
 ```
 
-**Parts:** a single `.ds-kbd` per key (it sits on the text baseline so it reads inline within a
-sentence); join keys with a literal `+` for a chord.
+**Parts:** a `.ds-kbd` per key; `.ds-kbd-group` chains several into one chord. Inside an input group
+the cap drops to a wash of its own ink; inside a tooltip it inverts with the surface.
 
-**React** — `<Kbd>` renders a `<kbd class="ds-kbd">`, forwards a ref, and spreads any extra props onto
-the element.
+**React** — `<Kbd>` and `<KbdGroup>`, both `<kbd>` elements — nesting is valid, and it keeps a chord
+one keyboard-input phrase to a screen reader rather than several.
 
 ```jsx
-<p>Press <Kbd>⌘</Kbd> + <Kbd>K</Kbd> to search.</p>
+<KbdGroup><Kbd>⌘</Kbd><Kbd>K</Kbd></KbdGroup>
 ```
 
 Live: [../examples/components/kbd.html](../examples/components/kbd.html)
@@ -2176,3 +2475,218 @@ Composes the date picker and time picker into one ISO `YYYY-MM-DDTHH:MM` value.
 **React** — `DateTimePicker({ value, defaultValue, onChange, min, max, step })`.
 
 Live: [../examples/components/date-time.html](../examples/components/date-time.html)
+
+---
+
+# Batch 1 — overlays and menus
+
+Absorbed from `@diametral/ui` in `1.0.0-beta.1`. These six are the first components in
+the system whose behaviour is not hand-written: it comes from Base UI, adopted as a
+substrate of the React binding ([ADR 0001](adr/0001-base-ui-as-a-substrate.md)). Each one
+records its **binding** below — the CSS ships for every binding, the keyboard and focus
+contract is React-only, and a Streamlit, Keycloak or plain-HTML consumer should read that
+line before reaching for one.
+
+## Context menu
+
+Right-click's own menu, positioned at the pointer. Rows come in four shapes — plain,
+checkbox, radio, submenu.
+
+```html
+<div class="ds-context-menu-positioner">
+  <div class="ds-context-menu-content">
+    <div class="ds-context-menu-label">charte-2026.pdf</div>
+    <div class="ds-context-menu-item">Rename</div>
+    <div class="ds-context-menu-item">
+      Duplicate <span class="ds-context-menu-shortcut">⌘D</span>
+    </div>
+    <div class="ds-context-menu-checkbox-item">
+      <span class="ds-context-menu-item-indicator">✓</span> Pinned
+    </div>
+    <div class="ds-context-menu-sub-trigger">
+      Move to <svg class="ds-context-menu-sub-trigger-icon"></svg>
+    </div>
+    <div class="ds-context-menu-separator"></div>
+    <div class="ds-context-menu-item" data-variant="destructive">Delete</div>
+  </div>
+</div>
+```
+
+**Parts:** `.ds-context-menu-trigger` (the region that answers the right-click),
+`-positioner`, `-content`, `-item`, `-checkbox-item`, `-radio-item`, `-item-indicator`,
+`-sub-trigger` + `-sub-trigger-icon`, `-label`, `-separator`, `-shortcut`. `data-inset` on
+an item adds the indicator gutter; `data-variant="destructive"` colours the row.
+
+**React** — `ContextMenu` + 14 parts. `ContextMenuTrigger` takes `render` to become the real
+element it guards; `ContextMenuContent` mounts its own portal and positioner.
+
+**Binding** — CSS: every binding. Behaviour (right-click capture, pointer positioning,
+submenus, focus return, Escape): React only.
+
+## Navigation menu
+
+A horizontal site menu whose triggers open one shared panel.
+
+```html
+<nav class="ds-navigation-menu">
+  <ul class="ds-navigation-menu-list">
+    <li class="ds-navigation-menu-item">
+      <button class="ds-navigation-menu-trigger">
+        Product <svg class="ds-navigation-menu-trigger-icon"></svg>
+      </button>
+    </li>
+  </ul>
+  <div class="ds-navigation-menu-positioner">
+    <div class="ds-navigation-menu-popup">
+      <div class="ds-navigation-menu-viewport">
+        <div class="ds-navigation-menu-content">
+          <a class="ds-navigation-menu-link" href="#">Overview</a>
+          <a class="ds-navigation-menu-link ds-navigation-menu-link--block" href="#">Changelog</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+```
+
+**Parts:** `.ds-navigation-menu`, `-list`, `-item`, `-trigger` + `-trigger-icon`,
+`-positioner`, `-popup`, `-viewport`, `-content`, `-link`, `-indicator` +
+`-indicator-arrow`. `.ds-navigation-menu-link--block` is the tighter block-flow link for a
+stacked list; the default is a flex row with a 0.75rem inset.
+
+**React** — `NavigationMenu` + 8 parts, plus `navigationMenuTriggerStyle()` for a top-level
+link with no panel. The root mounts its own portal, positioner, popup and viewport, so the
+tree you write is Root → List → Item.
+
+**Binding** — CSS: every binding. Behaviour (one shared popup, resize and slide between
+triggers, `data-activation-direction`): React only.
+
+## Menubar
+
+A desktop-style application menu bar: one tab stop, arrow keys between menus.
+
+```html
+<div class="ds-menubar">
+  <button class="ds-menubar-trigger">File</button>
+  <button class="ds-menubar-trigger">Edit</button>
+</div>
+<!-- an open menu is a .ds-menu, the same surface a Dropdown uses -->
+<div class="ds-menu">
+  <div class="ds-menu__header">Recent</div>
+  <div class="ds-menu__item">Open… <span class="ds-menubar-shortcut">⌘O</span></div>
+  <div class="ds-menu__item ds-menubar-checkbox-item">
+    <span class="ds-menubar-item-indicator">✓</span> Show gutter
+  </div>
+  <div class="ds-menu__divider"></div>
+  <div class="ds-menu__item ds-menubar-sub-trigger">
+    Move to <svg class="ds-menubar-sub-trigger-icon"></svg>
+  </div>
+</div>
+```
+
+**Parts:** `.ds-menubar` (the bar), `-trigger`. Everything inside a menu wears this system's
+own menu vocabulary — `.ds-menu`, `.ds-menu__item`, `.ds-menu__divider`, `.ds-menu__header`
+(see [Menu](#dropdown-menu)) — plus `.ds-menubar-checkbox-item` / `-radio-item` and
+`.ds-menubar-item-indicator` for the checkable rows, `-sub-trigger` + `-sub-trigger-icon`
+for a submenu row, and `.ds-menubar-shortcut` for the keyboard hint.
+`data-inset="true"` lines a plain row up with the checkable ones.
+
+**React** — `Menubar` + 15 parts. Each menu is a Base UI `Menu`, not this repo's
+`Dropdown`: the incumbent is click-toggled with no submenus and no checkable rows.
+
+**Binding** — CSS: every binding. Behaviour (the bar's single tab stop, arrow-key traversal
+between menus, submenus, checkable rows): React only.
+
+## Autocomplete
+
+A text input with suggestions, where the typed string is the value — the list is a
+shortcut, never a constraint. `Combobox` is the one whose value must come from the list.
+
+```html
+<div class="ds-input-group">
+  <input class="ds-input" placeholder="Start typing…">
+  <span class="ds-input-group__addon">
+    <button class="ds-button ds-button--icon ds-button--sm">
+      <svg class="ds-autocomplete-clear-icon"></svg>
+    </button>
+  </span>
+</div>
+<div class="ds-autocomplete-positioner">
+  <div class="ds-autocomplete-content">
+    <div class="ds-autocomplete-status">3 results</div>
+    <div class="ds-autocomplete-list">
+      <div class="ds-autocomplete-label">Forms</div>
+      <div class="ds-autocomplete-item">Combobox</div>
+      <div class="ds-autocomplete-separator"></div>
+      <div class="ds-autocomplete-empty">No suggestion.</div>
+    </div>
+  </div>
+</div>
+```
+
+**Parts:** the field is a `.ds-input-group` + `.ds-input` (see [Form
+controls](#form-controls)); the popup is `.ds-autocomplete-positioner`, `-content`,
+`-list`, `-item`, `-label`, `-separator`, `-empty`, `-status`, and
+`.ds-autocomplete-clear-icon` on the clear glyph.
+
+**React** — `Autocomplete` + 11 parts. `AutocompleteInput` renders the input group and takes
+`showClear`; `AutocompleteStatus` is a polite live region — swap its children rather than
+unmounting it. `mode` decides what a query does (`list`, `both`, `inline`, `none`); set
+`filter={null}` when something upstream already narrowed the items.
+
+**Binding** — CSS: every binding. Behaviour (filtering, inline completion, the live region,
+popup positioning, arrow-key traversal): React only.
+
+## Speed dial
+
+A floating action button whose two-to-four actions fan out on open.
+
+```html
+<button class="ds-button ds-button--icon ds-speed-dial" aria-label="Create" aria-expanded="false">
+  <span class="ds-speed-dial-icon"><!-- glyph --></span>
+  <svg class="ds-speed-dial-icon-close"></svg>
+</button>
+<div class="ds-speed-dial-positioner">
+  <div class="ds-speed-dial-actions">
+    <div class="ds-speed-dial-action">
+      <span class="ds-speed-dial-action-label">Upload</span>
+      <span class="ds-button ds-button--icon ds-speed-dial-action-icon"><!-- glyph --></span>
+    </div>
+  </div>
+</div>
+```
+
+**Parts:** `.ds-speed-dial` on the trigger (a `.ds-button.ds-button--icon`, fixed to the
+end-bottom corner); `.ds-speed-dial--docked` scopes it to a positioned ancestor and
+`--docked-top` flips which edge; `-icon` / `-icon-close` are the two glyphs, swapped by CSS
+off the trigger's `aria-expanded`; `-positioner`, `-actions`, `-action`, `-action-label`,
+`-action-icon` are the fan-out column.
+
+**React** — `SpeedDial` + `SpeedDialAction`. The trigger is the root, so `className`
+positions the dial. `tone` is `primary` or `danger` — the two the incumbent button has.
+
+**Binding** — CSS: every binding, including the open/closed glyph swap, which is pure CSS off
+`aria-expanded`. Behaviour (Escape, arrow keys across the actions, focus return): React only.
+
+## Hover card
+
+A preview surface shown on hover, for links and mentions. Everything inside is
+supplementary by definition — a touch user never hovers.
+
+```html
+<div class="ds-hover-card-positioner">
+  <div class="ds-hover-card-content" data-side="bottom">
+    <!-- the preview -->
+  </div>
+</div>
+```
+
+**Parts:** `.ds-hover-card-positioner`, `.ds-hover-card-content`. `data-side` on the content
+picks which edge it slides in from.
+
+**React** — `HoverCard`, `HoverCardTrigger`, `HoverCardContent`. The timings live on the
+trigger (`delay` 600ms, `closeDelay` 300ms), so two triggers can differ in one view. The
+trigger renders an `a` by default — pass `render` when it is really a button.
+
+**Binding** — CSS: every binding. Behaviour (hover and focus delays, dismissal, positioning):
+React only.

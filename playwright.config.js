@@ -11,6 +11,12 @@ import { defineConfig } from "@playwright/test";
 export default defineConfig({
   testDir: "tests",
 
+  // The 8 failures in the 240-test a11y run were all page-load timeouts under
+  // parallel load, not axe violations. Two workers on CI and a per-test budget
+  // above Playwright's 30s default is what separates "slow" from "broken".
+  workers: process.env.CI ? 2 : undefined,
+  timeout: 60_000,
+
   // Group all baselines under tests/__screenshots__/ (one folder per spec file),
   // independent of the OS/arch so CI on Linux matches what's committed.
   snapshotPathTemplate: "tests/__screenshots__/{testFilePath}/{arg}{ext}",
@@ -24,7 +30,7 @@ export default defineConfig({
   // reuseExistingServer lets you keep a `npm run serve` running locally.
   webServer: {
     command: "python3 -m http.server 8080",
-    url: "http://localhost:8080/examples/index.html",
+    url: "http://localhost:8080/index.html",
     reuseExistingServer: true,
     timeout: 60_000,
   },

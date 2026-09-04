@@ -1,58 +1,142 @@
-/* Kanban board — .ds-kanban (columns of draggable cards) */
+/* ============================================================================
+   Kanban board — .ds-kanban (columns of draggable cards)
+   ----------------------------------------------------------------------------
+   Batch 8's third defect swap, and the one that buys the migration's only new
+   dependency. 0.11's board was 49 lines of HTML5 drag with no ARIA and no
+   keyboard path at all; the absorbed one is a @dnd-kit lift/move/drop state
+   machine whose grip is a real <button>, so a card moves by Space + arrows.
+
+   This is a wholesale replacement, not a coexistence like tooltip.css: the
+   0.11 grammar was `.ds-kanban__col` / `__list` / `__card`, and its three
+   hand-written readers — examples/components/kanban.html and the demo's
+   talent.js and work.js — are re-classed to the flat kebab names in this same
+   batch, so nothing is left rendering the old parts.
+   ============================================================================ */
 .ds-kanban {
   display: flex;
-  gap: 16px;
-  align-items: flex-start;
+  width: 100%;
+  align-items: stretch;
+  gap: 1rem;
   overflow-x: auto;
-  padding-bottom: 6px;
+  font-family: var(--ds-font-sans);
 }
-.ds-kanban__col {
-  flex: 0 0 280px;
+
+.ds-kanban-column {
   display: flex;
+  width: 16rem;
+  flex-shrink: 0;
   flex-direction: column;
-  background: var(--ds-bg-alt);
+  gap: 0.75rem;
   border: 1px solid var(--ds-rule);
   border-radius: var(--ds-radius-none);
-  max-height: 100%;
+  background-color: var(--ds-bg-alt);
+  padding: 0.75rem;
 }
-.ds-kanban__col-head {
+
+.ds-kanban-column-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  padding: 11px 14px;
-  border-bottom: 1px solid var(--ds-rule);
-  font-size: var(--ds-text-2xs);
-  letter-spacing: 0.08em;
+  gap: 0.5rem;
+}
+
+.ds-kanban-column-title {
+  font-family: var(--ds-font-title);
+  font-size: var(--ds-text-sm);
+  line-height: var(--ds-leading-tight);
+  font-weight: var(--ds-font-weight-title);
+  letter-spacing: 0.05em;
   text-transform: uppercase;
+}
+
+.ds-kanban-column-count {
+  font-size: var(--ds-text-xs);
+  line-height: var(--ds-leading-tight);
   color: var(--ds-ink-faint);
-}
-.ds-kanban__count {
   font-variant-numeric: tabular-nums;
-  color: var(--ds-ink-soft);
-  background: var(--ds-surface);
-  border: 1px solid var(--ds-rule);
-  padding: 1px 7px;
 }
-.ds-kanban__list {
+
+.ds-kanban-column-list {
   display: flex;
+  min-height: 6rem;
+  flex: 1 1 0%;
   flex-direction: column;
-  gap: 10px;
-  padding: 10px;
-  min-height: 48px;
-  overflow-y: auto;
+  gap: 0.5rem;
   transition: background-color var(--ds-transition);
 }
-.ds-kanban__list.is-over { background: var(--ds-accent-bg); }
-.ds-kanban__card {
-  background: var(--ds-surface);
+.ds-kanban-column-list[data-over] {
+  background-color: var(--ds-accent-bg);
+}
+
+.ds-kanban-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
   border: 1px solid var(--ds-rule);
   border-radius: var(--ds-radius-none);
-  padding: 12px;
-  cursor: grab;
+  background-color: var(--ds-surface);
+  padding: 0.625rem;
+  font-size: var(--ds-text-sm);
+  line-height: var(--ds-leading-normal);
+  color: var(--ds-ink);
 }
-.ds-kanban__card:active { cursor: grabbing; }
-.ds-kanban__card:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: 2px; }
-.ds-kanban__card.is-dragging { opacity: .5; }
-.ds-kanban__card-title { font-size: 13.5px; font-weight: 500; }
-.ds-kanban__card-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 10px; font-size: var(--ds-text-xs); color: var(--ds-ink-faint); }
+
+/* The grip is the drag handle and the keyboard entry point both — it is a real
+   <button>, so it is in the tab order and Space starts a lift. Reset the UA
+   button chrome the base reset deliberately leaves alone. */
+.ds-kanban-card-grip {
+  margin-top: 0.125rem;
+  display: inline-flex;
+  border: 0;
+  background: none;
+  padding: 0;
+  color: var(--ds-ink-faint);
+  font: inherit;
+  cursor: grab;
+  transition: transform var(--ds-transition);
+}
+.ds-kanban-card-grip:hover {
+  color: var(--ds-ink);
+}
+/* The charte's real focus ring, not the source's soft box-shadow halo — same
+   correction batch 4 made for the outline-hidden idiom. */
+.ds-kanban-card-grip:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: 2px;
+}
+.ds-kanban-card-grip:active {
+  scale: 0.97;
+  cursor: grabbing;
+}
+.ds-kanban-card-grip svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.ds-kanban-card-body {
+  min-width: 0;
+  flex: 1 1 0%;
+}
+
+.ds-kanban-card-title {
+  font-size: var(--ds-text-sm);
+  line-height: var(--ds-leading-normal);
+  font-weight: 500;
+  color: var(--ds-ink);
+}
+
+.ds-kanban-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 0.625rem;
+  font-size: var(--ds-text-xs);
+  color: var(--ds-ink-faint);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-kanban-column-list,
+  .ds-kanban-card,
+  .ds-kanban-card-grip { transition: none; }
+}

@@ -1,0 +1,49 @@
+/* ============================================================================
+   Waterfall chart — .ds-waterfall-chart-tooltip
+   ----------------------------------------------------------------------------
+   A waterfall is two stacked bars per step — a transparent offset carrying the
+   running base, and the visible delta floating on it — so the plot itself is
+   recharts nodes and chart.css's `--plot` box. What this file owns is the
+   tooltip body, which is custom because the default one would print the offset:
+   a row reading "base: 4200" is the tell that this was done wrong.
+
+   Two rows, the signed change and the running total, in a `.ds-chart-tooltip
+   -content` slot. `flex: 1 1 0%` is what makes the grid fill that slot rather
+   than shrink to its content, which would leave the values ragged.
+
+   The source spent `h-56 w-full` as literal Tailwind classes so
+   `tailwind-merge` could dedupe a caller's `h-64` override; here the height is
+   a real declaration on `--plot`, retuned through `--ds-chart-height`.
+   ============================================================================ */
+.ds-waterfall-chart-tooltip {
+  display: grid;
+  flex: 1 1 0%;
+  gap: 0.25rem;
+}
+
+.ds-waterfall-chart-tooltip-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ds-space-4);
+}
+
+.ds-waterfall-chart-tooltip-label {
+  color: var(--ds-ink-soft);
+}
+
+/* The signed change. Mono and tabular, matching
+   `.ds-chart-tooltip-content-item-value` — the two appear in the same surface. */
+.ds-waterfall-chart-tooltip-value {
+  font-family: ui-monospace, "SF Mono", "Geist Mono", Menlo, Consolas, monospace;
+  font-weight: 500;
+  color: var(--ds-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The running figure, one step back: it is context for the change above it. */
+.ds-waterfall-chart-tooltip-value-muted {
+  font-family: ui-monospace, "SF Mono", "Geist Mono", Menlo, Consolas, monospace;
+  color: var(--ds-ink-faint);
+  font-variant-numeric: tabular-nums;
+}

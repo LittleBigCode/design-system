@@ -1,0 +1,71 @@
+/* ============================================================================
+   Theme switcher — .ds-theme-switcher
+   ----------------------------------------------------------------------------
+   Three modes — light, dark, system — in one of three footprints. Two of the
+   source's three variants are re-compositions, so this file is much smaller
+   than the one it replaces:
+
+   - `segmented` sat on the source's own `toggle-group`, which is held. It is
+     re-composed onto this repo's `Segmented`, so the row's chrome comes from
+     `.ds-segmented` and this file adds nothing. The source's sliding
+     `.ds-theme-switcher-indicator` goes with it: it was a hand-pitched
+     translate over `w-9` toggle cells with a -1px seam per cell, and
+     `.ds-segmented__item.is-active` already owns the pressed fill. Nothing
+     that shipped rendered it — the indicator was internal to the binding.
+   - `cycle` sat on the source's `Button` and is re-composed onto `IconButton`,
+     which needs no rules of its own.
+   - `dropdown` sat on the source's `dropdown-menu`, also held. Base UI's `Menu`
+     wearing this repo's `.ds-menu` vocabulary replaces it — the same re-wiring
+     batch 1's menubar made — so only the trigger's own spacing survives here.
+   ============================================================================ */
+.ds-theme-switcher-dropdown-trigger {
+  gap: 0.375rem;
+  padding-inline: 0.625rem;
+}
+
+.ds-theme-switcher-dropdown-icon {
+  width: 0.75rem;
+  height: 0.75rem;
+  color: var(--ds-ink-faint);
+}
+
+/* The dropdown's radio rows. `.ds-menu__item` supplies the row; these two
+   rules only make room for the tick and park it there — the same shape
+   menubar.css gives its own checkable rows, kept under this component's names
+   rather than borrowing a menubar-scoped class. */
+.ds-theme-switcher-radio-item {
+  position: relative;
+  padding-inline-start: 2.375rem;
+  user-select: none;
+}
+.ds-theme-switcher-check {
+  pointer-events: none;
+  position: absolute;
+  inset-inline-start: 0.875rem;
+  display: flex;
+  width: 1rem;
+  height: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+.ds-theme-switcher-check svg,
+.ds-theme-switcher-radio-item svg {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+/* The segmented row's own hook. `Segmented` supplies the cells; this only
+   marks the control so an app can target it, and keeps the mode glyph from
+   pushing the label off its baseline. */
+.ds-theme-switcher .ds-segmented__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+.ds-theme-switcher .ds-segmented__item svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  flex-shrink: 0;
+}

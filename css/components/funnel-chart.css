@@ -1,0 +1,39 @@
+/* ============================================================================
+   Funnel chart — .ds-funnel-chart-root · .ds-funnel-chart-*-label
+   ----------------------------------------------------------------------------
+   A `.ds-chart-container--plot` with one recharts <Funnel> in it, plus the two
+   margin labels, which are the part the wrapper exists for.
+
+   Both labels are drawn in the chart's margins rather than inside the
+   trapezoids, and that is a contrast decision: the slice ramp runs the whole
+   `--ds-chart-*` set, and no single text colour clears AA against all six.
+   Outside, they sit on the page background, so `--ds-ink` and `--ds-ink-faint`
+   are the right inks and stay right in both themes. They are SVG <text> nodes,
+   so they are painted with `fill`, not `color`.
+
+   The root carries this file's dedupe exception, resolved. `h-64 w-full` were
+   literal Tailwind classes in the source, kept literal so `tailwind-merge`
+   could dedupe a caller's `h-72`/`h-40` override. `--plot` supplies the width;
+   the height is a default for `--ds-chart-height` here, taller than the axis
+   charts' 14rem because a funnel is a vertical stack of trapezoids and each
+   stage needs a band deep enough to label. A caller's inline
+   `--ds-chart-height` lands on the same element and wins over this rule.
+   ============================================================================ */
+.ds-funnel-chart-root {
+  --ds-chart-height: 16rem;
+}
+
+.ds-funnel-chart-stage-label {
+  fill: var(--ds-ink);
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-xs);
+}
+
+/* The derived percentage, in the left margin. Mono and tabular so a column of
+   them lines up on the digit rather than on the glyph. */
+.ds-funnel-chart-share-label {
+  fill: var(--ds-ink-faint);
+  font-family: ui-monospace, "SF Mono", "Geist Mono", Menlo, Consolas, monospace;
+  font-size: var(--ds-text-xs);
+  font-variant-numeric: tabular-nums;
+}

@@ -1,5 +1,14 @@
 /* Work views: Projects (→ project detail), Board. */
-import { DataGrid, StatCard, Avatar, Button, Kanban, Tag } from "../../../react/index.js";
+import {
+  DataGrid,
+  StatCard,
+  Button,
+  Tag,
+} from "../../../dist/react/index.js";
+import {
+  Kanban,
+  Avatar,
+} from "../compat.js";
 import { h, F, stageTag, progressCell } from "../ui.js";
 import { loadProjects, TASKS, TASK_COLS } from "../data.js";
 
@@ -33,7 +42,7 @@ export function Board() {
     h(Kanban, {
       columns: TASK_COLS, items: TASKS,
       renderCard: (t) => h("div", null,
-        h("div", { className: "ds-kanban__card-title" }, t.title),
-        h("div", { className: "ds-kanban__card-meta" }, h(Tag, null, t.tag), h(Avatar, { initials: t.who, size: "sm" }))),
+        h("div", { className: "ds-kanban-card-title" }, t.title),
+        h("div", { className: "ds-kanban-card-meta" }, h(Tag, null, t.tag), h(Avatar, { initials: t.who, size: "sm" }))),
     }));
 }

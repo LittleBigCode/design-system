@@ -1,0 +1,69 @@
+/* ============================================================================
+   Label — .ds-label
+   ----------------------------------------------------------------------------
+   A standalone `<label>` for a control that does not wrap its own text.
+
+   **`.ds-label` was already defined**, in `base/typography.css`, as the
+   charte's signature small-caps treatment — 12px, weight 400, tracked
+   `0.08em`, `--ds-ink-faint`. The ledgers read it as a clean addition because
+   they scanned `css/components/`, where it does not appear. It is documented in
+   `docs/foundations.md` and used across `examples/` and `docs/for-claude.md`,
+   so it is a published contract, and the two definitions are the same idea:
+   an uppercase field-label voice.
+
+   So this file **does not restate the type**. The incumbent's weight, tracking
+   and colour stay exactly as they are, and what lands here is only what the
+   source adds and the incumbent lacks: the flex row, so a required badge or an
+   `optional` aside can sit beside the words; `user-select: none`, so
+   double-clicking a label to focus its control does not select the text; and
+   the two overrides below. A batch that lands in an occupied namespace merges
+   rather than overwrites — otherwise every label already in the system silently
+   changes weight and colour.
+
+   Upstream, the three type properties this file now leaves alone sat in their
+   own `@layer components` block, deliberately below Tailwind's
+   `@layer utilities`, so a call site could override the voice with plain
+   utility classNames. That bargain is gone — no Tailwind, no layers — but its
+   intent survives, because it was never really about layers: the voice must be
+   overridable, and the two overrides that mattered are real rules here, winning
+   on selector specificity exactly as they always did.
+
+   Both of those also lose a marker class. Upstream they were keyed to
+   Tailwind's `.peer` and `.group`, which nothing in this package applies, so
+   they would have landed inert — the same defect batch 2 found in `item.css`.
+   They read the real state instead: `:disabled` on the sibling control, and the
+   `data-slot` a checkbox, radio or switch carries. That second half is written
+   and dark until batch 7 lands those three controls; this repo's own
+   `.ds-checkbox` is a `<label>` that wraps its text and needs no sibling label.
+   ============================================================================ */
+.ds-label {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+  user-select: none;
+}
+
+/* A label inside a disabled group, or beside a disabled control. */
+[data-disabled="true"] .ds-label {
+  pointer-events: none;
+  opacity: 0.5;
+}
+/* Needs the disabled element itself to be the previous sibling, so it reaches
+   an Input or a Textarea but not a Select, whose <select> sits inside
+   .ds-select. Use the ancestor form above for a wrapped control. */
+:disabled ~ .ds-label {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Beside a checkbox, radio or switch the label is the row's prose, not a field
+   caption, so it drops the micro-caps voice. Live from batch 7. */
+[data-slot="checkbox"] ~ .ds-label,
+[data-slot="radio-group-item"] ~ .ds-label,
+[data-slot="switch"] ~ .ds-label {
+  font-size: var(--ds-text-base);
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--ds-ink);
+}

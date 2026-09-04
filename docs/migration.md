@@ -19,7 +19,7 @@ The class names below come from the original `pricing_matrix` stylesheet.
 | `.context-bar` | `.ds-context-bar` |
 | `.input-row` / `.unit` | `.ds-input-row` / `.ds-input-row__unit` |
 | `.context-chips` / `.chip` / `.chip.warn` | `.ds-chips` / `.ds-chip` / `.ds-chip--warn` |
-| `.banner` | `.ds-banner` |
+| `.banner` | `.ds-banner ds-banner--warning` — since `1.0.0-beta.6` the bare class is the neutral tone; `--warning` is 0.11's pale-yellow identity |
 | `.blocked` | `.ds-callout` (default warning tone) |
 | `.input-section` / `h3` | `.ds-panel.ds-panel--rows` / `.ds-panel__title` |
 | `.verdict` | `.ds-status` |
@@ -32,7 +32,7 @@ The class names below come from the original `pricing_matrix` stylesheet.
 | `.modal` / `.modal-head` / `h2` / `.close` / `.modal-body` / `.modal-foot` / `.spacer` | `.ds-modal` / `__head` / `__title` / `__close` / `__body` / `__foot` / `__spacer` |
 | `.admin-section` / `> h3` | `.ds-section` / `.ds-section-heading` |
 | `.entity-tabs` / `.entity-tab` / `.active` / `.dot.ok` / `.dot.ko` | `.ds-segmented` / `__item` / `.is-active` / `__dot--ok` / `__dot--ko` |
-| `table.params` / `th` / `td` / `input.num` / `.grade-name` / `.row-del` | `.ds-table` / `th` / `td` / `.ds-table__num` / `.ds-table__name` / `.ds-table__row-action` |
+| `table.params` / `th` / `td` / `input.num` / `.grade-name` / `.row-del` | `.ds-table` / `th` / `td` / `.ds-table__num` / `.ds-table__name` / `.ds-table__row-action` — this grammar is **preserved** through the 1.0 absorption; the composed React `<Table>` uses a separate part grammar beside it |
 | `header` / `.wordmark` / `.mark` / `h1` / `.sub` | `.ds-app-bar` / `.ds-wordmark` / `.ds-wordmark__mark` / `.ds-wordmark__name` / `.ds-wordmark__sub` |
 
 CSS variables: `--bg → --ds-bg`, `--ink → --ds-ink`, `--accent → --ds-accent`,

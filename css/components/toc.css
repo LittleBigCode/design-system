@@ -1,0 +1,83 @@
+/* ============================================================================
+   Table of contents — .ds-toc
+   ----------------------------------------------------------------------------
+   A sticky column of anchors down the side of a long page, indented by heading
+   level against a 1px spine.
+
+   Four dedupe exceptions are resolved here rather than carried. The source kept
+   `sticky top-8` on .ds-toc, `mb-3` on the label, `gap-2` on the list and
+   `border-transparent text-muted-foreground text-sm` on the link as literal
+   Tailwind utilities so tailwind-merge could dedupe them against consumer
+   overrides. With no Tailwind and no tailwind-merge here, each literal becomes
+   a real declaration and each override becomes a class:
+
+     sticky top-8  ->  the default; `.ds-toc--static` opts out
+     mb-3          ->  the default; `.ds-toc-label--tight` is the mb-2 case
+     gap-2         ->  the default; `.ds-toc-list--tight` is the gap-0.5 case
+     link defaults ->  the default; `.ds-toc-link--current` is the active row
+   ============================================================================ */
+.ds-toc {
+  position: sticky;
+  top: var(--ds-space-6);
+  height: fit-content;
+  flex-shrink: 0;
+}
+
+/* For a Toc rendered inline in prose or inside a scrolling demo frame, where
+   sticking to the viewport is wrong. */
+.ds-toc--static {
+  position: static;
+}
+
+.ds-toc-label {
+  font-family: ui-monospace, "SF Mono", "Geist Mono", Menlo, Consolas, monospace;
+  font-size: var(--ds-text-2xs);
+  letter-spacing: 0.025em;
+  color: var(--ds-ink-faint);
+  text-transform: uppercase;
+  margin-bottom: var(--ds-space-3);
+}
+.ds-toc-label--tight {
+  margin-bottom: var(--ds-space-2);
+}
+
+.ds-toc-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-2);
+  border-inline-start: 1px solid var(--ds-rule);
+}
+.ds-toc-list--tight {
+  gap: 2px;
+}
+
+.ds-toc-link {
+  display: block;
+  margin-inline-start: -1px;
+  border-inline-start: 1px solid transparent;
+  padding-inline-start: 0.75rem;
+  font-size: var(--ds-text-base);
+  color: var(--ds-ink-faint);
+  transition:
+    color var(--ds-transition),
+    border-color var(--ds-transition);
+}
+.ds-toc-link:hover {
+  border-inline-start-color: var(--ds-ink);
+  color: var(--ds-ink);
+}
+.ds-toc-link:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: -2px;
+}
+
+/* The reader's current section. Was `border-foreground text-foreground` passed
+   from the playground as a className override. */
+.ds-toc-link--current {
+  border-inline-start-color: var(--ds-ink);
+  color: var(--ds-ink);
+}
+
+[data-level="2"] .ds-toc-link {
+  padding-inline-start: 1.5rem;
+}

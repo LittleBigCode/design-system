@@ -2,9 +2,19 @@ import React from "react";
 const { useState } = React;
 import { h, F } from "../ui.js";
 import {
-  PageHeader, Button, FileUpload, Tag, Avatar, Dropdown, MenuItem,
-  MenuDivider, Drawer, DescriptionList,
-} from "../../../react/index.js";
+  Button,
+  FileUpload,
+  Tag,
+  Dropdown,
+  MenuItem,
+  MenuDivider,
+  Drawer,
+} from "../../../dist/react/index.js";
+import {
+  PageHeader,
+  Avatar,
+  DescriptionList,
+} from "../compat.js";
 import { FILES } from "../data.js";
 
 const TYPE_STATUS = { PDF: "danger", Sheet: "success", Image: "info", Doc: "info", Markdown: null };

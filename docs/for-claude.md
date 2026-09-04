@@ -21,8 +21,9 @@ variables. No build step.
 - **Surfaces:** white `--ds-surface` on whitesmoke `--ds-bg`. Ink is black `--ds-ink`.
 - **Type:** headings use the title font (serif/Ufficio) via `.ds-title`; body is Geist.
   Labels are UPPERCASE, letter-spaced `0.08em`, faint (`.ds-label` / `.ds-kicker`).
-- **Accent** `--ds-accent` `#ff2a00` is for emphasis only: links, a key edge/tick, a
-  small badge. The **primary action is solid black** (`.ds-button--primary`), not accent.
+- **Accent** `--ds-accent` is for emphasis only: links, a key edge/tick, a small
+  badge. The **primary action is solid black** (`.ds-button--primary`), not accent.
+  There is no fixed accent value — it is themeable, so reference the token, never a hex.
 - **Numbers:** tabular — wrap figures in `.ds-numeric`.
 - Use `.ds-*` classes as-is. Don't invent class names or override them with ad-hoc CSS;
   for layout, use plain inline `style` (fl/grid/gap) around `.ds-*` elements.
@@ -34,7 +35,7 @@ variables. No build step.
 | `--ds-ink` `#161616` / `--ds-ink-soft` / `--ds-ink-faint` | text: primary / secondary / muted |
 | `--ds-bg` `#f4f4f5` / `--ds-bg-alt` / `--ds-surface` `#fff` | page / alt / card surface |
 | `--ds-rule` `#e5e5e5` / `--ds-rule-soft` | 1px borders |
-| `--ds-accent` `#ff2a00` / `--ds-accent-ink` `#db2400` | accent fill / accent text on light |
+| `--ds-accent` / `--ds-accent-ink` | accent fill / accent text on light (themeable — no fixed value) |
 | `--ds-success` `--ds-warning` `--ds-danger` `--ds-info` | status |
 | `--ds-space-*`, `--ds-text-*`, `--ds-radius-none` (=0) | scale |
 
@@ -93,7 +94,7 @@ variables. No build step.
   <label class="ds-label" for="role">Role</label>
   <select class="ds-select" id="role"><option>Director</option><option>Manager</option></select>
 </div>
-<label class="ds-input-row"><span>Email digests</span><span class="ds-switch"><input type="checkbox" checked><span></span></span></label>
+<label class="ds-input-row"><span>Email digests</span><span class="ds-switch"><input type="checkbox" checked><span class="ds-switch__track"></span></span></label>
 ```
 
 ### Table
@@ -108,14 +109,14 @@ variables. No build step.
 
 ### Avatar, progress, alert
 ```html
-<span class="ds-avatar ds-avatar--sm">CR</span>
-<div class="ds-progress"><div class="ds-progress__bar" style="width:62%"></div></div>
+<span class="ds-avatar" data-size="sm"><span class="ds-avatar-fallback">CR</span></span>
+<div class="ds-progress"><div class="ds-progress-track"><div class="ds-progress-indicator" style="width:62%"></div></div></div>
 <div class="ds-alert ds-alert--danger">Couldn’t load data.</div>
 ```
 
-### Icons (Lucide-compatible)
+### Icons (Phosphor, regular weight)
 ```html
-<svg class="ds-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+<svg class="ds-icon" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/></svg>
 ```
 
 ## The visible grid system (a brand signature)
@@ -144,9 +145,9 @@ and section layout:
 ## Page header
 ```html
 <header class="ds-page-header">
-  <div class="ds-page-header__top">
-    <div><h1 class="ds-page-header__title">Projects</h1><p class="ds-page-header__subtitle">Delivery tracking</p></div>
-    <div class="ds-page-header__actions"><button class="ds-button">Export</button><button class="ds-button ds-button--primary">New</button></div>
+  <div class="ds-page-header-heading">
+    <div><h1 class="ds-page-header-title">Projects</h1><p class="ds-page-header-description">Delivery tracking</p></div>
+    <div class="ds-page-header-actions"><button class="ds-button">Export</button><button class="ds-button ds-button--primary">New</button></div>
   </div>
 </header>
 ```
@@ -158,9 +159,9 @@ and section layout:
 <link rel="stylesheet" href="https://unpkg.com/@diametral/design-system/dist/diametral.css">
 <body style="background:var(--ds-bg);margin:0;">
   <main style="max-width:1100px;margin:0 auto;padding:32px;">
-    <header class="ds-page-header"><div class="ds-page-header__top">
-      <div><p class="ds-kicker">Overview</p><h1 class="ds-page-header__title">Pricing matrix</h1></div>
-      <div class="ds-page-header__actions"><button class="ds-button ds-button--primary">New rate</button></div>
+    <header class="ds-page-header"><div class="ds-page-header-heading">
+      <div><p class="ds-kicker">Overview</p><h1 class="ds-page-header-title">Pricing matrix</h1></div>
+      <div class="ds-page-header-actions"><button class="ds-button ds-button--primary">New rate</button></div>
     </div></header>
     <div class="ds-statgrid" style="margin:22px 0">
       <div class="ds-statgrid__cell"><div class="ds-statgrid__label">Revenue</div><div class="ds-statgrid__value">€4.5M</div></div>

@@ -20,7 +20,7 @@ export async function fetchMetrics() {
 
 /** Build a <DataGrid loadPage> backed by a static JSON array — fetch once, then
    filter / sort / paginate client-side. (For a real paginated REST API, use
-   `restLoadPage(url)` from @diametral/design-system/react/hooks instead.) */
+   `restLoadPage(url)` from @diametral/design-system/react instead.) */
 export function jsonLoadPage(file) {
   let cache = null;
   return async ({ page, pageSize, sort, filters }) => {

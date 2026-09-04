@@ -1,0 +1,106 @@
+/* ============================================================================
+   One-time code — .ds-input-otp  (stylesheet only)
+   ----------------------------------------------------------------------------
+   No React binding ships. The source's `input-otp.tsx` wraps the `input-otp`
+   package, whose whole substance is the hidden-input trick that makes a row of
+   boxes behave like one field — paste, backspace across a boundary, autofill
+   from an SMS. That dependency is not acquired, so these classes are the whole
+   contract, as with `carousel` here and `resizable` in batch 2.
+
+   The shape: one hidden real input carrying the value, and a row of boxes that
+   only display it. Each box is an underlined cell matching `.ds-input`'s
+   treatment, and `data-active` marks the one the caret is in — a fake caret,
+   because the real input is invisible, which is what the blink keyframe is for.
+
+   Two charte edits on the way in. The source's `.dark`-scoped invalid colours
+   never painted here: this system's dark theme answers to
+   `[data-theme="dark"]`, the same defect batch 1 fixed in `navigation-menu`
+   and batch 2 in `bubble`. Rather than duplicate each rule under both
+   selectors, the invalid border is one colour on both themes — the softened
+   dark variant was a 50%-alpha mix of the same hue, and the charte separates
+   by a solid 1px rule. And `svg:not([class*="size-"])` on the separator is
+   gone: no Tailwind `size-*` class exists to escape.
+   ============================================================================ */
+@keyframes ds-caret-blink {
+  0%, 70%, 100% { opacity: 1; }
+  20%, 50%      { opacity: 0; }
+}
+
+.ds-input-otp {
+  display: flex;
+  align-items: center;
+}
+.ds-input-otp:has(input:disabled) {
+  opacity: 0.5;
+}
+
+/* The real input: present for the value and the keyboard, never seen. */
+.ds-input-otp-input {
+  cursor: default;
+}
+.ds-input-otp-input:disabled {
+  cursor: not-allowed;
+}
+
+.ds-input-otp-group {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-1);
+  border-radius: var(--ds-radius-none);
+}
+.ds-input-otp-group:has([aria-invalid="true"]) {
+  border-bottom-color: var(--ds-danger);
+}
+
+.ds-input-otp-slot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid transparent;
+  border-bottom-color: var(--ds-rule);
+  border-radius: var(--ds-radius-none);
+  background: transparent;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-base);
+  color: var(--ds-ink);
+  font-variant-numeric: tabular-nums;
+  transition: border-color var(--ds-transition), color var(--ds-transition);
+}
+.ds-input-otp-slot[aria-invalid="true"] {
+  border-bottom-color: var(--ds-danger);
+}
+.ds-input-otp-slot[data-active="true"] {
+  z-index: 1;
+  border-bottom-color: var(--ds-focus-ring);
+}
+
+.ds-input-otp-slot-caret {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ds-input-otp-slot-caret-line {
+  height: 16px;
+  width: 1px;
+  background: var(--ds-ink);
+  animation: ds-caret-blink 1.25s ease-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-input-otp-slot-caret-line { animation: none; }
+}
+
+.ds-input-otp-separator {
+  display: flex;
+  align-items: center;
+  color: var(--ds-ink-faint);
+}
+.ds-input-otp-separator svg {
+  width: 14px;
+  height: 14px;
+}

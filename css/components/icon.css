@@ -1,14 +1,26 @@
-/* Icon — .ds-icon (Lucide-compatible 24×24 stroked line icon)
-   Sized via font-size by default (1em square); pass a width/height or set
-   font-size on a parent to scale. Strokes follow currentColor so an icon takes
-   the text color of wherever it sits. flex:none keeps it from being squashed
-   inside flex rows (buttons, toolbars, list items). */
+/* Icon — .ds-icon (Phosphor 256×256 filled glyph)
+   ----------------------------------------------------------------------------
+   Frozen (css-ledger §1): `<ds-icon>` sets this class on its host and relies on
+   this file for every dimension it has.
+
+   The class name and its box are unchanged — 1em square, sized by font-size,
+   `flex: none` so a row cannot squash it. What changed in 1.0.0-beta.7 is the
+   paint: the set moved from Lucide to Phosphor (batch-plan §1.4), which is
+   filled geometry rather than stroked, so `fill` takes `currentColor` and
+   `stroke` is gone. An icon still takes the text colour of wherever it sits,
+   by the opposite mechanism.
+
+   The source's own `icon.css` is an empty `.ds-icon {}` — a bare data-slot hook
+   that carries no rules because upstream every dimension comes from Phosphor's
+   React `size` prop, which the web component has no way to pass. Absorbing the
+   empty file over this one would have left `<ds-icon>` with no size at all, so
+   what is absorbed is the geometry and the fill model, not the emptiness. */
 .ds-icon {
   display: inline-block;
   width: 1em;
   height: 1em;
   vertical-align: -0.125em;
-  fill: none;
-  stroke: currentColor;
+  fill: currentColor;
+  stroke: none;
   flex: none;
 }

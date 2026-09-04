@@ -3,24 +3,38 @@
    ----------------------------------------------------------------------------
    An inline mini line chart drawn as a single inline <svg>. No axes, no grid,
    no library — just a polyline (and an optional faint area fill + an end dot).
-   The stroke uses currentColor, so the line picks up the element's color; the
-   default color is the accent. Sits inline-block so it can flow next to text
-   or drop into a stat tile.
+   Sits inline-block so it can flow next to text or drop into a stat tile.
+
+   The stroke is currentColor, so the line picks up the element's color; the
+   root's own default is the first *series* color, not the accent — a themed
+   --ds-accent must not repaint data. That default is why this file keeps
+   0.11's `color` declaration where the source relied on inheritance.
+
+   The parts were `__line` / `__area` / `__dot` / `__svg` in 0.11 and are flat
+   kebab from 1.0.0-beta.4 on; `--animate` moved from the root onto the line,
+   which is the element the keyframe actually draws.
    ============================================================================ */
 .ds-sparkline {
   display: inline-block;
   line-height: 0;
-  color: var(--ds-accent);
+  color: var(--ds-chart-1);
   vertical-align: middle;
 }
 
-.ds-sparkline__svg {
+.ds-sparkline-svg {
   display: block;
   overflow: visible;
 }
 
+/* Optional faint area under the line (defaults to currentColor, made faint). */
+.ds-sparkline-area {
+  fill: currentColor;
+  opacity: 0.12;
+  stroke: none;
+}
+
 /* The line — inherits color via currentColor. */
-.ds-sparkline__line {
+.ds-sparkline-line {
   fill: none;
   stroke: currentColor;
   stroke-width: 1.5;
@@ -28,15 +42,12 @@
   stroke-linecap: round;
 }
 
-/* Optional faint area under the line (defaults to currentColor, made faint). */
-.ds-sparkline__area {
-  fill: currentColor;
-  opacity: 0.12;
-  stroke: none;
-}
+/* `.ds-sparkline-line--animate` draws the line in on mount. The keyframe and
+   the reduced-motion opt-out live in components/motion.css, which is where this
+   system keeps every animation it can be asked to switch off. */
 
 /* Dot marking the last point. */
-.ds-sparkline__dot {
+.ds-sparkline-dot {
   fill: currentColor;
   stroke: none;
 }

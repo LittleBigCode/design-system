@@ -1,5 +1,59 @@
-/* Button — .ds-button (default ghost · --primary · --danger) */
+/* ============================================================================
+   Button — .ds-button
+   ----------------------------------------------------------------------------
+   The most frozen surface in the package (css-ledger §1). `<ds-button>` sets
+   `class="ds-button"` and, when given a `variant`, string-concatenates
+   `ds-button--${v}` — so it is not one class that is frozen but **the whole
+   modifier family**: any name a consumer puts in that attribute must resolve.
+   `<ds-modal>` also renders `class="ds-button ds-modal__close"`, and
+   `legacy-aliases.css` maps `.btn` onto it.
+
+   The base class therefore does not move. A bare `.ds-button` is still the
+   40px, sentence-case, 1px-ink-bordered ghost button 0.11 shipped, and
+   `--primary`, `--danger`, `--sm`, `--lg`, `--block`, `--icon`, `--loading`
+   and `--xs` all still mean what they meant (the last five live next door in
+   `button-extras.css`, which this file never edits).
+
+   What the source adds is three axes the incumbent did not have, and they
+   compose:
+
+   - **variant** — `--default` (solid), `--outline`, `--secondary`, `--ghost`,
+     `--destructive`, `--link`. `--default` and 0.11's `--primary` are the same
+     button and share one rule; `--danger` and `--destructive` differ (0.11's
+     is an outline, the source's is a tinted fill) so both stay.
+   - **tone** — eight brand fills, `--tone-black` through `--tone-yellow`.
+     A tone sets `--btn` / `--btn-fg` / `--btn-hover` and every variant above
+     composes off those three, so a tone works across solid, outline and ghost
+     without a compound-variant matrix. This is the source's mechanism kept
+     whole; only the token names change.
+   - **size** — the source's eight-value `size` prop, mapped onto 0.11's four
+     classes rather than adding a second spelling. See the Size note below.
+
+   Charte edits on the way in. The uppercase 0.1em 12px face is the *source's*
+   button, not this system's, so it stays on the base class as 0.11 had it. The
+   focus `box-shadow` ring becomes the 2px `outline` on `--ds-focus-ring`. The
+   `[aria-invalid]` colour glow goes — the charte separates by rule, not glow.
+   The `.dark`-prefixed rules go; the theme lives in the token layer. And
+   `svg:not([class*="size-"])` loses its negation, which had no Tailwind
+   `size-*` class left to escape and silently skipped any icon whose class
+   happened to contain `size-`.
+
+   Issue #15's dark-theme `.ds-button--primary` contrast is fixed here, on the
+   batch that owns the file — see the note above the base rule.
+   ============================================================================ */
+/* --ds-bg, not --ds-on-accent, for the pair of the ink fill. --ds-on-accent is
+   pinned to --ds-blanc and the dark theme does not flip it, so on dark's
+   near-white --ds-ink it renders white on white (issue #15). --ds-bg is the
+   token that inverts with the theme, which is what "the colour that contrasts
+   with the ink" actually means — the finding bubble.css recorded in beta.2,
+   applied here to the surfaces this batch owns. The eight *tones* below keep
+   --ds-blanc / --ds-noir, because a tone is a brand colour rather than a theme
+   one and does not move between themes. */
 .ds-button {
+  --btn: var(--ds-ink);
+  --btn-fg: var(--ds-bg);
+  --btn-hover: var(--ds-ink-soft);
+
   font-family: var(--ds-font-sans);
   font-size: var(--ds-text-base);
   font-weight: 400;
@@ -9,24 +63,47 @@
   gap: 8px;
   cursor: pointer;
   display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
+  white-space: nowrap;
   border: 1px solid var(--ds-ink);
   background: var(--ds-surface);
   color: var(--ds-ink);
   border-radius: var(--ds-radius-none);
-  transition: background-color var(--ds-transition), color var(--ds-transition);
+  user-select: none;
+  transition: background-color var(--ds-transition), color var(--ds-transition),
+    border-color var(--ds-transition);
 }
 .ds-button:hover { background: var(--ds-bg-alt); }
 .ds-button:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: 2px; }
+/* A menu trigger stays put — the press nudge would fight the popup anchoring. */
+.ds-button:active:not([aria-haspopup]) { transform: translateY(1px); }
+.ds-button svg { pointer-events: none; flex-shrink: 0; width: 14px; height: 14px; }
+.ds-button[aria-invalid="true"] { border-color: var(--ds-danger); }
 
-.ds-button--primary {
-  background: var(--ds-ink);
-  border-color: var(--ds-ink);
-  color: var(--ds-on-accent);
+.ds-button:disabled,
+.ds-button[disabled],
+.ds-button[aria-disabled="true"] {
+  opacity: .45;
+  cursor: not-allowed;
+  pointer-events: none;
 }
-.ds-button--primary:hover { background: var(--ds-grey-dark); }
 
+/* ---- Variant axis -------------------------------------------------------- */
+/* Solid. 0.11's --primary and the source's --default are the same button. */
+.ds-button--primary,
+.ds-button--default {
+  background: var(--btn);
+  border-color: var(--btn);
+  color: var(--btn-fg);
+}
+.ds-button--primary:hover,
+.ds-button--default:hover,
+.ds-button--default[aria-expanded="true"] { background: var(--btn-hover); border-color: var(--btn-hover); }
+
+/* 0.11's outline-red danger. Kept apart from --destructive on purpose: one is
+   a bordered warning, the other a tinted one, and both names are published. */
 .ds-button--danger {
   color: var(--ds-danger);
   border-color: var(--ds-danger);
@@ -34,9 +111,81 @@
 }
 .ds-button--danger:hover { background: var(--ds-danger-bg); }
 
-.ds-button:disabled,
-.ds-button[disabled],
-.ds-button[aria-disabled="true"] {
-  opacity: .45;
-  cursor: not-allowed;
+.ds-button--outline {
+  border-color: var(--ds-rule);
+  background: transparent;
 }
+.ds-button--outline:hover { border-color: var(--btn); background: var(--ds-bg-alt); }
+.ds-button--outline[aria-expanded="true"] { background: var(--ds-bg-alt); }
+
+.ds-button--secondary {
+  background: var(--ds-bg-alt);
+  border-color: var(--ds-bg-alt);
+  color: var(--ds-ink-soft);
+}
+.ds-button--secondary:hover,
+.ds-button--secondary[aria-expanded="true"] {
+  background: color-mix(in oklab, var(--ds-bg-alt), var(--ds-ink) 5%);
+  color: var(--ds-ink);
+}
+
+.ds-button--ghost {
+  border-color: transparent;
+  background: transparent;
+}
+.ds-button--ghost:hover,
+.ds-button--ghost[aria-expanded="true"] { background: var(--ds-bg-alt); color: var(--ds-ink); }
+
+.ds-button--destructive {
+  border-color: transparent;
+  background: var(--ds-danger-bg);
+  color: var(--ds-danger-ink);
+}
+.ds-button--destructive:hover { border-color: var(--ds-danger); }
+.ds-button--destructive:focus-visible { outline-color: var(--ds-danger); }
+
+.ds-button--link {
+  height: auto;
+  padding: 0;
+  border-color: transparent;
+  background: transparent;
+  color: var(--ds-accent-ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.ds-button--link:hover { background: transparent; color: var(--ds-accent); }
+
+/* ---- Tone axis ----------------------------------------------------------- */
+/* Sets the fill and its contrast pair; every variant above composes off these
+   three vars. Declared after the variants so a tone wins the custom property.
+   The charte's eight brand hues, in the charte's own token names. */
+.ds-button--tone-black  { --btn: var(--ds-noir);      --btn-fg: var(--ds-blanc); --btn-hover: var(--ds-grey-dark); }
+.ds-button--tone-red    { --btn: var(--ds-rouge);     --btn-fg: var(--ds-noir);  --btn-hover: var(--ds-accent-ink); }
+.ds-button--tone-brown  { --btn: var(--ds-marron);    --btn-fg: var(--ds-noir);  --btn-hover: color-mix(in oklab, var(--ds-marron), var(--ds-noir) 14%); }
+.ds-button--tone-khaki  { --btn: var(--ds-kaki);      --btn-fg: var(--ds-noir);  --btn-hover: color-mix(in oklab, var(--ds-kaki), var(--ds-noir) 14%); }
+.ds-button--tone-beige  { --btn: var(--ds-beige);     --btn-fg: var(--ds-noir);  --btn-hover: color-mix(in oklab, var(--ds-beige), var(--ds-noir) 14%); }
+.ds-button--tone-green  { --btn: var(--ds-vert);      --btn-fg: var(--ds-noir);  --btn-hover: color-mix(in oklab, var(--ds-vert), var(--ds-noir) 14%); }
+.ds-button--tone-blue   { --btn: var(--ds-bleu);      --btn-fg: var(--ds-noir);  --btn-hover: color-mix(in oklab, var(--ds-bleu), var(--ds-noir) 14%); }
+.ds-button--tone-yellow { --btn: var(--ds-jaune-vif); --btn-fg: var(--ds-noir);  --btn-hover: color-mix(in oklab, var(--ds-jaune-vif), var(--ds-noir) 14%); }
+
+/* ---- Size ---------------------------------------------------------------
+   No `--size-*` block. The source's eight size classes and 0.11's `--sm` /
+   `--lg` / `--icon` / `--xs` are the same axis spelled twice, and 0.11's
+   spelling is the frozen one — `<ds-button>` passes its `variant` attribute
+   straight through, and `button-extras.css` already defines all four. The
+   React binding maps the source's names onto them (`icon-sm` becomes
+   `--icon --sm`), so the API is the source's and the classes stay 0.11's.
+   The sizes themselves live in `button-extras.css`, which this file never
+   edits; what belongs here is the one rule that is about the *button*, not the
+   size: an icon at one end tightens that end, so a label-plus-icon button
+   reads as one unit rather than a wide gap. */
+.ds-button:has([data-icon="inline-end"])   { padding-inline-end: 10px; }
+.ds-button:has([data-icon="inline-start"]) { padding-inline-start: 10px; }
+.ds-button--sm:has([data-icon="inline-end"])   { padding-inline-end: 8px; }
+.ds-button--sm:has([data-icon="inline-start"]) { padding-inline-start: 8px; }
+.ds-button--lg:has([data-icon="inline-end"])   { padding-inline-end: 14px; }
+.ds-button--lg:has([data-icon="inline-start"]) { padding-inline-start: 14px; }
+.ds-button--xs:has([data-icon="inline-end"])   { padding-inline-end: 5px; }
+.ds-button--xs:has([data-icon="inline-start"]) { padding-inline-start: 5px; }
+/* An icon-only button has no label to sit beside; its padding is its width. */
+.ds-button--icon:has([data-icon]) { padding-inline: 0; }
