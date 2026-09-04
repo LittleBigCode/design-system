@@ -35,6 +35,9 @@ These four are **copies**, each carrying a provenance header naming the source c
 a measurement at the source and re-copy; editing a copy in place diverges it silently.
 `docs/absorption/corrections.md` is the fifth file and is **not** a copy: it is where a batch
 records a source defect it fixed forward, or a plan measurement execution proved wrong.
+`docs/absorption/direction.md` is the sixth and is also not a copy: it records the 2026-09-04
+policy reversal — **incoming is the model, the incumbent contributes additives only** — and
+voids the ledgers' `frozen` and `incumbent-holds` verdicts. Read it before any ledger verdict.
 
 **Planning history.** Every *what* and *in what order* decision is closed and recorded on the
 source repo's tracker: [the migration map](https://github.com/diamorval/design-system-diametral/issues/151)
