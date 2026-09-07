@@ -8,12 +8,13 @@ import { cx, type ClassValue } from "./cx.js";
    attribute in CSS instead. So the dep buys a resolver we can write in ten
    lines.
 
-   The *declaration* stays cva-shaped on purpose. The docs site parses these
-   axes out of the component file at build time to drive each playground's
-   control panel (site/plugins/extract-variants.ts), so a component that
-   declared its variants any other way would silently lose its controls — or
-   force the axes to be restated in site/src/registry/playgrounds.ts, which is
-   the duplication that file exists to avoid. */
+   The *declaration* stays cva-shaped on purpose. The docs generator parses
+   these axes out of the component file at build time to drive each
+   playground's control panel (scripts/build-docs.mjs's extractVariants), so a
+   component that declared its variants any other way would silently lose its
+   controls — or force the axes to be restated in
+   examples/registry/playgrounds.ts, which is the duplication that file exists
+   to avoid. */
 export type VariantSpec = {
   /** Axis name -> option name -> the class that option applies (may be ""). */
   variants: Record<string, Record<string, string>>;

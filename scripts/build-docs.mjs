@@ -187,8 +187,8 @@ function legacySlugFor(slug, legacySlugs) {
   return null
 }
 
-// -- workbench: ported from site/plugins/extract-variants.ts (issue #32). Runs
-// at `npm run build` time instead of Vite build time, over the same TS compiler
+// -- workbench: ported from the retired React docs app's extract-variants.ts
+// (issue #32). Runs at `npm run build` time instead of Vite build time, over the same TS compiler
 // API and the same react/components/*.tsx sources. --
 function propertyName(name) {
   if (ts.isIdentifier(name)) return name.text
@@ -304,8 +304,8 @@ function toPascal(slug) {
   return slug.replace(/(^|-)([a-z])/g, (_, __, letter) => letter.toUpperCase())
 }
 
-/** `react/components/<slug>.tsx` or its PascalCase spelling — mirrors
- *  site/plugins/demo-source.ts's resolveComponent(). */
+/** `react/components/<slug>.tsx` or its PascalCase spelling — mirrors the
+ *  retired React docs app's demo-source.ts's resolveComponent(). */
 function resolveComponentFile(slug) {
   for (const name of [slug, toPascal(slug)]) {
     const file = join(ROOT, "react/components", `${name}.tsx`)

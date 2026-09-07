@@ -38,7 +38,7 @@ import { cx } from "../lib/cx.js"
    absorption worth a dependency.
 
    The grip is a real <button>, so it is in the tab order; Space lifts, arrows
-   move, Space drops, Escape cancels. site/tests/kanban-regress.spec.ts pins all
+   move, Space drops, Escape cancels. tests/kanban-regress.spec.ts pins all
    five behaviours, three of them by keyboard.
    ---------------------------------------------------------------------------- */
 
