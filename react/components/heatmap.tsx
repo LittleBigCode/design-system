@@ -195,7 +195,12 @@ function Heatmap({
 
   return (
     <div data-slot="heatmap" className={cx("ds-heatmap", className)} {...rest}>
-      <div className="ds-heatmap-scroll">{body}</div>
+      {/* tabIndex makes the scroll container itself reachable by keyboard,
+          same move as AttachmentGroup (attachment.tsx) — the only way to pan a
+          year of days on hardware with no scrollbar to drag. */}
+      <div className="ds-heatmap-scroll" tabIndex={0}>
+        {body}
+      </div>
       {legend ? <HeatmapLegend steps={steps} /> : null}
     </div>
   );
