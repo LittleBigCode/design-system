@@ -1,3 +1,5 @@
+"use client"
+
 import { Accordion as AccordionPrimitive } from "@base-ui/react/accordion"
 
 import { cx, type WithClassName } from "../lib/cx.js"

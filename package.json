@@ -89,7 +89,8 @@
     "test:visual:update": "playwright test tests/visual.spec.js --update-snapshots",
     "test:a11y": "playwright test tests/a11y.spec.js",
     "test:regress": "playwright test tests/*-regress.spec.ts tests/chart-marks.spec.ts",
-    "build:components-md": "node scripts/build-components-md.mjs"
+    "build:components-md": "node scripts/build-components-md.mjs",
+    "codemod:1.0": "node scripts/codemod-1.0-renames.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.0",

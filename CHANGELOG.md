@@ -34,8 +34,9 @@ other prop* still lines up, so there is nothing else to notice.
 
 ### Renamed loudly (the good case — these fail to build, not silently)
 
-A codemod handles the identifier swap for these seven; the composition changes
-inside four of them (marked below) still need a hand rewrite same as the rest.
+`npm run codemod:1.0 -- <path>` handles the identifier swap for these seven;
+the composition changes inside four of them (marked below) still need a hand
+rewrite same as the rest.
 
 - `DataGrid` → `DataTable` (also composed: `columns`/`rows` become a real
   `ColumnDef[]`/`data`, on `@tanstack/react-table`). Drops the old custom

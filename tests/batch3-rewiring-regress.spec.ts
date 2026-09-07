@@ -80,14 +80,20 @@ test.describe("button-group replaces the applier", () => {
     expect(await text.evaluate((el) => el.tabIndex)).toBeLessThan(0)
   })
 
-  test("the split action's menu is this repo's .ds-menu", async ({ page }) => {
-    // The source's dropdown-menu holds. A menu that is not .ds-menu means the
-    // held component was imported after all.
+  test("the split action's menu is DropdownMenu's own surface", async ({
+    page,
+  }) => {
+    // Batch 13 (#46) swapped Dropdown -> DropdownMenu for real: the held
+    // .ds-menu vocabulary this test used to guard against a premature import
+    // is what the incumbent rendered before the swap landed. Now the menu
+    // really is DropdownMenu's, with its own .ds-dropdown-menu-* classes.
     await page
       .locator('[aria-label="Other deploy targets"]')
       .first()
       .click()
-    await expect(page.locator(".ds-menu").first()).toBeVisible()
+    await expect(
+      page.locator(".ds-dropdown-menu-content").first()
+    ).toBeVisible()
   })
 })
 
