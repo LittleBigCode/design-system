@@ -1029,6 +1029,202 @@
       "to": "recharts (dependencies)",
       "batch": "8",
       "note": "recharts is now installed automatically with the package instead of requiring a separate `npm i recharts`. No import path changes."
+    },
+    {
+      "kind": "export",
+      "from": "Accordion ({ items, multiple })",
+      "to": "Accordion, AccordionItem, AccordionTrigger, AccordionContent",
+      "batch": "13",
+      "note": "Config becomes composition: items[] is gone, each row is an AccordionItem (its value is what defaultValue/value refers to) wrapping AccordionTrigger and AccordionContent. openMultiple replaces multiple; defaultValue/value is always an array (Value[]), whether or not openMultiple is on."
+    },
+    {
+      "kind": "export",
+      "from": "Alert ({ type, dismissible })",
+      "to": "Alert, AlertTitle, AlertDescription, AlertAction, AlertDismiss",
+      "batch": "13",
+      "note": "type becomes tone (neutral | info | success | warning | danger | critical, plus a variant axis: default | destructive). dismissible is gone: AlertDismiss renders the close button but is deliberately stateless — the caller holds whether the alert is dismissed and stops rendering it."
+    },
+    {
+      "kind": "export",
+      "from": "SplitButton ({ children, onMain, variant, size, menu })",
+      "to": "SplitButton ({ children, onMain, variant, size, tone, disabled, menu, menuLabel })",
+      "batch": "13",
+      "note": "Same name, real rewrite: built on ButtonGroup + DropdownMenu now (was a hand-rolled popover with its own outside-click/Escape handling). menu takes DropdownMenuItem rows, not arbitrary nodes. Moved from react/components/ButtonExtras.tsx (retired) to react/components/split-button.tsx."
+    },
+    {
+      "kind": "export",
+      "from": "Calendar ({ month, value, events, weekStartsOn, onSelectDate })",
+      "to": "Calendar, CalendarDayButton",
+      "batch": "13",
+      "note": "react-day-picker underneath now (was a hand-rolled month grid). mode (\"single\" | \"range\" | \"multiple\") + selected/onSelect replace value/onSelectDate; defaultMonth replaces month. events is gone — a per-day marker is a components={{ DayButton: ... }} override composing CalendarDayButton, not a data prop."
+    },
+    {
+      "kind": "export",
+      "from": "CodeBlock, CodeBlockCopyButton ({ code, filename, language })",
+      "to": "CodeBlock, CodeBlockHead, CodeBlockFilename, CodeBlockBody, CodeBlockCopyButton",
+      "batch": "13",
+      "note": "Config becomes composition: filename is a CodeBlockFilename child inside CodeBlockHead, code/html move to CodeBlockBody. language is gone — there was never a real grammar behind it, and the source ships none either. CodeBlockCopyButton no longer takes children/label: it always renders its own check/copy Icon and manages its own \"copied\" state."
+    },
+    {
+      "kind": "export",
+      "from": "BRAND_SWATCHES, ColorPicker",
+      "to": "BRAND_SWATCHES, ColorPicker",
+      "batch": "13",
+      "note": "Compatible — the only row in the 28 with no prop change. Gains className."
+    },
+    {
+      "kind": "export",
+      "from": "Combobox ({ options, allowCustom })",
+      "to": "Combobox, ComboboxTrigger, ComboboxValue, ComboboxInput, ComboboxContent, ComboboxList, ComboboxItem, ComboboxGroup, ComboboxLabel, ComboboxCollection, ComboboxEmpty, ComboboxSeparator, ComboboxChips, ComboboxChip, ComboboxChipsInput, useComboboxAnchor",
+      "batch": "13",
+      "note": "Config becomes composition: options becomes items on the root plus ComboboxItem rows inside ComboboxContent/ComboboxList. allowCustom has no direct replacement. MultiSelect is the friendlier options/value wrapper over this component's multiple + chips mode, for the common case."
+    },
+    {
+      "kind": "export",
+      "from": "CommandPalette ({ open, onClose, commands })",
+      "to": "Command, CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem, CommandShortcut, CommandSeparator",
+      "batch": "13",
+      "note": "Renamed and decomposed onto cmdk. The flat commands[] (grouped by a group field, each with onRun) is gone — CommandGroup's heading restores the grouping, CommandItem takes onSelect instead of onRun. CommandDialog is the ⌘K popup shell (a Dialog underneath); Command on its own composes inline."
+    },
+    {
+      "kind": "export",
+      "from": "DataGrid ({ columns, rows })",
+      "to": "DataTable, DataTableColumnHeader",
+      "batch": "13",
+      "note": "Renamed, on @tanstack/react-table now. columns is a real ColumnDef[] (accessorKey/header/cell) rather than { key, header, render }; rows is data. Drops the old custom keyboard-navigable grid entirely (no grid/gridcell roles, no roving tabindex, no arrow-key cell nav) — the source doesn't cover that axis at all; see corrections.md."
+    },
+    {
+      "kind": "export",
+      "from": "DatePicker ({ defaultValue, min, max, placeholder }), DateLike",
+      "to": "DatePicker, DatePickerTrigger, DatePickerContent",
+      "batch": "13",
+      "note": "DatePicker is Popover itself now; DatePickerTrigger/DatePickerContent are the parts it adds, composing a Calendar by hand inside. min/max are gone — bounding is Calendar's own disabled matchers ({ before }/{ after }). value is a real Date, not a DateLike (Date | string) — the type is retired with no replacement."
+    },
+    {
+      "kind": "export",
+      "from": "DateRangePicker ({ min, max })",
+      "to": "DateRangePicker, DateRange",
+      "batch": "13",
+      "note": "Same name, real rewrite: owns its own Calendar in mode=\"range\" now. value is { from, to } (real Dates, to optional) instead of an ISO-string pair; min/max are gone, no bound replaces them. showTime adds a TimePicker for each end."
+    },
+    {
+      "kind": "export",
+      "from": "DateTimePicker ({ step })",
+      "to": "DateTimePicker ({ step })",
+      "batch": "13",
+      "note": "Compatible, but step changes units: minutes now, not seconds (step={15} where it used to be step={900}). Composed from DatePicker + TimePicker internally. Gains datePlaceholder."
+    },
+    {
+      "kind": "export",
+      "from": "Dropdown, MenuItem, MenuHeader, MenuDivider",
+      "to": "DropdownMenu, DropdownMenuPortal, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuItem, DropdownMenuCheckboxItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent",
+      "batch": "13",
+      "note": "Renamed and decomposed. trigger becomes DropdownMenuTrigger's render prop; MenuItem's as polymorphism becomes DropdownMenuItem's render. MenuHeader -> DropdownMenuLabel, MenuDivider -> DropdownMenuSeparator. Does not share a class vocabulary with Menubar/ContextMenu (.ds-menu__* — those are unaffected, separately landed net-new)."
+    },
+    {
+      "kind": "export",
+      "from": "FileUpload ({ hint, name, value })",
+      "to": "FileUpload, FileUploadIcon, FileUploadTitle, FileUploadDescription",
+      "batch": "13",
+      "note": "Config becomes composition: hint/name/value are gone, FileUploadIcon/FileUploadTitle/FileUploadDescription are children instead. onFiles, accept, multiple, disabled are unchanged."
+    },
+    {
+      "kind": "export",
+      "from": "FormField ({ label, htmlFor, error, hint })",
+      "to": "Field, FieldSet, FieldLegend, FieldGroup, FieldContent, FieldLabel, FieldTitle, FieldDescription, FieldSeparator, FieldError",
+      "batch": "13",
+      "note": "Renamed and decomposed: label -> FieldLabel child, error -> FieldError child, hint -> FieldDescription child. data-invalid on Field itself replaces the error-truthy switch. The group mints no ids and reads no form library's state — htmlFor/id and aria-invalid stay the caller's to set, same as before."
+    },
+    {
+      "kind": "export",
+      "from": "Icon ({ size, strokeWidth, title })",
+      "to": "Icon ({ name })",
+      "batch": "13",
+      "note": "Same name, quieter contract: size, strokeWidth and title are gone. Sizing is CSS (.ds-icon is 1em square, font-size drives it); an accessible name is role=\"img\" + aria-label passed straight through, or aria-hidden for a decorative icon. Ported to reuse this repo's own larger icon-geometry catalogue (icons.tsx) rather than source's per-icon @phosphor-icons/react imports, to avoid a second copy of the same data."
+    },
+    {
+      "kind": "export",
+      "from": "MultiSelect ({ onChange })",
+      "to": "MultiSelect ({ onValueChange })",
+      "batch": "13",
+      "note": "Same name, dangerous one: onChange silently stops reporting selection under the new component (it renders correctly, so nothing errors). Everything else — options, value, defaultValue, placeholder, disabled — is unchanged. No per-option disabled any more; filter it out of options at the call site instead. No id — pair with a label via aria-labelledby/aria-label."
+    },
+    {
+      "kind": "export",
+      "from": "NumberInput",
+      "to": "NumberField, NumberFieldGroup, NumberFieldInput, NumberFieldDecrement, NumberFieldIncrement, NumberFieldScrubArea",
+      "batch": "13",
+      "note": "Renamed and decomposed onto Base UI's NumberField. min/max/step/value/defaultValue/onValueChange are unchanged; the steppers and the input are now composed children (NumberFieldGroup wraps NumberFieldDecrement/NumberFieldInput/NumberFieldIncrement) rather than baked in."
+    },
+    {
+      "kind": "export",
+      "from": "Popover ({ trigger, placement, title, arrow })",
+      "to": "Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverTitle, PopoverDescription",
+      "batch": "13",
+      "note": "Config becomes composition: trigger -> PopoverTrigger child, title -> PopoverTitle child (inside PopoverContent), placement -> side/align on PopoverContent. arrow has no replacement. defaultOpen / open+onOpenChange are unchanged."
+    },
+    {
+      "kind": "export",
+      "from": "Radio, RadioGroup ({ options })",
+      "to": "RadioGroup, RadioGroupItem",
+      "batch": "13",
+      "note": "Radio is retired; RadioGroup keeps its name but options is gone — RadioGroupItem is one per option, composed as children, each drawing only the dot (no self-label, unlike the incumbent Radio). Pair each with a Field-wrapped FieldLabel/Label the same way any other bare control is. label.css's sibling rule updated to match (radio-group-item dropped from the self-labelling-control selector list)."
+    },
+    {
+      "kind": "export",
+      "from": "Rating ({ onChange })",
+      "to": "Rating ({ onValueChange })",
+      "batch": "13",
+      "note": "onChange -> onValueChange. Gains shape (\"default\" | \"star\") and disabled. max/value/defaultValue/readOnly unchanged."
+    },
+    {
+      "kind": "export",
+      "from": "StatCard ({ label, value, delta, deltaDir, animate })",
+      "to": "StatCard, StatCardLabel, StatCardValue, StatCardDelta, StatCardSpark",
+      "batch": "13",
+      "note": "Config becomes composition: label/value/delta -> StatCardLabel/StatCardValue/StatCardDelta children, deltaDir -> direction on StatCardDelta, children (the spark slot) -> StatCardSpark wrapper. animate (count-up-on-mount tween) has no replacement — the source's version doesn't animate the figure."
+    },
+    {
+      "kind": "export",
+      "from": "TagInput",
+      "to": "TagsInput",
+      "batch": "13",
+      "note": "Renamed only — value, defaultValue, onValueChange, placeholder, disabled, max are all unchanged."
+    },
+    {
+      "kind": "export",
+      "from": "TimePicker ({ defaultValue: string, name, placeholder, step })",
+      "to": "TimePicker ({ defaultValue: TimeValue, picker, showSeconds }), TimeValue",
+      "batch": "13",
+      "note": "The value is { hours, minutes, seconds? } now, not a \"HH:mm\" string. name, placeholder and step (the quarter-hour-snap seconds prop) are gone with no replacement — there's no discrete step on the new dial/list pickers. Gains picker (\"dial\" | \"list\" | \"none\") and showSeconds."
+    },
+    {
+      "kind": "export",
+      "from": "Toast, ToastProvider ({ duration, children })",
+      "to": "Toaster, toast, useToastManager, createToastManager, Toast, ToastProvider, ToastPortal, ToastViewport, ToastContent, ToastTitle, ToastDescription, ToastAction, ToastClose",
+      "batch": "13",
+      "note": "ToastProvider keeps its name but is now just the context provider — mount Toaster once at the app root instead (it wraps ToastProvider + the portal + viewport + list). Raise a toast with the standalone toast.add({ type, title, description }) manager, not useToast().show(). duration and children on the old ToastProvider have no replacement."
+    },
+    {
+      "kind": "export",
+      "from": "Tree ({ nodes, defaultExpanded })",
+      "to": "Tree, TreeItem, TreeItemTrigger, TreeItemContent, TreeLeaf",
+      "batch": "13",
+      "note": "Config becomes composition: nodes[] is gone, a branch is a TreeItem (defaultOpen seeds it open) wrapping TreeItemTrigger + TreeItemContent, a childless node is a TreeLeaf. Drops the old custom roving-tabindex keyboard model entirely (no arrow-key expand/collapse) — the source's version is plain Collapsibles with no tree-specific keyboard layer; see corrections.md."
+    },
+    {
+      "kind": "export",
+      "from": "VerticalNav ({ items })",
+      "to": "SidebarProvider, Sidebar, SidebarContent, SidebarHeader, SidebarFooter, SidebarGroup, SidebarGroupAction, SidebarGroupContent, SidebarGroupLabel, SidebarInput, SidebarInset, SidebarMenu, SidebarMenuAction, SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarMenuSkeleton, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem, SidebarRail, SidebarSeparator, SidebarTrigger, useSidebar",
+      "batch": "13",
+      "note": "Renamed and decomposed — the near-total rewrite of the 28 (80 lines to 674, 23 exports). items[] with one level of nesting is gone; nesting is however many SidebarMenuSub levels a call site composes. isActive on SidebarMenuButton/SidebarMenuSubButton replaces active, same no-router-opinion as before."
+    },
+    {
+      "kind": "export",
+      "from": "Wizard",
+      "to": "Wizard, WizardStep",
+      "batch": "13",
+      "note": "Compatible. Gains label, nextLabel, backLabel, finishLabel. Composes Stepper's parts for the trail now rather than drawing its own — with no StepperSeparator between steps, since stepper.css's connector is a ::after with no separator element to render (see corrections.md)."
     }
   ],
   "notes": [

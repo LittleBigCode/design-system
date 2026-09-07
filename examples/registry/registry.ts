@@ -411,6 +411,18 @@ export const COMPONENTS: ComponentDoc[] = [
         description:
           "An items array of `{ value, label }`, so the code stores the id and the reader sees the name.",
       },
+      {
+        demo: "combobox/grouped",
+        title: "Grouped",
+        description:
+          "Nested `items`, one `ComboboxGroup` per team with a `ComboboxLabel` heading and a `ComboboxSeparator` between them.",
+      },
+      {
+        demo: "combobox/multiple",
+        title: "Multiple, as chips",
+        description:
+          "`multiple` plus `ComboboxChips`/`ComboboxChip`/`ComboboxValue` — the same composition `MultiSelect` wraps.",
+      },
     ],
   },
   {
@@ -537,6 +549,12 @@ export const COMPONENTS: ComponentDoc[] = [
         title: "Bounded",
         description:
           "`min`, `max` and `step` set, so both the buttons and typing stay in range.",
+      },
+      {
+        demo: "number-field/with-scrub",
+        title: "With a scrub area",
+        description:
+          "`NumberFieldScrubArea` wraps the label — drag it to change the value, the way a design tool's number fields do.",
       },
     ],
   },
@@ -1206,6 +1224,12 @@ export const COMPONENTS: ComponentDoc[] = [
         description:
           "Five commands across three groups, opened from a button rather than the key binding.",
       },
+      {
+        demo: "command/inline",
+        title: "Inline",
+        description:
+          "`Command` composed directly on the page — no `CommandDialog` — with a `CommandSeparator` between groups.",
+      },
     ],
   },
   {
@@ -1376,6 +1400,18 @@ export const COMPONENTS: ComponentDoc[] = [
         title: "Nested sections",
         description:
           "Two collapsible groups and one active row, beside an inset content area.",
+      },
+      {
+        demo: "sidebar/shell",
+        title: "A full app shell",
+        description:
+          "Header search, group actions, badges, a menu action, a loading skeleton row, and a footer account menu — the rest of the anatomy.",
+      },
+      {
+        demo: "sidebar/collapsible-icon",
+        title: "Collapsible to icons",
+        description:
+          "`collapsible=\"icon\"` plus `SidebarRail`/`SidebarTrigger` — either one collapses the sidebar to just its icons.",
       },
     ],
   },
@@ -1732,7 +1768,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "A stack of disclosure rows, composed from `AccordionItem`/`AccordionTrigger`/`AccordionContent` children.",
     intro: [
       "Reach for it when a page has more sections than a reader needs at once and each one stands alone — an FAQ, a settings group, a long form split into stages. When the sections are steps in an order, `Wizard` is the better shape.",
-      "Composed since 1.0.0: there's no `items` array or `multiple` prop — `openMultiple` switches single-open to many-open, and each `AccordionItem`'s `value` is what `defaultValue`/`value` (a single value, or an array under `openMultiple`) refers to. The chevron rotates off `[aria-expanded]`, so the open state is one attribute and screen readers and the paint can never disagree.",
+      "Composed since 1.0.0: there's no `items` array or `multiple` prop — `openMultiple` switches single-open to many-open, and each `AccordionItem`'s `value` is what `defaultValue`/`value` (always an array, whether or not `openMultiple` is on) refers to. The chevron rotates off `[aria-expanded]`, so the open state is one attribute and screen readers and the paint can never disagree.",
     ],
     examples: [
       {
@@ -1928,6 +1964,12 @@ export const COMPONENTS: ComponentDoc[] = [
         title: "Actions and links",
         description:
           '`align="end"` on the content so the menu hangs back under a right-aligned trigger, with one `render={<a/>}` row.',
+      },
+      {
+        demo: "dropdown-menu/complex",
+        title: "Checkboxes, radios and a submenu",
+        description:
+          "A `DropdownMenuCheckboxItem`, a `DropdownMenuRadioGroup`, a `DropdownMenuShortcut` and a `DropdownMenuSub` — the rest of the anatomy.",
       },
     ],
   },

@@ -4,6 +4,92 @@ All notable changes to the Diametral Design System are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/), and the project
 adheres to [Semantic Versioning](https://semver.org/) — see [docs/versioning.md](docs/versioning.md).
 
+## [1.0.0-beta.13] — 2026-09-07
+
+**The batch that earns the 1.0.0 major.** 28 exports the incumbent side of this
+package owned are replaced by the source's — every row in
+[`docs/absorption/api-swaps.md`](docs/absorption/api-swaps.md), generated from
+[`docs/migration/renames.json`](docs/migration/renames.json). The install does
+not change (`npm i @diametral/design-system`), the import path does not change
+(`@diametral/design-system/react`) — the components behind 28 of its exports do.
+Only `AppShell`, `ConsoleLayout` and `icons.tsx` (the icon catalogue, distinct
+from `Icon`) are untouched. Full recipes: `docs/migration/from-0.11.md`.
+
+### The two patterns behind most of the 28
+
+**Config props become composition.** The incumbents took data as a prop; the
+replacements take children. `Accordion`, `Alert`, `Calendar`, `Combobox`,
+`DropdownMenu`, `FileUpload`, `Field` (renamed from `FormField`), `Popover`,
+`StatCard`, `Tree` and `RadioGroup` all move this way — an `items`/`options`/
+`nodes`/`columns` array is gone, replaced by the matching `*Item`/`*Trigger`/
+`*Content` parts as children. Not mechanical: every call site is a hand
+rewrite, which is why no codemod attempts this half.
+
+**`onChange` becomes `onValueChange`.** `MultiSelect`, `Rating`, `TimePicker`
+and `DateRangePicker` all keep their exact name and most of their props, so a
+plain-JS call site compiles, renders correctly, and silently stops reporting
+the value. TypeScript catches it (the prop doesn't exist); nothing else will.
+**`MultiSelect` is the worst of the four** — it's the only one where *every
+other prop* still lines up, so there is nothing else to notice.
+
+### Renamed loudly (the good case — these fail to build, not silently)
+
+A codemod handles the identifier swap for these seven; the composition changes
+inside four of them (marked below) still need a hand rewrite same as the rest.
+
+- `DataGrid` → `DataTable` (also composed: `columns`/`rows` become a real
+  `ColumnDef[]`/`data`, on `@tanstack/react-table`). Drops the old custom
+  keyboard-navigable grid — no `role="grid"`, no roving tabindex, no arrow-key
+  cell nav. The source doesn't cover that axis; see `corrections.md`.
+- `TagInput` → `TagsInput` (props unchanged).
+- `NumberInput` → `NumberField` (also composed: steppers are children now).
+- `CommandPalette` → `Command` (also composed, onto `cmdk`).
+- `FormField` → `Field` (also composed).
+- `VerticalNav` → `Sidebar` (also composed — 80 lines and one prop,
+  `items`, become 674 lines and 23 exports; the near-total rewrite of the 28).
+- `Radio` → `RadioGroupItem` (`RadioGroup` keeps its name). `RadioGroupItem`
+  draws only the dot now — pair it with a `Field`/`FieldLabel` the way any
+  other bare control is, not a self-labelling `<label>`.
+
+### Also renamed, not decomposed
+
+- `Dropdown`, `MenuItem`, `MenuHeader`, `MenuDivider` → `DropdownMenu` + 14
+  parts (composed — grouped with the "config becomes composition" set above,
+  called out here because the name changes too).
+
+### Compatible or near-compatible
+
+- **`ColorPicker`** — fully compatible, the one safe row. Gains `className`.
+- **`DateTimePicker`** — compatible; `step` changes units (minutes, not
+  seconds — `step={15}` where it was `step={900}`). Gains `datePlaceholder`.
+- **`Wizard`** — compatible; gains `label`/`nextLabel`/`backLabel`/
+  `finishLabel`. Composes `Stepper`'s parts now, with no `StepperSeparator`
+  between steps — `stepper.css`'s connector is a `::after`, not an element.
+- **`Icon`** — same name, quieter contract: loses `size`, `strokeWidth` and
+  `title`. Sizing is `.ds-icon`'s CSS (font-size); an accessible name is
+  `role="img"` + `aria-label` passed straight through.
+- **`DatePicker`** — composed (`Popover` itself, plus `DatePickerTrigger`/
+  `DatePickerContent`). `min`/`max` and the `DateLike` (`Date | string`) type
+  are gone with no replacement; bounding is `Calendar`'s own `disabled`
+  matchers, and the value is a real `Date`.
+- **`Toast`/`ToastProvider`** — `ToastProvider` keeps its name but is now just
+  the context provider; mount `Toaster` once at the app root instead. Raise a
+  toast with the standalone `toast.add({ type, title, description })`
+  manager, not `useToast().show()`.
+- **`Tree`** — composed. Drops the old roving-tabindex keyboard model, same
+  reasoning as `DataTable`'s.
+
+### Fixed forward, found while landing the swap
+
+- **`label.css`**'s sibling rule still traded `Label`'s field-heading type for
+  sentence case beside a radio, written against the incumbent `Radio` (which
+  self-labelled). `RadioGroupItem` doesn't — every `radio-group` demo would
+  have shown its caption in the wrong voice. `radio-group-item` dropped from
+  the rule's selector list.
+- **`Wizard`**'s incoming composition calls for a `StepperSeparator` `stepper.tsx`
+  doesn't export, deliberately (the connector is CSS, not markup) — fixed
+  forward by omitting it rather than adding a part with nothing to render.
+
 ## [1.0.0-beta.8] — 2026-09-03
 
 **The last beta, and the only batch that buys a dependency or changes behaviour on a

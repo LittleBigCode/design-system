@@ -231,7 +231,7 @@ export const COMPONENTS = {
   },
   "calendar": {
     "name": "Calendar",
-    "description": "A month grid with dated events, statuses and a selected day.",
+    "description": "A month grid — react-day-picker underneath, styled to match.",
     "category": "Forms",
     "exampleCount": 1,
     "legacy": "calendar-view"
@@ -247,7 +247,7 @@ export const COMPONENTS = {
     "name": "Combobox",
     "description": "A text field that filters a list as you type, and settles on one value.",
     "category": "Forms",
-    "exampleCount": 1,
+    "exampleCount": 3,
     "legacy": "combobox"
   },
   "date-picker": {
@@ -266,14 +266,14 @@ export const COMPONENTS = {
   },
   "date-time-picker": {
     "name": "DateTimePicker",
-    "description": "A date and a time in one field, on the native `datetime-local` control.",
+    "description": "A `DatePicker` and a `TimePicker` combined into one `Date` value.",
     "category": "Forms",
     "exampleCount": 1,
     "legacy": "date-time"
   },
   "file-upload": {
     "name": "FileUpload",
-    "description": "A drop zone that is also a file button, with the picked files listed under it.",
+    "description": "A drop zone that is also a file button, composed from its own icon/title/description.",
     "category": "Forms",
     "exampleCount": 1,
     "legacy": "file-upload"
@@ -286,10 +286,10 @@ export const COMPONENTS = {
     "legacy": "multi-select"
   },
   "number-field": {
-    "name": "NumberInput",
+    "name": "NumberField",
     "description": "A numeric field with stepper buttons and a real `null` for empty.",
     "category": "Forms",
-    "exampleCount": 1,
+    "exampleCount": 2,
     "legacy": "number-input"
   },
   "radio-group": {
@@ -307,7 +307,7 @@ export const COMPONENTS = {
     "legacy": "rating"
   },
   "tags-input": {
-    "name": "TagInput",
+    "name": "TagsInput",
     "description": "Free-form labels, entered one at a time and shown as removable chips.",
     "category": "Forms",
     "exampleCount": 1,
@@ -315,7 +315,7 @@ export const COMPONENTS = {
   },
   "time-picker": {
     "name": "TimePicker",
-    "description": "A time of day, in 24-hour `HH:mm`.",
+    "description": "A time of day — segmented hour/minute fields plus a dial.",
     "category": "Forms",
     "exampleCount": 1,
     "legacy": "time-picker"
@@ -329,7 +329,7 @@ export const COMPONENTS = {
   },
   "form": {
     "name": "Form",
-    "description": "A thin Base UI Form wrapper: the page-level `<form>` and its vertical rhythm. `FormField` owns everything inside it.",
+    "description": "A thin Base UI Form wrapper: the page-level `<form>` and its vertical rhythm. `Field` owns everything inside it.",
     "category": "Forms",
     "exampleCount": 4,
     "legacy": "forms"
@@ -370,8 +370,8 @@ export const COMPONENTS = {
     "legacy": "code-block"
   },
   "data-table": {
-    "name": "DataGrid",
-    "description": "A real `<table>` with sorting, selection, filtering, inline edit and paging.",
+    "name": "DataTable",
+    "description": "A real `<table>` with sorting, selection, inline edit and paging, over `@tanstack/react-table`.",
     "category": "Data display",
     "exampleCount": 2,
     "legacy": "datagrid"
@@ -426,10 +426,10 @@ export const COMPONENTS = {
     "legacy": null
   },
   "command": {
-    "name": "CommandPalette",
-    "description": "The ⌘K surface: one flat list of commands, grouped and filtered as you type.",
+    "name": "Command",
+    "description": "The ⌘K surface: `cmdk`'s filtering, grouped and composed as children.",
     "category": "Navigation",
-    "exampleCount": 1,
+    "exampleCount": 2,
     "legacy": "command-palette"
   },
   "menubar": {
@@ -447,10 +447,10 @@ export const COMPONENTS = {
     "legacy": null
   },
   "sidebar": {
-    "name": "VerticalNav",
-    "description": "The app's own nav column: one level of nesting, one active row.",
+    "name": "Sidebar",
+    "description": "The app's own nav column — 23 composed parts, renamed from `VerticalNav`.",
     "category": "Navigation",
-    "exampleCount": 1,
+    "exampleCount": 3,
     "legacy": "vertical-nav"
   },
   "tabs": {
@@ -525,7 +525,7 @@ export const COMPONENTS = {
   },
   "accordion": {
     "name": "Accordion",
-    "description": "A stack of disclosure rows, driven by an `items` array rather than composed from children.",
+    "description": "A stack of disclosure rows, composed from `AccordionItem`/`AccordionTrigger`/`AccordionContent` children.",
     "category": "Disclosure",
     "exampleCount": 1,
     "legacy": "accordion"
@@ -559,10 +559,10 @@ export const COMPONENTS = {
     "legacy": "modal"
   },
   "dropdown-menu": {
-    "name": "Dropdown",
+    "name": "DropdownMenu",
     "description": "A menu of actions hanging off a trigger.",
     "category": "Overlays",
-    "exampleCount": 1,
+    "exampleCount": 2,
     "legacy": "menu"
   },
   "hover-card": {
@@ -581,14 +581,14 @@ export const COMPONENTS = {
   },
   "alert": {
     "name": "Alert",
-    "description": "An inline message about the thing next to it. Four types, optionally dismissible.",
+    "description": "An inline message about the thing next to it, composed from title/description/action/dismiss parts.",
     "category": "Feedback",
     "exampleCount": 1,
     "legacy": "alert"
   },
   "toast": {
     "name": "Toast",
-    "description": "A transient confirmation that an action landed, raised from anywhere via `useToast`.",
+    "description": "A transient confirmation that an action landed, raised from anywhere via `toast`.",
     "category": "Feedback",
     "exampleCount": 1,
     "legacy": "toast"

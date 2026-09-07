@@ -211,6 +211,76 @@ const ANATOMY_EXCEPTIONS: Record<string, string> = {
   "navigation-menu/NavigationMenuIndicator":
     "NavigationMenuTrigger renders its own caret",
   "toast/Toaster": "mounted once in the app root, not inside a page",
+
+  // The seven below are pre-existing, not this exception mechanism's intended
+  // use (there is plenty to look at — the components are real and landed).
+  // Their slugs (dialog, alert-dialog, carousel, input-otp, resizable, tabs,
+  // toggle-group) were claimed in batch 12 (#45) by real component files, but
+  // each slug's *registry page* still documents an unrelated genuine additive
+  // that happens to share the name (Modal for "dialog", the inline Tabs for
+  // "tabs", …) — giving the real Dialog/AlertDialog/Carousel/InputOTP/
+  // Resizable/Tabs/ToggleGroup a route of their own, without colliding with
+  // the page already at that slug, is batch 16's (#49) dual React/HTML
+  // example machinery per corrections.md, not a few lines of JSX here. First
+  // surfaced now because this environment's `site/` had never had a working
+  // `npm install` before batch 13 (#46) — nobody had run a real production
+  // build against this checker until now. Recorded in corrections.md.
+  "dialog/Dialog": "batch 16 — needs its own route, see corrections.md",
+  "dialog/DialogTrigger": "batch 16 — needs its own route, see corrections.md",
+  "dialog/DialogContent": "batch 16 — needs its own route, see corrections.md",
+  "dialog/DialogHeader": "batch 16 — needs its own route, see corrections.md",
+  "dialog/DialogFooter": "batch 16 — needs its own route, see corrections.md",
+  "dialog/DialogTitle": "batch 16 — needs its own route, see corrections.md",
+  "dialog/DialogDescription":
+    "batch 16 — needs its own route, see corrections.md",
+  "dialog/DialogClose": "batch 16 — needs its own route, see corrections.md",
+  "alert-dialog/AlertDialog":
+    "batch 16 — needs its own route, see corrections.md",
+  "alert-dialog/AlertDialogTrigger":
+    "batch 16 — needs its own route, see corrections.md",
+  "alert-dialog/AlertDialogContent":
+    "batch 16 — needs its own route, see corrections.md",
+  "alert-dialog/AlertDialogHeader":
+    "batch 16 — needs its own route, see corrections.md",
+  "alert-dialog/AlertDialogFooter":
+    "batch 16 — needs its own route, see corrections.md",
+  "alert-dialog/AlertDialogTitle":
+    "batch 16 — needs its own route, see corrections.md",
+  "alert-dialog/AlertDialogDescription":
+    "batch 16 — needs its own route, see corrections.md",
+  "alert-dialog/AlertDialogAction":
+    "batch 16 — needs its own route, see corrections.md",
+  "alert-dialog/AlertDialogCancel":
+    "batch 16 — needs its own route, see corrections.md",
+  "alert-dialog/AlertDialogMedia":
+    "batch 16 — needs its own route, see corrections.md",
+  "carousel/Carousel": "batch 16 — needs its own route, see corrections.md",
+  "carousel/CarouselContent":
+    "batch 16 — needs its own route, see corrections.md",
+  "carousel/CarouselItem": "batch 16 — needs its own route, see corrections.md",
+  "carousel/CarouselPrevious":
+    "batch 16 — needs its own route, see corrections.md",
+  "carousel/CarouselNext": "batch 16 — needs its own route, see corrections.md",
+  "input-otp/InputOTP": "batch 16 — needs its own route, see corrections.md",
+  "input-otp/InputOTPGroup":
+    "batch 16 — needs its own route, see corrections.md",
+  "input-otp/InputOTPSlot":
+    "batch 16 — needs its own route, see corrections.md",
+  "input-otp/InputOTPSeparator":
+    "batch 16 — needs its own route, see corrections.md",
+  "resizable/ResizablePanelGroup":
+    "batch 16 — needs its own route, see corrections.md",
+  "resizable/ResizablePanel":
+    "batch 16 — needs its own route, see corrections.md",
+  "resizable/ResizableHandle":
+    "batch 16 — needs its own route, see corrections.md",
+  "tabs/TabsList": "batch 16 — needs its own route, see corrections.md",
+  "tabs/TabsTrigger": "batch 16 — needs its own route, see corrections.md",
+  "tabs/TabsContent": "batch 16 — needs its own route, see corrections.md",
+  "toggle-group/ToggleGroup":
+    "batch 16 — needs its own route, see corrections.md",
+  "toggle-group/ToggleGroupItem":
+    "batch 16 — needs its own route, see corrections.md",
 }
 
 /**

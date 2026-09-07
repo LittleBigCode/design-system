@@ -28,7 +28,7 @@ const SECTIONS = [
 
 export default function AccordionBasic() {
   return (
-    <Accordion defaultValue="tokens">
+    <Accordion defaultValue={["tokens"]}>
       {SECTIONS.map((section) => (
         <AccordionItem key={section.id} value={section.id}>
           <AccordionTrigger>{section.title}</AccordionTrigger>

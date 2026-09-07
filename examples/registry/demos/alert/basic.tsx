@@ -1,8 +1,11 @@
 import * as React from "react"
 import {
   Alert,
+  AlertAction,
   AlertDescription,
   AlertDismiss,
+  AlertTitle,
+  Button,
 } from "@diametral/design-system/react"
 
 export default function AlertTypes() {
@@ -19,17 +22,22 @@ export default function AlertTypes() {
         <AlertDescription>Migration applied to 1 284 rows.</AlertDescription>
       </Alert>
       <Alert tone="warning">
+        <AlertTitle>Two seats remain</AlertTitle>
         <AlertDescription>
-          Two seats remain on this plan. Adding a third starts a new billing
-          tier.
+          Adding a third starts a new billing tier.
         </AlertDescription>
       </Alert>
       {!dismissed && (
         <Alert tone="danger">
+          <AlertTitle>Export failed</AlertTitle>
           <AlertDescription>
-            The export failed: the destination bucket rejected the
-            credentials.
+            The destination bucket rejected the credentials.
           </AlertDescription>
+          <AlertAction>
+            <Button size="sm" variant="outline">
+              Retry
+            </Button>
+          </AlertAction>
           <AlertDismiss onClick={() => setDismissed(true)} />
         </Alert>
       )}
