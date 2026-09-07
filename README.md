@@ -85,8 +85,8 @@ import { Button, Status, Metric } from "@diametral/design-system/react";
 <Button variant="primary">Save</Button>
 ```
 
-See [`docs/react.md`](docs/react.md) and the live, buildless demo in
-[`examples/react.html`](examples/react.html).
+See [`docs/react.md`](docs/react.md) and the live docs site at
+[littlebigcode.github.io/design-system](https://littlebigcode.github.io/design-system/).
 
 > The system is pure CSS + fonts + SVG + a sprinkle of vanilla JS for the Web Components.
 > **No bundler, transpiler, or framework is needed to consume it.**
@@ -167,16 +167,13 @@ Diametral CSS in a `<style>` instead of the `<link>`"* — that renders everywhe
 
 ## Live showcase
 
-A buildless, multi-page showcase that dogfoods the system lives in [`examples/`](examples/).
+The docs site that dogfoods the system lives in [`site/`](site/) and is deployed at
+[littlebigcode.github.io/design-system](https://littlebigcode.github.io/design-system/).
 
 ```bash
-# from the repo root
-python3 -m http.server 8080
-# then open http://localhost:8080/
+npm run build     # from the repo root — site/'s file:.. install needs dist/
+cd site && npm run dev
 ```
-
-It also works straight from the filesystem — open `index.html` in a browser.
-`examples/kitchen-sink.html` renders every component on one page.
 
 ## Token model
 
@@ -232,7 +229,7 @@ design-system/
 ├── tokens/tokens.json    Single source of truth
 ├── assets/               fonts (Ufficio + license) · logo · photography
 ├── docs/                 English documentation
-├── examples/             Live showcase (static HTML)
+├── site/                 Docs site (React), deployed at `/`
 ├── scripts/              Zero-dependency build scripts
 └── dist/                 Generated (gitignored)
 ```

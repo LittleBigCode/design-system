@@ -3,7 +3,7 @@
 The official Diametral design system. v0.11.0, published to npm as `@diametral/design-system`.
 
 Build: `npm run build` (tokens → css → components → figma). Tests: `npm run test:visual`, `npm run test:a11y`.
-Serve the docs site locally with `npm run serve`.
+Root is the published package; `site/` is the docs site — serve it locally with `cd site && npm run dev` (after `npm run build` at root, which `site/`'s `file:..` install needs).
 
 For generating on-brand UI with `.ds-*` classes and `--ds-*` tokens, read `docs/for-claude.md`.
 For adopting the system in an app that has its own styles, read `docs/migration.md`.

@@ -51,33 +51,18 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p _site
-          cp -r css assets components examples emails dist _site/
+          # site/'s own build output IS the site (issue #47 / direction.md
+          # decision 6): it owns `/` directly, not a `/react-workbench/`
+          # subpath — the buildless showcase this workflow used to serve at
+          # root retired with it. Its hashed bundles are self-contained
+          # (vite.config.ts `base: "/design-system/"`), so nothing else needs
+          # copying alongside them.
+          cp -r site/dist/* _site/
 
-          # The Ufficio title font is served here under Diametral's own font license
-          # (see NOTICE.md). To publish a license-safe build that excludes it instead,
-          # uncomment the two lines below — titles then fall back to free Fraunces:
-          #   rm -f _site/assets/fonts/Ufficio-300.woff2 _site/assets/fonts/ufficio.css
-          #   grep -rl "assets/fonts/ufficio.css" _site --include='*.html' | xargs -r sed -i 's#assets/fonts/ufficio.css#assets/fonts/fallback.css#g'
-
-          # The buildless showcase owns `/`: this repo's served layout mirrors
-          # its own directory layout, and examples/*.html reach up into the real
-          # published paths (../css/diametral.css) the way a consumer would.
-          cp deploy/pages-redirect.html _site/index.html
-
-          # The React workbench is the verification harness for the TSX layer,
-          # which static HTML cannot exercise. It mounts under a subpath rather
-          # than the root so it never displaces the showcase. Its own hashed
-          # bundles land in `_app/` (vite.config.ts build.assetsDir), a second
-          # guard against merging into the `assets/` copied above.
-          mkdir -p _site/react-workbench
-          cp -r site/dist/* _site/react-workbench/
-
-          # SPA fallback. Pages serves the site-root 404.html for any unmatched
-          # path anywhere, so the workbench's deep links — /react-workbench/docs/tabs,
-          # the link a reader shares — only survive a reload if that one file is
-          # the workbench's index. Its asset URLs are absolute (Vite `base`), so
-          # it boots correctly from any path Pages serves it at.
-          cp _site/react-workbench/index.html _site/404.html
+          # SPA fallback: Pages serves the site-root 404.html for any
+          # unmatched path, so a deep link only survives a reload if that
+          # file is the app's own index.
+          cp _site/index.html _site/404.html
 
           # Disable Jekyll processing.
           touch _site/.nojekyll
