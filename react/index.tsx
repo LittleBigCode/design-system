@@ -7,10 +7,12 @@ import { cx } from "./lib/cx.js";
    the eight that were left with a frozen class contract — Button, Input, Field,
    Badge, Panel, Status, Switch and Metric. What remains here is Chip, Callout
    and SectionHeading — genuine additives, no incoming counterpart — plus
-   Tabs, Segmented and Modal, which is wrong to call the same: incoming ships
-   all three (`tabs.tsx`, `toggle-group.tsx`, `dialog.tsx` + `alert-dialog.tsx`),
-   landed additively in batch 12 (#45) under their own names pending batch
-   13's (#46) swap — plus the re-exports.
+   Tabs, Segmented and Modal. Batch 13 (#46), the api-swaps.md 28-row swap,
+   came and went without touching them: none of the three are api-swaps.md
+   rows, despite this comment once saying otherwise — see corrections.md.
+   Incoming's own `tabs.tsx`/`toggle-group.tsx`/`dialog.tsx`+`alert-dialog.tsx`
+   still sit landed additively (batch 12, #45) under their own names, reachable
+   via their `./react/*` subpath, whatever batch eventually owns that swap.
 
    Styling comes from the global stylesheet — make sure it is loaded:
        import "@diametral/design-system/css/diametral.css";
@@ -348,22 +350,18 @@ export * from "./components/select.js";
 export * from "./components/input-group.js";
 export * from "./components/field.js";
 
-/* Batch 12 — the 26 unimported components, first half (#45). Additive only:
-   every one of these is a new name alongside its incumbent, not a replacement
-   of it — batch 13 (#46) removes the incumbent and is the breaking half.
-   `color-picker`, `command`, `file-upload`, `radio-group`, `split-button`,
-   `stat-card`, `tabs`, `toast` and `toggle-group` land in the same batch but
-   are NOT re-exported here: each has a same-named export already in this
-   barrel (`ColorPicker`, `CommandPalette.js`'s `Command` *interface*,
-   `FileUpload`, `RadioGroup`, `SplitButton`, `StatCard`, the inline
-   `Tabs`/`Segmented`, `Toast`/`ToastProvider`) — `export *` from two modules
-   sharing one top-level name is a compile error regardless of whether it's a
-   type or a value colliding. Reach them via their `./react/*` subpath until
-   batch 13 does the swap.
-   `command-palette`, `data-table` and 5 more transitively need `calendar`,
-   `icon` or `combobox`'s decomposed parts, which are themselves batch 13
-   items and hit the same name collision one step earlier — see
-   corrections.md; they're deferred, not landed here. */
+/* Batch 12 — the 26 unimported components, first half (#45). Landed
+   additively; batch 13 (#46) did the 28-row api-swaps.md swap and removed
+   every incumbent api-swaps.md named, including the nine that collided with
+   one of these on a top-level export name (`color-picker`, `command`,
+   `file-upload`, `radio-group`, `split-button`, `stat-card`, `toast` and
+   the six deferred from here — see corrections.md).
+   `tabs` and `toggle-group` are NOT re-exported here on purpose and are
+   NOT api-swaps.md rows: this barrel's inline `Tabs`/`Segmented` (this
+   file, above) are genuine additives with no incoming counterpart per
+   `direction.md`/`api-swaps.md`, despite what this file's own header
+   comment says — see corrections.md. Reach `tabs.tsx`/`toggle-group.tsx`
+   via their `./react/*` subpath. */
 export * from "./components/alert-dialog.js";
 export * from "./components/carousel.js";
 export * from "./components/data-table.js";

@@ -20,7 +20,7 @@ export type ComponentDoc = {
   /**
    * The barrel exports this page documents, in the order the import line shows
    * them. Required rather than derived: an incumbent's export name does not
-   * follow from its slug — `data-table` documents `DataGrid` — and the anatomy
+   * follow from its slug — `data-table` documents `DataTable` — and the anatomy
    * extractor only finds parts in components that compose from children.
    *
    * An empty array means stylesheet-only — the component's `.ds-*` classes are
@@ -626,8 +626,8 @@ export const COMPONENTS: ComponentDoc[] = [
     description:
       "An accessible label; pairs with a control via `htmlFor` and dims with its disabled state.",
     intro: [
-      "Label is the plain `label` element wearing the system's field-heading type: 12px, uppercase and tracked out at `0.08em` in faint ink — the charte's signature small-caps treatment, which `.ds-label` already carried before this component landed. Reach for it when the control and its name are separate elements — a select, a textarea, a range, an input in a hand-built grid. It is *not* what this package's `Checkbox`, `Switch` and `Radio` want: each of those is itself a `<label>` around its own text, so a Label beside one would be a second label for a single control. `FormField` is the label-plus-control-plus-hint row when you want the whole thing in one prop set.",
-      'It restyles itself from the control it sits beside rather than taking a prop: a Label following a `[data-slot="checkbox"]`, `radio-group-item` or `switch` trades the heading treatment for sentence case, because a checkbox label is a sentence and a field heading is not. Sibling selectors only look backwards, so the control has to come before the label in the DOM — and those three controls arrive in batch 7, so the rule is written and dark until then.',
+      "Label is the plain `label` element wearing the system's field-heading type: 12px, uppercase and tracked out at `0.08em` in faint ink — the charte's signature small-caps treatment, which `.ds-label` already carried before this component landed. Reach for it when the control and its name are separate elements — a select, a textarea, a range, a `RadioGroupItem` (since 1.0.0 — see below), an input in a hand-built grid. It is *not* what this package's `Checkbox` and `Switch` want: each of those is itself a `<label>` around its own text, so a Label beside one would be a second label for a single control. `Field` is the label-plus-control-plus-hint row when you want the whole thing in one composed group.",
+      'It restyles itself from the control it sits beside rather than taking a prop: a Label following a `[data-slot="checkbox"]` or `switch` trades the heading treatment for sentence case, because a checkbox label is a sentence and a field heading is not. Sibling selectors only look backwards, so the control has to come before the label in the DOM. `radio-group-item` dropped out of this rule in 1.0.0: `RadioGroupItem` draws only the dot, not a self-labelling `<label>`, so a Label beside one keeps the heading treatment like any other bare control.',
       "Upstream those selectors were keyed to Tailwind's `.peer` and `.group` marker classes, and the three type properties sat in a `@layer components` block below Tailwind's utilities so a call site could override them. Neither mechanism exists here: the markers are gone in favour of the real `:disabled` and `data-slot` they stood for, and the override is plain specificity. The three type properties themselves are not restated at all — `.ds-label` was already defined in `base/typography.css`, and a batch landing in an occupied namespace merges rather than overwrites.",
     ],
     examples: [
@@ -664,10 +664,10 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Forms",
     exports: ["Form"],
     description:
-      "A thin Base UI Form wrapper: the page-level `<form>` and its vertical rhythm. `FormField` owns everything inside it.",
+      "A thin Base UI Form wrapper: the page-level `<form>` and its vertical rhythm. `Field` owns everything inside it.",
     intro: [
-      "Form is the outermost wrapper of a form page — a `<form>` element laid out as a flex column with a wide gap, so sections separate themselves without margins. Reach for it once per form; its own gap is what spaces the rows, so there is no inner grouping element to add. `FormField` owns a single field's label, hint and error.",
-      "Base UI's own conveniences here need `Field.Root` to register the controls, and this system's `FormField` is a plain div, so none of them see anything: `onFormSubmit` reports an empty object, the `errors` prop keys off names it never learns, and there is no first-invalid field to focus. Read the values with `FormData` in `onSubmit` and hold errors in state instead. The one behaviour that does reach you is that the element is rendered with `noValidate`, so browser constraint bubbles never appear and `required` blocks nothing on its own.",
+      "Form is the outermost wrapper of a form page — a `<form>` element laid out as a flex column with a wide gap, so sections separate themselves without margins. Reach for it once per form; its own gap is what spaces the rows, so there is no inner grouping element to add. `Field` owns a single field's label, hint and error.",
+      "Base UI's own conveniences here need `Field.Root` to register the controls, and this system's `Field` is a plain div, so none of them see anything: `onFormSubmit` reports an empty object, the `errors` prop keys off names it never learns, and there is no first-invalid field to focus. Read the values with `FormData` in `onSubmit` and hold errors in state instead. The one behaviour that does reach you is that the element is rendered with `noValidate`, so browser constraint bubbles never appear and `required` blocks nothing on its own.",
     ],
     examples: [
       {
@@ -758,7 +758,7 @@ export const COMPONENTS: ComponentDoc[] = [
     description:
       "A segmented one-time-code field with per-character slots. Stylesheet only — the one-field-many-boxes behaviour needs a binding this package does not ship.",
     intro: [
-      "Input OTP is for a code of known length that reads as separate characters: an SMS or authenticator confirmation, an email verification, an invite key. Reach for it when the length is fixed and the segmentation helps the reader keep their place — a plain `Input` is better as soon as the value could be any length, and `FormField` is what wraps either one with a label and an error.",
+      "Input OTP is for a code of known length that reads as separate characters: an SMS or authenticator confirmation, an email verification, an invite key. Reach for it when the length is fixed and the segmentation helps the reader keep their place — a plain `Input` is better as soon as the value could be any length, and `Field` is what wraps either one with a label and an error.",
       "**This one is CSS without a React binding.** The source component wraps the `input-otp` package, and that dependency is not acquired. What it buys is precisely the behaviour, not the look: one real transparent input behind the boxes, so paste, password managers and the OS one-time-code suggestion keep working, plus backspace across a slot boundary and the caret tracking. So `.ds-input-otp` and its group, slot, caret and separator classes ship, and any binding that renders them gets the look.",
       "The structure is the part worth knowing even without a binding. There is exactly one `input`; every slot is a plain `div` painted from that input's state, which is why a slot carries no value and no `onChange`, why splitting the slots across groups is presentational and does not touch the value, and why the field is named on the input itself rather than on a group. `data-active` marks the slot the caret is in, and the caret is a painted line — the real one is invisible with the input.",
     ],
@@ -817,7 +817,7 @@ export const COMPONENTS: ComponentDoc[] = [
     description:
       "Inline click-to-edit text — a preview with an edit affordance that swaps to a field, committed on Enter or blur, discarded on Escape.",
     intro: [
-      "Editable turns a piece of text into its own editor: a preview with a pencil that surfaces on hover or focus, swapping in place for an `Input` with save and cancel beside it. Reach for it to rename something where it already sits — a document title, a board column, a row label — instead of sending someone to a dialog for one value. As soon as the edit touches more than one value, a `FormField` inside a form is the honest shape.",
+      "Editable turns a piece of text into its own editor: a preview with a pencil that surfaces on hover or focus, swapping in place for an `Input` with save and cancel beside it. Reach for it to rename something where it already sits — a document title, a board column, a row label — instead of sending someone to a dialog for one value. As soon as the edit touches more than one value, a `Field` inside a form is the honest shape.",
       "It is hand-rolled rather than composed, so the prop list is the whole surface and there are no parts to nest. Enter and blur commit, Escape discards, and `submitOnBlur={false}` makes blur discard too, which leaves the check button and Enter as the only ways through. Two details to know before styling it: the preview is a `span` rather than a button, so the pencil — not the text — is what opens the field, and the inner `Input` carries its own type size, so a heading-sized preview snaps back to field size while it is being edited.",
       "The three affordances are `IconButton`s at `icon-xs`, re-composed onto this package's button until batch 7 supplies the source's — which means each one now carries a required accessible name (`Edit`, `Save`, `Cancel`) rather than relying on the source remembering an `aria-label`.",
     ],
@@ -1233,8 +1233,8 @@ export const COMPONENTS: ComponentDoc[] = [
     description:
       "A desktop-style application menu bar with keyboard traversal.",
     intro: [
-      "Menubar is application chrome: a persistent row of named menus — File, Edit, View — that keeps a dense tool's whole command surface in reach and grouped by noun. Reach for it in editor-shaped views people live inside. One button that reveals a few actions is `Dropdown`, a right-click surface is `Context Menu`, and a searchable flat list of commands is `CommandPalette`.",
-      "Each menu is a Base UI `Menu`, and its rows wear this system's own menu vocabulary — `.ds-menu`, `.ds-menu__item`, `.ds-menu__divider`, `.ds-menu__header` — so a menubar menu and a `Dropdown` menu are the same surface. `MenubarContent` mounts its own portal and positioner, so the tree stops at Menu → Trigger → Content. The root is Base UI's menubar, which is what gives the row a single tab stop and hands focus between menus with the arrow keys.",
+      "Menubar is application chrome: a persistent row of named menus — File, Edit, View — that keeps a dense tool's whole command surface in reach and grouped by noun. Reach for it in editor-shaped views people live inside. One button that reveals a few actions is `DropdownMenu`, a right-click surface is `Context Menu`, and a searchable flat list of commands is `Command`.",
+      "Each menu is a Base UI `Menu`, and its rows wear this system's own menu vocabulary — `.ds-menu`, `.ds-menu__item`, `.ds-menu__divider`, `.ds-menu__header` — landed net-new in batches 1–2, before `DropdownMenu`'s own swap (batch 13, #46) gave it `.ds-dropdown-menu-*` classes instead: the two no longer share a surface, only the Base UI `Menu` underneath. `MenubarContent` mounts its own portal and positioner, so the tree stops at Menu → Trigger → Content. The root is Base UI's menubar, which is what gives the row a single tab stop and hands focus between menus with the arrow keys.",
     ],
     examples: [
       {
@@ -4467,8 +4467,10 @@ export const COMPONENTS: ComponentDoc[] = [
   /* Three of these five replace an incumbent whose measured accessibility
      defect earned the swap, and each of the three owes a regress spec:
      tooltip (never announced), drawer + sheet (no focus trap, no portal),
-     kanban (no keyboard path at all). skeleton is the cross-boundary pin —
-     its React moves, its stylesheet is held by DataGrid. */
+     kanban (no keyboard path at all). skeleton was the cross-boundary pin —
+     its stylesheet held for DataGrid's sake until batch 13 (#46) removed
+     DataGrid and the pin along with it; skeleton.css is now source's file
+     outright, no accommodation needed. */
   {
     slug: "kanban",
     name: "Kanban",

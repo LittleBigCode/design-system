@@ -56,10 +56,14 @@
   opacity: 0.5;
 }
 
-/* Beside a checkbox, radio or switch the label is the row's prose, not a field
-   caption, so it drops the micro-caps voice. Live from batch 7. */
+/* Beside a checkbox or switch the label is the row's prose, not a field
+   caption, so it drops the micro-caps voice. Live from batch 7.
+
+   `radio-group-item` dropped out of this rule in batch 13 (#46): the incoming
+   `RadioGroupItem` draws only the dot, not a self-labelling `<label>` the way
+   the incumbent `Radio` did, so a Label beside one is a field caption like
+   any other bare control and keeps the heading treatment. */
 [data-slot="checkbox"] ~ .ds-label,
-[data-slot="radio-group-item"] ~ .ds-label,
 [data-slot="switch"] ~ .ds-label {
   font-size: var(--ds-text-base);
   font-weight: 400;
