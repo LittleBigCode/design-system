@@ -66,14 +66,40 @@ function buildImportMap() {
     ...bareSpecifiersIn(listJsFiles(join(ROOT, "dist/react"))),
     ...bareSpecifiersIn(listJsFiles(join(ROOT, "dist/docs/demos"))),
   ])
-  for (const specifier of specifiers) {
-    if (imports[specifier]) continue
+  const mapped = [...specifiers].filter((s) => !imports[s])
+  // How many entries a package contributes decides whether it can be bundled:
+  // ?bundle inlines a build's dependencies, and a module inlined twice is two
+  // modules. React context is identity-based, so two copies of Base UI's
+  // internals means Menu never sees Menubar's context and the bar stops being
+  // one roving tab stop; two copies of @dnd-kit/core means useSortable never
+  // sees DndContext and every drag is inert. See issue #39.
+  const perPackage = new Map()
+  for (const specifier of mapped) {
+    const pkg = packageNameOf(specifier)
+    perPackage.set(pkg, (perPackage.get(pkg) ?? 0) + 1)
+  }
+  const packages = [...perPackage.keys()]
+
+  for (const specifier of mapped) {
     const pkg = packageNameOf(specifier)
     const subpath = specifier.slice(pkg.length)
-    // ?bundle: some of these (@phosphor-icons/react above all) eagerly
-    // re-export one file per icon; unbundled esm.sh serves each as its own
-    // request, which stalls the page on hundreds of round trips.
-    imports[specifier] = `https://esm.sh/${pkg}@${installedVersionOf(pkg)}${subpath}?external=react,react-dom&bundle`
+    // Everything else the map already resolves stays external, so a bundled
+    // dependent (@dnd-kit/sortable) imports the mapped @dnd-kit/core rather
+    // than inlining a second one.
+    // react/react-dom stay external unconditionally — a second React is fatal
+    // even for react's own jsx-runtime entry. Every other package drops out of
+    // its own list, since we map its subpaths and not its root.
+    const external = [
+      "react",
+      "react-dom",
+      ...packages.filter((p) => p !== pkg && p !== "react" && p !== "react-dom"),
+    ]
+    // ?bundle only where the package is a single entry with no sibling to
+    // duplicate against: @phosphor-icons/react eagerly re-exports one file per
+    // icon, and unbundled esm.sh serves each as its own request, which stalls
+    // the page on hundreds of round trips.
+    const bundle = perPackage.get(pkg) === 1 ? "&bundle" : ""
+    imports[specifier] = `https://esm.sh/${pkg}@${installedVersionOf(pkg)}${subpath}?external=${external.join(",")}${bundle}`
   }
   return { imports }
 }
