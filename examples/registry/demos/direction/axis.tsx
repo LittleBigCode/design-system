@@ -1,5 +1,7 @@
 import {
   DirectionProvider,
+  Field,
+  FieldLabel,
   FormField,
   Slider,
   Segmented,
@@ -13,14 +15,22 @@ import {
 
    Re-wired onto the incumbents: the source's `Slider` is `Range`, and its
    `ToggleGroup` is `Segmented`, which takes its cells as an `items` array
-   rather than as children. */
+   rather than as children.
+
+   The volume row uses `Field` + `aria-labelledby` rather than `FormField` +
+   `htmlFor`: Slider's `id` lands on its root wrapper, not the range input Base
+   UI actually renders, so a `<label for>` pointed at it never resolves. */
 export default function DirectionAxis() {
   return (
     <DirectionProvider direction="rtl">
       <div dir="rtl" className="flex w-full max-w-sm flex-col gap-8">
-        <FormField label="مستوى الصوت" htmlFor="direction-axis-volume">
-          <Slider id="direction-axis-volume" defaultValue={30} />
-        </FormField>
+        <Field>
+          <FieldLabel id="direction-axis-volume-label">مستوى الصوت</FieldLabel>
+          <Slider
+            defaultValue={30}
+            aria-labelledby="direction-axis-volume-label"
+          />
+        </Field>
         <FormField label="المدى" htmlFor="direction-axis-range">
           <Segmented
             defaultValue="week"
