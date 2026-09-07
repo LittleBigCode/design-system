@@ -65,3 +65,307 @@
   background: var(--ds-bg-alt);
 }
 .ds-modal__spacer { flex: 1; }
+
+/* From migration-source-v1's dialog.css + alert-dialog.css (batch 12, #45).
+   `ds-dialog-*`/`ds-alert-dialog-*` is a second, additive contract — the
+   frozen `ds-modal__*` grammar above is untouched, and `<ds-modal>` reads
+   none of this. Appended now because `react/components/dialog.tsx` and
+   `alert-dialog.tsx` (batch 12) are the first consumers; batch 9 (#42) had
+   no React yet to justify landing it. */
+.ds-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  isolation: isolate;
+  z-index: 50;
+  background-color: rgb(0 0 0 / 0.2);
+}
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .ds-dialog-overlay {
+    backdrop-filter: blur(8px);
+  }
+}
+@keyframes ds-dialog-overlay-enter {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes ds-dialog-overlay-exit {
+  to {
+    opacity: 0;
+  }
+}
+.ds-dialog-overlay[data-open] {
+  animation: ds-dialog-overlay-enter 100ms ease;
+}
+.ds-dialog-overlay[data-closed] {
+  animation: ds-dialog-overlay-exit 100ms ease;
+}
+
+/* top-1/2, -translate-x-1/2/-translate-y-1/2 and padding stay literal Tailwind
+   utilities on the component itself (see dialog.tsx) — command.tsx overrides
+   top/translate-y/padding on its DialogContent, and Tailwind's translate-x/y
+   utilities both write the single `translate` shorthand via shared
+   --tw-translate-* vars, so x and y must travel together as literal classes
+   for tailwind-merge to dedupe correctly instead of one axis silently
+   resetting to 0. */
+.ds-dialog-content {
+  position: fixed;
+  inset-inline-start: 50%;
+  z-index: 50;
+  display: grid;
+  width: 100%;
+  max-width: calc(100% - 2rem);
+  gap: 1.5rem;
+  border-radius: 0;
+  background-color: var(--ds-surface);
+  font-size: 0.875rem;
+  line-height: calc(1.25 / 0.875);
+  color: var(--ds-ink);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--ds-ink) 10%, transparent),
+    0 4px 6px -1px rgb(0 0 0 / 0.1),
+    0 2px 4px -2px rgb(0 0 0 / 0.1);
+  transition-duration: 100ms;
+  outline: none;
+}
+@media (width >= 40rem) {
+  .ds-dialog-content {
+    max-width: 28rem;
+  }
+}
+@keyframes ds-dialog-content-enter {
+  from {
+    opacity: 0;
+    scale: 0.95;
+  }
+}
+@keyframes ds-dialog-content-exit {
+  to {
+    opacity: 0;
+    scale: 0.95;
+  }
+}
+.ds-dialog-content[data-open] {
+  animation: ds-dialog-content-enter 100ms ease;
+}
+.ds-dialog-content[data-closed] {
+  animation: ds-dialog-content-exit 100ms ease;
+}
+
+.ds-dialog-close {
+  position: absolute;
+  top: 1.25rem;
+  inset-inline-end: 1.25rem;
+  background-color: var(--ds-bg-alt);
+}
+
+.ds-dialog-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ds-dialog-footer {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0.5rem;
+}
+@media (width >= 40rem) {
+  .ds-dialog-footer {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
+
+.ds-dialog-title {
+  font-family: var(--ds-font-title);
+  font-size: 1.125rem;
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.ds-dialog-description {
+  margin-top: 0.125rem;
+  font-size: 0.875rem;
+  line-height: 1.625;
+  color: var(--ds-ink-soft);
+}
+.ds-dialog-description a {
+  text-decoration-line: underline;
+  text-underline-offset: 3px;
+}
+.ds-dialog-description a:hover {
+  color: var(--ds-ink);
+}
+
+.ds-alert-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  isolation: isolate;
+  z-index: 50;
+  background-color: rgb(0 0 0 / 0.2);
+}
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .ds-alert-dialog-overlay {
+    backdrop-filter: blur(8px);
+  }
+}
+@keyframes ds-alert-dialog-overlay-enter {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes ds-alert-dialog-overlay-exit {
+  to {
+    opacity: 0;
+  }
+}
+.ds-alert-dialog-overlay[data-open] {
+  animation: ds-alert-dialog-overlay-enter 100ms ease;
+}
+.ds-alert-dialog-overlay[data-closed] {
+  animation: ds-alert-dialog-overlay-exit 100ms ease;
+}
+
+.ds-alert-dialog-content {
+  position: fixed;
+  top: 50%;
+  inset-inline-start: 50%;
+  z-index: 50;
+  display: grid;
+  width: 100%;
+  max-width: 20rem;
+  translate: -50% -50%;
+  gap: 1.5rem;
+  border-radius: 0;
+  background-color: var(--ds-surface);
+  padding: 1.5rem;
+  color: var(--ds-ink);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--ds-ink) 10%, transparent),
+    0 4px 6px -1px rgb(0 0 0 / 0.1),
+    0 2px 4px -2px rgb(0 0 0 / 0.1);
+  transition-duration: 100ms;
+  outline: none;
+}
+:dir(rtl) .ds-alert-dialog-content {
+  translate: 50% -50%;
+}
+@media (width >= 40rem) {
+  .ds-alert-dialog-content[data-size="default"] {
+    max-width: 28rem;
+  }
+}
+@keyframes ds-alert-dialog-content-enter {
+  from {
+    opacity: 0;
+    scale: 0.95;
+  }
+}
+@keyframes ds-alert-dialog-content-exit {
+  to {
+    opacity: 0;
+    scale: 0.95;
+  }
+}
+.ds-alert-dialog-content[data-open] {
+  animation: ds-alert-dialog-content-enter 100ms ease;
+}
+.ds-alert-dialog-content[data-closed] {
+  animation: ds-alert-dialog-content-exit 100ms ease;
+}
+
+.ds-alert-dialog-header {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  place-items: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+.ds-alert-dialog-header:has([data-slot="alert-dialog-media"]) {
+  grid-template-rows: auto auto 1fr;
+  column-gap: 1.5rem;
+}
+@media (width >= 40rem) {
+  .ds-alert-dialog-content[data-size="default"] .ds-alert-dialog-header {
+    place-items: start;
+    text-align: start;
+  }
+  .ds-alert-dialog-content[data-size="default"]
+    .ds-alert-dialog-header:has([data-slot="alert-dialog-media"]) {
+    grid-template-rows: auto 1fr;
+  }
+}
+
+.ds-alert-dialog-footer {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0.5rem;
+}
+.ds-alert-dialog-content[data-size="sm"] .ds-alert-dialog-footer {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (width >= 40rem) {
+  .ds-alert-dialog-footer {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
+
+.ds-alert-dialog-media {
+  margin-bottom: 0.5rem;
+  display: inline-flex;
+  width: 4rem;
+  height: 4rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0;
+  background-color: var(--ds-bg-alt);
+}
+.ds-alert-dialog-media svg:not([class*="size-"]) {
+  width: 2rem;
+  height: 2rem;
+}
+@media (width >= 40rem) {
+  .ds-alert-dialog-content[data-size="default"] .ds-alert-dialog-media {
+    grid-row: span 2 / span 2;
+  }
+}
+
+.ds-alert-dialog-title {
+  font-family: var(--ds-font-title);
+  font-size: 1.125rem;
+  line-height: calc(1.75 / 1.125);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+@media (width >= 40rem) {
+  .ds-alert-dialog-content[data-size="default"]:has([data-slot="alert-dialog-media"])
+    .ds-alert-dialog-title {
+    grid-column-start: 2;
+  }
+}
+
+.ds-alert-dialog-description {
+  margin-top: 0.125rem;
+  font-size: 0.875rem;
+  line-height: 1.625;
+  text-wrap: balance;
+  color: var(--ds-ink-soft);
+}
+@media (width >= 48rem) {
+  .ds-alert-dialog-description {
+    text-wrap: pretty;
+  }
+}
+.ds-alert-dialog-description a {
+  text-decoration-line: underline;
+  text-underline-offset: 3px;
+}
+.ds-alert-dialog-description a:hover {
+  color: var(--ds-ink);
+}

@@ -1109,6 +1109,30 @@
       "subject": "the six --ds-chart-* tokens",
       "batch": "4",
       "note": "Unchanged, and still the ramp: a series with no colour in `config` takes the next slot. What changed is how a colour reaches a mark — `config` emits a per-chart `--color-<key>` custom property that the mark references, so a key carrying a space (a slice named \"Closed won\") is folded to a dash-safe name first."
+    },
+    {
+      "kind": "component",
+      "subject": "AlertDialog, Carousel, Command, DataTable, Dialog, DropdownMenu, InputOTP, NumberField, Resizable, Sidebar, TagsInput, ToggleGroup",
+      "batch": "12",
+      "note": "Landed additively (#45) — new names, no incumbent uses the same one, so no rename row yet. Each is exported from the barrel and from its own `./react/*` subpath. Batch 13 (#46) removes the incumbent each one eventually replaces (DataGrid, Dropdown, NumberInput, TagInput, VerticalNav — the rest are net-new) and owes the actual rename rows then."
+    },
+    {
+      "kind": "component",
+      "subject": "color-picker, command (the `Command` interface), file-upload, radio-group, split-button, stat-card, tabs, toast",
+      "batch": "12",
+      "note": "Landed (#45) but NOT re-exported from the barrel: each has a same-named export already there (`ColorPicker`, `CommandPalette`'s `Command` type, `FileUpload`, `RadioGroup`, `SplitButton`, `StatCard`, the inline `Tabs`/`Segmented`, `Toast`/`ToastProvider`), and `export *` from two modules sharing a name is a compile error. Reachable only via `./react/<name>` until batch 13 swaps the incumbent out and the barrel export moves over."
+    },
+    {
+      "kind": "dependency",
+      "subject": "resizable",
+      "batch": "12",
+      "note": "Supersedes batch 2's note: react-resizable-panels is acquired (batch 11, #44) and `react/components/resizable.tsx` lands here. No longer admit-CSS-only — `Resizable`, `ResizablePanel`, `ResizablePanelGroup`, `ResizableHandle` are real exports now."
+    },
+    {
+      "kind": "component",
+      "subject": "code-block, date-picker, date-range-picker, date-time-picker, time-picker, multi-select",
+      "batch": "12",
+      "note": "In #45's 26 but not landed: each transitively imports `calendar`, `icon` or `combobox`'s decomposed parts, which don't exist yet under those exact names — only the PascalCase incumbents (`Calendar`, `Icon`, `Combobox`) do, and TypeScript's cross-case-collision check (TS1149) blocks a same-spelled lowercase sibling from coexisting with one, exactly like the export collisions above but one layer earlier and with no subpath escape hatch (there's no file to put the subpath version in without the same clash). Blocked until batch 13 swaps `Calendar`/`Icon`/`Combobox` for real; see corrections.md."
     }
   ]
 }

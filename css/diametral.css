@@ -201,6 +201,12 @@
 @import url("./components/heatmap.css");
 @import url("./components/bullet-chart.css");
 
+/* Batch 12 — the 26 unimported components, first half (#45). The only
+   net-new file: modal.css got dialog/alert-dialog's CSS as an in-place
+   append instead (see its own header) — sidebar.css has no existing file to
+   append into, so it's the one new import this batch adds. */
+@import url("./components/sidebar.css");
+
 /* Alternate themes — scoped to [data-theme="dark"|"sepia"], inert until a theme
    is set on a root element (e.g. by ConsoleLayout's Light/Dark/Sepia switcher). */
 @import url("./themes/dark.css");

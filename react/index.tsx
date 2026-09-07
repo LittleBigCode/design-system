@@ -5,9 +5,12 @@ import { cx } from "./lib/cx.js";
    The barrel. Since 1.0.0-beta.1 this file has been shrinking: every component
    that grew a second axis moved out to its own module, and 1.0.0-beta.7 takes
    the eight that were left with a frozen class contract — Button, Input, Field,
-   Badge, Panel, Status, Switch and Metric. What remains here is the handful
-   with no absorbed counterpart at all (Chip, Callout, SectionHeading, Tabs,
-   Segmented, Modal) plus the re-exports.
+   Badge, Panel, Status, Switch and Metric. What remains here is Chip, Callout
+   and SectionHeading — genuine additives, no incoming counterpart — plus
+   Tabs, Segmented and Modal, which is wrong to call the same: incoming ships
+   all three (`tabs.tsx`, `toggle-group.tsx`, `dialog.tsx` + `alert-dialog.tsx`),
+   landed additively in batch 12 (#45) under their own names pending batch
+   13's (#46) swap — plus the re-exports.
 
    Styling comes from the global stylesheet — make sure it is loaded:
        import "@diametral/design-system/css/diametral.css";
@@ -350,6 +353,34 @@ export * from "./components/slider.js";
 export * from "./components/select.js";
 export * from "./components/input-group.js";
 export * from "./components/field.js";
+
+/* Batch 12 — the 26 unimported components, first half (#45). Additive only:
+   every one of these is a new name alongside its incumbent, not a replacement
+   of it — batch 13 (#46) removes the incumbent and is the breaking half.
+   `color-picker`, `command`, `file-upload`, `radio-group`, `split-button`,
+   `stat-card`, `tabs`, `toast` and `toggle-group` land in the same batch but
+   are NOT re-exported here: each has a same-named export already in this
+   barrel (`ColorPicker`, `CommandPalette.js`'s `Command` *interface*,
+   `FileUpload`, `RadioGroup`, `SplitButton`, `StatCard`, the inline
+   `Tabs`/`Segmented`, `Toast`/`ToastProvider`) — `export *` from two modules
+   sharing one top-level name is a compile error regardless of whether it's a
+   type or a value colliding. Reach them via their `./react/*` subpath until
+   batch 13 does the swap.
+   `command-palette`, `data-table` and 5 more transitively need `calendar`,
+   `icon` or `combobox`'s decomposed parts, which are themselves batch 13
+   items and hit the same name collision one step earlier — see
+   corrections.md; they're deferred, not landed here. */
+export * from "./components/alert-dialog.js";
+export * from "./components/carousel.js";
+export * from "./components/data-table.js";
+export * from "./components/dialog.js";
+export * from "./components/dropdown-menu.js";
+export * from "./components/input-otp.js";
+export * from "./components/number-field.js";
+export * from "./components/resizable.js";
+export * from "./components/sidebar.js";
+export * from "./components/tags-input.js";
+export * from "./components/toggle-group.js";
 
 /* Types several modules re-declare. Naming the canonical module here is what
    keeps `export *` unambiguous. */
