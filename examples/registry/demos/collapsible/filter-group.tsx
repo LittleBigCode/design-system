@@ -3,6 +3,8 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
+  Field,
+  FieldLabel,
 } from "@diametral/design-system/react"
 import { CaretDownIcon } from "@phosphor-icons/react"
 
@@ -20,8 +22,9 @@ const STATUSES = [
    drives the rotation is the same one assistive tech reads.
 
    `CheckboxGroup` is a source component that holds here; this package's
-   `Checkbox` wraps its own text, so a `<fieldset>` with a shared `name` is the
-   grouping — and the count sits outside the label so it is not read as part of
+   `Checkbox` is only the box, not a label around its own text, so each gets an
+   explicit `FieldLabel htmlFor` — a `<fieldset>` with a shared `name` is the
+   grouping, and the count sits outside the label so it is not read as part of
    the option's name. */
 export default function CollapsibleFilterGroup() {
   return (
@@ -38,9 +41,17 @@ export default function CollapsibleFilterGroup() {
               key={status.value}
               className="flex items-center justify-between gap-3"
             >
-              <Checkbox name="status" defaultChecked={status.value === "sent"}>
-                {status.label}
-              </Checkbox>
+              <Field orientation="horizontal" className="w-auto">
+                <Checkbox
+                  id={`collapsible-filter-${status.value}`}
+                  name="status"
+                  value={status.value}
+                  defaultChecked={status.value === "sent"}
+                />
+                <FieldLabel htmlFor={`collapsible-filter-${status.value}`}>
+                  {status.label}
+                </FieldLabel>
+              </Field>
               <span className="text-xs text-muted-foreground tabular-nums">
                 {status.count}
               </span>

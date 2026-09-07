@@ -1,4 +1,9 @@
-import { Marker, MarkerContent, Switch } from "@diametral/design-system/react"
+import {
+  Label,
+  Marker,
+  MarkerContent,
+  Switch,
+} from "@diametral/design-system/react"
 
 const GROUPS = [
   {
@@ -26,11 +31,12 @@ export default function MarkerSectionLabels() {
             <MarkerContent>{group.title}</MarkerContent>
           </Marker>
           {group.rows.map((row) => (
-            // Switch carries its own label as children — it renders the
-            // <label> wrapper itself, so there is no htmlFor to wire.
-            <Switch key={row.id} defaultChecked={row.on}>
-              {row.label}
-            </Switch>
+            // Switch is only the track — unlike Checkbox, it wraps no text of
+            // its own — so the visible name is a separate Label pointed at it.
+            <div key={row.id} className="flex items-center justify-between gap-3">
+              <Label htmlFor={row.id}>{row.label}</Label>
+              <Switch id={row.id} defaultChecked={row.on} />
+            </div>
           ))}
         </section>
       ))}
