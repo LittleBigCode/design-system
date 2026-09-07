@@ -1,0 +1,28 @@
+{
+  "_comment": "Batch 9 (#42) global slot codemod. Source CSS from migration-source-v1 references these ~20 unprefixed shadcn-style custom properties across its 110 CSS files; every one must resolve to a --ds-* token before the file lands, so nothing unprefixed reaches a consumer's :root (direction.md decision 10). Component-local vars (--tone, --cell-radius, --panel-spacing, --transform-origin, --sidebar-*, Base UI positioner vars, drawer/toast animation state) are NOT in this table — they are scoped to their own rule and stay as-is. Re-applied by batch 16 on every source re-copy; edit here, not per-file.",
+  "vars": {
+    "--background": "--ds-bg",
+    "--foreground": "--ds-ink",
+    "--muted": "--ds-bg-alt",
+    "--muted-foreground": "--ds-ink-soft",
+    "--accent": "--ds-bg-alt",
+    "--accent-foreground": "--ds-ink",
+    "--secondary": "--ds-bg-alt",
+    "--secondary-foreground": "--ds-ink",
+    "--card": "--ds-surface",
+    "--card-foreground": "--ds-ink",
+    "--popover": "--ds-surface",
+    "--popover-foreground": "--ds-ink",
+    "--primary": "--ds-accent",
+    "--primary-foreground": "--ds-on-accent",
+    "--destructive": "--ds-danger",
+    "--border": "--ds-rule",
+    "--input": "--ds-rule",
+    "--ring": "--ds-focus-ring",
+    "--font-heading": "--ds-font-title"
+  },
+  "literals": {
+    "_comment": "Not tokens — the target defines no --ds-* equivalent, so the reference becomes the literal value directly. Precedent: chart.css, funnel-chart.css, code-block.css, treemap.css, waterfall-chart.css, snippet.css, toc.css all already do this for --font-mono.",
+    "var(--font-mono)": "ui-monospace, \"SF Mono\", \"Geist Mono\", Menlo, Consolas, monospace"
+  }
+}
