@@ -13,7 +13,7 @@ import type {
 export interface AppShellProps extends HTMLAttributes<HTMLDivElement> {
   /** Content of the full-width top header region (e.g. a Wordmark + actions). */
   header?: ReactNode;
-  /** Content of the left sidebar region (typically a VerticalNav). Omit to render a header + main only. */
+  /** Content of the left sidebar region (typically a `Sidebar`). Omit to render a header + main only. */
   sidebar?: ReactNode;
   /** The scrolling main content area. */
   children?: ReactNode;

@@ -210,7 +210,6 @@ export * from "./components/timeline.js";
 export * from "./components/toast.js";
 export * from "./components/tooltip.js";
 export * from "./components/Tree.js";
-export * from "./components/VerticalNav.js";
 export * from "./components/combobox.js";
 export * from "./components/date-picker.js";
 export * from "./components/file-upload.js";
