@@ -36,6 +36,45 @@ async function styleOf(page: Page, html: string, selector: string, prop: string)
   )
 }
 
+/**
+ * Every style rule the page has loaded, flattened.
+ *
+ * `document.styleSheets` lists only the sheets a `<link>` or `<style>` created:
+ * a sheet pulled in by `@import`, or a rule nested in `@media`/`@supports`, is
+ * reachable but not enumerated. The buildless pages link one entrypoint that
+ * `@import`s 125 component files, so a flat walk finds no `.ds-*` rule at all —
+ * which turns the assertions below into two loud false failures and two that
+ * pass by finding nothing. Recursing is what makes all four mean the same thing
+ * whether the CSS arrives flat or as an import chain. See issue #39.
+ */
+async function styleRules(page: Page) {
+  return page.evaluate(() => {
+    const out: { selector: string; zIndex: string }[] = []
+    const walk = (node: CSSStyleSheet | CSSGroupingRule) => {
+      let rules: CSSRuleList
+      try {
+        rules = node.cssRules
+      } catch {
+        return // a cross-origin sheet (the Google Fonts link) throws on access
+      }
+      for (const rule of Array.from(rules)) {
+        const imported = (rule as CSSImportRule).styleSheet
+        if (imported) walk(imported)
+        else if ((rule as CSSGroupingRule).cssRules) walk(rule as CSSGroupingRule)
+        const style = rule as CSSStyleRule
+        if (style.selectorText) {
+          out.push({
+            selector: style.selectorText,
+            zIndex: style.style.getPropertyValue("z-index").trim(),
+          })
+        }
+      }
+    }
+    for (const sheet of Array.from(document.styleSheets)) walk(sheet)
+    return out
+  })
+}
+
 /* -- The three grammar guards --------------------------------------------- */
 //
 // `.ds-checkbox`, `.ds-switch` and `.ds-input-group` each carry two grammars:
@@ -222,26 +261,13 @@ test.describe("button", () => {
       "tone-blue",
       "tone-yellow",
     ]
-    const undefinedRules = await page.evaluate((family) => {
-      const defined = new Set<string>()
-      for (const sheet of Array.from(document.styleSheets)) {
-        let rules: CSSRuleList
-        try {
-          rules = sheet.cssRules
-        } catch {
-          continue
-        }
-        for (const rule of Array.from(rules)) {
-          const text = (rule as CSSStyleRule).selectorText
-          if (!text) continue
-          for (const match of text.matchAll(/\.ds-button--([a-z-]+)/g)) {
-            defined.add(match[1])
-          }
-        }
+    const defined = new Set<string>()
+    for (const { selector } of await styleRules(page)) {
+      for (const match of selector.matchAll(/\.ds-button--([a-z-]+)/g)) {
+        defined.add(match[1])
       }
-      return family.filter((name) => !defined.has(name))
-    }, FAMILY)
-    expect(undefinedRules).toEqual([])
+    }
+    expect(FAMILY.filter((name) => !defined.has(name))).toEqual([])
   })
 })
 
@@ -296,21 +322,10 @@ test.describe("status", () => {
 test.describe("ds-modal's ds-open / ds-close", () => {
   test("match no rule, because they are event names", async ({ page }) => {
     await go(page, "button")
-    const inStylesheets = await page.evaluate(() => {
-      for (const sheet of Array.from(document.styleSheets)) {
-        let rules: CSSRuleList
-        try {
-          rules = sheet.cssRules
-        } catch {
-          continue
-        }
-        for (const rule of Array.from(rules)) {
-          const text = (rule as CSSStyleRule).selectorText
-          if (text && /\.ds-(open|close)\b/.test(text)) return text
-        }
-      }
-      return null
-    })
+    const inStylesheets =
+      (await styleRules(page)).find(({ selector }) =>
+        /\.ds-(open|close)\b/.test(selector)
+      )?.selector ?? null
     expect(
       inStylesheets,
       "ds-open / ds-close are CustomEvent names; a rule for them would be the defect, not the fix"
@@ -391,25 +406,12 @@ test.describe("select", () => {
         .trim()
     )
     expect(token).not.toBe("")
-    const zIndexes = await page.evaluate(() => {
-      const found: string[] = []
-      for (const sheet of Array.from(document.styleSheets)) {
-        let rules: CSSRuleList
-        try {
-          rules = sheet.cssRules
-        } catch {
-          continue
-        }
-        for (const rule of Array.from(rules)) {
-          const style = rule as CSSStyleRule
-          if (!style.selectorText) continue
-          if (!/\.ds-select-(positioner|content)\b/.test(style.selectorText)) continue
-          const value = style.style.getPropertyValue("z-index").trim()
-          if (value) found.push(value)
-        }
-      }
-      return found
-    })
+    const zIndexes = (await styleRules(page))
+      .filter(
+        ({ selector, zIndex }) =>
+          zIndex && /\.ds-select-(positioner|content)\b/.test(selector)
+      )
+      .map(({ zIndex }) => zIndex)
     expect(zIndexes.length).toBe(2)
     for (const value of zIndexes) {
       expect(value).toBe("var(--ds-z-popover)")
@@ -457,22 +459,9 @@ test.describe("re-wired forward imports", () => {
       page.locator(".ds-agenda-event-status .ds-status-indicator").first()
     ).toBeAttached()
     // The six private tone rules left agenda.css when the dot became a Status.
-    const leftovers = await page.evaluate(() => {
-      const found: string[] = []
-      for (const sheet of Array.from(document.styleSheets)) {
-        let rules: CSSRuleList
-        try {
-          rules = sheet.cssRules
-        } catch {
-          continue
-        }
-        for (const rule of Array.from(rules)) {
-          const text = (rule as CSSStyleRule).selectorText
-          if (text && /\.ds-agenda-event-status--/.test(text)) found.push(text)
-        }
-      }
-      return found
-    })
+    const leftovers = (await styleRules(page))
+      .map(({ selector }) => selector)
+      .filter((selector) => /\.ds-agenda-event-status--/.test(selector))
     expect(leftovers).toEqual([])
   })
 })
