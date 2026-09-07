@@ -1,4 +1,10 @@
-import { CodeBlock } from "@diametral/design-system/react"
+import {
+  CodeBlock,
+  CodeBlockHead,
+  CodeBlockFilename,
+  CodeBlockBody,
+  CodeBlockCopyButton,
+} from "@diametral/design-system/react"
 
 const SNIPPET = `import "@diametral/design-system/dist/diametral.css"
 import { Button } from "@diametral/design-system/react"
@@ -8,5 +14,13 @@ export function Save() {
 }`
 
 export default function CodeBlockBasic() {
-  return <CodeBlock code={SNIPPET} language="tsx" filename="save-button.tsx" />
+  return (
+    <CodeBlock>
+      <CodeBlockHead>
+        <CodeBlockFilename>save-button.tsx</CodeBlockFilename>
+        <CodeBlockCopyButton value={SNIPPET} />
+      </CodeBlockHead>
+      <CodeBlockBody code={SNIPPET} />
+    </CodeBlock>
+  )
 }

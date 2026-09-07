@@ -1,5 +1,5 @@
 import { TimePicker } from "@diametral/design-system/react"
 
 export default function TimePickerBasic() {
-  return <TimePicker defaultValue="14:30" step={900} />
+  return <TimePicker defaultValue={{ hours: 14, minutes: 30 }} />
 }

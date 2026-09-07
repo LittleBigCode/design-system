@@ -297,6 +297,21 @@
   background-color: var(--ds-bg-alt);
   color: var(--ds-ink);
 }
+
+/* An event marker a consumer adds by overriding the `DayButton` component
+   (calendar/basic demo) — not part of Calendar's own render, so it has no
+   `data-*` attribute of its own to key off. */
+.ds-calendar-event-dot {
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+.ds-calendar-event-dot--info    { color: var(--ds-info-solid); }
+.ds-calendar-event-dot--warning { color: var(--ds-warning-solid); }
+.ds-calendar-event-dot--success { color: var(--ds-success-solid); }
+.ds-calendar-event-dot--danger  { color: var(--ds-danger-solid); }
 .ds-calendar-day-button[data-range-start="true"] {
   border-radius: var(--cell-radius);
   background-color: var(--ds-accent);

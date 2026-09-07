@@ -83,7 +83,7 @@ test.describe("theme-switcher re-wired off toggle-group and dropdown-menu", () =
 })
 
 test.describe("snippet re-wired onto CodeBlock's extracted copy button", () => {
-  test("the copy affordance is .ds-code's button, named and functional", async ({
+  test("the copy affordance is CodeBlockCopyButton, named and functional", async ({
     page,
     context,
   }) => {
@@ -92,10 +92,11 @@ test.describe("snippet re-wired onto CodeBlock's extracted copy button", () => {
     await settle(page)
 
     const button = page.locator(".ds-snippet-copy-button").first()
-    // Extracted from CodeBlock rather than reimplemented, so it is still a
-    // .ds-button underneath — that is what says the re-wiring holds.
-    await expect(button).toHaveClass(/ds-button\b/)
-    await expect(button).toHaveAttribute("aria-label", "Copy")
+    // Batch 13 (#46) swapped CodeBlock onto source's version: the copy
+    // button is a plain <button> with its own class now, not a wrapped
+    // .ds-button — .ds-code-block-copy-button carries its own full styling.
+    await expect(button).toHaveClass(/ds-code-block-copy-button\b/)
+    await expect(button).toHaveAttribute("aria-label", "Copy code")
 
     await button.click()
     // The idle name flips to "Copied" from the button's own state, which a

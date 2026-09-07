@@ -14,7 +14,7 @@ export default function IconBasic() {
     <div className="flex flex-wrap items-center gap-6">
       {NAMES.map((name) => (
         <span key={name} className="flex flex-col items-center gap-2">
-          <Icon name={name} size={24} />
+          <Icon name={name} style={{ fontSize: 24 }} />
           <span className="text-2xs text-muted-foreground">{name}</span>
         </span>
       ))}

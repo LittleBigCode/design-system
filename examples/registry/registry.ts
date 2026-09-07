@@ -93,12 +93,12 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "split-button",
     name: "SplitButton",
     category: "Actions",
-    exports: ["SplitButton", "IconButton", "ButtonGroup"],
+    exports: ["SplitButton"],
     description:
       "One primary action, with its variants behind an attached caret.",
     intro: [
-      "It earns itself when there is a clear default and a short tail of near-misses — Deploy, and then deploy-to-staging or dry-run. If the reader has to read the menu to choose, the default was not one, and a plain `Dropdown` is more honest.",
-      "`onMain` is the default action; `menu` takes the `MenuItem` rows. The main half must never be the dangerous one, because it is the half a mis-aimed click lands on.",
+      "It earns itself when there is a clear default and a short tail of near-misses — Deploy, and then deploy-to-staging or dry-run. If the reader has to read the menu to choose, the default was not one, and a plain `DropdownMenu` is more honest.",
+      "`onMain` is the default action; `menu` takes `DropdownMenuItem` rows — it's built on `ButtonGroup` and `DropdownMenu`, not a hand-rolled popover, so focus management and typeahead come for free. The main half must never be the dangerous one, because it is the half a mis-aimed click lands on.",
     ],
     examples: [
       {
@@ -132,12 +132,12 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "wizard",
     name: "Wizard",
     category: "Actions",
-    exports: ["Wizard", "type WizardProps", "type WizardStep"],
+    exports: ["Wizard", "type WizardStep"],
     description:
       "An ordered sequence of steps, with the progress and the navigation handled.",
     intro: [
       "A wizard is right when the steps have a real order and a later one depends on an earlier — a mapping that needs its source first. When they are only sections, `Accordion` or `Tabs` let a reader work in their own order.",
-      "`disableNext` on a step is the gate: it is what makes the order load-bearing rather than a suggestion, and it belongs on the step whose own input is incomplete.",
+      "`disableNext` on a step is the gate: it is what makes the order load-bearing rather than a suggestion, and it belongs on the step whose own input is incomplete. Since 1.0.0 it also gains `label`/`nextLabel`/`backLabel`/`finishLabel`, and composes `Stepper`'s parts for the trail rather than drawing its own.",
     ],
     examples: [
       {
@@ -343,18 +343,18 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "calendar",
     name: "Calendar",
     category: "Forms",
-    exports: ["Calendar", "type CalendarProps", "type CalendarEvent"],
-    description: "A month grid with dated events, statuses and a selected day.",
+    exports: ["Calendar", "CalendarDayButton"],
+    description: "A month grid — react-day-picker underneath, styled to match.",
     intro: [
-      "Calendar shows a month; `DatePicker` collects a date. When a reader needs to *see* what is on which day, this is the one — and it composes under both pickers, so an arrow-key fix here reaches all three.",
-      "`weekStartsOn` is explicit rather than locale-derived: the same build serves several locales and a silently shifting first column is worse than one that has to be stated. `maxPerDay` caps a busy cell before it sets the height of the whole row.",
+      "Calendar shows a month; `DatePicker` collects a date behind a trigger. When a reader needs to *see* what is on which day, this is the one — and it composes under `DatePicker`, `DateRangePicker` and `DateTimePicker`, so a keyboard fix here reaches all four.",
+      "Since 1.0.0 there's no `events` prop — a day marker is a `components={{ DayButton: … }}` override composing `CalendarDayButton`, the same lever react-day-picker itself exposes. `mode` (`\"single\"`/`\"range\"`/`\"multiple\"`) and `selected`/`onSelect` replace `value`/`onSelectDate`.",
     ],
     examples: [
       {
         demo: "calendar/basic",
         title: "A month with events",
         description:
-          "A fixed month rather than `new Date()` — the visual suite diffs this screenshot, so a moving month would fail every month.",
+          "A fixed month rather than `new Date()` — the visual suite diffs this screenshot, so a moving month would fail every month. Event dots come from a `DayButton` override, not a data prop.",
       },
     ],
   },
@@ -380,19 +380,36 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "combobox",
     name: "Combobox",
     category: "Forms",
-    exports: ["Combobox", "type ComboboxProps", "type ComboboxOption"],
+    exports: [
+      "Combobox",
+      "ComboboxInput",
+      "ComboboxContent",
+      "ComboboxList",
+      "ComboboxItem",
+      "ComboboxGroup",
+      "ComboboxLabel",
+      "ComboboxCollection",
+      "ComboboxEmpty",
+      "ComboboxSeparator",
+      "ComboboxChips",
+      "ComboboxChip",
+      "ComboboxChipsInput",
+      "ComboboxTrigger",
+      "ComboboxValue",
+      "useComboboxAnchor",
+    ],
     description:
       "A text field that filters a list as you type, and settles on one value.",
     intro: [
       "Use it when the list is long enough that scanning beats scrolling but short enough that a reader knows roughly what they are looking for — regions, currencies, repositories. Under about seven options a plain `Select` is less machinery for the same job.",
-      "`allowCustom` decides whether the typed text can win over the list. Leave it off and the value is always one of `options`, which is what a foreign key needs.",
+      "Composed rather than data-driven since 1.0.0: `items` on `Combobox` is the list, but the rows themselves are `ComboboxItem` children inside `ComboboxContent`/`ComboboxList` — the same shape as `Select` and `Autocomplete`.",
     ],
     examples: [
       {
         demo: "combobox/basic",
         title: "Basic",
         description:
-          "An options array of `{ value, label }`, so the code stores the id and the reader sees the name.",
+          "An items array of `{ value, label }`, so the code stores the id and the reader sees the name.",
       },
     ],
   },
@@ -400,18 +417,18 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "date-picker",
     name: "DatePicker",
     category: "Forms",
-    exports: ["DatePicker", "type DatePickerProps", "type DateLike"],
+    exports: ["DatePicker", "DatePickerTrigger", "DatePickerContent"],
     description: "One date, from a field with a calendar under it.",
     intro: [
-      '`onChange` hands back both the `Date` and its ISO string, because the two callers are always the same two: something that renders it and something that stores it. `value`, `min` and `max` accept either, so a server\'s `"2026-03-19"` needs no parsing at the call site.',
-      "`min`/`max` bound the picker, not just the field: out-of-range days are unreachable in the calendar rather than rejected after the fact.",
+      "`DatePicker` is `Popover` itself — `DatePickerTrigger` and `DatePickerContent` are the only parts it adds. The calendar inside is composed by hand from `Calendar`, the same one `date-range-picker` and `date-time-picker` use, so bounding the pickable days is `Calendar`'s own `disabled` matchers (`{ before }`/`{ after }`) rather than a `min`/`max` prop.",
+      "The value is a real `Date`, not an ISO string — parse at the boundary (an API response, a form submit), not on every keystroke.",
     ],
     examples: [
       {
         demo: "date-picker/basic",
         title: "Bounded to a year",
         description:
-          "`min` and `max` as ISO strings, with a `defaultValue` inside the range.",
+          "`Calendar`'s `disabled` matchers keep the picker inside 2026.",
       },
     ],
   },
@@ -419,18 +436,17 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "date-range-picker",
     name: "DateRangePicker",
     category: "Forms",
-    exports: ["DateRangePicker", "type DateRangePickerProps", "type DateRange"],
+    exports: ["DateRangePicker", "type DateRange"],
     description: "A start and an end, picked together in one calendar.",
     intro: [
-      "Two `DatePicker`s side by side let a reader pick an end before a start and only find out on submit. This one holds the pair, so the second click is always interpreted against the first.",
-      "`onChange` mirrors `DatePicker`: the `Date` pair for rendering, the ISO pair for storage. Either end can be `null` while the range is half-picked, which is what a report filter has to tolerate.",
+      "Two `DatePicker`s side by side let a reader pick an end before a start and only find out on submit. This one holds the pair, so the second click is always interpreted against the first — it owns its own `Calendar` in `mode=\"range\"` rather than composing one at the call site.",
+      "The value is `{ from, to }` — real `Date`s, `to` optional while the range is half-picked. `showTime` adds a `TimePicker` for each end; there's no `min`/`max` bound.",
     ],
     examples: [
       {
         demo: "date-range-picker/basic",
         title: "A picked range",
-        description:
-          "`defaultValue` as `{ start, end }` ISO strings, bounded to one year.",
+        description: "`defaultValue` as a `{ from, to }` pair of `Date`s.",
       },
     ],
   },
@@ -438,19 +454,19 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "date-time-picker",
     name: "DateTimePicker",
     category: "Forms",
-    exports: ["DateTimePicker", "type DateTimePickerProps"],
+    exports: ["DateTimePicker"],
     description:
-      "A date and a time in one field, on the native `datetime-local` control.",
+      "A `DatePicker` and a `TimePicker` combined into one `Date` value.",
     intro: [
-      "A thin wrapper over the platform's own input, which is the right trade here: the native control brings the locale's own date order, the mobile spinner and the keyboard behaviour for free, and none of that is worth reimplementing to change a border.",
-      "`step` is in seconds and is what decides whether minutes are free or snapped — `900` gives quarter-hours, which is what most scheduling actually means.",
+      "Composed since 1.0.0 from the two halves that already exist: a calendar popover for the day, segmented hour/minute fields with a dial or list picker for the time. `min`/`max` bound both — the calendar disables whole days outside the range and the clock is clamped again on commit.",
+      "`step` is now in *minutes*, not seconds — `15` gives quarter-hours.",
     ],
     examples: [
       {
         demo: "date-time-picker/basic",
         title: "Quarter-hour steps",
         description:
-          "`step={900}`, so the minute field offers `:00`, `:15`, `:30` and `:45`.",
+          "`step={15}`, so a time picked off the clock snaps to `:00`, `:15`, `:30` or `:45`.",
       },
     ],
   },
@@ -458,12 +474,17 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "file-upload",
     name: "FileUpload",
     category: "Forms",
-    exports: ["FileUpload", "type FileUploadProps"],
+    exports: [
+      "FileUpload",
+      "FileUploadIcon",
+      "FileUploadTitle",
+      "FileUploadDescription",
+    ],
     description:
-      "A drop zone that is also a file button, with the picked files listed under it.",
+      "A drop zone that is also a file button, composed from its own icon/title/description.",
     intro: [
       "`accept` filters the native picker; it is not validation. A reader can still drop anything, so whatever the server requires has to be checked again on `onFiles` — the prop narrows the common path, it does not close the door.",
-      "`hint` is where the real limits go. A reader who has to discover the size cap by hitting it has been told too late.",
+      "Composed since 1.0.0: `hint`/`name`/`value` are gone, `FileUploadIcon`/`FileUploadTitle`/`FileUploadDescription` are children instead — the size cap belongs in `FileUploadDescription`'s own text, which is where a reader who has to discover it by hitting it should have been told sooner.",
     ],
     examples: [
       {
@@ -478,18 +499,17 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "multi-select",
     name: "MultiSelect",
     category: "Forms",
-    exports: ["MultiSelect", "type MultiSelectProps", "type MultiSelectOption"],
+    exports: ["MultiSelect", "type MultiSelectOption"],
     description: "Several values from a fixed list, shown as removable chips.",
     intro: [
       "Against a column of checkboxes, this wins once the list is longer than what a reader wants to see at rest — the chips show the answer and the list stays folded. Under about five options the checkboxes are honest and need no click to read.",
-      "A `disabled` option stays in the list rather than being filtered out, so the reader can see that the choice exists and is not theirs to make.",
+      "A friendlier `options`/`value` API over `Combobox`'s own `multiple` + chips mode underneath. Since 1.0.0 there's no `id` prop to pair with a `<label htmlFor>` — pass `aria-labelledby` (or `aria-label`) instead, and no per-option `disabled` — an option that shouldn't be offered is filtered out of `options` at the call site.",
     ],
     examples: [
       {
         demo: "multi-select/basic",
         title: "Scopes",
-        description:
-          "Two selected at mount, and one option disabled so the list still shows it.",
+        description: "Two selected at mount, labelled via `aria-labelledby`.",
       },
     ],
   },
@@ -536,10 +556,11 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "rating",
     name: "Rating",
     category: "Forms",
-    exports: ["Rating", "type RatingProps"],
+    exports: ["Rating"],
     description: "A star scale, as an input or as a read-only display.",
     intro: [
       "The same component does both jobs, and `readOnly` is the switch. It matters more than it looks: a read-only rating that still takes hover and focus invites a click that does nothing, which reads as broken rather than as information.",
+      "Since 1.0.0, `onValueChange` replaces `onChange`, and `shape` (`\"default\"` | `\"star\"`) picks the mark — it's a `RadioGroup` of `Radio`s underneath, one per rank.",
     ],
     examples: [
       {
@@ -574,18 +595,17 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "time-picker",
     name: "TimePicker",
     category: "Forms",
-    exports: ["TimePicker", "type TimePickerProps"],
-    description: "A time of day, in 24-hour `HH:mm`.",
+    exports: ["TimePicker", "type TimeValue"],
+    description: "A time of day — segmented hour/minute fields plus a dial.",
     intro: [
-      'The value is a `"HH:mm"` string, not a `Date`. A time with no date attached is what a schedule actually means, and forcing it through a `Date` invents a day and a timezone that then have to be ignored everywhere downstream.',
-      "`step` is in seconds, matching `DateTimePicker`, so the two agree about what a quarter-hour is.",
+      'The value is `{ hours, minutes, seconds? }`, not a `Date` or a string. A time with no date attached is what a schedule actually means, and forcing it through a `Date` invents a day and a timezone that then have to be ignored everywhere downstream.',
+      '`picker` picks the popover: `"dial"` (default) is a clock face, `"list"` is three scrolling columns, `"none"` drops the popover and leaves just the segmented fields.',
     ],
     examples: [
       {
         demo: "time-picker/basic",
-        title: "Quarter-hours",
-        description:
-          "`step={900}` against a `defaultValue` already on the grid.",
+        title: "Basic",
+        description: "A `defaultValue` of 14:30, with the dial popover.",
       },
     ],
   },
@@ -825,10 +845,16 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "code-block",
     name: "CodeBlock",
     category: "Data display",
-    exports: ["CodeBlock", "type CodeBlockProps"],
+    exports: [
+      "CodeBlock",
+      "CodeBlockHead",
+      "CodeBlockFilename",
+      "CodeBlockBody",
+      "CodeBlockCopyButton",
+    ],
     description: "A source snippet with a filename strip and a copy button.",
     intro: [
-      "`language` selects the grammar label, not a highlighter: the component ships no tokenizer, so the snippet renders as monospace text. That is deliberate — a highlighter is megabytes of grammar for a design system to carry, and the docs site highlights at build time instead.",
+      "Composed since 1.0.0: `CodeBlockHead`/`CodeBlockFilename`/`CodeBlockCopyButton` are children of `CodeBlock`, not `filename`/language props. `CodeBlockBody` still takes plain `code` (tokenized by a tiny built-in regex, comments/strings/keywords/numbers/capitalized identifiers only) or pre-highlighted `html` from a real grammar — there's no `language` prop, since the component itself ships no grammar to select.",
     ],
     examples: [
       {
@@ -1887,19 +1913,26 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "popover",
     name: "Popover",
     category: "Overlays",
-    exports: ["Popover", "type PopoverProps", "type PopoverPlacement"],
+    exports: [
+      "Popover",
+      "PopoverTrigger",
+      "PopoverContent",
+      "PopoverHeader",
+      "PopoverTitle",
+      "PopoverDescription",
+    ],
     description:
       "A small panel anchored to a trigger, for detail that would crowd the page.",
     intro: [
       "A popover holds content a reader may want; a `Tooltip` holds a label they need and cannot act on. The test is whether anything inside is clickable — if it is, it is a popover, because a tooltip disappears when you reach for it.",
-      "It can run uncontrolled (`defaultOpen`) or controlled (`open` + `onOpenChange`). Reach for the controlled form only when something outside the trigger has to close it.",
+      "Composed since 1.0.0: `trigger`/`title` are gone, `PopoverTrigger` and `PopoverContent`/`PopoverTitle` are children of `Popover` instead. It can run uncontrolled (`defaultOpen`) or controlled (`open` + `onOpenChange`). Reach for the controlled form only when something outside the trigger has to close it.",
     ],
     examples: [
       {
         demo: "popover/basic",
         title: "Anchored detail",
         description:
-          '`placement="bottom"` with `arrow`, so the panel points at what it explains.',
+          '`side="bottom"` on `PopoverContent`, so the panel points at what it explains.',
       },
     ],
   },
@@ -1928,19 +1961,32 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "toast",
     name: "Toast",
     category: "Feedback",
-    exports: ["ToastProvider", "useToast", "Toast", "type ToastOptions"],
+    exports: [
+      "Toaster",
+      "toast",
+      "useToastManager",
+      "createToastManager",
+      "Toast",
+      "ToastProvider",
+      "ToastPortal",
+      "ToastViewport",
+      "ToastContent",
+      "ToastTitle",
+      "ToastDescription",
+      "ToastAction",
+      "ToastClose",
+    ],
     description:
-      "A transient confirmation that an action landed, raised from anywhere via `useToast`.",
+      "A transient confirmation that an action landed, raised from anywhere via `toast`.",
     intro: [
-      "`ToastProvider` mounts the portal and the viewport once at the app root; `useToast` is how anything below raises one. That split is why a toast can be fired from a handler with no rendering of its own.",
+      "`Toaster` mounts the provider, the portal and the viewport once at the app root; `toast` is a standalone manager (`toast.add({ type, title, description })`) that anything below can call with no hook and no rendering of its own. `ToastProvider`/`ToastPortal`/`ToastViewport`/… are its parts, for a hand-composed toaster.",
       "A toast leaves on a timer, so it can only carry what does not need to be read twice. Anything a reader may want to come back to belongs in an `Alert` that stays.",
     ],
     examples: [
       {
         demo: "toast/basic",
         title: "Success and failure",
-        description:
-          "Both raised through `useToast` against the provider in `main.tsx`.",
+        description: "Both raised through `toast.add` against the `Toaster` in `main.tsx`.",
       },
     ],
   },

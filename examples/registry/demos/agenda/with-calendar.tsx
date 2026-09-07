@@ -30,12 +30,11 @@ export default function AgendaWithCalendar() {
 
   return (
     <div className="flex flex-wrap items-start gap-6">
-      {/* Calendar is the incumbent and holds for the whole migration, so the
-          selection is `value` + `onSelectDate` rather than day-picker's props. */}
       <Calendar
-        value={day}
-        onSelectDate={setDay}
-        month={new Date(2026, 7, 1)}
+        mode="single"
+        selected={day}
+        onSelect={setDay}
+        defaultMonth={new Date(2026, 7, 1)}
       />
       <Agenda
         events={day ? EVENTS.filter((event) => sameDay(day, event.date)) : []}

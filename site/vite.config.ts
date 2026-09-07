@@ -28,8 +28,8 @@ export default defineConfig({
      * `../dist/react/` resolves `react` and `react-dom` against the *repo
      * root's* node_modules — which has neither, because the package declares
      * them as optional peers. Vite then substitutes its optional-peer stub and
-     * `createPortal` silently disappears from ToastProvider, Drawer and
-     * CommandPalette. Deduping pins both to this app's copies.
+     * `createPortal` silently disappears from Toaster, Drawer and
+     * Command. Deduping pins both to this app's copies.
      *
      * `recharts` joins the list for a sharper version of the same failure: the
      * /docs/chart demos import `Bar`, `XAxis` and friends themselves and hand

@@ -1,4 +1,4 @@
-import { MenuItem, SplitButton } from "@diametral/design-system/react"
+import { DropdownMenuItem, SplitButton } from "@diametral/design-system/react"
 
 export default function SplitButtonBasic() {
   return (
@@ -6,9 +6,9 @@ export default function SplitButtonBasic() {
       variant="primary"
       menu={
         <>
-          <MenuItem>Deploy to staging</MenuItem>
-          <MenuItem>Deploy and watch</MenuItem>
-          <MenuItem>Dry run</MenuItem>
+          <DropdownMenuItem>Deploy to staging</DropdownMenuItem>
+          <DropdownMenuItem>Deploy and watch</DropdownMenuItem>
+          <DropdownMenuItem>Dry run</DropdownMenuItem>
         </>
       }
     >

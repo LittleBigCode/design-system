@@ -1,20 +1,18 @@
-import { Button, useToast } from "@diametral/design-system/react"
+import { Button, toast } from "@diametral/design-system/react"
 
 /**
- * `useToast` reads the context ToastProvider mounts in `main.tsx` — the portal
- * and viewport live once at the app root rather than in this page.
+ * `toast` is a standalone manager — `add()` queues a toast onto the
+ * `Toaster` mounted once in `main.tsx`, no hook or context read needed here.
  */
 export default function ToastBasic() {
-  const toast = useToast()
-
   return (
     <div className="flex flex-wrap gap-2">
       <Button
         onClick={() =>
-          toast.show({
+          toast.add({
             type: "success",
             title: "Deployed",
-            message: "rollup-daily is live on eu-west-3.",
+            description: "rollup-daily is live on eu-west-3.",
           })
         }
       >
@@ -22,10 +20,10 @@ export default function ToastBasic() {
       </Button>
       <Button
         onClick={() =>
-          toast.show({
-            type: "danger",
+          toast.add({
+            type: "error",
             title: "Export failed",
-            message: "The destination bucket rejected the credentials.",
+            description: "The destination bucket rejected the credentials.",
           })
         }
       >

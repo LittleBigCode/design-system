@@ -1,12 +1,35 @@
-import { DatePicker } from "@diametral/design-system/react"
+import * as React from "react"
+import {
+  Calendar,
+  DatePicker,
+  DatePickerContent,
+  DatePickerTrigger,
+} from "@diametral/design-system/react"
+
+const MIN = new Date(2026, 0, 1)
+const MAX = new Date(2026, 11, 31)
 
 export default function DatePickerBasic() {
+  const [value, setValue] = React.useState<Date | undefined>(
+    new Date(2026, 2, 19)
+  )
+  const [open, setOpen] = React.useState(false)
+
   return (
-    <DatePicker
-      defaultValue="2026-03-19"
-      min="2026-01-01"
-      max="2026-12-31"
-      placeholder="Pick a date"
-    />
+    <DatePicker open={open} onOpenChange={setOpen}>
+      <DatePickerTrigger value={value} />
+      <DatePickerContent>
+        <Calendar
+          mode="single"
+          selected={value}
+          defaultMonth={value}
+          disabled={[{ before: MIN }, { after: MAX }]}
+          onSelect={(day) => {
+            setValue(day)
+            setOpen(false)
+          }}
+        />
+      </DatePickerContent>
+    </DatePicker>
   )
 }

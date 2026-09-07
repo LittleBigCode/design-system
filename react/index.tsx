@@ -195,31 +195,31 @@ export * from "./components/Accordion.js";
 export * from "./components/Alert.js";
 export * from "./components/avatar.js";
 export * from "./components/breadcrumb.js";
-export * from "./components/ButtonExtras.js";
+export * from "./components/split-button.js";
 export * from "./components/DataGrid.js";
 export * from "./components/description-list.js";
 export * from "./components/Dropdown.js";
 export * from "./components/empty.js";
 export * from "./components/pagination.js";
-export * from "./components/Popover.js";
+export * from "./components/popover.js";
 export * from "./components/progress.js";
 export * from "./components/Radio.js";
 export * from "./components/skeleton.js";
 export * from "./components/spinner.js";
 export * from "./components/stepper.js";
 export * from "./components/timeline.js";
-export * from "./components/ToastProvider.js";
+export * from "./components/toast.js";
 export * from "./components/tooltip.js";
 export * from "./components/Tree.js";
 export * from "./components/VerticalNav.js";
-export * from "./components/Combobox.js";
+export * from "./components/combobox.js";
 export * from "./components/TagInput.js";
 export * from "./components/NumberInput.js";
-export * from "./components/DatePicker.js";
-export * from "./components/FileUpload.js";
+export * from "./components/date-picker.js";
+export * from "./components/file-upload.js";
 export * from "./components/toolbar.js";
 export * from "./components/AppShell.js";
-export * from "./components/Wizard.js";
+export * from "./components/wizard.js";
 /* Two symbols, one 1.0 merge: 0.11's single `Drawer` became the source's
    swipeable `Drawer` plus the edge-docked `Sheet` its `placement` prop meant.
    They export together because the merge only makes sense whole. */
@@ -227,15 +227,15 @@ export * from "./components/drawer.js";
 export * from "./components/sheet.js";
 export * from "./components/CommandPalette.js";
 export * from "./components/StatCard.js";
-export * from "./components/Rating.js";
-export * from "./components/DateRangePicker.js";
-export * from "./components/ColorPicker.js";
-export * from "./components/CodeBlock.js";
+export * from "./components/rating.js";
+export * from "./components/date-range-picker.js";
+export * from "./components/color-picker.js";
+export * from "./components/code-block.js";
 export * from "./components/kbd.js";
-export * from "./components/MultiSelect.js";
-export * from "./components/TimePicker.js";
-export * from "./components/DateTimePicker.js";
-export * from "./components/Calendar.js";
+export * from "./components/multi-select.js";
+export * from "./components/time-picker.js";
+export * from "./components/date-time-picker.js";
+export * from "./components/calendar.js";
 export * from "./components/agenda.js";
 export * from "./components/banner.js";
 export * from "./components/table.js";
@@ -246,7 +246,7 @@ export * from "./components/FormField.js";
 export * from "./hooks/useForm.js";
 export * from "./hooks/useResource.js";
 export * from "./hooks/restLoadPage.js";
-export * from "./components/Icon.js";
+export * from "./components/icon.js";
 export * from "./components/icons.js";
 
 /* ---- Batch 1 — net-new overlays and menus (1.0.0-beta.1) ----------------
@@ -384,5 +384,3 @@ export * from "./components/toggle-group.js";
 
 /* Types several modules re-declare. Naming the canonical module here is what
    keeps `export *` unambiguous. */
-export type { DateLike } from "./components/DatePicker.js";
-export type { IconName } from "./components/Icon.js";

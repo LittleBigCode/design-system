@@ -1,4 +1,11 @@
-import { Combobox } from "@diametral/design-system/react"
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxList,
+  ComboboxItem,
+} from "@diametral/design-system/react"
 
 const REGIONS = [
   { value: "eu-west-1", label: "Europe (Ireland)" },
@@ -10,10 +17,18 @@ const REGIONS = [
 
 export default function ComboboxBasic() {
   return (
-    <Combobox
-      options={REGIONS}
-      defaultValue="eu-west-3"
-      placeholder="Search regions…"
-    />
+    <Combobox items={REGIONS} defaultValue="eu-west-3">
+      <ComboboxInput placeholder="Search regions…" />
+      <ComboboxContent>
+        <ComboboxEmpty>No region matches.</ComboboxEmpty>
+        <ComboboxList>
+          {(region: (typeof REGIONS)[number]) => (
+            <ComboboxItem key={region.value} value={region.value}>
+              {region.label}
+            </ComboboxItem>
+          )}
+        </ComboboxList>
+      </ComboboxContent>
+    </Combobox>
   )
 }
