@@ -1,171 +1,308 @@
-/* ============================================================================
-   Calendar / month view — .ds-monthview
-   ----------------------------------------------------------------------------
-   A full-size month calendar that shows events inside day cells. A flat bordered
-   surface (1px border, no radius, no shadow): a head with the month label flanked
-   by prev / next icon buttons (and an optional "Today" action), a faint uppercase
-   weekday row, then a 7-column grid of equal cells (min-height ~88px) separated by
-   1px rules. Each day shows its date number top-left; today gets an accent ring,
-   outside-month days recede, and the selected day fills with the accent. Events
-   stack as small truncating chips that recolor by status; an overflow "+N more"
-   line caps the list. Distinct from the date-picker's .ds-calendar popover.
-   ============================================================================ */
-.ds-monthview {
-  background: var(--ds-surface);
-  border: 1px solid var(--ds-ink);
-  border-radius: var(--ds-radius-none);
-  font-family: var(--ds-font-sans);
+/* width, border, etc. stay literal Tailwind utilities on the component's
+   own default className (see calendar.tsx) — every calendar demo overrides
+   the root className with its own w-fit/border utilities and relies on
+   tailwind-merge to dedupe against the component's own defaults, which
+   only works while those specific utilities remain literal classes rather
+   than baked CSS. Only the non-overridden pieces (background, padding,
+   the cell custom properties, and the in-data-[slot=...] transparency
+   hooks) are baked here. */
+.ds-calendar {
+  background-color: var(--ds-bg);
+  padding: 0.75rem;
+  --cell-radius: 0px;
+  --cell-size: 2rem;
+}
+[data-slot="card-content"] .ds-calendar,
+[data-slot="popover-content"] .ds-calendar {
+  background-color: transparent;
+}
+:where([dir="rtl"], [dir="rtl"] *) .ds-calendar .rdp-button_next > svg {
+  rotate: 180deg;
+}
+:where([dir="rtl"], [dir="rtl"] *) .ds-calendar .rdp-button_previous > svg {
+  rotate: 180deg;
 }
 
-/* Head — month/year label flanked by prev / next icon buttons + optional Today. */
-.ds-monthview__head {
-  display: flex;
-  align-items: center;
-  gap: var(--ds-space-2);
-  padding: var(--ds-space-3) var(--ds-space-4);
-  border-bottom: 1px solid var(--ds-ink);
-}
-.ds-monthview__label {
-  font-size: var(--ds-text-md);
-  font-weight: 500;
-  letter-spacing: -0.2px;
-  color: var(--ds-ink);
-  font-variant-numeric: tabular-nums;
-  margin-right: auto;
-}
-.ds-monthview__nav {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--ds-space-1);
+.ds-calendar-root {
+  width: fit-content;
 }
 
-/* Weekday header — 7 equal columns, small uppercase faint labels. */
-.ds-monthview__weekdays {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  border-bottom: 1px solid var(--ds-rule);
-}
-.ds-monthview__weekday {
-  padding: var(--ds-space-2) var(--ds-space-3);
-  font-size: var(--ds-text-2xs);
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ds-ink-faint);
-  text-align: left;
-}
-
-/* Grid — 7 equal columns; 1px rules between cells come from cell borders. */
-.ds-monthview__grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-}
-
-/* ARIA row wrappers — a grid (role="grid") must contain rows of gridcells. The
-   row carries role="row" but generates no box (display: contents), so its day
-   children stay direct items of the 7-column grid; layout is unchanged. */
-.ds-monthview__row { display: contents; }
-
-/* Day cell — date number top-left, then a stack of event chips. The right +
-   bottom borders draw the 1px rules; the last column / last row drop theirs so
-   the outer frame stays single-weight. */
-.ds-monthview__day {
+.ds-calendar-months {
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 88px;
-  padding: var(--ds-space-2);
-  gap: var(--ds-space-1);
-  text-align: left;
-  font-family: var(--ds-font-sans);
-  background: var(--ds-surface);
-  border: none;
-  border-right: 1px solid var(--ds-rule-soft);
-  border-bottom: 1px solid var(--ds-rule-soft);
-  border-radius: var(--ds-radius-none);
-  color: var(--ds-ink);
-  cursor: pointer;
-  transition: background-color var(--ds-transition);
+  gap: 1rem;
 }
-.ds-monthview__day:nth-child(7n) { border-right: none; }
-/* Last week drops its bottom border so the outer frame stays single-weight.
-   Days live inside role="row" wrappers, so target the last row's cells. */
-.ds-monthview__row:last-child > .ds-monthview__day { border-bottom: none; }
-.ds-monthview__day:hover { background: var(--ds-bg-alt); }
-.ds-monthview__day:focus-visible {
-  outline: 2px solid var(--ds-focus-ring);
-  outline-offset: -2px;
-  z-index: 1;
+@media (min-width: 768px) {
+  .ds-calendar-months {
+    flex-direction: row;
+  }
 }
 
-/* The date number — top-left, tabular. */
-.ds-monthview__date {
-  display: inline-flex;
+.ds-calendar-month {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ds-calendar-nav {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem;
+}
+
+/* width, height and padding stay literal Tailwind utilities on the nav
+   buttons (see calendar.tsx) — button.css's own .ds-button--size-default
+   already sets height and padding-inline as real (non-Tailwind) CSS, so
+   it now wins the cascade by import order alone regardless of class-list
+   position; baking size-(--cell-size)/p-0 here would flip that and make
+   the nav buttons cell-sized instead of matching their current
+   (already-shipped) fixed button size. */
+.ds-calendar-nav-button {
+  user-select: none;
+}
+.ds-calendar-nav-button[aria-disabled="true"] {
+  opacity: 0.5;
+}
+
+.ds-calendar-month-caption {
+  display: flex;
+  height: var(--cell-size);
+  width: 100%;
   align-items: center;
   justify-content: center;
-  min-width: 22px;
-  height: 22px;
-  padding: 0 var(--ds-space-1);
-  font-size: var(--ds-text-sm);
-  font-variant-numeric: tabular-nums;
+  padding-inline: var(--cell-size);
+}
+
+.ds-calendar-dropdowns {
+  display: flex;
+  height: var(--cell-size);
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.ds-calendar-dropdown-root {
+  position: relative;
+  border-radius: var(--cell-radius);
+}
+
+.ds-calendar-dropdown {
+  position: absolute;
+  inset: 0;
+  background-color: var(--ds-surface);
+  opacity: 0;
+}
+
+.ds-calendar-caption-label {
+  font-weight: 500;
+  user-select: none;
+  font-size: 0.875rem;
+}
+.ds-calendar-caption-label--dropdown {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: var(--cell-radius);
+}
+.ds-calendar-caption-label--dropdown > svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  color: var(--ds-ink-soft);
+}
+
+.ds-calendar-month-grid {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ds-calendar-weekdays {
+  display: flex;
+}
+
+.ds-calendar-weekday {
+  flex: 1 1 0%;
+  border-radius: var(--cell-radius);
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--ds-ink-soft);
+  user-select: none;
+}
+
+.ds-calendar-week {
+  margin-top: 0.5rem;
+  display: flex;
+  width: 100%;
+}
+
+.ds-calendar-week-number-header {
+  width: var(--cell-size);
+  user-select: none;
+}
+
+.ds-calendar-week-number {
+  font-size: 0.8rem;
+  color: var(--ds-ink-soft);
+  user-select: none;
+}
+
+.ds-calendar-week-number-cell {
+  display: flex;
+  width: var(--cell-size);
+  height: var(--cell-size);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.ds-calendar-day {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  height: 100%;
+  width: 100%;
+  border-radius: var(--cell-radius);
+  padding: 0;
+  text-align: center;
+  user-select: none;
+}
+.ds-calendar-day:last-child[data-selected="true"] button {
+  border-start-end-radius: var(--cell-radius);
+  border-end-end-radius: var(--cell-radius);
+}
+.ds-calendar-day--round-start-first:first-child[data-selected="true"] button {
+  border-start-start-radius: var(--cell-radius);
+  border-end-start-radius: var(--cell-radius);
+}
+.ds-calendar-day--round-start-second:nth-child(2)[data-selected="true"]
+  button {
+  border-start-start-radius: var(--cell-radius);
+  border-end-start-radius: var(--cell-radius);
+}
+
+.ds-calendar-range-start {
+  position: relative;
+  isolation: isolate;
+  z-index: 0;
+  border-start-start-radius: var(--cell-radius);
+  border-end-start-radius: var(--cell-radius);
+  background-color: var(--ds-bg-alt);
+}
+.ds-calendar-range-start::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  width: 1rem;
+  background-color: var(--ds-bg-alt);
+}
+
+.ds-calendar-range-middle {
+  border-radius: 0;
+}
+
+.ds-calendar-range-end {
+  position: relative;
+  isolation: isolate;
+  z-index: 0;
+  border-start-end-radius: var(--cell-radius);
+  border-end-end-radius: var(--cell-radius);
+  background-color: var(--ds-bg-alt);
+}
+.ds-calendar-range-end::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: 1rem;
+  background-color: var(--ds-bg-alt);
+}
+
+.ds-calendar-today {
+  border-radius: var(--cell-radius);
+  background-color: var(--ds-bg-alt);
   color: var(--ds-ink);
 }
-
-/* Today — an accent ring around the date number (no fill). Uses the deeper
-   accent-ink so the small date number clears AA as text on the white cell. */
-.ds-monthview__day.is-today .ds-monthview__date {
-  border: 1px solid var(--ds-accent-ink);
-  color: var(--ds-accent-ink);
+.ds-calendar-today[data-selected="true"] {
+  border-radius: 0;
 }
 
-/* Outside-month days — faint, to recede behind the current month. */
-.ds-monthview__day.is-outside { background: var(--ds-bg); }
-.ds-monthview__day.is-outside .ds-monthview__date { color: var(--ds-ink-faint); }
-
-/* Selected — accent background; wins over hover. Today's ring drops to read on
-   the fill. */
-.ds-monthview__day.is-selected,
-.ds-monthview__day.is-selected:hover {
-  background: var(--ds-accent-bg);
+.ds-calendar-outside {
+  color: var(--ds-ink-soft);
 }
-.ds-monthview__day.is-selected .ds-monthview__date {
-  /* Deeper accent-ink fill so the white date number clears AA (the pure accent
-     #ff2a00 only reaches 3.76:1 behind white text). */
-  background: var(--ds-accent-ink);
-  border-color: var(--ds-accent-ink);
-  color: var(--ds-on-accent);
+.ds-calendar-outside[aria-selected="true"] {
+  color: var(--ds-ink-soft);
 }
 
-/* Events — a stacked list of chips under the date number. */
-.ds-monthview__events {
+.ds-calendar-disabled {
+  color: var(--ds-ink-soft);
+  opacity: 0.5;
+}
+
+.ds-calendar-hidden {
+  visibility: hidden;
+}
+
+.ds-calendar-chevron {
+  width: 1rem;
+  height: 1rem;
+}
+:where([dir="rtl"], [dir="rtl"] *) .ds-calendar-chevron--directional {
+  rotate: 180deg;
+}
+
+/* aspect-ratio, height, width and min-width stay literal Tailwind
+   utilities on the day button (see calendar.tsx) — same reasoning as
+   .ds-calendar-nav-button above: button.css's own .ds-button--size-icon
+   already sets width/height as real CSS, so it wins the cascade by
+   import order regardless of class-list position, and baking those
+   dimensions here would flip that precedence instead of matching the
+   already-shipped fixed icon-button size. */
+.ds-calendar-day-button {
+  position: relative;
+  isolation: isolate;
+  z-index: 10;
   display: flex;
   flex-direction: column;
-  gap: var(--ds-space-1);
+  gap: 0.25rem;
+  border-width: 0;
+  line-height: 1;
+  font-weight: 400;
 }
-
-/* Event chip — small, truncating, with a tinted bg + a left status bar. */
-.ds-monthview__event {
-  display: block;
-  max-width: 100%;
-  padding: 2px var(--ds-space-2);
-  font-size: var(--ds-text-2xs);
-  line-height: 1.4;
+.ds-calendar-day-button > span {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+.ds-calendar-day[data-focused="true"] .ds-calendar-day-button {
+  position: relative;
+  z-index: 10;
+  border-color: var(--ds-focus-ring);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--ds-focus-ring) 50%, transparent);
+}
+.ds-calendar-day-button[data-range-end="true"] {
+  border-radius: var(--cell-radius);
+  background-color: var(--ds-accent);
+  color: var(--ds-on-accent);
+}
+.ds-calendar-day-button[data-range-middle="true"] {
+  border-radius: 0;
+  background-color: var(--ds-bg-alt);
   color: var(--ds-ink);
-  background: var(--ds-bg-alt);
-  border-left: 2px solid var(--ds-neutral);
-  border-radius: var(--ds-radius-none);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
-.ds-monthview__event.is-success { background: var(--ds-success-bg); border-left-color: var(--ds-success); }
-.ds-monthview__event.is-warning { background: var(--ds-warning-bg); border-left-color: var(--ds-warning); }
-.ds-monthview__event.is-danger  { background: var(--ds-danger-bg);  border-left-color: var(--ds-danger); }
-.ds-monthview__event.is-info    { background: var(--ds-info-bg);    border-left-color: var(--ds-info); }
-
-/* Overflow line — "+N more", faint and small. */
-.ds-monthview__more {
-  font-size: var(--ds-text-2xs);
-  color: var(--ds-ink-faint);
-  padding: 0 var(--ds-space-2);
+.ds-calendar-day-button[data-range-start="true"] {
+  border-radius: var(--cell-radius);
+  background-color: var(--ds-accent);
+  color: var(--ds-on-accent);
+}
+.ds-calendar-day-button[data-selected-single="true"] {
+  background-color: var(--ds-accent);
+  color: var(--ds-on-accent);
 }

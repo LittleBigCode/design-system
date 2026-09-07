@@ -1,113 +1,119 @@
-/* ============================================================================
-   Alert — .ds-alert
-   ----------------------------------------------------------------------------
-   An inline alert: a 1px-bordered surface with a 3px accent bar on the left
-   (drawn with a thicker border-left in the status color) and a status-tinted
-   background. Holds an icon, content, optional actions, and a dismiss button.
-   The --app modifier turns it into a full-width, solid-status banner with
-   white text (for app-level / page-top messages).
-   ============================================================================ */
 .ds-alert {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--ds-space-3);
-  padding: var(--ds-space-3) var(--ds-space-4);
-  border: 1px solid var(--ds-info);
-  border-left-width: 3px;
-  border-left-color: var(--ds-info);
-  background: var(--ds-info-bg);
-  color: var(--ds-ink);
-  font-size: var(--ds-text-base);
-  line-height: var(--ds-leading-normal);
-  border-radius: var(--ds-radius-none);
-}
-
-.ds-alert__icon {
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 18px;
-  height: 18px;
-  margin-top: 1px;
-  color: var(--ds-info);
-}
-.ds-alert__icon svg { width: 100%; height: 100%; display: block; }
-
-.ds-alert__content { flex: 1 1 auto; min-width: 0; }
-.ds-alert__title { font-weight: 500; margin-bottom: var(--ds-space-1); }
-
-.ds-alert__actions {
-  display: flex;
-  align-items: center;
-  gap: var(--ds-space-2);
-  margin-top: var(--ds-space-2);
-}
-
-/* Borderless × dismiss button */
-.ds-alert__close {
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  margin: -2px -4px 0 0;
-  padding: 0;
-  border: none;
-  background: none;
-  color: var(--ds-ink-faint);
-  font-size: 18px;
-  line-height: 1;
-  cursor: pointer;
-  border-radius: var(--ds-radius-none);
-  transition: color var(--ds-transition);
-}
-.ds-alert__close:hover { color: var(--ds-ink); }
-.ds-alert__close:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: 2px; }
-
-/* ---- Status variants ----------------------------------------------------- */
-.ds-alert--info {
-  border-color: var(--ds-info);
-  border-left-color: var(--ds-info);
-  background: var(--ds-info-bg);
-}
-.ds-alert--info .ds-alert__icon { color: var(--ds-info); }
-
-.ds-alert--success {
-  border-color: var(--ds-success);
-  border-left-color: var(--ds-success);
-  background: var(--ds-success-bg);
-}
-.ds-alert--success .ds-alert__icon { color: var(--ds-success); }
-
-.ds-alert--warning {
-  border-color: var(--ds-warning);
-  border-left-color: var(--ds-warning);
-  background: var(--ds-warning-bg);
-}
-.ds-alert--warning .ds-alert__icon { color: var(--ds-warning); }
-
-.ds-alert--danger {
-  border-color: var(--ds-danger);
-  border-left-color: var(--ds-danger);
-  background: var(--ds-danger-bg);
-}
-.ds-alert--danger .ds-alert__icon { color: var(--ds-danger); }
-
-/* ---- App-level: full width, solid status background, white text ---------- */
-.ds-alert--app {
+  position: relative;
+  display: grid;
   width: 100%;
-  border-color: transparent;
-  border-left-color: transparent;
-  background: var(--ds-info);
-  color: var(--ds-on-status);
+  gap: 0.25rem;
+  border: 1px solid var(--ds-rule);
+  background: var(--ds-bg);
+  padding: 0.75rem 1rem;
+  text-align: start;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
-.ds-alert--app .ds-alert__icon,
-.ds-alert--app .ds-alert__close { color: var(--ds-on-status); }
-.ds-alert--app .ds-alert__close:hover { color: var(--ds-on-status); opacity: .8; }
+.ds-alert::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  inset-inline-start: -1px;
+  width: 0.125rem;
+  background: var(--tone-ink, var(--ds-ink));
+}
+.ds-alert:has([data-slot="alert-action"]) {
+  position: relative;
+  padding-inline-end: 4.5rem;
+}
+.ds-alert:has(> svg) {
+  grid-template-columns: auto 1fr;
+  column-gap: 0.625rem;
+}
+:where([data-slot="alert"]) > .ds-alert-title {
+  color: var(--tone-ink, inherit);
+}
+:where([data-slot="alert"]):has(> svg) > .ds-alert-title {
+  grid-column-start: 2;
+}
+:where([data-slot="alert"]) > svg {
+  grid-row: span 2 / span 2;
+  translate: 0 0.125rem;
+  color: currentColor;
+}
+:where([data-slot="alert"]) > svg:not([class*="size-"]) {
+  width: 1rem;
+  height: 1rem;
+}
 
-.ds-alert--app.ds-alert--info    { background: var(--ds-info); }
-.ds-alert--app.ds-alert--success { background: var(--ds-success); }
-.ds-alert--app.ds-alert--warning { background: var(--ds-warning); }
-.ds-alert--app.ds-alert--danger  { background: var(--ds-danger); }
+.ds-alert--default {
+  background: var(--ds-surface);
+  color: var(--ds-ink);
+}
+
+.ds-alert--destructive {
+  background: var(--ds-surface);
+  color: var(--ds-danger);
+  --tone-ink: var(--ds-danger);
+}
+.ds-alert--destructive > .ds-alert-description {
+  color: color-mix(in oklab, var(--ds-danger) 90%, transparent);
+}
+
+.ds-alert--tone-neutral {
+  --tone-ink: var(--ds-neutral-ink);
+}
+.ds-alert--tone-info {
+  --tone-ink: var(--ds-info-ink);
+}
+.ds-alert--tone-success {
+  --tone-ink: var(--ds-success-ink);
+}
+.ds-alert--tone-warning {
+  --tone-ink: var(--ds-warning-ink);
+}
+.ds-alert--tone-danger {
+  --tone-ink: var(--ds-danger-ink);
+}
+.ds-alert--tone-critical {
+  --tone-ink: var(--ds-critical-ink);
+}
+
+.ds-alert-title {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+}
+.ds-alert-title a {
+  text-decoration-line: underline;
+  text-underline-offset: 3px;
+}
+.ds-alert-title a:hover {
+  color: var(--ds-ink);
+}
+
+.ds-alert-description {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-wrap: balance;
+  color: var(--ds-ink-soft);
+}
+@media (min-width: 768px) {
+  .ds-alert-description {
+    text-wrap: pretty;
+  }
+}
+.ds-alert-description a {
+  text-decoration-line: underline;
+  text-underline-offset: 3px;
+}
+.ds-alert-description a:hover {
+  color: var(--ds-ink);
+}
+.ds-alert-description p:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+.ds-alert-action,
+.ds-alert-dismiss {
+  position: absolute;
+  inset-inline-end: 0.75rem;
+  top: 0.625rem;
+}

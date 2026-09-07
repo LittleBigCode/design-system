@@ -1,41 +1,63 @@
-/* ============================================================================
-   Rating — .ds-rating
-   ----------------------------------------------------------------------------
-   A 5-star rating: an inline-flex row of star buttons, each an inline <svg>
-   filled with currentColor. Filled stars (.is-on) read accent; empty stars
-   read the rule color. The --readonly modifier drops the button affordances
-   for display-only use.
-   ============================================================================ */
 .ds-rating {
-  display: inline-flex;
+  display: flex;
+  width: fit-content;
   align-items: center;
-  gap: 2px;
+}
+.ds-rating--star {
+  gap: 0.125rem;
+}
+.ds-rating--default {
+  gap: 0.25rem;
 }
 
-.ds-rating__star {
-  display: inline-flex;
-  padding: 2px;
+.ds-rating-item {
   border: none;
-  background: none;
+  background-color: transparent;
+  padding: 0;
+  outline: none;
+  transition-property:
+    color, background-color, border-color, outline-color, text-decoration-color,
+    fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.ds-rating-item:focus-visible {
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--ds-focus-ring) 30%, transparent);
+}
+.ds-rating-item--interactive {
   cursor: pointer;
-  color: var(--ds-rule);
-  line-height: 0;
-  transition: color var(--ds-transition);
 }
-.ds-rating__star svg {
-  display: block;
-  width: 20px;
-  height: 20px;
-  fill: currentColor;
-}
-.ds-rating__star.is-on { color: var(--ds-accent); }
-.ds-rating__star:focus-visible {
-  outline: 2px solid var(--ds-focus-ring);
-  outline-offset: 2px;
+.ds-rating-item--disabled {
+  pointer-events: none;
 }
 
-/* Readonly — no pointer / no hover affordance (still keyboard-inert as buttons
-   are not rendered). */
-.ds-rating--readonly .ds-rating__star {
-  cursor: default;
+.ds-rating-item[data-shape="star"] {
+  display: flex;
+  width: 1.5rem;
+  height: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  color: var(--ds-ink-soft);
+}
+.ds-rating-item[data-shape="star"].ds-rating-item--active {
+  color: var(--ds-accent);
+}
+
+.ds-rating-item[data-shape="default"] {
+  height: 0.625rem;
+  width: 1.25rem;
+  border-radius: 0;
+  background-color: var(--ds-bg-alt);
+  transition-property: background-color, translate;
+}
+.ds-rating-item[data-shape="default"].ds-rating-item--active {
+  background-color: var(--ds-accent);
+}
+.ds-rating-item[data-shape="default"].ds-rating-item--hover-lift:hover {
+  translate: 0 -1px;
+}
+
+.ds-rating-star-icon {
+  width: 1.25rem;
+  height: 1.25rem;
 }

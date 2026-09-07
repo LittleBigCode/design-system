@@ -1,75 +1,78 @@
-/* Number input — .ds-number-input (a −/+ stepper wrapping a numeric field)
-   An inline-flex group: a minus button, the centered input, a plus button —
-   sharing borders like .ds-input-group (children sit flush, the doubled border
-   between them collapses to read as one unit). Buttons borrow the .ds-button
-   look (1px border, no radius). Companion to field.css — never edits it. */
-.ds-number-input {
-  display: inline-flex;
-  align-items: stretch;
+/* w-full stays a literal Tailwind utility on the root's own className
+   (see number-field.tsx) — number-field/quantity.tsx overrides it with
+   w-28, relying on tailwind-merge to dedupe against this exact literal
+   class. */
+.ds-number-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
-/* The stepper buttons — square, ink-bordered, ghost like .ds-button--icon. */
-.ds-number-input__step {
-  flex: none;
-  width: 40px;
-  display: inline-flex;
+.ds-number-field-group {
+  display: flex;
+  height: 2.5rem;
+  width: 100%;
   align-items: center;
-  justify-content: center;
-  font-family: var(--ds-font-sans);
-  font-size: var(--ds-text-md);
-  line-height: 1;
-  color: var(--ds-ink);
-  background: var(--ds-surface);
-  border: 1px solid var(--ds-rule);
-  border-radius: var(--ds-radius-none);
-  cursor: pointer;
-  user-select: none;
-  transition: background-color var(--ds-transition), color var(--ds-transition);
+  border: 1px solid transparent;
+  border-bottom-color: var(--ds-rule);
+  background-color: transparent;
+  transition-property: color, border-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }
-.ds-number-input__step:hover { background: var(--ds-bg-alt); }
-.ds-number-input__step:focus-visible {
-  outline: 2px solid var(--ds-focus-ring);
-  outline-offset: 2px;
+.ds-number-field-group:focus-within {
+  border-bottom-color: var(--ds-focus-ring);
 }
-.ds-number-input__step:disabled,
-.ds-number-input__step[disabled] {
-  opacity: .45;
-  cursor: not-allowed;
+.ds-number-field-group:has([aria-invalid="true"]) {
+  border-bottom-color: var(--ds-danger);
 }
-.ds-number-input__step:disabled:hover { background: var(--ds-surface); }
+.ds-number-field-group:has(:disabled) {
+  pointer-events: none;
+  opacity: 0.5;
+}
 
-/* The numeric field in the middle — same look as .ds-input, centered figure. */
-.ds-number-input__field {
-  width: 72px;
-  text-align: center;
-  font-family: var(--ds-font-sans);
-  font-size: var(--ds-text-base);
-  font-weight: 400;
-  color: var(--ds-ink);
+/* px-2 and text-center stay literal Tailwind utilities on NumberFieldInput's
+   own className (see number-field.tsx) — number-field/with-scrub.tsx
+   overrides both (ps-0 text-start), relying on tailwind-merge to dedupe
+   against these exact literal classes. */
+.ds-number-field-input {
+  height: 100%;
+  min-width: 0;
+  flex: 1 1 0%;
+  background-color: transparent;
+  font-size: 1rem;
+  line-height: calc(1.5 / 1);
   font-variant-numeric: tabular-nums;
-  background: var(--ds-surface);
-  border: 1px solid var(--ds-rule);
-  border-radius: var(--ds-radius-none);
-  padding: 10px 8px;
   outline: none;
 }
-.ds-number-input__field:focus,
-.ds-number-input__field:focus-visible {
-  outline: 2px solid var(--ds-focus-ring);
-  outline-offset: -2px;
+@media (min-width: 768px) {
+  .ds-number-field-input {
+    font-size: 0.875rem;
+    line-height: calc(1.25 / 0.875);
+  }
 }
-.ds-number-input__field:disabled { opacity: .55; cursor: not-allowed; }
-/* Strip the native spinners — the ± buttons are the control. */
-.ds-number-input__field::-webkit-outer-spin-button,
-.ds-number-input__field::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-.ds-number-input__field { -moz-appearance: textfield; appearance: textfield; }
+.ds-number-field-input::placeholder {
+  color: var(--ds-ink-soft);
+}
+.ds-number-field-input:disabled {
+  cursor: not-allowed;
+}
 
-/* Collapse shared borders so neighbours don't double up (like .ds-input-group). */
-.ds-number-input > * + * { margin-left: -1px; }
-/* Bring the focused/hovered child's border above its neighbours. */
-.ds-number-input > :focus,
-.ds-number-input > :focus-within,
-.ds-number-input > :hover { position: relative; z-index: 1; }
+.ds-number-field-decrement,
+.ds-number-field-increment {
+  flex-shrink: 0;
+  color: var(--ds-ink-soft);
+}
+.ds-number-field-decrement:hover,
+.ds-number-field-increment:hover {
+  color: var(--ds-ink);
+}
 
-.ds-number-input--block { display: flex; }
-.ds-number-input--block .ds-number-input__field { flex: 1 1 auto; width: auto; min-width: 0; }
+.ds-number-field-scrub-area {
+  cursor: ew-resize;
+  user-select: none;
+}
+
+.ds-number-field-scrub-area-cursor {
+  filter: drop-shadow(0 1px 1px rgb(0 0 0 / 0.05));
+}

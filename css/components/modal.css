@@ -1,4 +1,14 @@
-/* Modal — .ds-overlay (backdrop) + .ds-modal (dialog) */
+/* Modal — .ds-overlay (backdrop) + .ds-modal (dialog)
+   Frozen: `<ds-modal>` (components/ds-modal.js) writes this exact grammar —
+   `ds-overlay`, `is-open`, `ds-modal`, `__head`, `__title`, `__close`, `__body`,
+   `__foot`, `__spacer` — over its own light-DOM children, and there is no
+   source counterpart with the same structure to replace it with (source's
+   `dialog`/`alert-dialog` are Base UI-driven React components with their own
+   DOM shape). Batch 9 (#42) folds in the two refinements worth taking —
+   backdrop blur and a layered shadow in place of a flat border — onto the
+   existing selectors; the frozen classnames and the show/hide mechanism
+   (`.is-open`, no source's `[data-open]`/`[data-closed]` animation states,
+   which nothing here dispatches) are unchanged. */
 .ds-overlay {
   position: fixed;
   inset: 0;
@@ -8,6 +18,9 @@
   align-items: flex-start;
   justify-content: center;
   padding: 5vh 18px;
+}
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .ds-overlay { backdrop-filter: blur(8px); }
 }
 .ds-overlay.is-open,
 .ds-overlay[data-open="true"] { display: flex; }
@@ -22,6 +35,10 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--ds-ink) 10%, transparent),
+    0 4px 6px -1px rgb(0 0 0 / 0.1),
+    0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 .ds-modal__head {
   display: flex;

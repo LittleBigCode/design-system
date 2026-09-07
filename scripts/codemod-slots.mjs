@@ -29,10 +29,12 @@ for (const file of files) {
   }
 
   for (const [slot, replacement] of Object.entries(vars)) {
-    // var(--slot) and var(--slot, fallback) — replace only the property name,
-    // keep any fallback the source supplied.
+    // var(--slot) and var(--slot, fallback) — replace only the exact property
+    // name. `\b` is not enough: "-" is a non-word char, so `\bvar\(--muted\b`
+    // also matches inside `var(--muted-foreground` (hyphen bleed). Require the
+    // next char to end the identifier — `,` (a fallback) or `)` (the end).
     css = css.replace(
-      new RegExp(`var\\(${slot}\\b`, "g"),
+      new RegExp(`var\\(${slot}(?=[,)])`, "g"),
       `var(${replacement}`,
     );
   }

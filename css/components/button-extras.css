@@ -47,3 +47,15 @@
 .ds-split { display: inline-flex; position: relative; }
 .ds-split > .ds-button:not(:first-child) { margin-left: -1px; }
 .ds-split__menu { position: absolute; top: calc(100% + 4px); right: 0; z-index: var(--ds-z-popover); }
+
+/* From migration-source-v1's split-button.css (batch 9, #42) — no collision
+   with the grammar above, landed as-is. */
+.ds-split-button-caret {
+  padding-inline: 0.5rem !important;
+}
+.ds-split-button-caret-icon {
+  transition: rotate 200ms;
+}
+.ds-split-button-caret[aria-expanded="true"] .ds-split-button-caret-icon {
+  rotate: 180deg;
+}
