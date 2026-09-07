@@ -19,10 +19,9 @@ import { diametralDark, diametralLight, palette } from "./shiki-theme"
 
 const VIRTUAL_ID = "virtual:demo-source"
 const RESOLVED_ID = "\0" + VIRTUAL_ID
-// registry.ts, demos/ and playgrounds/{,.ts} moved to examples/registry/
-// (issue #30, the docs-generator tracer bullet) — this plugin reads them from
-// there now instead of from under site/src.
-const REGISTRY = path.resolve(import.meta.dirname, "../../examples/registry")
+// registry.ts, demos/ and playgrounds/{,.ts} moved back under site/src/registry/
+// (issue #47, the repo restructure) — this plugin reads them from there.
+const REGISTRY = path.resolve(import.meta.dirname, "../src/registry")
 const DEMOS_DIR = path.join(REGISTRY, "demos")
 const PLAYGROUNDS_DIR = path.join(REGISTRY, "playgrounds")
 const DECLARATIONS = path.join(REGISTRY, "playgrounds.ts")

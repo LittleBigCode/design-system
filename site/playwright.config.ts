@@ -41,9 +41,9 @@ export default defineConfig({
     // Build then serve. reuseExistingServer lets a local `npm run preview`
     // stand in so the suite does not rebuild on every invocation.
     command: `npm run build && npx vite preview --port ${PORT} --strictPort`,
-    // Vite's `base` means the SPA lives under the workbench subpath, so the
-    // origin root is a 404 and would never report ready.
-    url: `http://localhost:${PORT}/design-system/react-workbench/`,
+    // Vite's `base` means the SPA lives under the project-pages subpath, so the
+    // bare origin root is a 404 and would never report ready.
+    url: `http://localhost:${PORT}/design-system/`,
     reuseExistingServer: !process.env.CI,
     timeout: 180_000,
   },

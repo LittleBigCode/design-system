@@ -6,7 +6,7 @@
 
 import type { Page } from "@playwright/test"
 
-import { COMPONENTS } from "../../examples/registry/registry"
+import { COMPONENTS } from "../src/registry/registry"
 
 export type Route = { name: string; path: string }
 
@@ -15,7 +15,7 @@ export type Route = { name: string; path: string }
  * GitHub Pages does, so every route the suites drive carries it. Centralised
  * here so a base change is one edit rather than one per spec.
  */
-export const BASE = "/design-system/react-workbench"
+export const BASE = "/design-system"
 
 /** A router path, prefixed with the deployed base. */
 export function routePath(path: string) {

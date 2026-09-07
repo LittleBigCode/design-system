@@ -7,18 +7,12 @@ import { demoSource } from "./plugins/demo-source"
 
 // https://vite.dev/config/
 export default defineConfig({
-  // The React workbench is a verification harness, not the docs site: the repo
-  // root IS the web root (pages.yml copies css/, assets/, examples/ verbatim, and
-  // examples/*.html link ../css/diametral.css the way a consumer would), so the
-  // buildless showcase keeps `/` and this app takes a subpath under it. Every
-  // emitted asset URL needs that full prefix; `App.tsx` reads the same value back
-  // out of `import.meta.env.BASE_URL` for the router's basename.
-  base: "/design-system/react-workbench/",
+  // site/ is the docs site (issue #47 / direction.md decision 6): GitHub Pages
+  // serves it at the project-pages subpath, not a nested react-workbench route
+  // any more. Every emitted asset URL needs that prefix; `App.tsx` reads the
+  // same value back out of `import.meta.env.BASE_URL` for the router's basename.
+  base: "/design-system/",
   build: {
-    // NOT the default "assets": pages.yml fills `_site/assets` with the fonts
-    // and logos that `examples/*.html` link as `../assets/fonts/ufficio.css`.
-    // The SPA's hashed bundles would merge into that directory and the copy
-    // order would decide which survives.
     assetsDir: "_app",
   },
   plugins: [react(), tailwindcss(), demoSource()],
@@ -42,10 +36,10 @@ export default defineConfig({
     dedupe: ["react", "react-dom", "recharts"],
     alias: {
       "@": path.resolve(__dirname, "./src"),
-      // registry.ts, demos/ and playgrounds/{,.ts} moved to examples/registry/
-      // (issue #30, the docs-generator tracer bullet) — everything left under
-      // src/registry/ (demos.ts, playground-registry.ts) still resolves via "@".
-      "@registry": path.resolve(__dirname, "../examples/registry"),
+      // registry.ts, demos/ and playgrounds/{,.ts} moved back under
+      // src/registry/ (issue #47, the repo restructure) alongside demos.ts and
+      // playground-registry.ts — "@registry" is kept as a stable alias name.
+      "@registry": path.resolve(__dirname, "./src/registry"),
     },
   },
 })

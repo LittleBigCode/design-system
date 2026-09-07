@@ -1,7 +1,7 @@
 /* ============================================================================
    check-contracts.mjs — the release-blocking contract checks.
 
-   Four assertions, all cheap, all zero-dependency. They exist because each one
+   Five assertions, all cheap, all zero-dependency. They exist because each one
    guards a failure that is invisible in a diff and only shows up in a consumer's
    browser:
 
@@ -24,6 +24,11 @@
      4. use-client — every file in react/components/ starts with a `"use client"`
         directive. Without this, a Next App Router consumer's server-component
         graph silently absorbs a stateful component instead of erroring.
+
+     5. root-is-package-only — every top-level directory at root is either
+        something package.json's own "files" field publishes or known repo
+        scaffolding (issue #47). Without this, site content quietly creeps
+        back onto root instead of living under site/.
 
    Usage: node scripts/check-contracts.mjs   (run `npm run build` first)
    Exits 1 on any failure.
@@ -212,6 +217,47 @@ for (const file of walk(join(root, "react", "components"), [".tsx"])) {
   if (!/^["']use client["'];?$/.test(firstLine.trim())) {
     fail("use-client", `${relative(root, file)}: missing "use client" as the first line`);
   }
+}
+
+/* -- 5. root is package-only ------------------------------------------------ */
+
+// Issue #47: root became the package, everything site-related moved into
+// site/. A top-level directory belongs at root only if package.json's own
+// "files" field publishes it, or it's scaffolding no restructure moves.
+const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
+const publishedDirs = new Set(pkg.files.map((f) => f.split("/")[0]));
+
+// react/ compiles into dist/react (the published artifact) the same way css/
+// and components/ ship raw — a source directory, not site content, so it's
+// scaffolding rather than a files entry. dist/ is both a files entry and a
+// build output not checked into git; listing it here too costs nothing.
+const KNOWN_SCAFFOLDING = new Set([
+  ".github",
+  ".git",
+  "node_modules",
+  "dist",
+  "site",
+  "scripts",
+  "tests",
+  "deploy",
+  "starters",
+  ".claude",
+  ".ds-sync",
+  ".feature-dev",
+  "ds-bundle",
+  "test-results",
+  "react",
+]);
+
+for (const name of readdirSync(root)) {
+  if (!statSync(join(root, name)).isDirectory()) continue;
+  if (publishedDirs.has(name) || KNOWN_SCAFFOLDING.has(name)) continue;
+  fail(
+    "root-is-package-only",
+    `"${name}" is a top-level directory at root that package.json's "files" ` +
+      `does not publish and that isn't known repo scaffolding — site content ` +
+      `belongs under site/, not root.`,
+  );
 }
 
 /* -- report --------------------------------------------------------------- */
