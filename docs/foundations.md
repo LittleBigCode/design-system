@@ -45,6 +45,20 @@ Key tokens: `--ds-space-1` (4px), `--ds-space-2` (8px), `--ds-space-3` (12px), `
 
 Live: [../examples/foundations/spacing.html](../examples/foundations/spacing.html)
 
+## Utility classes
+
+A small, capped layout vocabulary for markup that isn't already a component: flex/grid
+display, alignment, gap on the spacing scale above, full width, and four text utilities.
+Every class maps to an existing `--ds-*` token — no arbitrary values, no responsive
+variants, no colour utilities. It exists because the docs site's HTML tab renders demos as
+buildless markup with no Tailwind available; see
+[`docs/absorption/utility-mapping.md`](absorption/utility-mapping.md) for the source
+Tailwind-class mapping.
+
+Classes: `.ds-flex`, `.ds-flex-col`, `.ds-flex-wrap`, `.ds-grid`, `.ds-items-start/center/
+end/baseline/stretch`, `.ds-justify-start/center/between/end`, `.ds-gap-1` through
+`.ds-gap-8`, `.ds-w-full`, `.ds-text-xs/sm`, `.ds-text-muted`, `.ds-text-right`.
+
 ## Layout
 
 Centered, max-width content with a sticky application bar. Three max-widths frame the page, the
