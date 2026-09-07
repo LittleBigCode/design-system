@@ -51,15 +51,9 @@ jobs:
       - name: Install site dependencies
         run: npm --prefix site ci || npm --prefix site i
 
-      # Two installs, not one. The root pins @playwright/test ^1.48 and site/
-      # pins ^1.62, and each version wants its own browser build — installing
-      # only at the root leaves the docs-app suite looking for a
-      # chrome-headless-shell revision that was never downloaded.
-      - name: Install Chromium (root suite)
-        run: npx playwright install --with-deps chromium
-
-      - name: Install Chromium (docs-app suite)
-        working-directory: site
+      # One install, not two: root and site/ both pin @playwright/test ^1.62
+      # now, so they resolve the same Chromium build.
+      - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
       # --- Are there baselines to compare against? -------------------------
