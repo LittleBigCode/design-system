@@ -12,7 +12,7 @@
    `.ds-select` is preserved for the reason `.ds-range` is: three committed
    fixtures render it as bare HTML — `examples/components/form-controls.html`,
    `examples/kitchen-sink.html`, `examples/blocks/app-chrome.html` — plus
-   `docs/for-claude.md` and `site/src/registry/demos/label/disabled.tsx`, and a
+   `docs/for-claude.md` and `examples/registry/demos/label/disabled.tsx`, and a
    native select is still the right answer on a hand-written form. The absorbed
    popup buys what a native select cannot: grouped items with labels, a
    separator, an icon per row, and a checked indicator.

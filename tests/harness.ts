@@ -1,7 +1,7 @@
 // Shared helpers for the visual, a11y and regression suites.
 //
-// The 13 regress specs (plus chart-marks.spec.ts) were written against
-// site/'s React docs app and moved here unedited except for this import:
+// The 13 regress specs (plus chart-marks.spec.ts) were written against the
+// retired React docs app and moved here unedited except for this import:
 // they address components as `routePath("/docs/<slug>")` and call `settle()`
 // before asserting, and that is all they need from this file.
 
@@ -16,7 +16,7 @@ const COMPONENTS_DIR = join(ROOT, "examples/components")
 export type Route = { name: string; path: string }
 
 /**
- * The regress specs address components the way site/'s router did —
+ * The regress specs address components the way the retired React docs app's router did —
  * `/docs/<slug>`. Root has no router: `scripts/build-docs.mjs` writes one
  * static file per component to `examples/components/<slug>.html`, so a
  * `/docs/<slug>` request maps onto that file instead of a Vite dev route.

@@ -104,7 +104,7 @@ function render(components) {
     for (const c of items.sort((a, b) => a.name.localeCompare(b.name))) {
       const names = c.exports.map((e) => `\`${e}\``).join(", ");
       lines.push(
-        `| [${c.name}](${SITE}/docs/${c.slug}) | ${names} | ${c.description} |`
+        `| [${c.name}](${SITE}/examples/components/${c.slug}.html) | ${names} | ${c.description} |`
       );
     }
     lines.push("");
