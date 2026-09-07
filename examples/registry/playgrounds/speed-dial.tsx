@@ -22,7 +22,7 @@ export default function SpeedDialPlayground({
       <SpeedDial
         {...props}
         icon={<PlusIcon />}
-        className="absolute end-4 bottom-4"
+        className="ds-speed-dial--docked"
       >
         <SpeedDialAction icon={<FileTextIcon />}>{children}</SpeedDialAction>
         <SpeedDialAction icon={<UserPlusIcon />}>{second}</SpeedDialAction>
