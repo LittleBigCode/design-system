@@ -69,6 +69,7 @@ export function TimePicker({
   const [open, setOpen] = React.useState(false);
   // Draft text while typing in the field; committed (normalised) on blur.
   const [draft, setDraft] = React.useState(() => current || "");
+  const popupId = React.useId();
 
   const rootRef = React.useRef<any>(null);
   const inputRef = React.useRef<any>(null);
@@ -160,8 +161,14 @@ export function TimePicker({
       name,
       inputMode: "numeric",
       autoComplete: "off",
+      /* role=combobox, not the bare textbox this editable input would default
+         to: aria-expanded is not an allowed attribute on a textbox, which is
+         the invalid-ARIA violation the axe gate reports on this trigger. An
+         editable field that opens a chooser is exactly what combobox names. */
+      role: "combobox",
       "aria-haspopup": "dialog",
       "aria-expanded": open,
+      "aria-controls": popupId,
       onChange: (e: any) => setDraft(e.target.value),
       onClick: () => { if (!disabled) setOpen(true); },
       onFocus: () => { if (!disabled) setOpen(true); },
@@ -181,6 +188,7 @@ export function TimePicker({
     open
       ? h("div", {
           className: "ds-timepicker__popover",
+          id: popupId,
           role: "dialog",
           "aria-label": "Choose time",
         },

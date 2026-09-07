@@ -99,6 +99,10 @@ export const TagInput = React.forwardRef<HTMLInputElement, TagInputProps>(functi
       type: "text",
       value: draft,
       placeholder: tokens.length === 0 ? placeholder : undefined,
+      /* The visible tag chips are not a label for this field — this package
+         has no sr-only utility (carousel.css records the same finding), so
+         an aria-label is the accessible name rather than visually-hidden text. */
+      "aria-label": "Add a tag",
       disabled,
       onChange: (e) => setDraft(e.target.value),
       onKeyDown,
