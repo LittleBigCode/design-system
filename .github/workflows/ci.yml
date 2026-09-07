@@ -109,6 +109,21 @@ jobs:
       - name: Pack
         run: npm pack --pack-destination /tmp
 
+      # The entry points a consumer actually imports — `@diametral/design-system/react`
+      # and the CSS the barrel depends on. Both are gitignored (dist/) or easy to
+      # drop from `files` without the in-repo build noticing (#156 decision 5).
+      - name: Assert the react barrel and stylesheet ship in the tarball
+        run: |
+          missing=0
+          for f in dist/react/index.js css/diametral.css; do
+            if ! tar tzf /tmp/diametral-design-system-*.tgz | grep -qx "package/$f"; then
+              echo "::error::package/$f is missing from the tarball."
+              missing=1
+            fi
+          done
+          [ "$missing" -eq 0 ] && echo "dist/react/index.js and css/diametral.css are both in the tarball."
+          exit "$missing"
+
       # Ufficio is commercial and its licence requires offline-only storage
       # (NOTICE.md). Today it is kept out of the tarball by .npmignore alone —
       # one deleted line away from shipping. This asserts it.
