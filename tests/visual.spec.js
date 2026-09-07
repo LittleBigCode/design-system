@@ -57,21 +57,30 @@ for (const { name, path } of PAGES) {
     // Inject the stabilizing stylesheet after content has loaded so it wins.
     await page.addStyleTag({ content: STABILIZE_CSS });
 
-    // Pin the document to an integral height before capturing.
+    // Pin the root to a height at least as tall as the layout before capturing.
     //
     // A full-page screenshot is rejected outright on a size mismatch — no
     // maxDiffPixelRatio applies — and Playwright requires two consecutive
-    // captures of the same size. kitchen-sink is 12,738px tall and something in
-    // it has a fractional height, so consecutive layout passes rounded to
-    // 12737 and 12738 alternately and the assertion could never converge:
-    // deterministic, not flaky, and neither a retry nor a longer timeout
-    // touches it. Writing the height back once makes both passes agree.
+    // captures of the same size. Pages here have fractional heights, so
+    // consecutive layout passes round differently and the assertion can never
+    // converge: deterministic, not flaky, and neither a retry nor a longer
+    // timeout touches it. Writing a definite height back once settles it.
     //
-    // scrollHeight, not the bounding rect: a full-page capture is sized by the
-    // scrollable area, and on a page whose content overflows the root box the
-    // two disagree -- pinning the rect height leaves the capture free to wobble.
+    // The max of both measures, because they disagree in opposite directions
+    // and each alone leaves one page floating. The bounding rect is the root
+    // BOX; scrollHeight is the scrollable AREA, which is what sizes a full-page
+    // capture. On kitchen-sink the box is the fractional one, so the rect needs
+    // the ceil (12790, and 12789 without it). On theming the content overflows
+    // the box, so the rect reads short and only scrollHeight covers it (981,
+    // and 979 without it). Both failures are the same shape — a pin too short
+    // for the real layout — so the pin has to clear whichever measure is
+    // taller. Measured on Linux; neither reproduces on macOS.
     await page.evaluate(() => {
-      document.documentElement.style.height = `${document.documentElement.scrollHeight}px`;
+      const root = document.documentElement;
+      root.style.height = `${Math.max(
+        Math.ceil(root.getBoundingClientRect().height),
+        root.scrollHeight
+      )}px`;
     });
 
     await expect(page).toHaveScreenshot(`${name}.png`, { fullPage: true });
