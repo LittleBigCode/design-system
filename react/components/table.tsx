@@ -7,9 +7,10 @@ import { cx } from "../lib/cx.js"
 /* Table — the composed data table.
    ---------------------------------------------------------------------------
    New to the package: 0.11 shipped table.css and nothing that rendered it, so
-   there is no incumbent symbol here to replace. `DataGrid` is the other table
+   there is no incumbent symbol here to replace. `DataTable` is the other table
    in this library and stays what it is — sorting, selection, editing, its own
-   state. This one is the markup, for a table whose rows a caller writes.
+   state (it composes these same parts internally). This one is the markup,
+   for a table whose rows a caller writes.
 
    `<Table>` wraps itself in a scroll container, which is where the horizontal
    overflow lives; that container is also what tells table.css to drop the 0.11

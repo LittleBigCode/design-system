@@ -3,8 +3,9 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
+  Field,
   FieldDescription,
-  FormField,
+  FieldLabel,
   Input,
   Textarea,
 } from "@diametral/design-system/react"
@@ -16,13 +17,16 @@ export default function CollapsibleOptionalFields() {
       className="flex w-full max-w-sm flex-col gap-4"
       onSubmit={(event) => event.preventDefault()}
     >
-      <FormField label="Reference" htmlFor="collapsible-fields-reference">
+      <Field>
+        <FieldLabel htmlFor="collapsible-fields-reference">
+          Reference
+        </FieldLabel>
         <Input
           id="collapsible-fields-reference"
           name="reference"
           defaultValue="INV-014"
         />
-      </FormField>
+      </Field>
       <Collapsible>
         <CollapsibleTrigger
           render={
@@ -33,17 +37,20 @@ export default function CollapsibleOptionalFields() {
           }
         />
         <CollapsibleContent keepMounted className="mt-3 flex flex-col gap-4">
-          <FormField label="Purchase order" htmlFor="collapsible-fields-po">
+          <Field>
+            <FieldLabel htmlFor="collapsible-fields-po">
+              Purchase order
+            </FieldLabel>
             <Input
               id="collapsible-fields-po"
               name="purchaseOrder"
               placeholder="PO-2026-114"
             />
-          </FormField>
-          <FormField
-            label="Note to the client"
-            htmlFor="collapsible-fields-note"
-          >
+          </Field>
+          <Field>
+            <FieldLabel htmlFor="collapsible-fields-note">
+              Note to the client
+            </FieldLabel>
             <Textarea
               id="collapsible-fields-note"
               name="note"
@@ -53,7 +60,7 @@ export default function CollapsibleOptionalFields() {
             <FieldDescription>
               Printed under the invoice total.
             </FieldDescription>
-          </FormField>
+          </Field>
         </CollapsibleContent>
       </Collapsible>
       <Button type="submit" size="sm" className="self-start">

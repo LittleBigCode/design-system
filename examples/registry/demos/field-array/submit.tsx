@@ -11,7 +11,6 @@ import {
   FieldArrayRemove,
   FieldLabel,
   Form,
-  FormField,
   Input,
   Select,
   SelectContent,
@@ -73,17 +72,20 @@ export default function FieldArraySubmit() {
                 )}
               </div>
               <FieldArrayItemContent className="ds-field-array-item-content--grid gap-3">
-                <FormField
-                  label="Description"
-                  htmlFor={`quote-line-${line.id}-label`}
-                >
+                <Field>
+                  <FieldLabel htmlFor={`quote-line-${line.id}-label`}>
+                    Description
+                  </FieldLabel>
                   <Input
                     id={`quote-line-${line.id}-label`}
                     name={`lines[${index}].label`}
                     placeholder="Design review"
                   />
-                </FormField>
-                <FormField label="Unit" htmlFor={`quote-line-${line.id}-unit`}>
+                </Field>
+                <Field>
+                  <FieldLabel htmlFor={`quote-line-${line.id}-unit`}>
+                    Unit
+                  </FieldLabel>
                   <Select name={`lines[${index}].unit`} defaultValue="day">
                     <SelectTrigger id={`quote-line-${line.id}-unit`}>
                       <SelectValue />
@@ -96,7 +98,7 @@ export default function FieldArraySubmit() {
                       ))}
                     </SelectContent>
                   </Select>
-                </FormField>
+                </Field>
                 <div className="col-span-2">
                   <Field orientation="horizontal">
                     <Checkbox

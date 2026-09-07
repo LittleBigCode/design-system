@@ -12,10 +12,29 @@ import { Avatar, AvatarFallback } from "./avatar.js";
 import { Tooltip, TooltipTrigger, TooltipContent } from "./tooltip.js";
 import { Kbd } from "./kbd.js";
 import { Segmented } from "../index.js";
-import { CommandPalette } from "./CommandPalette.js";
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandShortcut,
+} from "./command.js";
 
 import type { ReactNode } from "react";
-import type { Command } from "./CommandPalette";
+
+/** Console's own ⌘K command shape — CommandPalette.js's `Command` retired in
+ *  batch 13 (#46); ConsoleLayout is a permanent additive so its public
+ *  contract holds, kept here (not re-exported — `Command` is now `command.js`'s
+ *  own component name) and composed onto its parts instead. */
+interface Command {
+  id: string;
+  label: ReactNode;
+  group?: string;
+  hint?: ReactNode;
+  onRun?: () => void;
+}
 
 export interface ConsoleNavItem {
   id: string;
@@ -93,6 +112,15 @@ export function ConsoleLayout({
 
   const flat = nav.flatMap((g) => g.items || []);
   const cmds = commands || flat.map((n) => ({ id: n.id, label: n.label, group: "Go to", onRun: () => onNavigate && onNavigate(n.id) }));
+  // CommandGroup needs its items handed to it already grouped — the retired
+  // CommandPalette did this grouping internally from a flat `commands` list.
+  const cmdGroups: [string, Command[]][] = [];
+  for (const c of cmds) {
+    const key = c.group || "";
+    const existing = cmdGroups.find(([g]) => g === key);
+    if (existing) existing[1].push(c);
+    else cmdGroups.push([key, [c]]);
+  }
   /* A `{ name, sub }` brand pairs the words with the square monogram: the
      horizontal lockup already spells "Diametral", so setting it beside the name
      would say it twice. With no brand at all the horizontal lockup stands alone. */
@@ -133,5 +161,21 @@ export function ConsoleLayout({
     h("main", { className: "ds-console__main" },
       h("div", { className: cx("ds-loadbar", (loading || navLoading) && "is-loading"), "aria-hidden": "true" }),
       h("div", { className: "ds-console__wrap" }, h("div", { key: active, className: "ds-fade-in" }, children))),
-    search ? h(CommandPalette, { open: cmdOpen, onClose: () => setCmdOpen(false), commands: cmds, placeholder: "Jump to a page or run a command…" }) : null);
+    search ? h(CommandDialog, {
+      open: cmdOpen, onOpenChange: setCmdOpen,
+      title: "Command palette", description: "Jump to a page or run a command",
+      children: [
+        h(CommandInput, { key: "input", placeholder: "Jump to a page or run a command…" }),
+        h(CommandList, { key: "list" },
+          h(CommandEmpty, null, "No results found."),
+          cmdGroups.map(([group, items]) => h(CommandGroup, { key: group || "_", heading: group || undefined },
+            items.map((c) => h(CommandItem, {
+              key: c.id,
+              value: typeof c.label === "string" ? c.label : c.id,
+              onSelect: () => { setCmdOpen(false); c.onRun && c.onRun(); },
+            }, h("span", null, c.label), c.hint != null ? h(CommandShortcut, null, c.hint) : null))
+          ))
+        ),
+      ],
+    }) : null);
 }

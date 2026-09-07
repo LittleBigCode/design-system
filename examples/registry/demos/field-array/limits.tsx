@@ -1,13 +1,14 @@
 "use client"
 
 import {
+  Field,
   FieldArray,
   FieldArrayAdd,
   FieldArrayItem,
   FieldArrayItemContent,
   FieldArrayRemove,
   FieldDescription,
-  FormField,
+  FieldLabel,
   Input,
 } from "@diametral/design-system/react"
 import * as React from "react"
@@ -28,10 +29,10 @@ export default function FieldArrayLimits() {
         {recipients.map((recipient, index) => (
           <FieldArrayItem key={recipient.id}>
             <FieldArrayItemContent>
-              <FormField
-                label={`Recipient ${index + 1}`}
-                htmlFor={`field-array-limits-${recipient.id}`}
-              >
+              <Field>
+                <FieldLabel htmlFor={`field-array-limits-${recipient.id}`}>
+                  Recipient {index + 1}
+                </FieldLabel>
                 <Input
                   id={`field-array-limits-${recipient.id}`}
                   name={`recipients[${index}].email`}
@@ -39,7 +40,7 @@ export default function FieldArrayLimits() {
                   defaultValue={index === 0 ? "compta@atelier-nord.fr" : ""}
                   placeholder="name@company.com"
                 />
-              </FormField>
+              </Field>
             </FieldArrayItemContent>
             {recipients.length > 1 && (
               <FieldArrayRemove

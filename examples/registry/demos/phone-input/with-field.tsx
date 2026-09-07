@@ -1,6 +1,7 @@
 import {
+  Field,
   FieldDescription,
-  FormField,
+  FieldLabel,
   PhoneInput,
 } from "@diametral/design-system/react"
 import * as React from "react"
@@ -9,9 +10,10 @@ export default function PhoneInputWithField() {
   const [value, setValue] = React.useState("")
 
   return (
-    <FormField label="Mobile">
+    <Field>
+      <FieldLabel>Mobile</FieldLabel>
       <PhoneInput value={value} onValueChange={setValue} defaultCountry="BE" />
       <FieldDescription>{value || "No number yet."}</FieldDescription>
-    </FormField>
+    </Field>
   )
 }

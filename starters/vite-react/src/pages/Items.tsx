@@ -2,17 +2,15 @@ import { useCallback } from "react";
 import { Link } from "react-router-dom";
 import {
   PageHeader,
-  DataGrid,
+  DataTable,
   Tag,
-  type DataGridColumn,
-  type LoadPageArgs,
-  type LoadPageResult,
+  type ColumnDef,
 } from "@diametral/design-system/react";
 
 /* ---------------------------------------------------------------------------
    A tiny in-memory dataset stands in for your API. Swap `loadPage` below for a
-   real `fetch(...)` that returns `{ rows, total }` and the grid keeps working —
-   it already passes you the page, page size, sort and filters.
+   real `fetch(...)` that returns `{ rows, total }` and the table keeps working —
+   it already passes you the page, page size, sort and column filters.
    --------------------------------------------------------------------------- */
 type Item = {
   id: number;
@@ -39,61 +37,78 @@ const STATUS_TONE: Record<Item["status"], "success" | "info" | "warning"> = {
   archived: "warning",
 };
 
-const columns: DataGridColumn<Item>[] = [
+const columns: ColumnDef<Item>[] = [
   {
-    key: "name",
+    accessorKey: "name",
     header: "Name",
-    sortable: true,
-    filterable: true,
-    render: (row) => <Link to={`/items/${row.id}`}>{row.name}</Link>,
+    cell: ({ row }) => <Link to={`/items/${row.original.id}`}>{row.original.name}</Link>,
   },
-  { key: "owner", header: "Owner", sortable: true, filterable: true },
+  { accessorKey: "owner", header: "Owner" },
   {
-    key: "status",
+    accessorKey: "status",
     header: "Status",
-    sortable: true,
-    render: (row) => <Tag status={STATUS_TONE[row.status]}>{row.status}</Tag>,
+    cell: ({ row }) => (
+      <Tag status={STATUS_TONE[row.original.status]}>{row.original.status}</Tag>
+    ),
   },
-  { key: "updated", header: "Updated", sortable: true, align: "right" },
+  {
+    accessorKey: "updated",
+    header: "Updated",
+    cell: ({ row }) => (
+      <span className="tabular-nums">{row.original.updated}</span>
+    ),
+  },
 ];
 
 export default function Items() {
   // Local "server": filter → sort → paginate. Returns { rows, total }.
   const loadPage = useCallback(
-    ({ page, pageSize, sort, filters }: LoadPageArgs): LoadPageResult<Item> => {
+    ({
+      page,
+      pageSize,
+      sort,
+      filters,
+    }: {
+      page: number;
+      pageSize: number;
+      sort: { id: string; desc: boolean }[];
+      filters: { id: string; value: unknown }[];
+    }) => {
       let rows = DATA.filter((row) =>
-        Object.entries(filters).every(([key, value]) =>
-          String(row[key as keyof Item])
+        filters.every(({ id, value }) =>
+          String(row[id as keyof Item])
             .toLowerCase()
-            .includes(value.toLowerCase())
+            .includes(String(value).toLowerCase())
         )
       );
 
-      if (sort) {
-        const { key, dir } = sort;
+      for (const { id, desc } of [...sort].reverse()) {
         rows = [...rows].sort((a, b) => {
-          const av = a[key as keyof Item];
-          const bv = b[key as keyof Item];
+          const av = a[id as keyof Item];
+          const bv = b[id as keyof Item];
           const cmp = av < bv ? -1 : av > bv ? 1 : 0;
-          return dir === "asc" ? cmp : -cmp;
+          return desc ? -cmp : cmp;
         });
       }
 
       const start = (page - 1) * pageSize;
-      return { rows: rows.slice(start, start + pageSize), total: rows.length };
+      return Promise.resolve({
+        rows: rows.slice(start, start + pageSize),
+        total: rows.length,
+      });
     },
     []
   );
 
   return (
     <>
-      <PageHeader title="Items" subtitle="A server-style DataGrid over local data." />
-      <DataGrid<Item>
+      <PageHeader title="Items" subtitle="A server-style DataTable over local data." />
+      <DataTable<Item>
         columns={columns}
-        rowKey={(row) => row.id}
+        rowKey={(row) => String(row.id)}
         loadPage={loadPage}
         pageSize={10}
-        filterable
+        searchColumn="name"
         columnToggle
       />
     </>

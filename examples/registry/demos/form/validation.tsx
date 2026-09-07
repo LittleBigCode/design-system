@@ -1,4 +1,11 @@
-import { Button, Form, FormField, Input } from "@diametral/design-system/react"
+import {
+  Button,
+  Field,
+  FieldError,
+  FieldLabel,
+  Form,
+  Input,
+} from "@diametral/design-system/react"
 import * as React from "react"
 
 type Errors = { email?: string; siret?: string }
@@ -22,23 +29,27 @@ export default function FormValidation() {
         })
       }}
     >
-      <FormField error={errors.email} label="Email" htmlFor="form-v-email">
+      <Field data-invalid={errors.email ? true : undefined}>
+        <FieldLabel htmlFor="form-v-email">Email</FieldLabel>
         <Input
           id="form-v-email"
           name="email"
           defaultValue="camille"
           aria-invalid={errors.email ? true : undefined}
         />
-      </FormField>
+        {errors.email && <FieldError>{errors.email}</FieldError>}
+      </Field>
 
-      <FormField error={errors.siret} label="SIRET" htmlFor="form-v-siret">
+      <Field data-invalid={errors.siret ? true : undefined}>
+        <FieldLabel htmlFor="form-v-siret">SIRET</FieldLabel>
         <Input
           id="form-v-siret"
           name="siret"
           defaultValue="123"
           aria-invalid={errors.siret ? true : undefined}
         />
-      </FormField>
+        {errors.siret && <FieldError>{errors.siret}</FieldError>}
+      </Field>
 
       <Button type="submit" className="self-start">
         Validate

@@ -1,4 +1,4 @@
-import { DataGrid } from "@diametral/design-system/react"
+import { DataTable, type ColumnDef } from "@diametral/design-system/react"
 
 type Run = {
   id: string
@@ -7,26 +7,28 @@ type Run = {
   rows: number
 }
 
-const COLUMNS = [
-  { key: "pipeline", header: "Pipeline", sortable: true },
-  { key: "id", header: "Run", width: "8rem" },
+const COLUMNS: ColumnDef<Run>[] = [
+  { accessorKey: "pipeline", header: "Pipeline" },
+  { accessorKey: "id", header: "Run", enableSorting: false },
   {
-    key: "duration",
+    accessorKey: "duration",
     header: "Duration",
-    align: "right" as const,
-    sortable: true,
-    render: (row: Run) => `${row.duration}s`,
+    cell: ({ row }) => (
+      <span className="tabular-nums">{row.original.duration}s</span>
+    ),
   },
   {
-    key: "rows",
+    accessorKey: "rows",
     header: "Rows",
-    align: "right" as const,
-    sortable: true,
-    render: (row: Run) => row.rows.toLocaleString("en-GB"),
+    cell: ({ row }) => (
+      <span className="tabular-nums">
+        {row.original.rows.toLocaleString("en-GB")}
+      </span>
+    ),
   },
 ]
 
-const ROWS: Run[] = [
+const DATA: Run[] = [
   { id: "r-4812", pipeline: "ingest-crm", duration: 42, rows: 128_402 },
   { id: "r-4811", pipeline: "ingest-billing", duration: 17, rows: 9_881 },
   { id: "r-4810", pipeline: "rollup-daily", duration: 311, rows: 2_004_117 },
@@ -36,12 +38,12 @@ const ROWS: Run[] = [
 
 export default function DataTableBasic() {
   return (
-    <DataGrid
+    <DataTable
       columns={COLUMNS}
-      rows={ROWS}
-      rowKey={(row: Run) => row.id}
+      data={DATA}
+      rowKey={(row) => row.id}
       selectable
-      defaultSort={{ key: "rows", dir: "desc" }}
+      defaultSort={[{ id: "rows", desc: true }]}
     />
   )
 }

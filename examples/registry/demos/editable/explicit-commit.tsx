@@ -1,6 +1,12 @@
 "use client"
 
-import { Editable, FormField, Kbd } from "@diametral/design-system/react"
+import {
+  Editable,
+  Field,
+  FieldDescription,
+  FieldLabel,
+  Kbd,
+} from "@diametral/design-system/react"
 import * as React from "react"
 
 /* `submitOnBlur={false}` turns blur into a discard, so the only ways through
@@ -12,22 +18,19 @@ export default function EditableExplicitCommit() {
 
   return (
     <div className="max-w-sm">
-      <FormField
-        label="Billing email"
-        hint={
-          <>
-            Clicking away discards, so the check button or <Kbd>Enter</Kbd> is
-            the only way through — last outcome: {outcome}.
-          </>
-        }
-      >
+      <Field>
+        <FieldLabel>Billing email</FieldLabel>
         <Editable
           defaultValue="compta@morval.studio"
           submitOnBlur={false}
           onSubmit={(value) => setOutcome(`saved ${value}`)}
           onCancel={() => setOutcome("discarded")}
         />
-      </FormField>
+        <FieldDescription>
+          Clicking away discards, so the check button or <Kbd>Enter</Kbd> is
+          the only way through — last outcome: {outcome}.
+        </FieldDescription>
+      </Field>
     </div>
   )
 }

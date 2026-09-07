@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-import { DataGrid } from "@diametral/design-system/react"
+import { DataTable, type ColumnDef } from "@diametral/design-system/react"
 
 type Budget = {
   id: string
@@ -9,15 +9,13 @@ type Budget = {
   cap: number
 }
 
-const COLUMNS = [
-  { key: "team", header: "Team", sortable: true },
-  { key: "owner", header: "Owner", editable: true },
+const COLUMNS: ColumnDef<Budget>[] = [
+  { accessorKey: "team", header: "Team" },
+  { accessorKey: "owner", header: "Owner", meta: { editable: true } },
   {
-    key: "cap",
+    accessorKey: "cap",
     header: "Monthly cap",
-    align: "right" as const,
-    sortable: true,
-    editable: true,
+    meta: { editable: true },
   },
 ]
 
@@ -31,12 +29,12 @@ export default function DataTableEditable() {
   const [rows, setRows] = useState(INITIAL)
 
   return (
-    <DataGrid
+    <DataTable
       columns={COLUMNS}
-      rows={rows}
-      rowKey={(row: Budget) => row.id}
+      data={rows}
+      rowKey={(row) => row.id}
       editable
-      onCellEdit={(row: Budget, key: string, value: string) =>
+      onCellEdit={(row, key, value) =>
         setRows((all) =>
           all.map((r) => (r.id === row.id ? { ...r, [key]: value } : r))
         )

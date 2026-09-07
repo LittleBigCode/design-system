@@ -515,14 +515,21 @@ export const COMPONENTS: ComponentDoc[] = [
   },
   {
     slug: "number-field",
-    name: "NumberInput",
+    name: "NumberField",
     category: "Forms",
-    exports: ["NumberInput", "type NumberInputProps"],
+    exports: [
+      "NumberField",
+      "NumberFieldGroup",
+      "NumberFieldInput",
+      "NumberFieldDecrement",
+      "NumberFieldIncrement",
+      "NumberFieldScrubArea",
+    ],
     description:
       "A numeric field with stepper buttons and a real `null` for empty.",
     intro: [
       "`value` is `number | null`, not `number`, because an empty numeric field is a distinct state from zero. Collapsing the two is the classic bug here: a cleared field that reads as `0` silently sets a limit to nothing.",
-      "`min` and `max` clamp the steppers and the typed value both, so the field cannot hold a number the form would reject.",
+      "`min` and `max` clamp the steppers and the typed value both, so the field cannot hold a number the form would reject. Composed since 1.0.0 (renamed from `NumberInput`): `NumberFieldGroup` holds `NumberFieldDecrement`/`NumberFieldInput`/`NumberFieldIncrement`, and `NumberFieldScrubArea` wraps a label to make it a drag-to-change handle.",
     ],
     examples: [
       {
@@ -537,11 +544,12 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "radio-group",
     name: "RadioGroup",
     category: "Forms",
-    exports: ["RadioGroup", "Radio", "type RadioGroupProps"],
+    exports: ["RadioGroup", "RadioGroupItem"],
     description: 'One choice from a few, over native `<input type="radio">`.',
     intro: [
       "Radios show every option at rest, which is what makes them right for two to five mutually exclusive choices whose differences matter. Past that a `Select` stops the layout from being mostly options.",
       "`name` defaults to a generated id and is best left alone. Radios only form one group when they share a name, and the native arrow-key navigation — which is the whole accessibility story here — silently stops working if they do not.",
+      "Composed since 1.0.0: there's no `options` prop — `RadioGroupItem` draws only the dot, one per option, each paired with a `Field`-wrapped `FieldLabel`/`Label` the same way any other bare control is.",
     ],
     examples: [
       {
@@ -573,9 +581,9 @@ export const COMPONENTS: ComponentDoc[] = [
   },
   {
     slug: "tags-input",
-    name: "TagInput",
+    name: "TagsInput",
     category: "Forms",
-    exports: ["TagInput", "type TagInputProps"],
+    exports: ["TagsInput"],
     description:
       "Free-form labels, entered one at a time and shown as removable chips.",
     intro: [
@@ -867,27 +875,27 @@ export const COMPONENTS: ComponentDoc[] = [
   },
   {
     slug: "data-table",
-    name: "DataGrid",
+    name: "DataTable",
     category: "Data display",
-    exports: ["DataGrid", "type DataGridProps", "type DataGridColumn"],
+    exports: ["DataTable", "DataTableColumnHeader", "type ColumnDef"],
     description:
-      "A real `<table>` with sorting, selection, filtering, inline edit and paging.",
+      "A real `<table>` with sorting, selection, inline edit and paging, over `@tanstack/react-table`.",
     intro: [
-      "The heaviest component in the system, and the one to reach for last: a list of five things with no sorting is a `<ul>`. It earns itself when a reader has to *compare* rows — sort by one column, filter by another, select some, act on those.",
-      "`rows` and `loadPage` are exclusive. Pass `rows` and the grid sorts, filters and pages in memory; pass `loadPage` and it hands you the page, sort and filters and expects the server to have done that work. Mixing them means sorting one page of a larger set, which reads as a bug to everyone but the author.",
+      "The heaviest component in the system, and the one to reach for last: a list of five things with no sorting is a `<ul>`. It earns itself when a reader has to *compare* rows — sort by one column, select some, act on those.",
+      "Renamed from `DataGrid` in 1.0.0: `columns` is now a real `ColumnDef[]` (`accessorKey`/`header`/`cell`, tanstack's own shape) rather than `{ key, header, render }`, and `rows` is `data`. `data` and `loadPage` are exclusive — pass `data` and the table sorts and pages in memory; pass `loadPage` and it hands you the page, sort and column filters and expects the server to have done that work.",
     ],
     examples: [
       {
         demo: "data-table/basic",
         title: "Sortable and selectable",
         description:
-          "In-memory `rows` with a default sort. `rowKey` is what selection tracks — without it the index does, and a re-sort moves the ticks.",
+          "In-memory `data` with a default sort. `rowKey` is what selection tracks — without it the index does, and a re-sort moves the ticks.",
       },
       {
         demo: "data-table/editable",
         title: "Inline edit",
         description:
-          "`editable` on the grid plus `editable` on a column opens the cell on double-click or Enter; `onCellEdit` receives the row, the column key and the new value. The grid does not mutate `rows` itself.",
+          "`editable` on the table plus `meta: { editable: true }` on a column opens the cell on double-click or Enter; `onCellEdit` receives the row, the column key and the new value. The table does not mutate `data` itself.",
       },
     ],
   },
@@ -1172,14 +1180,24 @@ export const COMPONENTS: ComponentDoc[] = [
   /* -- Navigation ---------------------------------------------------------- */
   {
     slug: "command",
-    name: "CommandPalette",
+    name: "Command",
     category: "Navigation",
-    exports: ["CommandPalette", "type CommandPaletteProps", "type Command"],
+    exports: [
+      "Command",
+      "CommandDialog",
+      "CommandInput",
+      "CommandList",
+      "CommandEmpty",
+      "CommandGroup",
+      "CommandItem",
+      "CommandShortcut",
+      "CommandSeparator",
+    ],
     description:
-      "The ⌘K surface: one flat list of commands, grouped and filtered as you type.",
+      "The ⌘K surface: `cmdk`'s filtering, grouped and composed as children.",
     intro: [
-      "`commands` is flat and `group` restores the headings, rather than a nested structure. That is what lets the filter cross groups — a query matches the whole list at once, and the headings that survive are whatever the matches belong to.",
-      "Each command carries its own `onRun`, so the palette never has to know what a command means. `hint` is the trailing slot: a shortcut, a count, or nothing.",
+      "Composed since 1.0.0 (renamed from `CommandPalette`): `CommandGroup`'s `heading` restores what `group` used to, and `CommandItem` takes an `onSelect` rather than an `onRun` — the filter still crosses groups, matching the whole list at once against whatever `value` each item carries.",
+      "`CommandDialog` is the ⌘K popup shell (a `Dialog` underneath); `Command` on its own composes inline instead, wherever the palette shouldn't be modal.",
     ],
     examples: [
       {

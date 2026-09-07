@@ -1,7 +1,9 @@
 import {
   Button,
+  Field,
+  FieldError,
+  FieldLabel,
   Form,
-  FormField,
   Input,
   Spinner,
 } from "@diametral/design-system/react"
@@ -42,7 +44,8 @@ export default function FormPending() {
         setPending(false)
       }}
     >
-      <FormField error={error} label="Invite a teammate" htmlFor="form-p-email">
+      <Field data-invalid={error ? true : undefined}>
+        <FieldLabel htmlFor="form-p-email">Invite a teammate</FieldLabel>
         <Input
           id="form-p-email"
           name="email"
@@ -51,7 +54,8 @@ export default function FormPending() {
           disabled={pending}
           aria-invalid={error ? true : undefined}
         />
-      </FormField>
+        {error && <FieldError>{error}</FieldError>}
+      </Field>
 
       <div className="flex items-center gap-3">
         <Button type="submit" disabled={pending}>

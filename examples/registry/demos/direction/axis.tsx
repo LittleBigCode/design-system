@@ -2,7 +2,6 @@ import {
   DirectionProvider,
   Field,
   FieldLabel,
-  FormField,
   Slider,
   Segmented,
 } from "@diametral/design-system/react"
@@ -17,9 +16,10 @@ import {
    `ToggleGroup` is `Segmented`, which takes its cells as an `items` array
    rather than as children.
 
-   The volume row uses `Field` + `aria-labelledby` rather than `FormField` +
-   `htmlFor`: Slider's `id` lands on its root wrapper, not the range input Base
-   UI actually renders, so a `<label for>` pointed at it never resolves. */
+   The volume row uses `Field` + `aria-labelledby`: Slider's `id` lands on its
+   root wrapper, not the range input Base UI actually renders, so a `<label
+   for>` pointed at it never resolves. The range row's `htmlFor` has the same
+   gap against `Segmented`'s own root — pre-existing, not this batch's fix. */
 export default function DirectionAxis() {
   return (
     <DirectionProvider direction="rtl">
@@ -31,7 +31,8 @@ export default function DirectionAxis() {
             aria-labelledby="direction-axis-volume-label"
           />
         </Field>
-        <FormField label="المدى" htmlFor="direction-axis-range">
+        <Field>
+          <FieldLabel htmlFor="direction-axis-range">المدى</FieldLabel>
           <Segmented
             defaultValue="week"
             items={[
@@ -40,7 +41,7 @@ export default function DirectionAxis() {
               { value: "month", label: "شهر" },
             ]}
           />
-        </FormField>
+        </Field>
       </div>
     </DirectionProvider>
   )

@@ -1,10 +1,11 @@
 import {
+  Field,
   FieldArray,
   FieldArrayAdd,
   FieldArrayItem,
   FieldArrayItemContent,
   FieldArrayRemove,
-  FormField,
+  FieldLabel,
   Input,
 } from "@diametral/design-system/react"
 import type { ComponentProps } from "react"
@@ -29,16 +30,16 @@ export default function FieldArrayPlayground({
       {SESSIONS.map((session, index) => (
         <FieldArrayItem key={session.id}>
           <FieldArrayItemContent>
-            <FormField
-              label={`${label} ${index + 1}`}
-              htmlFor={`field-array-playground-${session.id}`}
-            >
+            <Field>
+              <FieldLabel htmlFor={`field-array-playground-${session.id}`}>
+                {label} {index + 1}
+              </FieldLabel>
               <Input
                 id={`field-array-playground-${session.id}`}
                 name={`sessions[${index}].name`}
                 defaultValue={session.value}
               />
-            </FormField>
+            </Field>
           </FieldArrayItemContent>
           <FieldArrayRemove label={`Remove entry ${index + 1}`} />
         </FieldArrayItem>

@@ -2,14 +2,22 @@ import * as React from "react"
 import { useNavigate } from "react-router"
 import { MagnifyingGlassIcon } from "@phosphor-icons/react"
 
-import { CommandPalette, Kbd } from "@diametral/design-system/react"
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandShortcut,
+  Kbd,
+} from "@diametral/design-system/react"
 
 import { componentsByCategory } from "@registry/registry"
 
 /**
- * CommandPalette filters the flat list itself, so the grouped registry is
- * flattened once into its `commands` shape — `group` is what restores the
- * category headings the sidebar also uses.
+ * The grouped registry already shapes into `Command`'s own `CommandGroup`s —
+ * batch 13 (#46) dropped the flat `commands` prop `CommandPalette` took.
  */
 const GROUPS = componentsByCategory()
 
@@ -46,25 +54,39 @@ export function DocsSearch() {
         </span>
       </button>
 
-      <CommandPalette
+      <CommandDialog
         open={open}
-        onClose={() => setOpen(false)}
-        placeholder="Search components…"
-        commands={GROUPS.flatMap((group) =>
-          group.items.map((component) => ({
-            id: component.slug,
-            label: component.name,
-            group: group.category,
-            // The usage count doubles as the coverage map, same as the sidebar
-            // badge; a component with none shows no hint rather than a zero.
-            hint: component.examples?.length || undefined,
-            onRun: () => {
-              setOpen(false)
-              navigate(`/docs/${component.slug}`)
-            },
-          }))
-        )}
-      />
+        onOpenChange={setOpen}
+        title="Search components"
+        description="Search for a component to open"
+      >
+        <CommandInput placeholder="Search components…" />
+        <CommandList>
+          <CommandEmpty>No components found.</CommandEmpty>
+          {GROUPS.map((group) => (
+            <CommandGroup key={group.category} heading={group.category}>
+              {group.items.map((component) => (
+                <CommandItem
+                  key={component.slug}
+                  value={component.name}
+                  onSelect={() => {
+                    setOpen(false)
+                    navigate(`/docs/${component.slug}`)
+                  }}
+                >
+                  {component.name}
+                  {/* The usage count doubles as the coverage map, same as the
+                      sidebar badge; a component with none shows no hint rather
+                      than a zero. */}
+                  {component.examples?.length ? (
+                    <CommandShortcut>{component.examples.length}</CommandShortcut>
+                  ) : null}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          ))}
+        </CommandList>
+      </CommandDialog>
     </>
   )
 }

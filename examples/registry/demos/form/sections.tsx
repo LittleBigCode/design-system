@@ -1,8 +1,9 @@
 import {
   Button,
+  Field,
   FieldDescription,
+  FieldLabel,
   Form,
-  FormField,
   Input,
   Textarea,
 } from "@diametral/design-system/react"
@@ -11,37 +12,41 @@ export default function FormSections() {
     <Form className="max-w-sm" onSubmit={(event) => event.preventDefault()}>
       <fieldset>
         <legend>Company</legend>
-        <FormField label="Legal name" htmlFor="form-s-name">
+        <Field>
+          <FieldLabel htmlFor="form-s-name">Legal name</FieldLabel>
           <Input
             id="form-s-name"
             name="legal-name"
             defaultValue="Atelier Nord SAS"
           />
-        </FormField>
-        <FormField label="SIRET" htmlFor="form-s-siret">
+        </Field>
+        <Field>
+          <FieldLabel htmlFor="form-s-siret">SIRET</FieldLabel>
           <Input id="form-s-siret" name="siret" defaultValue="81234567800019" />
           <FieldDescription>Fourteen digits, no spaces.</FieldDescription>
-        </FormField>
+        </Field>
       </fieldset>
 
       <fieldset>
         <legend>Billing contact</legend>
-        <FormField label="Email" htmlFor="form-s-email">
+        <Field>
+          <FieldLabel htmlFor="form-s-email">Email</FieldLabel>
           <Input
             id="form-s-email"
             name="email"
             type="email"
             defaultValue="compta@atelier-nord.fr"
           />
-        </FormField>
-        <FormField label="Notes" htmlFor="form-s-notes">
+        </Field>
+        <Field>
+          <FieldLabel htmlFor="form-s-notes">Notes</FieldLabel>
           <Textarea
             id="form-s-notes"
             name="notes"
             rows={2}
             placeholder="Purchase order reference, payment terms…"
           />
-        </FormField>
+        </Field>
       </fieldset>
 
       <div className="flex justify-end gap-2">

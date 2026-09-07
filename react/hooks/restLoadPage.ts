@@ -1,7 +1,5 @@
 
 
-import type { LoadPageArgs, LoadPageResult } from "../components/DataGrid";
-
 export interface RestLoadPageOptions {
   /** Response header carrying the unfiltered total. Defaults to "X-Total-Count". */
   totalHeader?: string;
@@ -17,8 +15,19 @@ export interface RestLoadPageOptions {
   orderParam?: string;
 }
 
+interface LoadPageArgs {
+  page?: number;
+  pageSize?: number;
+  /** `DataTable`'s own sorting state — an array, tanstack's shape. Only the
+   *  first entry reaches the request: a json-server-style endpoint sorts on
+   *  one column. */
+  sort?: { id: string; desc: boolean }[];
+  /** `DataTable`'s own column-filters state. */
+  filters?: { id: string; value: unknown }[];
+}
+
 /**
- * Build a `loadPage` function for `<DataGrid loadPage>` from a json-server-style
+ * Build a `loadPage` function for `<DataTable loadPage>` from a json-server-style
  * REST endpoint. Translates page/pageSize/sort/filters into query params,
  * fetches `baseUrl`, and resolves `{ rows, total }` — `total` read from the
  * `X-Total-Count` header (or `options.totalHeader`), falling back to the row count.
@@ -26,21 +35,27 @@ export interface RestLoadPageOptions {
 /* ============================================================================
    Diametral Design System — restLoadPage
    ----------------------------------------------------------------------------
-   Adapt a json-server-style REST endpoint to the DS <DataGrid loadPage> prop.
+   Adapt a json-server-style REST endpoint to the DS <DataTable loadPage> prop.
 
-       <DataGrid columns={cols} pageSize={20}
-                 loadPage={restLoadPage("/api/items")} />
+       <DataTable columns={cols} pageSize={20}
+                  loadPage={restLoadPage("/api/items")} />
 
    `restLoadPage(baseUrl, options)` returns a `loadPage({ page, pageSize, sort,
-   filters })` function (matching DataGrid's LoadPageArgs) that fetches:
+   filters })` function (matching DataTable's own loadPage args) that fetches:
 
        `${baseUrl}?_page=${page}&_limit=${pageSize}`
-         + `&_sort=<key>&_order=<dir>`        (when `sort` is set)
-         + one `<name>=<value>` param per non-empty filter
+         + `&_sort=<id>&_order=<asc|desc>`    (from `sort`'s first entry, when set)
+         + one `<id>=<value>` param per column filter
 
    and resolves `{ rows, total }` — `total` from the `X-Total-Count` response
    header (configurable via `options.totalHeader`), falling back to the
    returned array length. Plain-JS ESM, no JSX, no build step, uses `fetch`.
+
+   Batch 13 (#46): `sort`/`filters` moved from DataGrid's singular
+   `{ key, dir }` object and plain filter record to DataTable's array shapes
+   (tanstack's `SortingState`/`ColumnFiltersState`) — only the query-building
+   below changed; the endpoint contract (`_page`/`_limit`/`_sort`/`_order`,
+   `X-Total-Count`) did not.
    ============================================================================ */
 
 export function restLoadPage(baseUrl: string, options: RestLoadPageOptions = {}) {
@@ -53,20 +68,21 @@ export function restLoadPage(baseUrl: string, options: RestLoadPageOptions = {})
     orderParam = "_order",
   } = options;
 
-  return function loadPage({ page, pageSize, sort, filters }: Partial<LoadPageArgs> = {}) {
+  return function loadPage({ page, pageSize, sort, filters }: LoadPageArgs = {}) {
     const params = new URLSearchParams();
     if (page != null) params.set(pageParam, String(page));
     if (pageSize != null) params.set(limitParam, String(pageSize));
 
-    if (sort && sort.key) {
-      params.set(sortParam, sort.key);
-      params.set(orderParam, sort.dir || "asc");
+    const [primarySort] = sort || [];
+    if (primarySort) {
+      params.set(sortParam, primarySort.id);
+      params.set(orderParam, primarySort.desc ? "desc" : "asc");
     }
 
     if (filters) {
-      for (const [key, value] of Object.entries(filters)) {
+      for (const { id, value } of filters) {
         if (value !== undefined && value !== null && value !== "") {
-          params.set(key, String(value));
+          params.set(id, String(value));
         }
       }
     }

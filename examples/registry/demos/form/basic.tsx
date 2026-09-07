@@ -1,8 +1,9 @@
 import {
   Button,
+  Field,
   FieldDescription,
+  FieldLabel,
   Form,
-  FormField,
   Input,
   Textarea,
 } from "@diametral/design-system/react"
@@ -20,16 +21,18 @@ export default function FormBasic() {
         setSubmitted(JSON.stringify(values))
       }}
     >
-      <FormField label="Name" htmlFor="form-name">
+      <Field>
+        <FieldLabel htmlFor="form-name">Name</FieldLabel>
         <Input id="form-name" name="name" defaultValue="Camille Roux" />
-      </FormField>
+      </Field>
 
-      <FormField label="Brief" htmlFor="form-brief">
+      <Field>
+        <FieldLabel htmlFor="form-brief">Brief</FieldLabel>
         <Textarea id="form-brief" name="brief" rows={3} />
         <FieldDescription>
           Submitting logs the collected values below.
         </FieldDescription>
-      </FormField>
+      </Field>
 
       <Button type="submit" className="self-start">
         Send

@@ -2,8 +2,8 @@ import type { CSSProperties } from "react"
 
 import {
   BulletChart,
-  DataGrid,
-  type DataGridColumn,
+  DataTable,
+  type ColumnDef,
 } from "@diametral/design-system/react"
 
 type Rep = { name: string; closed: number; quota: number }
@@ -15,24 +15,21 @@ const REPS: Rep[] = [
   { name: "Jonas Berger", closed: 194, quota: 320 },
 ]
 
-/* `DataTable` is the source's name for this; here the grid is `DataGrid`, whose
-   columns carry a `render` rather than a `cell` and are keyed by `key`.
-
-   Collapsing `--ds-bullet-label` to zero drops the label column, because the
-   table's own column already names the row — which is also why `aria-label` has
-   to supply the accessible name: with no visible label there is nothing to
-   derive one from. */
-const COLUMNS: DataGridColumn<Rep>[] = [
-  { key: "name", header: "Rep" },
+/* Collapsing `--ds-bullet-label` to zero drops the label column, because the
+   table's own column already names the row — which is also why `aria-label`
+   has to supply the accessible name: with no visible label there is nothing
+   to derive one from. */
+const COLUMNS: ColumnDef<Rep>[] = [
+  { accessorKey: "name", header: "Rep" },
   {
-    key: "attainment",
+    id: "attainment",
     header: "Attainment",
-    render: (row) => (
+    cell: ({ row }) => (
       <BulletChart
-        value={row.closed}
-        target={row.quota}
+        value={row.original.closed}
+        target={row.original.quota}
         max={480}
-        aria-label={`${row.name} attainment`}
+        aria-label={`${row.original.name} attainment`}
         formatValue={(figure) => `€${figure}k`}
         className="min-w-56"
         style={
@@ -47,5 +44,5 @@ const COLUMNS: DataGridColumn<Rep>[] = [
 ]
 
 export default function BulletChartInTable() {
-  return <DataGrid columns={COLUMNS} rows={REPS} rowKey={(row) => row.name} />
+  return <DataTable columns={COLUMNS} data={REPS} rowKey={(row) => row.name} />
 }

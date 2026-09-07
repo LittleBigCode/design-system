@@ -1,27 +1,31 @@
 import {
   Button,
+  Field,
   FieldDescription,
-  FormField,
+  FieldLabel,
   Input,
   PhoneInput,
 } from "@diametral/design-system/react"
 export default function PhoneInputContactForm() {
   return (
     <div className="flex w-full max-w-sm flex-col gap-4">
-      <FormField label="Full name" htmlFor="phone-input-contact-name">
+      <Field>
+        <FieldLabel htmlFor="phone-input-contact-name">Full name</FieldLabel>
         <Input id="phone-input-contact-name" defaultValue="Léa Réveil" />
-      </FormField>
-      <FormField label="Email" htmlFor="phone-input-contact-email">
+      </Field>
+      <Field>
+        <FieldLabel htmlFor="phone-input-contact-email">Email</FieldLabel>
         <Input
           id="phone-input-contact-email"
           type="email"
           defaultValue="lreveil@diametral.com"
         />
-      </FormField>
-      <FormField label="Phone">
+      </Field>
+      <Field>
+        <FieldLabel>Phone</FieldLabel>
         <PhoneInput defaultValue="+32470123456" />
         <FieldDescription>Dial code included in the value.</FieldDescription>
-      </FormField>
+      </Field>
       <Button size="sm" className="self-start">
         Save contact
       </Button>
