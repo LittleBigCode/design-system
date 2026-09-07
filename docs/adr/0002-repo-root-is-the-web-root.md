@@ -1,6 +1,6 @@
 # ADR 0002 — The repo root is the web root; the React workbench takes a subpath
 
-- **Status:** Superseded by [ADR 0003](0003-one-generated-site-no-bundler-dependent-surface.md)
+- **Status:** Accepted
 - **Date:** 2026-09-02
 - **Decided by:** Batch 0.2 execution ([#5](https://github.com/LittleBigCode/design-system/issues/5)), overriding defect **B** as recorded
 - **Applies from:** the next `pages.yml` deploy

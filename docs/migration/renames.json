@@ -918,7 +918,7 @@
       "from": "Tooltip (label + placement props)",
       "to": "Tooltip + TooltipTrigger + TooltipContent + TooltipProvider",
       "batch": "8",
-      "note": "A defect swap, not a rename of convenience. 0.11's Tooltip put role=\"tooltip\" on a sibling span with no id and no aria-describedby on the trigger, and had no Escape dismissal. `<Tooltip label=\"Save\" placement=\"bottom\"><IconButton/></Tooltip>` becomes `<Tooltip><TooltipTrigger render={<IconButton aria-label=\"Save\"/>}/><TooltipContent side=\"bottom\">Save</TooltipContent></Tooltip>`. The trigger MUST carry its own accessible name: the popup is visual-only by design and wires no description. Pinned by tests/tooltip-regress.spec.ts."
+      "note": "A defect swap, not a rename of convenience. 0.11's Tooltip put role=\"tooltip\" on a sibling span with no id and no aria-describedby on the trigger, and had no Escape dismissal. `<Tooltip label=\"Save\" placement=\"bottom\"><IconButton/></Tooltip>` becomes `<Tooltip><TooltipTrigger render={<IconButton aria-label=\"Save\"/>}/><TooltipContent side=\"bottom\">Save</TooltipContent></Tooltip>`. The trigger MUST carry its own accessible name: the popup is visual-only by design and wires no description. Pinned by site/tests/tooltip-regress.spec.ts."
     },
     {
       "kind": "class",
@@ -932,7 +932,7 @@
       "from": "Drawer (open/onClose/placement/heading/footer props)",
       "to": "Sheet + SheetTrigger + SheetContent + SheetHeader + SheetTitle + SheetDescription + SheetFooter + SheetClose",
       "batch": "8",
-      "note": "THE MERGE. 0.11's one Drawer did two jobs and the absorption splits it, so `placement` lands on Sheet, not on the new Drawer. `<Drawer open placement=\"right\" heading=\"Filters\" footer={…}>` becomes `<Sheet open><SheetContent side=\"right\"><SheetHeader><SheetTitle>Filters</SheetTitle></SheetHeader>…<SheetFooter>…</SheetFooter></SheetContent></Sheet>`. Earned on a measured defect: 0.11 had no focus trap and no portal, so Tab walked out of an open drawer. Pinned by tests/drawer-regress.spec.ts."
+      "note": "THE MERGE. 0.11's one Drawer did two jobs and the absorption splits it, so `placement` lands on Sheet, not on the new Drawer. `<Drawer open placement=\"right\" heading=\"Filters\" footer={…}>` becomes `<Sheet open><SheetContent side=\"right\"><SheetHeader><SheetTitle>Filters</SheetTitle></SheetHeader>…<SheetFooter>…</SheetFooter></SheetContent></Sheet>`. Earned on a measured defect: 0.11 had no focus trap and no portal, so Tab walked out of an open drawer. Pinned by site/tests/drawer-regress.spec.ts."
     },
     {
       "kind": "export",
@@ -960,7 +960,7 @@
       "from": "Kanban (items prop, seeded and then self-owned)",
       "to": "Kanban (items + onItemsChange, or defaultItems)",
       "batch": "8",
-      "note": "A defect swap: 0.11 was 49 lines of HTML5 drag with zero ARIA and no keyboard path at all. The board is now a @dnd-kit lift/move/drop state machine — the grip is a real button, so Space lifts, arrows move, Space drops, Escape cancels. `items` is now genuinely CONTROLLED: passing it without `onItemsChange` pins every card. Seeding behaviour is `defaultItems`. `onMove` reports (itemKey, toColumnId) and fires only on a column change, not a reorder. Pinned by tests/kanban-regress.spec.ts."
+      "note": "A defect swap: 0.11 was 49 lines of HTML5 drag with zero ARIA and no keyboard path at all. The board is now a @dnd-kit lift/move/drop state machine — the grip is a real button, so Space lifts, arrows move, Space drops, Escape cancels. `items` is now genuinely CONTROLLED: passing it without `onItemsChange` pins every card. Seeding behaviour is `defaultItems`. `onMove` reports (itemKey, toColumnId) and fires only on a column change, not a reorder. Pinned by site/tests/kanban-regress.spec.ts."
     },
     {
       "kind": "class",

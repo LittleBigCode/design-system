@@ -8,7 +8,7 @@ export const ALLOWLIST = [
   // #15 — 9 held components fail the axe gate (aria-allowed-attr, label,
   // color-contrast). Listed per #15's own findings table rather than only
   // what one local run reproduced: axe's color-contrast/aria checks are
-  // timing-sensitive on these async-mounting components (tests/README.md's
+  // timing-sensitive on these async-mounting components (site/tests/README.md's
   // "Known limitation: run-to-run variance" — the same route passed here on
   // one run and failed on the next), so the issue's table is the source of
   // truth, not a single sample.

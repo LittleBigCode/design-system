@@ -4,8 +4,8 @@ Playwright suites for the Diametral Design System, run against the buildless
 pages `npm run build` generates — `examples/components/<slug>.html` (one page
 per registry entry) plus the hand-written showcase pages. This is the single
 test harness for the package: it covers visual regression, accessibility, and
-the per-component behavior-regression specs that used to live only in the
-retired React docs app's own test suite.
+the per-component behavior-regression specs that used to live only under
+`site/tests/`.
 
 The design system itself stays dependency-free for consumers — Playwright is a
 **devDependency** used only for testing and never ships in the published
@@ -17,15 +17,15 @@ package.
   slug onto its generated page; `COMPONENT_ROUTES` is derived by reading the
   `examples/components/` directory (not hand-listed), so a new registry entry
   is covered with no test edit; `pinTheme`/`expectTheme`/`settle` mirror the
-  same-named helpers the retired React docs app's suites used.
+  same-named helpers `site/`'s suites used.
 - `visual.spec.js` — full-page screenshot comparison over a curated set of
   pages (see below).
 - `a11y.spec.js` — axe-core over every generated component page, both themes.
 - `a11y-allowlist.js` — known pre-existing axe failures, each tied to an open
   issue, excluded from the blocking check only (axe still reports them).
 - `*-regress.spec.ts` + `chart-marks.spec.ts` — per-component behavior
-  regression specs moved here unedited from the retired React docs app's test
-  suite (issue #33); they import only `routePath` and `settle` from `./harness`.
+  regression specs moved here unedited from `site/tests/` (issue #33); they
+  import only `routePath` and `settle` from `./harness`.
 
 ## How it works
 
@@ -38,7 +38,7 @@ package.
   pages) plus 15 generated component pages picked to exercise the visual
   language rather than component count — tone axis, 1px rules, form controls,
   dense data, chart palette, overlay layering, app chrome, date grids (the
-  same 17 routes the retired React docs app's visual.spec.ts used before issue #33). For each
+  same 17 routes `site/tests/visual.spec.ts` used before issue #33). For each
   page it:
   1. navigates to the page,
   2. waits for the network to go idle and for `document.fonts.ready`,
@@ -129,16 +129,6 @@ On failure the error message names, for each blocking violation, the rule id,
 the affected page, and a representative node selector, so the report points
 straight at the offending element.
 
-### Known limitation: run-to-run variance
-
-Violation counts move between runs on the same commit (one pair of runs reported
-43 and then 80 `color-contrast` hits). The set of _failing routes_ is far more
-stable than the per-run counts, so treat the counts as indicative and the route
-list as the signal. Likely causes are the 400 ms settle in `settle()` being
-marginal for chart animation, and axe evaluating whatever the playground happens
-to have rendered. Worth stabilising before the gate becomes blocking — otherwise
-it will flake.
-
 ```bash
 # Install the extra devDependency once (the test:a11y npm script runs the spec):
 npm i
@@ -154,7 +144,7 @@ npx playwright test tests/a11y.spec.js
 (`tests/*-regress.spec.ts` + `tests/chart-marks.spec.ts`) against the generated
 pages — drawer focus trap, tooltip, tree, stepper, kanban, calendar, chart
 marks, color picker, data table, radio group, and three batch-specific specs.
-They were moved here unedited from the retired React docs app's test suite (issue #33): only
+They were moved here unedited from `site/tests/` (issue #33): only
 `tests/harness.ts`'s `routePath()`/`settle()` change under them, mapping
 `/docs/<slug>` onto `examples/components/<slug>.html` instead of a Vite dev
 route.

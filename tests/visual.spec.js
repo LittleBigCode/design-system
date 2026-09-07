@@ -30,14 +30,13 @@ const PAGES = [
   { name: "templates-login", path: "/examples/templates/login.html" },
   { name: "templates-dashboard", path: "/examples/templates/dashboard.html" },
 
-  // The 17 curated routes the retired React docs app's visual.spec.ts used,
-  // picked to exercise the visual language rather than component count: tone
-  // axis, 1px rules, form controls, dense data, chart palette, overlay
-  // layering, app chrome, date grids. Of the 17, "overview" and "showcase"
-  // have no root equivalent (that app's SPA landing/index routes) and are
-  // already covered above by "index" and "kitchen-sink"; the other 15 map
-  // onto the generated component pages (examples/components/<slug>.html) by
-  // slug.
+  // The 17 curated routes site/tests/visual.spec.ts used, picked to exercise
+  // the visual language rather than component count: tone axis, 1px rules,
+  // form controls, dense data, chart palette, overlay layering, app chrome,
+  // date grids. Of the 17, "overview" and "showcase" have no root equivalent
+  // (site's SPA landing/index routes) and are already covered above by
+  // "index" and "kitchen-sink"; the other 15 map onto the generated
+  // component pages (examples/components/<slug>.html) by slug.
   { name: "button", path: "/examples/components/button.html" },
   { name: "badge", path: "/examples/components/badge.html" },
   { name: "card", path: "/examples/components/card.html" },

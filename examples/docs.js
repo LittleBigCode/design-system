@@ -1,8 +1,8 @@
 /* ============================================================================
    Workbench runtime (issue #32) — mounts a component live with a controls rail
-   that edits its props and prints the generated JSX. Ported from the retired
-   React docs app's playground.tsx and format-jsx.ts: the substitution rules
-   (always-present props, prop markers, children insertion) match those
+   that edits its props and prints the generated JSX. Ported from
+   site/src/docs/playground.tsx and site/src/docs/format-jsx.ts: the substitution
+   rules (always-present props, prop markers, children insertion) match those
    exactly, minus the anatomy/part-highlighting tree (explicitly out of scope).
    ============================================================================ */
 import { createElement as h } from "react"
@@ -34,7 +34,7 @@ function extraDefault(control) {
   return control.default ?? ""
 }
 
-/* -- JSX template substitution, ported from the retired React docs app's format-jsx.ts -- */
+/* -- JSX template substitution, ported from site/src/docs/format-jsx.ts ----- */
 
 function findTagEnd(source, from) {
   let depth = 0

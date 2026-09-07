@@ -191,8 +191,8 @@ export default function PanelFormSection() {
 
 ## Surface 3 — Playground template (`playgrounds/panel.tsx`)
 
-Renders **every exported part** (the code strip is the only place a reader
-sees each part in isolation). Extra text props beyond `children` become typed props with defaults matching
+Renders **every exported part** (the code strip is the anatomy navigator).
+Extra text props beyond `children` become typed props with defaults matching
 the `texts` config; `{...props}` passes the control-panel prop bag through.
 
 ```tsx
@@ -210,9 +210,8 @@ import {
 } from "@diametral/design-system/react"
 import { Switch } from "@diametral/design-system/react"
 
-// The template renders every Panel part: the Workbench's code strip is the
-// only place a reader sees each part in isolation, so a part missing here
-// would not be shown at all.
+// The template renders every Panel part: the Workbench's code strip doubles as
+// the anatomy navigator, so a part missing here would not be selectable.
 export default function PanelPlayground({
   children,
   description = "Choose which updates land in your inbox.",

@@ -6,9 +6,9 @@ name: Accessibility tests
 # playwright.config.js) and the same Chromium setup.
 
 # Scope: the root `tests/*.spec.js`/`tests/*.spec.ts` suites over `examples/` —
-# both the CSS/web-component layer and the generated React component pages,
-# exercised through the same buildless served output. One harness, no separate
-# job for the React layer (see issue #33 and #34).
+# the CSS and web-component layer, exercised through the buildless generated
+# pages. The React docs app has its own suites under `site/tests/*.spec.ts`,
+# run by the `site` job in ci.yml.
 
 on:
   pull_request:

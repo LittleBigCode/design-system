@@ -4,17 +4,6 @@ All notable changes to the Diametral Design System are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/), and the project
 adheres to [Semantic Versioning](https://semver.org/) — see [docs/versioning.md](docs/versioning.md).
 
-## [Unreleased]
-
-### Removed
-- **`site/` and `deploy/`, retired outright** (issue #34). The Vite + React "workbench" SPA
-  ADR 0002 mounted at `/react-workbench/` rendered nothing the generated `examples/components/`
-  pages don't now render themselves (issue #32), and its regression specs already moved onto
-  the root Playwright harness (issue #33). `pages.yml` no longer builds a second app, copies a
-  redirect, or mounts a subpath with a `404.html` SPA-fallback; `ci.yml` drops the `site` job.
-  See [ADR 0003](docs/adr/0003-one-generated-site-no-bundler-dependent-surface.md), which
-  supersedes ADR 0002.
-
 ## [1.0.0-beta.8] — 2026-09-03
 
 **The last beta, and the only batch that buys a dependency or changes behaviour on a

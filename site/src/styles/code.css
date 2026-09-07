@@ -1,0 +1,29 @@
+/* Shiki emits both themes as CSS variables on every span (--shiki-light /
+   --shiki-dark) because the plugin runs with `defaultColor: false`. Switching
+   theme is therefore a repaint of these two rules, not a re-highlight. */
+/* `.code-tokens` is the playground's runtime-tokenized block: it carries the
+   same per-span CSS variables, but must NOT get the grid rule below — that one
+   exists for shiki's own line spans and would stack every token vertically. */
+.shiki,
+.shiki span,
+.code-tokens span {
+  color: var(--shiki-light);
+  background-color: transparent;
+}
+
+.dark .shiki,
+.dark .shiki span,
+.dark .code-tokens span {
+  color: var(--shiki-dark);
+}
+
+.shiki {
+  background-color: transparent !important;
+}
+
+.shiki code {
+  display: grid;
+  /* Long lines scroll the container rather than wrapping: wrapped JSX loses the
+     indentation that carries the nesting. */
+  white-space: pre;
+}
