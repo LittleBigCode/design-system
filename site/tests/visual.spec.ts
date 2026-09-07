@@ -86,7 +86,11 @@ for (const theme of THEMES) {
     for (const { name, path } of ROUTES) {
       test(`${name} (${theme})`, async ({ page }) => {
         await pinTheme(page, theme)
-        await page.goto(path)
+        const response = await page.goto(path)
+        // Asserted directly rather than inferred from expectTheme(): the note on
+        // RAW_ROUTES above is the whole reason this line exists, and the light
+        // half of that failure was silent. tests/visual.spec.js carries the twin.
+        expect(response?.status(), `${path} did not serve`).toBe(200)
         await settle(page)
         await expectTheme(page, theme)
         await page.addStyleTag({ content: STABILIZE_CSS })
