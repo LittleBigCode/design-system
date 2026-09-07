@@ -290,7 +290,7 @@
 .ds-calendar-day-button[data-range-end="true"] {
   border-radius: var(--cell-radius);
   background-color: var(--ds-accent);
-  color: var(--ds-on-accent);
+  color: var(--ds-noir);
 }
 .ds-calendar-day-button[data-range-middle="true"] {
   border-radius: 0;
@@ -315,9 +315,9 @@
 .ds-calendar-day-button[data-range-start="true"] {
   border-radius: var(--cell-radius);
   background-color: var(--ds-accent);
-  color: var(--ds-on-accent);
+  color: var(--ds-noir);
 }
 .ds-calendar-day-button[data-selected-single="true"] {
   background-color: var(--ds-accent);
-  color: var(--ds-on-accent);
+  color: var(--ds-noir);
 }

@@ -1,8 +1,8 @@
 .ds-code-block {
   overflow: hidden;
   border-radius: 0;
-  border: 1px solid var(--ds-black);
-  background-color: var(--ds-black);
+  border: 1px solid var(--ds-noir);
+  background-color: var(--ds-noir);
   font-family: ui-monospace, "SF Mono", "Geist Mono", Menlo, Consolas, monospace;
   font-size: 0.875rem;
   line-height: calc(1.25 / 0.875);
