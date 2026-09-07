@@ -21,17 +21,29 @@ import AxeBuilder from "@axe-core/playwright";
 const FAIL_ON = ["critical", "serious"];
 
 // Key static pages, addressed relative to baseURL (http://localhost:8080).
+// Issue #31 moved the home page to the repo root and freed examples/components/
+// for the generator, sending the hand-written pages to examples/css/. The `name`
+// keys are what the reports are read by, so they kept their identity across the
+// move.
 const PAGES = [
-  { name: "index", path: "/examples/index.html" },
+  { name: "index", path: "/index.html" },
   { name: "kitchen-sink", path: "/examples/kitchen-sink.html" },
-  { name: "components-buttons", path: "/examples/components/buttons.html" },
-  { name: "components-forms", path: "/examples/components/forms.html" },
+  { name: "components-buttons", path: "/examples/css/buttons.html" },
+  { name: "components-forms", path: "/examples/css/forms.html" },
   // The only page that exercises the 11 web components; it was in neither suite.
-  { name: "components-web-components", path: "/examples/components/web-components.html" },
+  { name: "components-web-components", path: "/examples/css/web-components.html" },
 ];
 
-// Settle a page the same way the visual suite does before measuring it.
-async function settle(page) {
+// Navigate, assert the route actually served, then settle the same way the
+// visual suite does before measuring.
+//
+// The status check is the point: axe on a 404 error page finds no violations,
+// so a route that moved reads as a page that passed. Four of the five above
+// 404'd from #31's move until issue #39 measured them, and this gate stayed
+// green throughout. Same assertion, same reason, as visual.spec.js's.
+async function goTo(page, path) {
+  const response = await page.goto(path);
+  expect(response?.status(), `${path} did not serve`).toBe(200);
   await page.waitForLoadState("networkidle");
   await page.evaluate(() => document.fonts.ready);
 }
@@ -62,8 +74,7 @@ async function expectNoSeriousViolations(page, pageName) {
 
 for (const { name, path } of PAGES) {
   test(`a11y: ${name}`, async ({ page }) => {
-    await page.goto(path);
-    await settle(page);
+    await goTo(page, path);
     await expectNoSeriousViolations(page, name);
   });
 }
@@ -72,12 +83,11 @@ for (const { name, path } of PAGES) {
 // "Sign in" button, not the heading of the same text), wait for the console
 // shell (.ds-console) to mount, then audit the signed-in app chrome.
 test("a11y: demo (signed-in console)", async ({ page }) => {
-  await page.goto("/examples/demo.html");
-  await settle(page);
+  await goTo(page, "/examples/demo.html");
 
   await page.getByRole("button", { name: "Sign in" }).click();
   await page.locator(".ds-console").waitFor({ state: "visible" });
-  await settle(page);
+  await page.waitForLoadState("networkidle");
 
   await expectNoSeriousViolations(page, "demo");
 });
