@@ -103,9 +103,13 @@
 .ds-button--default[aria-expanded="true"] { background: var(--btn-hover); border-color: var(--btn-hover); }
 
 /* 0.11's outline-red danger. Kept apart from --destructive on purpose: one is
-   a bordered warning, the other a tinted one, and both names are published. */
+   a bordered warning, the other a tinted one, and both names are published.
+   --ds-danger-ink, not --ds-danger, for the text: --ds-danger is the base hue,
+   tuned as a fill/border, and on dark's near-black --ds-surface it measures
+   under 4.5:1 (issue #15) — the same pairing field.css's error text corrected
+   for the same reason. --ds-danger-ink is the mirror shade that clears it. */
 .ds-button--danger {
-  color: var(--ds-danger);
+  color: var(--ds-danger-ink);
   border-color: var(--ds-danger);
   background: var(--ds-surface);
 }

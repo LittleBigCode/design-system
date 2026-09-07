@@ -75,11 +75,15 @@
   font-weight: 500;
 }
 
-/* Complete step — solid ink marker showing a check instead of the number */
+/* Complete step — solid ink marker showing a check instead of the number.
+   --ds-bg, not --ds-on-accent, for the pair of the ink fill. --ds-on-accent is
+   pinned to --ds-blanc and the dark theme does not flip it, so on dark's
+   near-white --ds-ink it renders white on white (issue #15). --ds-bg is the
+   token that inverts with the theme — see button.css's note on the same fix. */
 .ds-stepper__step.is-complete .ds-stepper__marker {
   background: var(--ds-ink);
   border-color: var(--ds-ink);
-  color: var(--ds-on-accent);
+  color: var(--ds-bg);
   font-size: 0; /* hide the number; the check is drawn via ::after */
 }
 .ds-stepper__step.is-complete .ds-stepper__marker::after {
