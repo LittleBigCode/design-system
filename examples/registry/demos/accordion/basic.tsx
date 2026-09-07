@@ -1,4 +1,9 @@
-import { Accordion } from "@diametral/design-system/react"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@diametral/design-system/react"
 
 const SECTIONS = [
   {
@@ -22,5 +27,14 @@ const SECTIONS = [
 ]
 
 export default function AccordionBasic() {
-  return <Accordion items={SECTIONS} defaultOpen="tokens" />
+  return (
+    <Accordion defaultValue="tokens">
+      {SECTIONS.map((section) => (
+        <AccordionItem key={section.id} value={section.id}>
+          <AccordionTrigger>{section.title}</AccordionTrigger>
+          <AccordionContent>{section.content}</AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+  )
 }

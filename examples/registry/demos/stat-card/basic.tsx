@@ -2,7 +2,7 @@ import {
   StatCard,
   StatCardLabel,
   StatCardValue,
-} from "@diametral/ui/components/stat-card"
+} from "@diametral/design-system/react"
 
 export default function StatCardBasic() {
   return (

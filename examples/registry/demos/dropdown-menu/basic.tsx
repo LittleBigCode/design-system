@@ -1,22 +1,27 @@
 import {
   Button,
-  Dropdown,
-  MenuDivider,
-  MenuHeader,
-  MenuItem,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "@diametral/design-system/react"
 
 export default function DropdownMenuBasic() {
   return (
-    <Dropdown trigger={<Button>Account</Button>} align="end">
-      <MenuHeader>amorval@diametral.com</MenuHeader>
-      <MenuItem>Profile</MenuItem>
-      <MenuItem>Preferences</MenuItem>
-      <MenuDivider />
-      <MenuItem as="a" href="#docs">
-        Documentation
-      </MenuItem>
-      <MenuItem>Sign out</MenuItem>
-    </Dropdown>
+    <DropdownMenu>
+      <DropdownMenuTrigger render={<Button>Account</Button>} />
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>amorval@diametral.com</DropdownMenuLabel>
+        <DropdownMenuItem>Profile</DropdownMenuItem>
+        <DropdownMenuItem>Preferences</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem render={<a href="#docs" />}>
+          Documentation
+        </DropdownMenuItem>
+        <DropdownMenuItem>Sign out</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

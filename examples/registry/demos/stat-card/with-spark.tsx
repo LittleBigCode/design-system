@@ -3,7 +3,7 @@ import {
   StatCardLabel,
   StatCardSpark,
   StatCardValue,
-} from "@diametral/ui/components/stat-card"
+} from "@diametral/design-system/react"
 
 const POINTS = [4, 7, 6, 9, 8, 12, 11, 15]
 

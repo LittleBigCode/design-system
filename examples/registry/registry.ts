@@ -903,18 +903,18 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "tree",
     name: "Tree",
     category: "Data display",
-    exports: ["Tree", "type TreeProps", "type TreeNode"],
+    exports: ["Tree", "TreeItem", "TreeItemTrigger", "TreeItemContent", "TreeLeaf"],
     description:
       "A nested, expandable hierarchy — files, org units, categories.",
     intro: [
       "Reach for it when the nesting *is* the information. When it is only grouping, a list with headings is read faster and needs no expanding.",
-      "`defaultExpanded` takes node ids, so a tree can open straight to what matters rather than making the reader find it. Deep trees are worth opening on the reader's behalf.",
+      "Composed since 1.0.0: there's no `nodes` array or `defaultExpanded` — a branch is a `TreeItem` (`defaultOpen` to seed it open) wrapping a `TreeItemTrigger` and `TreeItemContent`, a childless node is a `TreeLeaf`. Deep trees are still worth opening on the reader's behalf, now via each branch's own `defaultOpen`.",
     ],
     examples: [
       {
         demo: "tree/basic",
         title: "A file tree",
-        description: "Two levels open at mount via `defaultExpanded`.",
+        description: "Two levels open at mount via `defaultOpen`.",
       },
     ],
   },
@@ -1727,19 +1727,19 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "accordion",
     name: "Accordion",
     category: "Disclosure",
-    exports: ["Accordion", "type AccordionProps", "type AccordionItem"],
+    exports: ["Accordion", "AccordionItem", "AccordionTrigger", "AccordionContent"],
     description:
-      "A stack of disclosure rows, driven by an `items` array rather than composed from children.",
+      "A stack of disclosure rows, composed from `AccordionItem`/`AccordionTrigger`/`AccordionContent` children.",
     intro: [
       "Reach for it when a page has more sections than a reader needs at once and each one stands alone — an FAQ, a settings group, a long form split into stages. When the sections are steps in an order, `Wizard` is the better shape.",
-      "`multiple` switches single-open to many-open, which also changes what `value` and `onChange` carry: a single id, or an array of them. The chevron rotates off `[aria-expanded]`, so the open state is one attribute and screen readers and the paint can never disagree.",
+      "Composed since 1.0.0: there's no `items` array or `multiple` prop — `openMultiple` switches single-open to many-open, and each `AccordionItem`'s `value` is what `defaultValue`/`value` (a single value, or an array under `openMultiple`) refers to. The chevron rotates off `[aria-expanded]`, so the open state is one attribute and screen readers and the paint can never disagree.",
     ],
     examples: [
       {
         demo: "accordion/basic",
         title: "Basic",
         description:
-          "Three rows, one open at mount. `defaultOpen` takes the item's `id`, not its index.",
+          "Three rows, one open at mount. `defaultValue` takes the item's `value`, not its index.",
       },
     ],
   },
@@ -1898,20 +1898,36 @@ export const COMPONENTS: ComponentDoc[] = [
   },
   {
     slug: "dropdown-menu",
-    name: "Dropdown",
+    name: "DropdownMenu",
     category: "Overlays",
-    exports: ["Dropdown", "MenuItem", "MenuHeader", "MenuDivider"],
+    exports: [
+      "DropdownMenu",
+      "DropdownMenuPortal",
+      "DropdownMenuTrigger",
+      "DropdownMenuContent",
+      "DropdownMenuGroup",
+      "DropdownMenuLabel",
+      "DropdownMenuItem",
+      "DropdownMenuCheckboxItem",
+      "DropdownMenuRadioGroup",
+      "DropdownMenuRadioItem",
+      "DropdownMenuSeparator",
+      "DropdownMenuShortcut",
+      "DropdownMenuSub",
+      "DropdownMenuSubTrigger",
+      "DropdownMenuSubContent",
+    ],
     description: "A menu of actions hanging off a trigger.",
     intro: [
-      "`trigger` takes either an element or a function. The function form receives `props` already carrying `aria-haspopup`, `aria-expanded` and the ref — spread it onto a custom trigger and the accessibility contract comes with it rather than being re-derived.",
-      '`MenuItem` is polymorphic through `as`: `"button"` for an action, `"a"` for navigation. Getting that right is what decides whether ⌘-click opens a new tab.',
+      "Renamed from `Dropdown` (and its `MenuItem`/`MenuHeader`/`MenuDivider` parts) in 1.0.0. `DropdownMenuTrigger`'s `render` takes over what `trigger` used to: hand it any element and the accessibility contract (`aria-haspopup`, `aria-expanded`, the ref) attaches to it rather than being re-derived.",
+      "`DropdownMenuItem`'s `render` is the polymorphism `MenuItem`'s `as` used to be: render an `<a>` for navigation, the default `<div>`-as-menuitem for an action. Getting that right is what decides whether ⌘-click opens a new tab.",
     ],
     examples: [
       {
         demo: "dropdown-menu/basic",
         title: "Actions and links",
         description:
-          '`align="end"` so the menu hangs back under a right-aligned trigger, with one `as="a"` row.',
+          '`align="end"` on the content so the menu hangs back under a right-aligned trigger, with one `render={<a/>}` row.',
       },
     ],
   },
@@ -1984,19 +2000,25 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "alert",
     name: "Alert",
     category: "Feedback",
-    exports: ["Alert", "type AlertProps", "type AlertType"],
+    exports: [
+      "Alert",
+      "AlertTitle",
+      "AlertDescription",
+      "AlertAction",
+      "AlertDismiss",
+    ],
     description:
-      "An inline message about the thing next to it. Four types, optionally dismissible.",
+      "An inline message about the thing next to it, composed from title/description/action/dismiss parts.",
     intro: [
       "An Alert stays in the layout and belongs to the content around it — it is the right shape for a condition a reader has to see while they work. A `Toast` interrupts and then leaves, so it suits the result of an action instead.",
-      "`type` is functional, never decorative: `danger` means something failed or will, and colouring an ordinary notice red spends the one signal that has to keep working.",
+      "`tone` is functional, never decorative (replaces `type` in 1.0.0): `danger` means something failed or will, and colouring an ordinary notice red spends the one signal that has to keep working. `AlertDismiss` is deliberately stateless — it renders the close button, but the caller decides what dismissed means and stops rendering the Alert itself.",
     ],
     examples: [
       {
         demo: "alert/basic",
-        title: "The four types",
+        title: "The four tones",
         description:
-          "`info`, `success`, `warning` and `danger`, with `dismissible` on the last one.",
+          "`info`, `success`, `warning` and `danger`, with `AlertDismiss` on the last one.",
       },
     ],
   },

@@ -3,7 +3,7 @@ import {
   StatCardDelta,
   StatCardLabel,
   StatCardValue,
-} from "@diametral/ui/components/stat-card"
+} from "@diametral/design-system/react"
 
 export default function StatCardWithDelta() {
   return (

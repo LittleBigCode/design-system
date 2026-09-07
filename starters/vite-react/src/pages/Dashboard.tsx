@@ -1,6 +1,10 @@
 import {
   PageHeader,
   StatCard,
+  StatCardDelta,
+  StatCardLabel,
+  StatCardSpark,
+  StatCardValue,
   Sparkline,
   Card,
   AreaChart,
@@ -26,14 +30,32 @@ export default function Dashboard() {
           marginBottom: "24px",
         }}
       >
-        <StatCard label="Revenue" value="€41k" delta="+18%" deltaDir="up">
-          <Sparkline data={REVENUE} fill />
+        <StatCard>
+          <StatCardLabel>Revenue</StatCardLabel>
+          <StatCardValue>€41k</StatCardValue>
+          <StatCardDelta direction="up">+18%</StatCardDelta>
+          <StatCardSpark>
+            <Sparkline data={REVENUE} fill />
+          </StatCardSpark>
         </StatCard>
-        <StatCard label="Sign-ups" value="1,284" delta="+9%" deltaDir="up">
-          <Sparkline data={SIGNUPS} fill />
+        <StatCard>
+          <StatCardLabel>Sign-ups</StatCardLabel>
+          <StatCardValue>1,284</StatCardValue>
+          <StatCardDelta direction="up">+9%</StatCardDelta>
+          <StatCardSpark>
+            <Sparkline data={SIGNUPS} fill />
+          </StatCardSpark>
         </StatCard>
-        <StatCard label="Active items" value="128" delta="-3%" deltaDir="down" />
-        <StatCard label="Churn" value="2.4%" delta="-0.5pt" deltaDir="up" />
+        <StatCard>
+          <StatCardLabel>Active items</StatCardLabel>
+          <StatCardValue>128</StatCardValue>
+          <StatCardDelta direction="down">-3%</StatCardDelta>
+        </StatCard>
+        <StatCard>
+          <StatCardLabel>Churn</StatCardLabel>
+          <StatCardValue>2.4%</StatCardValue>
+          <StatCardDelta direction="up">-0.5pt</StatCardDelta>
+        </StatCard>
       </div>
 
       <Card title="Revenue vs. sign-ups">

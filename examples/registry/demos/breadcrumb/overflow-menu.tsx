@@ -6,13 +6,15 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-  Dropdown,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
   IconButton,
-  MenuItem,
 } from "@diametral/design-system/react"
 
-/* The collapsed middle of the trail opens a menu. Dropdown and IconButton are
-   the incumbents until batch 7 lands the source's DropdownMenu parts. */
+/* The collapsed middle of the trail opens a menu, composed from DropdownMenu's
+   own parts since batch 13 (#46) — Dropdown/MenuItem retired. */
 export default function BreadcrumbOverflowMenu() {
   return (
     <Breadcrumb>
@@ -22,18 +24,20 @@ export default function BreadcrumbOverflowMenu() {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <Dropdown
-            align="start"
-            trigger={
-              <IconButton size="icon-sm" label="Show the levels between">
-                <BreadcrumbEllipsis />
-              </IconButton>
-            }
-          >
-            <MenuItem>Brand</MenuItem>
-            <MenuItem>Guidelines</MenuItem>
-            <MenuItem>2026</MenuItem>
-          </Dropdown>
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              render={
+                <IconButton size="icon-sm" label="Show the levels between">
+                  <BreadcrumbEllipsis />
+                </IconButton>
+              }
+            />
+            <DropdownMenuContent align="start">
+              <DropdownMenuItem>Brand</DropdownMenuItem>
+              <DropdownMenuItem>Guidelines</DropdownMenuItem>
+              <DropdownMenuItem>2026</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>

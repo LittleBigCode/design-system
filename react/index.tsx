@@ -191,13 +191,12 @@ export function Modal({ open, onClose, heading, footer, className, children }: M
    lockup replaced the placeholder mark. `name` and `sub` are unchanged. */
 
 /* ---- Extended component library (separate modules) ----------------------- */
-export * from "./components/Accordion.js";
-export * from "./components/Alert.js";
+export * from "./components/accordion.js";
+export * from "./components/alert.js";
 export * from "./components/avatar.js";
 export * from "./components/breadcrumb.js";
 export * from "./components/split-button.js";
 export * from "./components/description-list.js";
-export * from "./components/Dropdown.js";
 export * from "./components/empty.js";
 export * from "./components/pagination.js";
 export * from "./components/popover.js";
@@ -209,7 +208,7 @@ export * from "./components/stepper.js";
 export * from "./components/timeline.js";
 export * from "./components/toast.js";
 export * from "./components/tooltip.js";
-export * from "./components/Tree.js";
+export * from "./components/tree.js";
 export * from "./components/combobox.js";
 export * from "./components/date-picker.js";
 export * from "./components/file-upload.js";
@@ -222,7 +221,7 @@ export * from "./components/wizard.js";
 export * from "./components/drawer.js";
 export * from "./components/sheet.js";
 export * from "./components/command.js";
-export * from "./components/StatCard.js";
+export * from "./components/stat-card.js";
 export * from "./components/rating.js";
 export * from "./components/date-range-picker.js";
 export * from "./components/color-picker.js";

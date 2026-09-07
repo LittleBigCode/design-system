@@ -6,7 +6,7 @@ import {
   StatCardLabel,
   StatCardSpark,
   StatCardValue,
-} from "@diametral/ui/components/stat-card"
+} from "@diametral/design-system/react"
 
 // The axis (up/down) belongs to StatCardDelta, so it is routed there rather
 // than spread onto the root. Every part is rendered — the code strip doubles
