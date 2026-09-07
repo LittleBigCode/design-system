@@ -16,6 +16,9 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
+import { COMPONENT_ROUTES, expectTheme, pinTheme, THEMES } from "./harness.ts";
+import { isAllowlisted } from "./a11y-allowlist.js";
+
 // Severities that should fail the build. Moderate/minor are surfaced by axe but
 // tolerated so the gate flags only genuinely blocking issues.
 const FAIL_ON = ["critical", "serious"];
@@ -91,3 +94,52 @@ test("a11y: demo (signed-in console)", async ({ page }) => {
 
   await expectNoSeriousViolations(page, "demo");
 });
+
+// Every generated component page (examples/components/<slug>.html — derived
+// in harness.ts by reading that directory, not hand-listed), in both themes.
+// The shared docs-shell chrome (.docs-head, .docs-crosslink) is excluded from
+// the scan rather than allowlisted: it repeats on every page, and a real
+// chrome defect (#41's dark-theme badge/crosslink contrast findings) would
+// otherwise fail literally every route instead of pointing at its own page.
+//
+// A violation is still reported by axe here; it only skips failing the build
+// when tests/a11y-allowlist.js ties it to an open issue for this exact
+// route/theme/rule. Delete the allowlist entry once the issue is fixed, and
+// this gate starts enforcing it.
+async function expectNoNewViolations(page, routeName, theme) {
+  const { violations } = await new AxeBuilder({ page })
+    .exclude(".docs-head")
+    .exclude(".docs-crosslink")
+    .analyze();
+
+  const blocking = violations.filter(
+    (v) => FAIL_ON.includes(v.impact) && !isAllowlisted(routeName, theme, v.id),
+  );
+
+  if (blocking.length > 0) {
+    const details = blocking
+      .map((v) => {
+        const selector = v.nodes?.[0]?.target?.join(" ") ?? "(no node)";
+        return `  [${v.impact}] ${v.id} on ${routeName} [${theme}] — node: ${selector}\n    ${v.help} (${v.helpUrl})`;
+      })
+      .join("\n");
+    throw new Error(
+      `axe found ${blocking.length} new critical/serious accessibility violation(s) on ${routeName} [${theme}]:\n${details}`,
+    );
+  }
+
+  expect(blocking, `no new critical/serious axe violations on ${routeName} [${theme}]`).toEqual([]);
+}
+
+for (const theme of THEMES) {
+  test.describe(`a11y · ${theme}`, () => {
+    for (const { name, path } of COMPONENT_ROUTES) {
+      test(`a11y: ${name} (${theme})`, async ({ page }) => {
+        await pinTheme(page, theme);
+        await goTo(page, path);
+        await expectTheme(page, theme);
+        await expectNoNewViolations(page, name, theme);
+      });
+    }
+  });
+}

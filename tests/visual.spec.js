@@ -29,6 +29,29 @@ const PAGES = [
   { name: "components-modal", path: "/examples/css/modal.html" },
   { name: "templates-login", path: "/examples/templates/login.html" },
   { name: "templates-dashboard", path: "/examples/templates/dashboard.html" },
+
+  // The 17 curated routes site/tests/visual.spec.ts used, picked to exercise
+  // the visual language rather than component count: tone axis, 1px rules,
+  // form controls, dense data, chart palette, overlay layering, app chrome,
+  // date grids. Of the 17, "overview" and "showcase" have no root equivalent
+  // (site's SPA landing/index routes) and are already covered above by
+  // "index" and "kitchen-sink"; the other 15 map onto the generated
+  // component pages (examples/components/<slug>.html) by slug.
+  { name: "button", path: "/examples/components/button.html" },
+  { name: "badge", path: "/examples/components/badge.html" },
+  { name: "card", path: "/examples/components/card.html" },
+  { name: "item", path: "/examples/components/item.html" },
+  { name: "field", path: "/examples/components/field.html" },
+  { name: "input-group", path: "/examples/components/input-group.html" },
+  { name: "select", path: "/examples/components/select.html" },
+  { name: "table", path: "/examples/components/table.html" },
+  { name: "data-table", path: "/examples/components/data-table.html" },
+  { name: "chart", path: "/examples/components/chart.html" },
+  { name: "dialog", path: "/examples/components/dialog.html" },
+  { name: "dropdown-menu", path: "/examples/components/dropdown-menu.html" },
+  { name: "sidebar", path: "/examples/components/sidebar.html" },
+  { name: "tabs", path: "/examples/components/tabs.html" },
+  { name: "calendar", path: "/examples/components/calendar.html" },
 ];
 
 // Kill anything that would make a screenshot flake: in-flight animations,

@@ -1,13 +1,14 @@
 name: Accessibility tests
 
 # Runs axe-core (via @axe-core/playwright) against the static `examples/` pages and fails on any
-# critical/serious WCAG violation. Mirrors the visual-tests workflow: same
-# static server (started by playwright.config.js) and the same Chromium setup,
-# but runs only the a11y spec.
+# critical/serious WCAG violation, then runs the per-component behavior-regression
+# specs. Mirrors the visual-tests workflow: same static server (started by
+# playwright.config.js) and the same Chromium setup.
 
-# Scope: the root `tests/*.spec.js` suites over `examples/` — the CSS and
-# web-component layer. The React docs app has its own suites under
-# `site/tests/*.spec.ts`, run by the `site` job in ci.yml.
+# Scope: the root `tests/*.spec.js`/`tests/*.spec.ts` suites over `examples/` —
+# the CSS and web-component layer, exercised through the buildless generated
+# pages. The React docs app has its own suites under `site/tests/*.spec.ts`,
+# run by the `site` job in ci.yml.
 
 on:
   pull_request:
@@ -35,6 +36,9 @@ jobs:
 
       - name: Run accessibility tests
         run: npx playwright test tests/a11y.spec.js
+
+      - name: Run regression tests
+        run: npm run test:regress
 
       # On failure, publish the HTML report so the violations can be inspected
       # from the workflow run.
