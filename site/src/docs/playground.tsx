@@ -262,8 +262,13 @@ function ControlRow({
 }
 
 /**
- * A plain string option is both its own value and label; `{ value, label }`
- * splits them so the code the panel prints can differ from what it shows.
+ * A plain string option is both its own value and label. `SelectValue` needs no
+ * `items` map either way — Base UI resolves the trigger's displayed text from
+ * whichever `SelectItem`'s value matches, reading its rendered children as the
+ * label, so a `{ value, label }` option shows its shorter label there too.
+ *
+ * Base UI types the emitted value as nullable because a Select can be cleared;
+ * the panel offers no clear affordance, so a null falls back to UNSET.
  */
 function PanelSelect({
   label,
@@ -276,9 +281,20 @@ function PanelSelect({
   options: readonly SelectOption[]
   onValueChange: (value: string) => void
 }) {
+  // The trigger's text is resolved from `items`, not from the rendered
+  // SelectItem children — without this map a `{ value, label }` option shows its
+  // raw value once selected, even though the list showed the label.
+  const items = Object.fromEntries(
+    options.map((option) => [optionValue(option), optionLabel(option)])
+  )
+
   return (
-    <Select value={value} onValueChange={(next) => onValueChange(next ?? "")}>
-      <SelectTrigger aria-label={label}>
+    <Select
+      items={items}
+      value={value}
+      onValueChange={(next: string | null) => onValueChange(next ?? UNSET)}
+    >
+      <SelectTrigger size="sm" className="w-full" aria-label={label}>
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
@@ -406,7 +422,8 @@ export function GeneratedCode({
         </code>
       </pre>
       <Button
-        size="sm"
+        size="icon-sm"
+        variant="ghost"
         aria-label={copied ? "Copied" : "Copy code"}
         onClick={copy}
         className="absolute end-2 top-2 opacity-0 transition-opacity group-hover/code:opacity-100 focus-visible:opacity-100"

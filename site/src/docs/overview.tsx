@@ -4,7 +4,7 @@ import {
   Badge,
   Card,
   CardContent,
-  CardFooter,
+  CardDescription,
   CardHeader,
   CardTitle,
 } from "@diametral/design-system/react"
@@ -48,10 +48,10 @@ export function Overview() {
           <code className="font-mono text-xs">--ds-*</code> semantic.
         </p>
         <div className="mt-5 flex flex-wrap items-center gap-2">
-          <Badge>
+          <Badge variant="secondary">
             {documented.length} of {COMPONENTS.length} documented
           </Badge>
-          <Badge>{exampleCount} usages</Badge>
+          <Badge variant="outline">{exampleCount} usages</Badge>
         </div>
       </header>
 
@@ -96,6 +96,9 @@ export function Overview() {
             <Card key={group.category}>
               <CardHeader>
                 <CardTitle>{group.category}</CardTitle>
+                <CardDescription>
+                  {group.items.length} components
+                </CardDescription>
               </CardHeader>
               <CardContent className="flex flex-wrap gap-x-3 gap-y-1.5">
                 {group.items.map((component) => (
@@ -108,7 +111,6 @@ export function Overview() {
                   </Link>
                 ))}
               </CardContent>
-              <CardFooter>{`${group.items.length} components`}</CardFooter>
             </Card>
           ))}
         </div>

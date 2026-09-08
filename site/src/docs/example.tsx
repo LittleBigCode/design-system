@@ -1,4 +1,9 @@
-import { Tabs } from "@diametral/design-system/react"
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@diametral/design-system/react/tabs"
 
 import { CodeBlock } from "@/docs/code-block"
 import { Prose } from "@/docs/prose"
@@ -32,29 +37,22 @@ export function ExampleBlock({ example }: { example: Example }) {
         ) : null}
       </header>
 
-      <Tabs
-        defaultValue="preview"
-        items={[
-          {
-            id: "preview",
-            label: "Preview",
-            content: (
-              <div className="flex min-h-44 w-full items-center justify-center border border-border p-8">
-                <Component />
-              </div>
-            ),
-          },
-          {
-            id: "code",
-            label: "Code",
-            content: (
-              <div className="border border-border">
-                <CodeBlock html={demo.html} code={demo.code} />
-              </div>
-            ),
-          },
-        ]}
-      />
+      <Tabs defaultValue="preview">
+        <TabsList>
+          <TabsTrigger value="preview">Preview</TabsTrigger>
+          <TabsTrigger value="code">Code</TabsTrigger>
+        </TabsList>
+        <TabsContent value="preview">
+          <div className="flex min-h-44 w-full items-center justify-center border border-border p-8">
+            <Component />
+          </div>
+        </TabsContent>
+        <TabsContent value="code">
+          <div className="border border-border">
+            <CodeBlock html={demo.html} code={demo.code} />
+          </div>
+        </TabsContent>
+      </Tabs>
     </section>
   )
 }

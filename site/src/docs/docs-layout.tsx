@@ -1,3 +1,4 @@
+import * as React from "react"
 import {
   BellIcon,
   CaretCircleDownIcon,
@@ -14,6 +15,28 @@ import {
   WrenchIcon,
 } from "@phosphor-icons/react"
 import { Link, Outlet, useLocation } from "react-router"
+
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuBadge,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
+  SidebarProvider,
+  SidebarRail,
+  SidebarTrigger,
+} from "@diametral/design-system/react"
 
 import { ThemeToggle } from "@/components/theme-toggle"
 import { DocsSearch } from "@/docs/docs-search"
@@ -49,82 +72,108 @@ export function DocsLayout() {
     group.items.some((component) => `/docs/${component.slug}` === pathname)
   )?.category
 
+  // Sections are controlled, not `defaultOpen`: ⌘K can navigate straight into a
+  // component whose section is shut, and an uncontrolled section mounted closed
+  // would hide the row that just became active. Falling back to the active
+  // section keeps that in sync until the reader takes over a given section.
+  const [toggled, setToggled] = React.useState<Record<string, boolean>>({})
+
   return (
-    <div className="flex min-h-svh">
-      {/* `<details>` carries the disclosure state, the caret rotation and the
-          keyboard contract natively. `open` is set rather than controlled: ⌘K
-          can navigate straight into a component whose section is shut, and the
-          browser keeps whatever the reader opens after that. */}
-      <nav
-        aria-label="Components"
-        className="sticky top-0 hidden h-svh w-64 shrink-0 flex-col overflow-y-auto border-e border-border bg-sidebar md:flex"
-      >
-        <Link
-          to="/"
-          className="flex items-center gap-2 border-b border-border p-4"
-        >
-          <span className="flex aspect-square size-8 items-center justify-center bg-sidebar-primary text-sidebar-primary-foreground">
-            <SquaresFourIcon />
-          </span>
-          <span className="flex flex-col gap-0.5 leading-none">
-            <span className="font-heading font-semibold tracking-wider uppercase">
-              Diametral
-            </span>
-            <span className="text-xs text-muted-foreground">
-              Design system · {COMPONENTS.length} components
-            </span>
-          </span>
-        </Link>
+    <SidebarProvider>
+      <Sidebar>
+        <SidebarHeader>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton size="lg" render={<Link to="/" />}>
+                <div className="flex aspect-square size-8 items-center justify-center bg-sidebar-primary text-sidebar-primary-foreground">
+                  <SquaresFourIcon />
+                </div>
+                <div className="flex flex-col gap-0.5 leading-none">
+                  <span className="font-heading font-semibold tracking-wider uppercase">
+                    Diametral
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    Design system · {COMPONENTS.length} components
+                  </span>
+                </div>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarHeader>
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupLabel>Components</SidebarGroupLabel>
+            <SidebarMenu>
+              {GROUPS.map((group) => {
+                const CategoryIcon = CATEGORY_ICONS[group.category]
+                const open =
+                  toggled[group.category] ?? group.category === activeCategory
+                return (
+                  <Collapsible
+                    key={group.category}
+                    open={open}
+                    onOpenChange={(next) =>
+                      setToggled((previous) => ({
+                        ...previous,
+                        [group.category]: next,
+                      }))
+                    }
+                    render={<SidebarMenuItem />}
+                  >
+                    {/* A category has no page of its own — App.tsx routes only
+                        `/` and `/docs/:slug` — so unlike sidebar-08 the whole
+                        row is the trigger rather than a link plus a separate
+                        chevron action. */}
+                    <CollapsibleTrigger
+                      render={
+                        <SidebarMenuButton className="group/category">
+                          <CategoryIcon />
+                          <span>{group.category}</span>
+                          <CaretRightIcon className="ms-auto transition-transform group-aria-expanded/category:rotate-90" />
+                        </SidebarMenuButton>
+                      }
+                    />
+                    <CollapsibleContent>
+                      <SidebarMenuSub>
+                        {group.items.map((component) => {
+                          const to = `/docs/${component.slug}`
+                          const count = component.examples?.length ?? 0
+                          return (
+                            <SidebarMenuSubItem key={component.slug}>
+                              <SidebarMenuSubButton
+                                isActive={pathname === to}
+                                render={<Link to={to} />}
+                              >
+                                {component.name}
+                              </SidebarMenuSubButton>
+                              {/* The example count doubles as the coverage map:
+                                  a missing badge means the page has no usages
+                                  yet. `top-1` because the badge centres itself
+                                  off the peer menu button's data-size, which a
+                                  sub button — h-7, data-size="md" — never
+                                  emits. */}
+                              {count > 0 ? (
+                                <SidebarMenuBadge className="top-1">
+                                  {count}
+                                </SidebarMenuBadge>
+                              ) : null}
+                            </SidebarMenuSubItem>
+                          )
+                        })}
+                      </SidebarMenuSub>
+                    </CollapsibleContent>
+                  </Collapsible>
+                )
+              })}
+            </SidebarMenu>
+          </SidebarGroup>
+        </SidebarContent>
+        <SidebarRail />
+      </Sidebar>
 
-        <div className="flex flex-col gap-0.5 p-2">
-          {GROUPS.map((group) => {
-            const CategoryIcon = CATEGORY_ICONS[group.category]
-            return (
-              <details
-                key={group.category}
-                open={group.category === activeCategory}
-                className="group/category"
-              >
-                {/* A category has no page of its own — App.tsx routes only `/`
-                    and `/docs/:slug` — so the whole row is the toggle rather
-                    than a link plus a separate chevron action. */}
-                <summary className="flex cursor-default list-none items-center gap-2 p-2 text-sm hover:bg-sidebar-accent [&::-webkit-details-marker]:hidden">
-                  <CategoryIcon className="shrink-0" />
-                  <span className="flex-1">{group.category}</span>
-                  <CaretRightIcon className="shrink-0 transition-transform group-open/category:rotate-90" />
-                </summary>
-                <ul className="ms-4 flex flex-col border-s border-border ps-2">
-                  {group.items.map((component) => {
-                    const to = `/docs/${component.slug}`
-                    const count = component.examples?.length ?? 0
-                    return (
-                      <li key={component.slug} className="flex items-center">
-                        <Link
-                          to={to}
-                          aria-current={pathname === to ? "page" : undefined}
-                          className="flex-1 truncate p-1.5 text-sm text-muted-foreground hover:text-foreground aria-[current=page]:font-medium aria-[current=page]:text-foreground"
-                        >
-                          {component.name}
-                        </Link>
-                        {/* The example count doubles as the coverage map: a
-                            missing badge means the page has no usages yet. */}
-                        {count > 0 ? (
-                          <span className="shrink-0 pe-1.5 font-mono text-xs text-muted-foreground">
-                            {count}
-                          </span>
-                        ) : null}
-                      </li>
-                    )
-                  })}
-                </ul>
-              </details>
-            )
-          })}
-        </div>
-      </nav>
-
-      <div className="flex min-w-0 flex-1 flex-col">
+      <SidebarInset>
         <header className="sticky top-0 z-10 flex items-center gap-3 border-b border-border bg-background/85 px-6 py-3 backdrop-blur">
+          <SidebarTrigger />
           <DocsSearch />
           <div className="flex-1" />
           <ThemeToggle />
@@ -132,7 +181,7 @@ export function DocsLayout() {
         <main className="mx-auto w-full max-w-5xl px-6 py-10">
           <Outlet />
         </main>
-      </div>
-    </div>
+      </SidebarInset>
+    </SidebarProvider>
   )
 }

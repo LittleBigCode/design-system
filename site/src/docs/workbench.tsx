@@ -61,7 +61,7 @@ export function Workbench({ component }: { component: ComponentDoc }) {
           Workbench
         </h2>
         {controls.touched ? (
-          <Button size="sm" onClick={controls.reset}>
+          <Button variant="ghost" size="xs" onClick={controls.reset}>
             <ArrowCounterClockwiseIcon /> Reset
           </Button>
         ) : null}

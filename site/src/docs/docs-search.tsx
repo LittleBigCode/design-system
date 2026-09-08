@@ -3,6 +3,7 @@ import { useNavigate } from "react-router"
 import { MagnifyingGlassIcon } from "@phosphor-icons/react"
 
 import {
+  Command,
   CommandDialog,
   CommandEmpty,
   CommandGroup,
@@ -11,6 +12,7 @@ import {
   CommandList,
   CommandShortcut,
   Kbd,
+  KbdGroup,
 } from "@diametral/design-system/react"
 
 import { componentsByCategory } from "@registry/registry"
@@ -48,10 +50,10 @@ export function DocsSearch() {
       >
         <MagnifyingGlassIcon className="size-3.5 shrink-0" />
         <span className="flex-1 text-start">Search components…</span>
-        <span className="flex shrink-0 items-center gap-1">
+        <KbdGroup>
           <Kbd>⌘</Kbd>
           <Kbd>K</Kbd>
-        </span>
+        </KbdGroup>
       </button>
 
       <CommandDialog
@@ -60,32 +62,34 @@ export function DocsSearch() {
         title="Search components"
         description="Search for a component to open"
       >
-        <CommandInput placeholder="Search components…" />
-        <CommandList>
-          <CommandEmpty>No components found.</CommandEmpty>
-          {GROUPS.map((group) => (
-            <CommandGroup key={group.category} heading={group.category}>
-              {group.items.map((component) => (
-                <CommandItem
-                  key={component.slug}
-                  value={component.name}
-                  onSelect={() => {
-                    setOpen(false)
-                    navigate(`/docs/${component.slug}`)
-                  }}
-                >
-                  {component.name}
-                  {/* The usage count doubles as the coverage map, same as the
-                      sidebar badge; a component with none shows no hint rather
-                      than a zero. */}
-                  {component.examples?.length ? (
-                    <CommandShortcut>{component.examples.length}</CommandShortcut>
-                  ) : null}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          ))}
-        </CommandList>
+        <Command>
+          <CommandInput placeholder="Search components…" />
+          <CommandList>
+            <CommandEmpty>No components found.</CommandEmpty>
+            {GROUPS.map((group) => (
+              <CommandGroup key={group.category} heading={group.category}>
+                {group.items.map((component) => (
+                  <CommandItem
+                    key={component.slug}
+                    value={component.name}
+                    onSelect={() => {
+                      setOpen(false)
+                      navigate(`/docs/${component.slug}`)
+                    }}
+                  >
+                    {component.name}
+                    {/* The usage count doubles as the coverage map, same as the
+                        sidebar badge; a component with none shows no hint rather
+                        than a zero. */}
+                    {component.examples?.length ? (
+                      <CommandShortcut>{component.examples.length}</CommandShortcut>
+                    ) : null}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            ))}
+          </CommandList>
+        </Command>
       </CommandDialog>
     </>
   )

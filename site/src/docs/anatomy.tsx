@@ -4,9 +4,14 @@ import {
   anatomyExceptions as EXCEPTIONS,
 } from "virtual:demo-source"
 
-import { cx } from "@diametral/design-system/react"
-
-import { Toc, TocItem, TocLabel, TocLink, TocList } from "@/chrome/toc"
+import {
+  cx,
+  Toc,
+  TocItem,
+  TocLabel,
+  TocLink,
+  TocList,
+} from "@diametral/design-system/react"
 
 import { exampleTitle, type Example } from "@registry/registry"
 
@@ -207,7 +212,7 @@ export function PartIndex({
         {entries.map((entry) => (
           <TocItem key={entry.part}>
             <TocLink
-              as="button"
+              render={<button type="button" />}
               aria-pressed={selected === entry.part}
               onClick={() => onSelect(entry.part)}
               onMouseEnter={() => onHover(entry.part)}
@@ -251,7 +256,7 @@ export function PartIndex({
             {data.types.map(({ name }) => (
               <TocItem key={name}>
                 <TocLink
-                  as="button"
+                  render={<button type="button" />}
                   aria-pressed={selected === name}
                   onClick={() => onSelect(name)}
                   className={cx(

@@ -11,9 +11,12 @@ import {
   EmptyDescription,
   EmptyHeader,
   EmptyTitle,
+  Toc,
+  TocItem,
+  TocLabel,
+  TocLink,
+  TocList,
 } from "@diametral/design-system/react"
-
-import { Toc, TocItem, TocLabel, TocLink, TocList } from "@/chrome/toc"
 
 import { ExampleBlock } from "@/docs/example"
 import { Prose } from "@/docs/prose"
@@ -74,7 +77,8 @@ function ImportLine({
         {`import { ${shown} } from "${IMPORT_PATH}"`}
       </code>
       <Button
-        size="sm"
+        size="icon-sm"
+        variant="ghost"
         aria-label={copied ? "Copied" : "Copy import statement"}
         // The line is truncated for reading; what gets copied is the whole
         // statement, which is what the display has always implied.
@@ -121,7 +125,9 @@ export function ComponentPage() {
     <div className="flex gap-12">
       <article className="min-w-0 flex-1">
         <header className="mb-8">
-          <Badge className="mb-3">{component.category}</Badge>
+          <Badge variant="outline" className="mb-3">
+            {component.category}
+          </Badge>
           <h1 className="font-heading text-3xl font-light tracking-tight">
             {component.name}
           </h1>
