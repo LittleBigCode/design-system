@@ -30,6 +30,27 @@ body {
 
 img, svg, video { display: block; max-width: 100%; }
 
+/* Anchors and buttons carry their own UA-stylesheet styling that wins over
+   the inherited body colour outright — inheriting a property is only what
+   happens when nothing else sets it. A component whose own CSS doesn't
+   repaint the element it renders as (a polymorphic `.ds-item` as `<a>`, a
+   bare `<a>` hover-card trigger, `.ds-navigation-menu-trigger`'s `<button>`
+   at rest) is silently drawn in the UA default instead of `--ds-ink` on
+   `--ds-bg`/`--ds-surface`, at whatever contrast that default happens to
+   land on the theme (#15/#41/#50's ink/tint pattern, one step upstream: no
+   explicit ink at all, rather than the wrong one). `button` additionally
+   carries a native `appearance` (an opaque, always-light face — the other
+   half of that same mismatch on a dark surface) and its own border/background
+   the reset removes; every `.ds-*` button-shaped component already paints
+   its own, at higher specificity than this element selector. */
+a, button { color: inherit; }
+button {
+  appearance: none;
+  border: none;
+  background: none;
+  font: inherit;
+}
+
 ::selection {
   background: var(--ds-accent);
   color: var(--ds-on-accent);
