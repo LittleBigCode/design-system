@@ -120,6 +120,8 @@ export const COMPONENTS: ComponentDoc[] = [
           "The default action on the left, three variants under the caret.",
       },
     ],
+    wiring:
+      "The caret half is a `DropdownMenu` — see its own wiring note for the popup's open/close, arrow-key travel and Escape/outside-click dismissal, none of which this component adds to. `onMain` is a plain click handler with no state of its own; a from-scratch binding only has the main button's click to wire.",
   },
   {
     slug: "toggle-group",
@@ -190,6 +192,8 @@ export const COMPONENTS: ComponentDoc[] = [
           "`defaultActive={1}`, so the demo opens mid-sequence and the completed state is visible.",
       },
     ],
+    wiring:
+      "A from-scratch binding owns the current-step index: Back/Next move it by one, clamped to the first/last step, Finish fires only on the last, and Next disables whenever the active step's own `disableNext` is set — nothing in the markup enforces that gate on its own. `Stepper`'s parts (`StepperItem`'s `state`, `aria-current=\"step\"`) are presentational only; Wizard is what drives them.",
   },
 
   {
@@ -404,6 +408,8 @@ export const COMPONENTS: ComponentDoc[] = [
           "A fixed month rather than `new Date()` — the visual suite diffs this screenshot, so a moving month would fail every month. Event dots come from a `DayButton` override, not a data prop.",
       },
     ],
+    wiring:
+      "The grid, month navigation and single/range/multiple selection are `react-day-picker`'s own logic, not CSS — a from-scratch binding needs that library (or an equivalent date-grid implementation), not just the markup. `data-selected-single`/`data-range-start`/`data-range-end`/`data-range-middle` on each day button are the library's own state, deciding which cells `.ds-calendar-day-button` and its siblings paint as picked.",
   },
   {
     slug: "color-picker",
@@ -473,6 +479,8 @@ export const COMPONENTS: ComponentDoc[] = [
           "`multiple` plus `ComboboxChips`/`ComboboxChip`/`ComboboxValue` — the same composition `MultiSelect` wraps.",
       },
     ],
+    wiring:
+      "A from-scratch binding needs the full listbox-combobox pattern: the input filtering `.ds-combobox-item` rows as it's typed, arrow keys moving `data-highlighted` without committing, Enter/click committing the value and closing the popup, and Escape/outside-click closing without committing. `multiple` mode additionally tracks an array of values, rendering one `.ds-combobox-chip` per entry with its own remove button, and anchors the popup to the chips row (`useComboboxAnchor`) rather than the root so it follows the row as chips wrap onto a second line.",
   },
   {
     slug: "date-picker",
@@ -492,6 +500,8 @@ export const COMPONENTS: ComponentDoc[] = [
           "`Calendar`'s `disabled` matchers keep the picker inside 2026.",
       },
     ],
+    wiring:
+      "Thin composition over `Popover` — see its own wiring note for open/close, positioning and outside-click/Escape dismissal — plus `Calendar`'s own selection state (see its note) for the day grid inside. A from-scratch binding wires the trigger's displayed label to the current selection and closes the popover once a day is picked.",
   },
   {
     slug: "date-range-picker",
@@ -510,6 +520,8 @@ export const COMPONENTS: ComponentDoc[] = [
         description: "`defaultValue` as a `{ from, to }` pair of `Date`s.",
       },
     ],
+    wiring:
+      "Owns its own `{ from, to }` range state — unlike `DatePicker`, which leaves selection to the caller. A from-scratch binding needs `Calendar`'s range-select behavior (its own note) inside a `Popover` (ditto), plus, when `showTime` is on, keeping each bound's hours/minutes in sync with a `TimePicker` pair without disturbing the day already picked.",
   },
   {
     slug: "date-time-picker",
@@ -577,6 +589,8 @@ export const COMPONENTS: ComponentDoc[] = [
         description: "Two selected at mount, labelled via `aria-labelledby`.",
       },
     ],
+    wiring:
+      "A friendlier `options`/`value` wrapper over `Combobox`'s own `multiple` + chips wiring — see its note, nothing here is new behavior. `ComboboxChipsInput`'s own `aria-label`/`aria-labelledby` carries the accessible name, since a label on the root `Combobox` doesn't reach the actual form control.",
   },
   {
     slug: "number-field",
@@ -868,6 +882,8 @@ export const COMPONENTS: ComponentDoc[] = [
         description: "Submits itself once every slot is filled, no explicit action.",
       },
     ],
+    wiring:
+      "The `input-otp` package drives the actual field — one real, transparent `<input>` capturing every keystroke, paste and one-time-code suggestion, while each `InputOTPSlot` only *renders* the character and caret state it's handed via context. A from-scratch binding needs that library (or an equivalent single-input-many-boxes implementation), not just the markup — `data-active` alone won't move without it.",
   },
 
   {
@@ -905,6 +921,8 @@ export const COMPONENTS: ComponentDoc[] = [
       PhoneInput:
         "The two inner controls carry hardcoded `aria-label`s (`Country calling code`, `Phone number`) and accept no override, so a surrounding `Label` is a visual caption rather than a programmatic one. Typed characters are sanitised to digits and spaces, which is why the stored string is E.164-ish rather than strictly E.164.",
     },
+    wiring:
+      "Composes `Select` (its own wiring note) for the dial code and a plain `Input` for the national number, splitting and rejoining one `value` string between them on every change. A from-scratch binding needs that split/rejoin logic itself, not just the two controls side by side — otherwise picking a country stops updating the combined value correctly.",
   },
 
   {
@@ -1321,6 +1339,8 @@ export const COMPONENTS: ComponentDoc[] = [
           "`Command` composed directly on the page — no `CommandDialog` — with a `CommandSeparator` between groups.",
       },
     ],
+    wiring:
+      "`cmdk` drives the fuzzy filtering, keyboard navigation between `.ds-command-item` rows and the empty-state toggle — a from-scratch binding needs that library (or an equivalent command-palette filter/nav implementation), not just the markup. `CommandDialog` additionally needs the same open/close behavior as `Dialog` (its own wiring note) to mount the palette.",
   },
   {
     slug: "menubar",
@@ -1757,6 +1777,8 @@ export const COMPONENTS: ComponentDoc[] = [
         description: "A horizontal split with a vertical one inside one of its panes.",
       },
     ],
+    wiring:
+      "`react-resizable-panels` drives the actual drag-resize, not CSS: dragging `.ds-resizable-handle` resizes the panels either side of it, respecting each `ResizablePanel`'s own min/max size — a from-scratch binding needs that library (or an equivalent), not just the markup, same shape as `carousel`'s note on `embla-carousel-react`.",
   },
   {
     slug: "masonry",
