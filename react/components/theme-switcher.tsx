@@ -37,11 +37,9 @@ import { IconButton } from "./icon-button.js"
      the pass-through props land — `Segmented` renders a bare div.
    - `cycle` sat on the source's `Button` at `size="icon-sm"`. That is
      `IconButton` here, whose `label` is the accessible name the action needs.
-   - `dropdown` sat on the source's `dropdown-menu`, also held. This repo's
-     `Dropdown` is click-toggled with no radio rows, which is exactly why the
-     react-ledger withdrew the `MenuItem` alias, so the re-wiring goes to Base
-     UI's `Menu` — the primitive the source's own dropdown-menu wraps — wearing
-     this repo's `.ds-menu` vocabulary. Same move batch 1's menubar made.
+   - `dropdown` sat on the source's `dropdown-menu`. It re-wires onto Base UI's
+     `Menu` directly, wearing the landed `dropdown-menu.tsx`'s
+     `.ds-dropdown-menu-*` vocabulary. Same move batch 1's menubar made (#52).
 
    Re-wired in 1.0.0-beta.7: `Button` is the source's own module now, and
    `IconButton` composes it, so the `cycle` trigger reaches the symbol through
@@ -113,7 +111,7 @@ function ThemeSwitcher({
         </MenuPrimitive.Trigger>
         <MenuPrimitive.Portal>
           <MenuPrimitive.Positioner align="end" sideOffset={6}>
-            <MenuPrimitive.Popup className="ds-menu">
+            <MenuPrimitive.Popup className="ds-dropdown-menu-content">
               <MenuPrimitive.RadioGroup
                 value={value}
                 onValueChange={(next) =>
@@ -128,7 +126,7 @@ function ThemeSwitcher({
                     key={mode}
                     value={mode}
                     closeOnClick
-                    className="ds-menu__item ds-theme-switcher-radio-item"
+                    className="ds-dropdown-menu-radio-item ds-theme-switcher-radio-item"
                   >
                     <span className="ds-theme-switcher-check">
                       <MenuPrimitive.RadioItemIndicator>

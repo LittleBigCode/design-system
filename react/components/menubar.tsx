@@ -10,12 +10,12 @@ import { cx } from "../lib/cx.js"
 
 /* Menubar — a horizontal bar of menus, each with submenus, checkbox and radio
    rows. The source routed twelve of these sixteen parts through its own
-   `dropdown-menu`, which holds: this repo's incumbent is `Dropdown`, and it is
-   click-toggled with no submenus, no checkbox or radio rows and no positioning
-   props — which is exactly why the react-ledger withdrew the `MenuItem` alias.
-   So the re-wiring goes to Base UI's `Menu`, the primitive the source's own
-   dropdown-menu wraps, and to this repo's `.ds-menu*` vocabulary for the
-   surfaces it already has a shape for. All sixteen exports survive. */
+   `dropdown-menu`; this repo composes onto Base UI's `Menu` directly instead
+   and wears the landed `dropdown-menu.tsx`'s `.ds-dropdown-menu-*` vocabulary
+   for the surfaces it already has a shape for (#52 — the earlier `.ds-menu*`
+   vocabulary this file wore was the pre-#42 incumbent Dropdown's, wiped out
+   when `menu.css` was wholesale-replaced by incoming's dropdown-menu CSS).
+   All sixteen exports survive. */
 
 function Menubar({ className, ...props }: MenubarPrimitive.Props) {
   return (
@@ -74,7 +74,7 @@ function MenubarContent({
       >
         <MenuPrimitive.Popup
           data-slot="menubar-content"
-          className={bcx("ds-menu", className)}
+          className={bcx("ds-dropdown-menu-content", className)}
           {...props}
         />
       </MenuPrimitive.Positioner>
@@ -96,10 +96,7 @@ function MenubarItem({
       data-slot="menubar-item"
       data-inset={inset}
       data-variant={variant}
-      className={bcx(
-        cx("ds-menu__item", variant === "destructive" && "ds-menu__item--danger"),
-        className,
-      )}
+      className={bcx("ds-dropdown-menu-item", className)}
       {...props}
     />
   )
@@ -118,7 +115,7 @@ function MenubarCheckboxItem({
     <MenuPrimitive.CheckboxItem
       data-slot="menubar-checkbox-item"
       data-inset={inset}
-      className={bcx("ds-menu__item ds-menubar-checkbox-item", className)}
+      className={bcx("ds-dropdown-menu-checkbox-item ds-menubar-checkbox-item", className)}
       checked={checked}
       {...props}
     >
@@ -153,7 +150,7 @@ function MenubarRadioItem({
     <MenuPrimitive.RadioItem
       data-slot="menubar-radio-item"
       data-inset={inset}
-      className={bcx("ds-menu__item ds-menubar-radio-item", className)}
+      className={bcx("ds-dropdown-menu-radio-item ds-menubar-radio-item", className)}
       {...props}
     >
       <span
@@ -180,7 +177,7 @@ function MenubarLabel({
     <MenuPrimitive.GroupLabel
       data-slot="menubar-label"
       data-inset={inset}
-      className={bcx("ds-menu__header", className)}
+      className={bcx("ds-dropdown-menu-label", className)}
       {...props}
     />
   )
@@ -193,7 +190,7 @@ function MenubarSeparator({
   return (
     <MenuPrimitive.Separator
       data-slot="menubar-separator"
-      className={bcx("ds-menu__divider", className)}
+      className={bcx("ds-dropdown-menu-separator", className)}
       {...props}
     />
   )
@@ -228,7 +225,7 @@ function MenubarSubTrigger({
     <MenuPrimitive.SubmenuTrigger
       data-slot="menubar-sub-trigger"
       data-inset={inset}
-      className={bcx("ds-menu__item ds-menubar-sub-trigger", className)}
+      className={bcx("ds-dropdown-menu-sub-trigger ds-menubar-sub-trigger", className)}
       {...props}
     >
       {children}

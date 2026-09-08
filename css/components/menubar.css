@@ -1,9 +1,10 @@
 /* Menubar — .ds-menubar (a horizontal bar of menus)
-   The bar and its triggers are net-new. Everything inside a menu rides this
-   repo's own menu vocabulary — .ds-menu, .ds-menu__item, .ds-menu__divider,
-   .ds-menu__header — which is what the re-wiring off the source's held
-   dropdown-menu means in CSS: the source's ds-dropdown-menu-* base never
-   lands, so only the rows this vocabulary has no shape for are defined here. */
+   The bar and its triggers are net-new. Everything inside a menu rides the
+   landed dropdown-menu's own vocabulary — .ds-dropdown-menu-content,
+   .ds-dropdown-menu-item, .ds-dropdown-menu-checkbox-item/-radio-item,
+   .ds-dropdown-menu-label, .ds-dropdown-menu-separator, .ds-dropdown-menu-
+   sub-trigger (#52) — so only the rows that vocabulary has no shape for are
+   defined here. */
 
 .ds-menubar {
   display: flex;
@@ -49,9 +50,10 @@
   padding-inline-start: 2.375rem;
 }
 
-/* Checkbox and radio rows are .ds-menu__item plus an indicator well: the row
-   keeps the menu's own type and hover, and the inline-start inset makes room
-   for the check. Without the inset the label would sit under the indicator. */
+/* Checkbox and radio rows are .ds-dropdown-menu-checkbox-item/-radio-item plus
+   an indicator well: the row keeps the menu's own type and hover, and the
+   inline-start inset makes room for the check. Without the inset the label
+   would sit under the indicator. */
 .ds-menubar-checkbox-item,
 .ds-menubar-radio-item {
   position: relative;
@@ -92,7 +94,7 @@
 }
 
 /* The caret is pushed to the end edge, which is what marks the row apart from
-   a plain .ds-menu__item. */
+   a plain .ds-dropdown-menu-item. */
 .ds-menubar-sub-trigger-icon {
   margin-inline-start: auto;
   width: 0.875rem;
