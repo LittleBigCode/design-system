@@ -50,11 +50,16 @@
 
 .ds-alert--destructive {
   background: var(--ds-surface);
-  color: var(--ds-danger);
-  --tone-ink: var(--ds-danger);
+  /* --ds-danger-ink, not --ds-danger: the tone-danger variant below already
+     uses the ink token for exactly this reason — --ds-danger is the brand
+     red itself, constant across themes, and reads at ~3.3:1 on the dark
+     theme's --ds-surface (axe, color-contrast, caught on batch 16's first
+     demo to exercise this variant — docs/absorption/corrections.md). */
+  color: var(--ds-danger-ink);
+  --tone-ink: var(--ds-danger-ink);
 }
 .ds-alert--destructive > .ds-alert-description {
-  color: color-mix(in oklab, var(--ds-danger) 90%, transparent);
+  color: color-mix(in oklab, var(--ds-danger-ink) 90%, transparent);
 }
 
 .ds-alert--tone-neutral {
