@@ -1,5 +1,12 @@
-/* Tabs — .ds-tabs (title-voiced tabs with accent underline + optional sublabel) */
-.ds-tabs {
+/* Tabs — .ds-tabs, two grammars sharing the bare root class (#52 — the
+   collision batch 9 deferred: incoming's React Tabs never got its own rules).
+   Told apart the same way switch.css/checkbox.css tell theirs apart: a React
+   Tabs root always has a `> .ds-tabs-list` child (tabs.tsx's `TabsList`);
+   `<ds-tabs>`'s web component never does — its tabs are plain `.ds-tabs__tab`
+   buttons directly inside the root. */
+
+/* ---- The web-component grammar: title-voiced tabs + accent underline ---- */
+.ds-tabs:not(:has(> .ds-tabs-list)) {
   display: flex;
   gap: 0;
   border-bottom: 1px solid var(--ds-rule);
@@ -45,3 +52,137 @@
 .ds-tabpane { display: none; }
 .ds-tabpane.is-active,
 .ds-tabpane[aria-hidden="false"] { display: block; animation: ds-fadein var(--ds-transition-slow); }
+
+/* ---- The React grammar: TabsList/TabsTrigger/TabsContent composition ---- */
+.ds-tabs:has(> .ds-tabs-list) {
+  display: flex;
+  gap: 0.5rem;
+}
+.ds-tabs[data-orientation="horizontal"]:has(> .ds-tabs-list) {
+  flex-direction: column;
+}
+
+.ds-tabs-list {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  color: var(--ds-ink-soft);
+}
+:where(.ds-tabs[data-orientation="horizontal"]) .ds-tabs-list {
+  height: 2.5rem;
+}
+:where(.ds-tabs[data-orientation="vertical"]) .ds-tabs-list {
+  height: fit-content;
+  flex-direction: column;
+}
+.ds-tabs-list--default {
+  background: var(--ds-bg-alt);
+}
+.ds-tabs-list--line {
+  gap: 0.25rem;
+  background: transparent;
+}
+
+.ds-tabs-trigger {
+  position: relative;
+  display: inline-flex;
+  height: calc(100% - 1px);
+  flex: 1 1 0%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid transparent;
+  padding-inline: 1rem;
+  padding-block: 0.375rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  color: color-mix(in oklab, var(--ds-ink) 60%, transparent);
+  text-transform: uppercase;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.ds-tabs-trigger svg {
+  pointer-events: none;
+  flex-shrink: 0;
+}
+.ds-tabs-trigger svg:not([class*="size-"]) {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+:where(.ds-tabs[data-orientation="vertical"]) .ds-tabs-trigger {
+  width: 100%;
+  justify-content: flex-start;
+  padding-inline: 1rem;
+  padding-block: 0.5rem;
+}
+.ds-tabs-trigger:hover {
+  color: var(--ds-ink);
+}
+.ds-tabs-trigger:focus-visible {
+  border-color: var(--ds-focus-ring);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--ds-focus-ring) 50%, transparent);
+  outline: 1px solid var(--ds-focus-ring);
+}
+.ds-tabs-trigger:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.ds-tabs-trigger:has([data-icon="inline-end"]) {
+  padding-inline-end: 0.625rem;
+}
+.ds-tabs-trigger:has([data-icon="inline-start"]) {
+  padding-inline-start: 0.625rem;
+}
+.ds-tabs-trigger[aria-disabled="true"] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.ds-tabs-trigger[data-active] {
+  background: var(--ds-bg);
+  color: var(--ds-ink);
+}
+
+.ds-tabs-trigger::after {
+  content: "";
+  position: absolute;
+  background: var(--ds-ink);
+  opacity: 0;
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+:where(.ds-tabs[data-orientation="horizontal"]) .ds-tabs-trigger::after {
+  inset-inline: 0;
+  bottom: -5px;
+  height: 0.125rem;
+}
+:where(.ds-tabs[data-orientation="vertical"]) .ds-tabs-trigger::after {
+  inset-block: 0;
+  inset-inline-end: -0.25rem;
+  width: 0.125rem;
+}
+
+/* Line variant never fills with a background, active or not — only the ::after
+   underline signals the active tab. These match the `[data-active]` rules above
+   in specificity, so they must stay declared after them to win the cascade. */
+:where(.ds-tabs-list--line) .ds-tabs-trigger {
+  background: transparent;
+}
+:where(.ds-tabs-list--line) .ds-tabs-trigger[data-active] {
+  background: transparent;
+}
+:where(.ds-tabs-list--line) .ds-tabs-trigger[data-active]::after {
+  opacity: 1;
+}
+
+.ds-tabs-content {
+  flex: 1 1 0%;
+  outline: none;
+}

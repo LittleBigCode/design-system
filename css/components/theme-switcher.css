@@ -14,9 +14,10 @@
      that shipped rendered it — the indicator was internal to the binding.
    - `cycle` sat on the source's `Button` and is re-composed onto `IconButton`,
      which needs no rules of its own.
-   - `dropdown` sat on the source's `dropdown-menu`, also held. Base UI's `Menu`
-     wearing this repo's `.ds-menu` vocabulary replaces it — the same re-wiring
-     batch 1's menubar made — so only the trigger's own spacing survives here.
+   - `dropdown` sat on the source's `dropdown-menu`. Base UI's `Menu` wearing
+     the landed `dropdown-menu.tsx`'s `.ds-dropdown-menu-*` vocabulary replaces
+     it — the same re-wiring batch 1's menubar made (#52) — so only the
+     trigger's own spacing survives here.
    ============================================================================ */
 .ds-theme-switcher-dropdown-trigger {
   gap: 0.375rem;
@@ -29,7 +30,7 @@
   color: var(--ds-ink-faint);
 }
 
-/* The dropdown's radio rows. `.ds-menu__item` supplies the row; these two
+/* The dropdown's radio rows. `.ds-dropdown-menu-radio-item` supplies the row; these two
    rules only make room for the tick and park it there — the same shape
    menubar.css gives its own checkable rows, kept under this component's names
    rather than borrowing a menubar-scoped class. */
