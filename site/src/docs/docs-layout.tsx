@@ -128,6 +128,22 @@ export function DocsLayout() {
                   Foundations
                 </SidebarMenuButton>
               </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  isActive={pathname.startsWith("/blocks")}
+                  render={<Link to="/blocks" />}
+                >
+                  Blocks
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  isActive={pathname.startsWith("/templates")}
+                  render={<Link to="/templates" />}
+                >
+                  Templates
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroup>
           <SidebarGroup>
