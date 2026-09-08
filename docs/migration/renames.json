@@ -785,7 +785,7 @@
       "from": "Range",
       "to": "Slider",
       "batch": "7",
-      "note": "On Base UI, so a range is one control with two thumbs rather than two inputs kept in order by the caller. `.ds-range` — the native `<input type=range>` — is still defined in `slider.css` for hand-written HTML."
+      "note": "On Base UI, so a range is one control with two thumbs rather than two inputs kept in order by the caller. `.ds-range` — the native `<input type=range>` — is still defined in `slider.css` for hand-written HTML. To label a single-thumb Slider, use `aria-labelledby` (pointing at the label's own id) or `aria-label` — not `id` + a sibling `<FieldLabel htmlFor>` the way Checkbox/RadioGroupItem work. Base UI never routes the id down to the real, nested `<input>`."
     },
     {
       "kind": "export",

@@ -19,13 +19,23 @@ import { bcx } from "../lib/baseClass.js"
    native range is still the right answer on a hand-written form.
 
    The export is renamed `Range` -> `Slider`, which also retires a collision with
-   the DOM's own `Range`. Recipe in `docs/migration/from-0.11.md`. */
+   the DOM's own `Range`. Recipe in `docs/migration/from-0.11.md`.
+
+   A single-thumb Slider can't be labelled the way Checkbox/RadioGroupItem are
+   (`id` + sibling `<FieldLabel htmlFor>`): the focusable element is the native
+   `<input>` nested inside `Thumb`, two levels below `Root`, and Base UI never
+   routes `Root`'s `id` down to it. `aria-label`/`aria-labelledby` are the only
+   props Base UI actually applies to that `<input>`, so they're read off here
+   and forwarded to the thumb explicitly — only for the single-thumb case, since
+   a range slider's two thumbs each need their own name regardless. */
 function Slider({
   className,
   defaultValue,
   value,
   min = 0,
   max = 100,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
   ...props
 }: SliderPrimitive.Root.Props) {
   const values = Array.isArray(value)
@@ -33,6 +43,7 @@ function Slider({
     : Array.isArray(defaultValue)
       ? defaultValue
       : [(value ?? defaultValue ?? min) as number]
+  const singleThumb = values.length === 1
 
   return (
     <SliderPrimitive.Root
@@ -43,6 +54,7 @@ function Slider({
       min={min}
       max={max}
       thumbAlignment="edge"
+      aria-labelledby={ariaLabelledBy}
       {...props}
     >
       <SliderPrimitive.Control className="ds-slider-control">
@@ -57,6 +69,8 @@ function Slider({
             data-slot="slider-thumb"
             key={index}
             className="ds-slider-thumb"
+            aria-label={singleThumb ? ariaLabel : undefined}
+            aria-labelledby={singleThumb ? ariaLabelledBy : undefined}
           />
         ))}
       </SliderPrimitive.Control>

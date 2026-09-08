@@ -42,7 +42,6 @@ export const ALLOWLIST = [
   { route: "navigation-menu", theme: "dark", rule: "color-contrast", issue: 50 },
   { route: "sparkline", theme: "dark", rule: "color-contrast", issue: 50 },
   { route: "label", theme: "both", rule: "aria-toggle-field-name", issue: 50 },
-  { route: "label", theme: "both", rule: "label", issue: 50 },
   { route: "label", theme: "dark", rule: "color-contrast", issue: 50 }, // .ds-badge--accent, same defect as #41's
 ];
 

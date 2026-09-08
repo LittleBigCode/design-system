@@ -36,8 +36,11 @@ export default function LabelWithControls() {
         </Select>
       </div>
       <div className="flex flex-col gap-2">
-        <Label htmlFor="label-seats">Seats</Label>
-        <Slider id="label-seats" defaultValue={12} min={1} max={50} />
+        {/* Slider's focusable element is a native <input> nested inside its
+            Thumb, not the root Label/htmlFor pairs with elsewhere on this
+            page — so it's labelled via aria-labelledby instead. */}
+        <Label id="label-seats-label">Seats</Label>
+        <Slider aria-labelledby="label-seats-label" defaultValue={12} min={1} max={50} />
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor="label-brief">Brief</Label>
