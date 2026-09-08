@@ -219,8 +219,12 @@
   line-height: calc(1 / 0.75);
   color: var(--ds-ink-faint);
 }
+/* --ds-danger-ink, not the bare --ds-danger — same fix as alert.css's
+   `.ds-alert--destructive` (#49/#50): --ds-danger is constant across themes
+   and reads ~3.2:1 on dark's near-black --ds-surface; --ds-danger-ink is the
+   mirrored text-weight shade. */
 .ds-attachment[data-state="error"] .ds-attachment-description {
-  color: var(--ds-danger);
+  color: var(--ds-danger-ink);
 }
 
 .ds-attachment-actions {
