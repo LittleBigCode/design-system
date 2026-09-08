@@ -41,6 +41,13 @@ export default defineConfig({
     // reproducible across machines.
     viewport: { width: 1280, height: 900 },
     deviceScaleFactor: 1,
+    // css/base/reset.css sets `html { scroll-behavior: smooth }`, which races a
+    // scrollIntoView() + immediate getBoundingClientRect() read (kanban-regress.spec.ts)
+    // and would land recharts mid-animation on an arbitrary frame otherwise.
+    // Reduced motion is what both the CSS's own `prefers-reduced-motion` fallback
+    // and recharts itself read. tests/chart-marks.spec.ts opts back out, since it
+    // needs the real animation to verify charts draw. Matches site/playwright.config.ts.
+    contextOptions: { reducedMotion: "reduce" },
   },
 
   // Single Chromium project keeps baselines stable and CI fast.
