@@ -50,15 +50,33 @@ function toPascal(slug: string) {
 }
 
 /**
+ * `dialog`, `alert-dialog`, `tabs` and `toggle-group` are already registry
+ * slugs for an unrelated genuine additive (`Modal`, `Modal`, the barrel's
+ * inline `Tabs`, `Segmented` — see `react/index.tsx` and corrections.md #13),
+ * so batch 16 (#49) gives the real incoming component its own route under a
+ * `-primitive` slug instead. Kebab-of-slug no longer names the real file in
+ * that case; this is where the route says which file it actually means.
+ */
+const SLUG_ALIASES: Record<string, string> = {
+  "dialog-primitive": "dialog",
+  "alert-dialog-primitive": "alert-dialog",
+  "tabs-primitive": "tabs",
+  "toggle-group-primitive": "toggle-group",
+}
+
+/**
  * The `.tsx` behind a slug, or undefined when nothing is absorbed under it yet.
  *
- * Two spellings, in order: kebab, which every absorption batch authors, and the
- * PascalCase the incumbent components already carry. A slug that resolves to
- * neither has no source to read — its demos are parked under
- * `registry/_pending` and its registry entry is filtered out.
+ * Three spellings, in order: an explicit alias for the handful of slugs where
+ * kebab doesn't name the real file (see `SLUG_ALIASES`), then kebab, which
+ * every absorption batch authors, then the PascalCase the incumbent
+ * components already carry. A slug that resolves to none of these has no
+ * source to read — its demos are parked under `registry/_pending` and its
+ * registry entry is filtered out.
  */
 async function resolveComponent(slug: string): Promise<string | undefined> {
-  for (const name of [slug, toPascal(slug)]) {
+  const real = SLUG_ALIASES[slug] ?? slug
+  for (const name of [real, toPascal(real)]) {
     const file = path.join(UI_COMPONENTS, `${name}.tsx`)
     if (
       await fs.stat(file).then(
@@ -253,26 +271,10 @@ const ANATOMY_EXCEPTIONS: Record<string, string> = {
     "batch 16 — needs its own route, see corrections.md",
   "alert-dialog/AlertDialogMedia":
     "batch 16 — needs its own route, see corrections.md",
-  "carousel/Carousel": "batch 16 — needs its own route, see corrections.md",
-  "carousel/CarouselContent":
-    "batch 16 — needs its own route, see corrections.md",
-  "carousel/CarouselItem": "batch 16 — needs its own route, see corrections.md",
-  "carousel/CarouselPrevious":
-    "batch 16 — needs its own route, see corrections.md",
-  "carousel/CarouselNext": "batch 16 — needs its own route, see corrections.md",
-  "input-otp/InputOTP": "batch 16 — needs its own route, see corrections.md",
-  "input-otp/InputOTPGroup":
-    "batch 16 — needs its own route, see corrections.md",
-  "input-otp/InputOTPSlot":
-    "batch 16 — needs its own route, see corrections.md",
-  "input-otp/InputOTPSeparator":
-    "batch 16 — needs its own route, see corrections.md",
-  "resizable/ResizablePanelGroup":
-    "batch 16 — needs its own route, see corrections.md",
-  "resizable/ResizablePanel":
-    "batch 16 — needs its own route, see corrections.md",
-  "resizable/ResizableHandle":
-    "batch 16 — needs its own route, see corrections.md",
+  // carousel/input-otp/resizable were never a naming collision — same slug,
+  // same component, just missing its React binding's dependency. Batch 16
+  // (#49) took the dependency and wrote real demos, so all three now have
+  // real coverage; no exception needed.
   "tabs/TabsList": "batch 16 — needs its own route, see corrections.md",
   "tabs/TabsTrigger": "batch 16 — needs its own route, see corrections.md",
   "tabs/TabsContent": "batch 16 — needs its own route, see corrections.md",

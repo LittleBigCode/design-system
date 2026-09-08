@@ -129,6 +129,35 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
   },
   {
+    slug: "toggle-group-primitive",
+    name: "ToggleGroup",
+    category: "Actions",
+    exports: ["ToggleGroup", "ToggleGroupItem"],
+    description:
+      "Base UI's own toggle group, single- or multi-select — landed batch 12 (#45), routed here in batch 16 (#49).",
+    intro: [
+      "`Segmented` (the “Segmented” page) is this system's own additive and stays the default for a single-select view switch. `ToggleGroup` is incoming's composed primitive underneath the same shape, and the one that answers when the row isn't single-select: `type=\"multiple\"` toggles more than one item at once, which `Segmented` has no equivalent for.",
+      "Each `ToggleGroupItem` is its own toggle button — the group only coordinates which of them are pressed.",
+    ],
+    examples: [
+      {
+        demo: "toggle-group-primitive/single",
+        title: "Single select",
+        description: "`type=\"single\"` — the same shape `Segmented` covers, composed instead of configured.",
+      },
+      {
+        demo: "toggle-group-primitive/multiple",
+        title: "Multiple select",
+        description: "`type=\"multiple\"` — more than one item pressed at once, which `Segmented` cannot do.",
+      },
+      {
+        demo: "toggle-group-primitive/joined",
+        title: "Joined",
+        description: "Items sharing one visual edge rather than sitting apart.",
+      },
+    ],
+  },
+  {
     slug: "wizard",
     name: "Wizard",
     category: "Actions",
@@ -772,20 +801,35 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "input-otp",
     name: "Input OTP",
     category: "Forms",
-    exports: [],
+    exports: ["InputOTP", "InputOTPGroup", "InputOTPSlot", "InputOTPSeparator"],
     description:
-      "A segmented one-time-code field with per-character slots. Stylesheet only — the one-field-many-boxes behaviour needs a binding this package does not ship.",
+      "A segmented one-time-code field with per-character slots, over the `input-otp` package.",
     intro: [
       "Input OTP is for a code of known length that reads as separate characters: an SMS or authenticator confirmation, an email verification, an invite key. Reach for it when the length is fixed and the segmentation helps the reader keep their place — a plain `Input` is better as soon as the value could be any length, and `Field` is what wraps either one with a label and an error.",
-      "**This one is CSS without a React binding.** The source component wraps the `input-otp` package, and that dependency is not acquired. What it buys is precisely the behaviour, not the look: one real transparent input behind the boxes, so paste, password managers and the OS one-time-code suggestion keep working, plus backspace across a slot boundary and the caret tracking. So `.ds-input-otp` and its group, slot, caret and separator classes ship, and any binding that renders them gets the look.",
-      "The structure is the part worth knowing even without a binding. There is exactly one `input`; every slot is a plain `div` painted from that input's state, which is why a slot carries no value and no `onChange`, why splitting the slots across groups is presentational and does not touch the value, and why the field is named on the input itself rather than on a group. `data-active` marks the slot the caret is in, and the caret is a painted line — the real one is invisible with the input.",
+      "The `input-otp` package is the dependency batch 16 (#49) took rather than hand-rolling: one real transparent input behind the boxes, so paste, password managers and the OS one-time-code suggestion keep working, plus backspace across a slot boundary and the caret tracking.",
+      "The structure is the part worth knowing regardless of the binding. There is exactly one `input`; every slot is a plain `div` painted from that input's state, which is why a slot carries no value and no `onChange`, why splitting the slots across groups is presentational and does not touch the value, and why the field is named on the input itself rather than on a group. `data-active` marks the slot the caret is in, and the caret is a painted line — the real one is invisible with the input.",
     ],
     examples: [
       {
         demo: "input-otp/basic",
-        title: "The class contract",
+        title: "Basic",
         description:
-          "The markup a binding has to produce: one real input carrying the value and the accessible name, two groups of `.ds-input-otp-slot` boxes split 3–3 with a `.ds-input-otp-separator` between them, and `data-active` on the box the caret is in — which is what draws the focused underline and the blinking line. The boxes are `aria-hidden`, because the input already announces the value.",
+          "One real input carrying the value and the accessible name, two groups of `.ds-input-otp-slot` boxes split 3–3 with a `.ds-input-otp-separator` between them, and `data-active` on the box the caret is in — which is what draws the focused underline and the blinking line. The boxes are `aria-hidden`, because the input already announces the value.",
+      },
+      {
+        demo: "input-otp/with-separator",
+        title: "Custom grouping",
+        description: "`InputOTPSeparator` placed wherever the code's own convention splits it.",
+      },
+      {
+        demo: "input-otp/verify-form",
+        title: "In a verification form",
+        description: "Paired with `Field` for the label and the error, and a submit button gated on the code's length.",
+      },
+      {
+        demo: "input-otp/auto-submit",
+        title: "Auto-submit",
+        description: "Submits itself once every slot is filled, no explicit action.",
       },
     ],
   },
@@ -1435,6 +1479,40 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
   },
   {
+    slug: "tabs-primitive",
+    name: "Tabs (composed)",
+    category: "Navigation",
+    exports: ["Tabs", "TabsList", "TabsTrigger", "TabsContent"],
+    description:
+      "Base UI's own tabs, composed from parts rather than configured with an `items` prop — landed batch 12 (#45), routed here in batch 16 (#49).",
+    intro: [
+      "The barrel's `Tabs` (the “Tabs” page) is this system's own additive, config-driven with an `items` array, and stays the default. This one is incoming's composed primitive underneath the same concept — it is what this very docs site's own example blocks use to switch between Preview and Code, reachable at the `@diametral/design-system/react/tabs` subpath rather than the plain barrel, since the two share the export name `Tabs`.",
+      "`variant=\"line\"` on `TabsList` is the underline style; the default is the segmented one. `orientation=\"vertical\"` moves the list to the side of its panels.",
+    ],
+    examples: [
+      {
+        demo: "tabs-primitive/basic",
+        title: "Basic",
+        description: "List, trigger, content — the parts every composition needs.",
+      },
+      {
+        demo: "tabs-primitive/line",
+        title: "Line variant",
+        description: "`variant=\"line\"` on `TabsList`.",
+      },
+      {
+        demo: "tabs-primitive/vertical",
+        title: "Vertical",
+        description: "`orientation=\"vertical\"`, list beside its panels rather than above them.",
+      },
+      {
+        demo: "tabs-primitive/in-card",
+        title: "In a card",
+        description: "Tabs as a card's own internal navigation, not a page-level one.",
+      },
+    ],
+  },
+  {
     slug: "toc",
     name: "Toc",
     category: "Navigation",
@@ -1598,19 +1676,29 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "resizable",
     name: "Resizable",
     category: "Layout",
-    exports: [],
+    exports: ["ResizablePanelGroup", "ResizablePanel", "ResizableHandle"],
     description:
-      "Panel groups split by draggable handles. Stylesheet only — the drag needs a binding this package does not ship.",
+      "Panel groups split by draggable handles, over `react-resizable-panels`.",
     intro: [
       "Resizable splits a region into panes the reader can drag: an editor beside its preview, a file tree beside a document, a console under both. Reach for it when the split is the user's call — when it is the layout's, a grid is simpler and has no drag state to keep.",
-      "**This one is CSS without a React binding.** The source component wraps `react-resizable-panels`, and that dependency is not acquired — the narrow dep bought a drag loop and nothing else the system needs to own. So `.ds-resizable-panel-group`, `.ds-resizable-handle` and `.ds-resizable-handle-grip` ship, and any binding that renders them gets the look: a 1px rule with a 4px grab target over it, `aria-orientation` on the group choosing the axis and on the handle choosing the rule's own. What the stylesheet cannot supply is the pointer maths, the keyboard resize and the persisted layout.",
+      "`react-resizable-panels` is the dependency batch 16 (#49) took rather than hand-rolling: the pointer maths, the keyboard resize and the persisted layout. `.ds-resizable-panel-group`, `.ds-resizable-handle` and `.ds-resizable-handle-grip` are the whole class contract either way — a 1px rule with a 4px grab target over it, `aria-orientation` on the group choosing the axis and on the handle choosing the rule's own.",
     ],
     examples: [
       {
         demo: "resizable/basic",
-        title: "The class contract",
+        title: "Basic",
         description:
-          "The markup a binding has to produce, with the split fixed rather than draggable. The handle is `.ds-resizable-handle` — one pixel of visible rule, four pixels of pointer target from its `::after`, and `withHandle`'s grip as a child. `tabIndex={0}` on each pane's content is what keeps clipped content keyboard-reachable once a real binding is scrolling it.",
+          "A fixed split with one draggable handle. `withHandle` is the grip shown as its child.",
+      },
+      {
+        demo: "resizable/collapsible",
+        title: "Collapsible pane",
+        description: "A pane that snaps shut past a minimum size, rather than shrinking forever.",
+      },
+      {
+        demo: "resizable/nested",
+        title: "Nested groups",
+        description: "A horizontal split with a vertical one inside one of its panes.",
       },
     ],
   },
@@ -1703,20 +1791,39 @@ export const COMPONENTS: ComponentDoc[] = [
     slug: "carousel",
     name: "Carousel",
     category: "Layout",
-    exports: [],
+    exports: [
+      "Carousel",
+      "CarouselContent",
+      "CarouselItem",
+      "CarouselPrevious",
+      "CarouselNext",
+      "type CarouselApi",
+    ],
     description:
-      "A paged slide viewport with previous and next controls. Stylesheet only — the drag and snap need a binding this package does not ship.",
+      "A paged slide viewport with previous and next controls, over `embla-carousel-react`.",
     intro: [
       "Carousel is the paged strip: screenshots, release cards, testimonials the reader steps through instead of scrolling past. Reach for it when horizontal room is the constraint and the items are peers — never for content the reader must not miss, since everything but the current page is off screen.",
-      "**This one is CSS without a React binding.** The source component wraps `embla-carousel-react`, and that dependency is not acquired — it is a drag, snap and autoplay engine, which is the whole component and none of the look. So `.ds-carousel`, `.ds-carousel-viewport`, `.ds-carousel-content`, `.ds-carousel-item` and the two `.ds-carousel-control` boxes ship, and any binding that renders them gets the look. What the stylesheet cannot supply is the pointer maths, the snap points and the disabled state at either end.",
+      "The drag, the snap and the disabled state at either end are `embla-carousel-react`'s — batch 16 (#49) took the dependency rather than hand-rolling it. `.ds-carousel`, `.ds-carousel-viewport`, `.ds-carousel-content`, `.ds-carousel-item` and the two `.ds-carousel-control` boxes are the whole class contract either way, so a from-scratch binding still has a look to match.",
       "Two parts of the layout are a contract rather than a preference. The gap between slides is `.ds-carousel-content`'s negative margin paired with `.ds-carousel-item`'s padding, so a `gap` on the track doubles it; and the controls are absolutely positioned *outside* the viewport, so the wrapper needs horizontal room or they clip. `data-orientation` chooses the axis on both the track and each item, and the RTL rules mirror the vertical controls and turn the caret glyphs around.",
     ],
     examples: [
       {
         demo: "carousel/basic",
-        title: "The class contract",
+        title: "Basic",
         description:
-          "The markup a binding has to produce, with the slides fixed rather than draggable. `--third` is the modifier that replaced the source's literal `basis-1/3` override — one slide per page is the default, `--half` and `--third` are the other two. The controls are `IconButton`s, whose required `label` supplies the accessible name the source hid in an `sr-only` span; this package has no such utility.",
+          "One slide per page, previous/next controls disabled at either end.",
+      },
+      {
+        demo: "carousel/multiple",
+        title: "Multiple per page",
+        description:
+          "`--third` and `--half` are the modifiers that replaced the source's literal `basis-1/3` override.",
+      },
+      {
+        demo: "carousel/with-api",
+        title: "Reading the API",
+        description:
+          "`setApi` hands back the embla instance so a page can drive or observe the carousel from outside — a slide counter here.",
       },
     ],
   },
@@ -1848,6 +1955,51 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
   },
   {
+    slug: "alert-dialog-primitive",
+    name: "AlertDialog",
+    category: "Overlays",
+    exports: [
+      "AlertDialog",
+      "AlertDialogTrigger",
+      "AlertDialogContent",
+      "AlertDialogHeader",
+      "AlertDialogFooter",
+      "AlertDialogMedia",
+      "AlertDialogTitle",
+      "AlertDialogDescription",
+      "AlertDialogAction",
+      "AlertDialogCancel",
+    ],
+    description:
+      "Base UI's own alert dialog, composed from parts rather than configured with props — landed batch 12 (#45), routed here in batch 16 (#49).",
+    intro: [
+      "`Modal` (the “Modal” page) is this system's own additive and stays the default for a destructive-confirmation dialog. `AlertDialog` is incoming's composed primitive underneath the same concept: reach for it when a page is already composing Base UI parts directly, or needs a part `Modal` doesn't expose — `AlertDialogCancel`'s own focus behaviour, for instance.",
+      "Unlike `Modal`, there is no single `open`/`onClose` pair — `AlertDialogTrigger` opens it, `AlertDialogAction`/`AlertDialogCancel` close it, and the whole tree can also be driven controlled via `AlertDialog`'s own `open`/`onOpenChange`.",
+    ],
+    examples: [
+      {
+        demo: "alert-dialog-primitive/basic",
+        title: "Basic",
+        description: "Trigger, header, footer — the four parts every alert dialog composes.",
+      },
+      {
+        demo: "alert-dialog-primitive/with-media",
+        title: "With media",
+        description: "`AlertDialogMedia` for an icon or illustration ahead of the title.",
+      },
+      {
+        demo: "alert-dialog-primitive/pending",
+        title: "Pending confirm",
+        description: "The confirm action disabled and spinning until an async call resolves.",
+      },
+      {
+        demo: "alert-dialog-primitive/type-to-confirm",
+        title: "Type to confirm",
+        description: "The confirm action gated on typing the resource's own name back.",
+      },
+    ],
+  },
+  {
     slug: "context-menu",
     name: "ContextMenu",
     category: "Overlays",
@@ -1929,6 +2081,49 @@ export const COMPONENTS: ComponentDoc[] = [
         title: "A short form",
         description:
           "A `Field` and an `Input` in the body, with the actions in `footer` rather than the flow.",
+      },
+    ],
+  },
+  {
+    slug: "dialog-primitive",
+    name: "Dialog",
+    category: "Overlays",
+    exports: [
+      "Dialog",
+      "DialogTrigger",
+      "DialogContent",
+      "DialogHeader",
+      "DialogFooter",
+      "DialogTitle",
+      "DialogDescription",
+      "DialogClose",
+    ],
+    description:
+      "Base UI's own dialog, composed from parts rather than configured with props — landed batch 12 (#45), routed here in batch 16 (#49).",
+    intro: [
+      "`Modal` (the “Modal” page) is this system's own additive and stays the default for a focused-task dialog. `Dialog` is incoming's composed primitive underneath the same concept — already dogfooded once, transitively, through `CommandDialog`. Reach for it directly when a page is already composing Base UI parts, or needs a part `Modal` doesn't expose.",
+      "Unlike `Modal`, there is no single `open`/`onClose` pair — `DialogTrigger` opens it and `DialogClose` (or the tree's own `open`/`onOpenChange`) closes it, so an uncontrolled dialog needs no state in the page at all.",
+    ],
+    examples: [
+      {
+        demo: "dialog-primitive/basic",
+        title: "Basic",
+        description: "Trigger, header, footer — the parts every dialog composes.",
+      },
+      {
+        demo: "dialog-primitive/with-form",
+        title: "With a form",
+        description: "A `Field` and an `Input` in the body, submitted from the footer.",
+      },
+      {
+        demo: "dialog-primitive/controlled",
+        title: "Controlled",
+        description: "`open`/`onOpenChange` on `Dialog` itself, for a page that opens it from elsewhere.",
+      },
+      {
+        demo: "dialog-primitive/long-content",
+        title: "Long content",
+        description: "A body long enough to scroll inside `DialogContent` rather than the page.",
       },
     ],
   },
