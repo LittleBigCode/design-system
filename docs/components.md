@@ -9,7 +9,7 @@ showcase page.
 
 ## React components
 
-The 118 components exported from [`@diametral/design-system/react`](react.md). Every row has a live page with runnable examples, and every page is what the visual and accessibility gates drive — so this table and the tested surface cannot disagree.
+The 122 components exported from [`@diametral/design-system/react`](react.md). Every row has a live page with runnable examples, and every page is what the visual and accessibility gates drive — so this table and the tested surface cannot disagree.
 
 > Generated from `site/src/registry/registry.ts` by `scripts/build-components-md.mjs`. Edit the registry, then run `npm run build`.
 
@@ -25,6 +25,7 @@ The 118 components exported from [`@diametral/design-system/react`](react.md). E
 | [Speed Dial](https://littlebigcode.github.io/design-system/docs/speed-dial) | `SpeedDial`, `SpeedDialAction` | A floating action button whose two-to-four actions fan out on open — the create button a whole view is about. |
 | [SplitButton](https://littlebigcode.github.io/design-system/docs/split-button) | `SplitButton` | One primary action, with its variants behind an attached caret. |
 | [Toggle](https://littlebigcode.github.io/design-system/docs/toggle) | `Toggle`, `toggleVariants` | A two-state button for on/off formatting controls. |
+| [ToggleGroup](https://littlebigcode.github.io/design-system/docs/toggle-group-primitive) | `ToggleGroup`, `ToggleGroupItem` | Base UI's own toggle group, single- or multi-select — landed batch 12 (#45), routed here in batch 16 (#49). |
 | [Toolbar](https://littlebigcode.github.io/design-system/docs/toolbar) | `Toolbar`, `ToolbarGroup`, `ToolbarButton`, `ToolbarLink`, `ToolbarInput`, `ToolbarSeparator` | A Base UI toolbar with arrow-key navigation across grouped buttons, inputs and separators. |
 | [Wizard](https://littlebigcode.github.io/design-system/docs/wizard) | `Wizard`, `type WizardStep` | An ordered sequence of steps, with the progress and the navigation handled. |
 
@@ -48,7 +49,7 @@ The 118 components exported from [`@diametral/design-system/react`](react.md). E
 | [Form](https://littlebigcode.github.io/design-system/docs/form) | `Form` | A thin Base UI Form wrapper: the page-level `<form>` and its vertical rhythm. `Field` owns everything inside it. |
 | [Input](https://littlebigcode.github.io/design-system/docs/input) | `Input` | The single-line text field, and the base every other text control borrows its focus ring and invalid styling from. |
 | [Input Group](https://littlebigcode.github.io/design-system/docs/input-group) | `InputGroup`, `InputGroupAddon`, `InputGroupButton`, `InputGroupText`, `InputGroupInput`, `InputGroupTextarea`, `inputGroupAddonVariants` | Composes addons, icons and buttons around an input inside a single bordered box. |
-| [Input OTP](https://littlebigcode.github.io/design-system/docs/input-otp) |  | A segmented one-time-code field with per-character slots. Stylesheet only — the one-field-many-boxes behaviour needs a binding this package does not ship. |
+| [Input OTP](https://littlebigcode.github.io/design-system/docs/input-otp) | `InputOTP`, `InputOTPGroup`, `InputOTPSlot`, `InputOTPSeparator` | A segmented one-time-code field with per-character slots, over the `input-otp` package. |
 | [Label](https://littlebigcode.github.io/design-system/docs/label) | `Label` | An accessible label; pairs with a control via `htmlFor` and dims with its disabled state. |
 | [MultiSelect](https://littlebigcode.github.io/design-system/docs/multi-select) | `MultiSelect`, `type MultiSelectOption` | Several values from a fixed list, shown as removable chips. |
 | [NumberField](https://littlebigcode.github.io/design-system/docs/number-field) | `NumberField`, `NumberFieldGroup`, `NumberFieldInput`, `NumberFieldDecrement`, `NumberFieldIncrement`, `NumberFieldScrubArea` | A numeric field with stepper buttons and a real `null` for empty. |
@@ -119,6 +120,7 @@ The 118 components exported from [`@diametral/design-system/react`](react.md). E
 | [Sidebar](https://littlebigcode.github.io/design-system/docs/sidebar) | `SidebarProvider`, `Sidebar`, `SidebarContent`, `SidebarHeader`, `SidebarFooter`, `SidebarGroup`, `SidebarGroupAction`, `SidebarGroupContent`, `SidebarGroupLabel`, `SidebarInput`, `SidebarInset`, `SidebarMenu`, `SidebarMenuAction`, `SidebarMenuBadge`, `SidebarMenuButton`, `SidebarMenuItem`, `SidebarMenuSkeleton`, `SidebarMenuSub`, `SidebarMenuSubButton`, `SidebarMenuSubItem`, `SidebarRail`, `SidebarSeparator`, `SidebarTrigger`, `useSidebar` | The app's own nav column — 23 composed parts, renamed from `VerticalNav`. |
 | [Stepper](https://littlebigcode.github.io/design-system/docs/stepper) | `Stepper`, `StepperItem`, `StepperIndicator`, `StepperContent`, `StepperTitle`, `StepperDescription` | Progress through a multi-step flow, with per-step state and orientation support. |
 | [Tabs](https://littlebigcode.github.io/design-system/docs/tabs) | `Tabs`, `type TabsProps`, `type TabItem` | Sibling views of one subject, one visible at a time. |
+| [Tabs (composed)](https://littlebigcode.github.io/design-system/docs/tabs-primitive) | `Tabs`, `TabsList`, `TabsTrigger`, `TabsContent` | Base UI's own tabs, composed from parts rather than configured with an `items` prop — landed batch 12 (#45), routed here in batch 16 (#49). |
 | [Toc](https://littlebigcode.github.io/design-system/docs/toc) | `Toc`, `TocLabel`, `TocList`, `TocItem`, `TocLink` | The in-page anchor rail — a sticky list of the sections on the current page. |
 
 ### Layout
@@ -127,11 +129,11 @@ The 118 components exported from [`@diametral/design-system/react`](react.md). E
 | --- | --- | --- |
 | [Aspect Ratio](https://littlebigcode.github.io/design-system/docs/aspect-ratio) | `AspectRatio` | Constrains content to a fixed width-to-height ratio. |
 | [Banner](https://littlebigcode.github.io/design-system/docs/banner) | `Banner`, `BannerContent`, `BannerTitle`, `BannerDescription`, `BannerAction` | A full-width, tone-coloured message bar over the shared six-tone family — the same tokens button.tsx's `tone` axis reads. |
-| [Carousel](https://littlebigcode.github.io/design-system/docs/carousel) |  | A paged slide viewport with previous and next controls. Stylesheet only — the drag and snap need a binding this package does not ship. |
+| [Carousel](https://littlebigcode.github.io/design-system/docs/carousel) | `Carousel`, `CarouselContent`, `CarouselItem`, `CarouselPrevious`, `CarouselNext`, `type CarouselApi` | A paged slide viewport with previous and next controls, over `embla-carousel-react`. |
 | [Masonry](https://littlebigcode.github.io/design-system/docs/masonry) | `Masonry` | A multi-column layout that balances items of uneven height, via CSS columns rather than a JS measurement pass. |
 | [Page Header](https://littlebigcode.github.io/design-system/docs/page-header) | `PageHeader`, `PageHeaderHeading`, `PageHeaderIcon`, `PageHeaderTitle`, `PageHeaderDescription`, `PageHeaderActions`, `PageHeaderTabs` | Breadcrumb, title, description and actions for the top of a page, with an optional flush tab strip. |
 | [Panel](https://littlebigcode.github.io/design-system/docs/panel) | `Panel`, `PanelHeader`, `PanelTitle`, `PanelContent`, `PanelFooter`, `PanelRow` | A sunken section container — the flat sibling of Card, plus a row part for tightly-packed settings lists. |
-| [Resizable](https://littlebigcode.github.io/design-system/docs/resizable) |  | Panel groups split by draggable handles. Stylesheet only — the drag needs a binding this package does not ship. |
+| [Resizable](https://littlebigcode.github.io/design-system/docs/resizable) | `ResizablePanelGroup`, `ResizablePanel`, `ResizableHandle` | Panel groups split by draggable handles, over `react-resizable-panels`. |
 | [Scroll Area](https://littlebigcode.github.io/design-system/docs/scroll-area) | `ScrollArea`, `ScrollBar` | A scrollable region with styled, overlay scrollbars. |
 | [Separator](https://littlebigcode.github.io/design-system/docs/separator) | `Separator` | A rule between content. Base UI inverts the orientation semantics — a horizontal group takes vertical separators. |
 | [Theme Switcher](https://littlebigcode.github.io/design-system/docs/theme-switcher) | `ThemeSwitcher`, `type ThemeSwitcherMode` | A light/dark/system toggle, promoted from the docs app's own theme-toggle. Fully controlled — the consumer owns the theme hook. |
@@ -148,7 +150,9 @@ The 118 components exported from [`@diametral/design-system/react`](react.md). E
 
 | Component | Imports | What it is |
 | --- | --- | --- |
+| [AlertDialog](https://littlebigcode.github.io/design-system/docs/alert-dialog-primitive) | `AlertDialog`, `AlertDialogTrigger`, `AlertDialogContent`, `AlertDialogHeader`, `AlertDialogFooter`, `AlertDialogMedia`, `AlertDialogTitle`, `AlertDialogDescription`, `AlertDialogAction`, `AlertDialogCancel` | Base UI's own alert dialog, composed from parts rather than configured with props — landed batch 12 (#45), routed here in batch 16 (#49). |
 | [ContextMenu](https://littlebigcode.github.io/design-system/docs/context-menu) | `ContextMenu`, `ContextMenuTrigger`, `ContextMenuContent`, `ContextMenuItem`, `ContextMenuCheckboxItem`, `ContextMenuRadioGroup`, `ContextMenuRadioItem`, `ContextMenuLabel`, `ContextMenuSeparator`, `ContextMenuShortcut`, `ContextMenuGroup`, `ContextMenuPortal`, `ContextMenuSub`, `ContextMenuSubTrigger`, `ContextMenuSubContent` | Right-click's own menu, positioned at the pointer. |
+| [Dialog](https://littlebigcode.github.io/design-system/docs/dialog-primitive) | `Dialog`, `DialogTrigger`, `DialogContent`, `DialogHeader`, `DialogFooter`, `DialogTitle`, `DialogDescription`, `DialogClose` | Base UI's own dialog, composed from parts rather than configured with props — landed batch 12 (#45), routed here in batch 16 (#49). |
 | [Drawer](https://littlebigcode.github.io/design-system/docs/drawer) | `Drawer`, `DrawerTrigger`, `DrawerPortal`, `DrawerOverlay`, `DrawerSwipeHandle`, `DrawerClose`, `DrawerContent`, `DrawerHeader`, `DrawerFooter`, `DrawerTitle`, `DrawerDescription` | A bottom sheet with drag-to-dismiss and snap points — Sheet's gesture-driven sibling, tuned for touch. |
 | [DropdownMenu](https://littlebigcode.github.io/design-system/docs/dropdown-menu) | `DropdownMenu`, `DropdownMenuPortal`, `DropdownMenuTrigger`, `DropdownMenuContent`, `DropdownMenuGroup`, `DropdownMenuLabel`, `DropdownMenuItem`, `DropdownMenuCheckboxItem`, `DropdownMenuRadioGroup`, `DropdownMenuRadioItem`, `DropdownMenuSeparator`, `DropdownMenuShortcut`, `DropdownMenuSub`, `DropdownMenuSubTrigger`, `DropdownMenuSubContent` | A menu of actions hanging off a trigger. |
 | [Hover Card](https://littlebigcode.github.io/design-system/docs/hover-card) | `HoverCard`, `HoverCardTrigger`, `HoverCardContent` | A preview surface shown on hover, for links and mentions. |
