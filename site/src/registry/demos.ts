@@ -21,6 +21,9 @@ export type Demo = {
   Component: ComponentType
   code: string
   html: string
+  /** The buildless `.ds-*` markup reference (decision 8). See demo-source.ts. */
+  markup?: string
+  markupHtml?: string
 }
 
 const demos = new Map<string, Demo>()
@@ -35,6 +38,8 @@ for (const [file, mod] of Object.entries(modules)) {
     Component: mod.default,
     code: source.code,
     html: source.html,
+    markup: source.markup,
+    markupHtml: source.markupHtml,
   })
 }
 

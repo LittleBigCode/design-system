@@ -120,23 +120,54 @@ async function listFiles(dir: string): Promise<string[]> {
  * Both themes are emitted into one payload as CSS variables (--shiki-light /
  * --shiki-dark) so a theme switch is a repaint, not a re-highlight.
  */
-async function highlight(code: string) {
+async function highlight(code: string, lang: "tsx" | "html" = "tsx") {
   return codeToHtml(code, {
-    lang: "tsx",
+    lang,
     themes: { light: diametralLight, dark: diametralDark },
     defaultColor: false,
     cssVariablePrefix: "--shiki-",
   })
 }
 
+/**
+ * Written by `scripts/build-demo-markup.mjs` — a real browser drives the docs
+ * app and scrapes each example's rendered DOM, codemodded onto `.ds-*` (decision
+ * 8's HTML tab). Not generated here: an in-process SSR render hits a real,
+ * structural dual-React-copy problem in this repo (root's package and `site/`
+ * each install their own `react`/`react-dom`, and only the *client* bundle's
+ * `resolve.dedupe` unifies them), so a live browser stands in for a Node
+ * renderer. Missing when the script hasn't run yet (a plain `vite dev`, or a
+ * checkout that hasn't run `npm run build`) — `getDemo()`'s `markup` is
+ * `undefined` in that case, and the HTML tab says so rather than lying with a
+ * stale one.
+ */
+const MARKUP_MANIFEST = path.join(REGISTRY, "demo-markup.json")
+
+async function readMarkupManifest(): Promise<Record<string, string>> {
+  return fs
+    .readFile(MARKUP_MANIFEST, "utf8")
+    .then((text) => JSON.parse(text) as Record<string, string>)
+    .catch(() => ({}))
+}
+
 async function buildDemos() {
-  const files = (await listFiles(DEMOS_DIR)).sort()
+  const [files, markup] = await Promise.all([
+    listFiles(DEMOS_DIR).then((found) => found.sort()),
+    readMarkupManifest(),
+  ])
   const entries = await Promise.all(
     files.map(async (file) => {
+      const key = toKey(file, DEMOS_DIR)
       const code = (await fs.readFile(file, "utf8")).trimEnd()
+      const rawMarkup = markup[key]
       return [
-        toKey(file, DEMOS_DIR),
-        { code, html: await highlight(code) },
+        key,
+        {
+          code,
+          html: await highlight(code),
+          markup: rawMarkup,
+          markupHtml: rawMarkup ? await highlight(rawMarkup, "html") : undefined,
+        },
       ] as const
     })
   )
@@ -402,6 +433,7 @@ export function demoSource(): Plugin {
           file.startsWith(DEMOS_DIR) ||
           file.startsWith(PLAYGROUNDS_DIR) ||
           file === DECLARATIONS ||
+          file === MARKUP_MANIFEST ||
           file.startsWith(UI_COMPONENTS)
         if (!watched) return
         const mod = server.moduleGraph.getModuleById(RESOLVED_ID)

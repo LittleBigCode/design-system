@@ -1,6 +1,14 @@
 declare module "virtual:demo-source" {
-  /** Keyed by `<slug>/<demo-name>`, populated by the demo-source Vite plugin. */
-  export const sources: Record<string, { code: string; html: string }>
+  /**
+   * Keyed by `<slug>/<demo-name>`, populated by the demo-source Vite plugin.
+   * `markup`/`markupHtml` are undefined until `scripts/build-demo-markup.mjs`
+   * has run once (it isn't part of `vite dev`) — see that script and
+   * `demo-source.ts`.
+   */
+  export const sources: Record<
+    string,
+    { code: string; html: string; markup?: string; markupHtml?: string }
+  >
 
   /** The shiki themes' own colours, so runtime highlighting matches build-time. */
   export const palette: Record<
