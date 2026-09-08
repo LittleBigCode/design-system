@@ -71,15 +71,20 @@
   background-color: color-mix(in oklab, var(--ds-ink) 80%, transparent);
 }
 
+/* --ds-rule-soft, not --ds-grey-faint: the two are the same value in light
+   (#e4e4e6) but --ds-rule-soft is the one with a dark-theme mirror (#232428).
+   --ds-grey-faint is a fixed primitive that does not invert, so pairing it
+   with --ds-ink (which does) left dark-theme secondary bubbles near-white
+   text on a bg that stayed light grey — axe, color-contrast (#50). */
 .ds-bubble[data-variant="secondary"] > [data-slot="bubble-content"] {
-  background-color: var(--ds-grey-faint);
+  background-color: var(--ds-rule-soft);
   color: var(--ds-ink);
 }
 .ds-bubble[data-variant="secondary"]
   > [data-slot="bubble-content"]:is(button, a):hover {
   background-color: color-mix(
     in oklch,
-    var(--ds-grey-faint),
+    var(--ds-rule-soft),
     var(--ds-ink) 5%
   );
 }
@@ -139,9 +144,14 @@
   background-color: color-mix(in oklab, var(--ds-bg-alt) 50%, transparent);
 }
 
+/* --ds-danger-ink for text, not the bare --ds-danger — same fix as
+   alert.css's `.ds-alert--destructive` (#49/#50): --ds-danger is constant
+   across themes, and a 10% wash of it over dark's near-black --ds-surface
+   stays dark enough that the text reads under 4.5:1. --ds-danger-ink is the
+   mirrored text-weight shade (light theme: identical value; dark: #f08a7e). */
 .ds-bubble[data-variant="destructive"] > [data-slot="bubble-content"] {
   background-color: color-mix(in oklab, var(--ds-danger) 10%, transparent);
-  color: var(--ds-danger);
+  color: var(--ds-danger-ink);
 }
 .ds-bubble[data-variant="destructive"]
   > [data-slot="bubble-content"]:is(button, a):hover {

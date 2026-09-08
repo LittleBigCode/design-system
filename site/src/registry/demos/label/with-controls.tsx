@@ -40,7 +40,12 @@ export default function LabelWithControls() {
             Thumb, not the root Label/htmlFor pairs with elsewhere on this
             page — so it's labelled via aria-labelledby instead. */}
         <Label id="label-seats-label">Seats</Label>
-        <Slider aria-labelledby="label-seats-label" defaultValue={12} min={1} max={50} />
+        <Slider
+          aria-labelledby="label-seats-label"
+          defaultValue={12}
+          min={1}
+          max={50}
+        />
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor="label-brief">Brief</Label>
