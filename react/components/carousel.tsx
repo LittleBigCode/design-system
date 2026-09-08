@@ -6,7 +6,7 @@ import useEmblaCarousel, {
 } from "embla-carousel-react"
 
 import { cx } from "../lib/cx.js"
-import { Button } from "./button.js"
+import { IconButton } from "./icon-button.js"
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react"
 
 type CarouselApi = UseEmblaCarouselType[1]
@@ -169,24 +169,25 @@ function CarouselPrevious({
   className,
   variant = "outline",
   size = "icon-sm",
+  label = "Previous slide",
   ...props
-}: React.ComponentProps<typeof Button>) {
+}: React.ComponentProps<typeof IconButton>) {
   const { orientation, scrollPrev, canScrollPrev } = useCarousel()
 
   return (
-    <Button
+    <IconButton
       data-slot="carousel-previous"
       data-orientation={orientation}
       variant={variant}
       size={size}
+      label={label}
       className={cx("ds-carousel-control", className)}
       disabled={!canScrollPrev}
       onClick={scrollPrev}
       {...props}
     >
       <CaretLeftIcon className="ds-carousel-control-icon" />
-      <span className="sr-only">Previous slide</span>
-    </Button>
+    </IconButton>
   )
 }
 
@@ -194,24 +195,25 @@ function CarouselNext({
   className,
   variant = "outline",
   size = "icon-sm",
+  label = "Next slide",
   ...props
-}: React.ComponentProps<typeof Button>) {
+}: React.ComponentProps<typeof IconButton>) {
   const { orientation, scrollNext, canScrollNext } = useCarousel()
 
   return (
-    <Button
+    <IconButton
       data-slot="carousel-next"
       data-orientation={orientation}
       variant={variant}
       size={size}
+      label={label}
       className={cx("ds-carousel-control", className)}
       disabled={!canScrollNext}
       onClick={scrollNext}
       {...props}
     >
       <CaretRightIcon className="ds-carousel-control-icon" />
-      <span className="sr-only">Next slide</span>
-    </Button>
+    </IconButton>
   )
 }
 

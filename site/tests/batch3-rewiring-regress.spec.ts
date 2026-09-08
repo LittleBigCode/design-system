@@ -8,8 +8,9 @@
 // in place and have not quietly reverted to a source symbol.
 //
 // The rest guards work paid on the way in that nothing else would catch: six
-// resolved dedupe exceptions, two stylesheet-only class contracts, the
-// `.ds-label` namespace merge, and the theme and escape-hatch defects.
+// resolved dedupe exceptions, `carousel`/`input-otp`'s real bindings (batch
+// 16, #49 — stylesheet-only until then), the `.ds-label` namespace merge, and
+// the theme and escape-hatch defects.
 
 import { expect, test } from "@playwright/test"
 import { routePath, settle } from "./harness"
@@ -356,20 +357,18 @@ test.describe("phone-input composes onto the native Select", () => {
   })
 })
 
-/* -- The two stylesheet-only class contracts ------------------------------- */
+/* -- carousel and input-otp, real bindings since batch 16 (#49) ------------ */
 
-test.describe("carousel ships CSS with no binding", () => {
+test.describe("carousel's real binding", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(routePath("/docs/carousel"))
     await settle(page)
   })
 
-  test("the page prints no import line", async ({ page }) => {
-    // exports: [] is what tells the page there is nothing to import. An import
-    // line here would be promising Carousel* symbols that do not exist.
-    await expect(page.locator("main")).not.toContainText(
-      "import { Carousel }",
-    )
+  test("the page prints a real import line", async ({ page }) => {
+    // The reverse of the old stylesheet-only assertion: exports is no longer
+    // [], so the page promises real Carousel* symbols now.
+    await expect(page.locator("main").last()).toContainText("import { Carousel")
   })
 
   test("the gutter is the track's negative margin against the item's padding", async ({
@@ -387,36 +386,36 @@ test.describe("carousel ships CSS with no binding", () => {
     )
   })
 
-  test("--third is a real basis, replacing the literal basis-1/3", async ({
+  test("--third is a real basis, not a literal basis-1/3", async ({
     page,
   }) => {
     const item = page.locator(".ds-carousel-item--third").first()
     await expect(item).toBeVisible()
     await expect(item).toHaveCSS("flex-basis", "33.3333%")
-    expect(await item.getAttribute("class")).not.toMatch(/basis-/)
+    expect(await item.getAttribute("class")).not.toMatch(/basis-\d/)
   })
 
-  test("the controls are named IconButtons outside the viewport", async ({
+  test("the controls are IconButtons outside the viewport", async ({
     page,
   }) => {
-    // The source hid the name in an sr-only span; this package has none, so the
-    // name is IconButton's required label.
+    // IconButton's required `label` is the accessible name — the source hid it
+    // in an sr-only span, which this package has no utility class for.
     for (const name of ["Previous slide", "Next slide"]) {
-      const control = page.locator(`[aria-label="${name}"]`).first()
+      const control = page.getByRole("button", { name }).first()
       await expect(control).toHaveClass(/ds-carousel-control/)
       await expect(control).toHaveCSS("position", "absolute")
     }
   })
 })
 
-test.describe("input-otp ships CSS with no binding", () => {
+test.describe("input-otp's real binding", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(routePath("/docs/input-otp"))
     await settle(page)
   })
 
-  test("the page prints no import line", async ({ page }) => {
-    await expect(page.locator("main")).not.toContainText("import { InputOTP }")
+  test("the page prints a real import line", async ({ page }) => {
+    await expect(page.locator("main").last()).toContainText("import { InputOTP")
   })
 
   test("one real input carries the value, the slots only display it", async ({
@@ -426,27 +425,22 @@ test.describe("input-otp ships CSS with no binding", () => {
     await expect(root).toBeVisible()
     expect(await root.locator("input").count()).toBe(1)
     expect(await root.locator(".ds-input-otp-slot").count()).toBe(6)
-    // The boxes are aria-hidden because the input already announces the value.
-    await expect(root.locator(".ds-input-otp-group").first()).toHaveAttribute(
-      "aria-hidden",
-      "true",
-    )
+    // The slots are a plain div each — no value, no onChange — the input
+    // beneath announces the value on its own, so nothing here needs aria-hidden
+    // (unlike the pre-batch-16 stylesheet-only stub they replace).
   })
 
-  test("data-active draws the focused underline and the caret", async ({
+  test("data-active tracks real focus, not a static demo state", async ({
     page,
   }) => {
-    const active = page.locator('.ds-input-otp-slot[data-active="true"]').first()
-    await expect(active).toBeVisible()
-    await expect(active.locator(".ds-input-otp-slot-caret-line")).toBeVisible()
-    const [activeColor, restColor] = await Promise.all([
-      active.evaluate((el) => getComputedStyle(el).borderBottomColor),
-      page
-        .locator(".ds-input-otp-slot:not([data-active])")
-        .first()
-        .evaluate((el) => getComputedStyle(el).borderBottomColor),
-    ])
-    expect(activeColor).not.toBe(restColor)
+    const root = page.locator(".ds-input-otp").first()
+    const slots = root.locator(".ds-input-otp-slot")
+    // Nothing is focused on load — every slot starts inactive.
+    await expect(slots.first()).toHaveAttribute("data-active", "false")
+    await root.locator("input").click()
+    // Focusing the real input activates its first slot.
+    await expect(slots.first()).toHaveAttribute("data-active", "true")
+    await expect(slots.nth(1)).toHaveAttribute("data-active", "false")
   })
 })
 

@@ -140,6 +140,16 @@ export function ComponentPage() {
           <div className="mt-5 max-w-2xl">
             <ImportLine slug={component.slug} exports={component.exports} />
           </div>
+          {component.wiring ? (
+            <div className="mt-3 max-w-2xl border border-dashed border-border bg-muted/40 px-3 py-2">
+              <p className="text-xs text-muted-foreground">
+                <span className="font-semibold text-foreground">
+                  Wiring the HTML tab:
+                </span>{" "}
+                {component.wiring}
+              </p>
+            </div>
+          ) : null}
         </header>
 
         {playground ? (

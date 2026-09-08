@@ -12,7 +12,7 @@ export default function CarouselMultiple() {
       <Carousel opts={{ align: "start" }}>
         <CarouselContent>
           {Array.from({ length: 7 }, (_, index) => (
-            <CarouselItem key={index} className="basis-1/3">
+            <CarouselItem key={index} className="ds-carousel-item--third">
               <div className="flex aspect-square items-center justify-center border border-border bg-muted/50 font-mono text-sm text-muted-foreground">
                 {index + 1}
               </div>

@@ -35,6 +35,16 @@ export type ComponentDoc = {
    * part has a gotcha and leave the rest silent.
    */
   parts?: Record<string, string>
+  /**
+   * Batch 16 (#49), direction.md decision 9: the HTML tab is markup, not
+   * behaviour, so an interactive component's page carries one sentence on
+   * what a from-scratch binding has to wire up itself — name the real event
+   * (open/close, selection, drag) rather than "add JavaScript", and name the
+   * matching `<ds-*>` web component when one of the 11 covers this concept
+   * (`docs/absorption/corrections.md` — the plan's "12" was one over).
+   * Unset for the ~50 purely presentational components: nothing to wire.
+   */
+  wiring?: string
 }
 
 /**
@@ -88,6 +98,8 @@ export const COMPONENTS: ComponentDoc[] = [
       SpeedDialAction:
         "The whole row is the menu item — label chip and glyph box together — so the label is the accessible name and the box needs none.",
     },
+    wiring:
+      "The trigger's `aria-expanded` drives which glyph shows (`.ds-speed-dial-icon` vs `.ds-speed-dial-icon-close`) — nothing else marks open state — so a from-scratch binding must toggle it itself on click, plus close on Escape or an outside click and return focus to the trigger. It also needs arrow-key roving focus across `.ds-speed-dial-action` rows and to close the menu after an action fires, since these are Base UI Menu's semantics, not CSS.",
   },
   {
     slug: "split-button",
@@ -156,6 +168,8 @@ export const COMPONENTS: ComponentDoc[] = [
         description: "Items sharing one visual edge rather than sitting apart.",
       },
     ],
+    wiring:
+      "A from-scratch binding owns the shared value: clicking (or Space/Enter on) an item toggles it into or out of the group's pressed-values array — by default only one item stays pressed at a time (picking a new one unpresses the last), unless the consumer wants `multiple`-style independent toggling — and updates each item's `aria-pressed` to match. The group also needs roving `tabindex` with arrow-key navigation (looping past the last item back to the first) along `data-orientation`.",
   },
   {
     slug: "wizard",
@@ -301,6 +315,8 @@ export const COMPONENTS: ComponentDoc[] = [
           "One toggle per row, holding its own state. The icon carries no text, so each one needs an `aria-label` naming its row — the pressed fill is the only other cue.",
       },
     ],
+    wiring:
+      "One `aria-pressed` boolean, flipped by a click/Space/Enter handler on the button — `toggle.css` keys the pressed fill off `aria-pressed` itself, so that's the only state a from-scratch binding needs to maintain.",
   },
   /* -- Forms --------------------------------------------------------------- */
   {
@@ -367,6 +383,8 @@ export const COMPONENTS: ComponentDoc[] = [
       AutocompleteCollection:
         "Renders the items of the `AutocompleteGroup` above it, or the root's filtered items when there is no group — the same wrapper `AutocompleteList` applies implicitly to a function child.",
     },
+    wiring:
+      "A from-scratch binding filters (or not, per `mode`) the item list as the input's value changes, marks the highlighted item with `data-highlighted` as arrow keys move through it, and commits an item's text into the input on click or Enter. The popup's open state is `data-open`/`data-closed`, its empty state is a `data-empty` attribute rather than conditional rendering (so the empty message stays mounted and gets announced), and the clear button has to unmount itself — not just disable — whenever the input is empty.",
   },
   {
     slug: "calendar",
@@ -404,6 +422,8 @@ export const COMPONENTS: ComponentDoc[] = [
         description: "Uncontrolled, defaulting to the brand red.",
       },
     ],
+    wiring:
+      "Four inputs converge on one value and a binding has to keep them synced: a swatch click sets `aria-pressed` on the matching `.ds-color-picker-swatch` and commits its color; the hex field validates every keystroke against a `#rgb`/`#rrggbb` pattern before committing, so `#16` mid-type doesn't commit; the native `<input type=\"color\">` commits immediately on change; and a hidden `input[name]` must mirror only the last *committed* color, never the hex field's in-progress draft.",
   },
   {
     slug: "combobox",
@@ -510,6 +530,8 @@ export const COMPONENTS: ComponentDoc[] = [
           "`step={15}`, so a time picked off the clock snaps to `:00`, `:15`, `:30` or `:45`.",
       },
     ],
+    wiring:
+      "A binding has to wire two things: the date half's popover open/close (opening on trigger click, closing again the moment a day is picked) and the calendar's day-selection state (`aria-selected` on the picked cell, `aria-disabled` on days outside `min`/`max`). It then has to merge that picked day with the time sub-fields into one value and re-clamp on every change to `min`/`max`, since the bound applies to the combined date-time, not the date alone.",
   },
   {
     slug: "file-upload",
@@ -535,6 +557,8 @@ export const COMPONENTS: ComponentDoc[] = [
           "`accept` narrowing the picker, `multiple` allowing a set, and the size cap written into `hint`.",
       },
     ],
+    wiring:
+      "A binding needs to wire the drag lifecycle onto `data-dragging` (set on `dragover`, cleared on `dragleave`/`drop`), forward both a `drop`'s `dataTransfer.files` and the hidden input's own `change` `files` to the same handler, and reset the input's `value` after each change so re-selecting the identical file still fires a change event.",
   },
   {
     slug: "multi-select",
@@ -586,6 +610,8 @@ export const COMPONENTS: ComponentDoc[] = [
           "`NumberFieldScrubArea` wraps the label — drag it to change the value, the way a design tool's number fields do.",
       },
     ],
+    wiring:
+      "A binding has to parse and clamp the input's typed value against `min`/`max`/`step`, format it back for display, and disable (`data-disabled`/`aria-disabled`) the increment/decrement buttons at those bounds. It also owns the scrub area: pointer-drag on it should adjust the value by drag delta rather than by click, hide the system cursor, and move the cursor element to track the pointer.",
   },
   {
     slug: "radio-group",
@@ -606,6 +632,8 @@ export const COMPONENTS: ComponentDoc[] = [
           "No `name` passed, so the group generates its own and the arrow keys work.",
       },
     ],
+    wiring:
+      "A binding has to implement roving `tabindex` across the group's radios (only the checked, or first, item is tab-stoppable), arrow-key navigation that moves both focus and selection between items, and toggling `aria-checked`/`data-checked` on the chosen item while clearing it on the rest. For use in a native form it also needs a hidden input synced to the selected item's value.",
   },
   {
     slug: "rating",
@@ -625,6 +653,8 @@ export const COMPONENTS: ComponentDoc[] = [
           "One editable, one `readOnly` — the two states side by side.",
       },
     ],
+    wiring:
+      "Built on the same radio-group mechanics, plus a hover preview: mouse-enter on an item has to visually fill up to that rank without committing the value, mouse-leave clears the preview back to the committed selection, and a click (or arrow-key move) commits it. `readOnly`/`disabled` must suppress both the hover preview and the click handler.",
   },
   {
     slug: "tags-input",
@@ -645,6 +675,8 @@ export const COMPONENTS: ComponentDoc[] = [
           "Three tags at mount, with a placeholder that says what the field takes.",
       },
     ],
+    wiring:
+      "A from-scratch binding owns all of the token logic: `Enter` or `,` on the input commits its current text as a new tag (skipping duplicates and anything past a configured max), `Backspace` on an empty input removes the last tag, and blurring the input also commits whatever's left in it. It also needs the container click-through behavior — a `mousedown` on the wrapper (not on a tag or its remove button) should focus the text input — and each tag's remove button removes just that tag from the collection.",
   },
   {
     slug: "time-picker",
@@ -663,6 +695,8 @@ export const COMPONENTS: ComponentDoc[] = [
         description: "A `defaultValue` of 14:30, with the dial popover.",
       },
     ],
+    wiring:
+      "The dial view is the heavy lift: a from-scratch binding must map a click's position on the circular face to an hour or minute (via angle), animate a hand that sweeps to it, switch from hour-picking to minute-picking mode after an hour is chosen, and close the popover a beat after a minute is picked (~220ms, so the hand visibly lands first). The list view instead needs each column to scroll itself to the current value on open and smooth-scroll to a new one on later changes; both views also keep three independent number fields (hours/minutes/seconds) in sync as one time value.",
   },
 
   {
@@ -742,6 +776,8 @@ export const COMPONENTS: ComponentDoc[] = [
           "An async `onSubmit`: read the values before the first `await`, since `event.currentTarget` is null once the handler yields. The server's answer lands in the same error state a client check would use.",
       },
     ],
+    wiring:
+      "The behavior worth wiring is server-side error propagation: submit is intercepted, and whatever the submit handler returns as an errors map (field name to message) has to be distributed automatically to each field — setting `aria-invalid` and rendering the message next to the matching input — rather than a page hand-wiring each field's error display itself.",
   },
 
   /* -- Data display ------------------------------------------------------ */
@@ -909,6 +945,8 @@ export const COMPONENTS: ComponentDoc[] = [
           "`value` with `onSubmit` hands the commit to the page — and obliges it to write the value back, since a controlled Editable renders what it is given and would otherwise snap to the old text. `onValueChange` is the same moment, not the keystrokes: there is no callback for the draft.",
       },
     ],
+    wiring:
+      "The whole component is the edit-mode toggle: clicking the pencil swaps `data-editing=\"false\"` for `\"true\"` and swaps the preview `<span>` for an `<input>` plus save/cancel buttons. A binding must wire Enter to commit and Escape to cancel on the input's keydown, blur to either commit or cancel, and — since a button click blurs the input first — call `preventDefault` on the buttons' `mousedown` so their `click` still fires before the blur handler resolves the edit.",
   },
   /* -- Data display -------------------------------------------------------- */
   {
@@ -934,6 +972,8 @@ export const COMPONENTS: ComponentDoc[] = [
           "The strip names the file the snippet would live in, which is what makes a copied snippet placeable.",
       },
     ],
+    wiring:
+      "The copy button is the whole interactive surface: clicking it writes `value` to the clipboard and swaps its `aria-label` and icon between `Copy code` and `Copied` for about two seconds before reverting — the label/icon swap is the only signal, there's no CSS state to key off.",
   },
   {
     slug: "data-table",
@@ -960,6 +1000,8 @@ export const COMPONENTS: ComponentDoc[] = [
           "`editable` on the table plus `meta: { editable: true }` on a column opens the cell on double-click or Enter; `onCellEdit` receives the row, the column key and the new value. The table does not mutate `data` itself.",
       },
     ],
+    wiring:
+      "This is the heaviest binding in the set: a sortable header button cycles none→asc→desc on click, a select-all checkbox derives checked/indeterminate from its rows' own checkbox state (and vice versa), and a per-row disclosure button toggles `aria-expanded` to show or hide a full-width detail row. Column headers can also be dragged — or arrow-keyed, for a keyboard equivalent — into a new order; inline edit opens a cell on double-click or Enter and commits on blur/Enter without touching the underlying data; and a server-driven table has to fetch and show a loading state on every sort, filter or page change.",
   },
   {
     slug: "tree",
@@ -979,6 +1021,8 @@ export const COMPONENTS: ComponentDoc[] = [
         description: "Two levels open at mount via `defaultOpen`.",
       },
     ],
+    wiring:
+      "A from-scratch binding toggles `TreeItemTrigger`'s open state (its caret swaps `.ds-tree-item-trigger-caret-right`/`-down` off it) on click/Space/Enter, showing or hiding the matching `TreeItemContent` `<ul role=\"group\">`. Per `docs/absorption/corrections.md`'s batch-13 row this is deliberately as far as it goes — there's no roving tabindex or arrow-key expand/collapse to replicate; Tab visits every trigger and that's the accepted, shipped behavior.",
   },
   {
     slug: "item",
@@ -1238,6 +1282,8 @@ export const COMPONENTS: ComponentDoc[] = [
           "`locale` goes straight to `Intl.RelativeTimeFormat`, and an invalid tag falls back to the browser instead of throwing. Leaving it unset follows the browser, which is usually what an app wants.",
       },
     ],
+    wiring:
+      "A binding needs a self-rescheduling timer that recomputes the string via `Intl.RelativeTimeFormat` at a cadence derived from elapsed time — every second under a minute, every 30s under an hour, every minute under a day, hourly under a week — and stops ticking (falling back to an absolute date) past a week. Each tick updates the element's text, `dateTime`, and `title` (the full localized date/time) in place.",
   },
   /* -- Navigation ---------------------------------------------------------- */
   {
@@ -1344,6 +1390,8 @@ export const COMPONENTS: ComponentDoc[] = [
       MenubarPortal:
         "Only for putting a popup somewhere other than the body — `MenubarContent` already portals, so most trees never name this.",
     },
+    wiring:
+      "Beyond each menu's own open/close and item navigation (the same surface as `DropdownMenu`), the bar adds roving focus across its top-level triggers: ArrowLeft/ArrowRight moves between menus, and if one menu is already open, moving to the next trigger has to open that one immediately rather than waiting for a fresh click.",
   },
   {
     slug: "navigation-menu",
@@ -1401,6 +1449,8 @@ export const COMPONENTS: ComponentDoc[] = [
       NavigationMenuTrigger:
         "Appends its own caret after the children and rotates it while the panel is open, so a trigger needs no icon of its own.",
     },
+    wiring:
+      "A consumer has to implement hover-intent opening (mouse enter after a delay, not on first contact) alongside keyboard activation via Enter/Space and the arrow keys, reflecting the active submenu as `data-open`/`data-closed` on the popup and `aria-expanded` on its trigger; Escape has to close the open submenu and return focus to its trigger. It also owns sliding the indicator element under whichever trigger is active and swapping the viewport's rendered panel as the active item changes.",
   },
   {
     slug: "sidebar",
@@ -1458,6 +1508,8 @@ export const COMPONENTS: ComponentDoc[] = [
           "`collapsible=\"icon\"` plus `SidebarRail`/`SidebarTrigger` — either one collapses the sidebar to just its icons.",
       },
     ],
+    wiring:
+      "A binding owns a shared expanded/collapsed state reflected as `data-state` on the sidebar, toggled by the trigger button, the rail button, and a global Cmd/Ctrl+B keydown listener, and persisted across reloads via a cookie. Below the mobile breakpoint it has to swap to the sheet's dialog behavior entirely (focus trap, overlay, Escape-to-close) instead of the static collapse; each menu button's tooltip should only show while collapsed on desktop, never on mobile or while expanded.",
   },
   {
     slug: "tabs",
@@ -1511,6 +1563,8 @@ export const COMPONENTS: ComponentDoc[] = [
         description: "Tabs as a card's own internal navigation, not a page-level one.",
       },
     ],
+    wiring:
+      "A from-scratch binding needs single-selection state on the trigger row: clicking a `TabsTrigger` sets its `aria-selected` to `true` (and every sibling's to `false`), swaps which `TabsContent` panel is shown, and moves roving `tabindex` (0 on the selected trigger, -1 elsewhere) so arrow keys — not Tab — move focus and change the selection along `data-orientation`. Note the collision named in `docs/absorption/corrections.md`'s batch-9 row: `<ds-tabs>` (`components/ds-tabs.js`) is a different, bare tab-button implementation (`.ds-tabs__tab`/`.ds-tabpane`) that happens to share this component's bare `.ds-tabs` root class with a conflicting `display`/`flex-direction` default — deliberately left unresolved, so `<ds-tabs>` does not cover `TabsPrimitive` and the two must not be mixed on the same root.",
   },
   {
     slug: "toc",
@@ -1671,6 +1725,8 @@ export const COMPONENTS: ComponentDoc[] = [
       ScrollBar:
         "Rendered by ScrollArea itself, vertical only. It is exported for a custom bar, but the root does not accept one in its place today, so a second orientation means composing Base UI's primitive directly.",
     },
+    wiring:
+      "A binding has to size and position the scrollbar thumb from the viewport's `scrollTop`/`scrollHeight` ratio on every scroll event and make the thumb itself pointer-draggable to scroll the viewport. The viewport also needs a `tabindex` so it's a keyboard focus stop (arrow/page keys scrolling it) even when nothing inside it is focusable.",
   },
   {
     slug: "resizable",
@@ -1785,6 +1841,8 @@ export const COMPONENTS: ComponentDoc[] = [
       ThemeSwitcher:
         "Built on `Segmented` for the default variant, `IconButton` for `cycle` and Base UI `Menu` for `dropdown` — the source's own toggle-group and dropdown-menu are both held. The segmented cells carry a visible word beside the glyph rather than an icon-only `aria-label`, since `Segmented` takes a label node; the source's sliding indicator goes with the toggle cells it was pitched against.",
     },
+    wiring:
+      "All three footprints are fully controlled (`value`/`onValueChange` required) and each wires a different real interaction: `segmented` is a `Segmented` group where clicking the already-active cell is a no-op; `cycle` is one button whose click advances to the *next* mode in the light → dark → system cycle, with the icon showing the current mode and the label announcing the next; `dropdown` opens a radio-style menu (`Menu.RadioGroup`) where picking a mode closes the menu (`closeOnClick`) and calls `onValueChange`. None of the three include the theme's actual storage or system-preference resolution — that stays app-side.",
   },
 
   {
@@ -1826,6 +1884,8 @@ export const COMPONENTS: ComponentDoc[] = [
           "`setApi` hands back the embla instance so a page can drive or observe the carousel from outside — a slide counter here.",
       },
     ],
+    wiring:
+      "The motion here is real, not CSS: `embla-carousel-react` drives the drag, the snap-to-slide, and each control's disabled-at-either-end state, so a from-scratch binding needs its own scroll-snap or drag implementation, not just markup. It also has to disable `.ds-carousel-control` at either end, respond to ArrowLeft/ArrowRight on the viewport, and flip `data-orientation` on the track and each `.ds-carousel-item` for a vertical carousel.",
   },
 
   {
@@ -1885,6 +1945,8 @@ export const COMPONENTS: ComponentDoc[] = [
           "Three rows, one open at mount. `defaultValue` takes the item's `value`, not its index.",
       },
     ],
+    wiring:
+      "A from-scratch binding must toggle `aria-expanded` on `.ds-accordion-trigger` on click — the down/up chevron icons key off `[aria-expanded=\"true\"]` — and show or hide the matching `.ds-accordion-content` by swapping `data-open`/`data-closed` on it. Unless every item is allowed to stay open, the same click handler has to close any other item's panel, since only one accordion item opens at a time by default.",
   },
 
   {
@@ -1932,6 +1994,8 @@ export const COMPONENTS: ComponentDoc[] = [
       CollapsibleContent:
         "Unmounted while closed unless you pass `keepMounted` or `hiddenUntilFound`, and it publishes `--collapsible-panel-height` for height transitions.",
     },
+    wiring:
+      "A from-scratch binding puts `aria-expanded` and `data-panel-open` on the trigger — what a caret rotates off — and toggles `data-open`/`data-closed` on the panel for the show/hide itself. No stylesheet ships with this component, so the panel's height transition (`--collapsible-panel-height`) is also the binding's to compute and animate.",
   },
   /* -- Overlays ------------------------------------------------------------ */
   {
@@ -1998,6 +2062,8 @@ export const COMPONENTS: ComponentDoc[] = [
         description: "The confirm action gated on typing the resource's own name back.",
       },
     ],
+    wiring:
+      "A from-scratch binding opens the dialog on trigger click and closes it on Cancel/Action click or Escape, toggling `data-open`/`data-closed` on both `.ds-alert-dialog-overlay` and `.ds-alert-dialog-content` to run their enter/exit animations. Being a modal, it also has to trap focus inside the popup while open and return it to the trigger on close, and an async confirm additionally means disabling the action button and showing a spinner until the call resolves.",
   },
   {
     slug: "context-menu",
@@ -2063,6 +2129,8 @@ export const COMPONENTS: ComponentDoc[] = [
       ContextMenuShortcut:
         "The keyboard equivalent, on the row's end edge. It is a label, not a binding — the shortcut itself is the page's to register.",
     },
+    wiring:
+      "A from-scratch binding opens the menu on the `contextmenu` event rather than a click, positions it at the pointer instead of anchored to a trigger's edge, and closes it on Escape or an outside click by toggling `data-open`/`data-closed` on `.ds-context-menu-content`. Checkbox and radio rows keep their own checked state and stay open on activation (unlike a plain item, which closes the menu), and a submenu opens on hover or ArrowRight and closes on ArrowLeft or Escape.",
   },
   {
     slug: "dialog",
@@ -2126,6 +2194,8 @@ export const COMPONENTS: ComponentDoc[] = [
         description: "A body long enough to scroll inside `DialogContent` rather than the page.",
       },
     ],
+    wiring:
+      "The interactive surface is open/close: a trigger toggling a boolean that mounts the overlay and popup (`role=\"dialog\"`, `aria-modal=\"true\"`), with the close button, Escape, and a backdrop click all resolving to the same close. A from-scratch binding must also trap focus inside the popup while open and restore it to the trigger on close — nothing in the real markup does that via CSS or attributes alone, it's pure behavior. (Not covered by `ds-modal`, which uses an unrelated `.ds-modal__*`/`.ds-overlay` class contract this component's markup never touches.)",
   },
   {
     slug: "dropdown-menu",
@@ -2167,6 +2237,8 @@ export const COMPONENTS: ComponentDoc[] = [
           "A `DropdownMenuCheckboxItem`, a `DropdownMenuRadioGroup`, a `DropdownMenuShortcut` and a `DropdownMenuSub` — the rest of the anatomy.",
       },
     ],
+    wiring:
+      "A from-scratch binding needs the full menu interaction: the trigger toggling `aria-expanded` and opening the popup, arrow-key navigation between items, a `DropdownMenuSub` opening on hover or ArrowRight and closing on ArrowLeft/Escape, and `DropdownMenuCheckboxItem`/`DropdownMenuRadioItem` toggling their own `aria-checked` and reporting back into whatever owns the selection.",
   },
   {
     slug: "hover-card",
@@ -2204,6 +2276,8 @@ export const COMPONENTS: ComponentDoc[] = [
       HoverCardContent:
         "Renders its own portal and positioner, so positioning props are accepted here. Opening does not move focus into the card, so anything interactive inside it is pointer-only — keep actions out.",
     },
+    wiring:
+      "Unlike a click-toggled popover, the trigger here is hover/focus: opening after a short delay and closing on a separate delay once the pointer leaves (or immediately on Escape/blur). A binding has to implement those open/close delay timers itself and toggle the panel's open state accordingly — a plain CSS `:hover` rule can't reproduce a panel that outlives the pointer leaving the trigger.",
   },
   {
     slug: "popover",
@@ -2231,6 +2305,8 @@ export const COMPONENTS: ComponentDoc[] = [
           '`side="bottom"` on `PopoverContent`, so the panel points at what it explains.',
       },
     ],
+    wiring:
+      "A from-scratch binding has to toggle `aria-expanded` on the trigger and an open/closed state (e.g. `data-open`) on the popup, position the popup relative to the trigger and re-anchor it on scroll/resize, and dismiss on outside click or Escape — returning focus to the trigger on close.",
   },
   /* -- Feedback ------------------------------------------------------------ */
   {
@@ -2291,6 +2367,8 @@ export const COMPONENTS: ComponentDoc[] = [
         description: "Both raised through `toast.add` against the `Toaster` in `main.tsx`.",
       },
     ],
+    wiring:
+      "There's no toast markup to compose by hand at all — `toast.add()` (via `createToastManager`) is the only entry point, so a from-scratch binding needs its own imperative queue that mounts/unmounts toast elements, auto-dismiss timers per toast, a swipe-to-dismiss gesture, and pause-on-hover/focus so a reader has time to read before it times out. The close button and any action button just need to dismiss (or dismiss-and-invoke) and drop that toast from the queue; `ToastIcon`'s `type` (success/info/warning/error/loading) is a pure display mapping with nothing to wire.",
   },
   /* -- Conversation -------------------------------------------------------- */
   {
@@ -3335,6 +3413,8 @@ export const COMPONENTS: ComponentDoc[] = [
       AvatarGroupCount:
         "A counter, not an Avatar. It matches the group's size through `group-has-data-*`, so it follows whatever size the avatars were given.",
     },
+    wiring:
+      "A from-scratch binding has to load the image itself and only reveal it on success, keeping the fallback rendered underneath at all times — Base UI's Avatar unmounts `AvatarImage` on a failed load rather than letting a browser's broken-image icon show through, so a plain `<img>` needs its own `onload`/`onerror` handling to reproduce that.",
   },
   {
     slug: "pagination",
@@ -3653,6 +3733,8 @@ export const COMPONENTS: ComponentDoc[] = [
       ToolbarSeparator:
         "Defaults to the opposite orientation of the toolbar, which is the one that draws across it — pass `orientation` only to override that.",
     },
+    wiring:
+      "The whole strip is one tab stop — a from-scratch binding has to give it roving `tabindex` itself: `tabindex=0` on exactly one child (`ToolbarButton`/`ToolbarLink`/`ToolbarInput`), `-1` on the rest, arrow keys (matching `data-orientation`) move both focus and that index across every enabled child including the input, and Home/End jump to the first/last.",
   },
   {
     slug: "banner",
@@ -4010,6 +4092,8 @@ export const COMPONENTS: ComponentDoc[] = [
           "Icons are sized by the button's own `[&_svg]` rules — no wrapper classes needed.",
       },
     ],
+    wiring:
+      "The one state worth wiring is `loading`: it has to disable the button and set `aria-busy=\"true\"` alongside the `.ds-button--loading` class, since the class alone only hides the label and paints the spinner — it doesn't stop a keyboard press or a form submit. `<ds-button>` already covers the plain `variant`/`type`/`disabled` contract for a static button; `loading`, `tone` and `block` have no web-component equivalent.",
   },
   {
     slug: "input",
@@ -4232,6 +4316,8 @@ export const COMPONENTS: ComponentDoc[] = [
       SelectLabel:
         "A group heading — it must sit inside a `SelectGroup` to be tied to the options it names.",
     },
+    wiring:
+      "A from-scratch binding has to toggle `aria-expanded` on the trigger and open/closed state on the popup, implement roving selection inside the list (arrow keys, Home/End, typeahead) that moves `data-highlighted` without committing, and commit on Enter/Space/click — updating the trigger's displayed value, `data-selected` on the item, and closing the popup. Escape and outside-click must dismiss without committing, restoring focus to the trigger.",
   },
   {
     slug: "checkbox",
@@ -4271,6 +4357,8 @@ export const COMPONENTS: ComponentDoc[] = [
           "A `FieldLabel` that *contains* a `Field` becomes a card: full width, bordered, and tinted on `has-data-checked`.",
       },
     ],
+    wiring:
+      "A from-scratch binding keeps the `role=\"checkbox\"` span's `data-checked`/`data-indeterminate` (and `aria-checked`) in sync with clicks and keyboard activation, and mirrors that state onto a hidden `input[type=checkbox]` so the value actually submits with the form — the visible span carries no `name` of its own.",
   },
   {
     slug: "checkbox-group",
@@ -4309,6 +4397,8 @@ export const COMPONENTS: ComponentDoc[] = [
           "`FieldError` renders nothing until it has content, so it can sit in the markup unconditionally, and `aria-invalid` on each box is what carries the destructive border and ring — the group has no invalid state of its own.",
       },
     ],
+    wiring:
+      "The select-all relationship is the real logic to wire: a parent checkbox's checked/indeterminate state has to be derived from whether its children are all, some, or none checked, and toggling the parent has to check or uncheck every child in turn. `data-disabled` cascading from the group to every child, and the group's own array of checked values, are the binding's responsibility too.",
   },
   {
     slug: "switch",
@@ -4348,6 +4438,8 @@ export const COMPONENTS: ComponentDoc[] = [
           '`size="sm"` is the dense pairing — a switch reading as one word of chrome in a bar, where a checkbox would read as part of a form.',
       },
     ],
+    wiring:
+      "The real root is a `role=\"switch\"` button that IS the track (`data-checked`/`data-unchecked`, no hidden input), so a from-scratch binding must wire its own click/Space/Enter handler that flips those two data attributes and, if the value needs to reach a native form, add a hidden input itself — Base UI's switch doesn't render one. `<ds-switch>` does not cover this: it renders the older grammar entirely (a `<label>` wrapping a real checkbox `<input>` plus a `.ds-switch__track` span), and while `switch.css` disambiguates the shared `.ds-switch` class name by `:has(> .ds-switch__track)`, the two are different DOM shapes with a different state model.",
   },
   {
     slug: "slider",
@@ -4385,6 +4477,8 @@ export const COMPONENTS: ComponentDoc[] = [
           '`orientation="vertical"` needs no height of its own — the control carries `min-h-40`. `flex-1` inside a fixed-height column is what makes a bank of faders agree on one height and still leave room for their labels.',
       },
     ],
+    wiring:
+      "A from-scratch binding has to implement the drag/click interaction itself: computing a thumb's value from pointer position along the track, updating `aria-valuenow` (and `aria-valuemin`/`aria-valuemax`) on the active `.ds-slider-thumb`, and repositioning `.ds-slider-range`'s fill to match. Arrow/Home/End/PageUp/PageDown key-stepping on a focused thumb, and — for a two-thumb range — keeping the low thumb from crossing the high one, are Base UI behavior with no CSS equivalent.",
   },
   {
     slug: "input-group",
@@ -4746,6 +4840,8 @@ export const COMPONENTS: ComponentDoc[] = [
       KanbanCardTitle:
         "Type styles only, and what the card falls back to when no `renderCard` is given. `renderCard` replaces the whole body, so compose this back in when the heading should still match.",
     },
+    wiring:
+      "The board's real interaction is accessible drag-and-drop: a pointer drag *and* a keyboard path through the same grip button (Space lifts, arrow keys move the card across columns, Space drops, Escape cancels), plus live-region announcements at each transition. A from-scratch binding has to build that whole lift/move/drop state machine itself — plain HTML5 drag-and-drop, what this replaced, has no keyboard route at all.",
   },
   {
     slug: "skeleton",
@@ -4840,6 +4936,8 @@ export const COMPONENTS: ComponentDoc[] = [
       SheetTitle:
         "Supplies the panel's accessible name, so keep the part even when the design shows no visible heading.",
     },
+    wiring:
+      "A binding has to trap focus inside the open panel (Tab/Shift+Tab cycling within it), move focus into the panel on open and restore it to the trigger on close, and close on Escape or backdrop click. It also needs to lock body scroll while open and drive the slide transition off an open/closed state on the overlay and panel.",
   },
   {
     slug: "drawer",
@@ -4900,6 +4998,8 @@ export const COMPONENTS: ComponentDoc[] = [
       DrawerHeader:
         "Centres its text on vertical drawers and goes start-aligned from `md` up — a bottom sheet's title reads as a centred label on a phone and as a heading on a desktop.",
     },
+    wiring:
+      "Beyond open/close (trigger → portal + overlay + popup, closed by the close control, Escape, or a backdrop click when `modal`), the real behavior to reproduce is the swipe gesture: dragging the popup along the `swipeDirection` axis and snapping to each of `snapPoints` on release. A binding also has to trap focus inside the popup while open — 0.11's own drawer never implemented that, so there's no incumbent code to copy.",
   },
   {
     slug: "tooltip",
@@ -4940,6 +5040,8 @@ export const COMPONENTS: ComponentDoc[] = [
       TooltipContent:
         "Renders the portal, positioner and arrow together, so positioning props belong here. A nested `Kbd` is re-styled and the trailing padding tightened by the popup's own `data-[slot=kbd]` rules — nothing to pass.",
     },
+    wiring:
+      "Base UI's tooltip, per `docs/absorption/corrections.md`'s batch-8 row, wires none of `aria-describedby`/`role=\"tooltip\"` — a from-scratch binding gets no automatic ARIA association and must give the trigger its own accessible name that matches the popup's text. What it does have to wire itself: a shared open delay, Escape-to-dismiss, and keeping the popup open while the pointer moves from the trigger into it (a hoverable popup, not a `mouseleave`-closes-immediately one).",
   },
 ]
 
