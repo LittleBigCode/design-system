@@ -120,6 +120,14 @@ export function DocsLayout() {
                   Theming
                 </SidebarMenuButton>
               </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  isActive={pathname.startsWith("/foundations")}
+                  render={<Link to="/foundations" />}
+                >
+                  Foundations
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroup>
           <SidebarGroup>
