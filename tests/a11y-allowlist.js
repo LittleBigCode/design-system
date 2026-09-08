@@ -33,17 +33,9 @@ export const ALLOWLIST = [
   { route: "button", theme: "dark", rule: "color-contrast", issue: 41 }, // .ds-button--link
   { route: "theme-switcher", theme: "dark", rule: "color-contrast", issue: 41 }, // .ds-segmented
 
-  // #50 — residual findings from #33's exhaustive sweep (every generated
-  // page, not #41's spot-check sample), not named by #15 or #41.
-  { route: "bubble", theme: "both", rule: "color-contrast", issue: 50 },
-  { route: "attachment", theme: "dark", rule: "color-contrast", issue: 50 },
-  { route: "hover-card", theme: "dark", rule: "color-contrast", issue: 50 },
-  { route: "item", theme: "dark", rule: "color-contrast", issue: 50 },
-  { route: "navigation-menu", theme: "dark", rule: "color-contrast", issue: 50 },
-  { route: "sparkline", theme: "dark", rule: "color-contrast", issue: 50 },
-  { route: "label", theme: "both", rule: "aria-toggle-field-name", issue: 50 },
-  { route: "label", theme: "both", rule: "label", issue: 50 },
-  { route: "label", theme: "dark", rule: "color-contrast", issue: 50 }, // .ds-badge--accent, same defect as #41's
+  // #50's 9 findings (plus one unlisted .ds-badge--accent row folded in with
+  // them) are fixed — see docs/absorption/corrections.md — and none of them
+  // reproduce, so nothing is carried here.
 ];
 
 export function isAllowlisted(route, theme, ruleId) {
