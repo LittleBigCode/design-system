@@ -102,6 +102,27 @@ export function DocsLayout() {
         </SidebarHeader>
         <SidebarContent>
           <SidebarGroup>
+            <SidebarGroupLabel>Guides</SidebarGroupLabel>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  isActive={pathname === "/installation"}
+                  render={<Link to="/installation" />}
+                >
+                  Installation
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  isActive={pathname === "/theming"}
+                  render={<Link to="/theming" />}
+                >
+                  Theming
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroup>
+          <SidebarGroup>
             <SidebarGroupLabel>Components</SidebarGroupLabel>
             <SidebarMenu>
               {GROUPS.map((group) => {
