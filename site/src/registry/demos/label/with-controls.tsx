@@ -37,7 +37,16 @@ export default function LabelWithControls() {
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor="label-seats">Seats</Label>
-        <Slider id="label-seats" defaultValue={12} min={1} max={50} />
+        {/* `id`/`htmlFor` doesn't reach Slider's real <input> — see
+            react/components/slider.tsx — so the accessible name is given
+            directly. */}
+        <Slider
+          id="label-seats"
+          aria-label="Seats"
+          defaultValue={12}
+          min={1}
+          max={50}
+        />
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor="label-brief">Brief</Label>

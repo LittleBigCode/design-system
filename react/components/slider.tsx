@@ -26,6 +26,7 @@ function Slider({
   value,
   min = 0,
   max = 100,
+  "aria-label": ariaLabel,
   ...props
 }: SliderPrimitive.Root.Props) {
   const values = Array.isArray(value)
@@ -57,6 +58,15 @@ function Slider({
             data-slot="slider-thumb"
             key={index}
             className="ds-slider-thumb"
+            /* A caller's `aria-label` has to reach the real
+               `<input type="range">` Thumb renders internally — Root is just
+               the outer div, and an `id` left there for a sibling
+               `Label htmlFor` labels that div, not the input inside it (axe,
+               `label`, #50). `aria-label` is a Thumb-level prop precisely
+               because it's the input's own attribute. Only applied for the
+               single-thumb case: a range's two thumbs need one name each,
+               which this wrapper does not expose per-thumb. */
+            aria-label={values.length === 1 ? ariaLabel : undefined}
           />
         ))}
       </SliderPrimitive.Control>
