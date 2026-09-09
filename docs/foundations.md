@@ -26,9 +26,9 @@ Two voices, one weight idea. **Ufficio Light 300** carries titles (light and lar
 carries body (quiet). Titles render via the `.ds-title` utility (`--xl` / `--lg` / `--md` /
 `--sm`); structure is marked with the signature uppercase `.ds-label` / `.ds-kicker` at
 `0.08em` tracking. Ufficio is license-gated — if `ufficio.css` is not imported, titles fall
-back to the free **Fraunces** stack.
+back to **Geist**, the charter's other face, not to a borrowed serif.
 
-Key tokens: `--ds-font-title`, `--ds-font-sans`, `--ds-font-weight-title`, `--ds-text-2xs` …
+Key tokens: `--ds-font-title`, `--ds-font-sans`, `--ds-font-mono`, `--ds-font-weight-title`, `--ds-text-2xs` …
 `--ds-text-2xl`, `--ds-leading-tight`, `--ds-leading-normal`.
 
 Live: [../examples/foundations/typography.html](../examples/foundations/typography.html)

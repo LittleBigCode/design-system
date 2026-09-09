@@ -35,7 +35,7 @@
 /* The figure under the label, on its own tspan. */
 .ds-treemap-tile-value {
   fill: var(--ds-ink-faint);
-  font-family: ui-monospace, "SF Mono", "Geist Mono", Menlo, Consolas, monospace;
+  font-family: var(--ds-font-mono);
   font-size: 10px;
   font-variant-numeric: tabular-nums;
 }

@@ -3,7 +3,7 @@
   border-radius: 0;
   border: 1px solid var(--ds-noir);
   background-color: var(--ds-noir);
-  font-family: ui-monospace, "SF Mono", "Geist Mono", Menlo, Consolas, monospace;
+  font-family: var(--ds-font-mono);
   font-size: 0.875rem;
   line-height: calc(1.25 / 0.875);
   color: var(--ds-grey-faint);
@@ -31,7 +31,7 @@
   margin: 0;
   overflow: auto;
   padding: 0.75rem;
-  font-family: ui-monospace, "SF Mono", "Geist Mono", Menlo, Consolas, monospace;
+  font-family: var(--ds-font-mono);
   tab-size: 2;
   color: inherit;
 }
@@ -69,17 +69,17 @@
    code-block.tsx) — plain classes rather than arbitrary text-[var(...)]
    utilities, since the class name is picked at runtime per regex match. */
 .ds-code-block-token-comment {
-  color: var(--ds-grey-brand);
+  color: var(--ds-gris);
 }
 .ds-code-block-token-string {
-  color: var(--ds-green-brand);
+  color: var(--ds-vert);
 }
 .ds-code-block-token-keyword {
   color: var(--ds-orange);
 }
 .ds-code-block-token-number {
-  color: var(--ds-yellow-vivid);
+  color: var(--ds-jaune-vif);
 }
 .ds-code-block-token-type {
-  color: var(--ds-blue);
+  color: var(--ds-bleu);
 }

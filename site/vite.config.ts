@@ -15,6 +15,13 @@ export default defineConfig({
   build: {
     assetsDir: "_app",
   },
+  server: {
+    // `assets/fonts/ufficio.css` @font-faces a .woff2 next to itself, and the
+    // `file:..` install makes that path resolve to the repo root — outside this
+    // app's root, which dev-server `@fs` refuses with a 403 by default. The
+    // production build inlines/copies it, so this is a dev-only allowance.
+    fs: { allow: [path.resolve(__dirname, "..")] },
+  },
   plugins: [react(), tailwindcss(), demoSource()],
   resolve: {
     /**

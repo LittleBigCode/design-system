@@ -16,10 +16,12 @@
         convenience import someone adds to a web component before a Keycloak
         build breaks.
 
-     3. no-cascade-layers — no `@layer` survives in the shipped CSS. The
-        `@layer utilities` strip is paid once upstream on `migration-source-v1`,
-        so this is not an enforcement mechanism forcing every batch to strip: it
-        is an invariant guard that should never fire.
+     3. no-cascade-layers — none of incoming's Tailwind layers survive in the
+        shipped CSS. The `@layer utilities` strip is paid once upstream on
+        `migration-source-v1`, so this is not an enforcement mechanism forcing
+        every batch to strip: it is an invariant guard that should never fire.
+        The one exception is `@layer base` in `css/base/reset.css`, which the
+        bundle needs — see the rationale at the check itself.
 
      4. use-client — every file in react/components/ starts with a `"use client"`
         directive. Without this, a Next App Router consumer's server-component
@@ -199,12 +201,23 @@ for (const file of [
 
 /* -- 3. no cascade layers ------------------------------------------------- */
 
+/* The rule guards against incoming's Tailwind output leaking its `@layer
+   utilities` / `@layer components` wrappers into the shipped bundle. It read as
+   "no @layer at all", which also forbade the one layer the bundle *needs*:
+   `css/base/reset.css` has to be layered or its unlayered `* { margin: 0;
+   padding: 0 }` silently discards every `p-*`/`m-*` utility a Tailwind-based
+   consumer writes — unlayered CSS outranks every layered rule regardless of
+   specificity. The docs site ran that way from the first commit. So the guard
+   is now scoped to the layers it was actually written to catch, and `base` is
+   allowed only in the reset. See docs/absorption/corrections.md. */
+const RESET = join(root, "css", "base", "reset.css");
 for (const file of walk(join(root, "css"), [".css"])) {
   const src = readFileSync(file, "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
-  if (/@layer\b/.test(src)) {
+  for (const [, name] of src.matchAll(/@layer\s+([A-Za-z0-9_-]*)/g)) {
+    if (name === "base" && file === RESET) continue;
     fail(
       "no-cascade-layers",
-      `${relative(root, file)}: contains @layer — the strip is paid upstream; this should never fire`,
+      `${relative(root, file)}: contains @layer ${name || "(anonymous)"} — the strip is paid upstream; only @layer base in css/base/reset.css is allowed`,
     );
   }
 }

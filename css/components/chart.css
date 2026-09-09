@@ -184,7 +184,7 @@
 .ds-chart-tooltip-content-item-value {
   /* `var(--font-mono)` has no equivalent token here: mono type in this system
      is the platform stack, the way .ds-kbd and .ds-snippet spell it. */
-  font-family: ui-monospace, "SF Mono", "Geist Mono", Menlo, Consolas, monospace;
+  font-family: var(--ds-font-mono);
   font-weight: 500;
   color: var(--ds-ink);
   font-variant-numeric: tabular-nums;

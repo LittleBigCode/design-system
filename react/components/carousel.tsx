@@ -165,13 +165,25 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+/**
+ * `IconButton` makes `label` required — the accessible name is the whole
+ * component. Both controls already supply one, so re-exporting the prop as
+ * required made `<CarouselPrevious />` a type error at every call site while
+ * rendering correctly; the four carousel demos were failing `tsc -p
+ * tsconfig.docs.json` on exactly that.
+ */
+type CarouselControlProps = Omit<
+  React.ComponentProps<typeof IconButton>,
+  "label"
+> & { label?: string }
+
 function CarouselPrevious({
   className,
   variant = "outline",
   size = "icon-sm",
   label = "Previous slide",
   ...props
-}: React.ComponentProps<typeof IconButton>) {
+}: CarouselControlProps) {
   const { orientation, scrollPrev, canScrollPrev } = useCarousel()
 
   return (
@@ -197,7 +209,7 @@ function CarouselNext({
   size = "icon-sm",
   label = "Next slide",
   ...props
-}: React.ComponentProps<typeof IconButton>) {
+}: CarouselControlProps) {
   const { orientation, scrollNext, canScrollNext } = useCarousel()
 
   return (

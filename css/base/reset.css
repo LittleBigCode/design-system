@@ -5,30 +5,41 @@
    css/tokens.css + individual component partials instead of the full bundle.
    ============================================================================ */
 
-*,
-*::before,
-*::after { box-sizing: border-box; }
+/* Cascade layer, not unlayered. Unlayered CSS beats *every* layered rule
+   regardless of specificity, so an unlayered `* { margin: 0; padding: 0 }`
+   silently discards every `p-*`/`m-*` utility a Tailwind-based consumer writes
+   — Tailwind v4 emits its utilities into `@layer utilities`. The docs site ran
+   that way from the first commit: `px-6` on the header, `mt-4` on every
+   section and `px-3` on the theme toggle all computed to 0. `base` is the same
+   layer name Tailwind's own preflight uses and the one incoming's globals.css
+   puts its reset in, so the two resets interleave by source order instead of
+   fighting. The `.ds-*` component partials stay unlayered on purpose — they
+   must keep winning over utilities. */
+@layer base {
+  *,
+  *::before,
+  *::after { box-sizing: border-box; }
 
-* { margin: 0; padding: 0; }
+  * { margin: 0; padding: 0; }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-}
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
 
-body {
-  font-family: var(--ds-font-sans);
-  font-weight: 300;
-  font-size: var(--ds-text-base);
-  line-height: var(--ds-leading-normal);
-  color: var(--ds-ink);
-  background: var(--ds-bg);
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
+  body {
+    font-family: var(--ds-font-sans);
+    font-weight: 300;
+    font-size: var(--ds-text-base);
+    line-height: var(--ds-leading-normal);
+    color: var(--ds-ink);
+    background: var(--ds-bg);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
 
-img, svg, video { display: block; max-width: 100%; }
+  img, svg, video { display: block; max-width: 100%; }
 
 /* Anchors and buttons carry their own UA-stylesheet styling that wins over
    the inherited body colour outright — inheriting a property is only what
@@ -43,17 +54,18 @@ img, svg, video { display: block; max-width: 100%; }
    half of that same mismatch on a dark surface) and its own border/background
    the reset removes; every `.ds-*` button-shaped component already paints
    its own, at higher specificity than this element selector. */
-a, button { color: inherit; }
-button {
-  appearance: none;
-  border: none;
-  background: none;
-  font: inherit;
-}
+  a, button { color: inherit; }
+  button {
+    appearance: none;
+    border: none;
+    background: none;
+    font: inherit;
+  }
 
-::selection {
-  background: var(--ds-accent);
-  color: var(--ds-on-accent);
+  ::selection {
+    background: var(--ds-accent);
+    color: var(--ds-on-accent);
+  }
 }
 
 /* Shared entrance animation (used by tabs / panes / fade-in utilities). */

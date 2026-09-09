@@ -33,7 +33,7 @@
    them lines up on the digit rather than on the glyph. */
 .ds-funnel-chart-share-label {
   fill: var(--ds-ink-faint);
-  font-family: ui-monospace, "SF Mono", "Geist Mono", Menlo, Consolas, monospace;
+  font-family: var(--ds-font-mono);
   font-size: var(--ds-text-xs);
   font-variant-numeric: tabular-nums;
 }

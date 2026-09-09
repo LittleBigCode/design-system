@@ -35,7 +35,7 @@
 /* The signed change. Mono and tabular, matching
    `.ds-chart-tooltip-content-item-value` — the two appear in the same surface. */
 .ds-waterfall-chart-tooltip-value {
-  font-family: ui-monospace, "SF Mono", "Geist Mono", Menlo, Consolas, monospace;
+  font-family: var(--ds-font-mono);
   font-weight: 500;
   color: var(--ds-ink);
   font-variant-numeric: tabular-nums;
@@ -43,7 +43,7 @@
 
 /* The running figure, one step back: it is context for the change above it. */
 .ds-waterfall-chart-tooltip-value-muted {
-  font-family: ui-monospace, "SF Mono", "Geist Mono", Menlo, Consolas, monospace;
+  font-family: var(--ds-font-mono);
   color: var(--ds-ink-faint);
   font-variant-numeric: tabular-nums;
 }

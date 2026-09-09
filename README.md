@@ -210,8 +210,8 @@ new tokens or components are **minor**, fixes are **patch**. See
 > ⚠️ **Font licensing.** **Ufficio is a commercial font**, bundled and served under
 > Diametral's own font license (see [`NOTICE.md`](NOTICE.md)). This repository grants no
 > rights to it — **third parties must obtain their own license**. If you don't hold one,
-> simply don't import `ufficio.css`: titles fall back to the free **Fraunces** stack
-> automatically. Geist (body) and Fraunces are free (SIL OFL 1.1). Details in
+> simply don't import `ufficio.css`: titles fall back to the free **Geist** automatically.
+> Geist and Geist Mono are free (SIL OFL 1.1). Details in
 > [`docs/fonts-and-licensing.md`](docs/fonts-and-licensing.md).
 
 ## Directory layout

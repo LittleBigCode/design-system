@@ -30,7 +30,7 @@
 }
 
 .ds-toc-label {
-  font-family: ui-monospace, "SF Mono", "Geist Mono", Menlo, Consolas, monospace;
+  font-family: var(--ds-font-mono);
   font-size: var(--ds-text-2xs);
   letter-spacing: 0.025em;
   color: var(--ds-ink-faint);

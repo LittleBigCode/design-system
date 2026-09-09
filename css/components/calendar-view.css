@@ -287,10 +287,15 @@
   border-color: var(--ds-focus-ring);
   box-shadow: 0 0 0 3px color-mix(in oklab, var(--ds-focus-ring) 50%, transparent);
 }
+/* --ds-on-accent, not --ds-noir. Black ink cleared AA on the old accent
+   (#ff2a00, 5.58:1) and stopped clearing it the moment the semantic accent
+   darkened to #de2500 (3.77:1) — the pairing has to read the token that means
+   "text on accent" rather than pick an ink that happens to work at one value.
+   White is 4.81:1 there. Applies to all three accent-filled day states. */
 .ds-calendar-day-button[data-range-end="true"] {
   border-radius: var(--cell-radius);
   background-color: var(--ds-accent);
-  color: var(--ds-noir);
+  color: var(--ds-on-accent);
 }
 .ds-calendar-day-button[data-range-middle="true"] {
   border-radius: 0;
@@ -315,9 +320,9 @@
 .ds-calendar-day-button[data-range-start="true"] {
   border-radius: var(--cell-radius);
   background-color: var(--ds-accent);
-  color: var(--ds-noir);
+  color: var(--ds-on-accent);
 }
 .ds-calendar-day-button[data-selected-single="true"] {
   background-color: var(--ds-accent);
-  color: var(--ds-noir);
+  color: var(--ds-on-accent);
 }

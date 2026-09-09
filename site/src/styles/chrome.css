@@ -43,7 +43,7 @@
   --font-heading: var(--ds-font-title);
   --font-sans: var(--ds-font-sans);
   --font-serif: var(--ds-font-sans);
-  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-mono: var(--ds-font-mono);
 }
 
 /* The charter is square. Tailwind's radius scale is zeroed rather than left to

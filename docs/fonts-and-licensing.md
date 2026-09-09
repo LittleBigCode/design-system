@@ -18,19 +18,23 @@ pending license verification. **Verify your rights before any external distribut
 If you don't import it, the unknown family name is skipped and titles render in the free
 fallback. No token change needed.
 
-## Titles — Fraunces (free fallback)
+## Titles — Geist (free fallback)
 
 `--ds-font-title` falls back to:
 
 ```
-"Ufficio", "Fraunces", "PP Editorial New", Georgia, "Times New Roman", serif
+"Ufficio", "Geist Variable", "Geist", sans-serif
 ```
 
-**Fraunces** (SIL OFL 1.1) is a refined, light editorial serif that carries the same
-"minimal, enduring, elegant" character. Load it with the other free fonts:
+The charter has exactly two faces, Ufficio and Geist, so the title token falls back to the
+other one rather than borrowing a third. It used to end in
+`"Fraunces", "PP Editorial New", Georgia, "Times New Roman", serif`, which meant every
+project without an Ufficio license silently rendered **Georgia** headings over a Geist body
+— nobody had loaded Fraunces either. Geist Light 300 carries titles instead. Load it with
+the other free faces:
 
 ```css
-@import url("assets/fonts/fallback.css");   /* Fraunces + Geist via Google Fonts */
+@import url("assets/fonts/fallback.css");   /* Geist + Geist Mono via Google Fonts */
 ```
 
 ## Body — Geist (free)
@@ -52,5 +56,5 @@ To use a different body font (e.g. an app already on Outfit/Inter), override the
 | Font | Role | License | Action |
 |---|---|---|---|
 | Ufficio | Title (opt-in) | **Commercial** | Verify before external distribution |
-| Fraunces | Title (default fallback) | OFL 1.1 (free) | Use freely |
-| Geist | Body | OFL 1.1 (free) | Use freely |
+| Geist | Body + title fallback | OFL 1.1 (free) | Use freely |
+| Geist Mono | Tokens, code | OFL 1.1 (free) | Use freely |

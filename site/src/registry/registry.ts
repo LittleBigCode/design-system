@@ -4087,7 +4087,7 @@ export const COMPONENTS: ComponentDoc[] = [
         demo: "button/variants",
         title: "Variants",
         description:
-          "The absorbed variants, mapped onto charte tokens — `default` is the solid action fill, `destructive` the tinted red. Omit `variant` entirely and you get 0.11's bordered button, which is what `<ds-button>` renders with no attribute.",
+          "All eight variants, mapped onto charte tokens — `default` is the solid action fill, `destructive` the tinted red. `primary` is 0.11's spelling of `default` and resolves to the same rule; `danger` is 0.11's bordered red and stays distinct from `destructive`. The first button omits `variant` entirely, which is 0.11's bordered button and what `<ds-button>` renders with no attribute.",
       },
       {
         demo: "button/tones",

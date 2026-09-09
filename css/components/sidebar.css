@@ -89,7 +89,7 @@
 }
 .ds-sidebar[data-variant="floating"][data-collapsible="icon"] .ds-sidebar-gap,
 .ds-sidebar[data-variant="inset"][data-collapsible="icon"] .ds-sidebar-gap {
-  width: calc(var(--sidebar-width-icon) + var(--spacing) * 4);
+  width: calc(var(--sidebar-width-icon) + var(--ds-space-4));
 }
 
 .ds-sidebar-container {
@@ -130,7 +130,7 @@
   .ds-sidebar-container,
 .ds-sidebar[data-variant="inset"][data-collapsible="icon"]
   .ds-sidebar-container {
-  width: calc(var(--sidebar-width-icon) + var(--spacing) * 4 + 2px);
+  width: calc(var(--sidebar-width-icon) + var(--ds-space-4) + 2px);
 }
 .ds-sidebar[data-variant="sidebar"][data-collapsible="icon"]
   .ds-sidebar-container {

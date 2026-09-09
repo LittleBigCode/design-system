@@ -22,7 +22,7 @@ export const brand = {
   rule: "#e5e5e5",
   bg: "#f4f4f5",
   surface: "#ffffff",
-  accent: "#ff2a00",
+  accent: "#de2500",
   accentInk: "#db2400", // accent darkened for text/AA contrast on white
   sans: "-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif",
   serif: "Georgia,'Times New Roman',serif", // echoes the Ufficio/Fraunces titles

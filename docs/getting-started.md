@@ -34,7 +34,7 @@ import "@diametral/design-system/css/diametral.css";
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
 ```
 
-**Titles — Ufficio** (commercial) *or* the free Fraunces fallback. The title token lists
+**Titles — Ufficio** (commercial) *or* Geist. The title token lists
 Ufficio first; it renders **only** if you import its `@font-face`:
 
 ```html
@@ -42,8 +42,9 @@ Ufficio first; it renders **only** if you import its `@font-face`:
 <link rel="stylesheet" href="assets/fonts/ufficio.css">
 ```
 
-If you don't import it, titles fall back to Fraunces / Georgia automatically. To load the
-free fallbacks explicitly: `@import url("assets/fonts/fallback.css")`. See
+If you don't import it, titles render in Geist automatically — the charter has two faces and
+the token falls back to the other one rather than to a serif. To load the free faces
+explicitly: `@import url("assets/fonts/fallback.css")` (Geist + Geist Mono). See
 [fonts-and-licensing.md](fonts-and-licensing.md).
 
 ## 3. Write markup

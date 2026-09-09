@@ -2,13 +2,13 @@
    Ufficio — title typeface (COMMERCIAL, opt-in)
    ------------------------------------------------------------
    Import this file ONLY if your project holds a valid Ufficio
-   license. See ./LICENSE-FONTS.md. Then point the title token
-   at it:
+   license. See ./LICENSE-FONTS.md. Nothing else to do — Ufficio
+   already leads --ds-font-title.
 
-     :root { --ds-font-title: "Ufficio", "Fraunces", serif; }
-
-   Without this import the system renders headings in the free
-   fallback stack (Fraunces / PP Editorial New / Georgia).
+   Without this import the system renders headings in Geist, the
+   other of the charter's two faces, which ./fallback.css loads
+   for free. Deliberately not a serif: a borrowed Georgia would
+   be a third face the charter does not have.
    ============================================================ */
 @font-face {
   font-family: "Ufficio";
