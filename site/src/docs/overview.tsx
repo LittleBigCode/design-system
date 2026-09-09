@@ -1,119 +1,201 @@
 import { Link } from "react-router"
 
-import {
-  Badge,
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@diametral/design-system/react"
+import { Card, CardContent, CardTitle } from "@diametral/design-system/react"
 
+import {
+  BLOCKS,
+  FOUNDATIONS,
+  TEMPLATES,
+  type SectionItem,
+} from "@/docs/sections"
 import { COMPONENTS, componentsByCategory } from "@registry/registry"
 
-const SWATCHES = [
-  { name: "black", token: "--ds-noir" },
-  { name: "red", token: "--ds-rouge" },
-  { name: "brown", token: "--ds-marron" },
-  { name: "khaki", token: "--ds-kaki" },
-  { name: "beige", token: "--ds-beige" },
-  { name: "green", token: "--ds-vert" },
-  { name: "blue", token: "--ds-bleu" },
-  { name: "yellow", token: "--ds-jaune" },
-]
+// The six the charter leads with, in the strip's order. The chip reads the
+// token so a charter change follows it; the caption prints the hex the charter
+// publishes.
+const PALETTE = [
+  ["Noir", "--ds-noir", "#161616"],
+  ["Gris", "--ds-gris", "#767884"],
+  ["Marron", "--ds-marron", "#9F8667"],
+  ["Kaki", "--ds-kaki", "#AAB0A6"],
+  ["Beige", "--ds-beige", "#D5D3C4"],
+  ["Jaune", "--ds-jaune", "#F4FBDA"],
+] as const
+
+const REACT_EXPORTS = COMPONENTS.reduce(
+  (total, component) => total + (component.exports?.length ?? 0),
+  0
+)
+
+// Every page the site renders: the registry's component routes, the three
+// index lists, and the three standalone pages (this one, installation,
+// theming). Derived rather than typed in, so it cannot go stale.
+const PAGES =
+  3 + COMPONENTS.length + FOUNDATIONS.length + TEMPLATES.length + BLOCKS.length
+
+function CardGrid({
+  base,
+  entries,
+}: {
+  base: string
+  entries: readonly SectionItem[]
+}) {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2">
+      {entries.map(([slug, name, description]) => (
+        <Link key={slug} to={`${base}/${slug}`}>
+          <Card>
+            <CardContent className="flex flex-col gap-1 pt-6">
+              <CardTitle>{name}</CardTitle>
+              <p className="text-sm text-muted-foreground">{description}</p>
+            </CardContent>
+          </Card>
+        </Link>
+      ))}
+    </div>
+  )
+}
 
 export function Overview() {
-  const documented = COMPONENTS.filter(
-    (component) => (component.examples?.length ?? 0) > 0
-  )
-  const exampleCount = COMPONENTS.reduce(
-    (total, component) => total + (component.examples?.length ?? 0),
-    0
-  )
-
   return (
-    <div className="flex flex-col gap-12">
+    <div className="flex flex-col gap-16">
       <header>
-        <h1 className="font-heading text-4xl font-light tracking-tight">
-          Diametral × shadcn
-        </h1>
-        <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
-          72 components on Diametral brand tokens — 59 of the 60 shadcn registry
-          components plus 13 additions. The native{" "}
-          <code className="font-mono text-xs">select</code> is the one omission
-          — the OS paints its own dropdown, so it can never honour the charter,
-          and <code className="font-mono text-xs">Select</code> replaces it.
-          Radius is <code className="font-mono text-xs">0</code> by charter,
-          type is Ufficio and Geist only, and every colour resolves through a{" "}
-          <code className="font-mono text-xs">--ds-*</code> semantic.
+        <svg
+          viewBox="0 0 56 56"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={1.5}
+          aria-hidden="true"
+          className="size-21 text-foreground"
+        >
+          <circle cx="28" cy="28" r="24" />
+          <rect x="12" y="12" width="32" height="32" />
+          <line x1="12" y1="44" x2="44" y2="12" />
+        </svg>
+        <h1 className="ds-title mt-6 text-[64px] leading-none">Diametral</h1>
+        {/* Not `.ds-kicker`: that class carries its own ink-faint colour and
+            wins the cascade over a utility, and this eyebrow is the accent. */}
+        <p className="mt-3 text-[13px] uppercase tracking-[0.18em] text-[color:var(--ds-accent-ink)]">
+          Design System — Welcome to (the real)
         </p>
-        <div className="mt-5 flex flex-wrap items-center gap-2">
-          <Badge variant="secondary">
-            {documented.length} of {COMPONENTS.length} documented
-          </Badge>
-          <Badge variant="outline">{exampleCount} usages</Badge>
-        </div>
+        <p className="mt-7 text-base tracking-[0.06em]">
+          <b className="font-normal">Minimal</b> ·{" "}
+          <b className="font-normal">Enduring</b> ·{" "}
+          <b className="font-normal">Elegant</b>
+        </p>
+        <p className="mt-3 max-w-[56ch] text-sm leading-relaxed text-muted-foreground">
+          A flat, buildless design system extracted from the Diametral brand:
+          1px rules, no shadows, no border-radius, Ufficio headings over Geist
+          body. Refined and structured — deliberately away from tech and
+          consulting clichés.
+        </p>
+        <p className="mt-6 flex flex-wrap gap-3">
+          {/* The 0.11 hero pointed its primary at examples/demo.html. That app
+              is not part of the React site, and site/legacy/ is not copied into
+              the build, so the dashboard template is the live screen here. */}
+          <Link
+            to="/templates/dashboard"
+            className="ds-button ds-button--primary ds-button--lg no-underline"
+          >
+            ▸ Open the dashboard template
+          </Link>
+          <Link
+            to="/installation"
+            className="ds-button ds-button--lg no-underline"
+          >
+            Installation guide
+          </Link>
+        </p>
       </header>
 
-      <section>
-        <h2 className="font-heading text-lg font-semibold tracking-wider uppercase">
-          Palette
-        </h2>
-        <div className="mt-4 flex flex-wrap gap-4">
-          {SWATCHES.map((swatch) => (
-            <div key={swatch.name} className="flex flex-col gap-1.5">
-              <div
-                className="size-14 border border-border"
-                style={{ background: `var(${swatch.token})` }}
-              />
-              <span className="font-mono text-[10px] text-muted-foreground">
-                {swatch.name}
-              </span>
+      <section
+        aria-label="Primary palette"
+        className="grid grid-cols-3 border border-[color:var(--ds-ink)] sm:grid-cols-6"
+      >
+        {PALETTE.map(([name, token, hex]) => (
+          <div
+            key={name}
+            className="border-r border-[color:var(--ds-rule)] bg-background last:border-r-0"
+          >
+            <div className="h-24" style={{ background: `var(${token})` }} />
+            <div className="px-3 py-2.5">
+              <div className="text-xs">{name}</div>
+              <div className="ds-numeric mt-0.5 text-[11px] text-muted-foreground">
+                {hex}
+              </div>
             </div>
-          ))}
+          </div>
+        ))}
+      </section>
+
+      <section>
+        <p className="ds-gridlabel mb-4">The system in numbers</p>
+        <div className="ds-statgrid">
+          <div className="ds-statgrid__cell">
+            <div className="ds-statgrid__label">Components</div>
+            <div className="ds-statgrid__value">{COMPONENTS.length}</div>
+          </div>
+          <div className="ds-statgrid__cell">
+            <div className="ds-statgrid__label">React exports</div>
+            <div className="ds-statgrid__value">{REACT_EXPORTS}</div>
+          </div>
+          <div className="ds-statgrid__cell">
+            <div className="ds-statgrid__label">Showcase pages</div>
+            <div className="ds-statgrid__value">{PAGES}</div>
+          </div>
+          <div className="ds-statgrid__cell">
+            <div className="ds-statgrid__label">Themes</div>
+            <div className="ds-statgrid__value">2</div>
+          </div>
         </div>
       </section>
 
       <section>
-        <h2 className="font-heading text-lg font-semibold tracking-wider uppercase">
-          Type
-        </h2>
-        <div className="mt-4 flex flex-col gap-1">
-          <p className="font-heading text-2xl font-light">Ufficio title face</p>
-          <p className="text-base">Geist body — 14px base, 130% leading.</p>
-          <p className="font-mono text-xs text-muted-foreground">
-            Geist Mono for tokens and code.
-          </p>
-        </div>
+        <h2 className="ds-title ds-title--lg mb-4">Foundations</h2>
+        <CardGrid base="/foundations" entries={FOUNDATIONS} />
       </section>
 
       <section>
-        <h2 className="font-heading text-lg font-semibold tracking-wider uppercase">
-          Components
-        </h2>
-        <div className="mt-4 grid gap-4 sm:grid-cols-2">
-          {componentsByCategory().map((group) => (
-            <Card key={group.category}>
-              <CardHeader>
-                <CardTitle>{group.category}</CardTitle>
-                <CardDescription>
-                  {group.items.length} components
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="flex flex-wrap gap-x-3 gap-y-1.5">
-                {group.items.map((component) => (
-                  <Link
-                    key={component.slug}
-                    to={`/docs/${component.slug}`}
-                    className="text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
-                  >
-                    {component.name}
-                  </Link>
-                ))}
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        <h2 className="ds-title ds-title--lg">Components</h2>
+        {componentsByCategory().map((group) => (
+          <div key={group.category}>
+            <p className="ds-label mt-5 mb-2.5">{group.category}</p>
+            <CardGrid
+              base="/docs"
+              entries={group.items.map(
+                (component) =>
+                  [
+                    component.slug,
+                    component.name,
+                    component.description,
+                  ] as const
+              )}
+            />
+          </div>
+        ))}
+      </section>
+
+      <section>
+        <h2 className="ds-title ds-title--lg mb-4">Templates</h2>
+        <CardGrid base="/templates" entries={TEMPLATES} />
+      </section>
+
+      <section>
+        <h2 className="ds-title ds-title--lg">Blocks</h2>
+        <p className="mt-2 mb-4 text-sm text-muted-foreground">
+          Composed, copy-paste sections — app chrome, auth, marketing and
+          data/detail — built from the components and the visible grid system.
+        </p>
+        <CardGrid base="/blocks" entries={BLOCKS} />
+      </section>
+
+      <section>
+        <h2 className="ds-title ds-title--lg mb-2">Principles</h2>
+        <p className="text-sm text-muted-foreground">
+          Flat &amp; sharp — 1px borders, no shadows, no border-radius. &nbsp;·&nbsp;
+          White / whitesmoke surfaces, black ink. &nbsp;·&nbsp; Ufficio titles
+          over Geist body, uppercase labels at 0.08em, tabular numerals.
+        </p>
       </section>
     </div>
   )
