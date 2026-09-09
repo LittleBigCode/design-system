@@ -10,12 +10,6 @@ export type ComponentDoc = {
   name: string
   description: string
   category: string
-  /**
-   * Optional when-to-use paragraphs rendered under the description — one
-   * `Prose` block per entry, so backticks are the only markup. The description
-   * stays the one-line tagline; this is where "reach for it when…" lives.
-   */
-  intro?: string[]
   examples?: Example[]
   /**
    * The barrel exports this page documents, in the order the import line shows
@@ -67,11 +61,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Actions",
     exports: ["SpeedDial", "SpeedDialAction"],
     description:
-      "A floating action button whose two-to-four actions fan out on open — the create button a whole view is about.",
-    intro: [
-      "Speed Dial is the one action a view exists to start, parked in a corner and reachable from anywhere in it: compose, create, upload. Reach for it when the action outranks everything else on the page and the reader may be scrolled far from a toolbar. Two to four actions is the honest range — a fifth belongs in a `Dropdown`, and a single action needs no dial at all, just an `IconButton` positioned the same way.",
-      "It is a `Menu` underneath, not the CSS `:focus-within` trick daisyUI's `fab` uses, so Escape closes it, arrow keys walk the actions and focus returns to the trigger. The trigger is also the root, so `className` positions the dial: `.ds-speed-dial` is `fixed` in the end-bottom corner, which is what a FAB wants, and `.ds-speed-dial--docked` swaps in `absolute` when the dial belongs to a region rather than the viewport.",
-    ],
+      "A floating button that fans out two to four actions when opened. Use it for the one main action of a view.",
     examples: [
       {
         demo: "speed-dial/basic",
@@ -107,11 +97,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Actions",
     exports: ["SplitButton"],
     description:
-      "One primary action, with its variants behind an attached caret.",
-    intro: [
-      "It earns itself when there is a clear default and a short tail of near-misses — Deploy, and then deploy-to-staging or dry-run. If the reader has to read the menu to choose, the default was not one, and a plain `DropdownMenu` is more honest.",
-      "`onMain` is the default action; `menu` takes `DropdownMenuItem` rows — it's built on `ButtonGroup` and `DropdownMenu`, not a hand-rolled popover, so focus management and typeahead come for free. The main half must never be the dangerous one, because it is the half a mis-aimed click lands on.",
-    ],
+      "A main button with a caret beside it for its variants. Use it when there is a clear default action and a few alternatives.",
     examples: [
       {
         demo: "split-button/basic",
@@ -129,11 +115,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Actions",
     exports: ["Segmented", "type SegmentedProps", "type SegmentedItem"],
     description:
-      "A short row of mutually exclusive options, all visible at once.",
-    intro: [
-      "Where `RadioGroup` collects an answer in a form, `Segmented` switches a view now — a time window, a unit, a density. It suits two to five options with short labels; past that the row wraps and the comparison it was for is gone.",
-      "`dot` marks an option's own state (`ok`/`ko`) without a second row of text — useful when one window has data and another does not.",
-    ],
+      "A short row of options where only one can be selected. Best for two to five choices that switch a view.",
     examples: [
       {
         demo: "toggle-group/basic",
@@ -148,11 +130,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Actions",
     exports: ["ToggleGroup", "ToggleGroupItem"],
     description:
-      "Base UI's own toggle group, single- or multi-select — landed batch 12 (#45), routed here in batch 16 (#49).",
-    intro: [
-      "`Segmented` (the “Segmented” page) is this system's own additive and stays the default for a single-select view switch. `ToggleGroup` is incoming's composed primitive underneath the same shape, and the one that answers when the row isn't single-select: `type=\"multiple\"` toggles more than one item at once, which `Segmented` has no equivalent for.",
-      "Each `ToggleGroupItem` is its own toggle button — the group only coordinates which of them are pressed.",
-    ],
+      "Base UI's toggle group, composed from parts. Use it when the row needs multi-select or a shape `Segmented` doesn't cover.",
     examples: [
       {
         demo: "toggle-group-primitive/single",
@@ -179,11 +157,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Actions",
     exports: ["Wizard", "type WizardStep"],
     description:
-      "An ordered sequence of steps, with the progress and the navigation handled.",
-    intro: [
-      "A wizard is right when the steps have a real order and a later one depends on an earlier — a mapping that needs its source first. When they are only sections, `Accordion` or `Tabs` let a reader work in their own order.",
-      "`disableNext` on a step is the gate: it is what makes the order load-bearing rather than a suggestion, and it belongs on the step whose own input is incomplete. Since 1.0.0 it also gains `label`/`nextLabel`/`backLabel`/`finishLabel`, and composes `Stepper`'s parts for the trail rather than drawing its own.",
-    ],
+      "An ordered sequence of steps with the progress and navigation built in. Use it when a later step depends on an earlier one.",
     examples: [
       {
         demo: "wizard/basic",
@@ -207,11 +181,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "buttonGroupVariants",
     ],
     description:
-      "Joins related buttons into a single segmented control with shared borders.",
-    intro: [
-      "Button Group welds controls that belong to one decision into a single object: a period switcher, a split primary action, a field with its submit beside it. Reach for it when the children share a subject — actions that merely sit near each other want a `gap`, not a seam.",
-      "The group owns that seam, and it owns it by removing the losing border outright rather than overlapping the members — the same result in LTR and the correct one in RTL. Every selector matches both the absorbed parts' `data-slot` and this package's own `.ds-button`, `.ds-input` and `.ds-select`, so hand-written markup with no `data-slot` at all keeps joining. There is no grouped variant to remember, and variants keep working inside it.",
-    ],
+      "Joins related buttons into one segmented control with shared borders.",
     examples: [
       {
         demo: "button-group/basic",
@@ -254,12 +224,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Actions",
     exports: ["IconButton"],
     description:
-      "`Button` for an icon alone, with an accessible name it cannot ship without.",
-    intro: [
-      "Icon Button is the square, label-required `Button`: a toolbar control, a row action, anything whose meaning is carried by a glyph. It takes `Button`'s `variant` and `disabled` and forwards everything else, so it is the same control with one rule added.",
-      "That rule is the whole component. `label` is required in the type and lands on both `aria-label` and `title`, which is the difference between this and an icon-only `Button` — the latter can render with no accessible name at all and nothing catches it until the a11y suite does. Write the label as the action, not the glyph: `Archive invoice`, not `Archive icon`.",
-      "`size` takes the source's four square spellings — `icon`, `icon-xs`, `icon-sm`, `icon-lg` — and also the bare `sm` and `lg` this package shipped in 0.x, since those have call sites in `examples/` and in the docs. They are the same four boxes either way: `icon-` is stripped, and `icon` alone is the 40px default. `variant` narrows to `primary` and `danger` until batch 7 lands the source's six-variant `Button`; omit it for the bordered ghost.",
-    ],
+      "A square `Button` for a single icon. The `label` prop is required, since the icon carries no text.",
     examples: [
       {
         demo: "icon-button/toolbar",
@@ -288,11 +253,7 @@ export const COMPONENTS: ComponentDoc[] = [
     name: "Toggle",
     category: "Actions",
     exports: ["Toggle", "toggleVariants"],
-    description: "A two-state button for on/off formatting controls.",
-    intro: [
-      "Toggle is a button that stays down: bold, mute, pin, reveal. Reach for it when pressing it changes something the reader can see immediately. A preference a form submits later belongs to `Switch` or `Checkbox` — those carry a value into the submission, where a toggle carries none.",
-      "The pressed state lives on the button's own `aria-pressed`, which is also what the styling hooks, so `defaultPressed` is enough for the uncontrolled case and nothing needs to wrap it to read the state. `toggleVariants` is shared with Toggle Group, so a lone toggle and one inside a group are the same button.",
-    ],
+    description: "A button that stays pressed, for on/off controls like bold or mute. Use `Switch` or `Checkbox` for values a form submits.",
     examples: [
       {
         demo: "toggle/basic",
@@ -342,11 +303,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "AutocompleteSeparator",
     ],
     description:
-      "Free-text input with suggestions — unlike Combobox, the typed value need not come from the list.",
-    intro: [
-      "Autocomplete is a text input with suggestions attached, where the typed string is the value: the list is a shortcut, never a constraint. Reach for it for search fields, for the answer that is usually but not always one of a known set, and anywhere an “other” option would otherwise be needed. Combobox is the one to use when the value has to come from the list, and Command when the entries are actions rather than answers.",
-      "The root holds no selected value at all — only the input string, through `value`/`onValueChange` — and picking an item simply writes that item's text into the input. `mode` decides what a query does: `list` (the default) filters the list and leaves the input alone, `both` filters and previews the highlighted entry inline, `inline` previews without filtering, `none` does neither. Set `filter` to `null` when something upstream already narrowed `items`, or the same query is applied twice.",
-    ],
+      "A text input with suggestions, where the typed value doesn't have to come from the list. Use `Combobox` when it must.",
     examples: [
       {
         demo: "autocomplete/basic",
@@ -395,11 +352,7 @@ export const COMPONENTS: ComponentDoc[] = [
     name: "Calendar",
     category: "Forms",
     exports: ["Calendar", "CalendarDayButton"],
-    description: "A month grid — react-day-picker underneath, styled to match.",
-    intro: [
-      "Calendar shows a month; `DatePicker` collects a date behind a trigger. When a reader needs to *see* what is on which day, this is the one — and it composes under `DatePicker`, `DateRangePicker` and `DateTimePicker`, so a keyboard fix here reaches all four.",
-      "Since 1.0.0 there's no `events` prop — a day marker is a `components={{ DayButton: … }}` override composing `CalendarDayButton`, the same lever react-day-picker itself exposes. `mode` (`\"single\"`/`\"range\"`/`\"multiple\"`) and `selected`/`onSelect` replace `value`/`onSelectDate`.",
-    ],
+    description: "A month grid, built on react-day-picker. Use it when the reader needs to see the days; use `DatePicker` to just collect a date.",
     examples: [
       {
         demo: "calendar/basic",
@@ -417,10 +370,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Forms",
     exports: ["ColorPicker", "type ColorPickerProps"],
     description:
-      "A swatch group over the brand palette, with a free-form hex field beside it.",
-    intro: [
-      "The swatches default to the charter's eight brand colours, so the common answer is one click and the field is the escape hatch rather than the primary path. Pass `swatches` to narrow it to the subset a given form actually allows.",
-    ],
+      "Swatches for the brand palette with a hex field beside them. Pass `swatches` to narrow the choices.",
     examples: [
       {
         demo: "color-picker/basic",
@@ -454,11 +404,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "useComboboxAnchor",
     ],
     description:
-      "A text field that filters a list as you type, and settles on one value.",
-    intro: [
-      "Use it when the list is long enough that scanning beats scrolling but short enough that a reader knows roughly what they are looking for — regions, currencies, repositories. Under about seven options a plain `Select` is less machinery for the same job.",
-      "Composed rather than data-driven since 1.0.0: `items` on `Combobox` is the list, but the rows themselves are `ComboboxItem` children inside `ComboboxContent`/`ComboboxList` — the same shape as `Select` and `Autocomplete`.",
-    ],
+      "A text field that filters a list as you type and settles on one value. Use `Select` under about seven options.",
     examples: [
       {
         demo: "combobox/basic",
@@ -487,11 +433,7 @@ export const COMPONENTS: ComponentDoc[] = [
     name: "DatePicker",
     category: "Forms",
     exports: ["DatePicker", "DatePickerTrigger", "DatePickerContent"],
-    description: "One date, from a field with a calendar under it.",
-    intro: [
-      "`DatePicker` is `Popover` itself — `DatePickerTrigger` and `DatePickerContent` are the only parts it adds. The calendar inside is composed by hand from `Calendar`, the same one `date-range-picker` and `date-time-picker` use, so bounding the pickable days is `Calendar`'s own `disabled` matchers (`{ before }`/`{ after }`) rather than a `min`/`max` prop.",
-      "The value is a real `Date`, not an ISO string — parse at the boundary (an API response, a form submit), not on every keystroke.",
-    ],
+    description: "A field with a calendar in a popover, for picking one date.",
     examples: [
       {
         demo: "date-picker/basic",
@@ -508,11 +450,7 @@ export const COMPONENTS: ComponentDoc[] = [
     name: "DateRangePicker",
     category: "Forms",
     exports: ["DateRangePicker", "type DateRange"],
-    description: "A start and an end, picked together in one calendar.",
-    intro: [
-      "Two `DatePicker`s side by side let a reader pick an end before a start and only find out on submit. This one holds the pair, so the second click is always interpreted against the first — it owns its own `Calendar` in `mode=\"range\"` rather than composing one at the call site.",
-      "The value is `{ from, to }` — real `Date`s, `to` optional while the range is half-picked. `showTime` adds a `TimePicker` for each end; there's no `min`/`max` bound.",
-    ],
+    description: "A start and end date picked in one calendar. The value is `{ from, to }`.",
     examples: [
       {
         demo: "date-range-picker/basic",
@@ -529,11 +467,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Forms",
     exports: ["DateTimePicker"],
     description:
-      "A `DatePicker` and a `TimePicker` combined into one `Date` value.",
-    intro: [
-      "Composed since 1.0.0 from the two halves that already exist: a calendar popover for the day, segmented hour/minute fields with a dial or list picker for the time. `min`/`max` bound both — the calendar disables whole days outside the range and the clock is clamped again on commit.",
-      "`step` is now in *minutes*, not seconds — `15` gives quarter-hours.",
-    ],
+      "A calendar and a time picker combined into one `Date` value.",
     examples: [
       {
         demo: "date-time-picker/basic",
@@ -556,11 +490,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "FileUploadDescription",
     ],
     description:
-      "A drop zone that is also a file button, composed from its own icon/title/description.",
-    intro: [
-      "`accept` filters the native picker; it is not validation. A reader can still drop anything, so whatever the server requires has to be checked again on `onFiles` — the prop narrows the common path, it does not close the door.",
-      "Composed since 1.0.0: `hint`/`name`/`value` are gone, `FileUploadIcon`/`FileUploadTitle`/`FileUploadDescription` are children instead — the size cap belongs in `FileUploadDescription`'s own text, which is where a reader who has to discover it by hitting it should have been told sooner.",
-    ],
+      "A drop zone that also works as a file button. `accept` filters the picker but is not validation — check the files again on `onFiles`.",
     examples: [
       {
         demo: "file-upload/basic",
@@ -577,11 +507,7 @@ export const COMPONENTS: ComponentDoc[] = [
     name: "MultiSelect",
     category: "Forms",
     exports: ["MultiSelect", "type MultiSelectOption"],
-    description: "Several values from a fixed list, shown as removable chips.",
-    intro: [
-      "Against a column of checkboxes, this wins once the list is longer than what a reader wants to see at rest — the chips show the answer and the list stays folded. Under about five options the checkboxes are honest and need no click to read.",
-      "A friendlier `options`/`value` API over `Combobox`'s own `multiple` + chips mode underneath. Since 1.0.0 there's no `id` prop to pair with a `<label htmlFor>` — pass `aria-labelledby` (or `aria-label`) instead, and no per-option `disabled` — an option that shouldn't be offered is filtered out of `options` at the call site.",
-    ],
+    description: "Several values from a fixed list, shown as removable chips. Use checkboxes under about five options.",
     examples: [
       {
         demo: "multi-select/basic",
@@ -605,11 +531,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "NumberFieldScrubArea",
     ],
     description:
-      "A numeric field with stepper buttons and a real `null` for empty.",
-    intro: [
-      "`value` is `number | null`, not `number`, because an empty numeric field is a distinct state from zero. Collapsing the two is the classic bug here: a cleared field that reads as `0` silently sets a limit to nothing.",
-      "`min` and `max` clamp the steppers and the typed value both, so the field cannot hold a number the form would reject. Composed since 1.0.0 (renamed from `NumberInput`): `NumberFieldGroup` holds `NumberFieldDecrement`/`NumberFieldInput`/`NumberFieldIncrement`, and `NumberFieldScrubArea` wraps a label to make it a drag-to-change handle.",
-    ],
+      "A numeric field with stepper buttons. The value is `number | null`, so an empty field is never mistaken for zero.",
     examples: [
       {
         demo: "number-field/basic",
@@ -632,12 +554,7 @@ export const COMPONENTS: ComponentDoc[] = [
     name: "RadioGroup",
     category: "Forms",
     exports: ["RadioGroup", "RadioGroupItem"],
-    description: 'One choice from a few, over native `<input type="radio">`.',
-    intro: [
-      "Radios show every option at rest, which is what makes them right for two to five mutually exclusive choices whose differences matter. Past that a `Select` stops the layout from being mostly options.",
-      "`name` defaults to a generated id and is best left alone. Radios only form one group when they share a name, and the native arrow-key navigation — which is the whole accessibility story here — silently stops working if they do not.",
-      "Composed since 1.0.0: there's no `options` prop — `RadioGroupItem` draws only the dot, one per option, each paired with a `Field`-wrapped `FieldLabel`/`Label` the same way any other bare control is.",
-    ],
+    description: "One choice from a few, over native radio inputs. Best for two to five options; past that use `Select`.",
     examples: [
       {
         demo: "radio-group/basic",
@@ -654,11 +571,7 @@ export const COMPONENTS: ComponentDoc[] = [
     name: "Rating",
     category: "Forms",
     exports: ["Rating"],
-    description: "A star scale, as an input or as a read-only display.",
-    intro: [
-      "The same component does both jobs, and `readOnly` is the switch. It matters more than it looks: a read-only rating that still takes hover and focus invites a click that does nothing, which reads as broken rather than as information.",
-      "Since 1.0.0, `onValueChange` replaces `onChange`, and `shape` (`\"default\"` | `\"star\"`) picks the mark — it's a `RadioGroup` of `Radio`s underneath, one per rank.",
-    ],
+    description: "A star scale, as an input or, with `readOnly`, as a display.",
     examples: [
       {
         demo: "rating/basic",
@@ -676,11 +589,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Forms",
     exports: ["TagsInput"],
     description:
-      "Free-form labels, entered one at a time and shown as removable chips.",
-    intro: [
-      "The open-vocabulary counterpart to `MultiSelect`: use it when the set is not knowable in advance — tags, recipients, hostnames. When there is a fixed list, `MultiSelect` stops a typo from becoming a new value.",
-      "`value` is a plain `string[]`, so de-duplication and case are the caller's policy rather than a hidden one.",
-    ],
+      "Free-form labels typed one at a time and shown as removable chips. Use `MultiSelect` when the list is fixed.",
     examples: [
       {
         demo: "tags-input/basic",
@@ -697,11 +606,7 @@ export const COMPONENTS: ComponentDoc[] = [
     name: "TimePicker",
     category: "Forms",
     exports: ["TimePicker", "type TimeValue"],
-    description: "A time of day — segmented hour/minute fields plus a dial.",
-    intro: [
-      'The value is `{ hours, minutes, seconds? }`, not a `Date` or a string. A time with no date attached is what a schedule actually means, and forcing it through a `Date` invents a day and a timezone that then have to be ignored everywhere downstream.',
-      '`picker` picks the popover: `"dial"` (default) is a clock face, `"list"` is three scrolling columns, `"none"` drops the popover and leaves just the segmented fields.',
-    ],
+    description: "A time of day, from segmented hour and minute fields plus a dial. The value is `{ hours, minutes, seconds? }`, with no date attached.",
     examples: [
       {
         demo: "time-picker/basic",
@@ -719,12 +624,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Forms",
     exports: ["Label"],
     description:
-      "An accessible label; pairs with a control via `htmlFor` and dims with its disabled state.",
-    intro: [
-      "Label is the plain `label` element wearing the system's field-heading type: 12px, uppercase and tracked out at `0.08em` in faint ink — the charte's signature small-caps treatment, which `.ds-label` already carried before this component landed. Reach for it when the control and its name are separate elements — a select, a textarea, a range, a `RadioGroupItem` (since 1.0.0 — see below), an input in a hand-built grid. It is *not* what this package's `Checkbox` and `Switch` want: each of those is itself a `<label>` around its own text, so a Label beside one would be a second label for a single control. `Field` is the label-plus-control-plus-hint row when you want the whole thing in one composed group.",
-      'It restyles itself from the control it sits beside rather than taking a prop: a Label following a `[data-slot="checkbox"]` or `switch` trades the heading treatment for sentence case, because a checkbox label is a sentence and a field heading is not. Sibling selectors only look backwards, so the control has to come before the label in the DOM. `radio-group-item` dropped out of this rule in 1.0.0: `RadioGroupItem` draws only the dot, not a self-labelling `<label>`, so a Label beside one keeps the heading treatment like any other bare control.',
-      "Upstream those selectors were keyed to Tailwind's `.peer` and `.group` marker classes, and the three type properties sat in a `@layer components` block below Tailwind's utilities so a call site could override them. Neither mechanism exists here: the markers are gone in favour of the real `:disabled` and `data-slot` they stood for, and the override is plain specificity. The three type properties themselves are not restated at all — `.ds-label` was already defined in `base/typography.css`, and a batch landing in an occupied namespace merges rather than overwrites.",
-    ],
+      "An accessible label for a control, paired with `htmlFor`. Use it when the label and the control are separate elements.",
     examples: [
       {
         demo: "label/basic",
@@ -759,11 +659,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Forms",
     exports: ["Form"],
     description:
-      "A thin Base UI Form wrapper: the page-level `<form>` and its vertical rhythm. `Field` owns everything inside it.",
-    intro: [
-      "Form is the outermost wrapper of a form page — a `<form>` element laid out as a flex column with a wide gap, so sections separate themselves without margins. Reach for it once per form; its own gap is what spaces the rows, so there is no inner grouping element to add. `Field` owns a single field's label, hint and error.",
-      "Base UI's own conveniences here need `Field.Root` to register the controls, and this system's `Field` is a plain div, so none of them see anything: `onFormSubmit` reports an empty object, the `errors` prop keys off names it never learns, and there is no first-invalid field to focus. Read the values with `FormData` in `onSubmit` and hold errors in state instead. The one behaviour that does reach you is that the element is rendered with `noValidate`, so browser constraint bubbles never appear and `required` blocks nothing on its own.",
-    ],
+      "The page-level `<form>` element and its vertical spacing. `Field` handles everything inside it.",
     examples: [
       {
         demo: "form/basic",
@@ -808,12 +704,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "FieldArrayAdd",
     ],
     description:
-      "Repeated entries for an array of objects — one bordered block per entry, each removable, with one add button under the stack.",
-    intro: [
-      "Field Array is the repeat chrome for a section that collects several of the same object: a list of diplomas, of recipients, of quote lines. Each entry is a bordered block, `FieldArrayItemContent` lays out whatever controls that object needs, `FieldArrayRemove` drops the entry, and `FieldArrayAdd` closes the stack as a full-width outline button. Wrap the lot in a `<fieldset>` when the section wants a name — the legend then announces with every control inside it.",
-      "Every part is a plain styled box holding no state and asserting nothing about its contents, so an entry takes any control in any arrangement: pass a grid to the content part, or put the remove button in a header row above it rather than beside it. The array itself stays with you — this package owns no form state — which leaves add, remove, limits and the entry ids in your hands.",
-      "Submission needs no value state at all. Index each control's own `name` per entry (`lines[0].unit`) and a plain form submit carries the array; only the row list lives in React. Key each item off a stable entry id, never the index — keyed by index, removing a row makes React reuse the wrong DOM node and every uncontrolled value below it shifts up by one.",
-    ],
+      "Repeated entries for an array of objects — one removable block each, with an add button under the stack.",
     examples: [
       {
         demo: "field-array/basic",
@@ -853,12 +744,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Forms",
     exports: ["InputOTP", "InputOTPGroup", "InputOTPSlot", "InputOTPSeparator"],
     description:
-      "A segmented one-time-code field with per-character slots, over the `input-otp` package.",
-    intro: [
-      "Input OTP is for a code of known length that reads as separate characters: an SMS or authenticator confirmation, an email verification, an invite key. Reach for it when the length is fixed and the segmentation helps the reader keep their place — a plain `Input` is better as soon as the value could be any length, and `Field` is what wraps either one with a label and an error.",
-      "The `input-otp` package is the dependency batch 16 (#49) took rather than hand-rolling: one real transparent input behind the boxes, so paste, password managers and the OS one-time-code suggestion keep working, plus backspace across a slot boundary and the caret tracking.",
-      "The structure is the part worth knowing regardless of the binding. There is exactly one `input`; every slot is a plain `div` painted from that input's state, which is why a slot carries no value and no `onChange`, why splitting the slots across groups is presentational and does not touch the value, and why the field is named on the input itself rather than on a group. `data-active` marks the slot the caret is in, and the caret is a painted line — the real one is invisible with the input.",
-    ],
+      "A one-time-code field with one slot per character. Use it when the code length is fixed.",
     examples: [
       {
         demo: "input-otp/basic",
@@ -892,11 +778,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Forms",
     exports: ["PhoneInput"],
     description:
-      "A country dial-code select paired with a national-number field, composing into one E.164-ish string value.",
-    intro: [
-      'Phone Input pairs a dial-code Select with a national-number Input inside a single underline, and hands back one string (`+33612345678`) rather than a country/number pair. Reach for it when a form needs a phone number in one field; when it only needs digits, a plain Input with `type="tel"` is enough.',
-      "The country picker is this package's native `Select` — the source's five-part one lands in batch 7 — which is arguably the better fit anyway: a dial-code list is exactly where a platform select's own mobile UI beats a custom listbox. The dial-code table is hand-rolled and covers ten markets, so there is no `libphonenumber` in the bundle, no per-country grouping and no length validation — `placeholder` only suggests the shape. The split is derived from the value on every render rather than held in state, which is why `US` and `CA` both write `+1` and a `+1…` value always reads back as `US`.",
-    ],
+      "A country dial-code select next to a national-number field, returning one string like `+33612345678`.",
     examples: [
       {
         demo: "phone-input/basic",
@@ -931,12 +813,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Forms",
     exports: ["Editable"],
     description:
-      "Inline click-to-edit text — a preview with an edit affordance that swaps to a field, committed on Enter or blur, discarded on Escape.",
-    intro: [
-      "Editable turns a piece of text into its own editor: a preview with a pencil that surfaces on hover or focus, swapping in place for an `Input` with save and cancel beside it. Reach for it to rename something where it already sits — a document title, a board column, a row label — instead of sending someone to a dialog for one value. As soon as the edit touches more than one value, a `Field` inside a form is the honest shape.",
-      "It is hand-rolled rather than composed, so the prop list is the whole surface and there are no parts to nest. Enter and blur commit, Escape discards, and `submitOnBlur={false}` makes blur discard too, which leaves the check button and Enter as the only ways through. Two details to know before styling it: the preview is a `span` rather than a button, so the pencil — not the text — is what opens the field, and the inner `Input` carries its own type size, so a heading-sized preview snaps back to field size while it is being edited.",
-      "The three affordances are `IconButton`s at `icon-xs`, re-composed onto this package's button until batch 7 supplies the source's — which means each one now carries a required accessible name (`Edit`, `Save`, `Cancel`) rather than relying on the source remembering an `aria-label`.",
-    ],
+      "Click-to-edit text: a preview that swaps to a field, saved on Enter or blur and discarded on Escape.",
     examples: [
       {
         demo: "editable/basic",
@@ -978,10 +855,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "CodeBlockBody",
       "CodeBlockCopyButton",
     ],
-    description: "A source snippet with a filename strip and a copy button.",
-    intro: [
-      "Composed since 1.0.0: `CodeBlockHead`/`CodeBlockFilename`/`CodeBlockCopyButton` are children of `CodeBlock`, not `filename`/language props. `CodeBlockBody` still takes plain `code` (tokenized by a tiny built-in regex, comments/strings/keywords/numbers/capitalized identifiers only) or pre-highlighted `html` from a real grammar — there's no `language` prop, since the component itself ships no grammar to select.",
-    ],
+    description: "A code snippet with a filename strip and a copy button.",
     examples: [
       {
         demo: "code-block/basic",
@@ -999,11 +873,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["DataTable", "DataTableColumnHeader", "type ColumnDef"],
     description:
-      "A real `<table>` with sorting, selection, inline edit and paging, over `@tanstack/react-table`.",
-    intro: [
-      "The heaviest component in the system, and the one to reach for last: a list of five things with no sorting is a `<ul>`. It earns itself when a reader has to *compare* rows — sort by one column, select some, act on those.",
-      "Renamed from `DataGrid` in 1.0.0: `columns` is now a real `ColumnDef[]` (`accessorKey`/`header`/`cell`, tanstack's own shape) rather than `{ key, header, render }`, and `rows` is `data`. `data` and `loadPage` are exclusive — pass `data` and the table sorts and pages in memory; pass `loadPage` and it hands you the page, sort and column filters and expects the server to have done that work.",
-    ],
+      "A table with sorting, selection, inline edit and paging, over `@tanstack/react-table`. Use `Table` when the rows only need displaying.",
     examples: [
       {
         demo: "data-table/basic",
@@ -1027,11 +897,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["Tree", "TreeItem", "TreeItemTrigger", "TreeItemContent", "TreeLeaf"],
     description:
-      "A nested, expandable hierarchy — files, org units, categories.",
-    intro: [
-      "Reach for it when the nesting *is* the information. When it is only grouping, a list with headings is read faster and needs no expanding.",
-      "Composed since 1.0.0: there's no `nodes` array or `defaultExpanded` — a branch is a `TreeItem` (`defaultOpen` to seed it open) wrapping a `TreeItemTrigger` and `TreeItemContent`, a childless node is a `TreeLeaf`. Deep trees are still worth opening on the reader's behalf, now via each branch's own `defaultOpen`.",
-    ],
+      "A nested, expandable hierarchy for files, org units or categories. Use a list with headings when the nesting is only grouping.",
     examples: [
       {
         demo: "tree/basic",
@@ -1059,11 +925,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "ItemFooter",
     ],
     description:
-      "A list row with media, content and actions slots — lighter than a Card for repeated rows.",
-    intro: [
-      "Item is the repeated row: media, content and actions in one horizontal band, at three densities. Reach for it for lists of files, members, settings or results — anywhere the same shape repeats and a `Card` per row would be too much furniture. A region that owns the page rather than repeating inside it is still a `Card`.",
-      'ItemGroup is deliberately not a `role="list"`: a list may own only `listitem` children, and Item is polymorphic, so the group cannot assert that role for rows whose element it does not control — asserting it anyway is what produced a critical `aria-required-children` finding in axe. When list semantics matter, own the markup: `role="list"` on the group and `role="listitem"` on each row.',
-    ],
+      "A list row with media, content and action slots. Lighter than a `Card` for rows that repeat.",
     examples: [
       {
         demo: "item/variants",
@@ -1112,11 +974,7 @@ export const COMPONENTS: ComponentDoc[] = [
     name: "Marker",
     category: "Data display",
     exports: ["Marker", "MarkerIcon", "MarkerContent", "markerVariants"],
-    description: "A small inline badge pairing an icon with a label.",
-    intro: [
-      "Marker is the caption above a group: uppercase, muted, full-width, optionally with a glyph. Reach for it to title a stack of rows, label a section of a form, or divide a feed by day — the small typographic heading that is not a heading element. `Badge` is the inline word of state; `Separator` is the rule with no label.",
-      "The root is full width, so a marker captions whatever follows rather than sitting inline, and the `separator` variant draws its two rules as `::before` and `::after` on that root — the label centres between them with no wrapper markup. Use `render` when the caption should be a real heading element.",
-    ],
+    description: "A small label pairing an icon with text, for titling a group of rows.",
     examples: [
       {
         demo: "marker/variants",
@@ -1158,11 +1016,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["Snippet"],
     description:
-      "A one-line copyable command. Shares Code Block's copy affordance rather than restating it.",
-    intro: [
-      "Snippet is the one-line copyable value: an install command, an API key, a connection string. Reach for it wherever the reader's next action is `copy this`. A multi-line sample belongs in `Code Block`, whose copy button this component reuses rather than restating — landing Snippet is what turned that button into a real export, `CodeBlockCopyButton`, instead of markup baked inside `CodeBlock`.",
-      "`value` is what reaches the clipboard and `children` is what renders, so a secret can show obscured while the full string still copies. The root is an inline flex box capped at the width it is given, so it sits inside a table cell or a `dd` without stretching it.",
-    ],
+      "A one-line copyable command or value. Use `Code Block` for multi-line samples.",
     examples: [
       {
         demo: "snippet/basic",
@@ -1184,11 +1038,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["QrCode", "type QrErrorCorrectionLevel"],
     description:
-      "Renders a QR code as inline SVG from a hand-rolled byte-mode encoder — no dependency, no network, no canvas. Versions 1-10, all four correction levels.",
-    intro: [
-      "QR Code turns a string into a scannable inline SVG — a URL on a printed page, an `otpauth://` secret for two-factor enrolment, a token on a kiosk screen. Everything happens locally: no image service, no canvas, no network round trip, and nothing to configure but `value`.",
-      "The encoder is hand-rolled byte mode, versions 1 to 10, so the ceiling is 271 bytes at level L. Modules are fixed black on a white quiet zone rather than themed — a code has to hold its contrast to scan, which is the one deliberate exception to the token rule in this package. A payload over capacity renders a dashed error box instead of throwing.",
-    ],
+      "Renders a QR code as inline SVG. No dependency and no network — pass a `value`.",
     examples: [
       {
         demo: "qr-code/basic",
@@ -1224,11 +1074,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "meterVariants",
     ],
     description:
-      "Displays a measured value within a known range — capacity, not task progress.",
-    intro: [
-      "Meter shows how full something is: disk used, budget consumed, seats taken. Reach for it when the value measures a fixed capacity and can move either way — work advancing towards done is `Progress`, and a single figure that deserves a dial of its own is `Gauge`.",
-      "`Meter` renders its own `MeterTrack` and `MeterIndicator` after whatever children you pass, so children are the label and the value only; writing a track yourself draws a second bar. With no `format`, the value reads as its percentage of the `min`–`max` range — pass a `format`, or a function child on `MeterValue`, when the readout should be the raw figure instead.",
-    ],
+      "Shows how full something is within a known range, like disk or budget. Use `Progress` for work advancing towards done.",
     examples: [
       {
         demo: "meter/basic",
@@ -1269,11 +1115,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["RelativeTime", "formatRelativeTime"],
     description:
-      'Renders "3 hours ago" from a date, inside a `time` element that keeps the machine-readable timestamp.',
-    intro: [
-      "Relative Time turns a timestamp into `3 hours ago` and keeps it advancing while it is mounted. Reach for it in activity feeds, notification lists and updated-at columns, where distance from now is what a reader wants. Past a week it falls back to an absolute date, because `47 days ago` is worse than the date itself.",
-      "`date` takes what a row actually holds: a `Date`, epoch milliseconds, or a database string with a space separator, microseconds and a `+02` zone. A stamp carrying no zone counts as local time, so a column storing UTC has to append `Z`. What renders is a real `time` element with the ISO value in `dateTime` and the full local date in `title`, so the exact moment survives hover and copy.",
-    ],
+      "Renders \"3 hours ago\" from a date inside a `time` element, and keeps it updating. Past a week it shows the date instead.",
     examples: [
       {
         demo: "relative-time/basic",
@@ -1320,11 +1162,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "CommandSeparator",
     ],
     description:
-      "The ⌘K surface: `cmdk`'s filtering, grouped and composed as children.",
-    intro: [
-      "Composed since 1.0.0 (renamed from `CommandPalette`): `CommandGroup`'s `heading` restores what `group` used to, and `CommandItem` takes an `onSelect` rather than an `onRun` — the filter still crosses groups, matching the whole list at once against whatever `value` each item carries.",
-      "`CommandDialog` is the ⌘K popup shell (a `Dialog` underneath); `Command` on its own composes inline instead, wherever the palette shouldn't be modal.",
-    ],
+      "The ⌘K palette: a filtered, grouped list of commands, built on `cmdk`.",
     examples: [
       {
         demo: "command/basic",
@@ -1365,11 +1203,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "MenubarSubContent",
     ],
     description:
-      "A desktop-style application menu bar with keyboard traversal.",
-    intro: [
-      "Menubar is application chrome: a persistent row of named menus — File, Edit, View — that keeps a dense tool's whole command surface in reach and grouped by noun. Reach for it in editor-shaped views people live inside. One button that reveals a few actions is `DropdownMenu`, a right-click surface is `Context Menu`, and a searchable flat list of commands is `Command`.",
-      "Each menu is a Base UI `Menu`, and its rows wear this system's own menu vocabulary — `.ds-menu`, `.ds-menu__item`, `.ds-menu__divider`, `.ds-menu__header` — landed net-new in batches 1–2, before `DropdownMenu`'s own swap (batch 13, #46) gave it `.ds-dropdown-menu-*` classes instead: the two no longer share a surface, only the Base UI `Menu` underneath. `MenubarContent` mounts its own portal and positioner, so the tree stops at Menu → Trigger → Content. The root is Base UI's menubar, which is what gives the row a single tab stop and hands focus between menus with the arrow keys.",
-    ],
+      "A desktop-style application menu bar — File, Edit, View — with keyboard traversal.",
     examples: [
       {
         demo: "menubar/basic",
@@ -1428,11 +1262,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "NavigationMenuIndicator",
       "navigationMenuTriggerStyle",
     ],
-    description: "A horizontal site menu with optional rich dropdown panels.",
-    intro: [
-      "Navigation Menu is the top-level menu of a site header: a row of destinations, some of which open a panel with room for descriptions, groups or a featured link. Reach for it for marketing and documentation chrome. `Menubar` is the desktop-application counterpart with commands rather than destinations, and `Dropdown` is the right answer for actions on the page you are on.",
-      "The root mounts its own portal, positioner, popup and viewport, so the tree you write is only Root → List → Item — and `align` on the root is forwarded to that positioner rather than set on a part of your own. All the items share the single popup: moving between triggers resizes and slides it, and the content reads `data-activation-direction` to animate away from where the pointer came from.",
-    ],
+    description: "A horizontal site menu, with optional dropdown panels for richer links.",
     examples: [
       {
         demo: "navigation-menu/basic",
@@ -1503,11 +1333,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "useSidebar",
     ],
     description:
-      "The app's own nav column — 23 composed parts, renamed from `VerticalNav`.",
-    intro: [
-      "Nesting is now however many `SidebarMenuSub` levels a call site composes, not a one-level `items` ceiling — the shape moved from data to children, so what used to be a plan-time limit is a call-site choice.",
-      "`isActive` on `SidebarMenuButton`/`SidebarMenuSubButton` is passed rather than derived from the URL, same as `VerticalNav`'s `active`: the component ships with no router, so the app that has one decides what active means. `SidebarProvider` holds the collapse state every other part reads.",
-    ],
+      "The app's navigation column, composed from parts and nestable to any depth.",
     examples: [
       {
         demo: "sidebar/basic",
@@ -1536,11 +1362,7 @@ export const COMPONENTS: ComponentDoc[] = [
     name: "Tabs",
     category: "Navigation",
     exports: ["Tabs", "type TabsProps", "type TabItem"],
-    description: "Sibling views of one subject, one visible at a time.",
-    intro: [
-      "Tabs suit views of the same thing — a dataset's schema, preview and lineage. They do not suit steps, which have an order (`Wizard`), or unrelated destinations, which want nav.",
-      "`content` lives on the item, so the panels are declared with their labels rather than matched to them by value. `sublabel` is the second line: a count or a state, not a description.",
-    ],
+    description: "Sibling views of one subject, one visible at a time. Use `Wizard` for steps that have an order.",
     examples: [
       {
         demo: "tabs/basic",
@@ -1556,11 +1378,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Navigation",
     exports: ["Tabs", "TabsList", "TabsTrigger", "TabsContent"],
     description:
-      "Base UI's own tabs, composed from parts rather than configured with an `items` prop — landed batch 12 (#45), routed here in batch 16 (#49).",
-    intro: [
-      "The barrel's `Tabs` (the “Tabs” page) is this system's own additive, config-driven with an `items` array, and stays the default. This one is incoming's composed primitive underneath the same concept — it is what this very docs site's own example blocks use to switch between Preview and Code, reachable at the `@diametral/design-system/react/tabs` subpath rather than the plain barrel, since the two share the export name `Tabs`.",
-      "`variant=\"line\"` on `TabsList` is the underline style; the default is the segmented one. `orientation=\"vertical\"` moves the list to the side of its panels.",
-    ],
+      "Base UI's tabs, composed from parts instead of configured with an `items` array.",
     examples: [
       {
         demo: "tabs-primitive/basic",
@@ -1592,11 +1410,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Navigation",
     exports: ["Toc", "TocLabel", "TocList", "TocItem", "TocLink"],
     description:
-      "The in-page anchor rail — a sticky list of the sections on the current page.",
-    intro: [
-      "Toc is the rail that lists the headings of the page you are already on, so a long document can be skimmed and re-entered anywhere. Reach for it for documentation, articles and reference pages — content read in pieces. It navigates within one page, which is what separates it from `Breadcrumb` (where the page sits) and `Sidebar` (where else you can go).",
-      "It is presentation only: no scroll-spy, no heading collection, no state. You pass the sections and mark the reader's own with `current` on the link, which writes `aria-current` and lights that segment — so the rail works the same whether the headings come from MDX frontmatter, an intersection observer or a hand-written array. The root is sticky by default; `.ds-toc--static` opts out.",
-    ],
+      "A sticky list of the sections on the current page, for jumping around a long document.",
     examples: [
       {
         demo: "toc/basic",
@@ -1639,11 +1453,7 @@ export const COMPONENTS: ComponentDoc[] = [
     name: "Aspect Ratio",
     category: "Layout",
     exports: ["AspectRatio"],
-    description: "Constrains content to a fixed width-to-height ratio.",
-    intro: [
-      "Aspect Ratio holds a box at a fixed shape while its width comes from the layout around it — thumbnails, card covers, video frames, map tiles. Reach for it whenever the height should be derived from the width instead of guessed, so nothing reflows as an image or an embed loads.",
-      "`ratio` is written to a `--ratio` custom property that `.ds-aspect-ratio` reads through `aspect-ratio: var(--ratio)`, so any number works and there is no list of supported ratios to extend. The box owns the height and is `relative`, which is why children can fill it and why an overlay only needs `absolute` — no extra positioning wrapper.",
-    ],
+    description: "Holds content at a fixed width-to-height ratio, so the height follows the width.",
     examples: [
       {
         demo: "aspect-ratio/basic",
@@ -1677,11 +1487,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Layout",
     exports: ["Separator"],
     description:
-      "A rule between content. Base UI inverts the orientation semantics — a horizontal group takes vertical separators.",
-    intro: [
-      "Separator is the rule between things that are already grouped: a heading from its body, one card section from the next, items in a meta row. Reach for it when whitespace alone stops reading as a boundary — when the boundary belongs to a container instead, that container's own `border` is cheaper and cannot fall out of step with it.",
-      "`orientation` names the rule's own axis, not the group's, so a row of items is divided by `orientation=\"vertical\"` — the opposite of the container you are thinking about. It ships no margins at all: spacing is the caller's job, which is what lets the same component sit flush inside a card and spaced out between paragraphs. `.ds-separator--auto` is the one modifier: it drops the fill on the cross axis, for a rule that sizes itself to a button group rather than to its container.",
-    ],
+      "A rule between content. Note Base UI's orientation semantics: a horizontal group takes vertical separators.",
     examples: [
       {
         demo: "separator/basic",
@@ -1714,11 +1520,7 @@ export const COMPONENTS: ComponentDoc[] = [
     name: "Scroll Area",
     category: "Layout",
     exports: ["ScrollArea", "ScrollBar"],
-    description: "A scrollable region with styled, overlay scrollbars.",
-    intro: [
-      "Scroll Area is the bounded scrolling region: a commit list, a group of options, a long block of terms that has to live inside a fixed height instead of stretching the page. Reach for it when the content is unbounded but the layout is not — a dialog body, a sidebar tree, a command palette.",
-      "The root needs a height to scroll inside, from a class or from a flex parent, and with no cap it simply grows and the component looks absent. Children render into a viewport, so padding belongs on a wrapper inside the root; the scrollbar overlays instead of taking layout width, and Base UI gives that viewport a `tabIndex` of its own once it overflows, so keyboard users reach it without help.",
-    ],
+    description: "A scrollable region with styled overlay scrollbars. The root needs a height to scroll inside.",
     examples: [
       {
         demo: "scroll-area/basic",
@@ -1754,11 +1556,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Layout",
     exports: ["ResizablePanelGroup", "ResizablePanel", "ResizableHandle"],
     description:
-      "Panel groups split by draggable handles, over `react-resizable-panels`.",
-    intro: [
-      "Resizable splits a region into panes the reader can drag: an editor beside its preview, a file tree beside a document, a console under both. Reach for it when the split is the user's call — when it is the layout's, a grid is simpler and has no drag state to keep.",
-      "`react-resizable-panels` is the dependency batch 16 (#49) took rather than hand-rolling: the pointer maths, the keyboard resize and the persisted layout. `.ds-resizable-panel-group`, `.ds-resizable-handle` and `.ds-resizable-handle-grip` are the whole class contract either way — a 1px rule with a 4px grab target over it, `aria-orientation` on the group choosing the axis and on the handle choosing the rule's own.",
-    ],
+      "Panels split by draggable handles, over `react-resizable-panels`.",
     examples: [
       {
         demo: "resizable/basic",
@@ -1786,11 +1584,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Layout",
     exports: ["Masonry"],
     description:
-      "A multi-column layout that balances items of uneven height, via CSS columns rather than a JS measurement pass.",
-    intro: [
-      "Masonry packs children of uneven height into balanced columns — the pinboard layout a plain grid cannot produce without leaving gaps under the short items. Reach for it when the children are self-contained tiles (cards, images, notes) and reading order across columns does not matter.",
-      "It is CSS multi-column underneath, not a JS measurement pass: `columns` becomes a `--columns` custom property, so any integer works, and items flow down each column in source order — the first children fill the left column rather than the top row. Each child gets `break-inside-avoid`, so a tile never splits across two columns.",
-    ],
+      "A multi-column layout that balances items of uneven height, using CSS columns.",
     examples: [
       {
         demo: "masonry/basic",
@@ -1822,11 +1616,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Layout",
     exports: ["ThemeSwitcher", "type ThemeSwitcherMode"],
     description:
-      "A light/dark/system toggle, promoted from the docs app's own theme-toggle. Fully controlled — the consumer owns the theme hook.",
-    intro: [
-      "ThemeSwitcher is the light/dark/system control for wherever the theme choice lives — an app header, a settings page, a preferences dialog. Three forms share one contract: `segmented` (a three-cell `Segmented` row), `cycle` (one icon button that advances through the modes) and `dropdown` (an icon trigger opening a radio menu), so the footprint fits the placement without changing the wiring.",
-      "It is fully controlled: `value` and `onValueChange` are required, and storage, media-query sync and system resolution stay in the consumer's `useTheme()`-style hook — app wiring is not the design system's job. `Segmented` already treats a click on the pressed cell as a no-op, which is what a theme wants: a theme is never \"none\".",
-    ],
+      "A light, dark and system control in three forms. Fully controlled — the app owns the theme state.",
     examples: [
       {
         demo: "theme-switcher/basic",
@@ -1881,11 +1671,6 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
     description:
       "A paged slide viewport with previous and next controls, over `embla-carousel-react`.",
-    intro: [
-      "Carousel is the paged strip: screenshots, release cards, testimonials the reader steps through instead of scrolling past. Reach for it when horizontal room is the constraint and the items are peers — never for content the reader must not miss, since everything but the current page is off screen.",
-      "The drag, the snap and the disabled state at either end are `embla-carousel-react`'s — batch 16 (#49) took the dependency rather than hand-rolling it. `.ds-carousel`, `.ds-carousel-viewport`, `.ds-carousel-content`, `.ds-carousel-item` and the two `.ds-carousel-control` boxes are the whole class contract either way, so a from-scratch binding still has a look to match.",
-      "Two parts of the layout are a contract rather than a preference. The gap between slides is `.ds-carousel-content`'s negative margin paired with `.ds-carousel-item`'s padding, so a `gap` on the track doubles it; and the controls are absolutely positioned *outside* the viewport, so the wrapper needs horizontal room or they clip. `data-orientation` chooses the axis on both the track and each item, and the RTL rules mirror the vertical controls and turn the caret glyphs around.",
-    ],
     examples: [
       {
         demo: "carousel/basic",
@@ -1916,12 +1701,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Layout",
     exports: ["Wordmark", "wordmarkVariants"],
     description:
-      "The Diametral logo lockup, inlined as JSX so it recolours with the surrounding text.",
-    intro: [
-      "Wordmark renders the Diametral lockup as inline JSX, so app chrome — headers, footers, auth screens, empty states — never touches a raw asset file. Two lockups: `horizontal` is the full name, `square` sets it inside the symbol for avatar- and app-icon-sized placements. These are the produced lockups. 0.x drew the brand's three elements as primitives instead — a circle, a square and a diagonal line — which is still what `assets/logo/diametral-mark.svg` holds; that file has not been re-cut to match.",
-      "The paths are `currentColor`, so `text-*` utilities recolour the mark exactly like text and there is no light/dark SVG pair to swap. `assets/` remains the canonical source for non-React consumers such as email, the Keycloak theme and raster exports.",
-      '`name` and `sub` survive from 0.x, and they are the one part of the incumbent this component does not replace: the source\'s Wordmark is the mark alone, while `ConsoleLayout`, the Vite starter and the 0.x class table all read them. They render only when passed, and a name beside the mark wants `variant="square"` — the horizontal lockup already spells the word.',
-    ],
+      "The Diametral logo as inline JSX, so it recolours with the surrounding text. Two lockups: horizontal and square.",
     examples: [
       {
         demo: "wordmark/basic",
@@ -1954,11 +1734,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Disclosure",
     exports: ["Accordion", "AccordionItem", "AccordionTrigger", "AccordionContent"],
     description:
-      "A stack of disclosure rows, composed from `AccordionItem`/`AccordionTrigger`/`AccordionContent` children.",
-    intro: [
-      "Reach for it when a page has more sections than a reader needs at once and each one stands alone — an FAQ, a settings group, a long form split into stages. When the sections are steps in an order, `Wizard` is the better shape.",
-      "Composed since 1.0.0: there's no `items` array or `multiple` prop — `openMultiple` switches single-open to many-open, and each `AccordionItem`'s `value` is what `defaultValue`/`value` (always an array, whether or not `openMultiple` is on) refers to. The chevron rotates off `[aria-expanded]`, so the open state is one attribute and screen readers and the paint can never disagree.",
-    ],
+      "A stack of disclosure rows, one section per `AccordionItem`.",
     examples: [
       {
         demo: "accordion/basic",
@@ -1977,11 +1753,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Disclosure",
     exports: ["Collapsible", "CollapsibleTrigger", "CollapsibleContent"],
     description:
-      "A single show/hide region. Emits `data-open` / `data-closed`, not `data-state`.",
-    intro: [
-      "Collapsible is one region and one toggle: the show-more, the request detail, the advanced half of a form. Reach for it whenever there is a single thing to hide — several titled sections that stack is `Accordion`, and a region that floats over the page instead of pushing it down is `Popover`.",
-      "The wrapper is deliberately bare — no chrome, no caret, no padding — because the trigger is usually your own control: `CollapsibleTrigger` takes Base UI's `render` prop, so the trigger *is* a Button rather than wrapping one. State lands on the trigger as `aria-expanded` and `data-panel-open`, which is what a caret rotates off; the panel is the part carrying `data-open`/`data-closed` and publishing `--collapsible-panel-height`.",
-    ],
+      "One region that shows and hides. Use `Accordion` for several titled sections that stack.",
     examples: [
       {
         demo: "collapsible/basic",
@@ -2026,11 +1798,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Overlays",
     exports: ["Modal", "type ModalProps"],
     description:
-      "The destructive-confirmation shape of `Modal`: a heading, the consequence, and two buttons.",
-    intro: [
-      "There is no separate AlertDialog component — the same `Modal` takes the role, and what makes it an alert dialog is the writing. Name the consequence in the body rather than asking “are you sure?”, and label the confirm button with the verb (`Delete`) instead of `OK`.",
-      "`Modal` is always controlled: `open` and `onClose` are the whole contract, so the state lives in the page that owns the decision.",
-    ],
+      "The destructive-confirmation form of `Modal`: a heading, the consequence, and two buttons. Label the confirm button with the verb.",
     examples: [
       {
         demo: "alert-dialog/basic",
@@ -2057,11 +1825,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "AlertDialogCancel",
     ],
     description:
-      "Base UI's own alert dialog, composed from parts rather than configured with props — landed batch 12 (#45), routed here in batch 16 (#49).",
-    intro: [
-      "`Modal` (the “Modal” page) is this system's own additive and stays the default for a destructive-confirmation dialog. `AlertDialog` is incoming's composed primitive underneath the same concept: reach for it when a page is already composing Base UI parts directly, or needs a part `Modal` doesn't expose — `AlertDialogCancel`'s own focus behaviour, for instance.",
-      "Unlike `Modal`, there is no single `open`/`onClose` pair — `AlertDialogTrigger` opens it, `AlertDialogAction`/`AlertDialogCancel` close it, and the whole tree can also be driven controlled via `AlertDialog`'s own `open`/`onOpenChange`.",
-    ],
+      "Base UI's alert dialog, composed from parts. `Modal` stays the default for a confirmation.",
     examples: [
       {
         demo: "alert-dialog-primitive/basic",
@@ -2108,11 +1872,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "ContextMenuSubTrigger",
       "ContextMenuSubContent",
     ],
-    description: "Right-click's own menu, positioned at the pointer.",
-    intro: [
-      "A context menu is for actions that belong to *this* row, *this* file, *this* selection — the subject is whatever was right-clicked, which is why the menu opens at the pointer rather than under a button. Reach for it in list and canvas views where every row would otherwise need its own visible affordance. It is a shortcut, never the only path: pointer-only means a keyboard or touch reader never finds it, so the same actions belong somewhere reachable too — a `Dropdown` on the row, or a toolbar above it.",
-      '`ContextMenuTrigger` is the region that answers the right-click, so it wraps the content rather than sitting beside it, and `render` is how it becomes the `li`, `div` or cell it is really guarding. `ContextMenuContent` mounts its own portal and positioner: the tree stops at Root → Trigger + Content. Rows come in four shapes — plain, checkbox, radio and submenu — and `variant="destructive"` is the one that colours a row rather than a modifier class.',
-    ],
+    description: "A right-click menu that opens at the pointer, for actions belonging to the item clicked.",
     examples: [
       {
         demo: "context-menu/basic",
@@ -2160,11 +1920,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Overlays",
     exports: ["Modal", "type ModalProps"],
     description:
-      "A focused task on top of the page: heading, body, footer actions.",
-    intro: [
-      "A dialog is worth the interruption when the task is short and the page behind it is the context — renaming the thing you are looking at, confirming what you just asked for. When the task has its own steps or its own state, it wants a page.",
-      "`Modal` is always controlled. There is no `defaultOpen`: what opens a dialog is an action somewhere else, so the state belongs to whatever took that action.",
-    ],
+      "A focused task on top of the page: heading, body, footer actions. Always controlled through `open` and `onClose`.",
     examples: [
       {
         demo: "dialog/basic",
@@ -2189,11 +1945,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "DialogClose",
     ],
     description:
-      "Base UI's own dialog, composed from parts rather than configured with props — landed batch 12 (#45), routed here in batch 16 (#49).",
-    intro: [
-      "`Modal` (the “Modal” page) is this system's own additive and stays the default for a focused-task dialog. `Dialog` is incoming's composed primitive underneath the same concept — already dogfooded once, transitively, through `CommandDialog`. Reach for it directly when a page is already composing Base UI parts, or needs a part `Modal` doesn't expose.",
-      "Unlike `Modal`, there is no single `open`/`onClose` pair — `DialogTrigger` opens it and `DialogClose` (or the tree's own `open`/`onOpenChange`) closes it, so an uncontrolled dialog needs no state in the page at all.",
-    ],
+      "Base UI's dialog, composed from parts. `Modal` stays the default for a focused task.",
     examples: [
       {
         demo: "dialog-primitive/basic",
@@ -2241,10 +1993,6 @@ export const COMPONENTS: ComponentDoc[] = [
       "DropdownMenuSubContent",
     ],
     description: "A menu of actions hanging off a trigger.",
-    intro: [
-      "Renamed from `Dropdown` (and its `MenuItem`/`MenuHeader`/`MenuDivider` parts) in 1.0.0. `DropdownMenuTrigger`'s `render` takes over what `trigger` used to: hand it any element and the accessibility contract (`aria-haspopup`, `aria-expanded`, the ref) attaches to it rather than being re-derived.",
-      "`DropdownMenuItem`'s `render` is the polymorphism `MenuItem`'s `as` used to be: render an `<a>` for navigation, the default `<div>`-as-menuitem for an action. Getting that right is what decides whether ⌘-click opens a new tab.",
-    ],
     examples: [
       {
         demo: "dropdown-menu/basic",
@@ -2267,11 +2015,7 @@ export const COMPONENTS: ComponentDoc[] = [
     name: "Hover Card",
     category: "Overlays",
     exports: ["HoverCard", "HoverCardTrigger", "HoverCardContent"],
-    description: "A preview surface shown on hover, for links and mentions.",
-    intro: [
-      "Hover Card is the preview that saves a click: hovering a mention, a link or an entity name expands it into just enough context to decide whether to follow it. Everything inside is supplementary by definition — a touch user never hovers, so anything a reader actually needs belongs on the page, and anything they need to act on belongs in a Popover.",
-      "It wraps Base UI's `PreviewCard`, which puts the timings on the trigger rather than the root: `delay` (600ms) and `closeDelay` (300ms) are `HoverCardTrigger` props. That trigger renders an `a` element by default, so pass `render` whenever the real trigger is a button — the element has to match what a click would do.",
-    ],
+    description: "A preview panel shown on hover, for links and mentions. Keep anything essential on the page, since touch users never hover.",
     examples: [
       {
         demo: "hover-card/basic",
@@ -2314,11 +2058,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "PopoverDescription",
     ],
     description:
-      "A small panel anchored to a trigger, for detail that would crowd the page.",
-    intro: [
-      "A popover holds content a reader may want; a `Tooltip` holds a label they need and cannot act on. The test is whether anything inside is clickable — if it is, it is a popover, because a tooltip disappears when you reach for it.",
-      "Composed since 1.0.0: `trigger`/`title` are gone, `PopoverTrigger` and `PopoverContent`/`PopoverTitle` are children of `Popover` instead. It can run uncontrolled (`defaultOpen`) or controlled (`open` + `onOpenChange`). Reach for the controlled form only when something outside the trigger has to close it.",
-    ],
+      "A small panel anchored to a trigger. Use it when the content is interactive; use `Tooltip` for a plain label.",
     examples: [
       {
         demo: "popover/basic",
@@ -2343,11 +2083,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "AlertDismiss",
     ],
     description:
-      "An inline message about the thing next to it, composed from title/description/action/dismiss parts.",
-    intro: [
-      "An Alert stays in the layout and belongs to the content around it — it is the right shape for a condition a reader has to see while they work. A `Toast` interrupts and then leaves, so it suits the result of an action instead.",
-      "`tone` is functional, never decorative (replaces `type` in 1.0.0): `danger` means something failed or will, and colouring an ordinary notice red spends the one signal that has to keep working. `AlertDismiss` is deliberately stateless — it renders the close button, but the caller decides what dismissed means and stops rendering the Alert itself.",
-    ],
+      "An inline message about the content next to it. Use `Toast` for the result of an action.",
     examples: [
       {
         demo: "alert/basic",
@@ -2377,11 +2113,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "ToastClose",
     ],
     description:
-      "A transient confirmation that an action landed, raised from anywhere via `toast`.",
-    intro: [
-      "`Toaster` mounts the provider, the portal and the viewport once at the app root; `toast` is a standalone manager (`toast.add({ type, title, description })`) that anything below can call with no hook and no rendering of its own. `ToastProvider`/`ToastPortal`/`ToastViewport`/… are its parts, for a hand-composed toaster.",
-      "A toast leaves on a timer, so it can only carry what does not need to be read twice. Anything a reader may want to come back to belongs in an `Alert` that stays.",
-    ],
+      "A short confirmation that an action landed, raised from anywhere with `toast`. Mount `Toaster` once at the app root.",
     examples: [
       {
         demo: "toast/basic",
@@ -2404,11 +2136,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "BubbleReactions",
       "type BubbleVariant",
     ],
-    description: "Chat bubbles grouped by author.",
-    intro: [
-      "Bubble is the speech-balloon layer of a conversation: a `BubbleGroup` column of turns, each turn a `Bubble` wrapping one `BubbleContent`. Reach for it when the surface reads as a chat — a support thread, an assistant transcript, a row of suggested replies. For a turn that also needs an author and a timestamp, wrap it in Message rather than adding parts here.",
-      "The variant belongs to the wrapper, not the content: `Bubble` styles its own `BubbleContent` through `*:data-[slot=bubble-content]`. That is how `ghost` strips the padding and the background in one place, and how a bubble rendered as a `button` or an `a` picks up a matching hover state for free.",
-    ],
+    description: "Chat bubbles grouped by author. Use `Message` when a turn also needs an avatar or a timestamp.",
     examples: [
       {
         demo: "bubble/variants",
@@ -2458,11 +2186,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "MessageHeader",
       "MessageFooter",
     ],
-    description: "A conversation row with avatar and content.",
-    intro: [
-      "Message is the row around a bubble: an avatar on one side, a column of content on the other, with an optional header for the author and footer for the timestamp or the read state. Reach for it when a transcript needs author identity or per-turn metadata — a plain `BubbleGroup` is enough when the turns speak for themselves.",
-      "`align` is set once, on the row, and every part follows it: the row reverses its own flex direction, `MessageContent` pushes each slotted child to the far side, and a Bubble inside reads `group-data-[align=end]/message`. No part below takes an alignment prop of its own.",
-    ],
+    description: "A conversation row with an avatar on one side and the content on the other, plus an optional header and footer.",
     examples: [
       {
         demo: "message/basic",
@@ -2506,12 +2230,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Conversation",
     exports: [],
     description:
-      "A transcript viewport that keeps itself pinned to the latest message. Stylesheet only — the pinning needs a binding this package does not ship.",
-    intro: [
-      "MessageScroller is the viewport a transcript lives in: it holds the view at the newest message, releases that hold the moment the reader scrolls up, and offers a jump-back button while they are away. Reach for it whenever messages arrive after the first paint — a chat, a streaming answer, a live log — and for a static list Scroll Area is the lighter choice.",
-      "**This one is CSS without a React binding.** The source component wraps `@shadcn/react/message-scroller`, and that dependency is not acquired. So the classes ship and are the whole contract: `.ds-message-scroller` and its viewport, content, item and button parts, keyed off `data-active`, `data-direction` and `data-autoscrolling`. The scrolling, the bottom fade and the jump button's enter and exit transitions are all real here; what needs a binding is the state behind them — when the view is pinned, when the button is active, and preserving scroll position as older messages are prepended.",
-      "The button's own fill is deliberately not in the stylesheet. The source carried it as Tailwind literals precisely so it would lose to the button variant underneath, so `.ds-message-scroller-button` is position and motion only — pair it with `.ds-button`.",
-    ],
+      "A transcript viewport that stays pinned to the newest message. Stylesheet only — the pinning needs your own binding.",
     examples: [
       {
         demo: "message-scroller/basic",
@@ -2538,11 +2257,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "type AttachmentState",
     ],
     description:
-      "File metadata display for a message. Not an upload input — see File Upload.",
-    intro: [
-      "Attachment is the chip a file travels in: media thumbnail or icon, name, one line of metadata, and the actions that belong to that file. It only displays — picking files, progress and retry are File Upload's job — so this is what you render for each entry it hands you, in a message, a comment or a review panel.",
-      "Three data attributes on the root drive the whole chip: `size`, `orientation` and `state` are read by every part through `group-data-*`, so no child takes a state prop of its own.",
-    ],
+      "A chip showing a file's thumbnail, name and metadata. Display only; use `File Upload` to pick files.",
     examples: [
       {
         demo: "attachment/basic",
@@ -2591,11 +2306,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Utilities",
     exports: ["DirectionProvider", "useDirection"],
     description:
-      "A provider that sets text direction (LTR/RTL) for every Base UI component beneath it.",
-    intro: [
-      "DirectionProvider tells every Base UI component beneath it which way the document reads. Mount it once at the app root — direction is a whole-tree fact rather than a per-component prop — and mount it again only inside a subtree that genuinely reads the other way, such as a quoted Arabic thread inside an LTR shell.",
-      "It is half of the answer and the `dir` attribute is the other half: the provider is what Base UI's JavaScript reads (floating panel placement, arrow-key order, which end of a `Range` is the minimum), while `dir` is what the CSS logical properties read. Set both, from the same value.",
-    ],
+      "A provider that sets text direction (LTR or RTL) for every Base UI component beneath it. Mount it once at the app root.",
     examples: [
       {
         demo: "direction/rtl",
@@ -2631,12 +2342,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "ChartStyle",
     ],
     description:
-      "Recharts wrapped so series colours come from a `ChartConfig` and resolve to brand chart tokens.",
-    intro: [
-      "Chart is a thin frame around Recharts: `ChartContainer` gives you the responsive box, themed axis and grid colours, and one place to declare the series. The chart itself is still Recharts, so its children are `BarChart`, `Line`, `XAxis` — this component adds no chart types of its own.",
-      "It is the layer the finished charts are built on, not a substitute for them: for the common forms reach for `Line Chart`, `Area Chart`, `Bar Chart`, `Stacked Bar`, `Pie Chart` or `Donut Chart`, which each take `config` and `data` and compose these parts for you. This page is for the chart none of them draw — a figure that mixes mark types, or a colour outside the ramp. A single figure with a trend hint is `Stat Card`.",
-      "`config` is the whole naming and colour system: an entry that carries a colour becomes a `--color-<key>` custom property scoped to that one chart, which the series reference by name, and the tooltip and legend read their labels from the same object — so a series is named and coloured once. An entry may carry only a label, naming a key without colouring it. The six `--ds-chart-*` tokens hold in both themes, so `theme` on an entry is the escape hatch for the colour that does not.",
-    ],
+      "A thin frame around Recharts: series colours come from a `ChartConfig` and resolve to brand tokens.",
     examples: [
       {
         demo: "chart/composed",
@@ -2673,11 +2379,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["LineChart"],
     description:
-      "A finished line chart over the Chart primitives — grid, axis, tooltip and legend already wired to one `config`.",
-    intro: [
-      "Line Chart is the assembled version of what `Chart` leaves you to compose: pass `data` and a `config` and you get the grid, the x axis, the tooltip and the legend without naming a single recharts child. Reach for it for a value over time where the shape of the trend is the point. When the chart needs a shape this does not have — a brush, a second y axis, mixed marks — drop back to `Chart` and compose it yourself.",
-      "`config` is the whole naming and colouring system, one entry per series keyed by the field name in each `data` row. A series that names no colour takes the next slot of the `--ds-chart-*` ramp, so a config of bare labels still draws in brand colours. Sizing goes through `className` rather than `width`/`height` — the container underneath is responsive.",
-    ],
+      "A ready-made line chart — grid, axis, tooltip and legend wired from one `config`. Best for a value over time.",
     examples: [
       {
         demo: "line-chart/basic",
@@ -2712,11 +2414,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["AreaChart"],
     description:
-      "`Line Chart` read as a volume — the same props, with a filled band under each series.",
-    intro: [
-      "Area Chart is the volume reading of a trend: reach for it when the size of the quantity matters as much as its direction, or when several series are meant to sum. For a rate where only the shape of the line carries meaning, `Line Chart` says the same thing with less ink.",
-      "It shares `Line Chart`'s API exactly — the same `config`, `xAxisKey`, `grid` and `legend` — plus `stacked`. Overlaid is the default because it is the safe reading: two bands drawn over each other still compare, whereas stacking silently changes what the upper series means.",
-    ],
+      "`Line Chart` with a filled band under each series, for when the size of the quantity matters. Same props.",
     examples: [
       {
         demo: "area-chart/basic",
@@ -2745,11 +2443,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["BarChart"],
     description:
-      "Categorical bars with a pinned value axis, a row layout, and per-bar semantic tinting.",
-    intro: [
-      "Bar Chart compares discrete categories rather than a run over time: revenue by quarter, sessions by channel, uptime by service. When the x axis is time and the shape of the trend is the point, `Line Chart` is the better read; when the question is what share of a whole, `Stacked Bar`.",
-      "Two props have no `Line Chart` equivalent. `max` pins the value axis so a chart does not silently rescale when its tallest bar changes, and `statusKey` names a row field carrying `success`, `warning`, `danger` or `info`, which tints that one bar from the semantic tokens rather than the chart ramp.",
-    ],
+      "Bars comparing discrete categories, like revenue by quarter. Use `Line Chart` when the x axis is time.",
     examples: [
       {
         demo: "bar-chart/basic",
@@ -2784,11 +2478,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["StackedBar"],
     description:
-      "Proportional bars — every row normalised to its own total, so only the split differs.",
-    intro: [
-      "Stacked Bar answers what share, not how much. Each row is normalised to its own total, so every bar is the same length and the eye compares splits rather than sizes: storage by kind, a test run by outcome, throughput by state across teams. When the absolute size of each row is the point, `Bar Chart` with `stacked` keeps the raw values.",
-      "That normalisation is the whole component, and it is why the tooltip reads percentages — the magnitudes are deliberately gone. `config` is the stacking dimension, one entry per segment, and `showLegend` is on by default because a proportional bar is unreadable without one.",
-    ],
+      "Bars normalised to their own total, so the eye compares splits rather than sizes.",
     examples: [
       {
         demo: "stacked-bar/basic",
@@ -2817,11 +2507,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["PieChart"],
     description:
-      "A whole split into slices, coloured per slice from a `config` keyed by slice name.",
-    intro: [
-      "Pie Chart is for a small number of parts that make up one whole and are meant to be read as fractions: four traffic channels, three plan tiers. Past five or six slices the wedges stop being comparable — `Bar Chart` with `horizontal` stays readable where a pie does not, and `Stacked Bar` is the better shape when several wholes must be compared to each other.",
-      "A pie is coloured per slice rather than per series, so `nameKey` names the row field holding the slice name, and that name is the key into `config` — it is what the tooltip and legend look their labels up by too. A slice whose name is not a `config` key renders a swatch and no text.",
-    ],
+      "A whole split into slices. Keep it to five or six; past that use `Bar Chart`.",
     examples: [
       {
         demo: "pie-chart/basic",
@@ -2850,11 +2536,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["DonutChart"],
     description:
-      "`Pie Chart` with the middle cut out, and a figure in the hole.",
-    intro: [
-      "Donut Chart is a pie whose hole earns its keep: the total, or the one number the split is about, sits in the middle where a pie wastes space. Reach for it over `Pie Chart` whenever there is a headline figure to show. For a single bounded value with no split at all, `Gauge` is the dial that does only that.",
-      "`thickness` is a percentage of the chart radius rather than v1's pixels, because the container is responsive and a fixed ring would not scale with it. The centre text follows `Gauge`: a title-voiced figure with an uppercase faint caption below it.",
-    ],
+      "`Pie Chart` with the middle cut out, so a headline figure can sit in the hole.",
     examples: [
       {
         demo: "donut-chart/basic",
@@ -2883,11 +2565,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["Gauge", "type GaugeThreshold"],
     description:
-      "A radial progress dial for a bounded value, with optional thresholds that recolour the arc.",
-    intro: [
-      "Gauge is the radial readout for one bounded value: a 270° dial with the figure in the middle. Reach for it when a single number wants to be read against its ceiling — utilisation, a score, a quota. For the same value inside a row or a list, `Progress` and `Meter` take far less room.",
-      'It is a single component, not a compound one: everything is props. The arc is drawn with `stroke-dasharray` over one fixed path, so the value animates with no path recomputation, and the whole dial is one `role="img"` whose label reads `label: value of max`.',
-    ],
+      "A radial dial for one bounded value, with optional thresholds that recolour the arc.",
     examples: [
       {
         demo: "gauge/basic",
@@ -2916,11 +2594,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["Sparkline"],
     description:
-      "An inline mini line chart, small and cheap enough to sit in every row of a table.",
-    intro: [
-      "Sparkline is the trend you read at a glance next to the number it belongs to: a table's per-row history, a stat tile's last eight weeks, a figure with its own shape beside it. It has no axes, no ticks and no tooltip, because at this size none of them would be legible — for a chart meant to be read off, `Line Chart` is the full-size sibling.",
-      "It is hand-rolled SVG rather than a `Line Chart` shrunk down, and that is the whole point: one `polyline` per instance, no responsive observer, so a hundred of them in a table cost nothing. The line is `currentColor` until `stroke` names a colour, so a bare sparkline takes the colour of whatever it sits in.",
-    ],
+      "A tiny inline line chart with no axes, small enough to sit in every row of a table.",
     examples: [
       {
         demo: "sparkline/basic",
@@ -2955,11 +2629,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["RadarChart"],
     description:
-      "A spider chart — how two or three entities compare across many dimensions at once.",
-    intro: [
-      "Radar Chart answers how a small number of entities compare across many dimensions: a product's capability profile, a candidate against a role's requirements, plan A against plan B. Each spoke is a dimension and each closed polygon is one entity. When there is only one dimension to compare on, `Bar Chart` says it more precisely; when the dimensions are a sequence rather than a set, `Line Chart` is the honest read.",
-      "The data is transposed against every other wrapper here and it is the thing to get right: `data` rows are the spokes and `config` keys are the polygons, so a two-product five-capability chart is five rows of two fields. Pin `domain` whenever two charts sit side by side — left off, recharts refits the radius to each chart's own data and the two stop being comparable.",
-    ],
+      "A spider chart comparing two or three entities across many dimensions at once.",
     examples: [
       {
         demo: "radar-chart/basic",
@@ -2994,11 +2664,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["ComboChart", "type ComboSeries"],
     description:
-      "Bars and a line on one x axis, with a second Y scale — the volume-plus-rate dashboard shape.",
-    intro: [
-      "Combo Chart relates a volume series and a rate series over the same x axis: revenue bars with a margin-percent line, signups with a conversion rate, tickets opened with median resolution time. It is the most common business-dashboard shape and the one `Bar Chart` and `Line Chart` cannot cover between them, because they cannot share an axis. When both series are the same kind of quantity, stay with the single-mark wrapper.",
-      "`series` is the one place a chart wrapper here takes an array, because which mark a series draws as cannot be inferred from `config` — and because marks are layered back to front, which the component sorts for you so a line never hides under a bar. `rightAxis` is the second scale; omit it and every series falls back to the left one, which is the right degrade rather than an error.",
-    ],
+      "Bars and a line on one x axis with a second Y scale — a volume series next to a rate.",
     examples: [
       {
         demo: "combo-chart/revenue-margin",
@@ -3033,11 +2699,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["FunnelChart", "type FunnelConversion"],
     description:
-      "Ordered conversion stages with the drop-off derived for you from raw counts.",
-    intro: [
-      "Funnel Chart shows where people leave an ordered sequence: visit to signup to activation to paid, or lead to demo to proposal to close. The value of the form is the drop rather than the absolute widths, which is why `conversion` exists — the caller passes raw counts and the percentage beside each stage is computed. For unordered parts of a whole, `Pie Chart` or `Stacked Bar`; for a count per category with no sequence, `Bar Chart`.",
-      'Rows are used in the order given and are never sorted, because the caller\'s order is the funnel\'s order. `conversion="previous"` is the stage-over-stage drop and leaves the first stage blank, `"first"` is cumulative from the top and starts at 100%. There is no horizontal layout: recharts computes its trapezoids from a fixed vertical stack, so long stage names are handled by widening `margin.right` instead.',
-    ],
+      "Ordered conversion stages, with the drop-off computed from raw counts.",
     examples: [
       {
         demo: "funnel-chart/signup",
@@ -3072,11 +2734,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["ScatterChart"],
     description:
-      "Quantity against quantity, with optional bubble sizing for a third variable.",
-    intro: [
-      "Scatter Chart answers whether two quantities correlate and where the outliers sit: price against rating, page weight against bounce rate, tenure against output. It is the only chart in the set that plots a quantity against another quantity rather than against a category or a date, which is what makes it the wrong reach for anything over time — that is `Line Chart`.",
-      "Both axes are pinned to a numeric scale by the component. recharts defaults its x axis to categories, which spaces the points evenly and quietly collapses a scatter into columns, so this is not a knob. `groupKey` splits one flat array into separately-coloured groups, and `sizeKey` wires a third field through the area of each mark — area rather than radius, because that is what the eye reads as magnitude.",
-    ],
+      "One quantity plotted against another, with optional bubble sizing for a third.",
     examples: [
       {
         demo: "scatter-chart/correlation",
@@ -3111,11 +2769,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["Treemap", "type TreemapDatum"],
     description:
-      "A weighted hierarchy as nested areas — where a pie stops working and a bar chart runs out of room.",
-    intro: [
-      "Treemap shows how a weighted hierarchy divides up: cloud spend by service, storage by team then by project, bundle size by module. A pie stops working past six or seven slices; a treemap keeps reading into the dozens and gets a second level for free. This is not `Tree`, which is a navigation control for a file or category hierarchy — the two share nothing but a prefix.",
-      "Two levels is the ceiling and deliberately so: at three the tiles have nowhere to put a label and the form stops informing. Tiles are drawn as a wash of their hue rather than a solid fill, which is what lets the label sit on something close to the page background and clear AA in both themes; a child tile takes its parent's hue dimmed a step, so a group reads as a group.",
-    ],
+      "A weighted hierarchy as nested areas. Use it where a pie has too many slices.",
     examples: [
       {
         demo: "treemap/spend",
@@ -3150,11 +2804,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["WaterfallChart"],
     description:
-      "Signed deltas accumulating to a total — the bridge a bar chart and a line chart each tell half of.",
-    intro: [
-      "Waterfall Chart shows how signed deltas accumulate from a starting value to an ending one: opening ARR through new, expansion, contraction and churn to closing ARR; budget to actuals through each variance; headcount quarter over quarter. A bar chart shows the deltas but hides the running total, and a line shows the total but hides what moved it. recharts has no waterfall primitive, so this is a composed chart with a transparent offset series carrying the running base.",
-      "The caller passes raw signed values and never a base — working those out is the component. `totalKeys` names the rows that restate the total rather than move it, and without it the closing bar stacks on the running figure and floats at roughly twice its true height. Colour is semantic rather than a series ramp: rises take the success tone, falls the danger tone, and totals a neutral slot. The running total is assumed to stay at or above zero.",
-    ],
+      "Signed deltas accumulating from a starting value to a total.",
     examples: [
       {
         demo: "waterfall-chart/arr-bridge",
@@ -3189,11 +2839,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["Heatmap", "type HeatmapCell", "type HeatmapDay"],
     description:
-      "Density across two axes as colour — CSS grid, not a chart library, and the only form here that encodes magnitude without position.",
-    intro: [
-      "Heatmap shows where density concentrates across two axes: activity per weekday-by-hour, errors per service-by-day, a year of contributions. It is the only form in the set that encodes magnitude as colour rather than position, which is what lets it scale to hundreds of cells where a bar chart cannot — and also what makes it the wrong reach when an exact value matters. It is plain CSS grid and divs; recharts has no heatmap primitive and the shape is a grid of coloured rectangles, which is what CSS grid already is.",
-      "`layout` chooses between two forms: a sparse `{ x, y, value }` grid where a missing pair renders empty rather than as zero, and a `{ date, value }` calendar whose week columns and weekday rows are derived from the range. The ramp is five quantised steps off one hue from `--ds-heat-1` to `--ds-heat-5`, not the categorical `--ds-chart-*` ramp — reading a categorical ramp as a scale is the classic dataviz error. Pin `scale.max` whenever two heatmaps are meant to compare. Because colour is the only encoding, every cell carries its own accessible name with both axes and its value.",
-    ],
+      "Density across two axes shown as colour, built on CSS grid rather than a chart library.",
     examples: [
       {
         demo: "heatmap/activity",
@@ -3228,11 +2874,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["BulletChart", "type BulletBand"],
     description:
-      "An actual against its target and qualitative bands — what `meter`, `gauge` and `progress` cannot say.",
-    intro: [
-      "Bullet Chart is Stephen Few's bullet graph: one measure bar, one target tick across it, and two or three background bands. Reach for it when the reading is not just where a value sits in a range but how it sits against a target — 68% of quota, target 80%, bands poor/ok/good. `meter`, `gauge` and `progress` all answer the first question; none of them can express a target or comparison bands, and that gap is why this exists.",
-      "It is sized to sit inside a `stat-card` or a table cell, and the primary use is a stack of them. That is why the label and figure columns are fixed widths driven by `--bullet-label` and `--bullet-value` rather than sized to their content — intrinsic columns would leave every row in a stack starting at a different x. Band fills are surface tints rather than a tone ink at reduced opacity, and the target goes into the spoken value as well as the geometry, because it is invisible to a screen reader otherwise.",
-    ],
+      "A value against its target, with two or three qualitative bands behind it.",
     examples: [
       {
         demo: "bullet-chart/quota",
@@ -3274,11 +2916,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "StepperDescription",
     ],
     description:
-      "Progress through a multi-step flow, with per-step state and orientation support.",
-    intro: [
-      "Stepper is the rail across the top of a flow that has been split into screens: the steps, the one you are on, and how much is left. Reach for it when the count is part of the task — checkout, onboarding, a long form worth breaking up. A dated record of what has already happened is `Timeline`; a bare fraction with no names is `Progress`.",
-      "It holds no state and knows nothing about your flow: `state` is a prop on each `StepperItem` (`inactive`, `active`, `completed`), and it lands as the `is-active` / `is-complete` classes the stylesheet keys off. Orientation is the root's alone — `data-orientation` on it is what the vertical layout reads, so horizontal to vertical is one prop and no change to the items.",
-    ],
+      "The step rail of a multi-step flow: the steps, the one you are on, and how much is left.",
     examples: [
       {
         demo: "stepper/basic",
@@ -3333,11 +2971,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "TimelineDescription",
     ],
     description:
-      "A vertical sequence of events with completed, active and inactive states.",
-    intro: [
-      "Timeline is an ordered list of moments: an indicator on a rail, a title, and optionally a timestamp and a line of detail. Reach for it when the sequence itself is the information — a process someone is partway through, an audit trail, a shipment's history. When the steps are a form the reader walks through and can navigate, that is `Stepper`.",
-      "The rail is a `::before` on each item, hidden on the last, so items can be added or removed without touching it. State is `data-state` on the item — `completed`, `active`, or nothing — and the parts style themselves from there, which is why the indicator takes no state prop of its own. It is vertical only.",
-    ],
+      "A vertical sequence of events, each completed, active or inactive.",
     examples: [
       {
         demo: "timeline/basic",
@@ -3392,11 +3026,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "AvatarGroupCount",
     ],
     description:
-      "A user image with a text fallback, and a group with overflow count.",
-    intro: [
-      "Avatar is the identity marker: a round image with initials waiting behind it. Reach for it wherever a person or an account has to be recognisable at a glance — a comment header, an assignee cell, a member list. It renders no name of its own, so keep the name in the markup beside it unless the avatar is purely decorative.",
-      "`size` sets `data-size` on the root rather than styling the children directly, so `AvatarBadge` and `AvatarGroupCount` size themselves from the avatar they belong to. A group is scaled by sizing its avatars; the group itself takes no size.",
-    ],
+      "A user image with initials behind it, plus a group form with an overflow count.",
     examples: [
       {
         demo: "avatar/basic",
@@ -3452,12 +3082,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "PaginationEllipsis",
       "paginationRange",
     ],
-    description: "Page links with previous, next and ellipsis.",
-    intro: [
-      "Pagination is the rail under a long list: numbered pages, previous and next, and an ellipsis standing in for the numbers there is no room to show. Reach for it when the results are ordered and someone has to be able to come back to page 7 — invoices, search results, an archive. An endless feed is better with no rail at all than with one nobody can address.",
-      'Every entry is a real anchor: `PaginationLink` renders through Button\'s `render` with `nativeButton={false}`, and `isActive` sets both the `outline` variant and `aria-current="page"`. In an SPA, intercept the click and keep the `href` — dropping it costs middle-click, open-in-new-tab and the shareable URL.',
-      "The parts draw the rail; they do not decide what is on it. `paginationRange({ page, pageCount, siblingCount })` is the window calculation as a plain function — it returns page numbers and `ellipsis` markers for you to map over, so which pages show is answered in one place instead of in every consumer.",
-    ],
+    description: "Page links with previous, next and an ellipsis.",
     examples: [
       {
         demo: "pagination/basic",
@@ -3505,11 +3130,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["Agenda"],
     description:
-      "A chronological list of events grouped by day — the list half of a calendar, and where v2 keeps event display.",
-    intro: [
-      "Agenda sorts events by day and time, groups them under a day heading, and renders each as a time, a status dot and a title. Reach for it for what is coming up: a day view, a week's schedule, a room's bookings. `Timeline` is the neighbour that looks similar and answers a different question — it narrates a sequence of things that already happened.",
-      "Event display lives here and not on `calendar`. v2's calendar is `react-day-picker`, a date-selection control, and a month cell can honestly show about two events before it starts hiding the rest; a list has no such ceiling. The two compose instead — select a day in `calendar`, list it here — which is what the third example does.",
-    ],
+      "Events sorted by day and time, grouped under day headings. Use it for what is coming up.",
     examples: [
       {
         demo: "agenda/basic",
@@ -3546,11 +3167,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "TableCaption",
     ],
     description:
-      "The static table primitives. For sorting, filtering and pagination use Data Table.",
-    intro: [
-      "Table is the styled HTML table and nothing more: one thin wrapper per element, no data layer, no state. Reach for it when the rows are already in the order you want them — a summary, a fixed list, markup rendered on the server. Sorting, filtering and pagination are `Data Table`, which composes these same parts around TanStack Table.",
-      "The root renders a wrapping div that owns the horizontal scroll, so a wide table scrolls inside its column rather than stretching the page — but `className` lands on the `table` element, not on that wrapper. Cells carry no opinion about their content, so a numeric column needs `text-right tabular-nums` on both its head and its cells.",
-    ],
+      "The styled HTML table primitives, with no data layer. Use `Data Table` for sorting, filtering and paging.",
     examples: [
       {
         demo: "table/basic",
@@ -3611,10 +3228,6 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
     description:
       "The trail to the current page, with the last item as plain text.",
-    intro: [
-      "Breadcrumb states where the current page sits in a hierarchy and offers the way back up it. Reach for it when a page has ancestors a reader can meaningfully return to — a file inside folders, a record inside a project. A flat app with three top-level screens has no trail to show, and history is what the back button is for.",
-      "The trail is an ordered list of links with one exception at the end: `BreadcrumbPage` is the current page, so it renders as plain text carrying `aria-current`, not as a link to where you already are. Links go through Base UI's `render` prop rather than `asChild`, which is how a router's own link component takes over the anchor.",
-    ],
     examples: [
       {
         demo: "breadcrumb/basic",
@@ -3660,10 +3273,6 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
     description:
       "The empty-state block: media, title, description and an action.",
-    intro: [
-      "Empty is the centred block a region shows when it has nothing to show: media, a title, a line of explanation, and the way out. One anatomy covers three situations that only differ in wording — a first-run state, a search with no matches, and a request that failed. For a message about the whole page rather than one region, that is `Banner`.",
-      'It sets `border-dashed` but no border width, so it is unframed until you add `border` — which is what lets the same block sit flush inside a card that already has edges. It is `flex-1`, so in a flex column it fills the space it is given rather than sizing to its text, and it carries no role: pass `role="status"` when the block replaces content after a load.',
-    ],
     examples: [
       {
         demo: "empty/basic",
@@ -3718,11 +3327,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "ToolbarSeparator",
     ],
     description:
-      "A Base UI toolbar with arrow-key navigation across grouped buttons, inputs and separators.",
-    intro: [
-      "Toolbar is the chrome strip beside a canvas or above a list: formatting actions, view controls, a filter field. Reach for it when a cluster of controls is used over and over and should not cost one tab stop each — a row of buttons a reader passes once is just a flex container.",
-      "The strip is a single tab stop with the arrow keys moving inside it, wrapping at the ends, so a control only joins that ring if it is a Toolbar part: `ToolbarButton`, `ToolbarLink` and `ToolbarInput` are Base UI items rather than styling wrappers. `ToolbarButton` renders a `Button` underneath, so variants and tones still apply.",
-    ],
+      "A strip of grouped buttons, inputs and separators. It is one tab stop, with the arrow keys moving inside it.",
     examples: [
       {
         demo: "toolbar/basic",
@@ -3770,11 +3375,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "BannerAction",
     ],
     description:
-      "A full-width, tone-coloured message bar over the shared six-tone family — the same tokens button.tsx's `tone` axis reads.",
-    intro: [
-      "Banner is the page-level counterpart of Alert: the same icon, title and description anatomy, but full-width, flush-cornered and tinted edge to edge. Reach for it when a message concerns the whole screen or section — a maintenance window, a plan limit, an incident notice — pinned above the content rather than nested inside it.",
-      "`tone` sets `--tone-bg`/`--tone-ink` from the shared six-tone family in globals.css — the same tokens Button's `tone` axis reads — so a banner always matches its sibling controls and a new tone never needs a bespoke colour here.",
-    ],
+      "A full-width, tone-coloured message bar for a whole page or section. Use `Alert` inside content.",
     examples: [
       {
         demo: "banner/basic",
@@ -3815,11 +3416,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "ProgressLabel",
       "ProgressValue",
     ],
-    description: "Task completion, with optional label and value slots.",
-    intro: [
-      "Progress reports work advancing towards done: an upload, an import, an indexing pass. Reach for it when the value only moves one way and completion is the point — a measurement of capacity that can fall again is `Meter`, and work whose extent is unknown and unmeasured is `Spinner`.",
-      "`value={null}` is the indeterminate state, and it is the default — distinct from `0`, which means started with nothing done. The root reflects that state as `data-indeterminate`, `data-progressing` or `data-complete`, so a finished bar restyles itself off an attribute instead of the caller comparing `value` to `max`.",
-    ],
+    description: "Task completion advancing towards done, with optional label and value. `value={null}` is the indeterminate state.",
     examples: [
       {
         demo: "progress/basic",
@@ -3867,11 +3464,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "PageHeaderTabs",
     ],
     description:
-      "Breadcrumb, title, description and actions for the top of a page, with an optional flush tab strip.",
-    intro: [
-      "Page Header is the block every routed page opens with: an optional breadcrumb, the title and its description, the page's primary actions, and a rule closing it off. Reach for it so heading level, spacing and that rule are decided once here rather than re-guessed per screen.",
-      "It is slots rather than props — the parts compose in the order the page needs and take no configuration bag. `PageHeaderTitle` renders an `h1`, so a page renders one. `PageHeaderTabs` is the one part that changes the root: its presence drops the header's bottom padding, so the rule lands flush under the tab strip instead of above it.",
-    ],
+      "The top of a page: breadcrumb, title, description, actions, and an optional tab strip.",
     examples: [
       {
         demo: "page-header/basic",
@@ -3910,11 +3503,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["DescriptionList", "DescriptionTerm", "DescriptionDetail"],
     description:
-      "Term/detail pairs for record summaries. Renders a real `dl`, so the pairing survives without sight of the layout.",
-    intro: [
-      "Description List is the record-summary primitive: term-and-detail pairs in a two-column grid. Reach for it whenever a block answers `what are the fields of this thing?` — an invoice head, a mission summary, a settings readout. A scannable column of many records is `Table`.",
-      "The grid columns live on the root, so terms and details must be direct children: pairs flow as consecutive grid cells with no row wrapper. Wrapping a pair in a `div` breaks the alignment for the whole list.",
-    ],
+      "Term and detail pairs in a real `dl`, for record summaries.",
     examples: [
       {
         demo: "description-list/basic",
@@ -3950,11 +3539,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Actions",
     exports: ["Kbd", "KbdGroup"],
     description:
-      "Renders a keyboard key or chord inline, sized to sit in a line of text.",
-    intro: [
-      "Kbd prints a key the reader is meant to press: the shortcut on a menu row, the `⌘K` hint inside a search field, the accelerator on a tooltip. One key per element, and `KbdGroup` for a chord.",
-      "It takes its colours from whatever contains it — inside an input group it picks up the input fill, inside a tooltip it inverts onto the dark surface — so a chord dropped into another component needs no props. It is also `pointer-events-none`: the key labels a shortcut, it never fires it.",
-    ],
+      "Renders a keyboard key inline, sized to the text around it. Use `KbdGroup` for a chord.",
     examples: [
       {
         demo: "kbd/basic",
@@ -3987,11 +3572,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["Spinner"],
     description:
-      "An indeterminate loading indicator, sized to the current text.",
-    intro: [
-      "Spinner is the indeterminate wait: a rotating mark sized to the text beside it, for when there is no honest way to say how long or how far along. Reach for it inside a button that has been pressed, on a row refreshing in place, or in a region with no shape to build a placeholder from. When the shape of the arriving content is known, `Skeleton` holds the layout instead of covering it.",
-      'It is a bare `svg` carrying `role="status"`, so it announces itself with no wrapper, and it paints in `currentColor`, so it takes the colour of the text around it. `label` is the accessible name and defaults to "Loading" — right for a page, wrong for the third spinner in a list, which is why it is a prop rather than a constant. `className` retunes the `size-4` default.',
-    ],
+      "An indeterminate loading indicator sized to the surrounding text. Use `Skeleton` when the shape of the content is known.",
     examples: [
       {
         demo: "spinner/basic",
@@ -4037,12 +3618,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Utilities",
     exports: ["Icon", "icons"],
     description:
-      "The built-in glyph set — 34 Phosphor icons, keyed by name, shared by the React binding and the `<ds-icon>` web component.",
-    intro: [
-      "Icon draws one glyph from a name. The set is [Phosphor](https://phosphoricons.com) at regular weight: 256×256 filled geometry, `fill: currentColor`, no stroke. Reach for it when the glyph is part of the system's own vocabulary; import a component straight from `@phosphor-icons/react` when you need one the set does not carry, and add it here when a second place needs the same glyph.",
-      'The set moved from Lucide to Phosphor in `1.0.0-beta.7`. **Every name is unchanged** — `search`, `chevron-down`, `log-out` all still resolve — so no `<Icon>` or `<ds-icon>` call has to be rewritten. Hand-written `<svg class="ds-icon">` does: the wrapper is now `viewBox="0 0 256 256" fill="currentColor"` with no stroke attributes. `strokeWidth` is still accepted on both bindings and no longer does anything, because filled geometry has no stroke to widen.',
-      "One geometry map serves both bindings. `icons` is exported as plain inner-SVG strings rather than as React components, which is what lets `<ds-icon>` — zero-dependency JavaScript with no React to render — read the same set instead of carrying a second copy of it.",
-    ],
+      "The built-in glyph set: 34 Phosphor icons keyed by name. Import from `@phosphor-icons/react` for anything outside it.",
     examples: [
       {
         demo: "icon/basic",
@@ -4076,12 +3652,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Actions",
     exports: ["Button", "buttonVariants"],
     description:
-      "The primary action trigger. Eight variants and an eight-colour brand tone axis that compose independently.",
-    intro: [
-      "Button is the trigger everything else defers to: submit, confirm, open, cancel. `variant` places it in the emphasis order — `default` (or its 0.11 spelling `primary`, the same rule) for the one action a view is about, `secondary`, `outline` and `ghost` for the ones beside it, `link` for navigation that has to read as prose. `destructive` and 0.11's `danger` are both the functional red and both stay: one is a tinted fill, the other a bordered warning, and both names are published.",
-      "`variant` and `tone` are independent axes rather than a matrix. A tone only sets the fill `--btn`, its contrast pair `--btn-fg` and its `--btn-hover`, and every variant composes off those three variables, so a ninth palette colour would work across solid, outline and ghost without a single compound variant.",
-      "`variant` has no default, and that is deliberate. `<ds-button>` with no attribute renders a bare `ds-button` class, which is 0.11's white ink-bordered button — so omitting the prop has to render that same button, or the two bindings would disagree about the same absence.",
-    ],
+      "The main action trigger. Eight variants and eight brand tones that combine freely.",
     examples: [
       {
         demo: "button/variants",
@@ -4123,11 +3694,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Forms",
     exports: ["Input"],
     description:
-      "The single-line text field, and the base every other text control borrows its focus ring and invalid styling from.",
-    intro: [
-      "Input is the single-line text control and nothing more — one wrapper over Base UI's input primitive. Reach for it for any value a keyboard produces. It stays deliberately bare: the label, helper text and error message come from `Field`, and anything that has to sit inside the field box — an icon, a unit, a reveal button — comes from `InputGroup`.",
-      "The box is a full 1px rule on `--ds-rule`, no radius, and focus draws the system's 2px outline on `--ds-focus-ring` — the charte's box, not the source's underline. `.ds-input` is the most-published class in the package, so absorbing the source's borderless field over it would have unstyled every hand-written form in `examples/`. Invalid styling hangs off `aria-invalid` rather than a prop, which makes the accessibility attribute the switch — and Textarea, InputGroupInput and the pickers all copy this treatment, so it is worth changing in one place.",
-    ],
+      "The single-line text field, and the base the other text controls borrow their focus and invalid styling from.",
     examples: [
       {
         demo: "input/basic",
@@ -4167,11 +3734,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Forms",
     exports: ["Textarea"],
     description:
-      "A multi-line text field sharing Input's focus and invalid states.",
-    intro: [
-      "Textarea is the multi-line field: Input's bottom rule, focus and invalid treatment, measured in rows instead of characters. Reach for it when the answer is prose — a description, a message, a set of notes. For a composer whose buttons live inside the field, `InputGroup` takes an `InputGroupTextarea` instead.",
-      "`field-sizing: content` grows the box to fit what is typed, so `rows` sets a floor rather than a height. The resize grip stays — the source dropped it, and on a class `docs/components.md` already teaches that would have taken away an affordance. Growth has no ceiling of its own: cap it with a `max-height` wherever the field sits in a fixed layout.",
-    ],
+      "A multi-line text field, measured in rows and sharing Input's focus and invalid states.",
     examples: [
       {
         demo: "textarea/basic",
@@ -4216,11 +3779,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "FieldError",
     ],
     description:
-      "The form row primitive — label, control, description and error in one accessible group. Replaces the retired `form` component in this system.",
-    intro: [
-      'Field is the form row: a label, its control, the helper text and the error message in one `role="group"` box on a single `gap-3`. Reach for it for every labelled control — it replaces the retired `form` component in this system, and `FieldGroup` stacks the rows so a form needs no ad-hoc margins.',
-      "None of the wiring is automatic: the group mints no ids and reads no form library's state, so `htmlFor`/`id` and `aria-invalid` stay yours to set. What it owns is the reaction — `data-invalid` on the Field turns the whole row destructive and `data-disabled` fades its labels, both through `group/field` selectors the parts already carry.",
-    ],
+      "The form row: label, control, description and error in one accessible group. Use it for every labelled control.",
     examples: [
       {
         demo: "field/basic",
@@ -4289,11 +3848,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "SelectSeparator",
     ],
     description:
-      "A Base UI listbox for choosing one option from a set, with a rendered trigger and portalled popup.",
-    intro: [
-      "Select is the closed-list control: a trigger showing the current choice, and a popup listing every option there is. Reach for it when the set is short, known and needs no typing — an environment, a role, a sort order. Once the list is long enough that scanning stops working, Combobox and Autocomplete filter as you type, and Multi Select is the one that keeps more than one answer.",
-      "The root owns both the value and the labels: pass `items` — a value-to-label map — and `SelectValue` prints the selected item's label instead of the raw value it stores. The popup is portalled, sized to `--anchor-width`, and `alignItemWithTrigger` is on by default, which parks the selected item over the trigger rather than dropping the list underneath it — that is also why an open Select does not animate.",
-    ],
+      "A closed list for choosing one option, with a trigger and a portalled popup. Use `Combobox` once the list gets long.",
     examples: [
       {
         demo: "select/basic",
@@ -4347,12 +3902,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Forms",
     exports: ["Checkbox"],
     description:
-      "A single boolean control, with indeterminate support via the `parent` prop inside a group.",
-    intro: [
-      "Checkbox is the single yes-or-no: accept, include, opt in. Reach for it when the answer travels with a form and applies on submit — Switch is the sibling for a setting that takes effect the moment it changes. When several boxes answer one question, put them in a Checkbox Group so the group holds the array instead of one boolean per box.",
-      'Base UI renders the box as a `span` with `role="checkbox"` and a visually hidden `input` beside it. The span is the thing you style — through `data-checked` and `data-indeterminate`, never `:checked` — while the hidden input carries `name` for form submission and takes the `id` you pass, which is what keeps a plain `htmlFor` label working. The box itself is 18px, but an invisible `::after` stretches the hit area well past it: a comfortable target without a bigger visual.',
-      "0.11's markup still works and is still styled: a `label.ds-checkbox` wrapping a hidden input and a drawn `span.ds-checkbox__box` is what three committed fixtures render, and `checkbox.css` tells the two grammars apart by whether the root has a `__box` child.",
-    ],
+      "A single yes-or-no control for a value a form submits. Use `Switch` for a setting that applies immediately.",
     examples: [
       {
         demo: "checkbox/basic",
@@ -4388,11 +3938,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Forms",
     exports: ["CheckboxGroup"],
     description:
-      "Manages a set of checkbox values, including the parent select-all relationship.",
-    intro: [
-      "Checkbox Group owns the array behind a set of boxes that answer one question — permissions, notification topics, the labels a list is filtered by. Children declare a `value` and nothing else; the group holds which ones are on. Reach for it instead of a boolean per box, and for one answer out of many reach for Radio Group.",
-      "Select-all is built in rather than derived: give the group `allValues` and mark one child `parent`, and that box works out checked, unchecked and indeterminate from the others. `disabled` cascades the same way, through `data-disabled` on the group, so no child needs the prop. Layout is a flex column by default and a `horizontal` orientation is the wrapping row — an axis rather than a `className`, because this package has no `tailwind-merge` to arbitrate a class race with the group's own default.",
-    ],
+      "Holds the array of values behind a set of checkboxes, including the select-all parent.",
     examples: [
       {
         demo: "checkbox-group/basic",
@@ -4428,12 +3974,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Forms",
     exports: ["Switch"],
     description:
-      "An immediate on/off toggle for settings that apply on change.",
-    intro: [
-      "Switch is the setting that applies as it changes: no save button, no submit, the state is live the moment the thumb moves. Reach for it in preference panels and settings rows, and keep Checkbox for an answer that travels with a form — or for anything that needs an indeterminate state, which a switch has no way to show.",
-      "It is square like the rest of the system: the thumb translates rather than sliding along a pill, so there is no radius to keep in sync, and `size` is a plain prop writing `data-size` — `sm` for dense rows. The control carries no label of its own; pair it with a `Label` through `htmlFor`, or give it `aria-label` when the text beside it lives in a `FieldContent`.",
-      "0.11's markup still works and is still styled: `<ds-switch>` renders a `label.ds-switch` around a hidden input and a `span.ds-switch__track`, which is a frozen contract. `switch.css` tells the two apart by whether the root has a `__track` child, so both a form-submitting checkbox and the absorbed `role=switch` button get the same look.",
-    ],
+      "An on/off toggle for a setting that applies as soon as it changes.",
     examples: [
       {
         demo: "switch/basic",
@@ -4468,11 +4009,7 @@ export const COMPONENTS: ComponentDoc[] = [
     name: "Slider",
     category: "Forms",
     exports: ["Slider"],
-    description: "Selects a number, or a range, by dragging along a track.",
-    intro: [
-      "Slider picks a number, or a pair of them, by dragging along a track. Reach for it when the position matters more than the figure — opacity, a volume, a price band — and where someone would rather type the exact number, reach for Number Field instead.",
-      'The thumb count is read from the value\'s shape, so a number renders one thumb and an array renders one per entry, and the callback hands back the shape it was given. `thumbAlignment="edge"` is fixed by the wrapper, so a thumb stops flush with the end of the track instead of overhanging it — which is what lets a scale printed under the track line up. There is no built-in readout and no label: render the value yourself and point `aria-labelledby` at whatever names it.',
-    ],
+    description: "Picks a number, or a range, by dragging along a track. Use `Number Field` when the exact figure matters.",
     examples: [
       {
         demo: "slider/basic",
@@ -4516,12 +4053,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "inputGroupAddonVariants",
     ],
     description:
-      "Composes addons, icons and buttons around an input inside a single bordered box.",
-    intro: [
-      "Input Group is the bordered box that holds a control plus whatever belongs inside the field with it — a search icon, a currency suffix, a reveal button, a composer's toolbar. Reach for it when the affordance sits within the field's boundary; a control that belongs beside the field is a plain `Button` next to an `Input`.",
-      'The group owns the border and the focus outline, so its control has to be `InputGroupInput` or `InputGroupTextarea` — the same Input and Textarea with their own border stripped and a `data-slot="input-group-control"` for the group to find. Everything else is `:has()` on the root: an `aria-invalid` control anywhere inside turns the rule destructive, and a block-aligned addon releases the fixed height and switches the box to a column.',
-      "0.11's group still works and is still styled — an `inline-flex` strip of bordered `.ds-input-group__addon` children overlapping by a pixel, which two committed fixtures render. `input-group.css` tells the two apart by whether the group has an `__addon` child.",
-    ],
+      "Puts icons, addons and buttons inside an input's own border.",
     examples: [
       {
         demo: "input-group/addons",
@@ -4579,11 +4111,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "CardFooter",
     ],
     description:
-      "A bordered surface with header, content and footer slots — the default container for grouped content.",
-    intro: [
-      "Card is the default container for something that reads as its own object: a record on an index, a tile on a dashboard, a summary you could drag elsewhere and still understand. When the region belongs to the page rather than sitting on it, `Panel` is the flat sibling with the same header, content and footer skeleton.",
-      'The root owns `--ds-card-pad-x` / `--ds-card-pad-y` and every part reads them, so `size="sm"` retunes the whole card from one place. Rules are opt-in through a `ruled` prop on the header rather than a Tailwind utility this package does not define. The root is `overflow: hidden`, which is what lets `CardMedia` bleed to the edges.',
-    ],
+      "A bordered surface with header, content and footer slots. Use `Panel` for a flat region that belongs to the page.",
     examples: [
       {
         demo: "card/basic",
@@ -4647,11 +4175,7 @@ export const COMPONENTS: ComponentDoc[] = [
     name: "Badge",
     category: "Data display",
     exports: ["Badge", "badgeVariants"],
-    description: "A compact status or category label.",
-    intro: [
-      "Badge is the typographic state label: uppercase, letterspaced and boxless. Reach for it when one word of state has to sit inside something that already has a boundary — the status column of a row, a suffix after a heading, a qualifier in running text. `Tag` is the boxed, tinted version for when the label should read as an object you can scan a column of, and `Status` is the dot-and-word pair.",
-      "It contributes no fill, border or padding of its own, so `variant` is a colour axis only and a badge takes exactly the width of its text. It renders a `span` by default and any element through `render`, which is what the `link` variant exists for.",
-    ],
+    description: "A compact, uppercase status or category label with no box. `Tag` is the boxed, tinted version.",
     examples: [
       {
         demo: "badge/variants",
@@ -4685,11 +4209,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "statusVariants",
     ],
     description:
-      "A dot-and-label state indicator across the shared six-tone family — success, warning, danger, critical, neutral, info.",
-    intro: [
-      "Status is the smallest state readout in the system: a coloured dot and a word, sized to sit inline in a table cell, a list row or a page header. Reach for it when the state is a fact about one thing — a service, a job, a deployment. A boxed, filled label is `Tag`; a full-width coloured strip is `Banner`.",
-      "`tone` sets a single `--tone` variable on the root that both parts read, so the dot and the label can never drift apart. The tones are the `-ink` values, tuned to pass AA as text on both themes — keep the label at full opacity and use weight for hierarchy.",
-    ],
+      "A coloured dot and a word, for the state of one thing. Six tones.",
     examples: [
       {
         demo: "status/tones",
@@ -4735,11 +4255,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["Tag", "tagVariants"],
     description:
-      'A boxed, tinted label across the shared six-tone family. Absorbs v1\'s Chip, whose one boolean `warn` axis is now `tone="warning"`.',
-    intro: [
-      "Tag is the boxed, tinted label: a filled background with matching ink, sized for a status column or a row of attributes. Reach for it when the label should read as an object you can scan a column of — `Badge` is the bare typographic emphasis, and `Status` is the dot-and-word that sits inline in running text.",
-      "Each tone sets `--tone-bg` and `--tone-ink` as a pair, so a tone can never be half-applied. The six tones are the same family `status`, `banner` and `alert` draw from, which is what lets a danger tag and a danger banner mean the same thing on the same page.",
-    ],
+      "A boxed, tinted label in six tones. Absorbs v1's Chip, whose `warn` boolean is now `tone=\"warning\"`.",
     examples: [
       {
         demo: "tag/tones",
@@ -4775,11 +4291,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "PanelRow",
     ],
     description:
-      "A sunken section container — the flat sibling of Card, plus a row part for tightly-packed settings lists.",
-    intro: [
-      "Panel is the flat sibling of Card: the same header, content and footer skeleton, but a plain border instead of elevation. Reach for it when a region needs a boundary without needing to float — settings sections, form groups, tiles that sit inside the page rather than on top of it.",
-      "The root carries the padding, not the parts, because `<ds-panel>` wraps arbitrary light-DOM children and a bare paragraph inside one has no part to pad it. A `sm` size retunes it. For tightly-packed label-and-control lists, `PanelRow` is the part; `rows` survives beside it because the web component writes that modifier itself.",
-    ],
+      "A flat, bordered section container — Card without the elevation — plus a row part for settings lists.",
     examples: [
       {
         demo: "panel/basic",
@@ -4830,12 +4342,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Data display",
     exports: ["Kanban", "KanbanCardTitle"],
     description:
-      "A board of columns holding cards that move between them by drag or by arrow key.",
-    intro: [
-      "Kanban is the board shape: columns you declare, cards that move between them. Reach for it when the state of a record *is* the column it sits in — a triage queue, a sprint board, a review pipeline. The card order is state it owns, so it is a client component and every drop re-renders it.",
-      "Column membership lives on the item rather than in a nested per-column array: each item carries a `column` id and the board filters a flat list. That is what makes a move a one-field rewrite instead of a splice out of one array and into another, and why `onMove` can report the whole thing as `(itemKey, toColumnId)`.",
-      "Cards are dragged by a grip that is a real button, so there is a keyboard route through the entire interaction: tab to a grip, arrow across to another column, drop. The column body is its own drop target as well as its cards, which is what lets a card land in a column that is currently empty. Native HTML5 drag-and-drop offers no keyboard path at all, which is the whole reason the board carries a drag library rather than a pair of pointer handlers.",
-    ],
+      "A board of columns whose cards move between them by drag or by arrow key.",
     examples: [
       {
         demo: "kanban/basic",
@@ -4870,11 +4377,7 @@ export const COMPONENTS: ComponentDoc[] = [
     name: "Skeleton",
     category: "Data display",
     exports: ["Skeleton"],
-    description: "A placeholder block for content that has not loaded.",
-    intro: [
-      "Skeleton is one pulsing block; a placeholder is several of them arranged like the content that will replace them. Reach for it when the shape of what is arriving is already known — a row, a card, a table body — so the layout holds its place and nothing jumps when the data lands. When the shape is unknown, or the wait belongs to one action rather than a region, that is `Spinner`.",
-      'It contributes the pulse and the muted fill and nothing else, so `className` is the whole API and a Skeleton with no height renders nothing at all. It carries no ARIA either: the announcement belongs to the region around it, as `aria-busy` or a single `role="status"` line.',
-    ],
+    description: "A pulsing placeholder block for content that has not loaded yet.",
     examples: [
       {
         demo: "skeleton/basic",
@@ -4917,11 +4420,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "SheetDescription",
     ],
     description:
-      "A panel that slides in from an edge — Dialog's modal contract, sized to a column instead of a centred box.",
-    intro: [
-      "Sheet is the edge-anchored form of Dialog: the same trigger, close and modal behaviour, but the panel fills one side of the viewport rather than floating in the middle. Reach for it when the content is a column — a record's details, a filter set, a navigation menu on a narrow screen — or when a centred box would be too cramped to read in. Drawer is the touch-first alternative, with drag-to-dismiss and snap points.",
-      "`side` is the only geometry prop: the edge, the border and the enter and exit transforms all derive from the `data-side` it sets. Inside, the content is a flex column whose header and footer carry their own padding and whose body carries none — so a body long enough to scroll needs `min-h-0 flex-1 overflow-y-auto` plus the matching `px-8`.",
-    ],
+      "A panel that slides in from an edge, with Dialog's modal behaviour.",
     examples: [
       {
         demo: "sheet/sides",
@@ -4979,11 +4478,7 @@ export const COMPONENTS: ComponentDoc[] = [
       "DrawerDescription",
     ],
     description:
-      "A bottom sheet with drag-to-dismiss and snap points — Sheet's gesture-driven sibling, tuned for touch.",
-    intro: [
-      "Drawer slides in from an edge like Sheet, but it follows the finger: it tracks the drag, dismisses on a flick and can rest at snap points on the way. Reach for it on touch-first surfaces, and for content someone wants to peek at before committing — a filter set, an upload queue, the list under a map. On a pointer-only screen Sheet is the plainer choice.",
-      "There is no `side` prop. `swipeDirection` on the root is the single source of truth, and the axis, the edge, the border and the closed transform all derive from it: `down` and `up` size their height to the content, `left` and `right` take three-quarters width up to 24rem. Geometry lives on the root — `DrawerContent` reads it from context rather than taking props of its own.",
-    ],
+      "A bottom sheet that follows the finger, with drag-to-dismiss and snap points. Tuned for touch.",
     examples: [
       {
         demo: "drawer/basic",
@@ -5029,11 +4524,7 @@ export const COMPONENTS: ComponentDoc[] = [
     category: "Overlays",
     exports: ["Tooltip", "TooltipTrigger", "TooltipContent", "TooltipProvider"],
     description:
-      "A short label on hover or focus. Never put interactive content in one.",
-    intro: [
-      "Tooltip names something the interface has left unlabelled: an icon button, a clipped table cell, the shortcut behind an action. It is a label and not a container — the popup never takes focus and a touch user never hovers it, so a link or a button in here is a control nobody can reach. It also cannot rescue a `disabled` element, which emits no pointer events at all.",
-      "Timing lives on `TooltipProvider`, and this wrapper defaults its `delay` to 0 where the Base UI default is 600ms per trigger: a bare provider makes its whole subtree instant, and a considered pause means passing `delay` yourself. Individual triggers override both `delay` and `closeDelay`, so one slow control does not need its own provider.",
-    ],
+      "A short label shown on hover or focus. Never put interactive content in one.",
     examples: [
       {
         demo: "tooltip/basic",
@@ -5092,11 +4583,7 @@ export const PENDING: ComponentDoc[] = [
     name: "Stat Card",
     category: "Data display",
     description:
-      "A single headline figure with an optional signed delta and sparkline.",
-    intro: [
-      "Stat Card is the dashboard tile: one label, one headline figure, and optionally how it moved and where it has been. Reach for it for the KPI row at the top of a page. When the numbers themselves have to be read rather than glanced at, that is `Chart`.",
-      "Every part is optional and carries its own top margin, so the vertical rhythm holds whichever ones you leave out. The card sets no width — size it from the grid it sits in.",
-    ],
+      "A single headline figure, with an optional signed delta and sparkline.",
     examples: [
       {
         demo: "stat-card/basic",

@@ -380,7 +380,6 @@ function buildWorkbenchSection(workbench) {
 
 function buildPage(doc, legacySlug) {
   const title = `${doc.name} · Diametral Design System`
-  const intro = (doc.intro ?? []).map((p) => `        <p class="docs-note">${prose(p)}</p>`).join("\n")
   const importLine = buildImportLine(doc)
   const examples = doc.examples ?? []
   const workbench = buildWorkbenchPayload(doc.slug)
@@ -494,7 +493,6 @@ ${tocLinks.join("\n")}
         <h1 class="ds-title ds-title--xl">${escapeHtml(doc.name)}</h1>
         <p class="docs-lede">${prose(doc.description)}</p>
         ${legacySlug ? `<p class="docs-note docs-crosslink"><a href="../css/${legacySlug}.html">→ See the HTML &amp; CSS version</a></p>` : ""}
-${intro}
         ${importLine ? `<div class="docs-import">
           <pre class="docs-import__code" tabindex="0"><code id="import-line">${escapeHtml(importLine)}</code></pre>
           <button class="ds-button" type="button" data-copy-target="#import-line">Copy</button>

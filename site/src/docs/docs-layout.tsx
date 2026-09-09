@@ -8,7 +8,6 @@ import {
   CursorClickIcon,
   type Icon,
   LayoutIcon,
-  SquaresFourIcon,
   StackIcon,
   TableIcon,
   TextboxIcon,
@@ -36,6 +35,7 @@ import {
   SidebarProvider,
   SidebarRail,
   SidebarTrigger,
+  Wordmark,
 } from "@diametral/design-system/react"
 
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -176,9 +176,11 @@ export function DocsLayout() {
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton size="lg" render={<Link to="/" />}>
-                <div className="flex aspect-square size-8 items-center justify-center bg-sidebar-primary text-sidebar-primary-foreground">
-                  <SquaresFourIcon />
-                </div>
+                <Wordmark
+                  variant="square"
+                  label=""
+                  className="flex aspect-square size-8 items-center justify-center"
+                />
                 <div className="flex flex-col gap-0.5 leading-none">
                   <span className="font-heading font-semibold tracking-wider uppercase">
                     Diametral
@@ -195,7 +197,6 @@ export function DocsLayout() {
           {/* Flat and always open: four rows the reader needs before they know
               what they are looking for, so nothing here hides behind a chevron. */}
           <SidebarGroup>
-            <SidebarGroupLabel>Main</SidebarGroupLabel>
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton

@@ -132,11 +132,6 @@ export function ComponentPage() {
             {component.name}
           </h1>
           <Prose className="mt-2 max-w-2xl">{component.description}</Prose>
-          {component.intro?.map((paragraph) => (
-            <Prose key={paragraph} className="mt-3 max-w-2xl">
-              {paragraph}
-            </Prose>
-          ))}
           <div className="mt-5 max-w-2xl">
             <ImportLine slug={component.slug} exports={component.exports} />
           </div>
