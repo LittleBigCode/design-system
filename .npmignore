@@ -6,7 +6,6 @@
 assets/fonts/Ufficio-300.woff2
 
 # Heavy showcase-only imagery and raster brand exports (not needed to consume the system).
-assets/photography/
 assets/logo/diametral-wordmark.png
 assets/logo/diametral-keyvisual.png
 

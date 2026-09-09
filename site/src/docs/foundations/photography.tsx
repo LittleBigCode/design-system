@@ -1,5 +1,5 @@
-import walnut from "@diametral/design-system/assets/photography/texture-walnut.png"
-import ice from "@diametral/design-system/assets/photography/texture-ice.png"
+import walnut from "@/photography/texture-walnut.png"
+import ice from "@/photography/texture-ice.png"
 
 import { P, Section } from "@/docs/foundation-example"
 
