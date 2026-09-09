@@ -35,10 +35,11 @@ import {
   SidebarProvider,
   SidebarRail,
   SidebarTrigger,
+  ThemeSwitcher,
   Wordmark,
 } from "@diametral/design-system/react"
 
-import { ThemeToggle } from "@/components/theme-toggle"
+import { useTheme } from "@/components/theme-provider"
 import { DocsSearch } from "@/docs/docs-search"
 import {
   BLOCKS,
@@ -151,6 +152,13 @@ function NavSection({
       </CollapsibleContent>
     </Collapsible>
   )
+}
+
+/* The theme lives in the app (storage, media-query sync); ThemeSwitcher is
+   fully controlled, so this is the whole of the wiring it needs. */
+function ThemeSwitch() {
+  const { theme, setTheme } = useTheme()
+  return <ThemeSwitcher value={theme} onValueChange={setTheme} />
 }
 
 export function DocsLayout() {
@@ -325,7 +333,7 @@ export function DocsLayout() {
           <SidebarTrigger />
           <DocsSearch />
           <div className="flex-1" />
-          <ThemeToggle />
+          <ThemeSwitch />
         </header>
         <main className="mx-auto w-full max-w-5xl px-6 py-10">
           <Outlet />

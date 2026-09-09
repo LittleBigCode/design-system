@@ -10,8 +10,8 @@ import {
   FieldLabel,
   Input,
   Metric,
+  Segmented,
   StatusPanel,
-  cx,
 } from "@diametral/design-system/react"
 
 // Dark ships inside `diametral.css` already (the site's real ThemeProvider
@@ -32,10 +32,6 @@ const THEMES = [
  * attribute. Scoped to this card instead — `css/themes/*.css` both target a
  * bare `[data-theme=...]` selector, not `:root`, by their own header comments
  * ("set the attribute on a root element"), so a local root works the same way.
- *
- * Not `Segmented` for the switch itself, same reasoning `ThemeToggle`'s own
- * comment gives for avoiding it: a defect in the component under test would
- * report on this page too.
  */
 export function Theming() {
   const [theme, setTheme] = React.useState<(typeof THEMES)[number]["value"]>("")
@@ -57,23 +53,16 @@ export function Theming() {
         <h2 className="font-heading text-lg font-semibold tracking-wider uppercase">
           Switch theme
         </h2>
-        <div role="group" aria-label="Theme" className="flex gap-1.5">
-          {THEMES.map((option) => (
-            <button
-              key={option.value}
-              type="button"
-              aria-pressed={theme === option.value}
-              onClick={() => setTheme(option.value)}
-              className={cx(
-                "border px-3 py-1.5 text-xs",
-                theme === option.value
-                  ? "border-foreground bg-foreground text-background"
-                  : "border-border text-muted-foreground hover:text-foreground"
-              )}
-            >
-              {option.label}
-            </button>
-          ))}
+        {/* Segmented renders a bare div, so the group's accessible name has
+            to live on a wrapper. */}
+        <div role="group" aria-label="Theme">
+          <Segmented
+            items={THEMES.map((option) => ({ ...option }))}
+            value={theme}
+            onChange={(next) =>
+              setTheme(next as (typeof THEMES)[number]["value"])
+            }
+          />
         </div>
         <p className="text-sm text-muted-foreground">
           This sets <code className="font-mono text-xs">data-theme</code> on
