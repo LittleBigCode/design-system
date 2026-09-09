@@ -66,10 +66,14 @@ export function ExampleBlock({ example }: { example: Example }) {
             {demo.markup && demo.markupHtml ? (
               <>
                 <p className="border-b border-border bg-muted/40 px-4 py-2 text-xs text-muted-foreground">
-                  Markup reference, not a live preview — the classes and ARIA
-                  a consumer renders against{" "}
+                  Markup reference, not a live preview — the classes,{" "}
+                  <code className="font-mono">data-*</code> hooks and ARIA a
+                  consumer renders against{" "}
                   <code className="font-mono">css/diametral.css</code> alone.
-                  Any interactivity is the consumer's own JS to wire.
+                  Derived from this example's own DOM, with runtime bookkeeping
+                  no stylesheet reads stripped out and indented for reading. It
+                  shows one state; any interactivity is the consumer's own JS to
+                  wire.
                 </p>
                 <CodeBlock html={demo.markupHtml} code={demo.markup} />
               </>

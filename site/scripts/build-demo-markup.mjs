@@ -23,10 +23,20 @@ import { chromium } from "playwright"
 import fs from "node:fs/promises"
 import path from "node:path"
 
+import prettier from "prettier"
+
 import { UTILITY_MAP } from "../plugins/utility-mapping.ts"
 import { resolveViaTailwind } from "../plugins/resolve-tailwind-class.ts"
+import {
+  chartMarkup,
+  NATIVELY_FOCUSABLE,
+  RUNTIME_DATA_ATTRIBUTES,
+  sanitizeStyle,
+  styledDataAttributes,
+} from "../plugins/markup-contract.ts"
 
 const SITE_ROOT = path.resolve(import.meta.dirname, "..")
+const CSS_DIR = path.resolve(SITE_ROOT, "../css")
 const DEMOS_DIR = path.join(SITE_ROOT, "src/registry/demos")
 const OUT_FILE = path.join(SITE_ROOT, "src/registry/demo-markup.json")
 
@@ -100,6 +110,113 @@ async function codemod(html, warn) {
   return out
 }
 
+/**
+ * Merges the `style` the codemod injects for an unmapped Tailwind class with any
+ * the element already carried, and sanitizes the result.
+ *
+ * Two attributes of the same name is not a warning in HTML — the parser keeps
+ * the first and silently drops the rest. 52 tags in the manifest hit this, and
+ * `aspect-ratio/basic` is the one that shows why it matters: it printed
+ * `style="background-color: …" style="--ratio: 1.777…"`, so the ratio the
+ * component exists to set never applied and the snippet rendered a square.
+ */
+function normalizeStyles(html) {
+  return html.replace(
+    /<([a-zA-Z][^\s/>]*)((?:\s+[^\s=/>]+(?:="[^"]*")?)*)\s*(\/?)>/g,
+    (whole, tag, attrs, selfClosing) => {
+      const declarations = [...attrs.matchAll(/\sstyle="([^"]*)"/g)].map((m) => m[1])
+      if (!declarations.length) return whole
+      const merged = sanitizeStyle(declarations.join("; "))
+      const rest = attrs.replace(/\sstyle="[^"]*"/g, "")
+      const style = merged ? ` style="${merged}"` : ""
+      return `<${tag}${rest}${style}${selfClosing ? " /" : ""}>`
+    }
+  )
+}
+
+/**
+ * Reads one demo's DOM back out, cleaned, using the browser's own parser rather
+ * than regexes over a string — the scraped node is right there, so `cloneNode`
+ * plus `removeAttribute` is both shorter and correct on edge cases a regex
+ * would get wrong (attribute values containing `>`, boolean attributes, SVG
+ * namespacing).
+ *
+ * Returns the cleaned `innerHTML`, any unknown `data-*` it refused to judge,
+ * and — when the demo is a chart — the wrapper facts `chartMarkup()` needs to
+ * print a contract instead of 170KB of generated SVG.
+ */
+async function scrapeCleaned(node, keep) {
+  return node.evaluate(
+    (root, { keep, strip, nativelyFocusable }) => {
+      const clone = root.cloneNode(true)
+      const unknown = new Set()
+
+      const chartEl = clone.querySelector('[data-slot="chart"]')
+      const chart = chartEl
+        ? {
+            className: chartEl.getAttribute("class") ?? "",
+            series: [
+              ...new Set(
+                [...(chartEl.querySelector("style")?.textContent ?? "").matchAll(
+                  /--color-([a-zA-Z0-9_-]+)\s*:/g
+                )].map((m) => m[1])
+              ),
+            ],
+          }
+        : undefined
+
+      for (const el of clone.querySelectorAll("*")) {
+        for (const { name, value } of [...el.attributes]) {
+          if (name.startsWith("data-")) {
+            if (keep.includes(name)) continue
+            if (strip.includes(name)) el.removeAttribute(name)
+            else unknown.add(name)
+            continue
+          }
+          // Natively focusable: the browser tab-orders these on its own, so a
+          // printed `tabindex` describes a keyboard implementation rather than
+          // a class contract. Elsewhere (a `div[role="option"]`) it is the only
+          // thing making the element reachable, and stays.
+          if (name === "tabindex" && nativelyFocusable.includes(el.tagName.toLowerCase()))
+            el.removeAttribute(name)
+        }
+      }
+
+      return { html: clone.innerHTML, unknown: [...unknown], chart }
+    },
+    {
+      keep: [...keep],
+      strip: [...RUNTIME_DATA_ATTRIBUTES],
+      nativelyFocusable: NATIVELY_FOCUSABLE,
+    }
+  )
+}
+
+/**
+ * The scraped DOM is one unbroken line — median 1,725 characters, and a chart
+ * once reached 172,682. Prettier is already a devDependency here and parses
+ * HTML properly, so the printer is one call rather than a hand-rolled one.
+ *
+ * `htmlWhitespaceSensitivity: "ignore"` is a deliberate trade. The default
+ * `"css"` preserves inter-element whitespace exactly, but the only way it can
+ * indent two inline siblings is the dangling-bracket form —
+ * `…</button\n><button …` — which is harder to read than the single line it
+ * replaced. `"ignore"` indents normally and may add a word-space between inline
+ * elements that had none. That is the whole extent of the difference, it is
+ * invisible in the flex and grid wrappers nearly every demo uses, and the tab
+ * says on its face that it prints a reference rather than a live preview.
+ */
+async function format(html) {
+  return prettier
+    .format(html, {
+      parser: "html",
+      printWidth: 84,
+      htmlWhitespaceSensitivity: "ignore",
+    })
+    .then((out) => out.trimEnd())
+    .catch(() => html)
+}
+
 async function main() {
   // Against the real production build (`vite preview`), not the dev server:
   // `base` and asset URLs are exactly what a consumer's browser gets, and
@@ -120,6 +237,8 @@ async function main() {
 
   const manifest = {}
   const allUnresolved = new Set()
+  const allUnknownAttrs = new Map()
+  const keep = await styledDataAttributes(CSS_DIR)
 
   for (const slug of await slugs()) {
     const url = new URL(`docs/${slug}`, base).href
@@ -127,15 +246,42 @@ async function main() {
     const nodes = await page.$$("[data-demo-key]")
     for (const node of nodes) {
       const key = await node.getAttribute("data-demo-key")
-      const html = await node.innerHTML()
-      manifest[key] = (
-        await codemod(html, (tokens) => tokens.forEach((t) => allUnresolved.add(t)))
-      ).trim()
+      const { html, unknown, chart } = await scrapeCleaned(node, keep)
+      for (const attr of unknown) {
+        if (!allUnknownAttrs.has(attr)) allUnknownAttrs.set(attr, key)
+      }
+
+      // A chart's DOM is recharts' generated SVG, which no consumer renders
+      // from a stylesheet. Print the wrapper contract instead of the plot.
+      if (chart) {
+        manifest[key] = chartMarkup(chart.className, chart.series)
+        continue
+      }
+
+      const mapped = await codemod(html, (tokens) =>
+        tokens.forEach((t) => allUnresolved.add(t))
+      )
+      manifest[key] = await format(normalizeStyles(mapped).trim())
     }
   }
 
   await browser.close()
   await server.close()
+
+  if (allUnknownAttrs.size) {
+    throw new Error(
+      `[build-demo-markup] ${allUnknownAttrs.size} data attribute(s) are in the ` +
+        `scraped DOM but match no selector in css/ and are not listed as runtime ` +
+        `noise, so this script cannot tell whether a consumer must write them:\n` +
+        [...allUnknownAttrs]
+          .sort(([a], [b]) => a.localeCompare(b))
+          .map(([attr, where]) => `  ${attr}  (first seen in ${where})`)
+          .join("\n") +
+        `\nIf css/ should style it, add the rule and it is kept automatically. ` +
+        `If it is runtime bookkeeping, add it to RUNTIME_DATA_ATTRIBUTES in ` +
+        `plugins/markup-contract.ts with the reason.`
+    )
+  }
 
   if (allUnresolved.size) {
     throw new Error(
