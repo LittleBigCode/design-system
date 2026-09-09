@@ -4,6 +4,26 @@ All notable changes to the Diametral Design System are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/), and the project
 adheres to [Semantic Versioning](https://semver.org/) — see [docs/versioning.md](docs/versioning.md).
 
+## [5.0.0-beta] — 2026-09-09
+
+**The first absorption beta to actually reach npm.** The version line moves to
+`5.0.0`; the renumber changes nothing about what the package contains. What
+ships here is the work documented under [1.0.0-beta.13] below and every beta
+before it — the 28 export swaps, the token layer, the CSS conversion — none of
+which had ever been published: `latest` stood at `0.11.0` and the registry held
+no prerelease at all.
+
+Published to the `next` dist-tag, so `latest` stays on `0.11.0`.
+
+### Fixed
+
+- **The publish workflow never installed dependencies.** `publish-npm.yml` ran
+  `npm run build` straight after `setup-node`, so `build:react` compiled the
+  React layer against an empty `node_modules` and died with 200+ `TS2307
+  Cannot find module 'react'`. It went unnoticed until now because
+  `build:react` is new to this major — the 0.x publishes had no React layer to
+  compile. Now installs with `npm ci || npm i`, the same idiom `ci.yml` uses.
+
 ## [1.0.0-beta.13] — 2026-09-07
 
 **The batch that earns the 1.0.0 major.** 28 exports the incumbent side of this
