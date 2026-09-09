@@ -5,7 +5,8 @@
     "outDir": "dist/docs",
     "rootDir": "site/src/registry",
     "paths": {
-      "@diametral/design-system/react": ["./dist/react/index.d.ts"]
+      "@diametral/design-system/react": ["./dist/react/index.d.ts"],
+      "@diametral/design-system/react/*": ["./dist/react/components/*"]
     }
   },
   "include": [
