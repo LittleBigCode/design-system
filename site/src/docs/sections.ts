@@ -28,6 +28,7 @@ export const TEMPLATES = [
 ] as const satisfies readonly SectionItem[]
 
 export const BLOCKS = [
+  ["nav-shell", "Nav shell", "Sidebar, grouped and nested nav, badges and an inset content area — the left edge of an application screen."],
   ["app-chrome", "App chrome", "Page header, toolbar, filter bar and stat band — the frame around an application screen."],
   ["auth", "Auth", "Sign in, sign up, forgot-password and two-factor cards."],
   ["marketing", "Marketing", "Hero, feature grid, pricing, stat band and footer — built on the visible grid system."],

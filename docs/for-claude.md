@@ -62,7 +62,7 @@ what you are building, read that source, and start from it.
 
 | Building | Read first | Live |
 |---|---|---|
-| App shell, sidebar nav | `css/components/sidebar.css`, `docs/recipes.md` §1, `site/src/docs/docs-layout.tsx` | /templates/dashboard |
+| App shell, sidebar nav | `site/src/docs/blocks/nav-shell.tsx`, `docs/recipes.md` §1, `site/src/docs/docs-layout.tsx` | /blocks/nav-shell |
 | Page header, toolbar, filter bar, stat band | `site/src/docs/blocks/app-chrome.tsx` | /blocks/app-chrome |
 | Sign in, sign up, 2FA, forgot password | `site/src/docs/blocks/auth.tsx` | /blocks/auth |
 | Hero, feature grid, pricing, footer | `site/src/docs/blocks/marketing.tsx` | /blocks/marketing |

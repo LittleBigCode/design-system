@@ -11,8 +11,10 @@ import { AppChrome } from "@/docs/blocks/app-chrome"
 import { Auth } from "@/docs/blocks/auth"
 import { DataDetail } from "@/docs/blocks/data-detail"
 import { Marketing } from "@/docs/blocks/marketing"
+import { NavShell } from "@/docs/blocks/nav-shell"
 
 const BLOCKS: Record<string, React.ComponentType> = {
+  "nav-shell": NavShell,
   "app-chrome": AppChrome,
   auth: Auth,
   marketing: Marketing,
