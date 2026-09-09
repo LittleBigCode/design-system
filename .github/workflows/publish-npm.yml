@@ -43,6 +43,11 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           scope: "@diametral"
 
+      # `npm run build` starts with `build:react` (tsc), which resolves react's
+      # types from node_modules — without this the whole React layer fails to
+      # compile with TS2307. Same idiom as ci.yml.
+      - run: npm ci || npm i
+
       - name: Build distributable artifacts
         run: npm run build
 
