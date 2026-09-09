@@ -1,8 +1,33 @@
 # Diametral Design System — reference for Claude
 
-A single, self-contained guide for generating **on-brand Diametral UI**. Everything
-here is real, copy-paste HTML using `.ds-*` classes backed by `--ds-*` CSS
-variables. No build step.
+A guide for generating **on-brand Diametral UI**: principles, tokens, and the
+most-used `.ds-*` classes as real copy-paste HTML backed by `--ds-*` CSS
+variables, plus where to find the rest. No build step. It is a starting point,
+not the catalogue — the system ships over 900 `.ds-*` selectors and this file
+names about 80, so the routing tables below matter as much as the snippets.
+
+## Pick your layer first
+
+| Your project | Use | Read |
+|---|---|---|
+| React | `@diametral/design-system/react` — the full typed component set | `docs/react.md`, `docs/recipes.md`, then this file for tokens and look |
+| Anything else (static HTML, Vue, Angular, Django, Streamlit, email) | `.ds-*` classes | this file |
+
+The React layer is strictly larger. Interactive components ship their behaviour
+there. In the class layer the CSS is only the skin — you wire the behaviour
+yourself, and if you don't, the thing renders and does nothing. The five where
+that gap bites hardest, with the real hook to drive, not "add JavaScript":
+
+| Component | What you must wire in the class layer |
+|---|---|
+| Sidebar | Toggle `data-state="collapsed"` on `.ds-sidebar` (with `data-collapsible="icon"` or `"offcanvas"`) from the trigger, the rail and a Cmd/Ctrl+B keydown; below the mobile breakpoint swap the collapse for sheet behaviour — focus trap, overlay, Escape. |
+| Select | Toggle `aria-expanded` on the trigger and move `data-highlighted` with arrows/Home/End/typeahead without committing; commit on Enter/Space/click, dismiss on Escape or outside click without committing. |
+| Combobox | Filter `.ds-combobox-item` rows from the input as it is typed, move `data-highlighted` with arrows, commit and close on Enter; `multiple` also tracks an array and renders one `.ds-combobox-chip` per value. |
+| Drawer | Open/close plus the swipe gesture — drag along the swipe axis, snap to each snap point on release — and a focus trap inside the popup while open. |
+| Data table | Cycle a sortable header none→asc→desc, derive the select-all checkbox's checked/indeterminate state from its rows, toggle `aria-expanded` on each row's disclosure, and commit inline edits on blur/Enter. |
+
+Every component page carries its own wiring note in full, e.g.
+https://littlebigcode.github.io/design-system/docs/sidebar
 
 ## Setup — always include this
 
@@ -12,7 +37,7 @@ variables. No build step.
 ```
 
 (React: `import "@diametral/design-system/css/diametral.css"` and
-`import { Button, Card, DataGrid } from "@diametral/design-system/react"`.)
+`import { Button, Card, DataTable } from "@diametral/design-system/react"`.)
 
 ## Principles — the look (follow strictly)
 
@@ -27,6 +52,31 @@ variables. No build step.
 - **Numbers:** tabular — wrap figures in `.ds-numeric`.
 - Use `.ds-*` classes as-is. Don't invent class names or override them with ad-hoc CSS;
   for layout, use plain inline `style` (fl/grid/gap) around `.ds-*` elements.
+
+## Before you build — start from the composition that exists
+
+Do not assemble a screen out of the primitives below. Find the row that matches
+what you are building, read that source, and start from it.
+
+<!-- ponytail: the repo column points into site/, which is not in package.json `files` and so is absent from an npm install; the live column is the fallback until a generated index inlines these -->
+
+| Building | Read first | Live |
+|---|---|---|
+| App shell, sidebar nav | `css/components/sidebar.css`, `docs/recipes.md` §1, `site/src/docs/docs-layout.tsx` | /templates/dashboard |
+| Page header, toolbar, filter bar, stat band | `site/src/docs/blocks/app-chrome.tsx` | /blocks/app-chrome |
+| Sign in, sign up, 2FA, forgot password | `site/src/docs/blocks/auth.tsx` | /blocks/auth |
+| Hero, feature grid, pricing, footer | `site/src/docs/blocks/marketing.tsx` | /blocks/marketing |
+| Detail view, empty state, faceted filter, activity feed | `site/src/docs/blocks/data-detail.tsx` | /blocks/data-detail |
+| A whole screen — dashboard, login, 404 | `site/src/docs/templates/` | /templates/dashboard · /templates/login · /templates/error-404 |
+| React screen wiring (app shell, CRUD list+detail, dashboard, auth gate) | `docs/recipes.md` | — |
+
+Repo paths are relative to the repository root. Installed from npm, `site/` is
+not present — use the live column, prefixed with
+https://littlebigcode.github.io/design-system.
+
+A primitive is a fallback. If a block already contains the thing you are
+building, copying it and changing the content is the correct move, not a
+shortcut.
 
 ## Tokens (use these, not raw hex)
 
@@ -185,7 +235,57 @@ and section layout:
 </body>
 ```
 
-## Don'ts
+## Composition rules
+
+Prohibitions alone cap ambition — an agent that only knows what is forbidden
+minimises surface area to stay safe, and ships eight flat rows where the system
+has grouped, iconed, collapsible nav. So: the positive rules first. Every one is
+already obeyed by a file in this repo, named beside it.
+
+### Do
+
+**Density**
+- A nav over ~6 items groups. Every group gets a label *and* an icon.
+  — `site/src/docs/docs-layout.tsx` (`CATEGORY_ICONS` is keyed off the category
+  union, so a new category fails the typecheck rather than rendering iconless).
+- A group is open when the reader is inside it. Never seed everything collapsed.
+  — `docs-layout.tsx` `useSectionOpen`: the seed is `undefined`, not `false`, so
+  a jump into a shut section still reveals the row that just became active.
+- The handful of rows a reader needs *before* they know what they are looking
+  for stay flat and always open — nothing top-level hides behind a chevron.
+  — `docs-layout.tsx`, the first `SidebarGroup`.
+
+**Structure**
+- Every panel edge is a real 1px rule. `--ds-rule` for structure,
+  `--ds-rule-soft` for subdivision inside an already-ruled box.
+  — `site/src/docs/foundations/borders.tsx` (the two weights, and why there is
+  no third: depth is drawn, not faked).
+- Draw the structure rather than implying it with whitespace: `.ds-ruled` for
+  ruled columns, `.ds-frame` / `.ds-frame--accent` for gutter rules,
+  `.ds-gridlines` (set `--ds-grid-cols`) for a measured overlay, `.ds-marks` for
+  registration ticks. — `site/src/docs/foundations/grid.tsx`.
+- A stat row is one `.ds-statgrid` of `.ds-statgrid__cell`s, never three
+  `.ds-card`s in a flex. — `site/src/docs/blocks/app-chrome.tsx`, "Stat band".
+- A page header is one `.ds-page-header` carrying breadcrumb, heading, actions
+  and tabs — not four stacked `div`s.
+  — `app-chrome.tsx`, "Page header".
+
+**State**
+- Exactly one row carries the active state, and it is derived from the current
+  route, not stored. — `docs-layout.tsx` (`isActive={pathname === to}`);
+  `css/components/sidebar.css` styles `[data-active]`.
+- Counts live in `.ds-sidebar-menu-badge`, not in the label text. No badge means
+  zero — the absence is the signal.
+  — `docs-layout.tsx`, the example-count badge.
+
+**Hierarchy**
+- One `.ds-button--primary` per screen region, and it is last in its action
+  group. — `app-chrome.tsx`: both the page header's
+  `.ds-page-header-actions` and the toolbar's `.ds-toolbar-group` end on it.
+- `.ds-kicker` above a title, never beside it. — every block and foundation
+  page header in `site/src/docs/`, and the full-screen example above.
+
+### Don't
 - ❌ rounded corners, shadows, gradients, glassmorphism.
 - ❌ accent-colored primary buttons (primary is **black**); accent is for links/emphasis.
 - ❌ inventing `.ds-*` names or restyling existing ones — compose with inline layout instead.

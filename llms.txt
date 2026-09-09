@@ -5,8 +5,16 @@
 > uppercase 0.08em labels, tabular numerals, one themeable accent. Every class is
 > namespaced `.ds-*` and backed by `--ds-*` CSS custom properties.
 
-When generating UI for Diametral, include the stylesheet and use `.ds-*` classes.
-No build step is required.
+Pick the layer first. In **React**, use `@diametral/design-system/react` — the
+full typed component set, where the interactive components (sidebar collapse,
+combobox, drawer, data table) ship their behaviour. **Anywhere else** — static
+HTML, Vue, Angular, Django, Streamlit, email — include the stylesheet and use
+`.ds-*` classes; no build step is required, and you wire the behaviour yourself.
+
+```js
+import "@diametral/design-system/css/diametral.css";
+import { Sidebar, DataTable } from "@diametral/design-system/react";
+```
 
 ```html
 <link rel="stylesheet" href="https://unpkg.com/@diametral/design-system/dist/diametral.css">
@@ -14,10 +22,12 @@ No build step is required.
 ```
 
 ## Core reference
-- [Design system for Claude](docs/for-claude.md): single-file, self-contained reference — principles, tokens, every component with copy-paste HTML, and rules. **Start here.**
+- [Design system for Claude](docs/for-claude.md): single-file, self-contained reference — principles, tokens, and the ~80 most-used classes with copy-paste HTML, plus where to find the rest. **Start here.**
 - [Installation](docs/installation.md): npm / Vite / Next / Angular / Vue / Streamlit / CDN.
 - [Components](docs/components.md): full component catalogue.
 - [Foundations](docs/foundations.md): color, type, spacing, layout, borders, motion.
+- [Recipes](docs/recipes.md): whole screens in React — app shell, CRUD list+detail, dashboard, auth gate.
+- [Blocks & templates](https://littlebigcode.github.io/design-system/blocks): whole compositions — app chrome, auth, marketing, data+detail.
 
 ## Rules (must follow)
 - NO border-radius, NO box-shadow, NO gradients. Borders are 1px solid `var(--ds-rule)`.
@@ -25,6 +35,7 @@ No build step is required.
 - The accent `--ds-accent` is for emphasis only (links, key edges, the primary action is solid black `#161616`). It is themeable and has no fixed value — never hard-code it.
 - Headings use the title font; labels are uppercase, letter-spaced, faint.
 - Prefer semantic tokens (`--ds-ink`, `--ds-accent`, `--ds-rule`, …) over raw hex.
+- A primitive is a fallback. Before assembling a screen from primitives, check whether a block or template already contains it — copying that and changing the content is the correct move.
 
 ## Optional
-- [React components](docs/react.md), [Theming](docs/theming.md), [Emails](docs/emails.md), [Recipes](docs/recipes.md).
+- [React components](docs/react.md), [Theming](docs/theming.md), [Emails](docs/emails.md).
