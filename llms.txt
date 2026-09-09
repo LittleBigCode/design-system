@@ -28,6 +28,7 @@ import { Sidebar, DataTable } from "@diametral/design-system/react";
 - [Foundations](docs/foundations.md): color, type, spacing, layout, borders, motion.
 - [Recipes](docs/recipes.md): whole screens in React — app shell, CRUD list+detail, dashboard, auth gate.
 - [Blocks & templates](https://littlebigcode.github.io/design-system/blocks): whole compositions — app chrome, auth, marketing, data+detail.
+- [Agent index](docs/agent-index.json): every component, its category, its CSS file, and its examples richest-first — machine-readable.
 
 ## Rules (must follow)
 - NO border-radius, NO box-shadow, NO gradients. Borders are 1px solid `var(--ds-rule)`.

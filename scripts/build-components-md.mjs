@@ -21,7 +21,7 @@ const END = "<!-- END generated: react-components -->";
 const SITE = "https://littlebigcode.github.io/design-system";
 
 /** The COMPONENTS array only — PENDING holds entries for unlanded batches. */
-function componentsBlock(source) {
+export function componentsBlock(source) {
   const start = source.indexOf("export const COMPONENTS: ComponentDoc[] = [");
   if (start < 0) throw new Error(`${REGISTRY}: no COMPONENTS array`);
   const end = source.indexOf("export const PENDING", start);
@@ -38,10 +38,10 @@ function componentsBlock(source) {
  * when its own content contains a double quote, which `radio-group`'s
  * description (`<input type="radio">`) does.
  */
-const STR = String.raw`(?:"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')`;
+export const STR = String.raw`(?:"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')`;
 
 /** The literal's value, with its quotes stripped and its escapes resolved. */
-function unquote(literal) {
+export function unquote(literal) {
   const quote = literal[0];
   return literal
     .slice(1, -1)
@@ -49,7 +49,7 @@ function unquote(literal) {
     .replace(/\\\\/g, "\\");
 }
 
-function parse(block) {
+export function parse(block) {
   const ENTRY = new RegExp(
     String.raw`\{\s*slug: (${STR}),\s*name: (${STR}),\s*category: (${STR}),` +
       String.raw`\s*exports: \[([^\]]*)\],\s*description:\s*(${STR})`,

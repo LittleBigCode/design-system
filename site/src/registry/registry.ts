@@ -2,6 +2,8 @@ export type Example = {
   /** Key into the demo registry: `<slug>/<file-name>` without the extension. */
   demo: string
   title: string
+  /** This component's richest example, when it isn't the first one listed. Read by `scripts/build-agent-index.mjs`. */
+  featured?: boolean
   description?: string
 }
 
@@ -682,6 +684,7 @@ export const COMPONENTS: ComponentDoc[] = [
       {
         demo: "form/pending",
         title: "Pending submit",
+        featured: true,
         description:
           "An async `onSubmit`: read the values before the first `await`, since `event.currentTarget` is null once the handler yields. The server's answer lands in the same error state a client check would use.",
       },
@@ -884,6 +887,7 @@ export const COMPONENTS: ComponentDoc[] = [
       {
         demo: "data-table/editable",
         title: "Inline edit",
+        featured: true,
         description:
           "`editable` on the table plus `meta: { editable: true }` on a column opens the cell on double-click or Enter; `onCellEdit` receives the row, the column key and the new value. The table does not mutate `data` itself.",
       },
@@ -1344,6 +1348,7 @@ export const COMPONENTS: ComponentDoc[] = [
       {
         demo: "sidebar/shell",
         title: "A full app shell",
+        featured: true,
         description:
           "Header search, group actions, badges, a menu action, a loading skeleton row, and a footer account menu — the rest of the anatomy.",
       },
@@ -3711,6 +3716,7 @@ export const COMPONENTS: ComponentDoc[] = [
       {
         demo: "input/types",
         title: "Typed values",
+        featured: true,
         description:
           "`type` swaps the native control, not just the keyboard: `date` brings the platform picker and `file` picks up the `file:` classes the component ships for the browser's own button. Validation props (`min`, `max`, `accept`) pass straight through. For a numeric field with steppers, `Number Field` is the richer sibling.",
       },
@@ -3871,6 +3877,7 @@ export const COMPONENTS: ComponentDoc[] = [
       {
         demo: "select/status",
         title: "Status picker",
+        featured: true,
         description:
           "`SelectValue` also takes a function child, which receives the current value — the way to print an icon beside the label, since `items` only carries text. The trigger sizes any icon it holds, so no wrapper classes.",
       },
@@ -4146,6 +4153,7 @@ export const COMPONENTS: ComponentDoc[] = [
       {
         demo: "card/with-chart",
         title: "With a chart",
+        featured: true,
         description:
           "`CardContent` is horizontal padding and nothing else — no height, no gap — so the `ChartContainer` brings its own `h-40 w-full`. Left to itself the chart's `aspect-video` would decide how tall the card is.",
       },
@@ -4353,6 +4361,7 @@ export const COMPONENTS: ComponentDoc[] = [
       {
         demo: "kanban/card-content",
         title: "Card content",
+        featured: true,
         description:
           "`renderCard` fills the card body and nothing else — the board keeps the surface and the grip, so a card carrying its own badges or buttons never competes with the drag. Compose `KanbanCardTitle` back in to keep the heading matching the default.",
       },
