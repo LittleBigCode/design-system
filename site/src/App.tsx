@@ -7,6 +7,7 @@ import { DocsLayout } from "@/docs/docs-layout"
 import { FoundationPage } from "@/docs/foundations/foundation-page"
 import { FoundationsIndex } from "@/docs/foundations"
 import { Installation } from "@/docs/installation"
+import { KitchenSink } from "@/docs/kitchen-sink"
 import { Overview } from "@/docs/overview"
 import { TemplatePage } from "@/docs/templates/template-page"
 import { TemplatesIndex } from "@/docs/templates"
@@ -21,6 +22,7 @@ export function App() {
         <Route element={<DocsLayout />}>
           <Route index element={<Overview />} />
           <Route path="docs/:slug" element={<ComponentPage />} />
+          <Route path="kitchen-sink" element={<KitchenSink />} />
           <Route path="installation" element={<Installation />} />
           <Route path="theming" element={<Theming />} />
           <Route path="foundations" element={<FoundationsIndex />} />

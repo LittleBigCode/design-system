@@ -2,12 +2,7 @@ import { Link } from "react-router"
 
 import { Card, CardContent, CardTitle } from "@diametral/design-system/react"
 
-const BLOCKS = [
-  ["app-chrome", "App chrome", "Page header, toolbar, filter bar and stat band — the frame around an application screen."],
-  ["auth", "Auth", "Sign in, sign up, forgot-password and two-factor cards."],
-  ["marketing", "Marketing", "Hero, feature grid, pricing, stat band and footer — built on the visible grid system."],
-  ["data-detail", "Data & detail", "Detail layout, empty state, faceted filter, activity feed and a confirmation dialog."],
-] as const
+import { BLOCKS } from "@/docs/sections"
 
 export function BlocksIndex() {
   return (

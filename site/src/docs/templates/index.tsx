@@ -2,11 +2,7 @@ import { Link } from "react-router"
 
 import { Card, CardContent, CardTitle } from "@diametral/design-system/react"
 
-const TEMPLATES = [
-  ["dashboard", "Dashboard", "App bar, sidebar nav, KPI row and a chart panel — a full application screen."],
-  ["login", "Login", "A standalone sign-in page, centered on the brand background."],
-  ["error-404", "404", "A standalone error page built from the empty-state pattern."],
-] as const
+import { TEMPLATES } from "@/docs/sections"
 
 export function TemplatesIndex() {
   return (
