@@ -13,31 +13,30 @@ party, you **must verify that you hold the appropriate license**.
 If you do not hold an Ufficio license, **do not import `ufficio.css`**. The design
 system already renders headings in a free fallback (see below) — no action needed.
 
-## Free fallbacks (no license required)
+## Free fallback (no license required)
 
-`--ds-font-title` defaults to:
+`--ds-font-title` falls back to Geist, not to a serif:
 
 ```
-"Fraunces", "PP Editorial New", Georgia, "Times New Roman", serif
+"Ufficio", "Geist Variable", "Geist", sans-serif
 ```
 
-- **Fraunces** — SIL Open Font License 1.1. A refined, light, editorial serif that
-  carries the same "minimal, enduring, elegant" character as Ufficio.
-- **PP Editorial New** — a commercial alternative (listed only as a stylistic match;
-  same caveat as Ufficio applies if you choose it).
-- **Georgia / serif** — system fallback, always available.
+The charter has exactly two faces, Ufficio and Geist. Borrowing a third — the
+Fraunces / PP Editorial New / Georgia chain this token used to carry — meant every
+unlicensed project silently rendered Georgia headings above a Geist body, which is
+not the design. Geist Light 300 carries titles instead.
 
-Importing `fallback.css` loads Fraunces (and Geist) from Google Fonts.
+Importing `fallback.css` loads Geist and Geist Mono from Google Fonts.
 
-## Geist — body typeface
+## Geist — body, title fallback and mono
 
-`--ds-font-sans` uses **Geist**, released under the SIL Open Font License 1.1 (free).
-Load it via Google Fonts:
+`--ds-font-sans` and `--ds-font-mono` use **Geist** and **Geist Mono**, both released
+under the SIL Open Font License 1.1 (free). Load them via Google Fonts:
 
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 ```
 
 ## Summary
@@ -45,5 +44,5 @@ Load it via Google Fonts:
 | Font | Role | License | Action |
 |---|---|---|---|
 | Ufficio | Title (opt-in) | **Commercial** | Verify license before any external distribution |
-| Fraunces | Title (default fallback) | OFL 1.1 (free) | Use freely |
-| Geist | Body | OFL 1.1 (free) | Use freely |
+| Geist | Body + title fallback | OFL 1.1 (free) | Use freely |
+| Geist Mono | Tokens, code | OFL 1.1 (free) | Use freely |

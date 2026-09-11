@@ -8,7 +8,7 @@ form library:
 - [`useForm`](../react/hooks/useForm.js) — holds values, errors, touched and
   submitting state, and hands you a `register(name)` spread and a
   `handleSubmit(onValid)` event handler.
-- [`FormField`](../react/components/FormField.js) — a labelled field row that
+- [`FormField`](../dist/react/index.js) — a labelled field row that
   wraps a control in the DS `Field` and renders the matching inline error (or a
   neutral hint) underneath via `FieldHint`.
 

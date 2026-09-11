@@ -1,54 +1,50 @@
-/* ============================================================================
-   Stat / KPI card — .ds-stat
-   ----------------------------------------------------------------------------
-   A dashboard tile: a flat bordered surface (like .ds-card) carrying an
-   uppercase faint label, a large title-voiced figure, an optional up/down
-   delta, and a slot for inline content (e.g. a Sparkline) under the value.
-   ============================================================================ */
-.ds-stat {
-  background: var(--ds-surface);
+.ds-stat-card {
+  display: flex;
+  flex-direction: column;
   border: 1px solid var(--ds-rule);
-  border-radius: var(--ds-radius-none);
+  background: var(--ds-surface);
+  padding: 1rem 1.25rem;
   color: var(--ds-ink);
-  padding: 16px 20px;
 }
 
-.ds-stat__label {
-  font-size: var(--ds-text-2xs);
+.ds-stat-card-label {
+  font-size: 0.6875rem;
+  line-height: calc(1 / 0.6875);
   font-weight: 400;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.05em;
+  color: var(--ds-ink-soft);
   text-transform: uppercase;
-  color: var(--ds-ink-faint);
 }
 
-.ds-stat__value {
+.ds-stat-card-value {
+  margin-top: 0.5rem;
   font-family: var(--ds-font-title);
-  font-size: var(--ds-text-2xl);
-  font-weight: var(--ds-font-weight-title);
-  letter-spacing: -0.5px;
-  line-height: var(--ds-leading-tight);
+  font-size: 1.5rem;
+  line-height: calc(2 / 1.5);
+  font-weight: 600;
+  letter-spacing: -0.025em;
   font-variant-numeric: tabular-nums;
-  margin-top: var(--ds-space-2);
 }
 
-/* Delta — small signed change. .is-up reads success, .is-down reads danger;
-   the arrow is supplied via ::before. */
-.ds-stat__delta {
+.ds-stat-card-delta {
   display: inline-flex;
+  width: fit-content;
   align-items: center;
-  gap: 4px;
-  margin-top: var(--ds-space-1);
-  font-size: var(--ds-text-xs);
+  gap: 0.25rem;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  line-height: calc(1 / 0.75);
+  color: var(--ds-ink-soft);
   font-variant-numeric: tabular-nums;
-  color: var(--ds-ink-faint);
 }
-.ds-stat__delta.is-up   { color: var(--ds-success); }
-.ds-stat__delta.is-down { color: var(--ds-danger); }
-.ds-stat__delta.is-up::before   { content: "\25B2"; font-size: 0.85em; }
-.ds-stat__delta.is-down::before { content: "\25BC"; font-size: 0.85em; }
+.ds-stat-card-delta--up {
+  color: var(--ds-success-ink);
+}
+.ds-stat-card-delta--down {
+  color: var(--ds-danger-ink);
+}
 
-/* Spark slot — room for an inline chart (e.g. a sparkline) under the figure. */
-.ds-stat__spark {
-  margin-top: var(--ds-space-3);
-  line-height: 0;
+.ds-stat-card-spark {
+  margin-top: 0.75rem;
+  line-height: 1;
 }

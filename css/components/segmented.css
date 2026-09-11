@@ -13,12 +13,16 @@
   border-radius: var(--ds-radius-none);
   transition: background-color var(--ds-transition), color var(--ds-transition);
 }
+/* --ds-bg, not --ds-on-accent, for the pair of the ink fill. --ds-on-accent is
+   pinned to --ds-blanc and the dark theme does not flip it, so on dark's
+   near-white --ds-ink it renders white on white (issue #15). --ds-bg is the
+   token that inverts with the theme — see button.css's note on the same fix. */
 .ds-segmented__item[aria-pressed="true"],
 .ds-segmented__item[aria-selected="true"],
 .ds-segmented__item.is-active {
   background: var(--ds-ink);
   border-color: var(--ds-ink);
-  color: var(--ds-on-accent);
+  color: var(--ds-bg);
 }
 .ds-segmented__item:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: 2px; }
 
@@ -30,3 +34,168 @@
 }
 .ds-segmented__dot--ok { background: var(--ds-success); }
 .ds-segmented__dot--ko { background: var(--ds-warning); }
+
+/* From migration-source-v1's toggle.css + toggle-group.css (batch 9, #42).
+   `<ds-segmented>` reads none of `.ds-toggle`/`.ds-toggle-group*` — no
+   collision with the grammar above — landed as-is for whenever the source's
+   Toggle/ToggleGroup React lands. */
+.ds-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  border-radius: 0;
+  font-size: 0.75rem;
+  line-height: calc(1 / 0.75);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  text-transform: uppercase;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  outline: none;
+}
+.ds-toggle svg {
+  pointer-events: none;
+  flex-shrink: 0;
+}
+.ds-toggle svg:not([class*="size-"]) {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+.ds-toggle:hover {
+  background: var(--ds-bg-alt);
+  color: var(--ds-ink);
+}
+.ds-toggle:focus-visible {
+  border-color: var(--ds-focus-ring);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--ds-focus-ring) 30%, transparent);
+}
+.ds-toggle:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.ds-toggle[aria-invalid="true"] {
+  border-color: var(--ds-danger);
+  box-shadow: 0 0 0 1px
+    color-mix(in oklch, var(--ds-danger) 20%, transparent);
+}
+.ds-toggle[aria-pressed="true"] {
+  background: var(--ds-bg-alt);
+}
+
+.ds-toggle--default {
+  background: transparent;
+}
+
+.ds-toggle--outline {
+  border: 1px solid var(--ds-rule);
+  background: transparent;
+}
+
+.ds-toggle--size-default {
+  height: 2.5rem;
+  min-width: 2.5rem;
+  padding-inline: 1.5rem;
+}
+.ds-toggle--size-default:has([data-icon="inline-end"]) {
+  padding-inline-end: 1rem;
+}
+.ds-toggle--size-default:has([data-icon="inline-start"]) {
+  padding-inline-start: 1rem;
+}
+
+.ds-toggle--size-sm {
+  height: 2.25rem;
+  min-width: 2.25rem;
+  padding-inline: 1rem;
+}
+.ds-toggle--size-sm:has([data-icon="inline-end"]) {
+  padding-inline-end: 0.75rem;
+}
+.ds-toggle--size-sm:has([data-icon="inline-start"]) {
+  padding-inline-start: 0.75rem;
+}
+
+.ds-toggle--size-lg {
+  height: 2.75rem;
+  min-width: 2.75rem;
+  padding-inline: 2rem;
+}
+.ds-toggle--size-lg:has([data-icon="inline-end"]) {
+  padding-inline-end: 1.25rem;
+}
+.ds-toggle--size-lg:has([data-icon="inline-start"]) {
+  padding-inline-start: 1.25rem;
+}
+.ds-toggle-group {
+  display: flex;
+  width: fit-content;
+  flex-direction: row;
+  align-items: center;
+  gap: calc(0.25rem * var(--gap));
+}
+.ds-toggle-group[data-spacing="0"][data-variant="outline"] {
+  border-radius: 0;
+}
+.ds-toggle-group[data-orientation="vertical"] {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.ds-toggle-group-item {
+  flex-shrink: 0;
+}
+:where(.ds-toggle-group[data-spacing="0"]) .ds-toggle-group-item {
+  border-radius: 0;
+  padding-inline: 1.5rem;
+  box-shadow: none;
+}
+:where(.ds-toggle-group[data-spacing="0"])
+  .ds-toggle-group-item:has([data-icon="inline-end"]) {
+  padding-inline-end: 1rem;
+}
+:where(.ds-toggle-group[data-spacing="0"])
+  .ds-toggle-group-item:has([data-icon="inline-start"]) {
+  padding-inline-start: 1rem;
+}
+.ds-toggle-group-item:focus,
+.ds-toggle-group-item:focus-visible {
+  z-index: 10;
+}
+:where(.ds-toggle-group[data-orientation="horizontal"][data-spacing="0"])
+  .ds-toggle-group-item:first-child,
+:where(.ds-toggle-group[data-orientation="vertical"][data-spacing="0"])
+  .ds-toggle-group-item:first-child,
+:where(.ds-toggle-group[data-orientation="horizontal"][data-spacing="0"])
+  .ds-toggle-group-item:last-child,
+:where(.ds-toggle-group[data-orientation="vertical"][data-spacing="0"])
+  .ds-toggle-group-item:last-child {
+  border-radius: 0;
+}
+.ds-toggle-group-item[data-state="on"] {
+  background-color: var(--ds-bg-alt);
+  color: var(--ds-ink);
+}
+:where(
+    .ds-toggle-group[data-orientation="horizontal"][data-spacing="0"]
+  )
+  .ds-toggle-group-item[data-variant="outline"] {
+  border-inline-start-width: 0;
+}
+:where(.ds-toggle-group[data-orientation="vertical"][data-spacing="0"])
+  .ds-toggle-group-item[data-variant="outline"] {
+  border-top-width: 0;
+}
+:where(
+    .ds-toggle-group[data-orientation="horizontal"][data-spacing="0"]
+  )
+  .ds-toggle-group-item[data-variant="outline"]:first-child {
+  border-inline-start-width: 1px;
+}
+:where(.ds-toggle-group[data-orientation="vertical"][data-spacing="0"])
+  .ds-toggle-group-item[data-variant="outline"]:first-child {
+  border-top-width: 1px;
+}

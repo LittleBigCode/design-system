@@ -82,10 +82,9 @@ hues**:
   `#2e7d4f`, `--ds-orange` `#ff5500`, `--ds-red` `#c0392b`, plus their tints — come from the
   application and are tuned for legibility, not from the charter's vivid secondary palette.
   `--ds-info` `#1488a6` is DS-introduced, harmonized with the brand blue.
-- **⚠️ `--ds-vert` (`#89FC79`) is SAMPLED from the charter PNG.** Its swatch label in the
-  charter was a copy-paste typo, so the hex was eye-dropped from the artwork rather than read
-  from a reliable value. **Flag for brand-owner confirmation before `1.0`** — see
-  [`../docs/versioning.md`](../docs/versioning.md).
+- **`--ds-vert` (`#53FF64`) is charter canonical.** Earlier releases carried `#89FC79`,
+  eye-dropped from the charter PNG under the belief that the swatch label was a copy-paste
+  typo. The label was right and the sample was wrong; the value is read from the charter.
 
 See the live color foundation:
 **[../examples/foundations/color.html](../examples/foundations/color.html)**.

@@ -1,4 +1,22 @@
-/* Tag / Label — .ds-tag (small inline uppercase pill; status + removable) */
+/* ============================================================================
+   Tag / Label — .ds-tag (small inline uppercase pill; tone + removable)
+   ----------------------------------------------------------------------------
+   Frozen (css-ledger §1): `ds-tag` and `ds-tag--success` are both in the set
+   `docs/streamlit.md` publishes for Python consumers to write by hand, so the
+   box and that modifier's name are contract.
+
+   The absorption is narrow, and deliberately so. The source's tag is a filled
+   12px pill with no border; 0.11's is a bordered 10px uppercase one, and that
+   is the frozen box. What lands is the **tone axis completing itself**:
+   `--neutral` and `--critical` join the four already here, so a tag can now
+   say any of the six things every other status surface in the system can say
+   (`banner`, `alert`, `callout`, `status`). Two modifiers, not a repaint.
+
+   Not absorbed: the source's `tag.tsx` comment says it also absorbs 0.11's
+   `Chip`, folding `warn` into `tone="warning"`. `chip.css` is a held,
+   target-only file (css-ledger §3) and `Chip` is not in this batch, so that
+   fold is left where the ledger put it. Nothing here reaches `.ds-chip`.
+   ============================================================================ */
 .ds-tag {
   display: inline-flex;
   align-items: center;
@@ -20,6 +38,8 @@
 /* Status variants — colored border + matching text + tinted background.
    Text uses the *-ink shade so small uppercase labels clear AA on the tint;
    the border keeps the brighter status hue. */
+.ds-tag--neutral { color: var(--ds-ink-soft);    border-color: var(--ds-rule);    background: var(--ds-neutral-bg); }
+.ds-tag--critical{ color: var(--ds-ink);         border-color: var(--ds-critical); background: var(--ds-critical-bg); }
 .ds-tag--info    { color: var(--ds-info-ink);    border-color: var(--ds-info);    background: var(--ds-info-bg); }
 .ds-tag--success { color: var(--ds-success-ink); border-color: var(--ds-success); background: var(--ds-success-bg); }
 .ds-tag--warning { color: var(--ds-warning-ink); border-color: var(--ds-warning); background: var(--ds-warning-bg); }
@@ -46,4 +66,5 @@
 .ds-tag--success .ds-tag__remove:hover { color: var(--ds-success); }
 .ds-tag--warning .ds-tag__remove:hover { color: var(--ds-warning); }
 .ds-tag--danger .ds-tag__remove:hover  { color: var(--ds-danger); }
+.ds-tag--critical .ds-tag__remove:hover { color: var(--ds-critical); }
 .ds-tag__remove:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: 2px; }

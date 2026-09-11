@@ -1,0 +1,70 @@
+/* ============================================================================
+   Wordmark — .ds-wordmark
+   ----------------------------------------------------------------------------
+   The Diametral lockup, in the produced artwork rather than the geometric
+   construction. What 0.x drew in `app-bar.css` was the brand's three elements
+   as primitives — a circle, a square and a diagonal line, the same sketch
+   `assets/logo/diametral-mark.svg` still holds. What lands here are the two
+   finished lockups: the typographic wordmark, and the monogram that sets it
+   inside the symbol. Both are `currentColor` paths, so ink colour recolours
+   them and they invert with the theme for free.
+
+   Note that `assets/logo/` has not been re-cut to match. The React binding and
+   the geometric svg now draw different marks, which is a brand-asset decision
+   rather than a code one — see the batch 3 PR.
+
+   Two variants, sized here rather than on the component. The source kept the
+   svg sizing as literal `[&_svg]:h-5` / `[&_svg]:size-8` utilities on its cva
+   so tailwind-merge could dedupe them against `wordmark/app-header.tsx`'s
+   `[&_svg]:size-6` override. That is the one dedupe exception this file owes,
+   and it resolves the same way as the rest: the sizes become real declarations
+   keyed to `[data-variant]`, and the override becomes `.ds-wordmark--lg`.
+
+   `__name` and `__sub` are kept. The source's Wordmark has no equivalent for
+   either — it is the mark alone — and three in-repo call sites plus
+   `docs/migration.md`'s 0.x mapping table read them, so dropping them would be
+   a regression rather than an absorption. They move here out of `app-bar.css`,
+   which keeps only the app bar.
+   ============================================================================ */
+.ds-wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--ds-ink);
+}
+
+.ds-wordmark[data-variant="horizontal"] svg {
+  height: 20px;
+  width: auto;
+}
+.ds-wordmark[data-variant="square"] svg {
+  width: 32px;
+  height: 32px;
+}
+/* The app-header override: one step up, for a bar that gives the mark room. */
+.ds-wordmark--lg[data-variant="horizontal"] svg { height: 24px; }
+.ds-wordmark--lg[data-variant="square"] svg { width: 24px; height: 24px; }
+
+/* The optional text lockup beside the mark — a product name and a qualifier
+   ("Diametral" / "Console"). Not part of the source's Wordmark, and moved here
+   from `app-bar.css` verbatim: these are a published 0.x contract, unrelated to
+   the absorption, so their look is unchanged. `__mark` is the class a
+   hand-written svg wears in `examples/`; the React binding emits the real
+   lockup and needs none. */
+.ds-wordmark__mark { width: 34px; height: 34px; color: var(--ds-ink); flex: none; }
+.ds-wordmark__name {
+  font-family: var(--ds-font-title);
+  font-weight: var(--ds-font-weight-title);
+  font-size: var(--ds-text-lg);
+  letter-spacing: -0.4px;
+  line-height: var(--ds-leading-tight);
+}
+.ds-wordmark__sub {
+  font-size: var(--ds-text-xs);
+  color: var(--ds-ink-faint);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-left: 1px solid var(--ds-rule);
+  padding-left: 14px;
+  margin-left: 2px;
+}

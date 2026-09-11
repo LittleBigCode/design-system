@@ -27,7 +27,7 @@ It ships as:
 
 There is **no build step required to use it**.
 
-The library spans **~50 components** — actions, forms, **data display (including a lazy-loading
+The library spans **115 components** — actions, forms, **data display (including a lazy-loading
 data grid)**, feedback, navigation, overlays, data-viz and utilities — every one with a matching
 React component, plus ready-made **page templates** (login, dashboard, 404). Browse them all in
 the [live showcase](https://littlebigcode.github.io/design-system/).
@@ -85,8 +85,8 @@ import { Button, Status, Metric } from "@diametral/design-system/react";
 <Button variant="primary">Save</Button>
 ```
 
-See [`docs/react.md`](docs/react.md) and the live, buildless demo in
-[`examples/react.html`](examples/react.html).
+See [`docs/react.md`](docs/react.md) and the live docs site at
+[littlebigcode.github.io/design-system](https://littlebigcode.github.io/design-system/).
 
 > The system is pure CSS + fonts + SVG + a sprinkle of vanilla JS for the Web Components.
 > **No bundler, transpiler, or framework is needed to consume it.**
@@ -109,14 +109,14 @@ A kit to stand up an app fast on top of the components:
   `useResource` + `restLoadPage` ([`docs/data.md`](docs/data.md)).
 - **Theme generator** — turn a brand color into a `data-theme` ([`docs/theme-generator.md`](docs/theme-generator.md)).
 - **Shared configs** — ESLint, Prettier, base tsconfig and VS Code snippets in [`configs/`](configs/).
-- **Icons** — a Lucide-compatible `<Icon>` / `<ds-icon>` line-icon set; any 24×24 stroke SVG drops in.
+- **Icons** — a Phosphor `<Icon>` / `<ds-icon>` icon set (regular weight); any 256×256 filled Phosphor SVG drops in.
 - **Emails** — on-brand, email-safe transactional templates (welcome, reset, OTP, notification, invoice, invite, digest, alert) in [`docs/emails.md`](docs/emails.md).
 - **Streamlit (Python)** — theme config + CSS injection + `.ds-*` HTML blocks: [`docs/streamlit.md`](docs/streamlit.md).
 - **Keycloak** — a drop-in theme for the login flow + transactional emails: [`keycloak/`](keycloak/).
 - **Designer handoff** — `npm run build` emits Tokens Studio tokens for Figma ([`docs/figma.md`](docs/figma.md)).
 - **AI assistants / Claude** — generate on-brand UI by giving Claude one reference file. See
   [**Use it with Claude**](#use-it-with-claude) below.
-- **Tested** — visual-regression + axe accessibility checks in CI (`npm run test:visual` / `npm run test:a11y`).
+- **Tested** — visual-regression + axe accessibility checks in CI (`cd site && npm run test:visual` / `npm run test:a11y`).
 
 ## Use it with Claude
 
@@ -167,16 +167,13 @@ Diametral CSS in a `<style>` instead of the `<link>`"* — that renders everywhe
 
 ## Live showcase
 
-A buildless, multi-page showcase that dogfoods the system lives in [`examples/`](examples/).
+The docs site that dogfoods the system lives in [`site/`](site/) and is deployed at
+[littlebigcode.github.io/design-system](https://littlebigcode.github.io/design-system/).
 
 ```bash
-# from the repo root
-python3 -m http.server 8080
-# then open http://localhost:8080/examples/
+npm run build     # from the repo root — site/'s file:.. install needs dist/
+cd site && npm run dev
 ```
-
-It also works straight from the filesystem — open `examples/index.html` in a browser.
-`examples/kitchen-sink.html` renders every component on one page.
 
 ## Token model
 
@@ -208,13 +205,13 @@ No third-party dependencies — the build uses Node built-ins only.
 Semantic Versioning for a CSS system: token renames / class removals are **major**,
 new tokens or components are **minor**, fixes are **patch**. See
 [`CHANGELOG.md`](CHANGELOG.md), [`docs/versioning.md`](docs/versioning.md), and
-[`CONTRIBUTING.md`](CONTRIBUTING.md). Publishing to npm / GitHub Packages: [`RELEASE.md`](RELEASE.md).
+[`CONTRIBUTING.md`](CONTRIBUTING.md). Publishing to npm: [`RELEASE.md`](RELEASE.md).
 
 > ⚠️ **Font licensing.** **Ufficio is a commercial font**, bundled and served under
 > Diametral's own font license (see [`NOTICE.md`](NOTICE.md)). This repository grants no
 > rights to it — **third parties must obtain their own license**. If you don't hold one,
-> simply don't import `ufficio.css`: titles fall back to the free **Fraunces** stack
-> automatically. Geist (body) and Fraunces are free (SIL OFL 1.1). Details in
+> simply don't import `ufficio.css`: titles fall back to the free **Geist** automatically.
+> Geist and Geist Mono are free (SIL OFL 1.1). Details in
 > [`docs/fonts-and-licensing.md`](docs/fonts-and-licensing.md).
 
 ## Directory layout
@@ -232,7 +229,7 @@ design-system/
 ├── tokens/tokens.json    Single source of truth
 ├── assets/               fonts (Ufficio + license) · logo · photography
 ├── docs/                 English documentation
-├── examples/             Live showcase (static HTML)
+├── site/                 Docs site (React), deployed at `/`
 ├── scripts/              Zero-dependency build scripts
 └── dist/                 Generated (gitignored)
 ```

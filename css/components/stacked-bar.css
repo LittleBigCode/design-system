@@ -1,0 +1,19 @@
+/* ============================================================================
+   Stacked bar — .ds-stacked-bar-root
+   ----------------------------------------------------------------------------
+   The share chart: horizontal bars normalised to each row's own total, so
+   every bar is the same length and only the split differs. A
+   `.ds-chart-container` with a recharts vertical <BarChart> in it, so all this
+   file owns is the box — full width, and a height shorter than the axis charts'
+   because a share bar carries no value axis to leave room for.
+
+   `h-40` was a literal Tailwind class in the source, kept literal so
+   `tailwind-merge` could dedupe a caller's `h-24`/`h-8` override. Here the
+   height is a real declaration read through `--ds-chart-height`, which is
+   deterministic where a competing class would depend on stylesheet order.
+   ============================================================================ */
+.ds-stacked-bar-root {
+  aspect-ratio: auto;
+  inline-size: 100%;
+  block-size: var(--ds-chart-height, 10rem);
+}

@@ -1,0 +1,3523 @@
+{
+  "generated": "npm run build",
+  "components": [
+    {
+      "slug": "speed-dial",
+      "name": "Speed Dial",
+      "category": "Actions",
+      "exports": [
+        "SpeedDial",
+        "SpeedDialAction"
+      ],
+      "description": "A floating button that fans out two to four actions when opened. Use it for the one main action of a view.",
+      "css": "css/components/speed-dial.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/speed-dial",
+      "examples": [
+        {
+          "demo": "speed-dial/basic",
+          "title": "Create actions"
+        },
+        {
+          "demo": "speed-dial/docked",
+          "title": "Docked to the top"
+        },
+        {
+          "demo": "speed-dial/tone",
+          "title": "Brand tone"
+        }
+      ]
+    },
+    {
+      "slug": "split-button",
+      "name": "SplitButton",
+      "category": "Actions",
+      "exports": [
+        "SplitButton"
+      ],
+      "description": "A main button with a caret beside it for its variants. Use it when there is a clear default action and a few alternatives.",
+      "url": "https://littlebigcode.github.io/design-system/docs/split-button",
+      "examples": [
+        {
+          "demo": "split-button/basic",
+          "title": "Deploy"
+        }
+      ]
+    },
+    {
+      "slug": "toggle-group",
+      "name": "Segmented",
+      "category": "Actions",
+      "exports": [
+        "Segmented",
+        "type SegmentedProps",
+        "type SegmentedItem"
+      ],
+      "description": "A short row of options where only one can be selected. Best for two to five choices that switch a view.",
+      "url": "https://littlebigcode.github.io/design-system/docs/toggle-group",
+      "examples": [
+        {
+          "demo": "toggle-group/basic",
+          "title": "Time window"
+        }
+      ]
+    },
+    {
+      "slug": "toggle-group-primitive",
+      "name": "ToggleGroup",
+      "category": "Actions",
+      "exports": [
+        "ToggleGroup",
+        "ToggleGroupItem"
+      ],
+      "description": "Base UI's toggle group, composed from parts. Use it when the row needs multi-select or a shape `Segmented` doesn't cover.",
+      "url": "https://littlebigcode.github.io/design-system/docs/toggle-group-primitive",
+      "examples": [
+        {
+          "demo": "toggle-group-primitive/single",
+          "title": "Single select"
+        },
+        {
+          "demo": "toggle-group-primitive/multiple",
+          "title": "Multiple select"
+        },
+        {
+          "demo": "toggle-group-primitive/joined",
+          "title": "Joined"
+        }
+      ]
+    },
+    {
+      "slug": "wizard",
+      "name": "Wizard",
+      "category": "Actions",
+      "exports": [
+        "Wizard",
+        "type WizardStep"
+      ],
+      "description": "An ordered sequence of steps with the progress and navigation built in. Use it when a later step depends on an earlier one.",
+      "css": "css/components/wizard.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/wizard",
+      "examples": [
+        {
+          "demo": "wizard/basic",
+          "title": "Four steps"
+        }
+      ]
+    },
+    {
+      "slug": "button-group",
+      "name": "Button Group",
+      "category": "Actions",
+      "exports": [
+        "ButtonGroup",
+        "ButtonGroupSeparator",
+        "ButtonGroupText",
+        "buttonGroupVariants"
+      ],
+      "description": "Joins related buttons into one segmented control with shared borders.",
+      "css": "css/components/button-group.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/button-group",
+      "examples": [
+        {
+          "demo": "button-group/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "button-group/split",
+          "title": "Split action"
+        },
+        {
+          "demo": "button-group/with-text",
+          "title": "With text and inputs"
+        },
+        {
+          "demo": "button-group/vertical",
+          "title": "Vertical"
+        }
+      ]
+    },
+    {
+      "slug": "icon-button",
+      "name": "Icon Button",
+      "category": "Actions",
+      "exports": [
+        "IconButton"
+      ],
+      "description": "A square `Button` for a single icon. The `label` prop is required, since the icon carries no text.",
+      "url": "https://littlebigcode.github.io/design-system/docs/icon-button",
+      "examples": [
+        {
+          "demo": "icon-button/toolbar",
+          "title": "Toolbar"
+        },
+        {
+          "demo": "icon-button/row-actions",
+          "title": "Row actions"
+        },
+        {
+          "demo": "icon-button/sizes",
+          "title": "Sizes"
+        }
+      ]
+    },
+    {
+      "slug": "toggle",
+      "name": "Toggle",
+      "category": "Actions",
+      "exports": [
+        "Toggle",
+        "toggleVariants"
+      ],
+      "description": "A button that stays pressed, for on/off controls like bold or mute. Use `Switch` or `Checkbox` for values a form submits.",
+      "css": "css/components/toggle.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/toggle",
+      "examples": [
+        {
+          "demo": "toggle/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "toggle/variants",
+          "title": "Variants and sizes"
+        },
+        {
+          "demo": "toggle/controlled",
+          "title": "Controlled"
+        },
+        {
+          "demo": "toggle/row-action",
+          "title": "Row action"
+        }
+      ]
+    },
+    {
+      "slug": "autocomplete",
+      "name": "Autocomplete",
+      "category": "Forms",
+      "exports": [
+        "Autocomplete",
+        "AutocompleteInput",
+        "AutocompleteClear",
+        "AutocompleteContent",
+        "AutocompleteList",
+        "AutocompleteItem",
+        "AutocompleteGroup",
+        "AutocompleteLabel",
+        "AutocompleteCollection",
+        "AutocompleteEmpty",
+        "AutocompleteStatus",
+        "AutocompleteSeparator"
+      ],
+      "description": "A text input with suggestions, where the typed value doesn't have to come from the list. Use `Combobox` when it must.",
+      "css": "css/components/autocomplete.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/autocomplete",
+      "examples": [
+        {
+          "demo": "autocomplete/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "autocomplete/grouped",
+          "title": "Grouped suggestions"
+        },
+        {
+          "demo": "autocomplete/inline",
+          "title": "Inline completion"
+        },
+        {
+          "demo": "autocomplete/async",
+          "title": "Server-side search"
+        }
+      ]
+    },
+    {
+      "slug": "calendar",
+      "name": "Calendar",
+      "category": "Forms",
+      "exports": [
+        "Calendar",
+        "CalendarDayButton"
+      ],
+      "description": "A month grid, built on react-day-picker. Use it when the reader needs to see the days; use `DatePicker` to just collect a date.",
+      "url": "https://littlebigcode.github.io/design-system/docs/calendar",
+      "examples": [
+        {
+          "demo": "calendar/basic",
+          "title": "A month with events"
+        }
+      ]
+    },
+    {
+      "slug": "color-picker",
+      "name": "ColorPicker",
+      "category": "Forms",
+      "exports": [
+        "ColorPicker",
+        "type ColorPickerProps"
+      ],
+      "description": "Swatches for the brand palette with a hex field beside them. Pass `swatches` to narrow the choices.",
+      "css": "css/components/color-picker.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/color-picker",
+      "examples": [
+        {
+          "demo": "color-picker/basic",
+          "title": "Basic"
+        }
+      ]
+    },
+    {
+      "slug": "combobox",
+      "name": "Combobox",
+      "category": "Forms",
+      "exports": [
+        "Combobox",
+        "ComboboxInput",
+        "ComboboxContent",
+        "ComboboxList",
+        "ComboboxItem",
+        "ComboboxGroup",
+        "ComboboxLabel",
+        "ComboboxCollection",
+        "ComboboxEmpty",
+        "ComboboxSeparator",
+        "ComboboxChips",
+        "ComboboxChip",
+        "ComboboxChipsInput",
+        "ComboboxTrigger",
+        "ComboboxValue",
+        "useComboboxAnchor"
+      ],
+      "description": "A text field that filters a list as you type and settles on one value. Use `Select` under about seven options.",
+      "css": "css/components/combobox.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/combobox",
+      "examples": [
+        {
+          "demo": "combobox/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "combobox/grouped",
+          "title": "Grouped"
+        },
+        {
+          "demo": "combobox/multiple",
+          "title": "Multiple, as chips"
+        }
+      ]
+    },
+    {
+      "slug": "date-picker",
+      "name": "DatePicker",
+      "category": "Forms",
+      "exports": [
+        "DatePicker",
+        "DatePickerTrigger",
+        "DatePickerContent"
+      ],
+      "description": "A field with a calendar in a popover, for picking one date.",
+      "css": "css/components/date-picker.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/date-picker",
+      "examples": [
+        {
+          "demo": "date-picker/basic",
+          "title": "Bounded to a year"
+        }
+      ]
+    },
+    {
+      "slug": "date-range-picker",
+      "name": "DateRangePicker",
+      "category": "Forms",
+      "exports": [
+        "DateRangePicker",
+        "type DateRange"
+      ],
+      "description": "A start and end date picked in one calendar. The value is `{ from, to }`.",
+      "url": "https://littlebigcode.github.io/design-system/docs/date-range-picker",
+      "examples": [
+        {
+          "demo": "date-range-picker/basic",
+          "title": "A picked range"
+        }
+      ]
+    },
+    {
+      "slug": "date-time-picker",
+      "name": "DateTimePicker",
+      "category": "Forms",
+      "exports": [
+        "DateTimePicker"
+      ],
+      "description": "A calendar and a time picker combined into one `Date` value.",
+      "url": "https://littlebigcode.github.io/design-system/docs/date-time-picker",
+      "examples": [
+        {
+          "demo": "date-time-picker/basic",
+          "title": "Quarter-hour steps"
+        }
+      ]
+    },
+    {
+      "slug": "file-upload",
+      "name": "FileUpload",
+      "category": "Forms",
+      "exports": [
+        "FileUpload",
+        "FileUploadIcon",
+        "FileUploadTitle",
+        "FileUploadDescription"
+      ],
+      "description": "A drop zone that also works as a file button. `accept` filters the picker but is not validation — check the files again on `onFiles`.",
+      "css": "css/components/file-upload.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/file-upload",
+      "examples": [
+        {
+          "demo": "file-upload/basic",
+          "title": "Multiple CSVs"
+        }
+      ]
+    },
+    {
+      "slug": "multi-select",
+      "name": "MultiSelect",
+      "category": "Forms",
+      "exports": [
+        "MultiSelect",
+        "type MultiSelectOption"
+      ],
+      "description": "Several values from a fixed list, shown as removable chips. Use checkboxes under about five options.",
+      "css": "css/components/multi-select.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/multi-select",
+      "examples": [
+        {
+          "demo": "multi-select/basic",
+          "title": "Scopes"
+        }
+      ]
+    },
+    {
+      "slug": "number-field",
+      "name": "NumberField",
+      "category": "Forms",
+      "exports": [
+        "NumberField",
+        "NumberFieldGroup",
+        "NumberFieldInput",
+        "NumberFieldDecrement",
+        "NumberFieldIncrement",
+        "NumberFieldScrubArea"
+      ],
+      "description": "A numeric field with stepper buttons. The value is `number | null`, so an empty field is never mistaken for zero.",
+      "url": "https://littlebigcode.github.io/design-system/docs/number-field",
+      "examples": [
+        {
+          "demo": "number-field/basic",
+          "title": "Bounded"
+        },
+        {
+          "demo": "number-field/with-scrub",
+          "title": "With a scrub area"
+        }
+      ]
+    },
+    {
+      "slug": "radio-group",
+      "name": "RadioGroup",
+      "category": "Forms",
+      "exports": [
+        "RadioGroup",
+        "RadioGroupItem"
+      ],
+      "description": "One choice from a few, over native radio inputs. Best for two to five options; past that use `Select`.",
+      "url": "https://littlebigcode.github.io/design-system/docs/radio-group",
+      "examples": [
+        {
+          "demo": "radio-group/basic",
+          "title": "Frequency"
+        }
+      ]
+    },
+    {
+      "slug": "rating",
+      "name": "Rating",
+      "category": "Forms",
+      "exports": [
+        "Rating"
+      ],
+      "description": "A star scale, as an input or, with `readOnly`, as a display.",
+      "css": "css/components/rating.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/rating",
+      "examples": [
+        {
+          "demo": "rating/basic",
+          "title": "Input and display"
+        }
+      ]
+    },
+    {
+      "slug": "tags-input",
+      "name": "TagsInput",
+      "category": "Forms",
+      "exports": [
+        "TagsInput"
+      ],
+      "description": "Free-form labels typed one at a time and shown as removable chips. Use `MultiSelect` when the list is fixed.",
+      "url": "https://littlebigcode.github.io/design-system/docs/tags-input",
+      "examples": [
+        {
+          "demo": "tags-input/basic",
+          "title": "Tags"
+        }
+      ]
+    },
+    {
+      "slug": "time-picker",
+      "name": "TimePicker",
+      "category": "Forms",
+      "exports": [
+        "TimePicker",
+        "type TimeValue"
+      ],
+      "description": "A time of day, from segmented hour and minute fields plus a dial. The value is `{ hours, minutes, seconds? }`, with no date attached.",
+      "css": "css/components/time-picker.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/time-picker",
+      "examples": [
+        {
+          "demo": "time-picker/basic",
+          "title": "Basic"
+        }
+      ]
+    },
+    {
+      "slug": "label",
+      "name": "Label",
+      "category": "Forms",
+      "exports": [
+        "Label"
+      ],
+      "description": "An accessible label for a control, paired with `htmlFor`. Use it when the label and the control are separate elements.",
+      "css": "css/components/label.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/label",
+      "examples": [
+        {
+          "demo": "label/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "label/with-controls",
+          "title": "Checkbox and switch rows"
+        },
+        {
+          "demo": "label/inline-hints",
+          "title": "Inline hints"
+        },
+        {
+          "demo": "label/disabled",
+          "title": "Disabled controls"
+        }
+      ]
+    },
+    {
+      "slug": "form",
+      "name": "Form",
+      "category": "Forms",
+      "exports": [
+        "Form"
+      ],
+      "description": "The page-level `<form>` element and its vertical spacing. `Field` handles everything inside it.",
+      "css": "css/components/form.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/form",
+      "examples": [
+        {
+          "demo": "form/pending",
+          "title": "Pending submit",
+          "featured": true
+        },
+        {
+          "demo": "form/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "form/validation",
+          "title": "Validation"
+        },
+        {
+          "demo": "form/sections",
+          "title": "Sectioned form"
+        }
+      ]
+    },
+    {
+      "slug": "field-array",
+      "name": "Field Array",
+      "category": "Forms",
+      "exports": [
+        "FieldArray",
+        "FieldArrayItem",
+        "FieldArrayItemContent",
+        "FieldArrayRemove",
+        "FieldArrayAdd"
+      ],
+      "description": "Repeated entries for an array of objects — one removable block each, with an add button under the stack.",
+      "css": "css/components/field-array.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/field-array",
+      "examples": [
+        {
+          "demo": "field-array/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "field-array/submit",
+          "title": "Any controls, one submit"
+        },
+        {
+          "demo": "field-array/limits",
+          "title": "Limits"
+        }
+      ]
+    },
+    {
+      "slug": "input-otp",
+      "name": "Input OTP",
+      "category": "Forms",
+      "exports": [
+        "InputOTP",
+        "InputOTPGroup",
+        "InputOTPSlot",
+        "InputOTPSeparator"
+      ],
+      "description": "A one-time-code field with one slot per character. Use it when the code length is fixed.",
+      "css": "css/components/input-otp.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/input-otp",
+      "examples": [
+        {
+          "demo": "input-otp/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "input-otp/with-separator",
+          "title": "Custom grouping"
+        },
+        {
+          "demo": "input-otp/verify-form",
+          "title": "In a verification form"
+        },
+        {
+          "demo": "input-otp/auto-submit",
+          "title": "Auto-submit"
+        }
+      ]
+    },
+    {
+      "slug": "phone-input",
+      "name": "Phone Input",
+      "category": "Forms",
+      "exports": [
+        "PhoneInput"
+      ],
+      "description": "A country dial-code select next to a national-number field, returning one string like `+33612345678`.",
+      "css": "css/components/phone-input.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/phone-input",
+      "examples": [
+        {
+          "demo": "phone-input/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "phone-input/with-field",
+          "title": "In a field"
+        },
+        {
+          "demo": "phone-input/contact-form",
+          "title": "Contact form"
+        }
+      ]
+    },
+    {
+      "slug": "editable",
+      "name": "Editable",
+      "category": "Forms",
+      "exports": [
+        "Editable"
+      ],
+      "description": "Click-to-edit text: a preview that swaps to a field, saved on Enter or blur and discarded on Escape.",
+      "css": "css/components/editable.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/editable",
+      "examples": [
+        {
+          "demo": "editable/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "editable/rows",
+          "title": "Rows in a list"
+        },
+        {
+          "demo": "editable/explicit-commit",
+          "title": "Commit explicitly"
+        },
+        {
+          "demo": "editable/controlled",
+          "title": "Controlled"
+        }
+      ]
+    },
+    {
+      "slug": "code-block",
+      "name": "CodeBlock",
+      "category": "Data display",
+      "exports": [
+        "CodeBlock",
+        "CodeBlockHead",
+        "CodeBlockFilename",
+        "CodeBlockBody",
+        "CodeBlockCopyButton"
+      ],
+      "description": "A code snippet with a filename strip and a copy button.",
+      "css": "css/components/code-block.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/code-block",
+      "examples": [
+        {
+          "demo": "code-block/basic",
+          "title": "With a filename"
+        }
+      ]
+    },
+    {
+      "slug": "data-table",
+      "name": "DataTable",
+      "category": "Data display",
+      "exports": [
+        "DataTable",
+        "DataTableColumnHeader",
+        "type ColumnDef"
+      ],
+      "description": "A table with sorting, selection, inline edit and paging, over `@tanstack/react-table`. Use `Table` when the rows only need displaying.",
+      "url": "https://littlebigcode.github.io/design-system/docs/data-table",
+      "examples": [
+        {
+          "demo": "data-table/editable",
+          "title": "Inline edit",
+          "featured": true
+        },
+        {
+          "demo": "data-table/basic",
+          "title": "Sortable and selectable"
+        }
+      ]
+    },
+    {
+      "slug": "tree",
+      "name": "Tree",
+      "category": "Data display",
+      "exports": [
+        "Tree",
+        "TreeItem",
+        "TreeItemTrigger",
+        "TreeItemContent",
+        "TreeLeaf"
+      ],
+      "description": "A nested, expandable hierarchy for files, org units or categories. Use a list with headings when the nesting is only grouping.",
+      "css": "css/components/tree.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/tree",
+      "examples": [
+        {
+          "demo": "tree/basic",
+          "title": "A file tree"
+        }
+      ]
+    },
+    {
+      "slug": "item",
+      "name": "Item",
+      "category": "Data display",
+      "exports": [
+        "Item",
+        "ItemMedia",
+        "ItemContent",
+        "ItemActions",
+        "ItemGroup",
+        "ItemSeparator",
+        "ItemTitle",
+        "ItemDescription",
+        "ItemHeader",
+        "ItemFooter"
+      ],
+      "description": "A list row with media, content and action slots. Lighter than a `Card` for rows that repeat.",
+      "css": "css/components/item.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/item",
+      "examples": [
+        {
+          "demo": "item/variants",
+          "title": "Variants"
+        },
+        {
+          "demo": "item/with-media",
+          "title": "Media and actions"
+        },
+        {
+          "demo": "item/sizes",
+          "title": "Density, header and footer"
+        },
+        {
+          "demo": "item/as-link",
+          "title": "Navigable rows"
+        }
+      ]
+    },
+    {
+      "slug": "marker",
+      "name": "Marker",
+      "category": "Data display",
+      "exports": [
+        "Marker",
+        "MarkerIcon",
+        "MarkerContent",
+        "markerVariants"
+      ],
+      "description": "A small label pairing an icon with text, for titling a group of rows.",
+      "css": "css/components/marker.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/marker",
+      "examples": [
+        {
+          "demo": "marker/variants",
+          "title": "Variants"
+        },
+        {
+          "demo": "marker/with-icon",
+          "title": "With an icon"
+        },
+        {
+          "demo": "marker/section-labels",
+          "title": "Section labels"
+        },
+        {
+          "demo": "marker/day-divider",
+          "title": "Dividing a feed"
+        }
+      ]
+    },
+    {
+      "slug": "snippet",
+      "name": "Snippet",
+      "category": "Data display",
+      "exports": [
+        "Snippet"
+      ],
+      "description": "A one-line copyable command or value. Use `Code Block` for multi-line samples.",
+      "css": "css/components/snippet.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/snippet",
+      "examples": [
+        {
+          "demo": "snippet/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "snippet/in-context",
+          "title": "Obscured secret"
+        }
+      ]
+    },
+    {
+      "slug": "qr-code",
+      "name": "QR Code",
+      "category": "Data display",
+      "exports": [
+        "QrCode",
+        "type QrErrorCorrectionLevel"
+      ],
+      "description": "Renders a QR code as inline SVG. No dependency and no network — pass a `value`.",
+      "css": "css/components/qr-code.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/qr-code",
+      "examples": [
+        {
+          "demo": "qr-code/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "qr-code/levels",
+          "title": "Correction levels"
+        },
+        {
+          "demo": "qr-code/in-card",
+          "title": "Scan or type"
+        }
+      ]
+    },
+    {
+      "slug": "meter",
+      "name": "Meter",
+      "category": "Data display",
+      "exports": [
+        "Meter",
+        "MeterTrack",
+        "MeterIndicator",
+        "MeterLabel",
+        "MeterValue",
+        "meterVariants"
+      ],
+      "description": "Shows how full something is within a known range, like disk or budget. Use `Progress` for work advancing towards done.",
+      "css": "css/components/meter.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/meter",
+      "examples": [
+        {
+          "demo": "meter/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "meter/thresholds",
+          "title": "Colour by threshold"
+        },
+        {
+          "demo": "meter/plan-usage",
+          "title": "In a panel"
+        }
+      ]
+    },
+    {
+      "slug": "relative-time",
+      "name": "Relative Time",
+      "category": "Data display",
+      "exports": [
+        "RelativeTime",
+        "formatRelativeTime"
+      ],
+      "description": "Renders \"3 hours ago\" from a date inside a `time` element, and keeps it updating. Past a week it shows the date instead.",
+      "css": "css/components/relative-time.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/relative-time",
+      "examples": [
+        {
+          "demo": "relative-time/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "relative-time/static",
+          "title": "In a table"
+        },
+        {
+          "demo": "relative-time/inputs",
+          "title": "What a column can hand over"
+        },
+        {
+          "demo": "relative-time/locales",
+          "title": "Other locales"
+        }
+      ]
+    },
+    {
+      "slug": "command",
+      "name": "Command",
+      "category": "Navigation",
+      "exports": [
+        "Command",
+        "CommandDialog",
+        "CommandInput",
+        "CommandList",
+        "CommandEmpty",
+        "CommandGroup",
+        "CommandItem",
+        "CommandShortcut",
+        "CommandSeparator"
+      ],
+      "description": "The ⌘K palette: a filtered, grouped list of commands, built on `cmdk`.",
+      "url": "https://littlebigcode.github.io/design-system/docs/command",
+      "examples": [
+        {
+          "demo": "command/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "command/inline",
+          "title": "Inline"
+        }
+      ]
+    },
+    {
+      "slug": "menubar",
+      "name": "Menubar",
+      "category": "Navigation",
+      "exports": [
+        "Menubar",
+        "MenubarMenu",
+        "MenubarTrigger",
+        "MenubarContent",
+        "MenubarItem",
+        "MenubarCheckboxItem",
+        "MenubarRadioGroup",
+        "MenubarRadioItem",
+        "MenubarLabel",
+        "MenubarSeparator",
+        "MenubarShortcut",
+        "MenubarGroup",
+        "MenubarPortal",
+        "MenubarSub",
+        "MenubarSubTrigger",
+        "MenubarSubContent"
+      ],
+      "description": "A desktop-style application menu bar — File, Edit, View — with keyboard traversal.",
+      "css": "css/components/menubar.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/menubar",
+      "examples": [
+        {
+          "demo": "menubar/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "menubar/sectioned",
+          "title": "A long menu, sectioned"
+        },
+        {
+          "demo": "menubar/with-state",
+          "title": "Checkboxes, radios and submenus"
+        },
+        {
+          "demo": "menubar/app-frame",
+          "title": "In an app frame"
+        }
+      ]
+    },
+    {
+      "slug": "navigation-menu",
+      "name": "Navigation Menu",
+      "category": "Navigation",
+      "exports": [
+        "NavigationMenu",
+        "NavigationMenuList",
+        "NavigationMenuItem",
+        "NavigationMenuTrigger",
+        "NavigationMenuContent",
+        "NavigationMenuPositioner",
+        "NavigationMenuLink",
+        "NavigationMenuIndicator",
+        "navigationMenuTriggerStyle"
+      ],
+      "description": "A horizontal site menu, with optional dropdown panels for richer links.",
+      "css": "css/components/navigation-menu.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/navigation-menu",
+      "examples": [
+        {
+          "demo": "navigation-menu/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "navigation-menu/multiple",
+          "title": "Several menus"
+        },
+        {
+          "demo": "navigation-menu/featured",
+          "title": "Featured panel"
+        },
+        {
+          "demo": "navigation-menu/in-header",
+          "title": "In a site header"
+        }
+      ]
+    },
+    {
+      "slug": "sidebar",
+      "name": "Sidebar",
+      "category": "Navigation",
+      "exports": [
+        "SidebarProvider",
+        "Sidebar",
+        "SidebarContent",
+        "SidebarHeader",
+        "SidebarFooter",
+        "SidebarGroup",
+        "SidebarGroupAction",
+        "SidebarGroupContent",
+        "SidebarGroupLabel",
+        "SidebarInput",
+        "SidebarInset",
+        "SidebarMenu",
+        "SidebarMenuAction",
+        "SidebarMenuBadge",
+        "SidebarMenuButton",
+        "SidebarMenuItem",
+        "SidebarMenuSkeleton",
+        "SidebarMenuSub",
+        "SidebarMenuSubButton",
+        "SidebarMenuSubItem",
+        "SidebarRail",
+        "SidebarSeparator",
+        "SidebarTrigger",
+        "useSidebar"
+      ],
+      "description": "The app's navigation column, composed from parts and nestable to any depth.",
+      "css": "css/components/sidebar.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/sidebar",
+      "examples": [
+        {
+          "demo": "sidebar/shell",
+          "title": "A full app shell",
+          "featured": true
+        },
+        {
+          "demo": "sidebar/basic",
+          "title": "Nested sections"
+        },
+        {
+          "demo": "sidebar/collapsible-icon",
+          "title": "Collapsible to icons"
+        }
+      ]
+    },
+    {
+      "slug": "tabs",
+      "name": "Tabs",
+      "category": "Navigation",
+      "exports": [
+        "Tabs",
+        "type TabsProps",
+        "type TabItem"
+      ],
+      "description": "Sibling views of one subject, one visible at a time. Use `Wizard` for steps that have an order.",
+      "css": "css/components/tabs.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/tabs",
+      "examples": [
+        {
+          "demo": "tabs/basic",
+          "title": "Three views"
+        }
+      ]
+    },
+    {
+      "slug": "tabs-primitive",
+      "name": "Tabs (composed)",
+      "category": "Navigation",
+      "exports": [
+        "Tabs",
+        "TabsList",
+        "TabsTrigger",
+        "TabsContent"
+      ],
+      "description": "Base UI's tabs, composed from parts instead of configured with an `items` array.",
+      "url": "https://littlebigcode.github.io/design-system/docs/tabs-primitive",
+      "examples": [
+        {
+          "demo": "tabs-primitive/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "tabs-primitive/line",
+          "title": "Line variant"
+        },
+        {
+          "demo": "tabs-primitive/vertical",
+          "title": "Vertical"
+        },
+        {
+          "demo": "tabs-primitive/in-card",
+          "title": "In a card"
+        }
+      ]
+    },
+    {
+      "slug": "toc",
+      "name": "Toc",
+      "category": "Navigation",
+      "exports": [
+        "Toc",
+        "TocLabel",
+        "TocList",
+        "TocItem",
+        "TocLink"
+      ],
+      "description": "A sticky list of the sections on the current page, for jumping around a long document.",
+      "css": "css/components/toc.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/toc",
+      "examples": [
+        {
+          "demo": "toc/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "toc/current-section",
+          "title": "Current section"
+        },
+        {
+          "demo": "toc/nested",
+          "title": "Nested sections"
+        },
+        {
+          "demo": "toc/page-rail",
+          "title": "Beside the article"
+        }
+      ]
+    },
+    {
+      "slug": "aspect-ratio",
+      "name": "Aspect Ratio",
+      "category": "Layout",
+      "exports": [
+        "AspectRatio"
+      ],
+      "description": "Holds content at a fixed width-to-height ratio, so the height follows the width.",
+      "css": "css/components/aspect-ratio.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/aspect-ratio",
+      "examples": [
+        {
+          "demo": "aspect-ratio/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "aspect-ratio/ratios",
+          "title": "Common ratios"
+        },
+        {
+          "demo": "aspect-ratio/card-cover",
+          "title": "Card cover"
+        },
+        {
+          "demo": "aspect-ratio/overlay",
+          "title": "Overlaid caption"
+        }
+      ]
+    },
+    {
+      "slug": "separator",
+      "name": "Separator",
+      "category": "Layout",
+      "exports": [
+        "Separator"
+      ],
+      "description": "A rule between content. Note Base UI's orientation semantics: a horizontal group takes vertical separators.",
+      "css": "css/components/separator.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/separator",
+      "examples": [
+        {
+          "demo": "separator/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "separator/vertical",
+          "title": "Between inline items"
+        },
+        {
+          "demo": "separator/labelled",
+          "title": "Labelled divider"
+        },
+        {
+          "demo": "separator/in-a-card",
+          "title": "Card sections"
+        }
+      ]
+    },
+    {
+      "slug": "scroll-area",
+      "name": "Scroll Area",
+      "category": "Layout",
+      "exports": [
+        "ScrollArea",
+        "ScrollBar"
+      ],
+      "description": "A scrollable region with styled overlay scrollbars. The root needs a height to scroll inside.",
+      "css": "css/components/scroll-area.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/scroll-area",
+      "examples": [
+        {
+          "demo": "scroll-area/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "scroll-area/with-headings",
+          "title": "Grouped content"
+        },
+        {
+          "demo": "scroll-area/in-a-dialog",
+          "title": "Dialog body"
+        }
+      ]
+    },
+    {
+      "slug": "resizable",
+      "name": "Resizable",
+      "category": "Layout",
+      "exports": [
+        "ResizablePanelGroup",
+        "ResizablePanel",
+        "ResizableHandle"
+      ],
+      "description": "Panels split by draggable handles, over `react-resizable-panels`.",
+      "css": "css/components/resizable.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/resizable",
+      "examples": [
+        {
+          "demo": "resizable/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "resizable/collapsible",
+          "title": "Collapsible pane"
+        },
+        {
+          "demo": "resizable/nested",
+          "title": "Nested groups"
+        }
+      ]
+    },
+    {
+      "slug": "masonry",
+      "name": "Masonry",
+      "category": "Layout",
+      "exports": [
+        "Masonry"
+      ],
+      "description": "A multi-column layout that balances items of uneven height, using CSS columns.",
+      "css": "css/components/masonry.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/masonry",
+      "examples": [
+        {
+          "demo": "masonry/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "masonry/with-cards",
+          "title": "Card wall"
+        },
+        {
+          "demo": "masonry/gallery",
+          "title": "Media gallery"
+        }
+      ]
+    },
+    {
+      "slug": "theme-switcher",
+      "name": "Theme Switcher",
+      "category": "Layout",
+      "exports": [
+        "ThemeSwitcher",
+        "type ThemeSwitcherMode"
+      ],
+      "description": "A light, dark and system control in three forms. Fully controlled — the app owns the theme state.",
+      "css": "css/components/theme-switcher.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/theme-switcher",
+      "examples": [
+        {
+          "demo": "theme-switcher/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "theme-switcher/cycle",
+          "title": "Compact cycle"
+        },
+        {
+          "demo": "theme-switcher/dropdown",
+          "title": "Dropdown"
+        },
+        {
+          "demo": "theme-switcher/in-toolbar",
+          "title": "In a toolbar"
+        },
+        {
+          "demo": "theme-switcher/settings-row",
+          "title": "Settings row"
+        }
+      ]
+    },
+    {
+      "slug": "carousel",
+      "name": "Carousel",
+      "category": "Layout",
+      "exports": [
+        "Carousel",
+        "CarouselContent",
+        "CarouselItem",
+        "CarouselPrevious",
+        "CarouselNext",
+        "type CarouselApi"
+      ],
+      "description": "A paged slide viewport with previous and next controls, over `embla-carousel-react`.",
+      "css": "css/components/carousel.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/carousel",
+      "examples": [
+        {
+          "demo": "carousel/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "carousel/multiple",
+          "title": "Multiple per page"
+        },
+        {
+          "demo": "carousel/with-api",
+          "title": "Reading the API"
+        }
+      ]
+    },
+    {
+      "slug": "wordmark",
+      "name": "Wordmark",
+      "category": "Layout",
+      "exports": [
+        "Wordmark",
+        "wordmarkVariants"
+      ],
+      "description": "The Diametral logo as inline JSX, so it recolours with the surrounding text. Two lockups: horizontal and square.",
+      "css": "css/components/wordmark.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/wordmark",
+      "examples": [
+        {
+          "demo": "wordmark/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "wordmark/square",
+          "title": "Square"
+        },
+        {
+          "demo": "wordmark/app-header",
+          "title": "Beside a text label"
+        }
+      ]
+    },
+    {
+      "slug": "accordion",
+      "name": "Accordion",
+      "category": "Disclosure",
+      "exports": [
+        "Accordion",
+        "AccordionItem",
+        "AccordionTrigger",
+        "AccordionContent"
+      ],
+      "description": "A stack of disclosure rows, one section per `AccordionItem`.",
+      "css": "css/components/accordion.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/accordion",
+      "examples": [
+        {
+          "demo": "accordion/basic",
+          "title": "Basic"
+        }
+      ]
+    },
+    {
+      "slug": "collapsible",
+      "name": "Collapsible",
+      "category": "Disclosure",
+      "exports": [
+        "Collapsible",
+        "CollapsibleTrigger",
+        "CollapsibleContent"
+      ],
+      "description": "One region that shows and hides. Use `Accordion` for several titled sections that stack.",
+      "url": "https://littlebigcode.github.io/design-system/docs/collapsible",
+      "examples": [
+        {
+          "demo": "collapsible/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "collapsible/filter-group",
+          "title": "Filter group"
+        },
+        {
+          "demo": "collapsible/optional-fields",
+          "title": "Optional fields"
+        },
+        {
+          "demo": "collapsible/controlled",
+          "title": "Controlled"
+        }
+      ]
+    },
+    {
+      "slug": "alert-dialog",
+      "name": "Modal",
+      "category": "Overlays",
+      "exports": [
+        "Modal",
+        "type ModalProps"
+      ],
+      "description": "The destructive-confirmation form of `Modal`: a heading, the consequence, and two buttons. Label the confirm button with the verb.",
+      "url": "https://littlebigcode.github.io/design-system/docs/alert-dialog",
+      "examples": [
+        {
+          "demo": "alert-dialog/basic",
+          "title": "Destructive confirmation"
+        }
+      ]
+    },
+    {
+      "slug": "alert-dialog-primitive",
+      "name": "AlertDialog",
+      "category": "Overlays",
+      "exports": [
+        "AlertDialog",
+        "AlertDialogTrigger",
+        "AlertDialogContent",
+        "AlertDialogHeader",
+        "AlertDialogFooter",
+        "AlertDialogMedia",
+        "AlertDialogTitle",
+        "AlertDialogDescription",
+        "AlertDialogAction",
+        "AlertDialogCancel"
+      ],
+      "description": "Base UI's alert dialog, composed from parts. `Modal` stays the default for a confirmation.",
+      "url": "https://littlebigcode.github.io/design-system/docs/alert-dialog-primitive",
+      "examples": [
+        {
+          "demo": "alert-dialog-primitive/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "alert-dialog-primitive/with-media",
+          "title": "With media"
+        },
+        {
+          "demo": "alert-dialog-primitive/pending",
+          "title": "Pending confirm"
+        },
+        {
+          "demo": "alert-dialog-primitive/type-to-confirm",
+          "title": "Type to confirm"
+        }
+      ]
+    },
+    {
+      "slug": "context-menu",
+      "name": "ContextMenu",
+      "category": "Overlays",
+      "exports": [
+        "ContextMenu",
+        "ContextMenuTrigger",
+        "ContextMenuContent",
+        "ContextMenuItem",
+        "ContextMenuCheckboxItem",
+        "ContextMenuRadioGroup",
+        "ContextMenuRadioItem",
+        "ContextMenuLabel",
+        "ContextMenuSeparator",
+        "ContextMenuShortcut",
+        "ContextMenuGroup",
+        "ContextMenuPortal",
+        "ContextMenuSub",
+        "ContextMenuSubTrigger",
+        "ContextMenuSubContent"
+      ],
+      "description": "A right-click menu that opens at the pointer, for actions belonging to the item clicked.",
+      "css": "css/components/context-menu.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/context-menu",
+      "examples": [
+        {
+          "demo": "context-menu/basic",
+          "title": "Rename, duplicate, delete"
+        },
+        {
+          "demo": "context-menu/rows",
+          "title": "One menu per row"
+        },
+        {
+          "demo": "context-menu/view-options",
+          "title": "View options"
+        },
+        {
+          "demo": "context-menu/with-submenu",
+          "title": "Checkbox and submenu"
+        }
+      ]
+    },
+    {
+      "slug": "dialog",
+      "name": "Modal",
+      "category": "Overlays",
+      "exports": [
+        "Modal",
+        "type ModalProps"
+      ],
+      "description": "A focused task on top of the page: heading, body, footer actions. Always controlled through `open` and `onClose`.",
+      "url": "https://littlebigcode.github.io/design-system/docs/dialog",
+      "examples": [
+        {
+          "demo": "dialog/basic",
+          "title": "A short form"
+        }
+      ]
+    },
+    {
+      "slug": "dialog-primitive",
+      "name": "Dialog",
+      "category": "Overlays",
+      "exports": [
+        "Dialog",
+        "DialogTrigger",
+        "DialogContent",
+        "DialogHeader",
+        "DialogFooter",
+        "DialogTitle",
+        "DialogDescription",
+        "DialogClose"
+      ],
+      "description": "Base UI's dialog, composed from parts. `Modal` stays the default for a focused task.",
+      "url": "https://littlebigcode.github.io/design-system/docs/dialog-primitive",
+      "examples": [
+        {
+          "demo": "dialog-primitive/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "dialog-primitive/with-form",
+          "title": "With a form"
+        },
+        {
+          "demo": "dialog-primitive/controlled",
+          "title": "Controlled"
+        },
+        {
+          "demo": "dialog-primitive/long-content",
+          "title": "Long content"
+        }
+      ]
+    },
+    {
+      "slug": "dropdown-menu",
+      "name": "DropdownMenu",
+      "category": "Overlays",
+      "exports": [
+        "DropdownMenu",
+        "DropdownMenuPortal",
+        "DropdownMenuTrigger",
+        "DropdownMenuContent",
+        "DropdownMenuGroup",
+        "DropdownMenuLabel",
+        "DropdownMenuItem",
+        "DropdownMenuCheckboxItem",
+        "DropdownMenuRadioGroup",
+        "DropdownMenuRadioItem",
+        "DropdownMenuSeparator",
+        "DropdownMenuShortcut",
+        "DropdownMenuSub",
+        "DropdownMenuSubTrigger",
+        "DropdownMenuSubContent"
+      ],
+      "description": "A menu of actions hanging off a trigger.",
+      "url": "https://littlebigcode.github.io/design-system/docs/dropdown-menu",
+      "examples": [
+        {
+          "demo": "dropdown-menu/basic",
+          "title": "Actions and links"
+        },
+        {
+          "demo": "dropdown-menu/complex",
+          "title": "Checkboxes, radios and a submenu"
+        }
+      ]
+    },
+    {
+      "slug": "hover-card",
+      "name": "Hover Card",
+      "category": "Overlays",
+      "exports": [
+        "HoverCard",
+        "HoverCardTrigger",
+        "HoverCardContent"
+      ],
+      "description": "A preview panel shown on hover, for links and mentions. Keep anything essential on the page, since touch users never hover.",
+      "css": "css/components/hover-card.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/hover-card",
+      "examples": [
+        {
+          "demo": "hover-card/basic",
+          "title": "On a link"
+        },
+        {
+          "demo": "hover-card/with-avatar",
+          "title": "Person preview"
+        },
+        {
+          "demo": "hover-card/definition",
+          "title": "Metric definition"
+        }
+      ]
+    },
+    {
+      "slug": "popover",
+      "name": "Popover",
+      "category": "Overlays",
+      "exports": [
+        "Popover",
+        "PopoverTrigger",
+        "PopoverContent",
+        "PopoverHeader",
+        "PopoverTitle",
+        "PopoverDescription"
+      ],
+      "description": "A small panel anchored to a trigger. Use it when the content is interactive; use `Tooltip` for a plain label.",
+      "css": "css/components/popover.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/popover",
+      "examples": [
+        {
+          "demo": "popover/basic",
+          "title": "Anchored detail"
+        }
+      ]
+    },
+    {
+      "slug": "alert",
+      "name": "Alert",
+      "category": "Feedback",
+      "exports": [
+        "Alert",
+        "AlertTitle",
+        "AlertDescription",
+        "AlertAction",
+        "AlertDismiss"
+      ],
+      "description": "An inline message about the content next to it. Use `Toast` for the result of an action.",
+      "css": "css/components/alert.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/alert",
+      "examples": [
+        {
+          "demo": "alert/basic",
+          "title": "The four tones"
+        }
+      ]
+    },
+    {
+      "slug": "toast",
+      "name": "Toast",
+      "category": "Feedback",
+      "exports": [
+        "Toaster",
+        "toast",
+        "useToastManager",
+        "createToastManager",
+        "Toast",
+        "ToastProvider",
+        "ToastPortal",
+        "ToastViewport",
+        "ToastContent",
+        "ToastTitle",
+        "ToastDescription",
+        "ToastAction",
+        "ToastClose"
+      ],
+      "description": "A short confirmation that an action landed, raised from anywhere with `toast`. Mount `Toaster` once at the app root.",
+      "css": "css/components/toast.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/toast",
+      "examples": [
+        {
+          "demo": "toast/basic",
+          "title": "Success and failure"
+        }
+      ]
+    },
+    {
+      "slug": "bubble",
+      "name": "Bubble",
+      "category": "Conversation",
+      "exports": [
+        "BubbleGroup",
+        "Bubble",
+        "BubbleContent",
+        "BubbleReactions",
+        "type BubbleVariant"
+      ],
+      "description": "Chat bubbles grouped by author. Use `Message` when a turn also needs an avatar or a timestamp.",
+      "css": "css/components/bubble.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/bubble",
+      "examples": [
+        {
+          "demo": "bubble/variants",
+          "title": "Variants"
+        },
+        {
+          "demo": "bubble/conversation",
+          "title": "A conversation"
+        },
+        {
+          "demo": "bubble/with-reactions",
+          "title": "With reactions"
+        },
+        {
+          "demo": "bubble/quick-replies",
+          "title": "Quick replies"
+        }
+      ]
+    },
+    {
+      "slug": "message",
+      "name": "Message",
+      "category": "Conversation",
+      "exports": [
+        "MessageGroup",
+        "Message",
+        "MessageAvatar",
+        "MessageContent",
+        "MessageHeader",
+        "MessageFooter"
+      ],
+      "description": "A conversation row with an avatar on one side and the content on the other, plus an optional header and footer.",
+      "css": "css/components/message.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/message",
+      "examples": [
+        {
+          "demo": "message/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "message/with-footer",
+          "title": "With a footer"
+        },
+        {
+          "demo": "message/assistant",
+          "title": "Assistant reply"
+        },
+        {
+          "demo": "message/attachments",
+          "title": "With attachments"
+        }
+      ]
+    },
+    {
+      "slug": "message-scroller",
+      "name": "Message Scroller",
+      "category": "Conversation",
+      "exports": [],
+      "description": "A transcript viewport that stays pinned to the newest message. Stylesheet only — the pinning needs your own binding.",
+      "css": "css/components/message-scroller.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/message-scroller",
+      "examples": [
+        {
+          "demo": "message-scroller/basic",
+          "title": "The class contract"
+        }
+      ]
+    },
+    {
+      "slug": "attachment",
+      "name": "Attachment",
+      "category": "Conversation",
+      "exports": [
+        "Attachment",
+        "AttachmentGroup",
+        "AttachmentMedia",
+        "AttachmentContent",
+        "AttachmentTitle",
+        "AttachmentDescription",
+        "AttachmentActions",
+        "AttachmentAction",
+        "AttachmentTrigger",
+        "type AttachmentState"
+      ],
+      "description": "A chip showing a file's thumbnail, name and metadata. Display only; use `File Upload` to pick files.",
+      "css": "css/components/attachment.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/attachment",
+      "examples": [
+        {
+          "demo": "attachment/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "attachment/states",
+          "title": "States and sizes"
+        },
+        {
+          "demo": "attachment/vertical",
+          "title": "Vertical cards"
+        },
+        {
+          "demo": "attachment/clickable",
+          "title": "Openable cards"
+        }
+      ]
+    },
+    {
+      "slug": "direction",
+      "name": "Direction",
+      "category": "Utilities",
+      "exports": [
+        "DirectionProvider",
+        "useDirection"
+      ],
+      "description": "A provider that sets text direction (LTR or RTL) for every Base UI component beneath it. Mount it once at the app root.",
+      "url": "https://littlebigcode.github.io/design-system/docs/direction",
+      "examples": [
+        {
+          "demo": "direction/rtl",
+          "title": "Side by side"
+        },
+        {
+          "demo": "direction/switching",
+          "title": "Switching at runtime"
+        },
+        {
+          "demo": "direction/axis",
+          "title": "Controls with an axis"
+        }
+      ]
+    },
+    {
+      "slug": "chart",
+      "name": "Chart",
+      "category": "Data display",
+      "exports": [
+        "ChartContainer",
+        "ChartTooltip",
+        "ChartTooltipContent",
+        "ChartLegend",
+        "ChartLegendContent",
+        "ChartStyle"
+      ],
+      "description": "A thin frame around Recharts: series colours come from a `ChartConfig` and resolve to brand tokens.",
+      "css": "css/components/chart.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/chart",
+      "examples": [
+        {
+          "demo": "chart/composed",
+          "title": "Two mark types"
+        },
+        {
+          "demo": "chart/theme",
+          "title": "A colour outside the ramp"
+        }
+      ]
+    },
+    {
+      "slug": "line-chart",
+      "name": "Line Chart",
+      "category": "Data display",
+      "exports": [
+        "LineChart"
+      ],
+      "description": "A ready-made line chart — grid, axis, tooltip and legend wired from one `config`. Best for a value over time.",
+      "url": "https://littlebigcode.github.io/design-system/docs/line-chart",
+      "examples": [
+        {
+          "demo": "line-chart/basic",
+          "title": "Single series"
+        },
+        {
+          "demo": "line-chart/comparison",
+          "title": "Comparing series"
+        },
+        {
+          "demo": "line-chart/dense",
+          "title": "Dense sampling"
+        },
+        {
+          "demo": "line-chart/target",
+          "title": "Annotated against a target"
+        }
+      ]
+    },
+    {
+      "slug": "area-chart",
+      "name": "Area Chart",
+      "category": "Data display",
+      "exports": [
+        "AreaChart"
+      ],
+      "description": "`Line Chart` with a filled band under each series, for when the size of the quantity matters. Same props.",
+      "url": "https://littlebigcode.github.io/design-system/docs/area-chart",
+      "examples": [
+        {
+          "demo": "area-chart/basic",
+          "title": "Single series"
+        },
+        {
+          "demo": "area-chart/stacked",
+          "title": "Stacked composition"
+        },
+        {
+          "demo": "area-chart/overlaid",
+          "title": "Forecast against actual"
+        }
+      ]
+    },
+    {
+      "slug": "bar-chart",
+      "name": "Bar Chart",
+      "category": "Data display",
+      "exports": [
+        "BarChart"
+      ],
+      "description": "Bars comparing discrete categories, like revenue by quarter. Use `Line Chart` when the x axis is time.",
+      "url": "https://littlebigcode.github.io/design-system/docs/bar-chart",
+      "examples": [
+        {
+          "demo": "bar-chart/basic",
+          "title": "Single series"
+        },
+        {
+          "demo": "bar-chart/status",
+          "title": "Tinted by status"
+        },
+        {
+          "demo": "bar-chart/horizontal",
+          "title": "Rows for long labels"
+        },
+        {
+          "demo": "bar-chart/grouped",
+          "title": "Grouped series"
+        }
+      ]
+    },
+    {
+      "slug": "stacked-bar",
+      "name": "Stacked Bar",
+      "category": "Data display",
+      "exports": [
+        "StackedBar"
+      ],
+      "description": "Bars normalised to their own total, so the eye compares splits rather than sizes.",
+      "css": "css/components/stacked-bar.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/stacked-bar",
+      "examples": [
+        {
+          "demo": "stacked-bar/basic",
+          "title": "One row"
+        },
+        {
+          "demo": "stacked-bar/by-team",
+          "title": "Comparing rows"
+        },
+        {
+          "demo": "stacked-bar/inline",
+          "title": "Inline in a summary"
+        }
+      ]
+    },
+    {
+      "slug": "pie-chart",
+      "name": "Pie Chart",
+      "category": "Data display",
+      "exports": [
+        "PieChart"
+      ],
+      "description": "A whole split into slices. Keep it to five or six; past that use `Bar Chart`.",
+      "css": "css/components/pie-chart.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/pie-chart",
+      "examples": [
+        {
+          "demo": "pie-chart/basic",
+          "title": "Share of traffic"
+        },
+        {
+          "demo": "pie-chart/branded",
+          "title": "Named colours"
+        },
+        {
+          "demo": "pie-chart/compact",
+          "title": "With a figure list"
+        }
+      ]
+    },
+    {
+      "slug": "donut-chart",
+      "name": "Donut Chart",
+      "category": "Data display",
+      "exports": [
+        "DonutChart"
+      ],
+      "description": "`Pie Chart` with the middle cut out, so a headline figure can sit in the hole.",
+      "css": "css/components/donut-chart.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/donut-chart",
+      "examples": [
+        {
+          "demo": "donut-chart/basic",
+          "title": "Total in the middle"
+        },
+        {
+          "demo": "donut-chart/thin",
+          "title": "Two-part ring"
+        },
+        {
+          "demo": "donut-chart/breakdown",
+          "title": "Cost breakdown"
+        }
+      ]
+    },
+    {
+      "slug": "gauge",
+      "name": "Gauge",
+      "category": "Data display",
+      "exports": [
+        "Gauge",
+        "type GaugeThreshold"
+      ],
+      "description": "A radial dial for one bounded value, with optional thresholds that recolour the arc.",
+      "css": "css/components/gauge.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/gauge",
+      "examples": [
+        {
+          "demo": "gauge/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "gauge/thresholds",
+          "title": "Thresholds"
+        },
+        {
+          "demo": "gauge/formatted",
+          "title": "Units and density"
+        }
+      ]
+    },
+    {
+      "slug": "sparkline",
+      "name": "Sparkline",
+      "category": "Data display",
+      "exports": [
+        "Sparkline"
+      ],
+      "description": "A tiny inline line chart with no axes, small enough to sit in every row of a table.",
+      "css": "css/components/sparkline.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/sparkline",
+      "examples": [
+        {
+          "demo": "sparkline/basic",
+          "title": "Beside a figure"
+        },
+        {
+          "demo": "sparkline/area",
+          "title": "Area and end dot"
+        },
+        {
+          "demo": "sparkline/table",
+          "title": "Trend column"
+        },
+        {
+          "demo": "sparkline/stat-card",
+          "title": "Inside a stat card"
+        }
+      ]
+    },
+    {
+      "slug": "radar-chart",
+      "name": "Radar Chart",
+      "category": "Data display",
+      "exports": [
+        "RadarChart"
+      ],
+      "description": "A spider chart comparing two or three entities across many dimensions at once.",
+      "css": "css/components/radar-chart.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/radar-chart",
+      "examples": [
+        {
+          "demo": "radar-chart/basic",
+          "title": "One profile"
+        },
+        {
+          "demo": "radar-chart/overlaid",
+          "title": "Candidate against requirement"
+        },
+        {
+          "demo": "radar-chart/pinned",
+          "title": "Two regions compared"
+        },
+        {
+          "demo": "radar-chart/dense",
+          "title": "Dense dimensions"
+        }
+      ]
+    },
+    {
+      "slug": "combo-chart",
+      "name": "Combo Chart",
+      "category": "Data display",
+      "exports": [
+        "ComboChart",
+        "type ComboSeries"
+      ],
+      "description": "Bars and a line on one x axis with a second Y scale — a volume series next to a rate.",
+      "url": "https://littlebigcode.github.io/design-system/docs/combo-chart",
+      "examples": [
+        {
+          "demo": "combo-chart/revenue-margin",
+          "title": "Revenue against margin"
+        },
+        {
+          "demo": "combo-chart/volume-rate",
+          "title": "Volume against rate"
+        },
+        {
+          "demo": "combo-chart/same-scale",
+          "title": "Same scale"
+        },
+        {
+          "demo": "combo-chart/formatted-axis",
+          "title": "Formatted second axis"
+        }
+      ]
+    },
+    {
+      "slug": "funnel-chart",
+      "name": "Funnel Chart",
+      "category": "Data display",
+      "exports": [
+        "FunnelChart",
+        "type FunnelConversion"
+      ],
+      "description": "Ordered conversion stages, with the drop-off computed from raw counts.",
+      "css": "css/components/funnel-chart.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/funnel-chart",
+      "examples": [
+        {
+          "demo": "funnel-chart/signup",
+          "title": "Signup funnel"
+        },
+        {
+          "demo": "funnel-chart/pipeline",
+          "title": "Sales pipeline"
+        },
+        {
+          "demo": "funnel-chart/long-labels",
+          "title": "Long stage names"
+        },
+        {
+          "demo": "funnel-chart/two-stage",
+          "title": "Two stages"
+        }
+      ]
+    },
+    {
+      "slug": "scatter-chart",
+      "name": "Scatter Chart",
+      "category": "Data display",
+      "exports": [
+        "ScatterChart"
+      ],
+      "description": "One quantity plotted against another, with optional bubble sizing for a third.",
+      "css": "css/components/scatter-chart.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/scatter-chart",
+      "examples": [
+        {
+          "demo": "scatter-chart/correlation",
+          "title": "Correlation with a threshold"
+        },
+        {
+          "demo": "scatter-chart/groups",
+          "title": "Two groups separated"
+        },
+        {
+          "demo": "scatter-chart/bubble",
+          "title": "Bubble sizing"
+        },
+        {
+          "demo": "scatter-chart/dense",
+          "title": "Hundreds of points"
+        }
+      ]
+    },
+    {
+      "slug": "treemap",
+      "name": "Treemap",
+      "category": "Data display",
+      "exports": [
+        "Treemap",
+        "type TreemapDatum"
+      ],
+      "description": "A weighted hierarchy as nested areas. Use it where a pie has too many slices.",
+      "css": "css/components/treemap.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/treemap",
+      "examples": [
+        {
+          "demo": "treemap/spend",
+          "title": "Flat spend by service"
+        },
+        {
+          "demo": "treemap/two-level",
+          "title": "Team then project"
+        },
+        {
+          "demo": "treemap/long-tail",
+          "title": "One dominant part"
+        },
+        {
+          "demo": "treemap/small-tiles",
+          "title": "Small tiles"
+        }
+      ]
+    },
+    {
+      "slug": "waterfall-chart",
+      "name": "Waterfall Chart",
+      "category": "Data display",
+      "exports": [
+        "WaterfallChart"
+      ],
+      "description": "Signed deltas accumulating from a starting value to a total.",
+      "css": "css/components/waterfall-chart.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/waterfall-chart",
+      "examples": [
+        {
+          "demo": "waterfall-chart/arr-bridge",
+          "title": "ARR bridge"
+        },
+        {
+          "demo": "waterfall-chart/budget-variance",
+          "title": "Budget variance"
+        },
+        {
+          "demo": "waterfall-chart/accumulation",
+          "title": "All positive"
+        },
+        {
+          "demo": "waterfall-chart/subtotal",
+          "title": "Mid-sequence subtotals"
+        }
+      ]
+    },
+    {
+      "slug": "heatmap",
+      "name": "Heatmap",
+      "category": "Data display",
+      "exports": [
+        "Heatmap",
+        "type HeatmapCell",
+        "type HeatmapDay"
+      ],
+      "description": "Density across two axes shown as colour, built on CSS grid rather than a chart library.",
+      "css": "css/components/heatmap.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/heatmap",
+      "examples": [
+        {
+          "demo": "heatmap/activity",
+          "title": "Weekday by hour"
+        },
+        {
+          "demo": "heatmap/calendar",
+          "title": "Contribution calendar"
+        },
+        {
+          "demo": "heatmap/sparse",
+          "title": "Sparse grid"
+        },
+        {
+          "demo": "heatmap/pinned",
+          "title": "Pinned scale"
+        }
+      ]
+    },
+    {
+      "slug": "bullet-chart",
+      "name": "Bullet Chart",
+      "category": "Data display",
+      "exports": [
+        "BulletChart",
+        "type BulletBand"
+      ],
+      "description": "A value against its target, with two or three qualitative bands behind it.",
+      "css": "css/components/bullet-chart.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/bullet-chart",
+      "examples": [
+        {
+          "demo": "bullet-chart/quota",
+          "title": "Quota with bands"
+        },
+        {
+          "demo": "bullet-chart/stack",
+          "title": "A stack of KPIs"
+        },
+        {
+          "demo": "bullet-chart/in-table",
+          "title": "In a table cell"
+        },
+        {
+          "demo": "bullet-chart/no-target",
+          "title": "No target"
+        }
+      ]
+    },
+    {
+      "slug": "stepper",
+      "name": "Stepper",
+      "category": "Navigation",
+      "exports": [
+        "Stepper",
+        "StepperItem",
+        "StepperIndicator",
+        "StepperContent",
+        "StepperTitle",
+        "StepperDescription"
+      ],
+      "description": "The step rail of a multi-step flow: the steps, the one you are on, and how much is left.",
+      "css": "css/components/stepper.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/stepper",
+      "examples": [
+        {
+          "demo": "stepper/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "stepper/wizard",
+          "title": "In a form wizard"
+        },
+        {
+          "demo": "stepper/vertical",
+          "title": "Vertical"
+        },
+        {
+          "demo": "stepper/icon-indicators",
+          "title": "Icon indicators"
+        }
+      ]
+    },
+    {
+      "slug": "timeline",
+      "name": "Timeline",
+      "category": "Data display",
+      "exports": [
+        "Timeline",
+        "TimelineItem",
+        "TimelineIndicator",
+        "TimelineContent",
+        "TimelineTitle",
+        "TimelineTime",
+        "TimelineDescription"
+      ],
+      "description": "A vertical sequence of events, each completed, active or inactive.",
+      "css": "css/components/timeline.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/timeline",
+      "examples": [
+        {
+          "demo": "timeline/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "timeline/states",
+          "title": "States"
+        },
+        {
+          "demo": "timeline/activity-feed",
+          "title": "Activity feed"
+        },
+        {
+          "demo": "timeline/in-panel",
+          "title": "Compact, in a panel"
+        }
+      ]
+    },
+    {
+      "slug": "avatar",
+      "name": "Avatar",
+      "category": "Data display",
+      "exports": [
+        "Avatar",
+        "AvatarImage",
+        "AvatarFallback",
+        "AvatarBadge",
+        "AvatarGroup",
+        "AvatarGroupCount"
+      ],
+      "description": "A user image with initials behind it, plus a group form with an overflow count.",
+      "css": "css/components/avatar.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/avatar",
+      "examples": [
+        {
+          "demo": "avatar/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "avatar/sizes",
+          "title": "Sizes and badge"
+        },
+        {
+          "demo": "avatar/group",
+          "title": "Group"
+        },
+        {
+          "demo": "avatar/in-row",
+          "title": "In a member list"
+        }
+      ]
+    },
+    {
+      "slug": "pagination",
+      "name": "Pagination",
+      "category": "Navigation",
+      "exports": [
+        "Pagination",
+        "PaginationContent",
+        "PaginationItem",
+        "PaginationLink",
+        "PaginationPrevious",
+        "PaginationNext",
+        "PaginationEllipsis",
+        "paginationRange"
+      ],
+      "description": "Page links with previous, next and an ellipsis.",
+      "css": "css/components/pagination.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/pagination",
+      "examples": [
+        {
+          "demo": "pagination/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "pagination/controlled",
+          "title": "Controlled"
+        },
+        {
+          "demo": "pagination/long-range",
+          "title": "Long ranges"
+        },
+        {
+          "demo": "pagination/under-a-table",
+          "title": "Under a table"
+        }
+      ]
+    },
+    {
+      "slug": "agenda",
+      "name": "Agenda",
+      "category": "Data display",
+      "exports": [
+        "Agenda"
+      ],
+      "description": "Events sorted by day and time, grouped under day headings. Use it for what is coming up.",
+      "css": "css/components/agenda.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/agenda",
+      "examples": [
+        {
+          "demo": "agenda/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "agenda/with-calendar",
+          "title": "With a calendar"
+        },
+        {
+          "demo": "agenda/empty",
+          "title": "Empty state"
+        }
+      ]
+    },
+    {
+      "slug": "table",
+      "name": "Table",
+      "category": "Data display",
+      "exports": [
+        "Table",
+        "TableHeader",
+        "TableBody",
+        "TableFooter",
+        "TableRow",
+        "TableHead",
+        "TableCell",
+        "TableCaption"
+      ],
+      "description": "The styled HTML table primitives, with no data layer. Use `Data Table` for sorting, filtering and paging.",
+      "css": "css/components/table.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/table",
+      "examples": [
+        {
+          "demo": "table/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "table/with-badges",
+          "title": "With status badges"
+        },
+        {
+          "demo": "table/with-footer",
+          "title": "With footer total"
+        },
+        {
+          "demo": "table/selectable",
+          "title": "Selectable rows"
+        }
+      ]
+    },
+    {
+      "slug": "breadcrumb",
+      "name": "Breadcrumb",
+      "category": "Navigation",
+      "exports": [
+        "Breadcrumb",
+        "BreadcrumbList",
+        "BreadcrumbItem",
+        "BreadcrumbLink",
+        "BreadcrumbPage",
+        "BreadcrumbSeparator",
+        "BreadcrumbEllipsis"
+      ],
+      "description": "The trail to the current page, with the last item as plain text.",
+      "css": "css/components/breadcrumb.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/breadcrumb",
+      "examples": [
+        {
+          "demo": "breadcrumb/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "breadcrumb/collapsed",
+          "title": "Collapsed"
+        },
+        {
+          "demo": "breadcrumb/overflow-menu",
+          "title": "Overflow menu"
+        }
+      ]
+    },
+    {
+      "slug": "empty",
+      "name": "Empty",
+      "category": "Data display",
+      "exports": [
+        "Empty",
+        "EmptyHeader",
+        "EmptyMedia",
+        "EmptyTitle",
+        "EmptyDescription",
+        "EmptyContent"
+      ],
+      "description": "The empty-state block: media, title, description and an action.",
+      "url": "https://littlebigcode.github.io/design-system/docs/empty",
+      "examples": [
+        {
+          "demo": "empty/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "empty/with-action",
+          "title": "With actions"
+        },
+        {
+          "demo": "empty/failed",
+          "title": "Failed to load"
+        },
+        {
+          "demo": "empty/in-card",
+          "title": "Inside a card"
+        }
+      ]
+    },
+    {
+      "slug": "toolbar",
+      "name": "Toolbar",
+      "category": "Actions",
+      "exports": [
+        "Toolbar",
+        "ToolbarGroup",
+        "ToolbarButton",
+        "ToolbarLink",
+        "ToolbarInput",
+        "ToolbarSeparator"
+      ],
+      "description": "A strip of grouped buttons, inputs and separators. It is one tab stop, with the arrow keys moving inside it.",
+      "css": "css/components/toolbar.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/toolbar",
+      "examples": [
+        {
+          "demo": "toolbar/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "toolbar/with-input",
+          "title": "With input and link"
+        },
+        {
+          "demo": "toolbar/vertical",
+          "title": "Vertical"
+        }
+      ]
+    },
+    {
+      "slug": "banner",
+      "name": "Banner",
+      "category": "Layout",
+      "exports": [
+        "Banner",
+        "BannerContent",
+        "BannerTitle",
+        "BannerDescription",
+        "BannerAction"
+      ],
+      "description": "A full-width, tone-coloured message bar for a whole page or section. Use `Alert` inside content.",
+      "css": "css/components/banner.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/banner",
+      "examples": [
+        {
+          "demo": "banner/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "banner/with-action",
+          "title": "Action and dismiss"
+        },
+        {
+          "demo": "banner/tones",
+          "title": "Tones"
+        }
+      ]
+    },
+    {
+      "slug": "progress",
+      "name": "Progress",
+      "category": "Data display",
+      "exports": [
+        "Progress",
+        "ProgressTrack",
+        "ProgressIndicator",
+        "ProgressLabel",
+        "ProgressValue"
+      ],
+      "description": "Task completion advancing towards done, with optional label and value. `value={null}` is the indeterminate state.",
+      "css": "css/components/progress.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/progress",
+      "examples": [
+        {
+          "demo": "progress/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "progress/indeterminate",
+          "title": "Indeterminate"
+        },
+        {
+          "demo": "progress/upload-queue",
+          "title": "Upload queue"
+        }
+      ]
+    },
+    {
+      "slug": "page-header",
+      "name": "Page Header",
+      "category": "Layout",
+      "exports": [
+        "PageHeader",
+        "PageHeaderHeading",
+        "PageHeaderIcon",
+        "PageHeaderTitle",
+        "PageHeaderDescription",
+        "PageHeaderActions",
+        "PageHeaderTabs"
+      ],
+      "description": "The top of a page: breadcrumb, title, description, actions, and an optional tab strip.",
+      "css": "css/components/page-header.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/page-header",
+      "examples": [
+        {
+          "demo": "page-header/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "page-header/advanced",
+          "title": "Advanced"
+        },
+        {
+          "demo": "page-header/with-tabs",
+          "title": "With tabs and icon"
+        }
+      ]
+    },
+    {
+      "slug": "description-list",
+      "name": "Description List",
+      "category": "Data display",
+      "exports": [
+        "DescriptionList",
+        "DescriptionTerm",
+        "DescriptionDetail"
+      ],
+      "description": "Term and detail pairs in a real `dl`, for record summaries.",
+      "css": "css/components/description-list.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/description-list",
+      "examples": [
+        {
+          "demo": "description-list/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "description-list/in-card",
+          "title": "In a card"
+        },
+        {
+          "demo": "description-list/rich-details",
+          "title": "Details that aren't text"
+        }
+      ]
+    },
+    {
+      "slug": "kbd",
+      "name": "Kbd",
+      "category": "Actions",
+      "exports": [
+        "Kbd",
+        "KbdGroup"
+      ],
+      "description": "Renders a keyboard key inline, sized to the text around it. Use `KbdGroup` for a chord.",
+      "css": "css/components/kbd.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/kbd",
+      "examples": [
+        {
+          "demo": "kbd/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "kbd/shortcuts",
+          "title": "Shortcut list"
+        },
+        {
+          "demo": "kbd/in-context",
+          "title": "Inside other components"
+        }
+      ]
+    },
+    {
+      "slug": "spinner",
+      "name": "Spinner",
+      "category": "Data display",
+      "exports": [
+        "Spinner"
+      ],
+      "description": "An indeterminate loading indicator sized to the surrounding text. Use `Skeleton` when the shape of the content is known.",
+      "css": "css/components/spinner.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/spinner",
+      "examples": [
+        {
+          "demo": "spinner/basic",
+          "title": "Sizes"
+        },
+        {
+          "demo": "spinner/labelled",
+          "title": "Naming each wait"
+        },
+        {
+          "demo": "spinner/in-context",
+          "title": "In buttons and empty states"
+        },
+        {
+          "demo": "spinner/activity-rows",
+          "title": "Per-row activity"
+        },
+        {
+          "demo": "spinner/deferred",
+          "title": "Deferred appearance"
+        }
+      ]
+    },
+    {
+      "slug": "icon",
+      "name": "Icon",
+      "category": "Utilities",
+      "exports": [
+        "Icon",
+        "icons"
+      ],
+      "description": "The built-in glyph set: 34 Phosphor icons keyed by name. Import from `@phosphor-icons/react` for anything outside it.",
+      "css": "css/components/icon.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/icon",
+      "examples": [
+        {
+          "demo": "icon/basic",
+          "title": "The set"
+        },
+        {
+          "demo": "icon/sizing",
+          "title": "Sizing and colour"
+        },
+        {
+          "demo": "icon/accessible-name",
+          "title": "Accessible name"
+        }
+      ]
+    },
+    {
+      "slug": "button",
+      "name": "Button",
+      "category": "Actions",
+      "exports": [
+        "Button",
+        "buttonVariants"
+      ],
+      "description": "The main action trigger. Eight variants and eight brand tones that combine freely.",
+      "css": "css/components/button.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/button",
+      "examples": [
+        {
+          "demo": "button/variants",
+          "title": "Variants"
+        },
+        {
+          "demo": "button/tones",
+          "title": "Brand tones"
+        },
+        {
+          "demo": "button/tones-subtle",
+          "title": "Tones on outline and ghost"
+        },
+        {
+          "demo": "button/sizes",
+          "title": "Sizes"
+        },
+        {
+          "demo": "button/icon",
+          "title": "With icon and loading"
+        }
+      ]
+    },
+    {
+      "slug": "input",
+      "name": "Input",
+      "category": "Forms",
+      "exports": [
+        "Input"
+      ],
+      "description": "The single-line text field, and the base the other text controls borrow their focus and invalid styling from.",
+      "css": "css/components/input.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/input",
+      "examples": [
+        {
+          "demo": "input/types",
+          "title": "Typed values",
+          "featured": true
+        },
+        {
+          "demo": "input/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "input/with-field",
+          "title": "With label and description"
+        },
+        {
+          "demo": "input/invalid",
+          "title": "Invalid and disabled"
+        },
+        {
+          "demo": "input/with-addon",
+          "title": "With addons"
+        }
+      ]
+    },
+    {
+      "slug": "textarea",
+      "name": "Textarea",
+      "category": "Forms",
+      "exports": [
+        "Textarea"
+      ],
+      "description": "A multi-line text field, measured in rows and sharing Input's focus and invalid states.",
+      "css": "css/components/textarea.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/textarea",
+      "examples": [
+        {
+          "demo": "textarea/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "textarea/with-field",
+          "title": "In a field"
+        },
+        {
+          "demo": "textarea/counter",
+          "title": "Character count"
+        },
+        {
+          "demo": "textarea/bounded",
+          "title": "Bounded growth"
+        }
+      ]
+    },
+    {
+      "slug": "field",
+      "name": "Field",
+      "category": "Forms",
+      "exports": [
+        "Field",
+        "FieldSet",
+        "FieldLegend",
+        "FieldGroup",
+        "FieldContent",
+        "FieldLabel",
+        "FieldTitle",
+        "FieldDescription",
+        "FieldSeparator",
+        "FieldError"
+      ],
+      "description": "The form row: label, control, description and error in one accessible group. Use it for every labelled control.",
+      "css": "css/components/field.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/field",
+      "examples": [
+        {
+          "demo": "field/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "field/group",
+          "title": "Field group"
+        },
+        {
+          "demo": "field/fieldset",
+          "title": "Fieldset and legend"
+        },
+        {
+          "demo": "field/choices",
+          "title": "Horizontal orientation"
+        },
+        {
+          "demo": "field/invalid",
+          "title": "With error"
+        }
+      ]
+    },
+    {
+      "slug": "select",
+      "name": "Select",
+      "category": "Forms",
+      "exports": [
+        "Select",
+        "SelectTrigger",
+        "SelectValue",
+        "SelectContent",
+        "SelectGroup",
+        "SelectLabel",
+        "SelectItem",
+        "SelectSeparator"
+      ],
+      "description": "A closed list for choosing one option, with a trigger and a portalled popup. Use `Combobox` once the list gets long.",
+      "css": "css/components/select.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/select",
+      "examples": [
+        {
+          "demo": "select/status",
+          "title": "Status picker",
+          "featured": true
+        },
+        {
+          "demo": "select/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "select/grouped",
+          "title": "Grouped options"
+        },
+        {
+          "demo": "select/with-field",
+          "title": "In a field"
+        },
+        {
+          "demo": "select/long-list",
+          "title": "Long lists"
+        }
+      ]
+    },
+    {
+      "slug": "checkbox",
+      "name": "Checkbox",
+      "category": "Forms",
+      "exports": [
+        "Checkbox"
+      ],
+      "description": "A single yes-or-no control for a value a form submits. Use `Switch` for a setting that applies immediately.",
+      "css": "css/components/checkbox.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/checkbox",
+      "examples": [
+        {
+          "demo": "checkbox/basic",
+          "title": "States"
+        },
+        {
+          "demo": "checkbox/consent",
+          "title": "Consent field"
+        },
+        {
+          "demo": "checkbox/task-list",
+          "title": "Task list"
+        },
+        {
+          "demo": "checkbox/as-cards",
+          "title": "As cards"
+        }
+      ]
+    },
+    {
+      "slug": "checkbox-group",
+      "name": "Checkbox Group",
+      "category": "Forms",
+      "exports": [
+        "CheckboxGroup"
+      ],
+      "description": "Holds the array of values behind a set of checkboxes, including the select-all parent.",
+      "css": "css/components/checkbox-group.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/checkbox-group",
+      "examples": [
+        {
+          "demo": "checkbox-group/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "checkbox-group/with-parent",
+          "title": "Select all"
+        },
+        {
+          "demo": "checkbox-group/filters",
+          "title": "Filter bar"
+        },
+        {
+          "demo": "checkbox-group/validation",
+          "title": "With validation"
+        }
+      ]
+    },
+    {
+      "slug": "switch",
+      "name": "Switch",
+      "category": "Forms",
+      "exports": [
+        "Switch"
+      ],
+      "description": "An on/off toggle for a setting that applies as soon as it changes.",
+      "css": "css/components/switch.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/switch",
+      "examples": [
+        {
+          "demo": "switch/basic",
+          "title": "States and sizes"
+        },
+        {
+          "demo": "switch/in-settings",
+          "title": "Settings rows"
+        },
+        {
+          "demo": "switch/master-toggle",
+          "title": "Master toggle"
+        },
+        {
+          "demo": "switch/in-toolbar",
+          "title": "Toolbar filter"
+        }
+      ]
+    },
+    {
+      "slug": "slider",
+      "name": "Slider",
+      "category": "Forms",
+      "exports": [
+        "Slider"
+      ],
+      "description": "Picks a number, or a range, by dragging along a track. Use `Number Field` when the exact figure matters.",
+      "css": "css/components/slider.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/slider",
+      "examples": [
+        {
+          "demo": "slider/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "slider/range",
+          "title": "Range"
+        },
+        {
+          "demo": "slider/stepped",
+          "title": "Stepped scale"
+        },
+        {
+          "demo": "slider/vertical",
+          "title": "Vertical faders"
+        }
+      ]
+    },
+    {
+      "slug": "input-group",
+      "name": "Input Group",
+      "category": "Forms",
+      "exports": [
+        "InputGroup",
+        "InputGroupAddon",
+        "InputGroupButton",
+        "InputGroupText",
+        "InputGroupInput",
+        "InputGroupTextarea",
+        "inputGroupAddonVariants"
+      ],
+      "description": "Puts icons, addons and buttons inside an input's own border.",
+      "css": "css/components/input-group.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/input-group",
+      "examples": [
+        {
+          "demo": "input-group/addons",
+          "title": "Addons"
+        },
+        {
+          "demo": "input-group/with-buttons",
+          "title": "With buttons"
+        },
+        {
+          "demo": "input-group/in-field",
+          "title": "In a field"
+        },
+        {
+          "demo": "input-group/block-align",
+          "title": "Stacked addons"
+        }
+      ]
+    },
+    {
+      "slug": "card",
+      "name": "Card",
+      "category": "Data display",
+      "exports": [
+        "Card",
+        "CardMedia",
+        "CardHeader",
+        "CardTitle",
+        "CardDescription",
+        "CardAction",
+        "CardContent",
+        "CardBlock",
+        "CardFooter"
+      ],
+      "description": "A bordered surface with header, content and footer slots. Use `Panel` for a flat region that belongs to the page.",
+      "css": "css/components/card.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/card",
+      "examples": [
+        {
+          "demo": "card/with-chart",
+          "title": "With a chart",
+          "featured": true
+        },
+        {
+          "demo": "card/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "card/with-action",
+          "title": "With header action"
+        },
+        {
+          "demo": "card/stat",
+          "title": "Stat card"
+        },
+        {
+          "demo": "card/media",
+          "title": "With cover media"
+        },
+        {
+          "demo": "card/blocks",
+          "title": "Divided blocks"
+        }
+      ]
+    },
+    {
+      "slug": "badge",
+      "name": "Badge",
+      "category": "Data display",
+      "exports": [
+        "Badge",
+        "badgeVariants"
+      ],
+      "description": "A compact, uppercase status or category label with no box. `Tag` is the boxed, tinted version.",
+      "css": "css/components/badge.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/badge",
+      "examples": [
+        {
+          "demo": "badge/variants",
+          "title": "Variants"
+        },
+        {
+          "demo": "badge/with-icon",
+          "title": "With an icon"
+        },
+        {
+          "demo": "badge/in-context",
+          "title": "In a list"
+        }
+      ]
+    },
+    {
+      "slug": "status",
+      "name": "Status",
+      "category": "Data display",
+      "exports": [
+        "Status",
+        "StatusIndicator",
+        "StatusLabel",
+        "StatusPanel",
+        "Metric",
+        "statusVariants"
+      ],
+      "description": "A coloured dot and a word, for the state of one thing. Six tones.",
+      "url": "https://littlebigcode.github.io/design-system/docs/status",
+      "examples": [
+        {
+          "demo": "status/tones",
+          "title": "Tones"
+        },
+        {
+          "demo": "status/pulse",
+          "title": "Pulse"
+        },
+        {
+          "demo": "status/in-service-list",
+          "title": "In a service list"
+        },
+        {
+          "demo": "status/panel",
+          "title": "Status panel"
+        }
+      ]
+    },
+    {
+      "slug": "tag",
+      "name": "Tag",
+      "category": "Data display",
+      "exports": [
+        "Tag",
+        "tagVariants"
+      ],
+      "description": "A boxed, tinted label in six tones. Absorbs v1's Chip, whose `warn` boolean is now `tone=\"warning\"`.",
+      "css": "css/components/tag.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/tag",
+      "examples": [
+        {
+          "demo": "tag/tones",
+          "title": "Tones"
+        },
+        {
+          "demo": "tag/in-context",
+          "title": "In a list"
+        },
+        {
+          "demo": "tag/with-icon",
+          "title": "With a leading icon"
+        }
+      ]
+    },
+    {
+      "slug": "panel",
+      "name": "Panel",
+      "category": "Layout",
+      "exports": [
+        "Panel",
+        "PanelHeader",
+        "PanelTitle",
+        "PanelContent",
+        "PanelFooter",
+        "PanelRow"
+      ],
+      "description": "A flat, bordered section container — Card without the elevation — plus a row part for settings lists.",
+      "css": "css/components/panel.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/panel",
+      "examples": [
+        {
+          "demo": "panel/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "panel/rows",
+          "title": "Settings rows"
+        },
+        {
+          "demo": "panel/form-section",
+          "title": "Form section"
+        }
+      ]
+    },
+    {
+      "slug": "kanban",
+      "name": "Kanban",
+      "category": "Data display",
+      "exports": [
+        "Kanban",
+        "KanbanCardTitle"
+      ],
+      "description": "A board of columns whose cards move between them by drag or by arrow key.",
+      "css": "css/components/kanban.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/kanban",
+      "examples": [
+        {
+          "demo": "kanban/card-content",
+          "title": "Card content",
+          "featured": true
+        },
+        {
+          "demo": "kanban/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "kanban/controlled",
+          "title": "Controlled board"
+        }
+      ]
+    },
+    {
+      "slug": "skeleton",
+      "name": "Skeleton",
+      "category": "Data display",
+      "exports": [
+        "Skeleton"
+      ],
+      "description": "A pulsing placeholder block for content that has not loaded yet.",
+      "css": "css/components/skeleton.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/skeleton",
+      "examples": [
+        {
+          "demo": "skeleton/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "skeleton/matching-layout",
+          "title": "Matching the real layout"
+        },
+        {
+          "demo": "skeleton/table-rows",
+          "title": "Table body"
+        },
+        {
+          "demo": "skeleton/announced",
+          "title": "Announcing the wait"
+        }
+      ]
+    },
+    {
+      "slug": "sheet",
+      "name": "Sheet",
+      "category": "Overlays",
+      "exports": [
+        "Sheet",
+        "SheetTrigger",
+        "SheetClose",
+        "SheetContent",
+        "SheetHeader",
+        "SheetFooter",
+        "SheetTitle",
+        "SheetDescription"
+      ],
+      "description": "A panel that slides in from an edge, with Dialog's modal behaviour.",
+      "css": "css/components/sheet.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/sheet",
+      "examples": [
+        {
+          "demo": "sheet/sides",
+          "title": "Sides"
+        },
+        {
+          "demo": "sheet/detail",
+          "title": "Detail panel"
+        },
+        {
+          "demo": "sheet/with-form",
+          "title": "With a form"
+        },
+        {
+          "demo": "sheet/navigation",
+          "title": "Navigation menu"
+        }
+      ]
+    },
+    {
+      "slug": "drawer",
+      "name": "Drawer",
+      "category": "Overlays",
+      "exports": [
+        "Drawer",
+        "DrawerTrigger",
+        "DrawerPortal",
+        "DrawerOverlay",
+        "DrawerSwipeHandle",
+        "DrawerClose",
+        "DrawerContent",
+        "DrawerHeader",
+        "DrawerFooter",
+        "DrawerTitle",
+        "DrawerDescription"
+      ],
+      "description": "A bottom sheet that follows the finger, with drag-to-dismiss and snap points. Tuned for touch.",
+      "css": "css/components/drawer.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/drawer",
+      "examples": [
+        {
+          "demo": "drawer/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "drawer/directions",
+          "title": "Directions"
+        },
+        {
+          "demo": "drawer/snap-points",
+          "title": "Snap points"
+        },
+        {
+          "demo": "drawer/non-modal",
+          "title": "Non-modal"
+        }
+      ]
+    },
+    {
+      "slug": "tooltip",
+      "name": "Tooltip",
+      "category": "Overlays",
+      "exports": [
+        "Tooltip",
+        "TooltipTrigger",
+        "TooltipContent",
+        "TooltipProvider"
+      ],
+      "description": "A short label shown on hover or focus. Never put interactive content in one.",
+      "css": "css/components/tooltip.css",
+      "url": "https://littlebigcode.github.io/design-system/docs/tooltip",
+      "examples": [
+        {
+          "demo": "tooltip/basic",
+          "title": "Basic"
+        },
+        {
+          "demo": "tooltip/sides",
+          "title": "Sides and shortcuts"
+        },
+        {
+          "demo": "tooltip/truncated",
+          "title": "Clipped labels"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "slug": "nav-shell",
+      "name": "Nav shell",
+      "description": "Sidebar, grouped and nested nav, badges and an inset content area — the left edge of an application screen.",
+      "url": "https://littlebigcode.github.io/design-system/blocks/nav-shell"
+    },
+    {
+      "slug": "app-chrome",
+      "name": "App chrome",
+      "description": "Page header, toolbar, filter bar and stat band — the frame around an application screen.",
+      "url": "https://littlebigcode.github.io/design-system/blocks/app-chrome"
+    },
+    {
+      "slug": "auth",
+      "name": "Auth",
+      "description": "Sign in, sign up, forgot-password and two-factor cards.",
+      "url": "https://littlebigcode.github.io/design-system/blocks/auth"
+    },
+    {
+      "slug": "marketing",
+      "name": "Marketing",
+      "description": "Hero, feature grid, pricing, stat band and footer — built on the visible grid system.",
+      "url": "https://littlebigcode.github.io/design-system/blocks/marketing"
+    },
+    {
+      "slug": "data-detail",
+      "name": "Data & detail",
+      "description": "Detail layout, empty state, faceted filter, activity feed and a confirmation dialog.",
+      "url": "https://littlebigcode.github.io/design-system/blocks/data-detail"
+    }
+  ],
+  "templates": [
+    {
+      "slug": "dashboard",
+      "name": "Dashboard",
+      "description": "App bar, sidebar nav, KPI row and a chart panel — a full application screen.",
+      "url": "https://littlebigcode.github.io/design-system/templates/dashboard"
+    },
+    {
+      "slug": "login",
+      "name": "Login",
+      "description": "A standalone sign-in page, centered on the brand background.",
+      "url": "https://littlebigcode.github.io/design-system/templates/login"
+    },
+    {
+      "slug": "error-404",
+      "name": "404",
+      "description": "A standalone error page built from the empty-state pattern.",
+      "url": "https://littlebigcode.github.io/design-system/templates/error-404"
+    }
+  ]
+}

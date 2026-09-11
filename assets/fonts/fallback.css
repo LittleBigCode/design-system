@@ -3,11 +3,14 @@
    ------------------------------------------------------------
    Convenience loader for the open-source fonts the design system
    falls back to out of the box:
-     - Title : Fraunces  (a refined, light editorial serif —
-               matches the "minimal, enduring, elegant" DNA)
+     - Title : Geist     (the same face as the body — the charter
+               allows exactly two, Ufficio and Geist, so an
+               unlicensed project renders titles in Geist Light
+               rather than in a third, borrowed serif)
      - Body  : Geist     (the brand body typeface, OFL)
-   Import this file to pull both from Google Fonts, or self-host
+     - Mono  : Geist Mono (tokens, code, tabular figures)
+   Import this file to pull them from Google Fonts, or self-host
    the files and replace these @imports.
    ============================================================ */
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap");

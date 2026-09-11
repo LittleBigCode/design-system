@@ -1,11 +1,125 @@
-/* Data table — .ds-table */
+/* ============================================================================
+   Table — .ds-table
+   ----------------------------------------------------------------------------
+   Two grammars share this file, and that is deliberate.
+
+   The PART grammar (.ds-table-container, -header, -body, -footer, -row, -head,
+   -cell, -caption) is the source's, and is what <Table> renders: a horizontally
+   scrollable container around a borderless table whose rows are separated by
+   hairlines. This is the grammar to write new markup in.
+
+   The ELEMENT grammar below it is 0.11's, and is PRESERVED rather than
+   replaced. `.ds-table--hover`, `__num`, `__name` and `__row-action` are read
+   by four files under examples/ plus docs/components.md and docs/migration.md —
+   committed fixtures the a11y and visual suites load — and there is no React
+   component on either side whose replacement would have re-classed them. A
+   wholesale swap would have unstyled every one.
+
+   The two are kept apart by three moves, all of them here so a reader does not
+   have to reconstruct them:
+
+     1. The element rules are scoped `:not(.ds-table-head)` / `:not(.ds-table-cell)`
+        so they do not outrank the part classes. `.ds-table th` is (0,1,1) and
+        `.ds-table-head` is (0,1,0) — without the guard the legacy padding would
+        win inside a <Table>.
+     2. `.ds-table-container > .ds-table` drops the 0.11 frame, so the composed
+        component keeps the source's borderless look while hand-written tables
+        keep their box.
+     3. `__num` / `__name` sit after the part rules, so a cell can carry both
+        `.ds-table-cell` and `.ds-table__num` and the alignment still lands.
+
+   The source left `text-start` a literal Tailwind utility on TableHead's own
+   className, for a dedupe there is no tailwind-merge here to perform. It is
+   baked into .ds-table-head; a caller overrides with text-align directly.
+   ============================================================================ */
+
+/* ---- Part grammar (the composed <Table>) --------------------------------- */
+.ds-table-container {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+}
+
 .ds-table {
   width: 100%;
   border-collapse: collapse;
+  caption-side: bottom;
   background: var(--ds-surface);
   border: 1px solid var(--ds-rule);
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-base);
+  line-height: 1.25rem;
 }
-.ds-table th {
+/* The composed table is framed by its container, not by itself. */
+.ds-table-container > .ds-table {
+  background: none;
+  border: 0;
+}
+
+.ds-table-header tr {
+  border-bottom: 1px solid var(--ds-rule);
+}
+
+.ds-table-body tr:last-child {
+  border-width: 0;
+}
+
+.ds-table-footer {
+  border-top: 1px solid var(--ds-rule);
+  background-color: color-mix(in oklab, var(--ds-bg-alt) 50%, transparent);
+  font-weight: 500;
+}
+.ds-table-footer > tr:last-child {
+  border-bottom-width: 0;
+}
+
+.ds-table-row {
+  border-bottom: 1px solid var(--ds-rule);
+  transition: background-color var(--ds-transition), color var(--ds-transition);
+}
+.ds-table-row:hover,
+.ds-table-row:has([aria-expanded="true"]) {
+  background-color: color-mix(in oklab, var(--ds-bg-alt) 50%, transparent);
+}
+.ds-table-row[data-state="selected"] {
+  background-color: var(--ds-bg-alt);
+}
+
+.ds-table-head {
+  height: 3rem;
+  padding-inline: 0.75rem;
+  vertical-align: middle;
+  text-align: start;
+  font-size: var(--ds-text-xs);
+  line-height: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  color: var(--ds-ink-faint);
+  text-transform: uppercase;
+}
+.ds-table-head:has([role="checkbox"]) {
+  padding-inline-end: 0;
+}
+
+.ds-table-cell {
+  padding: 0.75rem;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.ds-table-cell:has([role="checkbox"]) {
+  padding-inline-end: 0;
+}
+
+.ds-table-caption {
+  margin-top: 1rem;
+  font-size: var(--ds-text-base);
+  line-height: 1.25rem;
+  color: var(--ds-ink-faint);
+}
+
+/* ---- Element grammar (0.11, preserved for the hand-written fixtures) ----- */
+.ds-table th:not(.ds-table-head) {
   font-size: var(--ds-text-2xs);
   font-weight: 400;
   letter-spacing: 0.08em;
@@ -15,15 +129,12 @@
   padding: 10px 12px;
   border-bottom: 1px solid var(--ds-ink);
 }
-.ds-table td {
+.ds-table td:not(.ds-table-cell) {
   padding: 6px 12px;
   border-bottom: 1px solid var(--ds-rule-soft);
   font-size: 13.5px;
 }
-.ds-table tr:last-child td { border-bottom: none; }
-
-.ds-table__num { text-align: right; font-variant-numeric: tabular-nums; }
-.ds-table__name { font-weight: 400; font-size: var(--ds-text-sm); white-space: nowrap; }
+.ds-table tr:last-child td:not(.ds-table-cell) { border-bottom: none; }
 
 .ds-table--hover tbody tr:hover { background: var(--ds-bg-alt); }
 
@@ -38,6 +149,9 @@
   font-variant-numeric: tabular-nums;
 }
 .ds-table input.ds-table__num { max-width: 110px; text-align: right; }
+
+.ds-table__num { text-align: right; font-variant-numeric: tabular-nums; }
+.ds-table__name { font-weight: 400; font-size: var(--ds-text-sm); white-space: nowrap; }
 
 .ds-table__row-action {
   background: none;

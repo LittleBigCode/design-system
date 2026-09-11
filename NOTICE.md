@@ -26,24 +26,19 @@ the font is served on Diametral's production web properties.
 3. **No independent redistribution.** The font file must not be extracted from this repository
    and redistributed on its own, repackaged, or used outside the Diametral brand context.
 4. **Free fallback is built in.** If you do not hold an Ufficio license, do **not** import
-   `assets/fonts/ufficio.css`. The design system then renders titles in the free **Fraunces**
-   stack automatically — no other change is required. The `--ds-font-title` token makes the
+   `assets/fonts/ufficio.css`. The design system then renders titles in the free **Geist**
+   automatically — no other change is required. The `--ds-font-title` token makes the
    swap a one-line override.
 
-### Geist — body typeface (free)
+### Geist — body typeface, title fallback and mono (free)
 
-`--ds-font-sans` uses **Geist**, licensed under the **SIL Open Font License 1.1**. Free to use
-and redistribute under the OFL terms. Loaded from Google Fonts (or self-host).
+`--ds-font-sans`, `--ds-font-title`'s fallback and `--ds-font-mono` use **Geist** and
+**Geist Mono**, licensed under the **SIL Open Font License 1.1**. Free to use and
+redistribute under the OFL terms. Loaded from Google Fonts (or self-host).
 
-### Fraunces — free title fallback
-
-The default title fallback is **Fraunces**, licensed under the **SIL Open Font License 1.1**.
-Free to use under the OFL terms.
-
-### PP Editorial New — listed alternative (commercial)
-
-Referenced in the title fallback stack only as a stylistic match. It is a commercial font; the
-same caveat as Ufficio applies if you choose to use it.
+The charter has exactly two faces, so there is no third, borrowed one: the title token's
+former **Fraunces / PP Editorial New / Georgia** chain is gone, and neither font is
+referenced or loaded by this repository any more.
 
 ## Summary
 
@@ -52,8 +47,7 @@ same caveat as Ufficio applies if you choose to use it.
 | Design system code | MIT | Yes |
 | Ufficio (`Ufficio-300.woff2`) | Commercial (Diametral license) | **No** — obtain your own |
 | Geist | SIL OFL 1.1 | Yes (under OFL) |
-| Fraunces | SIL OFL 1.1 | Yes (under OFL) |
-| PP Editorial New | Commercial | **No** — obtain your own |
+| Geist Mono | SIL OFL 1.1 | Yes (under OFL) |
 
 See also [`docs/fonts-and-licensing.md`](docs/fonts-and-licensing.md) and
 [`assets/fonts/LICENSE-FONTS.md`](assets/fonts/LICENSE-FONTS.md).

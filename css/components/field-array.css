@@ -1,0 +1,64 @@
+/* ============================================================================
+   Field array — .ds-field-array
+   ----------------------------------------------------------------------------
+   Repeat chrome for an array of objects: one bordered block per entry, one add
+   button under the stack. Every part holds nothing — no state, no opinion
+   about what an entry contains — so an entry takes any control in any
+   arrangement and the array itself lives with the consumer.
+
+   Two dedupe exceptions are resolved here rather than carried. The source kept
+   `flex items-center` on the item and `flex` on the item content as literal
+   Tailwind utilities so `tailwind-merge` could dedupe them against the demos'
+   `flex-col`, `items-stretch` and `grid` overrides. With no Tailwind and no
+   tailwind-merge here, both literals become real declarations and each
+   override becomes a class:
+
+     flex items-center  ->  the default; `--stacked` is the flex-col case and
+                            `--stretch` the items-stretch case
+     flex               ->  the default; `--grid` is the two-column case
+
+   `min-width: 0` on the content is load-bearing rather than cosmetic: without
+   it a long value refuses to shrink below its content width and pushes the
+   remove button out of the block.
+   ============================================================================ */
+.ds-field-array {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: var(--ds-space-3);
+}
+
+.ds-field-array-item {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-3);
+  border: 1px solid var(--ds-rule);
+  border-radius: var(--ds-radius-none);
+  padding: var(--ds-space-3);
+}
+/* An entry whose controls stack rather than sitting on one line. */
+.ds-field-array-item--stacked {
+  flex-direction: column;
+}
+/* An entry whose controls fill the block height instead of centring in it —
+   what a stacked entry with a trailing remove button wants. */
+.ds-field-array-item--stretch {
+  align-items: stretch;
+}
+
+.ds-field-array-item-content {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 0%;
+  flex-direction: column;
+  gap: var(--ds-space-3);
+}
+/* Two controls side by side inside one entry. */
+.ds-field-array-item-content--grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ds-field-array-add {
+  width: 100%;
+}

@@ -1,67 +1,188 @@
-/* ============================================================================
-   Toast — .ds-toast (+ .ds-toasts viewport)
-   ----------------------------------------------------------------------------
-   A transient, floating notification: a bordered surface card with a 3px
-   status bar on the left (like .ds-alert, but it floats and sits on a surface
-   rather than a tint). Stacks in a fixed top-right viewport (.ds-toasts).
-   Flat parti pris: 1px borders, no radius, no shadow — separation by rule.
-   ============================================================================ */
-.ds-toasts {
+.ds-toast-viewport {
   position: fixed;
-  top: var(--ds-space-4);
-  right: var(--ds-space-4);
-  z-index: var(--ds-z-toast);
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-space-2);
-  width: 360px;
-  max-width: calc(100vw - var(--ds-space-7));
-  pointer-events: none; /* let clicks fall through the gaps; cards re-enable */
+  z-index: 50;
+  inset-inline: 1rem;
+  bottom: 1rem;
+  margin-inline: auto;
+  width: auto;
+  max-width: 24rem;
+  outline: none;
+  pointer-events: none;
+}
+@media (min-width: 640px) {
+  .ds-toast-viewport {
+    inset-inline-end: 1rem;
+    inset-inline-start: auto;
+    margin-inline: 0;
+    width: 100%;
+  }
 }
 
 .ds-toast {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--ds-space-3);
-  padding: var(--ds-space-3) var(--ds-space-4);
-  background: var(--ds-surface);
+  position: absolute;
+  inset-inline-end: 0;
+  bottom: 0;
+  z-index: calc(1000 - var(--toast-index));
+  width: 100%;
+  transform-origin: bottom;
+  border-radius: 0 !important;
   border: 1px solid var(--ds-rule);
-  border-left: 3px solid var(--ds-accent);
+  background: var(--ds-surface);
   color: var(--ds-ink);
-  font-size: var(--ds-text-base);
-  line-height: var(--ds-leading-normal);
-  border-radius: var(--ds-radius-none);
+  box-shadow:
+    0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
+  will-change: transform;
+  outline: none;
+  user-select: none;
   pointer-events: auto;
+
+  --gap: 0.75rem;
+  --height: var(--toast-frontmost-height, var(--toast-height));
+  --offset-y: calc(
+    var(--toast-offset-y) * -1 + calc(var(--toast-index) * var(--gap) * -1) +
+      var(--toast-swipe-movement-y)
+  );
+  --peek: 0.75rem;
+  --scale: calc(max(0, 1 - (var(--toast-index) * 0.1)));
+  --shrink: calc(1 - var(--scale));
+
+  height: var(--height);
+  transform: translateX(var(--toast-swipe-movement-x))
+    translateY(
+      calc(
+        var(--toast-swipe-movement-y) - (var(--toast-index) * var(--peek)) -
+          (var(--shrink) * var(--height))
+      )
+    )
+    scale(var(--scale));
+  transition:
+    transform 500ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 500ms,
+    height 150ms;
+}
+.ds-toast:focus-visible {
+  border-color: var(--ds-focus-ring);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--ds-focus-ring) 50%, transparent);
+}
+.ds-toast::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  inset-inline-start: 0;
+  width: 100%;
+  height: calc(var(--gap) + 1px);
+}
+.ds-toast[data-expanded] {
+  height: var(--toast-height);
+  transform: translateX(var(--toast-swipe-movement-x)) translateY(var(--offset-y));
+}
+.ds-toast[data-limited] {
+  opacity: 0;
+}
+.ds-toast[data-starting-style] {
+  transform: translateY(150%);
+}
+.ds-toast[data-ending-style]:not([data-limited]):not([data-swipe-direction]) {
+  transform: translateY(150%);
+}
+.ds-toast[data-ending-style][data-swipe-direction="down"] {
+  transform: translateY(calc(var(--toast-swipe-movement-y) + 150%));
+}
+.ds-toast[data-ending-style][data-swipe-direction="left"] {
+  transform: translateX(calc(var(--toast-swipe-movement-x) - 150%)) translateY(var(--offset-y));
+}
+.ds-toast[data-ending-style][data-swipe-direction="right"] {
+  transform: translateX(calc(var(--toast-swipe-movement-x) + 150%)) translateY(var(--offset-y));
+}
+.ds-toast[data-ending-style][data-swipe-direction="up"] {
+  transform: translateY(calc(var(--toast-swipe-movement-y) - 150%));
+}
+.ds-toast[data-expanded][data-ending-style][data-swipe-direction="down"] {
+  transform: translateY(calc(var(--toast-swipe-movement-y) + 150%));
+}
+.ds-toast[data-expanded][data-ending-style][data-swipe-direction="left"] {
+  transform: translateX(calc(var(--toast-swipe-movement-x) - 150%)) translateY(var(--offset-y));
+}
+.ds-toast[data-expanded][data-ending-style][data-swipe-direction="right"] {
+  transform: translateX(calc(var(--toast-swipe-movement-x) + 150%)) translateY(var(--offset-y));
+}
+.ds-toast[data-expanded][data-ending-style][data-swipe-direction="up"] {
+  transform: translateY(calc(var(--toast-swipe-movement-y) - 150%));
 }
 
-.ds-toast__content { flex: 1 1 auto; min-width: 0; }
-.ds-toast__title { font-weight: 500; margin-bottom: var(--ds-space-1); }
-.ds-toast__message { color: var(--ds-ink-soft); font-size: var(--ds-text-sm); }
-
-/* Borderless × dismiss button */
-.ds-toast__close {
-  flex: 0 0 auto;
-  display: inline-flex;
+.ds-toast-content {
+  display: flex;
+  height: 100%;
   align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  margin: -2px -4px 0 0;
-  padding: 0;
-  border: none;
-  background: none;
-  color: var(--ds-ink-faint);
-  font-size: 18px;
-  line-height: 1;
-  cursor: pointer;
-  border-radius: var(--ds-radius-none);
-  transition: color var(--ds-transition);
+  gap: 0.75rem;
+  overflow: hidden;
+  padding: 1rem;
+  transition: opacity 250ms cubic-bezier(0.22, 1, 0.36, 1);
 }
-.ds-toast__close:hover { color: var(--ds-ink); }
-.ds-toast__close:focus-visible { outline: 2px solid var(--ds-focus-ring); outline-offset: 2px; }
+.ds-toast-content[data-behind] {
+  opacity: 0;
+}
+.ds-toast-content[data-expanded] {
+  opacity: 1;
+}
 
-/* ---- Status variants (recolor the left bar) ------------------------------ */
-.ds-toast--info    { border-left-color: var(--ds-info); }
-.ds-toast--success { border-left-color: var(--ds-success); }
-.ds-toast--warning { border-left-color: var(--ds-warning); }
-.ds-toast--danger  { border-left-color: var(--ds-danger); }
+.ds-toast-body {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 0%;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.ds-toast-title {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+}
+
+.ds-toast-description {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--ds-ink-soft);
+}
+
+.ds-toast-action {
+  flex-shrink: 0;
+}
+
+.ds-toast-close {
+  position: relative;
+  flex-shrink: 0;
+  color: var(--ds-ink-soft);
+}
+.ds-toast-close::after {
+  content: "";
+  position: absolute;
+  inset: -0.5rem;
+}
+.ds-toast-close:hover {
+  color: var(--ds-ink);
+}
+
+.ds-toast-icon {
+  flex-shrink: 0;
+}
+.ds-toast-icon svg {
+  pointer-events: none;
+}
+.ds-toast-icon svg:not([class*="size-"]) {
+  width: 1rem;
+  height: 1rem;
+}
+.ds-toast-icon--error {
+  color: var(--ds-danger);
+}
+.ds-toast-icon--loading {
+  animation: ds-toast-spin 1s linear infinite;
+}
+@keyframes ds-toast-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

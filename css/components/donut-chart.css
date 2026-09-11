@@ -1,0 +1,27 @@
+/* ============================================================================
+   Donut chart — .ds-donut-chart-root
+   ----------------------------------------------------------------------------
+   A `PieChart` with the middle cut out and a figure in the hole. Sizing is
+   chart.css's `--square` modifier, for the reason pie-chart.css records; what
+   is local is the centre text, which follows .ds-gauge's pairing — a
+   title-voiced figure with an uppercase faint caption under it.
+   ============================================================================ */
+.ds-donut-chart-root {
+  margin-inline: auto;
+}
+
+.ds-donut-chart-center-label {
+  fill: var(--ds-ink);
+  font-family: var(--ds-font-title);
+  font-weight: var(--ds-font-weight-title);
+  font-size: var(--ds-text-lg);
+  font-variant-numeric: tabular-nums;
+}
+
+.ds-donut-chart-center-caption {
+  fill: var(--ds-ink-faint);
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-2xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}

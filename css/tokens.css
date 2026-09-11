@@ -26,7 +26,7 @@
 
   /* Brand · secondary palette (accent / illustration) */
   --ds-rouge:     #ff2a00;  /* signal red — charter canonical */
-  --ds-vert:      #89fc79;  /* sampled from charter PNG (label is a known typo) — confirm before 1.0 */
+  --ds-vert:      #53ff64;  /* bright green — charter canonical */
   --ds-bleu:      #23e2ff;
   --ds-jaune-vif: #fff73b;
 
@@ -53,6 +53,22 @@
   --ds-chart-5: #7b5ea7;  /* violet */
   --ds-chart-6: #e0a32e;  /* amber */
 
+  /* Sequential ramp — magnitude encoded as colour, for .ds-heatmap's five
+     steps. Ordered data needs one hue getting darker, not six unrelated ones;
+     the --ds-chart-* ramp above is categorical and reading it as a scale is the
+     classic dataviz error. Derived from --ds-chart-2 (teal) because a red ramp
+     reads as severity on data that is only dense.
+
+     Step 1 is a real tint rather than a hairline wash: an empty cell renders as
+     an unfilled ring, and the two have to be separable at a glance. Five
+     quantised steps rather than a gradient, because a gradient cannot be put in
+     a legend. This is the one primitive themes/dark.css overrides — see there. */
+  --ds-heat-1: #9fd3e2;
+  --ds-heat-2: #6fbcd0;
+  --ds-heat-3: #3f9db6;
+  --ds-heat-4: #1f7d97;
+  --ds-heat-5: #0b5a70;
+
   /* ===== TIER 2 — SEMANTIC (the override surface) ========================= */
 
   /* Surfaces & text */
@@ -74,8 +90,12 @@
   --ds-rule:      var(--ds-grey);
   --ds-rule-soft: var(--ds-grey-faint);
 
-  /* Accent (brand signal) */
-  --ds-accent:        var(--ds-rouge);
+  /* Accent (brand signal). The semantic accent is a shade deeper than the raw
+     Rouge primitive: #ff2a00 reaches only 3.76:1 on white, so every accent
+     fill carrying small white text failed AA. Incoming's globals.css darkens
+     the semantic slot itself rather than leaving each consumer to reach for
+     --ds-accent-ink; --ds-rouge stays charter-canonical for the brand swatch. */
+  --ds-accent:        #de2500;
   --ds-accent-bg:     var(--ds-orange-bg);
   --ds-accent-legacy: var(--ds-orange);  /* #ff5500 — pre-charter accent, for pixel-frozen migration */
   /* Accent INK: a marginally deeper signal red for accent TEXT/icons on light
@@ -85,22 +105,55 @@
   --ds-accent-ink:    #db2400;
   --ds-focus-ring:    var(--ds-ink);
 
+  /* Neutral action surface — the default (non-accent) button fill. Kept
+     separate from --ds-ink because dark mode has to raise it off the page
+     rather than invert it: a black button on a #0e0e10 background disappears.
+     See themes/dark.css. */
+  --ds-action:        var(--ds-noir);
+  --ds-on-action:     var(--ds-blanc);
+
   /* Status families (success / warning / danger / critical / neutral / info) */
   --ds-success:    var(--ds-green);     --ds-success-bg:  var(--ds-green-bg);
   --ds-warning:    var(--ds-orange);    --ds-warning-bg:  var(--ds-orange-bg);
   --ds-danger:     var(--ds-red);       --ds-danger-bg:   var(--ds-red-bg);
-  --ds-critical:   var(--ds-noir);      --ds-critical-bg: var(--ds-grey-bg);
-  --ds-neutral:    var(--ds-gris);      --ds-neutral-bg:  var(--ds-grey-bg);
+  /* Critical is the vivid brand red — the rarer "more severe than danger" step
+     above --ds-danger's muted charter red. It read as plain black here, which
+     made it indistinguishable from --ds-ink and left the tone family without a
+     top step; incoming's globals.css defines it as Rouge on a Rouge tint. */
+  --ds-critical:   var(--ds-rouge);     --ds-critical-bg: rgba(255, 42, 0, .08);
+  /* Neutral is the dark grey, not mid Gris: as a tone it has to carry text and
+     fills, and #767884 clears AA on neither. Gris stays charter-canonical. */
+  --ds-neutral:    var(--ds-grey-dark); --ds-neutral-bg:  var(--ds-grey-bg);
+  /* Status SOLID — fills that must carry --ds-on-status (white) text. Three of
+     the six hues fail WCAG AA as a white-text background: warning #ff5500 at
+     3.21:1, info #1488a6 at 4.12:1, critical/Rouge #ff2a00 at 3.76:1. These are
+     the smallest darkenings that clear 4.5:1; success and danger already pass
+     and alias their base hue. Same move as --ds-accent-ink and the
+     --ds-*-ink shades — the a11y-safe variant is a new token, so the base hues
+     (and --ds-gris in particular) stay charter-canonical. */
+  --ds-success-solid:  var(--ds-success);
+  --ds-warning-solid:  #cf4500;
+  --ds-danger-solid:   var(--ds-danger);
+  /* Critical cannot alias its base hue any more: raw Rouge under white text is
+     3.76:1. Same darkening as --ds-critical-ink, which clears 5.77:1. */
+  --ds-critical-solid: #c81f00;
+  --ds-neutral-solid:  #727480;
+  --ds-info-solid:     #137e9a;
   --ds-info-fg:    var(--ds-info);      /* --ds-info / --ds-info-bg defined as primitives above */
   /* Status INK — darker foregrounds for status TEXT on the soft tinted bgs.
      The solid status hues above are tuned as fills (white text on them); used as
      small text on their own *-bg tints, warning (#ff5500) and info (#1488a6)
      fall below WCAG AA. These deeper shades clear 4.5:1 on the tints and white.
-     success/danger already pass on their tints, so they alias the base hue. */
-  --ds-success-ink: var(--ds-success);
-  --ds-warning-ink: #b8400b;
-  --ds-danger-ink:  var(--ds-danger);
-  --ds-info-ink:    #0e6a82;
+     success/danger already pass on their tints, so they alias the base hue.
+     alert.css reads a --ds-*-ink for all five tones, critical and neutral
+     included, so the family has to be complete or `.ds-alert--tone-critical`
+     resolves its --tone-ink to nothing at all. */
+  --ds-success-ink:  var(--ds-success);
+  --ds-warning-ink:  #a33900;
+  --ds-danger-ink:   var(--ds-danger);
+  --ds-info-ink:     #0f6d85;
+  --ds-critical-ink: #c81f00;
+  --ds-neutral-ink:  var(--ds-ink-soft);
 
   /* ===== TIER 3 — SCALE =================================================== */
 
@@ -114,8 +167,12 @@
   --ds-space-7: 40px;
   --ds-space-8: 80px;
 
-  /* The flat parti pris — one knob. Override to round the whole system. */
-  --ds-radius-none: 0;
+  /* The flat parti pris — one knob. Override to round the whole system.
+     `--ds-radius` is the name incoming's globals.css publishes (and the one
+     shadcn's calc-derived scale hangs off); `--ds-radius-none` is kept as its
+     alias because 78 declarations across css/components/ already read it. */
+  --ds-radius: 0px;
+  --ds-radius-none: var(--ds-radius);
 
   /* Type scale */
   --ds-text-2xs:  11px;
@@ -129,10 +186,19 @@
   --ds-leading-tight:  110%;
   --ds-leading-normal: 130%;
 
-  /* Type families. Ufficio renders only if you import assets/fonts/ufficio.css
-     (license required); otherwise the stack falls back to free Fraunces. */
-  --ds-font-title: "Ufficio", "Fraunces", "PP Editorial New", Georgia, "Times New Roman", serif;
-  --ds-font-sans:  "Geist", system-ui, "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  /* Type families. Two faces only — Ufficio for titles, Geist for body and
+     mono — and deliberately no third: the title stack falls back to Geist, not
+     to a serif. The old Fraunces/PP Editorial/Georgia chain meant any consumer
+     without an Ufficio license silently got Georgia headings on a system-sans
+     body, which is not the charter; incoming's globals.css pins the same
+     Ufficio -> Geist -> sans-serif chain for exactly that reason.
+     Ufficio renders only if you import assets/fonts/ufficio.css (license
+     required). "Geist Variable" leads each stack so a @fontsource-variable
+     install resolves; "Geist" catches the Google-Fonts path documented in
+     docs/getting-started.md. */
+  --ds-font-title: "Ufficio", "Geist Variable", "Geist", sans-serif;
+  --ds-font-sans:  "Geist Variable", "Geist", system-ui, "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  --ds-font-mono:  "Geist Mono Variable", "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --ds-font-weight-title: 300;
 
   /* Layout */

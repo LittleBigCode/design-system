@@ -23,7 +23,7 @@ export default function Login({ onSignIn }: { onSignIn: () => void }) {
       <form onSubmit={submit} style={{ width: "360px", maxWidth: "100%" }}>
         <Card>
           <div style={{ marginBottom: "18px" }}>
-            <Wordmark name="Diametral" sub="Starter" />
+            <Wordmark variant="square" name="Diametral" sub="Starter" />
           </div>
           <SectionHeading as="h1">Sign in</SectionHeading>
           <p style={{ margin: "4px 0 20px", color: "var(--ds-ink-faint)" }}>

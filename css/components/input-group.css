@@ -1,0 +1,201 @@
+/* ============================================================================
+   Input group — .ds-input-group
+   ----------------------------------------------------------------------------
+   Last of `form-controls.css`'s seven destinations (batch-plan §1.3), and the
+   second name collision after `checkbox`.
+
+   0.11's group is an `inline-flex` strip whose *children* each carry a border
+   and overlap by a pixel so the seam reads as one rule. The source's group
+   carries the border **itself** and un-borders everything inside it, which is
+   the better mechanism: no negative margins, no `z-index` shuffle to raise the
+   focused member, and an addon can sit above or below the control
+   (`data-align="block-start" / "block-end"`) rather than only beside it.
+
+   Both ship. They are told apart by what the element contains, the same way
+   `checkbox.css` does it: a 0.11 group has a `> .ds-input-group__addon` child
+   and an absorbed one never does. `examples/components/form-controls.html` and
+   `examples/kitchen-sink.html` render the 0.11 form and nothing re-classes
+   them.
+
+   The cascade note this file inherits: `kbd.css` already carries
+   `:where([data-slot="input-group"], .ds-input-group) .ds-kbd`, resolved in
+   beta.6 rather than left inverted for this batch (see
+   `docs/absorption/corrections.md`). It reaches both grammars by design and
+   needs nothing here.
+
+   **Dedupe exceptions resolved** (4 and 5 of batch 7's 6). `InputGroupInput`
+   kept `border-0` literal and `InputGroupTextarea` kept `border-0 py-2.5
+   [--textarea-chrome:1.25rem]`, both so `tailwind-merge` could dedupe them
+   against `Input`'s and `Textarea`'s own literal border defaults. With no
+   `tailwind-merge` here both sides would have applied at once, so each becomes
+   a real declaration on its own class below — which is also why `input.css`
+   and `textarea.css` could bake their boxes in the first place.
+
+   Charte edits: the underline-only box becomes the system's full 1px rule; the
+   focus `border-bottom-color` swap becomes the 2px `outline` on
+   `--ds-focus-ring`; `--input` resolves to `--ds-rule`, `--ring` to
+   `--ds-focus-ring`, `--muted-foreground` to `--ds-ink-faint`; and the
+   `.border-b` / `.border-t` Tailwind-utility descendant selectors are dropped
+   — they matched classes this package does not define.
+   ============================================================================ */
+
+/* ---- The 0.11 grammar: bordered children, collapsed seams ---------------- */
+.ds-input-group:has(> .ds-input-group__addon) {
+  display: inline-flex;
+  align-items: stretch;
+  border: 0;
+}
+.ds-input-group__addon {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 12px;
+  font-size: var(--ds-text-sm);
+  color: var(--ds-ink-soft);
+  background: var(--ds-bg-alt);
+  border: 1px solid var(--ds-rule);
+  border-radius: var(--ds-radius-none);
+  white-space: nowrap;
+}
+/* Collapse shared borders so neighbours don't double up. */
+.ds-input-group:has(> .ds-input-group__addon) > * + * { margin-left: -1px; }
+/* The control inside fills the remaining space and keeps the flat look. */
+.ds-input-group:has(> .ds-input-group__addon) > .ds-input,
+.ds-input-group:has(> .ds-input-group__addon) > input,
+.ds-input-group:has(> .ds-input-group__addon) > select {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+/* Bring the focused control's border above its neighbours. */
+.ds-input-group:has(> .ds-input-group__addon) > :focus-within,
+.ds-input-group:has(> .ds-input-group__addon) > :focus {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- The absorbed grammar: the group carries the box -------------------- */
+.ds-input-group:not(:has(> .ds-input-group__addon)) {
+  position: relative;
+  display: flex;
+  height: 40px;
+  width: 100%;
+  min-width: 0;
+  align-items: center;
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-rule);
+  border-radius: var(--ds-radius-none);
+  outline: none;
+  transition: border-color var(--ds-transition);
+}
+/* A group holding a textarea, or an addon stacked above or below the control,
+   grows to its content and stacks instead of sitting on one row. */
+.ds-input-group:has(> [data-align="block-end"]),
+.ds-input-group:has(> [data-align="block-start"]),
+.ds-input-group:has(> textarea) { height: auto; }
+.ds-input-group:has(> [data-align="block-end"]),
+.ds-input-group:has(> [data-align="block-start"]) { flex-direction: column; }
+.ds-input-group:has(> [data-align="block-end"]) > input { padding-top: 12px; }
+.ds-input-group:has(> [data-align="block-start"]) > input { padding-bottom: 12px; }
+
+.ds-input-group:has([data-slot="input-group-control"]:focus-visible) {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: -2px;
+}
+.ds-input-group:has([data-slot][aria-invalid="true"]) { border-color: var(--ds-danger); }
+/* A group nested inside a combobox popup is chrome, not a field of its own. */
+:where([data-slot="combobox-content"]) .ds-input-group:focus-within {
+  border-color: inherit;
+  outline: none;
+}
+
+.ds-input-group-addon {
+  display: flex;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 12px;
+  font-size: var(--ds-text-sm);
+  font-weight: 500;
+  color: var(--ds-ink-faint);
+  cursor: text;
+  user-select: none;
+}
+.ds-input-group[data-disabled="true"] .ds-input-group-addon { opacity: .5; }
+.ds-input-group-addon > svg { width: 14px; height: 14px; }
+.ds-input-group-addon[data-align="inline-start"] { order: -9999; }
+.ds-input-group-addon[data-align="inline-end"] { order: 9999; }
+.ds-input-group-addon[data-align="block-start"] {
+  order: -9999;
+  width: 100%;
+  justify-content: flex-start;
+  padding-top: 12px;
+}
+.ds-input-group:has(> input) .ds-input-group-addon[data-align="block-start"] { padding-top: 14px; }
+.ds-input-group-addon[data-align="block-end"] {
+  order: 9999;
+  width: 100%;
+  justify-content: flex-start;
+  padding-bottom: 12px;
+}
+.ds-input-group:has(> input) .ds-input-group-addon[data-align="block-end"] { padding-bottom: 14px; }
+
+/* The control fills the row and drops its own box — the group draws it. */
+.ds-input-group-input,
+.ds-input-group-textarea {
+  flex: 1 1 0%;
+  border: 0;
+  background: transparent;
+  min-height: 0;
+}
+.ds-input-group-input:focus,
+.ds-input-group-input:focus-visible,
+.ds-input-group-textarea:focus,
+.ds-input-group-textarea:focus-visible { outline: none; }
+.ds-input-group-input[aria-invalid="true"],
+.ds-input-group-textarea[aria-invalid="true"] { border: 0; }
+.ds-input-group-textarea {
+  resize: none;
+  padding-block: 10px;
+  --ds-textarea-chrome: 20px; /* no border of its own; the group draws it */
+}
+.ds-input-group:has(> [data-align="inline-end"]) > .ds-input-group-input { padding-inline-end: 8px; }
+.ds-input-group:has(> [data-align="inline-start"]) > .ds-input-group-input { padding-inline-start: 8px; }
+
+.ds-input-group-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: var(--ds-radius-none);
+  font-size: var(--ds-text-sm);
+}
+.ds-input-group-button[data-size="xs"] {
+  height: 24px;
+  gap: 4px;
+  padding-inline: 6px;
+  font-size: var(--ds-text-2xs);
+}
+.ds-input-group-button[data-size="xs"] > svg { width: 14px; height: 14px; }
+.ds-input-group-button[data-size="icon-xs"] {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  font-size: var(--ds-text-2xs);
+}
+.ds-input-group-button[data-size="icon-sm"] {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+}
+
+.ds-input-group-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--ds-text-sm);
+  color: var(--ds-ink-faint);
+}
+.ds-input-group-text svg {
+  pointer-events: none;
+  width: 14px;
+  height: 14px;
+}

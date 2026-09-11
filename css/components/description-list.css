@@ -1,40 +1,47 @@
 /* ============================================================================
-   Description list — .ds-dl
+   Description list — .ds-description-list
    ----------------------------------------------------------------------------
-   A <dl> laid out as a two-column grid: an auto-width uppercase label column
-   and a 1fr value column. Each term/description pair is one row, separated from
-   the next by a soft rule. Built for key/value detail readouts.
+   A <dl> laid out as a two-column grid: an auto-width uppercase term column and
+   a 1fr detail column. `dt`/`dd` pairs flow as consecutive grid children, so a
+   row needs no wrapper.
+
+   Renamed from 0.x's .ds-dl / __term / __desc. The rule between rows moves from
+   --ds-rule-soft to --ds-rule, which is the source's weight and the one every
+   other absorbed row list uses.
    ============================================================================ */
-.ds-dl {
+.ds-description-list {
   display: grid;
   grid-template-columns: auto 1fr;
-  column-gap: 24px;
+  column-gap: 1.5rem;
   margin: 0;
 }
 
-.ds-dl__term {
+.ds-description-term {
+  border-top: 1px solid var(--ds-rule);
+  padding-block: 0.625rem;
   font-size: var(--ds-text-2xs);
   font-weight: 400;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ds-ink-faint);
-  padding: 10px 0;
-  border-top: 1px solid var(--ds-rule-soft);
-  align-self: baseline;
+  letter-spacing: 0.05em;
   white-space: nowrap;
+  color: var(--ds-ink-faint);
+  text-transform: uppercase;
+  align-self: baseline;
+}
+.ds-description-term:first-of-type {
+  border-top: 0;
 }
 
-.ds-dl__desc {
+.ds-description-detail {
+  display: flex;
+  align-items: flex-start;
   margin: 0;
+  border-top: 1px solid var(--ds-rule);
+  padding-block: 0.625rem;
   font-size: var(--ds-text-base);
+  line-height: calc(1.25 / 0.875);
   color: var(--ds-ink);
-  padding: 10px 0;
-  border-top: 1px solid var(--ds-rule-soft);
   font-variant-numeric: tabular-nums;
 }
-
-/* First row drops the leading rule. */
-.ds-dl__term:first-of-type,
-.ds-dl__term:first-of-type + .ds-dl__desc {
-  border-top: none;
+.ds-description-detail:first-of-type {
+  border-top: 0;
 }

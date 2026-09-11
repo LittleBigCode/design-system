@@ -1,0 +1,50 @@
+/* ============================================================================
+   Scroll area — .ds-scroll-area
+   ----------------------------------------------------------------------------
+   A scrolling region with a styled 10px scrollbar, for panels where the native
+   bar is either invisible (macOS overlay bars) or too heavy. The viewport is
+   keyboard-focusable, which is what keeps axe's scrollable-region-focusable
+   satisfied on a region with no other focus stop.
+   ============================================================================ */
+.ds-scroll-area {
+  position: relative;
+}
+
+.ds-scroll-area-viewport {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  outline: none;
+  transition-property: color, box-shadow;
+}
+/* Charte focus convention: 2px outline, no glow. */
+.ds-scroll-area-viewport:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: -2px;
+}
+
+.ds-scroll-area-scrollbar {
+  display: flex;
+  touch-action: none;
+  padding: 1px;
+  transition-property:
+    color, background-color, border-color, text-decoration-color, fill, stroke;
+  user-select: none;
+}
+.ds-scroll-area-scrollbar[data-orientation="horizontal"] {
+  height: 0.625rem;
+  flex-direction: column;
+  border-top: 1px solid transparent;
+}
+.ds-scroll-area-scrollbar[data-orientation="vertical"] {
+  height: 100%;
+  width: 0.625rem;
+  border-inline-start: 1px solid transparent;
+}
+
+.ds-scroll-area-thumb {
+  position: relative;
+  flex: 1 1 0%;
+  border-radius: 0;
+  background-color: var(--ds-rule);
+}

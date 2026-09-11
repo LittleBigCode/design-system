@@ -1,0 +1,84 @@
+/* ============================================================================
+   Marker — .ds-marker
+   ----------------------------------------------------------------------------
+   A small uppercase label that marks a position in a stream: "Today", "Unread",
+   "3 new". Three variants — plain, `separator` (rules to both sides of the
+   text) and `border` (a rule underneath).
+
+   Two `svg:not([class*="size-"])` escape hatches removed on the way in: with no
+   Tailwind here there is nothing to escape, and they would have skipped any
+   icon whose class contained "size-".
+   ============================================================================ */
+.ds-marker {
+  position: relative;
+  display: flex;
+  min-height: 1rem;
+  width: 100%;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: start;
+  font-size: 0.75rem;
+  line-height: calc(1 / 0.75);
+  letter-spacing: 0.025em;
+  color: var(--ds-ink-faint);
+  text-transform: uppercase;
+}
+.ds-marker svg {
+  width: 1rem;
+  height: 1rem;
+}
+.ds-marker a {
+  text-decoration-line: underline;
+  text-underline-offset: 3px;
+}
+.ds-marker a:hover {
+  color: var(--ds-ink);
+}
+
+.ds-marker[data-variant="separator"]::before {
+  margin-inline-end: 0.25rem;
+  height: 1px;
+  min-width: 0;
+  flex: 1;
+  background-color: var(--ds-rule);
+  content: "";
+}
+.ds-marker[data-variant="separator"]::after {
+  margin-inline-start: 0.25rem;
+  height: 1px;
+  min-width: 0;
+  flex: 1;
+  background-color: var(--ds-rule);
+  content: "";
+}
+
+.ds-marker[data-variant="border"] {
+  border-bottom: 1px solid var(--ds-rule);
+  padding-bottom: 0.5rem;
+}
+
+.ds-marker-icon {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+.ds-marker-icon svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.ds-marker-content {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+.ds-marker[data-variant="separator"] .ds-marker-content {
+  flex: none;
+  text-align: center;
+}
+.ds-marker-content a {
+  text-decoration-line: underline;
+  text-underline-offset: 3px;
+}
+.ds-marker-content a:hover {
+  color: var(--ds-ink);
+}

@@ -1,14 +1,80 @@
-/* Banner — .ds-banner (full-width notice, yellow by default) */
+/* ============================================================================
+   Banner — .ds-banner (a full-width notice with a tone axis)
+   ----------------------------------------------------------------------------
+   0.11's banner was a fixed-identity yellow strip. This one takes the same six
+   tones every other status surface here takes, so a notice can say what kind of
+   notice it is without a bespoke colour.
+
+   The source pairs --ds-<tone>-bg with --ds-<tone>-ink. Only four of the six
+   ink shades exist in this package (neutral and critical have none), so those
+   two fall back to --ds-ink — which is what callout.css already does for every
+   tone, and which clears AA on a grey tint by a wide margin. Same gap meter.css
+   hit in batch 3 from the other side.
+
+   Both custom properties carry a fallback so a bare `.ds-banner` with no tone
+   class still paints: hand-written HTML writes the class on its own.
+   ============================================================================ */
 .ds-banner {
-  /* Fixed-identity notice: stays pale-yellow with dark ink in every theme,
-     so it uses the noir/jaune primitives rather than the flipping ink token. */
-  border: 1px solid var(--ds-noir);
-  background: var(--ds-jaune);
-  color: var(--ds-noir);
-  padding: 14px 18px;
-  font-size: 13.5px;
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  gap: 0.75rem;
   border-radius: var(--ds-radius-none);
+  background-color: var(--tone-bg, var(--ds-neutral-bg));
+  padding-inline: 1rem;
+  padding-block: 0.75rem;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-base);
+  line-height: 1.25rem;
+  color: var(--tone-ink, var(--ds-ink));
 }
-.ds-banner b,
-.ds-banner strong { font-weight: 500; }
+.ds-banner > svg {
+  margin-top: 0.125rem;
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+}
 .ds-banner[hidden] { display: none; }
+
+.ds-banner--neutral {
+  --tone-bg: var(--ds-neutral-bg);
+  --tone-ink: var(--ds-ink);
+}
+.ds-banner--info {
+  --tone-bg: var(--ds-info-bg);
+  --tone-ink: var(--ds-info-ink);
+}
+.ds-banner--success {
+  --tone-bg: var(--ds-success-bg);
+  --tone-ink: var(--ds-success-ink);
+}
+.ds-banner--warning {
+  --tone-bg: var(--ds-warning-bg);
+  --tone-ink: var(--ds-warning-ink);
+}
+.ds-banner--danger {
+  --tone-bg: var(--ds-danger-bg);
+  --tone-ink: var(--ds-danger-ink);
+}
+.ds-banner--critical {
+  --tone-bg: var(--ds-critical-bg);
+  --tone-ink: var(--ds-ink);
+}
+
+.ds-banner-content {
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.ds-banner-title {
+  font-weight: 500;
+}
+
+.ds-banner-action {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.5rem;
+}

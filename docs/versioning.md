@@ -45,12 +45,4 @@ Bump the **patch** version for fixes that do **not** change the API:
 - Re-pointing a token to a corrected value where the name and role are unchanged (for example,
   confirming a sampled hue) — flag prominently in the changelog.
 
-## Pre-1.0 note
-
-While the system is `0.x`, the surface is still being reconciled with the brand charter (see
-the palette note in [../tokens/README.md](../tokens/README.md)). Some token values — notably
-`--ds-vert` — are flagged for brand-owner confirmation before `1.0`. Until `1.0`, minor
-versions may carry larger adjustments than they would afterward; the changelog is the
-authoritative record.
-
 See **[../CHANGELOG.md](../CHANGELOG.md)** for the full history.

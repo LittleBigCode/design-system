@@ -1,0 +1,279 @@
+.ds-navigation-menu {
+  position: relative;
+  display: flex;
+  max-width: max-content;
+  flex: 1 1 0%;
+  align-items: center;
+  justify-content: center;
+}
+
+.ds-navigation-menu-list {
+  display: flex;
+  flex: 1 1 0%;
+  list-style: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+
+.ds-navigation-menu-item {
+  position: relative;
+}
+
+/* navigationMenuTriggerStyle() is a cva with no variants object — this is
+   its entire output, also applied directly to plain NavigationMenuLinks
+   that need to sit level with the triggers (see navigation-menu.tsx demos). */
+.ds-navigation-menu-trigger {
+  display: inline-flex;
+  height: 2.25rem;
+  width: max-content;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0;
+  padding-inline: 1.125rem;
+  padding-block: 0.625rem;
+  font-size: 0.875rem;
+  line-height: calc(1.25 / 0.875);
+  font-weight: 500;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  outline: none;
+}
+.ds-navigation-menu-trigger:hover,
+.ds-navigation-menu-trigger:focus {
+  background-color: var(--ds-bg-alt);
+}
+.ds-navigation-menu-trigger:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: -2px;
+}
+.ds-navigation-menu-trigger:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+/* Base UI's Trigger only ever sets `data-popup-open` (see
+   NavigationMenuTriggerDataAttributes) — it never renders `data-open`.
+   The Radix-ported `data-open:*` variants this class used to carry never
+   matched anything, so they are dropped rather than shipped as dead CSS. */
+.ds-navigation-menu-trigger[data-popup-open] {
+  background-color: color-mix(in oklab, var(--ds-bg-alt) 50%, transparent);
+}
+.ds-navigation-menu-trigger[data-popup-open]:hover {
+  background-color: var(--ds-bg-alt);
+}
+
+.ds-navigation-menu-trigger-icon {
+  position: relative;
+  top: 1px;
+  margin-inline-start: 0.25rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  transition-property: transform, translate, scale, rotate;
+  transition-duration: 300ms;
+}
+/* Same dead-`data-open` note as the trigger above — only data-popup-open
+   ever fires, so that half of the old `group-data-open/...` pair is gone. */
+.ds-navigation-menu-trigger[data-popup-open]
+  .ds-navigation-menu-trigger-icon {
+  rotate: 180deg;
+}
+
+/* Base UI's NavigationMenu.Root sets no data attributes of its own (no
+   `data-viewport`) and Content never renders `data-motion` — both are
+   Radix-only concepts this port carried over by mistake. Every
+   `group-data-[viewport=false]/navigation-menu:*` and `data-[motion=...]:*`
+   utility the original className string had was therefore dead on arrival
+   and is not reproduced here. The `**:data-[slot=navigation-menu-link]`
+   focus-ring reset below is real (it has no data-attribute gate) and is
+   kept as a plain descendant rule. */
+.ds-navigation-menu-content {
+  height: 100%;
+  width: auto;
+  padding: 0.625rem;
+  padding-inline-end: 0.75rem;
+  transition-property: opacity, transform, translate;
+  transition-duration: 0.35s;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ds-navigation-menu-content[data-ending-style],
+.ds-navigation-menu-content[data-starting-style] {
+  opacity: 0;
+}
+.ds-navigation-menu-content[data-ending-style][data-activation-direction="left"] {
+  translate: 50% 0;
+}
+.ds-navigation-menu-content[data-ending-style][data-activation-direction="right"] {
+  translate: -50% 0;
+}
+.ds-navigation-menu-content[data-starting-style][data-activation-direction="left"] {
+  translate: -50% 0;
+}
+.ds-navigation-menu-content[data-starting-style][data-activation-direction="right"] {
+  translate: 50% 0;
+}
+:where(
+    [dir="rtl"],
+    [dir="rtl"] *
+  ).ds-navigation-menu-content[data-ending-style][data-activation-direction="left"] {
+  translate: -50% 0;
+}
+:where(
+    [dir="rtl"],
+    [dir="rtl"] *
+  ).ds-navigation-menu-content[data-ending-style][data-activation-direction="right"] {
+  translate: 50% 0;
+}
+:where(
+    [dir="rtl"],
+    [dir="rtl"] *
+  ).ds-navigation-menu-content[data-starting-style][data-activation-direction="left"] {
+  translate: 50% 0;
+}
+:where(
+    [dir="rtl"],
+    [dir="rtl"] *
+  ).ds-navigation-menu-content[data-starting-style][data-activation-direction="right"] {
+  translate: -50% 0;
+}
+.ds-navigation-menu-content [data-slot="navigation-menu-link"]:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.ds-navigation-menu-positioner {
+  isolation: isolate;
+  z-index: var(--ds-z-popover);
+  height: var(--positioner-height);
+  width: var(--positioner-width);
+  max-width: var(--available-width);
+  transition-property: top, left, right, bottom;
+  transition-duration: 0.35s;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ds-navigation-menu-positioner[data-instant] {
+  transition-property: none;
+}
+/* The `before:top-[-10px]` hover-bridge hitbox this positioner used to
+   carry never rendered anything — no `content` utility was ever set
+   alongside it, so the ::before had no box to position. Dropped rather
+   than reproduced as dead CSS. */
+
+.ds-navigation-menu-popup {
+  position: relative;
+  height: var(--popup-height);
+  width: var(--popup-width);
+  transform-origin: var(--transform-origin);
+  border-radius: 0;
+  background-color: var(--ds-surface);
+  color: var(--ds-ink);
+  /* Charte conformance: no drop shadows. The source lifted a popup with a
+     10%-ink ring plus two shadow layers; here a popup is a bordered flat
+     surface, the same 1px solid ink .ds-menu uses. */
+  border: 1px solid var(--ds-ink);
+  transition-property: opacity, transform, width, height, scale, translate;
+  transition-duration: 0.35s;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  outline: none;
+}
+.ds-navigation-menu-popup[data-ending-style] {
+  scale: 0.9;
+  opacity: 0;
+  transition-duration: 150ms;
+}
+.ds-navigation-menu-popup[data-starting-style] {
+  scale: 0.9;
+  opacity: 0;
+}
+
+.ds-navigation-menu-viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* The dedupe exception is resolved: `flex` and `p-3` were literal Tailwind
+   utilities on the component's own className so tailwind-merge could dedupe a
+   consumer override against them. There is no tailwind-merge here, so they are
+   real declarations, and the one override shape the demos needed — block flow
+   with tighter padding — is the `--block` modifier below. */
+.ds-navigation-menu-link {
+  display: flex;
+  padding: 0.75rem;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: 0;
+  font-size: 0.875rem;
+  line-height: calc(1.25 / 0.875);
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  outline: none;
+}
+.ds-navigation-menu-link:hover,
+.ds-navigation-menu-link:focus {
+  background-color: var(--ds-bg-alt);
+}
+.ds-navigation-menu-link:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: -2px;
+}
+/* Base UI's NavigationMenuLink renders `active` as a boolean presence
+   attribute (`data-active`, no value) — the ported `data-[active=true]:*`
+   variants were matching a literal "true" string that never appears, so
+   the active state never painted. Fixed to the real presence selector. */
+.ds-navigation-menu-link[data-active] {
+  background-color: color-mix(in oklab, var(--ds-bg-alt) 50%, transparent);
+}
+.ds-navigation-menu-link[data-active]:hover,
+.ds-navigation-menu-link[data-active]:focus {
+  background-color: var(--ds-bg-alt);
+}
+.ds-navigation-menu-link svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+/* Block flow with tighter padding — a row of links stacked in a menu panel,
+   where the default flex row and its 0.75rem inset read too loose. */
+.ds-navigation-menu-link--block {
+  display: block;
+  padding: 0.5rem 0.75rem;
+}
+
+.ds-navigation-menu-indicator {
+  top: 100%;
+  z-index: 1;
+  display: flex;
+  height: 0.375rem;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+}
+.ds-navigation-menu-indicator[data-state="hidden"] {
+  animation: ds-navigation-menu-indicator-out 150ms ease;
+}
+.ds-navigation-menu-indicator[data-state="visible"] {
+  animation: ds-navigation-menu-indicator-in 150ms ease;
+}
+@keyframes ds-navigation-menu-indicator-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes ds-navigation-menu-indicator-out {
+  to {
+    opacity: 0;
+  }
+}
+
+.ds-navigation-menu-indicator-arrow {
+  position: relative;
+  top: 60%;
+  height: 0.5rem;
+  width: 0.5rem;
+  rotate: 45deg;
+  border-radius: 0;
+  background-color: var(--ds-rule);
+}

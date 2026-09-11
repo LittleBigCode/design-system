@@ -1,0 +1,1209 @@
+{
+  "provenance": {
+    "extracted_from": ".design-sync/.cache/review (git-ignored, deleted by batch 0.1)",
+    "extracted_by": "batch 0.1 — release and verification plumbing (LittleBigCode/design-system#4)",
+    "extracted_at_commit": "c72fba9319da056ad6210bc838e573e7c770473c",
+    "components": 89,
+    "cells": 259,
+    "graded": 236,
+    "notes": 236,
+    "ungraded": 23,
+    "repaired": [
+      "AppShell"
+    ],
+    "note": "A cell with \"verdict\": null was declared by the sync run but never graded; all 23 are chart cells. The batch plan quotes 234 notes; the cache holds 236."
+  },
+  "components": {
+    "Accordion": {
+      "Default": {
+        "verdict": "good",
+        "note": "3-item accordion, first open with body text, 1px borders, chevron icons"
+      },
+      "Multiple": {
+        "verdict": "good",
+        "note": "Two items expanded simultaneously, body text visible on both"
+      }
+    },
+    "Agenda": {
+      "Empty": {
+        "verdict": "good",
+        "note": "Empty state with 'No events scheduled this week.' in bordered container"
+      },
+      "WithEvents": {
+        "verdict": "good",
+        "note": "Proper agenda with date headers, colored event dots, times and subtitles, 5 events across 4 days"
+      }
+    },
+    "Alert": {
+      "Danger": {
+        "verdict": "good",
+        "note": "Red-tinted border, danger content, 1px sharp border"
+      },
+      "Dismissible": {
+        "verdict": "good",
+        "note": "Blue info tint with × dismiss button visible"
+      },
+      "Info": {
+        "verdict": "good",
+        "note": "Blue-tinted border, realistic content"
+      },
+      "Success": {
+        "verdict": "good",
+        "note": "Green-tinted border, confirmation content"
+      },
+      "Warning": {
+        "verdict": "good",
+        "note": "Orange-tinted border, rate threshold warning content"
+      }
+    },
+    "AppShell": {
+      "HeaderOnly": {
+        "verdict": "good",
+        "note": "Diametral wordmark + Export button in header bar, content area below — shell structure clear"
+      },
+      "WithSidebar": {
+        "verdict": "good",
+        "note": "Full app shell: header with burger + wordmark + app name, sidebar nav with active item, content pane"
+      }
+    },
+    "AreaChart": {
+      "MultiSeries": {
+        "verdict": null
+      },
+      "NoGrid": {
+        "verdict": null
+      },
+      "SingleSeries": {
+        "verdict": null
+      }
+    },
+    "Avatar": {
+      "Group": {
+        "verdict": "good",
+        "note": "4 initials avatars in a row (MV, JL, AO, +2 overflow)"
+      },
+      "Initials": {
+        "verdict": "good",
+        "note": "3 MV avatars at small/medium/large sizes"
+      },
+      "Sizes": {
+        "verdict": "good",
+        "note": "3 avatars (JL, AO, PD) at small/medium/large sizes"
+      }
+    },
+    "AvatarGroup": {
+      "All": {
+        "verdict": "good",
+        "note": "3 overlapping initials avatars (MV, JL, AO)"
+      },
+      "Limited": {
+        "verdict": "good",
+        "note": "3 avatars + +2 overflow badge with max=3"
+      }
+    },
+    "Badge": {
+      "InContext": {
+        "verdict": "good",
+        "note": "4 badges in a row: bordered, bordered, solid, accent — Ufficio uppercase text, flat sharp styling correct"
+      },
+      "Variants": {
+        "verdict": "good",
+        "note": "Director (bordered), Admin (solid black fill), New (accent orange border) — all 3 variants distinct and styled"
+      }
+    },
+    "Banner": {
+      "Default": {
+        "verdict": "good",
+        "note": "Light lime/yellow-green tinted banner, full-width, bold 'modified locally' highlighted, realistic content"
+      },
+      "SimpleNotice": {
+        "verdict": "good",
+        "note": "Same lime styling, plain notice text, correct DS banner appearance"
+      }
+    },
+    "BarChart": {
+      "Horizontal": {
+        "verdict": null
+      },
+      "StatusColors": {
+        "verdict": null
+      },
+      "Vertical": {
+        "verdict": null
+      }
+    },
+    "Breadcrumb": {
+      "FourLevels": {
+        "verdict": "good",
+        "note": "Home / Reports / Margins / Q2 2026 — 4-level slash-separated breadcrumb, correct DS style"
+      },
+      "ThreeLevels": {
+        "verdict": "good",
+        "note": "Home / Pricing / Matrix — 3-level, current page bold"
+      }
+    },
+    "Button": {
+      "Danger": {
+        "verdict": "good",
+        "note": "Red outline variant renders correctly"
+      },
+      "Disabled": {
+        "verdict": "good",
+        "note": "Both ghost+primary disabled shown, greyed-out correctly"
+      },
+      "Ghost": {
+        "verdict": "good",
+        "note": "1px bordered, correct ghost style"
+      },
+      "Loading": {
+        "verdict": "good",
+        "note": "Spinner shown, button disabled state correct"
+      },
+      "Primary": {
+        "verdict": "good",
+        "note": "Solid black fill, correct sharp border, Ufficio text"
+      },
+      "Sizes": {
+        "verdict": "good",
+        "note": "Small/Default/Large row — size axis swept, visible difference"
+      }
+    },
+    "ButtonGroup": {
+      "Default": {
+        "verdict": "good",
+        "note": "Day/Week/Month buttons share borders correctly, flat sharp styling, ghost variant"
+      },
+      "WithPrimary": {
+        "verdict": "good",
+        "note": "Save (solid black), Export (ghost), Delete (red danger text) — all 3 variants in joined group"
+      }
+    },
+    "Calendar": {
+      "Empty": {
+        "verdict": "good",
+        "note": "Full July 2026 month grid with Today/nav buttons, correct MON-SUN headers"
+      },
+      "WithEvents": {
+        "verdict": "good",
+        "note": "Calendar with colored event chips on specific dates (Kick-off, Rate review, Weekly sync, Board, Onboarding)"
+      }
+    },
+    "Callout": {
+      "Danger": {
+        "verdict": "good",
+        "note": "Red tint, heading + body, destruction-warning content is plausible"
+      },
+      "Info": {
+        "verdict": "good",
+        "note": "Blue tint, bold heading 'Heads up', body text renders correctly"
+      },
+      "Success": {
+        "verdict": "good",
+        "note": "Green-tinted border, body text, correct success palette"
+      },
+      "Warning": {
+        "verdict": "good",
+        "note": "Orange-tinted border, default warning tone, realistic content"
+      }
+    },
+    "Card": {
+      "Basic": {
+        "verdict": "good",
+        "note": "Card with title, body, and muted footer row, 1px border"
+      },
+      "Clickable": {
+        "verdict": "good",
+        "note": "Mission card with title, subtitle, and footer metric"
+      },
+      "WithFooter": {
+        "verdict": "good",
+        "note": "Matrix Q3-2026 card with description and 'Published · 1,204 rates' footer"
+      }
+    },
+    "Checkbox": {
+      "Checked": {
+        "verdict": "good",
+        "note": "Black checkbox, checkmark visible, sharp 1px style, realistic label"
+      },
+      "Disabled": {
+        "verdict": "good",
+        "note": "Greyed unchecked state, label dimmed correctly"
+      },
+      "DisabledChecked": {
+        "verdict": "good",
+        "note": "Greyed checked state, archived-mission label plausible"
+      },
+      "Unchecked": {
+        "verdict": "good",
+        "note": "Empty checkbox, sharp border, rounding label realistic"
+      }
+    },
+    "Chip": {
+      "Default": {
+        "verdict": "good",
+        "note": "3 chips: label+bold-value pairs, 1px bordered, flat DS style, realistic business data"
+      },
+      "WithWarn": {
+        "verdict": "good",
+        "note": "Plain chip + 2 warn chips with orange/salmon tint — warn state visually distinct"
+      }
+    },
+    "CodeBlock": {
+      "Shell": {
+        "verdict": "good",
+        "note": "Dark theme, BASH label, Copy button, multiline npm/yarn code"
+      },
+      "TypeScript": {
+        "verdict": "good",
+        "note": "Dark theme, TYPESCRIPT label, realistic React component code"
+      },
+      "WithFilename": {
+        "verdict": "good",
+        "note": "PRICING/MARGIN.TS filename header, function code snippet"
+      }
+    },
+    "ColorPicker": {
+      "BrandColor": {
+        "verdict": "good",
+        "note": "Swatch row with red selected, hex input #FF2A00, preview square visible"
+      },
+      "Default": {
+        "verdict": "good",
+        "note": "Swatch row, blue selected (#2563EB), hex input + preview square"
+      },
+      "Disabled": {
+        "verdict": "good",
+        "note": "Swatch row with dashed border on selected, greyed hex input, disabled state correct"
+      }
+    },
+    "Combobox": {
+      "Currency": {
+        "verdict": "good",
+        "note": "Input shows EUR — Euro value, 1px border, correct combobox style"
+      },
+      "Disabled": {
+        "verdict": "good",
+        "note": "Same value greyed out, disabled appearance correct"
+      },
+      "Entity": {
+        "verdict": "good",
+        "note": "Select entity... placeholder, blank/unset state shown"
+      }
+    },
+    "CommandPalette": {
+      "Open": {
+        "verdict": "good",
+        "note": "Palette open with search input, 3 grouped sections (MISSIONS/APP/HELP), keyboard shortcut badges visible, grey overlay backdrop"
+      }
+    },
+    "ConsoleLayout": {
+      "Full": {
+        "verdict": "good",
+        "note": "Header + sidebar with grouped nav (PRICING/ANALYTICS sections with badge) + content pane — comprehensive layout"
+      },
+      "Minimal": {
+        "verdict": "good",
+        "note": "Headerless layout with simple Overview/Settings sidebar and content area"
+      }
+    },
+    "DataGrid": {
+      "Default": {
+        "verdict": "good",
+        "note": "Full table with sortable column headers, filter input row, 5 data rows, pagination — very complete"
+      },
+      "Selectable": {
+        "verdict": "good",
+        "note": "Same table with checkbox column, select-all header checkbox, row checkboxes"
+      }
+    },
+    "DatePicker": {
+      "Disabled": {
+        "verdict": "good",
+        "note": "1px bordered input, dim text 2026-06-30, disabled state"
+      },
+      "Empty": {
+        "verdict": "good",
+        "note": "Input with placeholder 'Select a date'"
+      },
+      "WithValue": {
+        "verdict": "good",
+        "note": "Input showing 2026-01-15"
+      }
+    },
+    "DateRangePicker": {
+      "Disabled": {
+        "verdict": "good",
+        "note": "Dim input showing range 2026-06-01 — 2026-06-30"
+      },
+      "Empty": {
+        "verdict": "good",
+        "note": "Input with placeholder 'Select date range'"
+      },
+      "WithRange": {
+        "verdict": "good",
+        "note": "Input showing 2026-01-15 — 2026-01-31"
+      }
+    },
+    "DateTimePicker": {
+      "Disabled": {
+        "verdict": "good",
+        "note": "Side-by-side date+time inputs, dim text 2026-06-30 / 14:30"
+      },
+      "Empty": {
+        "verdict": "good",
+        "note": "Placeholders yyyy-mm-dd and hh:mm"
+      },
+      "WithValue": {
+        "verdict": "good",
+        "note": "Showing 2026-01-15 / 09:00"
+      }
+    },
+    "DescriptionList": {
+      "ContractSummary": {
+        "verdict": "good",
+        "note": "3-row dl with uppercase labels (CONTRACT TYPE, STATUS, BILLING CYCLE) and values"
+      },
+      "MissionDetails": {
+        "verdict": "good",
+        "note": "6-row dl with entity, consultant, rate, margin, start/end dates — all correct"
+      }
+    },
+    "DonutChart": {
+      "Compact": {
+        "verdict": null
+      },
+      "Default": {
+        "verdict": null
+      },
+      "WithCenterLabel": {
+        "verdict": null
+      }
+    },
+    "Drawer": {
+      "LeftOpen": {
+        "verdict": "good",
+        "note": "Left-edge panel with Navigation heading, Close button, grey overlay on right"
+      },
+      "RightOpen": {
+        "verdict": "good",
+        "note": "Right-edge panel with Mission settings heading, Cancel/Save footer, grey overlay on left"
+      }
+    },
+    "Dropdown": {
+      "Actions": {
+        "verdict": "good",
+        "note": "Ghost trigger button 'Actions' renders correctly; menu closes in static context as expected"
+      },
+      "AlignEnd": {
+        "verdict": "good",
+        "note": "Primary black trigger button 'Options' with correct filled style"
+      }
+    },
+    "EmptyState": {
+      "SearchEmpty": {
+        "verdict": "good",
+        "note": "Centered heading with curly quotes, muted subtitle text"
+      },
+      "WithActions": {
+        "verdict": "good",
+        "note": "Centered heading, description, New mission primary + Import CSV ghost buttons"
+      }
+    },
+    "Field": {
+      "WithInput": {
+        "verdict": "good",
+        "note": "Uppercase 'DAY RATE' label above number input with value 900"
+      },
+      "WithSelect": {
+        "verdict": "good",
+        "note": "Uppercase 'ENTITY' label above native select showing LBC_FR"
+      },
+      "WithText": {
+        "verdict": "good",
+        "note": "Uppercase 'MISSION NAME' label above textarea with placeholder"
+      }
+    },
+    "FieldHint": {
+      "Error": {
+        "verdict": "good",
+        "note": "Red border on input, red hint text 'Day rate must be greater than zero'"
+      },
+      "Neutral": {
+        "verdict": "good",
+        "note": "Normal input with grey hint text 'Before taxes and overhead'"
+      },
+      "Success": {
+        "verdict": "good",
+        "note": "Green hint text 'Rate validated against the matrix'"
+      }
+    },
+    "FileUpload": {
+      "Default": {
+        "verdict": "good",
+        "note": "Dashed border dropzone with 'PDF or Excel, max 5 MB'"
+      },
+      "Disabled": {
+        "verdict": "good",
+        "note": "Dashed border, dimmed text 'Upload disabled during processing'"
+      },
+      "Multiple": {
+        "verdict": "good",
+        "note": "Dashed border dropzone with 'PNG, JPG or GIF'"
+      }
+    },
+    "FormField": {
+      "Basic": {
+        "verdict": "good",
+        "note": "Label 'MISSION NAME' + text input with placeholder"
+      },
+      "WithError": {
+        "verdict": "good",
+        "note": "Label + NumberInput with −/+ steppers, red error text below"
+      },
+      "WithHint": {
+        "verdict": "good",
+        "note": "Label + NumberInput showing 900, grey hint text 'Before taxes and overhead'"
+      }
+    },
+    "GaugeChart": {
+      "Default": {
+        "verdict": null
+      },
+      "LowMargin": {
+        "verdict": null
+      },
+      "WithThresholds": {
+        "verdict": null
+      }
+    },
+    "Icon": {
+      "Actions": {
+        "verdict": "good",
+        "note": "plus, edit, trash, upload icons — all render correctly"
+      },
+      "Common": {
+        "verdict": "good",
+        "note": "6 icons in a row: search, settings, bell, user, download, filter — all render as crisp SVG glyphs"
+      },
+      "Sizes": {
+        "verdict": "good",
+        "note": "4 check icons at 16/20/24/32px — size progression visible"
+      }
+    },
+    "IconButton": {
+      "Default": {
+        "verdict": "good",
+        "note": "Single square icon button with + glyph, 1px border, flat DS style"
+      },
+      "Sizes": {
+        "verdict": "good",
+        "note": "3 filter icon buttons at sm/default/lg — size difference visible"
+      },
+      "Variants": {
+        "verdict": "good",
+        "note": "ghost (search), primary (save, solid black), danger (trash, red border) — all 3 variants render"
+      }
+    },
+    "Input": {
+      "Default": {
+        "verdict": "good",
+        "note": "Day rate placeholder, clean 1px-border input"
+      },
+      "Disabled": {
+        "verdict": "good",
+        "note": "900 value, greyed/disabled appearance"
+      },
+      "Number": {
+        "verdict": "good",
+        "note": "Right-aligned 900, number input type"
+      },
+      "Placeholder": {
+        "verdict": "good",
+        "note": "Search missions... placeholder shown"
+      },
+      "WithValue": {
+        "verdict": "good",
+        "note": "900 day-rate value filled"
+      }
+    },
+    "InputGroup": {
+      "BothEnds": {
+        "verdict": "good",
+        "note": "From prefix + 30 input + days suffix, both adorners visible"
+      },
+      "CurrencySelect": {
+        "verdict": "good",
+        "note": "€ select dropdown + 900 number input joined"
+      },
+      "DayRatePrefix": {
+        "verdict": "good",
+        "note": "€ prefix tile + 900 value"
+      },
+      "DayRateSuffix": {
+        "verdict": "good",
+        "note": "900 value + /day suffix tile"
+      }
+    },
+    "Kanban": {
+      "MissionPipeline": {
+        "verdict": "good",
+        "note": "4-column kanban (Sourcing/Negotiation/Active/Closed), cards with title+rate, column count badges, 1px borders"
+      }
+    },
+    "Kbd": {
+      "InSentence": {
+        "verdict": "good",
+        "note": "Inline Kbd components within prose sentence, correct inline display"
+      },
+      "Shortcuts": {
+        "verdict": "good",
+        "note": "⌘K, Ctrl+S, Esc, Enter rendered as styled keyboard key badges, correct pill/border treatment"
+      }
+    },
+    "LineChart": {
+      "MultiSeries": {
+        "verdict": null
+      },
+      "NoDots": {
+        "verdict": null
+      },
+      "SingleSeries": {
+        "verdict": null
+      }
+    },
+    "MenuDivider": {
+      "InMenu": {
+        "verdict": "good",
+        "note": "Thin horizontal rule between Duplicate and Delete, Delete in red — divider clearly visible"
+      },
+      "MultipleDividers": {
+        "verdict": "good",
+        "note": "Two dividers with MenuHeader, Archive section separated from danger action"
+      }
+    },
+    "MenuHeader": {
+      "MultipleSections": {
+        "verdict": "good",
+        "note": "MISSION and REPORTING headers in small uppercase/muted, sections clearly divided, danger item at bottom"
+      },
+      "SingleSection": {
+        "verdict": "good",
+        "note": "RATE OPTIONS header above three items, correct uppercase small-caps style"
+      }
+    },
+    "MenuItem": {
+      "AsLink": {
+        "verdict": "good",
+        "note": "Two anchor items in bordered container, correct link styling"
+      },
+      "Basic": {
+        "verdict": "good",
+        "note": "Three items in ds-menu container, correct typography and spacing"
+      },
+      "Disabled": {
+        "verdict": "good",
+        "note": "Muted items for disabled, red muted for danger+disabled — states correctly differentiated"
+      },
+      "WithDanger": {
+        "verdict": "good",
+        "note": "Delete permanently in red, divider visible between actions and destructive"
+      },
+      "WithSections": {
+        "verdict": "good",
+        "note": "MenuHeader labels uppercase/muted, two sections with divider, danger item at bottom"
+      }
+    },
+    "Metric": {
+      "Hero": {
+        "verdict": "good",
+        "note": "Hero variant '38.0 %' in green, label visible"
+      },
+      "HeroNegative": {
+        "verdict": "good",
+        "note": "Hero variant '−4 %' in red, negative sign coloring correct"
+      },
+      "Neutral": {
+        "verdict": "good",
+        "note": "Default metric '€900' in dark, no sign coloring"
+      },
+      "Row": {
+        "verdict": "good",
+        "note": "4 metrics inline: Margin hero green, Margin/day, Day rate, Salary cost sub — full row"
+      },
+      "Sub": {
+        "verdict": "good",
+        "note": "Sub variant '€420 / month' with smaller muted style"
+      }
+    },
+    "Modal": {
+      "Open": {
+        "verdict": "good",
+        "note": "Dialog open with Reference settings title, body text, Cancel/Reset(danger)/Save footer, grey overlay backdrop"
+      }
+    },
+    "MultiSelect": {
+      "Disabled": {
+        "verdict": "good",
+        "note": "EUROPE tag greyed, disabled state correct"
+      },
+      "Regions": {
+        "verdict": "good",
+        "note": "EUROPE and NORTH AMERICA tags with × dismissal, 1px border"
+      },
+      "Skills": {
+        "verdict": "good",
+        "note": "Select skills... placeholder, empty state"
+      }
+    },
+    "NumberInput": {
+      "AtMax": {
+        "verdict": "good",
+        "note": "- 10 + stepper at max value"
+      },
+      "AtMin": {
+        "verdict": "good",
+        "note": "- 0 + stepper at min, decrement visually muted"
+      },
+      "Days": {
+        "verdict": "good",
+        "note": "- 218 + realistic days value"
+      },
+      "Disabled": {
+        "verdict": "good",
+        "note": "Greyed stepper, disabled state correct"
+      },
+      "Overhead": {
+        "verdict": "good",
+        "note": "- 18 + overhead percentage stepper"
+      }
+    },
+    "PageHeader": {
+      "Simple": {
+        "verdict": "good",
+        "note": "Large title 'Pricing matrix', subtitle, bottom rule — correct page header style"
+      },
+      "WithActions": {
+        "verdict": "good",
+        "note": "Title + subtitle on left, Export/Approve buttons on right, proper layout"
+      },
+      "WithBreadcrumb": {
+        "verdict": "good",
+        "note": "Breadcrumb trail (Settings / Rate cards / LBC_FR) above title, Save button on right"
+      }
+    },
+    "Pagination": {
+      "End": {
+        "verdict": "good",
+        "note": "Page 24 active in black, ellipsis truncation, Prev/Next buttons — end-of-range state correct"
+      },
+      "Middle": {
+        "verdict": "good",
+        "note": "Page 5 active, ellipsis on both sides, 24 total pages"
+      },
+      "Short": {
+        "verdict": "good",
+        "note": "4-page set, page 2 active, no ellipsis needed — all pages shown"
+      },
+      "Start": {
+        "verdict": "good",
+        "note": "Page 1 active, ellipsis on right, 24 total pages"
+      }
+    },
+    "Panel": {
+      "WithContent": {
+        "verdict": "good",
+        "note": "NOTES panel header, body text — panel structure with title and content correct"
+      },
+      "WithRows": {
+        "verdict": "good",
+        "note": "SALE panel with labelled rows (Day rate/Rebilled expenses/Days) and editable inputs — form panel variant"
+      }
+    },
+    "PieChart": {
+      "Compact": {
+        "verdict": null
+      },
+      "Default": {
+        "verdict": null
+      },
+      "NoLegend": {
+        "verdict": null
+      }
+    },
+    "Popover": {
+      "Bottom": {
+        "verdict": "good",
+        "note": "Popover panel below trigger with MARGIN GUARD uppercase header and body text, arrow pointing up"
+      },
+      "Top": {
+        "verdict": "good",
+        "note": "Popover panel above Learn more button with DELEGATION RULE uppercase header and body text"
+      }
+    },
+    "Progress": {
+      "Default": {
+        "verdict": "good",
+        "note": "Orange-red bar at 65%, label 'Uploading documents' left, percentage right"
+      },
+      "Indeterminate": {
+        "verdict": "good",
+        "note": "Animated bar mid-position, 'Processing...' label"
+      },
+      "Statuses": {
+        "verdict": "good",
+        "note": "Three bars: green 100%, orange 42%, red 20% — status variants correctly colored"
+      }
+    },
+    "Radio": {
+      "Group": {
+        "verdict": "good",
+        "note": "LBC_FR selected (filled), LBC_BE and LBC_US unselected, entity context"
+      },
+      "GroupDisabled": {
+        "verdict": "good",
+        "note": "All greyed, Senior consultant pre-selected, disabled group"
+      },
+      "SingleRadio": {
+        "verdict": "good",
+        "note": "3-option rounding group, No rounding selected"
+      }
+    },
+    "RadioGroup": {
+      "Entity": {
+        "verdict": "good",
+        "note": "LBC_FR/BE/US options, France selected, entity context"
+      },
+      "Rounding": {
+        "verdict": "good",
+        "note": "4 rounding options, No rounding selected, realistic values"
+      }
+    },
+    "Range": {
+      "AtEnd": {
+        "verdict": "good",
+        "note": "Square thumb at far right, track filled"
+      },
+      "AtStart": {
+        "verdict": "good",
+        "note": "Square thumb at far left, track empty"
+      },
+      "Margin": {
+        "verdict": "good",
+        "note": "Thumb at ~25% representing margin value"
+      },
+      "Overhead": {
+        "verdict": "good",
+        "note": "Thumb at ~25% overhead position"
+      }
+    },
+    "Rating": {
+      "Default": {
+        "verdict": "good",
+        "note": "3/5 red stars filled, 2 grey empty — interactive state"
+      },
+      "Empty": {
+        "verdict": "good",
+        "note": "5/5 grey empty stars — zero value"
+      },
+      "ReadOnly": {
+        "verdict": "good",
+        "note": "4/5 red stars, 1 grey — read-only state"
+      }
+    },
+    "SectionHeading": {
+      "AsH2": {
+        "verdict": "good",
+        "note": "REFERENCE DATA all-caps label with horizontal rule and subtitle body text"
+      },
+      "Default": {
+        "verdict": "good",
+        "note": "DELEGATION THRESHOLDS heading with rule and description"
+      },
+      "Multiple": {
+        "verdict": "good",
+        "note": "Two headings stacked: PRICING + REPORTING — demonstrates reuse across a page"
+      }
+    },
+    "Segmented": {
+      "Entities": {
+        "verdict": "good",
+        "note": "LBC_FR active (black fill), LBC_BE and LBC_US inactive — entity toggle row correct"
+      },
+      "TimeRange": {
+        "verdict": "good",
+        "note": "Q2 active in black, Q1/Q3/Q4 bordered — quarterly selector"
+      },
+      "WithDots": {
+        "verdict": "good",
+        "note": "Coloured dot indicators alongside labels (Standard/Strategic/Legacy) — status-coded variant"
+      }
+    },
+    "Select": {
+      "Disabled": {
+        "verdict": "good",
+        "note": "LBC_FR shown greyed, select disabled"
+      },
+      "Entity": {
+        "verdict": "good",
+        "note": "LBC_FR selected, dropdown chevron visible"
+      },
+      "RateCard": {
+        "verdict": "good",
+        "note": "Standard rate card full-width select, realistic option"
+      }
+    },
+    "Skeleton": {
+      "AvatarRow": {
+        "verdict": "good",
+        "note": "Small square skeleton + two shimmer text lines in a row"
+      },
+      "CardPlaceholder": {
+        "verdict": "good",
+        "note": "Large card-height shimmer block + two text-width shimmer lines below"
+      },
+      "TextLines": {
+        "verdict": "good",
+        "note": "3 varying-width shimmer lines, gradient animation visible at snapshot time"
+      }
+    },
+    "Sparkline": {
+      "Default": {
+        "verdict": null
+      },
+      "Inline": {
+        "verdict": null
+      },
+      "WithFill": {
+        "verdict": null
+      }
+    },
+    "Spinner": {
+      "Default": {
+        "verdict": "good",
+        "note": "Default 20px ring spinner visible"
+      },
+      "Inline": {
+        "verdict": "good",
+        "note": "Text 'Syncing rates' with tiny spinner inline, baseline-aligned"
+      },
+      "Large": {
+        "verdict": "good",
+        "note": "Larger ring circle visible"
+      },
+      "Sizes": {
+        "verdict": "good",
+        "note": "Row of 3 sizes (sm / default / lg), visible size progression"
+      },
+      "Small": {
+        "verdict": "good",
+        "note": "Small 16px ring spinner visible"
+      }
+    },
+    "SplitButton": {
+      "Default": {
+        "verdict": "good",
+        "note": "Save button + caret divider, ghost variant, 1px border, correct split layout"
+      },
+      "Primary": {
+        "verdict": "good",
+        "note": "Publish button in solid black, caret separator, primary style correct"
+      },
+      "Sizes": {
+        "verdict": "good",
+        "note": "3 Export split buttons at sm/default/lg — size progression visible, third is primary solid"
+      }
+    },
+    "StackedBar": {
+      "MultiRow": {
+        "verdict": null
+      },
+      "SingleRow": {
+        "verdict": null
+      }
+    },
+    "StatCard": {
+      "GrowthUp": {
+        "verdict": "good",
+        "note": "Label 'ACTIVE MISSIONS', value '47', green ▲ delta '+5 this month'"
+      },
+      "MarginDown": {
+        "verdict": "good",
+        "note": "Label 'AVG. MARGIN', value '34.2 %', red ▼ delta '−1.8 pts'"
+      },
+      "Neutral": {
+        "verdict": "good",
+        "note": "Label 'CONSULTANTS ON BENCH', value '3', no delta"
+      },
+      "Revenue": {
+        "verdict": "good",
+        "note": "Label 'MONTHLY REVENUE', value '€412 k', green ▲ delta '+€28 k'"
+      }
+    },
+    "Status": {
+      "CriticalBlocked": {
+        "verdict": "good",
+        "note": "Near-black header, Blocked heading, −4% danger-colored value"
+      },
+      "DangerDirector": {
+        "verdict": "good",
+        "note": "Terracotta/red header, director-required heading, metric values visible"
+      },
+      "NeutralPending": {
+        "verdict": "good",
+        "note": "Slate-grey header, awaiting-data heading, em-dash placeholder metric"
+      },
+      "SuccessFull": {
+        "verdict": "good",
+        "note": "Green header, Ufficio title, hero metric 38.0% in green, 4-row metric stack with sub indent"
+      },
+      "WarningManager": {
+        "verdict": "good",
+        "note": "Orange header, manager-review heading, 2 metric rows"
+      }
+    },
+    "Stepper": {
+      "Complete": {
+        "verdict": "good",
+        "note": "5 steps all with checkmark black squares, labels and subtitles visible — completed state"
+      },
+      "Step1Active": {
+        "verdict": "good",
+        "note": "Step 1 orange/red bordered square, steps 2-5 empty grey — first step active"
+      },
+      "Step3Active": {
+        "verdict": "good",
+        "note": "Steps 1-2 complete (checkmarks), step 3 orange/red active, steps 4-5 pending"
+      }
+    },
+    "Switch": {
+      "Disabled": {
+        "verdict": "good",
+        "note": "Off state greyed, Auto-publish label, disabled"
+      },
+      "DisabledOn": {
+        "verdict": "good",
+        "note": "On state greyed, Archived mission label, disabled-on"
+      },
+      "Off": {
+        "verdict": "good",
+        "note": "White/light toggle off, Enable auto-billing"
+      },
+      "On": {
+        "verdict": "good",
+        "note": "Black filled toggle on, Include rebilled expenses"
+      }
+    },
+    "Tabs": {
+      "PricingTabs": {
+        "verdict": "good",
+        "note": "3 tabs with sub-labels, first active with red/orange underline accent, content below"
+      },
+      "SimpleTabs": {
+        "verdict": "good",
+        "note": "Overview/History/Settings — Overview active with accent underline, content renders below"
+      }
+    },
+    "Tag": {
+      "Removable": {
+        "verdict": "good",
+        "note": "3 tags with × remove button: neutral, info, success — remove button visible and correctly styled"
+      },
+      "Statuses": {
+        "verdict": "good",
+        "note": "5 tags: neutral (Draft), info (blue), success (green), warning (orange), danger (red) — all status colors present, uppercase text"
+      }
+    },
+    "TagInput": {
+      "Disabled": {
+        "verdict": "good",
+        "note": "PRICING and MARGIN tags shown greyed, disabled state"
+      },
+      "Empty": {
+        "verdict": "good",
+        "note": "Add tag... placeholder, empty state correct"
+      },
+      "WithTags": {
+        "verdict": "good",
+        "note": "PRICING, MARGIN, Q2-2026 tags with × removals"
+      }
+    },
+    "Textarea": {
+      "Default": {
+        "verdict": "good",
+        "note": "1px bordered textarea with placeholder 'Describe the mission scope...'"
+      },
+      "Disabled": {
+        "verdict": "good",
+        "note": "Dimmed textarea with placeholder 'Locked mission notes.'"
+      },
+      "WithValue": {
+        "verdict": "good",
+        "note": "Textarea filled with realistic LBC consulting mission description"
+      }
+    },
+    "TimePicker": {
+      "Default": {
+        "verdict": "good",
+        "note": "09:30 value displayed in input with 1px border — closed state correct"
+      },
+      "Disabled": {
+        "verdict": "good",
+        "note": "08:00 faded/greyed — disabled state visible"
+      },
+      "Placeholder": {
+        "verdict": "good",
+        "note": "Select time placeholder text shown in empty field"
+      },
+      "Step15": {
+        "verdict": "good",
+        "note": "14:00 value, step-15 configured — input renders identically (step affects picker column only)"
+      }
+    },
+    "Timeline": {
+      "MissionTimeline": {
+        "verdict": "good",
+        "note": "5 events with colored status dots (teal/green, teal, orange, red, grey), date labels uppercase/muted, bold titles, muted body text"
+      },
+      "ShortTimeline": {
+        "verdict": "good",
+        "note": "3 events including pending state — neutral grey dot for pending item, correct muted styling"
+      },
+      "StatusVariants": {
+        "verdict": "good",
+        "note": "All 6 dot colors shown: green (success), blue (info), orange (warning), red (danger), grey (neutral), very faint (default)"
+      }
+    },
+    "Toast": {
+      "Danger": {
+        "verdict": "good",
+        "note": "Red-accented card, Sync failed title + message"
+      },
+      "Info": {
+        "verdict": "good",
+        "note": "Teal/blue-accented card, Sync started title + message"
+      },
+      "Success": {
+        "verdict": "good",
+        "note": "Green-accented card, Published title + message"
+      },
+      "Warning": {
+        "verdict": "good",
+        "note": "Orange-accented card, Threshold exceeded title + message"
+      },
+      "WithClose": {
+        "verdict": "good",
+        "note": "Info card with × dismiss button top-right, New comment content"
+      }
+    },
+    "ToastProvider": {
+      "MultipleToasts": {
+        "verdict": "good",
+        "note": "3 stacked toast cards: green Published / orange Threshold exceeded / red Sync failed, left color-coded borders"
+      },
+      "WithToast": {
+        "verdict": "good",
+        "note": "Single green Rates published toast inside provider context"
+      }
+    },
+    "Toolbar": {
+      "Bordered": {
+        "verdict": "good",
+        "note": "Full 1px box border visible, three ghost buttons left, Export+Approve (primary) right — spacer pushes groups apart"
+      },
+      "Default": {
+        "verdict": "good",
+        "note": "Bottom rule only, Save+Preview left, Publish primary right — correct layout"
+      },
+      "EditorBar": {
+        "verdict": "good",
+        "note": "Undo/Redo left, Discard+Save changes right — two spacers distribute items correctly"
+      }
+    },
+    "ToolbarGroup": {
+      "ActionGroup": {
+        "verdict": "good",
+        "note": "Three ghost buttons grouped left in toolbar context, bottom rule visible"
+      },
+      "TwoGroups": {
+        "verdict": "good",
+        "note": "Save+Preview left group, Publish primary right — marginLeft:auto pushes second group right"
+      }
+    },
+    "ToolbarSpacer": {
+      "MultipleSpacer": {
+        "verdict": "good",
+        "note": "Back / Save draft / Submit evenly distributed across full toolbar width — two spacers working"
+      },
+      "WithSpacer": {
+        "verdict": "good",
+        "note": "Matrix+Profiles left, Approve primary far right — single spacer fills gap correctly"
+      }
+    },
+    "Tooltip": {
+      "OnAction": {
+        "verdict": "good",
+        "note": "Dark pill tooltip 'Delete mission — cannot be undone' above danger Delete button — forced visible via HTML class + inline style"
+      },
+      "Placements": {
+        "verdict": "good",
+        "note": "All 4 placement tooltips visible (top/bottom/left/right), dark bubble style clear despite slight overlap in static layout"
+      },
+      "Top": {
+        "verdict": "good",
+        "note": "Dark 'Edit profile' tooltip bubble above Edit button, correct DS dark pill shape"
+      }
+    },
+    "Tree": {
+      "FlatTree": {
+        "verdict": "good",
+        "note": "4 flat items, no expand controls — correct leaf-only display"
+      },
+      "MissionTree": {
+        "verdict": "good",
+        "note": "Active missions expanded (2 child items), Archived collapsed with › caret — expand/collapse state correct"
+      },
+      "OrgTree": {
+        "verdict": "good",
+        "note": "LBC Group → LBC France (expanded, Paris+Lyon) → LBC Belgium (collapsed) → LBC United States — two levels expanded correctly with indentation"
+      }
+    },
+    "VerticalNav": {
+      "Standard": {
+        "verdict": "good",
+        "note": "Dashboard highlighted with accent bar and background, 4 inactive items below — active state and typography correct"
+      },
+      "WithNested": {
+        "verdict": "good",
+        "note": "Pricing group expanded showing Matrix (active), Profiles, Overrides as indented children — collapsible group renders"
+      }
+    },
+    "Wizard": {
+      "FirstStep": {
+        "verdict": "good",
+        "note": "Step 1 active (orange border), steps 2-3 pending, content shown, Back+Next buttons"
+      },
+      "InProgress": {
+        "verdict": "good",
+        "note": "Step 1 complete (checkmark), step 2 active (orange), step 3 pending — mid-flow state"
+      },
+      "LastStep": {
+        "verdict": "good",
+        "note": "Steps 1-2 complete, step 3 active, Finish button instead of Next — final step variant"
+      }
+    },
+    "Wordmark": {
+      "CustomName": {
+        "verdict": "good",
+        "note": "LBC logo mark + LBC | LITTLE BIG CODE — custom name renders correctly"
+      },
+      "Default": {
+        "verdict": "good",
+        "note": "Diametral logo mark + wordmark in Ufficio, clean DS brand lockup"
+      },
+      "WithSub": {
+        "verdict": "good",
+        "note": "Logo + Diametral | PRICING ENGINE — sub text in small caps, correct vertical separator"
+      }
+    }
+  }
+}

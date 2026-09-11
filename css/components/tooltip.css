@@ -66,3 +66,134 @@
   top: 50%;
   transform: translateY(-50%);
 }
+
+/* ============================================================================
+   The absorbed tooltip — .ds-tooltip-positioner / -content / -arrow
+   ----------------------------------------------------------------------------
+   Batch 8's defect swap. The block above is 0.11's CSS-only host: a sibling
+   span revealed on :hover / :focus-within, which a screen reader never
+   announces because nothing ties it to the trigger. It stays because
+   examples/components/tooltip.html and kitchen-sink.html write it by hand and
+   no React component renders it, so a wholesale swap would unstyle both.
+
+   The two grammars share no class name — 0.11 is .ds-tooltip / .ds-tooltip-host,
+   the absorbed one is .ds-tooltip-content / -positioner / -arrow — so unlike
+   .ds-checkbox and friends in beta.7 they need no :has() guard to be told apart.
+   They simply coexist, and the React <Tooltip> renders only the second.
+
+   4 of the 18 `z-index: 50` remaps land here: the positioner, the content, the
+   arrow, and the .ds-kbd nested inside a tooltip. All four take
+   --ds-z-popover — a tooltip is a popover-layer surface, not an overlay one.
+   ============================================================================ */
+.ds-tooltip-positioner {
+  isolation: isolate;
+  z-index: var(--ds-z-popover);
+}
+
+.ds-tooltip-content {
+  z-index: var(--ds-z-popover);
+  display: inline-flex;
+  width: fit-content;
+  max-width: 20rem;
+  transform-origin: var(--transform-origin);
+  align-items: center;
+  gap: 0.375rem;
+  border: 1px solid var(--ds-ink);
+  border-radius: var(--ds-radius-none);
+  background-color: var(--ds-ink);
+  padding-inline: 0.75rem;
+  padding-block: 0.375rem;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-xs);
+  line-height: var(--ds-leading-normal);
+  color: var(--ds-bg);
+  --ds-tooltip-slide-x: 0;
+  --ds-tooltip-slide-y: 0;
+}
+.ds-tooltip-content:has([data-slot="kbd"]) {
+  padding-inline-end: 0.375rem;
+}
+.ds-tooltip-content [data-slot="kbd"] {
+  position: relative;
+  isolation: isolate;
+  z-index: var(--ds-z-popover);
+  border-radius: var(--ds-radius-none);
+}
+
+/* Direction each side's popup enters from — 0.5rem, negated towards the
+   trigger so the content settles in from the opposite edge. */
+.ds-tooltip-content[data-side="bottom"] { --ds-tooltip-slide-y: -0.5rem; }
+.ds-tooltip-content[data-side="top"]    { --ds-tooltip-slide-y: 0.5rem; }
+.ds-tooltip-content[data-side="left"]   { --ds-tooltip-slide-x: 0.5rem; }
+.ds-tooltip-content[data-side="right"]  { --ds-tooltip-slide-x: -0.5rem; }
+.ds-tooltip-content[data-side="inline-end"] { --ds-tooltip-slide-x: -0.5rem; }
+:where([dir="rtl"], [dir="rtl"] *).ds-tooltip-content[data-side="inline-end"] {
+  --ds-tooltip-slide-x: 0.5rem;
+}
+.ds-tooltip-content[data-side="inline-start"] { --ds-tooltip-slide-x: 0.5rem; }
+:where([dir="rtl"], [dir="rtl"] *).ds-tooltip-content[data-side="inline-start"] {
+  --ds-tooltip-slide-x: -0.5rem;
+}
+
+@keyframes ds-tooltip-enter {
+  from {
+    opacity: 0;
+    scale: 0.95;
+    translate: var(--ds-tooltip-slide-x) var(--ds-tooltip-slide-y);
+  }
+}
+@keyframes ds-tooltip-exit {
+  to { opacity: 0; scale: 0.95; }
+}
+.ds-tooltip-content[data-state="delayed-open"],
+.ds-tooltip-content[data-open] {
+  animation: ds-tooltip-enter 150ms ease;
+}
+.ds-tooltip-content[data-closed] {
+  animation: ds-tooltip-exit 150ms ease;
+}
+
+.ds-tooltip-arrow {
+  z-index: var(--ds-z-popover);
+  width: 0.625rem;
+  height: 0.625rem;
+  translate: 0 calc(-50% - 2px);
+  rotate: 45deg;
+  border-radius: var(--ds-radius-none);
+  background-color: var(--ds-ink);
+  fill: var(--ds-ink);
+}
+.ds-tooltip-arrow[data-side="bottom"] { top: 0.25rem; }
+.ds-tooltip-arrow[data-side="inline-end"] {
+  top: 50% !important;
+  inset-inline-start: -0.25rem;
+  translate: 1.5px -50%;
+}
+:where([dir="rtl"], [dir="rtl"] *) .ds-tooltip-arrow[data-side="inline-end"] {
+  translate: -1.5px -50%;
+}
+.ds-tooltip-arrow[data-side="inline-start"] {
+  top: 50% !important;
+  inset-inline-end: -0.25rem;
+  translate: -1.5px -50%;
+}
+:where([dir="rtl"], [dir="rtl"] *) .ds-tooltip-arrow[data-side="inline-start"] {
+  translate: 1.5px -50%;
+}
+.ds-tooltip-arrow[data-side="left"] {
+  top: 50% !important;
+  right: -0.25rem;
+  translate: 0 -50%;
+}
+.ds-tooltip-arrow[data-side="right"] {
+  top: 50% !important;
+  left: -0.25rem;
+  translate: 0 -50%;
+}
+.ds-tooltip-arrow[data-side="top"] { bottom: -0.625rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-tooltip-content[data-state="delayed-open"],
+  .ds-tooltip-content[data-open],
+  .ds-tooltip-content[data-closed] { animation: none; }
+}

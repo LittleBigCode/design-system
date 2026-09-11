@@ -1,9 +1,41 @@
-/* Panel — .ds-panel (sunken content panel with an uppercase title) */
+/* ============================================================================
+   Panel — .ds-panel
+   ----------------------------------------------------------------------------
+   Frozen (css-ledger §1). `<ds-panel>` sets `class="ds-panel"`, appends
+   `ds-panel--rows` for its `rows` attribute, and prepends a
+   `div.ds-panel__title` for its `title` — three literal class names it writes
+   itself, over **arbitrary light-DOM children**. That last part is what fixes
+   the box: a `<ds-panel>` holding a bare paragraph has no part to carry
+   padding, so the padding has to stay on the panel.
+
+   Which is where the source's version could not be taken literally. Upstream a
+   panel is `padding-block` only, and every part pads its own inline edges off a
+   shared `--panel-spacing`. Absorbed as written, `<ds-panel>Some text</ds-panel>`
+   would have lost its side padding entirely — a frozen surface unstyled by a
+   file it does not read. So the box stays 0.11's uniform 24px, and the parts
+   are absorbed *inside* it: they bring the rhythm, the header row and the
+   divided row, and inherit the padding rather than restating it.
+
+   Renamed into the frozen grammar, per batch-plan §4: the source's flat-kebab
+   `ds-panel-header` / `-title` / `-content` / `-footer` / `-row` become
+   `__header` / `__title` / `__content` / `__footer` / `__row`. `__title` is
+   the one the web component writes, so it is a contract; the other four follow
+   it because a panel with two spellings is worse than either.
+
+   `--rows` and `PanelRow` are the same idea arriving twice — 0.11 tightened the
+   panel's bottom padding for `.ds-input-row` content, the source made the row
+   its own part. Both stay: the modifier is frozen and the part is better.
+   ============================================================================ */
 .ds-panel {
   background: var(--ds-bg-alt);
   padding: 24px;
   border-radius: var(--ds-radius-none);
 }
+/* The source's size axis. Not a modifier class: `size` lands as data-size on
+   every absorbed component that has one (avatar, card, select), so a panel
+   sizes the same way the rest of the system does. */
+.ds-panel[data-size="sm"] { padding: 16px; }
+
 /* Use --rows when the panel hosts .ds-input-row items (they carry their own
    bottom spacing), to match the app's tighter bottom padding. */
 .ds-panel--rows { padding-bottom: 12px; }
@@ -16,3 +48,47 @@
   color: var(--ds-ink-faint);
   margin-bottom: 14px;
 }
+
+/* ---- The absorbed parts -------------------------------------------------- */
+/* A header is a title with something on its far side — a count, a menu, a
+   link. On its own the title still works, which is why the web component can
+   go on writing just the title. */
+.ds-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+/* The title already carries the gap below it; inside a header that spacing
+   belongs to the header, or the row and its rule drift apart. */
+.ds-panel__header > .ds-panel__title { margin-bottom: 0; }
+.ds-panel__header { margin-bottom: 14px; }
+.ds-panel__header--ruled {
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--ds-rule);
+}
+
+.ds-panel__content { display: block; }
+
+.ds-panel__footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+}
+.ds-panel__footer--ruled {
+  padding-top: 14px;
+  border-top: 1px solid var(--ds-rule);
+}
+
+/* A label on the left, a control on the right, divided by a soft rule — the
+   same shape .ds-input-row draws, as a panel part rather than a field one. */
+.ds-panel__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 10px;
+  border-bottom: 1px solid var(--ds-rule);
+}
+.ds-panel__row:last-child { border-bottom: none; }

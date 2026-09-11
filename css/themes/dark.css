@@ -1,7 +1,8 @@
 /* ============================================================================
    Dark theme
-   Overrides Tier-2 SEMANTIC tokens only — primitives and component rules are
-   untouched. Activates under any of the three conventions found in the wild,
+   Overrides Tier-2 SEMANTIC tokens, plus one primitive: the --ds-heat-* ramp,
+   which is sequential and has to invert. Component rules are untouched.
+   Activates under any of the three conventions found in the wild,
    so it is drop-in for apps using [data-theme], .dark, or :root.dark-theme.
 
    Opt-in: import this file, then set the attribute/class on a root element.
@@ -26,12 +27,47 @@
   /* Accent stays the brand red — it pops on dark. */
   --ds-accent-bg: rgba(255, 42, 0, .16);
 
+  /* The neutral action fill has to lift off the page here rather than invert:
+     --ds-noir on --ds-bg (#0e0e10) would be an invisible button. */
+  --ds-action:    #32333a;
+  --ds-on-action: var(--ds-blanc);
+
   --ds-success-bg:  rgba(46, 125, 79, .20);
   --ds-warning-bg:  rgba(255, 85, 0, .16);
   --ds-danger-bg:   rgba(192, 57, 43, .20);
   --ds-info-bg:     rgba(20, 136, 166, .20);
   --ds-neutral-bg:  rgba(255, 255, 255, .08);
-  --ds-critical-bg: rgba(255, 255, 255, .08);
+  --ds-critical-bg: rgba(255, 42, 0, .18);
+
+  /* Status INK — the light-theme values are darker shades tuned to read on the
+     pale tints above, and this theme replaces those tints with translucent dark
+     ones. Left un-overridden they are dark text on a dark tint: `.ds-tag--success`
+     and `.ds-banner--info` measured under 2:1 here. These are the mirror shades,
+     each clearing 4.5:1 on its own tint, on --ds-bg and on --ds-surface.
+     Neutral needs no override: it aliases --ds-ink-soft, which this theme
+     already flips. Critical does — the light shade #c81f00 is a deeper red
+     tuned for white, and the brand red it darkens only reaches 4.53:1 on
+     --ds-bg-alt here, so both are replaced by the mirror lift. */
+  --ds-success-ink:  #7fd6a0;
+  --ds-warning-ink:  #ff9d6b;
+  --ds-danger-ink:   #f08a7e;
+  --ds-info-ink:     #6fd0e8;
+  --ds-critical-ink: #ff5535;
+  /* --ds-accent-ink follows the same rule: light theme's #db2400 is a *deeper*
+     red tuned for white (badge.css), and reads at 3.91:1 here — this is the
+     mirror shade, clearing 4.5:1 on --ds-bg and --ds-surface. */
+  --ds-accent-ink:  #ff8a6e;
+
+  /* The one primitive this theme overrides. A sequential ramp encodes magnitude
+     as colour, so "more" has to mean *further from the page* — on dark that is
+     brighter, and the light ramp's darkest step would sink into the background
+     instead of lifting off it. The categorical --ds-chart-* ramp needs no such
+     flip: its slots mean identity, not amount. */
+  --ds-heat-1: #1d4250;
+  --ds-heat-2: #275f73;
+  --ds-heat-3: #327f99;
+  --ds-heat-4: #47a3bd;
+  --ds-heat-5: #6ec6dd;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -46,11 +82,31 @@
     --ds-rule:      #2c2d31;
     --ds-rule-soft: #232428;
     --ds-accent-bg: rgba(255, 42, 0, .16);
+    --ds-action:    #32333a;
+    --ds-on-action: var(--ds-blanc);
     --ds-success-bg:  rgba(46, 125, 79, .20);
     --ds-warning-bg:  rgba(255, 85, 0, .16);
     --ds-danger-bg:   rgba(192, 57, 43, .20);
     --ds-info-bg:     rgba(20, 136, 166, .20);
     --ds-neutral-bg:  rgba(255, 255, 255, .08);
-    --ds-critical-bg: rgba(255, 255, 255, .08);
+    --ds-critical-bg: rgba(255, 42, 0, .18);
+
+    /* Status INK — the light-theme values are darker shades tuned to read on the
+       pale tints above, and this theme replaces those tints with translucent dark
+       ones. Left un-overridden they are dark text on a dark tint: `.ds-tag--success`
+       and `.ds-banner--info` measured under 2:1 here. These are the mirror shades,
+       each clearing 4.5:1 on its own tint, on --ds-bg and on --ds-surface.
+       Neutral needs no override (it aliases --ds-ink-soft); critical does. */
+    --ds-success-ink:  #7fd6a0;
+    --ds-warning-ink:  #ff9d6b;
+    --ds-danger-ink:   #f08a7e;
+    --ds-info-ink:     #6fd0e8;
+    --ds-critical-ink: #ff5535;
+    --ds-accent-ink:   #ff8a6e;
+    --ds-heat-1: #1d4250;
+    --ds-heat-2: #275f73;
+    --ds-heat-3: #327f99;
+    --ds-heat-4: #47a3bd;
+    --ds-heat-5: #6ec6dd;
   }
 }

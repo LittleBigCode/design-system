@@ -1,20 +1,67 @@
 /* ============================================================================
    Kbd — .ds-kbd (an inline keycap for keyboard shortcuts)
    ----------------------------------------------------------------------------
-   A small inline-block on var(--ds-bg-alt) with a 1px rule, mono type and no
-   radius — the flat take on a keycap. Pair them with a separator (e.g. "+") for
-   chords. Mono font follows the system stack used by .ds-prose code.
+   A flat filled cap, no rule and no radius, sized to sit on a line of text.
+   .ds-kbd-group chains several into a chord.
+
+   The input-group rule is the one interesting line here. In the source this
+   file is *layered* on purpose, so that InputGroupAddon's Tailwind utility
+   (`**:data-[slot=kbd]:bg-muted-foreground/10`) keeps outranking the plain
+   `background: var(--input)` below it. This package has no @layer and no
+   Tailwind, so keeping the source's declaration would have inverted that
+   cascade — the input-group background would win, which is the opposite of the
+   pre-conversion look — and would have shipped inverted in beta.6 and beta.7,
+   since input-group does not land until batch 7.
+
+   So the addon's override is carried here as a plain rule instead: the value
+   below *is* what the Tailwind utility resolved to, and the source's losing
+   `var(--input)` declaration is dropped rather than transcribed. Batch 7 has
+   nothing to undo. See docs/absorption/corrections.md.
    ============================================================================ */
 .ds-kbd {
-  display: inline-block;
-  font-family: ui-monospace, "SF Mono", "Geist Mono", Menlo, Consolas, monospace;
-  font-size: var(--ds-text-2xs);
-  line-height: 1.4;
-  color: var(--ds-ink);
-  background: var(--ds-bg-alt);
-  border: 1px solid var(--ds-rule);
+  pointer-events: none;
+  display: inline-flex;
+  height: 1.375rem;
+  width: fit-content;
+  min-width: 1.375rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
   border-radius: var(--ds-radius-none);
-  padding: 1px 6px;
-  white-space: nowrap;
-  font-variant-numeric: tabular-nums;
+  background: var(--ds-bg-alt);
+  padding-inline: 0.375rem;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-xs);
+  line-height: 1rem;
+  font-weight: 500;
+  color: var(--ds-ink-faint);
+  user-select: none;
+}
+.ds-kbd svg {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+/* Inside an input group the cap sits on the field's own surface, so it drops to
+   a 10% wash of the ink it is written in. This is the addon override described
+   above, not the source's `var(--input)` fill. */
+:where([data-slot="input-group"], .ds-input-group) .ds-kbd {
+  background: color-mix(in oklab, var(--ds-ink-faint) 10%, transparent);
+}
+
+/* Inside a tooltip the surface is inverted, so the cap inverts with it. */
+:where([data-slot="tooltip-content"]) .ds-kbd {
+  background: color-mix(in oklab, var(--ds-bg) 20%, transparent);
+  color: var(--ds-bg);
+}
+[data-theme="dark"] [data-slot="tooltip-content"] .ds-kbd,
+.dark [data-slot="tooltip-content"] .ds-kbd,
+:root.dark-theme [data-slot="tooltip-content"] .ds-kbd {
+  background: color-mix(in oklab, var(--ds-bg) 10%, transparent);
+}
+
+.ds-kbd-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
 }

@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "dist/docs",
+    "rootDir": "site/src/registry",
+    "paths": {
+      "@diametral/design-system/react": ["./dist/react/index.d.ts"],
+      "@diametral/design-system/react/*": ["./dist/react/components/*"]
+    }
+  },
+  "include": [
+    "site/src/registry/registry.ts",
+    "site/src/registry/playgrounds.ts",
+    "site/src/registry/demos",
+    "site/src/registry/playgrounds"
+  ]
+}

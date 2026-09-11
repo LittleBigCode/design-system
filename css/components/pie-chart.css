@@ -1,0 +1,17 @@
+/* ============================================================================
+   Pie chart — .ds-pie-chart-root
+   ----------------------------------------------------------------------------
+   A `PieChart` is a `.ds-chart-container` with one recharts <Pie> in it, so
+   this file holds only what the container cannot: the centring. Sizing is the
+   container's `--square` modifier — the source spent `aspect-square h-64` as
+   literal Tailwind classes here so `tailwind-merge` could dedupe a caller's
+   override; there is no Tailwind in this package, so the ratio and the height
+   are real declarations in chart.css and a caller retunes the height through
+   `--ds-chart-height`.
+
+   Slice colour rides on each row as recharts' `fill`, and the seam between
+   adjacent slices is chart.css's surface-coloured hairline.
+   ============================================================================ */
+.ds-pie-chart-root {
+  margin-inline: auto;
+}

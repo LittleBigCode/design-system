@@ -1,4 +1,4 @@
-name: Deploy showcase to GitHub Pages
+name: Deploy site to GitHub Pages
 
 on:
   push:
@@ -21,20 +21,52 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: npm ci || npm i
+
+      # The React layer is authored in TSX and served from the emit, so the site
+      # cannot be assembled from the working tree alone any more. It is also a
+      # hard prerequisite for site/: its `file:..` install resolves
+      # `dist/diametral.css` through the package's own exports map, and dist/ is
+      # gitignored, so a fresh checkout has no stylesheet until this runs.
+      - name: Build the package
+        run: npm run build
+
+      # site/ is deliberately not a workspace member — its ~15 devDeps must
+      # never reach the zero-dep package's resolution graph — so it installs
+      # and builds on its own.
+      - name: Install site/
+        run: cd site && npm ci || npm i
+
+      # build-demo-markup.mjs (part of `npm run build`) launches headless
+      # Chromium to scrape rendered demo markup, not just the test suites.
+      - name: Install Chromium
+        run: cd site && npx playwright install --with-deps chromium
+
+      - name: Build site/
+        run: npm --prefix site run build
+
       - name: Assemble _site
         run: |
           set -euo pipefail
           mkdir -p _site
-          cp -r css assets components react examples emails _site/
+          # site/'s own build output IS the site (issue #47 / direction.md
+          # decision 6): it owns `/` directly, not a `/react-workbench/`
+          # subpath — the buildless showcase this workflow used to serve at
+          # root retired with it. Its hashed bundles are self-contained
+          # (vite.config.ts `base: "/design-system/"`), so nothing else needs
+          # copying alongside them.
+          cp -r site/dist/* _site/
 
-          # The Ufficio title font is served here under Diametral's own font license
-          # (see NOTICE.md). To publish a license-safe build that excludes it instead,
-          # uncomment the two lines below — titles then fall back to free Fraunces:
-          #   rm -f _site/assets/fonts/Ufficio-300.woff2 _site/assets/fonts/ufficio.css
-          #   grep -rl "assets/fonts/ufficio.css" _site --include='*.html' | xargs -r sed -i 's#assets/fonts/ufficio.css#assets/fonts/fallback.css#g'
-
-          # Landing redirect at the site root -> the showcase.
-          cp deploy/pages-redirect.html _site/index.html
+          # SPA fallback: Pages serves the site-root 404.html for any
+          # unmatched path, so a deep link only survives a reload if that
+          # file is the app's own index.
+          cp _site/index.html _site/404.html
 
           # Disable Jekyll processing.
           touch _site/.nojekyll

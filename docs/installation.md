@@ -22,7 +22,7 @@ each works on its own, and **none requires a build step to consume**.
 | **React components** (optional) | Real, typed React components (`Button`, `DataGrid`, …). | `@diametral/design-system/react` |
 | **Tailwind preset** | Binds Tailwind `colors`/`spacing`/`fontFamily`/… to the `--ds-*` variables. | `@diametral/design-system/tailwind-preset` |
 | **SCSS variables** | `$ds-*` variables, each resolving to the matching CSS var. | `@diametral/design-system/dist/tokens.scss` |
-| **Assets** | Free font CSS (Fraunces fallback) + logo SVGs + license notes. The commercial **Ufficio** font is **not** bundled in the package — licensed users add it. | `@diametral/design-system/assets/*` |
+| **Assets** | Free font CSS (Geist + Geist Mono) + logo SVGs + license notes. The commercial **Ufficio** font is **not** bundled in the package — licensed users add it. | `@diametral/design-system/assets/*` |
 
 The CSS and the tokens are the foundation; the Web Components and React layers render the **same**
 `.ds-*` markup, so styling and theming always come from the one stylesheet. Change a token, every
@@ -100,8 +100,8 @@ an Ufficio license*:
 import "@diametral/design-system/assets/fonts/ufficio.css";
 ```
 
-If you **don't** import it, the unknown family name is skipped and titles fall back to the free
-**Fraunces** stack automatically — no token change needed. To load the free fonts (Fraunces + Geist)
+If you **don't** import it, the unknown family name is skipped and titles render in the free
+**Geist** automatically — no token change needed. To load the free faces (Geist + Geist Mono)
 explicitly in one shot, import `assets/fonts/fallback.css` instead. See
 [fonts-and-licensing.md](fonts-and-licensing.md).
 
@@ -400,7 +400,7 @@ drops in regardless of which convention your app uses. For OS-driven dark mode, 
 ## 7. TypeScript
 
 No extra setup. Types ship with the React entry and are wired through the package `exports` map
-(`react/index.d.ts`), so `import { Button } from "@diametral/design-system/react"` is fully typed
+(`react/index.tsx`), so `import { Button } from "@diametral/design-system/react"` is fully typed
 out of the box — typed props, `children`, event handlers, and `forwardRef` on `Button` / `Input`.
 
 ---
@@ -414,10 +414,10 @@ out of the box — typed props, `children`, event handlers, and `forwardRef` on 
 - **Fonts don't load offline.** Geist and Ufficio load fine over `file://`; only the Google Fonts
   `<link>` needs a network. The system still renders with system fallbacks offline. Self-host the
   fonts (the bundled `assets/fonts/ufficio.css` is already local) or import
-  `assets/fonts/fallback.css` if you want the free Fraunces/Geist files under your control.
-- **Titles render in a serif, not Ufficio.** Expected unless you imported `assets/fonts/ufficio.css`
+  `assets/fonts/fallback.css` if you want the free Geist/Geist Mono files under your control.
+- **Titles render in Geist, not Ufficio.** Expected unless you imported `assets/fonts/ufficio.css`
   (and hold a license). The token lists Ufficio first; without the `@font-face` it falls back to
-  Fraunces / Georgia. See [fonts-and-licensing.md](fonts-and-licensing.md).
+  the charter's other face rather than to a serif. See [fonts-and-licensing.md](fonts-and-licensing.md).
 - **My app's reset and Diametral's overlap.** Skip the bundle's reset: import `css/tokens.css` plus
   the `css/components/*.css` partials you need instead of `css/diametral.css`.
 - **CSP blocks the esm.sh demo.** The buildless CDN pattern pulls React from `https://esm.sh` and
@@ -430,7 +430,7 @@ out of the box — typed props, `children`, event handlers, and `forwardRef` on 
 ## See also
 
 - [getting-started.md](getting-started.md) — the from-the-repo buildless path.
-- [react.md](react.md) · [react/README.md](../react/README.md) — the React layer.
+- [react.md](react.md) — the React layer.
 - [components/README.md](../components/README.md) — the Web Components layer.
 - [tokens/README.md](../tokens/README.md) — the token model.
 - [theming.md](theming.md) — themes and per-stack consumption.

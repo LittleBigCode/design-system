@@ -1,97 +1,282 @@
-/* Combobox / typeahead — .ds-combobox (an .ds-input field + a filtered popover)
-   The wrapper is relative so the list anchors to the field. The field reuses the
-   .ds-input look (1px border, no radius). The list is a bordered popover like
-   .ds-menu (border on --ds-ink, no shadow) sitting at --ds-z-popover; options
-   shift to bg-alt on hover or when active (keyboard), and the selected option is
-   marked via [aria-selected]. Companion to field.css / menu.css — never edits them. */
-.ds-combobox {
+.ds-combobox-trigger svg:not([class*="size-"]) {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.ds-combobox-trigger-icon {
+  pointer-events: none;
+  width: 0.875rem;
+  height: 0.875rem;
+  color: var(--ds-ink-soft);
+}
+
+.ds-combobox-clear-icon {
+  pointer-events: none;
+}
+
+.ds-combobox-input-trigger[data-pressed] {
+  background-color: transparent;
+}
+.group\/input-group:has([data-slot="combobox-clear"])
+  .ds-combobox-input-trigger {
+  display: none;
+}
+
+.ds-combobox-positioner {
+  isolation: isolate;
+  z-index: 50;
+}
+
+.ds-combobox-content {
   position: relative;
-  display: inline-flex;
-  flex-direction: column;
-  min-width: 240px;
-}
-.ds-combobox--block { display: flex; }
-
-/* The text field — same look as .ds-input. */
-.ds-combobox__input {
-  font-family: var(--ds-font-sans);
-  font-size: var(--ds-text-base);
-  font-weight: 400;
+  max-height: var(--available-height);
+  width: var(--anchor-width);
+  max-width: var(--available-width);
+  min-width: calc(var(--anchor-width) + 1.75rem);
+  transform-origin: var(--transform-origin);
+  overflow: hidden;
+  border-radius: 0;
+  background-color: var(--ds-surface);
   color: var(--ds-ink);
-  font-variant-numeric: tabular-nums;
-  background: var(--ds-surface);
-  border: 1px solid var(--ds-rule);
-  border-radius: var(--ds-radius-none);
-  padding: 10px 12px;
-  width: 100%;
-  outline: none;
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--ds-ink) 10%, transparent),
+    0 4px 6px -1px rgb(0 0 0 / 0.1),
+    0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --ds-combobox-slide-x: 0;
+  --ds-combobox-slide-y: 0;
 }
-.ds-combobox__input:focus,
-.ds-combobox__input:focus-visible {
-  outline: 2px solid var(--ds-focus-ring);
-  outline-offset: -2px;
+.ds-combobox-content[data-chips="true"] {
+  min-width: var(--anchor-width);
 }
-.ds-combobox__input:disabled { opacity: .55; cursor: not-allowed; }
+.ds-combobox-content [data-slot="input-group"] {
+  margin: 0.375rem;
+  margin-bottom: 0;
+  height: 2rem;
+  border-color: transparent;
+  background-color: transparent;
+  padding-inline: 0.625rem;
+}
+.ds-combobox-content [data-slot="input-group"]:focus-within {
+  border-color: transparent;
+}
 
-/* The popover list — bordered surface like .ds-menu, no radius, no shadow. */
-.ds-combobox__list {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  right: 0;
-  z-index: var(--ds-z-popover);
-  margin: 0;
-  padding: 4px 0;
-  list-style: none;
-  max-height: 260px;
+/* Slide direction mirrors ds-popover-content: each side enters from the
+   opposite edge, 0.5rem (spacing-2) away, matching tw-animate-css's
+   slide-in-from-* utilities the Tailwind version used. */
+.ds-combobox-content[data-side="bottom"] {
+  --ds-combobox-slide-y: -0.5rem;
+}
+.ds-combobox-content[data-side="top"] {
+  --ds-combobox-slide-y: 0.5rem;
+}
+.ds-combobox-content[data-side="left"] {
+  --ds-combobox-slide-x: 0.5rem;
+}
+.ds-combobox-content[data-side="right"] {
+  --ds-combobox-slide-x: -0.5rem;
+}
+.ds-combobox-content[data-side="inline-end"] {
+  --ds-combobox-slide-x: -0.5rem;
+}
+:where(
+    [dir="rtl"],
+    [dir="rtl"] *
+  ).ds-combobox-content[data-side="inline-end"] {
+  --ds-combobox-slide-x: 0.5rem;
+}
+.ds-combobox-content[data-side="inline-start"] {
+  --ds-combobox-slide-x: 0.5rem;
+}
+:where(
+    [dir="rtl"],
+    [dir="rtl"] *
+  ).ds-combobox-content[data-side="inline-start"] {
+  --ds-combobox-slide-x: -0.5rem;
+}
+
+@keyframes ds-combobox-enter {
+  from {
+    opacity: 0;
+    scale: 0.95;
+    translate: var(--ds-combobox-slide-x) var(--ds-combobox-slide-y);
+  }
+}
+@keyframes ds-combobox-exit {
+  to {
+    opacity: 0;
+    scale: 0.95;
+  }
+}
+.ds-combobox-content[data-open] {
+  animation: ds-combobox-enter 100ms ease;
+}
+.ds-combobox-content[data-closed] {
+  animation: ds-combobox-exit 100ms ease;
+}
+
+.ds-combobox-list {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  max-height: min(calc(18rem - 2.25rem), calc(var(--available-height) - 2.25rem));
+  scroll-padding-block: 0.375rem;
   overflow-y: auto;
-  background: var(--ds-surface);
-  border: 1px solid var(--ds-ink);
-  border-radius: var(--ds-radius-none);
-  font-family: var(--ds-font-sans);
+  overscroll-behavior: contain;
+  padding: 0.375rem;
+}
+.ds-combobox-list::-webkit-scrollbar {
+  display: none;
+}
+.ds-combobox-list[data-empty] {
+  padding: 0;
 }
 
-/* An option row — full width, hover/active shift to bg-alt. */
-.ds-combobox__option {
+.ds-combobox-item {
+  position: relative;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
   width: 100%;
-  padding: 8px 14px;
-  font-size: var(--ds-text-sm);
-  font-weight: 400;
-  letter-spacing: -0.1px;
-  text-align: left;
+  cursor: default;
+  align-items: center;
+  gap: 0.625rem;
+  border-radius: 0;
+  padding-block: 0.5rem;
+  padding-inline-end: 2rem;
+  padding-inline-start: 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  user-select: none;
+}
+.ds-combobox-item[data-highlighted] {
+  background-color: var(--ds-bg-alt);
   color: var(--ds-ink);
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: background-color var(--ds-transition), color var(--ds-transition);
 }
-.ds-combobox__option:hover,
-.ds-combobox__option.is-active { background: var(--ds-bg-alt); }
-
-/* The current value reads with a faint check on the right. */
-.ds-combobox__option[aria-selected="true"] { color: var(--ds-ink); font-weight: 500; }
-.ds-combobox__option[aria-selected="true"]::after {
-  content: "";
-  width: 12px;
-  height: 9px;
-  flex: none;
-  background-color: var(--ds-ink);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='9' viewBox='0 0 12 9' fill='none' stroke='black' stroke-width='1.5'%3E%3Cpath d='M1 4.5 4.5 8 11 1'/%3E%3C/svg%3E") no-repeat center / contain;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='9' viewBox='0 0 12 9' fill='none' stroke='black' stroke-width='1.5'%3E%3Cpath d='M1 4.5 4.5 8 11 1'/%3E%3C/svg%3E") no-repeat center / contain;
+.ds-combobox-item[data-highlighted]:not([data-variant="destructive"]) * {
+  color: var(--ds-ink);
+}
+.ds-combobox-item[data-disabled] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.ds-combobox-item svg {
+  pointer-events: none;
+  flex-shrink: 0;
+}
+.ds-combobox-item svg:not([class*="size-"]) {
+  width: 0.875rem;
+  height: 0.875rem;
 }
 
-.ds-combobox__option:disabled,
-.ds-combobox__option[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
-.ds-combobox__option:disabled:hover,
-.ds-combobox__option[aria-disabled="true"]:hover { background: none; }
+.ds-combobox-item-indicator {
+  pointer-events: none;
+  position: absolute;
+  inset-inline-end: 0.5rem;
+  display: flex;
+  width: 1rem;
+  height: 1rem;
+  align-items: center;
+  justify-content: center;
+}
 
-/* Empty state — shown when nothing matches the query. */
-.ds-combobox__empty {
-  padding: 8px 14px;
-  font-size: var(--ds-text-sm);
-  color: var(--ds-ink-faint);
+.ds-combobox-label {
+  padding-inline: 0.75rem;
+  padding-block: 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--ds-ink-soft);
+  text-transform: uppercase;
+}
+
+.ds-combobox-empty {
+  display: none;
+  width: 100%;
+  justify-content: center;
+  padding-block: 0.5rem;
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--ds-ink-soft);
+}
+.ds-combobox-content[data-empty] .ds-combobox-empty {
+  display: flex;
+}
+
+.ds-combobox-separator {
+  margin-inline: -0.375rem;
+  margin-block: 0.375rem;
+  height: 1px;
+  background-color: color-mix(in oklab, var(--ds-rule) 50%, transparent);
+}
+
+.ds-combobox-chips {
+  display: flex;
+  min-height: 2.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: 0;
+  border: 1px solid transparent;
+  border-bottom-color: var(--ds-rule);
+  background-color: transparent;
+  background-clip: padding-box;
+  padding-inline: 0;
+  padding-block: 0.375rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  transition-property: color, border-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.ds-combobox-chips:focus-within {
+  border-bottom-color: var(--ds-focus-ring);
+}
+.ds-combobox-chips:has([aria-invalid="true"]) {
+  border-bottom-color: var(--ds-danger);
+}
+.ds-combobox-chips:has([data-slot="combobox-chip"]) {
+  padding-inline: 0;
+}
+
+.ds-combobox-chip {
+  display: flex;
+  height: 1.375rem;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  border-radius: 0;
+  background-color: var(--ds-bg-alt);
+  padding-inline: 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--ds-ink);
+}
+.ds-combobox-chip:has(:disabled) {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.ds-combobox-chip:has([data-slot="combobox-chip-remove"]) {
+  padding-inline-end: 0;
+}
+
+.ds-combobox-chip-remove {
+  margin-inline-start: -0.25rem;
+  opacity: 0.5;
+}
+.ds-combobox-chip-remove:hover {
+  opacity: 1;
+}
+.ds-combobox-chip-remove-icon {
+  pointer-events: none;
+}
+
+.ds-combobox-chip-input {
+  min-width: 4rem;
+  flex: 1 1 0%;
+  outline: none;
 }

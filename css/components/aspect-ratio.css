@@ -1,0 +1,11 @@
+/* ============================================================================
+   Aspect ratio — .ds-aspect-ratio
+   ----------------------------------------------------------------------------
+   Holds a box at a fixed ratio while it loads, so the page does not reflow when
+   the image arrives. The ratio is a `--ratio` custom property rather than a set
+   of variant classes, so any value works.
+   ============================================================================ */
+.ds-aspect-ratio {
+  position: relative;
+  aspect-ratio: var(--ratio);
+}

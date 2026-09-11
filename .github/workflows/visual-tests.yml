@@ -1,16 +1,33 @@
 name: Visual regression tests
 
-# Runs Playwright full-page screenshot tests against the showcase.
+# site/tests/visual.spec.ts — full-page screenshot comparison over the React
+# docs app, the component library itself. The root's own copy of this suite
+# (tests/visual.spec.js, over the static examples/ pages) was retired along
+# with examples/ — site/ is now the only docs surface (direction.md decision 6).
 #
-# IMPORTANT: baselines must be generated and committed first
-# (see tests/README.md — `npm run test:visual:update`, then commit
-# tests/__screenshots__/). CI only *compares* against the committed images;
-# if none exist, the run fails. Baselines should be generated on Linux so they
-# match this ubuntu-latest runner.
+# Baselines MUST be generated on Linux. The config sets `snapshotPathTemplate`
+# without a platform key, so CI compares against exactly what is committed, and
+# sub-pixel font rendering differs enough between macOS and Linux to blow past
+# the 2% maxDiffPixelRatio. That is why generating them is a workflow input
+# rather than something you run on a laptop.
+#
+# The absorption deliberately had no baselines until 1.0.0-beta.8: during the
+# migration the pixels change by design, so a committed baseline would have
+# flagged the work itself on every batch. The comparison step therefore SKIPS
+# when no baselines exist, and arms itself the moment they land.
+#
+#   1. Run this workflow manually with `update_baselines: true`
+#   2. Download the `visual-baselines` artifact
+#   3. Commit it to site/tests/__screenshots__/
 
 on:
   pull_request:
   workflow_dispatch:
+    inputs:
+      update_baselines:
+        description: "Generate baselines on this runner and upload them as an artifact instead of comparing"
+        type: boolean
+        default: false
 
 jobs:
   visual:
@@ -21,26 +38,66 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
 
       - name: Install dependencies
         run: npm ci || npm i
 
+      - name: Build the package
+        # site/ installs it as `file:..` and imports dist/diametral.css, so the
+        # docs app cannot render without this.
+        run: npm run build
+
+      - name: Install site dependencies
+        run: npm --prefix site ci || npm --prefix site i
+
       - name: Install Chromium
-        run: npx playwright install --with-deps chromium
+        run: cd site && npx playwright install --with-deps chromium
 
-      - name: Run visual regression tests
-        run: npx playwright test tests/visual.spec.js
+      # --- Are there baselines to compare against? -------------------------
+      - name: Detect committed baselines
+        id: baselines
+        run: |
+          site=false
+          [ -d site/tests/__screenshots__ ] && [ -n "$(find site/tests/__screenshots__ -name '*.png' -print -quit)" ] && site=true
+          echo "site=$site" >> "$GITHUB_OUTPUT"
+          echo "site baselines: $site"
 
-      # On failure, publish the HTML report and any generated diff images so the
-      # visual delta can be inspected from the workflow run.
+      # --- Generate ---------------------------------------------------------
+      - name: Generate baselines
+        if: inputs.update_baselines
+        run: npm --prefix site run test:visual:update
+
+      - name: Upload generated baselines
+        if: ${{ inputs.update_baselines && !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-baselines
+          path: site/tests/__screenshots__/
+          retention-days: 14
+          if-no-files-found: error
+
+      # --- Compare ----------------------------------------------------------
+      # Skipped rather than failed while the suite has no baselines, so the gate
+      # arms itself instead of blocking every PR until someone generates them.
+      - name: Compare against baselines
+        if: ${{ !inputs.update_baselines && steps.baselines.outputs.site == 'true' }}
+        run: npm --prefix site run test:visual
+
+      - name: Note skipped comparison
+        if: ${{ !inputs.update_baselines && steps.baselines.outputs.site != 'true' }}
+        run: |
+          echo "::notice title=Visual baselines missing::re-run this workflow with update_baselines: true, then commit the artifact."
+
+      # On failure, publish the report and diff images so the delta can be seen
+      # from the run rather than reproduced locally.
       - name: Upload Playwright report and diffs
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
           path: |
-            playwright-report/
-            test-results/
+            site/playwright-report/
+            site/test-results/
           retention-days: 14
           if-no-files-found: ignore

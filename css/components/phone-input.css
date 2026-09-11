@@ -1,0 +1,64 @@
+/* ============================================================================
+   Phone input — .ds-phone-input
+   ----------------------------------------------------------------------------
+   A dial-code select joined to a national-number field, reading as one
+   underlined control: the group draws the single bottom rule and its two
+   members draw none, so the focus ring moves under the whole thing rather than
+   under whichever half has the caret.
+
+   This is the batch's largest dedupe exception and the one the plan singled
+   out. Upstream, the inner select trigger kept `w-fit shrink-0 border-0 ps-0
+   pe-2` and the inner input kept `flex-1 border-0 ps-2` as literal Tailwind
+   utilities — because `select.css` and `input.css` had *themselves* kept their
+   own `w-fit border px-0` and `border border-transparent border-b-input px-0`
+   defaults literal, specifically so these overrides could dedupe against them
+   through tailwind-merge. Baking either side into a plain class would have left
+   both the old and the new declarations applied at once.
+
+   Neither side is literal here, so the exception dissolves rather than moving:
+   the two members get part classes of their own, `--country` and `--number`,
+   and those classes carry the overrides as real declarations. The reason the
+   upstream note gives for keeping them literal — that the losing declaration
+   has to disappear — is satisfied by specificity instead of by a merge pass,
+   and a CSS-only consumer can now reproduce the control without Tailwind.
+   ============================================================================ */
+.ds-phone-input {
+  display: flex;
+  height: 40px;
+  width: 100%;
+  align-items: stretch;
+  border: 1px solid transparent;
+  border-bottom-color: var(--ds-rule);
+  border-radius: var(--ds-radius-none);
+  background: transparent;
+  transition: border-color var(--ds-transition), color var(--ds-transition);
+}
+.ds-phone-input:focus-within {
+  border-bottom-color: var(--ds-focus-ring);
+}
+.ds-phone-input[data-disabled] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* The dial-code half: as narrow as its content, and it never shrinks — a
+   `+352` must not be squeezed to fit a long number beside it. */
+.ds-phone-input__country {
+  width: fit-content;
+  flex-shrink: 0;
+}
+.ds-phone-input__country,
+.ds-phone-input__country select {
+  border: 0;
+  padding-inline-start: 0;
+  padding-inline-end: var(--ds-space-2);
+  background: transparent;
+}
+
+/* The number half: takes the rest of the row. */
+.ds-phone-input__number {
+  flex: 1;
+  border: 0;
+  padding-inline-start: var(--ds-space-2);
+  background: transparent;
+}

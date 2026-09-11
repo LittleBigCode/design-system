@@ -1,0 +1,25 @@
+/* ============================================================================
+   QR code — .ds-qr-code
+   ----------------------------------------------------------------------------
+   The SVG is drawn with fixed #fff / #000 fills rather than tokens: a QR code
+   needs a light quiet zone and dark modules to scan reliably whatever the
+   surrounding theme is. That is the one deliberate exception to "always read
+   tokens" in this package. `.ds-qr-code-error` is the fallback when the value
+   does not fit the chosen error-correction level.
+   ============================================================================ */
+.ds-qr-code {
+  border-radius: 0;
+}
+
+.ds-qr-code-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed color-mix(in oklab, var(--ds-danger) 50%, transparent);
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.75rem;
+  line-height: calc(1 / 0.75);
+  text-wrap: balance;
+  color: var(--ds-danger);
+}

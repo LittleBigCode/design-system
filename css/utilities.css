@@ -1,0 +1,52 @@
+/* ============================================================================
+   Utility classes — a small demo-layout vocabulary, not a Tailwind clone.
+   ----------------------------------------------------------------------------
+   Batch 10 (decision 7 in docs/absorption/direction.md): incoming's demos wrap
+   components in Tailwind layout utilities; this package ships no Tailwind, so
+   batch 16's HTML tab needs a buildless equivalent for the ~40 utilities that
+   cover most of that usage. Every class maps to an existing --ds-* token — no
+   arbitrary values, no responsive variants, no colour utilities. See
+   docs/absorption/utility-mapping.md for the Tailwind-class → here table batch
+   16's codemod reads, including what has no home here and falls to inline
+   `style=` instead.
+   ============================================================================ */
+
+/* Display */
+.ds-flex     { display: flex; }
+.ds-grid     { display: grid; }
+.ds-flex-col { flex-direction: column; }
+.ds-flex-wrap { flex-wrap: wrap; }
+
+/* Align items */
+.ds-items-start    { align-items: flex-start; }
+.ds-items-center   { align-items: center; }
+.ds-items-end      { align-items: flex-end; }
+.ds-items-baseline { align-items: baseline; }
+.ds-items-stretch  { align-items: stretch; }
+
+/* Justify content */
+.ds-justify-start   { justify-content: flex-start; }
+.ds-justify-center  { justify-content: center; }
+.ds-justify-between { justify-content: space-between; }
+.ds-justify-end     { justify-content: flex-end; }
+
+/* Gap — indexed to the --ds-space-* scale (docs/foundations.md #Spacing),
+   not to Tailwind's own numbering. See the mapping table for how a source
+   gap-N lands on a ds-gap-N. */
+.ds-gap-1 { gap: var(--ds-space-1); }
+.ds-gap-2 { gap: var(--ds-space-2); }
+.ds-gap-3 { gap: var(--ds-space-3); }
+.ds-gap-4 { gap: var(--ds-space-4); }
+.ds-gap-5 { gap: var(--ds-space-5); }
+.ds-gap-6 { gap: var(--ds-space-6); }
+.ds-gap-7 { gap: var(--ds-space-7); }
+.ds-gap-8 { gap: var(--ds-space-8); }
+
+/* Width */
+.ds-w-full { width: 100%; }
+
+/* Text */
+.ds-text-xs     { font-size: var(--ds-text-xs); }
+.ds-text-sm     { font-size: var(--ds-text-sm); }
+.ds-text-muted  { color: var(--ds-ink-soft); }
+.ds-text-right  { text-align: right; }

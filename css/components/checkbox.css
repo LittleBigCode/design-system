@@ -1,0 +1,126 @@
+/* ============================================================================
+   Checkbox — .ds-checkbox
+   ----------------------------------------------------------------------------
+   Third of `form-controls.css`'s seven destinations (batch-plan §1.3), and the
+   one where the two grammars collide on the same class name.
+
+   0.11's `.ds-checkbox` is the *label*: a flex row holding a visually-hidden
+   `<input type=checkbox>`, a drawn `.ds-checkbox__box`, and the text. The
+   source's `.ds-checkbox` is the *box itself* — Base UI's `Checkbox.Root`, a
+   `<button role="checkbox">` with a `.ds-checkbox-indicator` inside it, and
+   the label is a separate `FieldLabel` beside it.
+
+   Both ship, and they are told apart the way `table.css` told its two
+   grammars apart in beta.6: by what the element contains. A 0.11 checkbox has
+   a `.ds-checkbox__box` child; a source one never does. Three committed
+   fixtures render the 0.11 form — `examples/components/form-controls.html`,
+   `examples/blocks/data-detail.html`, `examples/kitchen-sink.html` — and
+   nothing in this migration re-classes them.
+
+   Charte edits on the source's half: 1.125rem → 18px; the focus `box-shadow`
+   ring becomes the system's 2px `outline` on `--ds-focus-ring`; the invalid
+   state's second colour glow is dropped, the red border alone carries it; and
+   the `.dark`-prefixed rules go, since the theme lives in the token layer.
+   ============================================================================ */
+
+/* ---- The 0.11 grammar: label + hidden input + drawn box ------------------ */
+.ds-checkbox:has(> .ds-checkbox__box) {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  font-size: var(--ds-text-sm);
+  font-weight: 400;
+  color: var(--ds-ink-soft);
+}
+.ds-checkbox > input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.ds-checkbox__box {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-rule);
+  border-radius: var(--ds-radius-none);
+  position: relative;
+  transition: background-color var(--ds-transition), border-color var(--ds-transition);
+}
+/* The check — a rotated bottom+right border, hidden until checked. */
+.ds-checkbox__box::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: 5px;
+  width: 4px;
+  height: 8px;
+  border: 2px solid var(--ds-bg); /* the pair of the ink fill; see issue #15 */
+  border-top: 0;
+  border-left: 0;
+  transform: rotate(45deg);
+  opacity: 0;
+}
+.ds-checkbox input:checked + .ds-checkbox__box {
+  background: var(--ds-ink);
+  border-color: var(--ds-ink);
+}
+.ds-checkbox input:checked + .ds-checkbox__box::after { opacity: 1; }
+.ds-checkbox input:focus-visible + .ds-checkbox__box {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: 2px;
+}
+.ds-checkbox input:disabled + .ds-checkbox__box { opacity: .5; }
+.ds-checkbox:has(input:disabled) { cursor: not-allowed; color: var(--ds-ink-faint); }
+
+/* ---- The absorbed grammar: the root IS the box --------------------------- */
+.ds-checkbox:not(:has(> .ds-checkbox__box)) {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 1px solid var(--ds-rule);
+  border-radius: var(--ds-radius-none);
+  background: var(--ds-surface);
+  color: var(--ds-bg);
+  cursor: pointer;
+  transition: background-color var(--ds-transition), border-color var(--ds-transition);
+  outline: none;
+}
+/* An 18px hit target is under the 24px minimum, so the box carries an
+   invisible one that overflows it. Source rule, kept verbatim in intent. */
+.ds-checkbox:not(:has(> .ds-checkbox__box))::after {
+  content: "";
+  position: absolute;
+  inset-inline: -12px;
+  inset-block: -8px;
+}
+.ds-checkbox[data-checked] {
+  background: var(--ds-ink);
+  border-color: var(--ds-ink);
+}
+.ds-checkbox:focus-visible {
+  outline: 2px solid var(--ds-focus-ring);
+  outline-offset: 2px;
+}
+.ds-checkbox[aria-invalid="true"] { border-color: var(--ds-danger); }
+.ds-checkbox[aria-invalid="true"][aria-checked="true"] { border-color: var(--ds-ink); }
+.ds-checkbox:disabled,
+.ds-checkbox[data-disabled] { cursor: not-allowed; opacity: .5; }
+
+.ds-checkbox-indicator {
+  display: grid;
+  place-content: center;
+  color: currentcolor;
+}
+.ds-checkbox-indicator > svg {
+  width: 14px;
+  height: 14px;
+}

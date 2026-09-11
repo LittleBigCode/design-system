@@ -1,7 +1,42 @@
-/* Form fields — .ds-field, .ds-input, .ds-input-row, .ds-context-bar
-   Apply .ds-input to a control, or wrap controls in .ds-field to style them by
-   descent. Resets are scoped — they never touch bare inputs outside the system. */
+/* ============================================================================
+   Field — .ds-field, .ds-input-row, .ds-context-bar (+ the absorbed parts)
+   ----------------------------------------------------------------------------
+   A **frozen** file (css-ledger §1): `.ds-input-row` is read from outside the
+   package — `<ds-panel rows>` documents itself as tightening its bottom padding
+   "for `.ds-input-row` content", and `docs/components.md` teaches the pairing.
+   So the source is absorbed *into* this contract, not over it.
 
+   Two things moved out on the way in. `.ds-input` and the typed-input resets
+   left for `input.css`, the first of `form-controls.css`'s seven destinations —
+   they were never in `form-controls.css` to begin with, which is why the
+   ledger's "`.ds-input` four-way dedupe" row was withdrawn as one-way
+   (batch-plan §4, batch 7). Four files override `.ds-input` by descent —
+   `color-picker.css:54`, `time-picker.css:13`, `date-picker.css:16`,
+   `date-range.css:17` — and `toolbar.css`'s fifth left with the wholesale
+   replacement in beta.6 (`docs/absorption/corrections.md`). All four win on
+   specificity, not load order, and `input.css` loads ahead of every one of
+   them, so the move reaches all four without editing any of them.
+
+   The validation block moved *in*, from the bottom of `form-controls.css`:
+   `.ds-field--error`, `.ds-field--success` and `.ds-field__hint` are field
+   grammar, not radio grammar, and radio is all that file kept.
+
+   The absorbed half is the source's part set — `FieldSet`, `FieldLegend`,
+   `FieldGroup`, `FieldContent`, `FieldLabel`, `FieldTitle`,
+   `FieldDescription`, `FieldSeparator`, `FieldError`. It buys three things
+   0.11's one-label-one-control `.ds-field` could not do: a horizontal
+   orientation (label left, control right) and a `responsive` one that flips at
+   a container width; a description and an error line as real parts with
+   `role="alert"`; and a checkbox-in-a-card layout where the whole label is the
+   hit target.
+
+   The orientation default is what keeps the two halves compatible: a bare
+   `.ds-field` with no `data-orientation` stays 0.11's 6px column, and the
+   source's own default is `vertical`, so an absorbed field lands in the same
+   direction with its own 12px rhythm.
+   ============================================================================ */
+
+/* ---- 0.11's field, unchanged -------------------------------------------- */
 .ds-field { display: flex; flex-direction: column; gap: 6px; }
 .ds-field > label,
 .ds-field__label {
@@ -11,48 +46,6 @@
   text-transform: uppercase;
   color: var(--ds-ink-faint);
 }
-
-.ds-input,
-.ds-field select,
-.ds-field textarea,
-.ds-field input[type="text"],
-.ds-field input[type="number"],
-.ds-field input[type="email"],
-.ds-field input[type="password"],
-.ds-field input[type="search"],
-.ds-field input[type="tel"],
-.ds-field input[type="url"] {
-  font-family: var(--ds-font-sans);
-  font-size: var(--ds-text-base);
-  font-weight: 400;
-  color: var(--ds-ink);
-  font-variant-numeric: tabular-nums;
-  background: var(--ds-surface);
-  border: 1px solid var(--ds-rule);
-  border-radius: var(--ds-radius-none);
-  padding: 10px 12px;
-  outline: none;
-}
-select.ds-input,
-.ds-field select { cursor: pointer; min-width: 200px; }
-
-.ds-input:focus,
-.ds-field :is(select, input, textarea):focus {
-  outline: 2px solid var(--ds-focus-ring);
-  outline-offset: -2px;
-}
-
-.ds-input--number,
-.ds-field input[type="number"] { width: 130px; text-align: right; }
-.ds-input--number::-webkit-outer-spin-button,
-.ds-input--number::-webkit-inner-spin-button,
-.ds-field input[type="number"]::-webkit-outer-spin-button,
-.ds-field input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-.ds-input--number,
-.ds-field input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
-
-.ds-input:disabled,
-.ds-field :is(select, input, textarea):disabled { opacity: .55; cursor: not-allowed; }
 
 /* Context bar — a row of fields above content. */
 .ds-context-bar {
@@ -64,7 +57,8 @@ select.ds-input,
   border-bottom: 1px solid var(--ds-rule);
 }
 
-/* Labeled row — a label on the left, a control/value on the right. */
+/* Labeled row — a label on the left, a control/value on the right.
+   The frozen class: `<ds-panel rows>` is documented against it. */
 .ds-input-row {
   display: flex;
   align-items: center;
@@ -76,3 +70,183 @@ select.ds-input,
 .ds-input-row:last-child { border-bottom: none; }
 .ds-input-row > label { font-size: var(--ds-text-base); color: var(--ds-ink-soft); }
 .ds-input-row__unit { font-size: var(--ds-text-xs); color: var(--ds-ink-faint); margin-left: 6px; }
+
+/* ---- Validation, moved in from form-controls.css ------------------------- */
+.ds-field--error :is(.ds-input, .ds-textarea, .ds-checkbox__box, .ds-radio__dot, input, select, textarea),
+.ds-field--error .ds-select select,
+.ds-field--error .ds-input-group__addon {
+  border-color: var(--ds-danger);
+}
+.ds-field--success :is(.ds-input, .ds-textarea, .ds-checkbox__box, .ds-radio__dot, input, select, textarea),
+.ds-field--success .ds-select select,
+.ds-field--success .ds-input-group__addon {
+  border-color: var(--ds-success);
+}
+
+.ds-field__hint {
+  font-size: var(--ds-text-xs);
+  color: var(--ds-ink-faint);
+  font-weight: 400;
+}
+.ds-field__hint--error { color: var(--ds-danger-ink); }
+.ds-field__hint--success { color: var(--ds-success-ink); }
+
+/* ---- The absorbed parts -------------------------------------------------- */
+.ds-field-set {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-inline-size: 0; /* <fieldset>'s min-content default breaks flex children */
+}
+.ds-field-set:has(> [data-slot="checkbox-group"]),
+.ds-field-set:has(> [data-slot="radio-group"]) { gap: 12px; }
+
+.ds-field-legend {
+  margin-bottom: 12px;
+  padding: 0;
+  font-size: var(--ds-text-xs);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ds-ink-faint);
+}
+
+.ds-field-group {
+  container-type: inline-size;
+  container-name: ds-field-group;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 40px;
+}
+.ds-field-group[data-slot="checkbox-group"] { gap: 12px; }
+.ds-field-group > .ds-field-group { gap: 16px; }
+
+.ds-field[data-orientation] {
+  width: 100%;
+  gap: 12px;
+}
+/* --ds-danger-ink, not --ds-danger: the base hue is tuned as a *fill*, and as
+   text on this system's near-black dark background it measures under 4.5:1.
+   The -ink shades are the mirror pair batch 6 added to themes/dark.css for
+   exactly this, and axe caught it on `field [dark]`. */
+.ds-field[data-invalid="true"] { color: var(--ds-danger-ink); }
+
+.ds-field[data-orientation="vertical"],
+.ds-field[data-orientation="responsive"] { flex-direction: column; }
+.ds-field[data-orientation="vertical"] > *,
+.ds-field[data-orientation="responsive"] > * { width: 100%; }
+/* The source stretched every child to full width except an `sr-only` one.
+   This package has no such utility (carousel.css and pagination.tsx record the
+   same finding), so the exception has nothing to match and is dropped. */
+
+.ds-field[data-orientation="horizontal"] { flex-direction: row; align-items: center; }
+.ds-field[data-orientation="horizontal"]:has(> [data-slot="field-content"]) { align-items: flex-start; }
+.ds-field[data-orientation="horizontal"] > [data-slot="field-label"] { flex: 1 1 auto; }
+.ds-field[data-orientation="horizontal"]:has(> [data-slot="field-content"]) > [role="checkbox"],
+.ds-field[data-orientation="horizontal"]:has(> [data-slot="field-content"]) [role="radio"] { margin-top: 1px; }
+
+@container ds-field-group (width >= 448px) {
+  .ds-field[data-orientation="responsive"] { flex-direction: row; align-items: center; }
+  .ds-field[data-orientation="responsive"] > * { width: auto; }
+  .ds-field[data-orientation="responsive"]:has(> [data-slot="field-content"]) { align-items: flex-start; }
+  .ds-field[data-orientation="responsive"] > [data-slot="field-label"] { flex: 1 1 auto; }
+  .ds-field[data-orientation="responsive"]:has(> [data-slot="field-content"]) > [role="checkbox"],
+  .ds-field[data-orientation="responsive"]:has(> [data-slot="field-content"]) [role="radio"] { margin-top: 1px; }
+}
+
+.ds-field-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+  line-height: var(--ds-leading-normal);
+}
+
+.ds-field-label {
+  display: flex;
+  width: fit-content;
+  gap: 8px;
+  line-height: var(--ds-leading-normal);
+}
+:where(.ds-field[data-disabled="true"]) .ds-field-label { opacity: .5; }
+/* A label wrapping a whole field is a selectable card: the checked state
+   tints it so the choice reads without hunting for the control. */
+.ds-field-label:has(> [data-slot="field"]) {
+  width: 100%;
+  flex-direction: column;
+  border: 1px solid var(--ds-rule);
+  border-radius: var(--ds-radius-none);
+}
+.ds-field-label > [data-slot="field"] { padding: 16px; }
+.ds-field-label:has(
+    :where([data-state="checked"]),
+    :where([data-checked]:not([data-checked="false"]))
+  ) {
+  border-color: var(--ds-ink);
+  background: var(--ds-bg-alt);
+}
+
+.ds-field-title {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--ds-text-xs);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ds-ink-faint);
+}
+:where(.ds-field[data-disabled="true"]) .ds-field-title { opacity: .5; }
+
+.ds-field-description {
+  margin: 0;
+  text-align: start;
+  font-size: var(--ds-text-sm);
+  font-weight: 400;
+  line-height: var(--ds-leading-normal);
+  letter-spacing: 0;
+  color: var(--ds-ink-faint);
+  text-transform: none;
+}
+:where(.ds-field:has([data-orientation="horizontal"])) .ds-field-description { text-wrap: balance; }
+[data-variant="legend"] + .ds-field-description { margin-top: -6px; }
+.ds-field-description:last-child { margin-top: 0; }
+.ds-field-description:nth-last-child(2) { margin-top: -4px; }
+.ds-field-description > a { text-decoration-line: underline; text-underline-offset: 4px; }
+.ds-field-description > a:hover { color: var(--ds-accent-ink); }
+
+.ds-field-separator {
+  position: relative;
+  margin-block: -8px;
+  height: 20px;
+  font-size: var(--ds-text-sm);
+}
+.ds-field-separator-line { position: absolute; inset: 0; top: 50%; }
+.ds-field-separator-content {
+  position: relative;
+  margin-inline: auto;
+  display: block;
+  width: fit-content;
+  background: var(--ds-bg);
+  padding-inline: 8px;
+  color: var(--ds-ink-faint);
+}
+
+.ds-field-error {
+  font-size: var(--ds-text-sm);
+  font-weight: 400;
+  color: var(--ds-danger-ink);
+}
+.ds-field-error-list {
+  margin: 0;
+  margin-inline-start: 16px;
+  display: flex;
+  list-style-type: disc;
+  flex-direction: column;
+  gap: 4px;
+}

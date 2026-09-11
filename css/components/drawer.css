@@ -6,15 +6,15 @@
    separation by rule + background. Slides in via transform; the motion is held
    still for users who prefer reduced motion. Position is fixed (own the layer).
    ============================================================================ */
-.ds-drawer-overlay {
+.ds-drawer-overlay:has(> .ds-drawer) {
   position: fixed;
   inset: 0;
   background: var(--ds-overlay-scrim);
   z-index: var(--ds-z-overlay);
   display: none;
 }
-.ds-drawer-overlay.is-open,
-.ds-drawer-overlay[data-open="true"] { display: block; }
+.ds-drawer-overlay:has(> .ds-drawer).is-open,
+.ds-drawer-overlay:has(> .ds-drawer)[data-open="true"] { display: block; }
 
 .ds-drawer {
   position: fixed;
@@ -126,4 +126,314 @@
   .ds-drawer--left,
   .ds-drawer--top,
   .ds-drawer--bottom { transform: none; }
+}
+
+/* ============================================================================
+   The absorbed drawer — .ds-drawer-viewport / -popup / -content / -header …
+   ----------------------------------------------------------------------------
+   Batch 8's second defect swap, and half of a merge: 0.11's single `Drawer`
+   symbol is replaced by TWO absorbed components, `Drawer` (this file, a
+   swipeable sheet with snap points) and `Sheet` (sheet.css, the edge-docked
+   panel 0.11's `placement` prop meant). Both had to land together or the
+   incumbent's capability would have shipped halved.
+
+   The defect being swapped: 0.11's Drawer.js had Escape and role=dialog but no
+   focus trap and no portal, so Tab walked straight out of an open drawer into
+   the page behind it. Base UI supplies both.
+
+   The block above is 0.11's grammar — .ds-drawer, --right/left/top/bottom and
+   the __head / __title / __close / __body / __foot / __spacer parts. It stays
+   because examples/components/drawer.html, kitchen-sink.html and the demo's
+   files.js write it by hand and no React component renders it. Only ONE class
+   name collides across the two grammars, .ds-drawer-overlay, and it is told
+   apart the way beta.7 told .ds-checkbox from .ds-checkbox: by what it
+   contains. 0.11's scrim wraps the panel (`> .ds-drawer`); Base UI's Backdrop
+   is a bare sibling element with no children at all.
+
+   3 of the 18 `z-index: 50` remaps land here — the overlay, the viewport and
+   the popup — all three on --ds-z-overlay.
+   ============================================================================ */
+.ds-drawer-overlay:not(:has(> .ds-drawer)) {
+  position: fixed;
+  inset: 0;
+  z-index: var(--ds-z-overlay);
+  min-height: 100dvh;
+  /* The charte's scrim, not the source's rgb(0 0 0 / .2) + backdrop blur:
+     modal.css already owns what a dimmed page looks like in this system and no
+     absorbed file has landed a backdrop-filter. Flat, one token, both themes. */
+  background-color: var(--ds-overlay-scrim);
+  opacity: max(var(--drawer-overlay-min-opacity, 0), calc(1 - var(--drawer-swipe-progress)));
+  transition-property: opacity;
+  transition-duration: 450ms;
+  transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+  user-select: none;
+}
+@supports (-webkit-touch-callout: none) {
+  .ds-drawer-overlay:not(:has(> .ds-drawer)) { position: absolute; }
+}
+.ds-drawer-overlay[data-snap-points] { --drawer-overlay-min-opacity: 0.5; }
+.ds-drawer-overlay[data-ending-style] {
+  pointer-events: none;
+  opacity: 0;
+  transition-duration: calc(var(--drawer-swipe-strength) * 400ms);
+}
+.ds-drawer-overlay[data-starting-style] { opacity: 0; }
+.ds-drawer-overlay[data-swiping] { transition-duration: 0s; }
+
+.ds-drawer-swipe-handle {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-shrink: 0;
+  cursor: grab;
+  transition: opacity var(--ds-transition);
+}
+.ds-drawer-swipe-handle:active { cursor: grabbing; }
+.ds-drawer-swipe-handle::after {
+  content: "";
+  display: block;
+  flex-shrink: 0;
+  border-radius: var(--ds-radius-none);
+  background-color: var(--ds-grey);
+}
+:where(.ds-drawer-popup)[data-swipe-axis="x"] .ds-drawer-swipe-handle {
+  height: 100%;
+  width: 0.75rem;
+  align-items: center;
+}
+:where(.ds-drawer-popup)[data-swipe-axis="y"] .ds-drawer-swipe-handle {
+  height: 0.75rem;
+  width: 100%;
+  justify-content: center;
+}
+:where(.ds-drawer-popup)[data-swipe-direction="down"] .ds-drawer-swipe-handle {
+  align-items: flex-end;
+}
+:where(.ds-drawer-popup)[data-swipe-direction="left"] .ds-drawer-swipe-handle {
+  order: 9999;
+  justify-content: flex-start;
+}
+:where(.ds-drawer-popup)[data-swipe-direction="right"] .ds-drawer-swipe-handle {
+  justify-content: flex-end;
+}
+:where(.ds-drawer-popup)[data-swipe-direction="up"] .ds-drawer-swipe-handle {
+  order: 9999;
+  align-items: flex-start;
+}
+:where(.ds-drawer-popup)[data-swipe-axis="x"] .ds-drawer-swipe-handle::after {
+  height: 100px;
+  width: 0.375rem;
+}
+:where(.ds-drawer-popup)[data-swipe-axis="y"] .ds-drawer-swipe-handle::after {
+  height: 0.375rem;
+  width: 100px;
+}
+
+.ds-drawer-viewport {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: var(--ds-z-overlay);
+  user-select: none;
+}
+.ds-drawer-viewport[data-modal="true"] { pointer-events: auto; }
+
+/* ---- The panel ------------------------------------------------------------ */
+.ds-drawer-popup {
+  pointer-events: auto;
+  position: fixed;
+  z-index: var(--ds-z-overlay);
+  margin: var(--drawer-inset, 0px);
+  display: flex;
+  height: var(--drawer-content-height);
+  max-height: var(--drawer-content-max-height, none);
+  min-height: 0;
+  width: var(--drawer-content-width, auto);
+  transform: translate3d(var(--translate-x, 0px), var(--translate-y, 0px), 0) scale(var(--stack-scale));
+  flex-direction: column;
+  border-radius: var(--ds-radius-none);
+  background-color: var(--ds-surface);
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-sm);
+  line-height: var(--ds-leading-normal);
+  color: var(--ds-ink);
+  transition-property: transform, height, opacity, filter;
+  transition-duration: 450ms;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+  outline: none;
+  user-select: none;
+  interpolate-size: allow-keywords;
+}
+.ds-drawer-popup[data-swipe-direction="down"] { border-top: 1px solid var(--ds-ink); }
+.ds-drawer-popup[data-swipe-direction="left"] { border-inline-end: 1px solid var(--ds-ink); }
+.ds-drawer-popup[data-swipe-direction="right"] { border-inline-start: 1px solid var(--ds-ink); }
+.ds-drawer-popup[data-swipe-direction="up"] { border-bottom: 1px solid var(--ds-ink); }
+
+/* Nested. */
+.ds-drawer-popup[data-nested-drawer-open] {
+  overflow: hidden;
+  filter: brightness(0.95);
+}
+
+/* Bleed: the strip of surface-coloured background that peeks past the panel's
+   edge while it is mid-swipe, so the gap never shows the scrim behind it. */
+.ds-drawer-popup::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  background-color: var(--drawer-bleed-background, var(--ds-surface));
+}
+.ds-drawer-popup[data-swipe-axis="x"]::after { inset-block: 0; width: var(--bleed); }
+.ds-drawer-popup[data-swipe-axis="y"]::after { inset-inline: 0; height: var(--bleed); }
+.ds-drawer-popup[data-swipe-direction="down"]::after { top: 100%; }
+.ds-drawer-popup[data-swipe-direction="left"]::after { inset-inline-end: 100%; }
+.ds-drawer-popup[data-swipe-direction="right"]::after { inset-inline-start: 100%; }
+.ds-drawer-popup[data-swipe-direction="up"]::after { bottom: 100%; }
+
+/* Sizing. */
+.ds-drawer-popup { --drawer-content-height: var(--drawer-height, auto); }
+.ds-drawer-popup[data-swipe-axis="x"] { --drawer-content-width: 75%; }
+.ds-drawer-popup[data-swipe-axis="y"] { --drawer-content-max-height: calc(100dvh - 6rem); }
+.ds-drawer-popup[data-swipe-axis="y"][data-snap-points] { --drawer-content-height: 100dvh; }
+@media (width >= 40rem) {
+  .ds-drawer-popup[data-swipe-axis="x"] { --drawer-content-width: 24rem; }
+}
+
+/* Stack: nested drawers shrink and peek out from behind the frontmost one,
+   driven by how many are open and how far the top one has been swiped. */
+.ds-drawer-popup {
+  --bleed: 3rem;
+  --peek: 1rem;
+  --stack-height: var(--drawer-frontmost-height, var(--drawer-height, 0px));
+  --stack-peek-offset: max(0px, calc((var(--nested-drawers) - var(--stack-progress)) * var(--peek)));
+  --stack-progress: clamp(0, var(--drawer-swipe-progress), 1);
+  --stack-scale-base: max(0, calc(1 - (var(--nested-drawers) * var(--stack-step))));
+  --stack-scale: clamp(0, calc(var(--stack-scale-base) + (var(--stack-step) * var(--stack-progress))), 1);
+  --stack-shrink: calc(1 - var(--stack-scale));
+  --stack-step: 0.05;
+}
+
+/* Transitions. */
+.ds-drawer-popup[data-ending-style] {
+  transform: var(--closed-transform);
+  opacity: 0.9999;
+  transition-duration: calc(var(--drawer-swipe-strength) * 400ms);
+}
+.ds-drawer-popup[data-nested-drawer-swiping] { transition-duration: 0s; }
+.ds-drawer-popup[data-ending-style][data-nested-drawer-swiping] {
+  transition-duration: calc(var(--drawer-swipe-strength) * 400ms);
+}
+.ds-drawer-popup[data-starting-style] { transform: var(--closed-transform); }
+.ds-drawer-popup[data-swiping] { transition-duration: 0s; }
+.ds-drawer-popup[data-ending-style][data-swiping] {
+  transition-duration: calc(var(--drawer-swipe-strength) * 400ms);
+}
+
+/* Axis: y. */
+.ds-drawer-popup[data-swipe-axis="y"] { inset-inline: 0; }
+.ds-drawer-popup[data-swipe-axis="y"][data-nested-drawer-open] { height: var(--stack-height); }
+
+/* Axis: x. */
+.ds-drawer-popup[data-swipe-axis="x"] { inset-block: 0; flex-direction: row; }
+
+/* Direction: down. */
+.ds-drawer-popup[data-swipe-direction="down"] {
+  bottom: 0;
+  transform-origin: bottom;
+  --closed-transform: translate3d(0, calc(100% + var(--drawer-inset, 0px) + 2px), 0);
+  --translate-y: calc(
+    var(--drawer-snap-point-offset, 0px) + var(--drawer-swipe-movement-y) - var(--stack-peek-offset) -
+      (var(--stack-shrink) * var(--stack-height))
+  );
+}
+
+/* Direction: up. */
+.ds-drawer-popup[data-swipe-direction="up"] {
+  top: 0;
+  transform-origin: top;
+  --closed-transform: translate3d(0, calc(-100% - var(--drawer-inset, 0px) - 2px), 0);
+  --translate-y: calc(
+    var(--drawer-snap-point-offset, 0px) + var(--drawer-swipe-movement-y) + var(--stack-peek-offset) +
+      (var(--stack-shrink) * var(--stack-height))
+  );
+}
+
+/* Direction: left. */
+.ds-drawer-popup[data-swipe-direction="left"] {
+  inset-inline-start: 0;
+  --closed-transform: translate3d(calc(-100% - var(--drawer-inset, 0px) - 2px), 0, 0);
+  --translate-x: calc(
+    var(--drawer-swipe-movement-x) + var(--stack-peek-offset) + (var(--stack-shrink) * 100%)
+  );
+}
+
+/* Direction: right. */
+.ds-drawer-popup[data-swipe-direction="right"] {
+  inset-inline-end: 0;
+  --closed-transform: translate3d(calc(100% + var(--drawer-inset, 0px) + 2px), 0, 0);
+  --translate-x: calc(
+    var(--drawer-swipe-movement-x) - var(--stack-peek-offset) - (var(--stack-shrink) * 100%)
+  );
+}
+
+.ds-drawer-content {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  border-radius: inherit;
+  transition-property: opacity;
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.45, 1.005, 0, 1.005);
+  user-select: text;
+}
+:where(.ds-drawer-popup)[data-swiping] .ds-drawer-content { user-select: none; }
+
+:where(.ds-drawer-popup)[data-nested-drawer-open] .ds-drawer-content,
+:where(.ds-drawer-popup)[data-nested-drawer-open] .ds-drawer-swipe-handle { opacity: 0; }
+:where(.ds-drawer-popup)[data-nested-drawer-swiping] .ds-drawer-content,
+:where(.ds-drawer-popup)[data-nested-drawer-swiping] .ds-drawer-swipe-handle { opacity: 1; }
+
+.ds-drawer-header {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem;
+  padding-bottom: 0;
+}
+:where(.ds-drawer-popup)[data-swipe-axis="y"] .ds-drawer-header { text-align: center; }
+@media (width >= 48rem) {
+  .ds-drawer-header { gap: 0.5rem; text-align: start; }
+}
+
+.ds-drawer-footer {
+  margin-top: auto;
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  padding-top: 0;
+}
+
+.ds-drawer-title {
+  font-family: var(--ds-font-title);
+  font-size: var(--ds-text-md);
+  line-height: var(--ds-leading-tight);
+  font-weight: var(--ds-font-weight-title);
+  letter-spacing: 0.05em;
+  color: var(--ds-ink);
+  text-transform: uppercase;
+}
+
+.ds-drawer-description {
+  margin-top: 0.125rem;
+  font-size: var(--ds-text-sm);
+  line-height: var(--ds-leading-normal);
+  text-wrap: balance;
+  color: var(--ds-ink-faint);
 }

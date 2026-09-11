@@ -28,7 +28,7 @@ import "@diametral/design-system/css/diametral.css";
 
 ## 1. App shell
 
-Wrap your whole router in [`<ConsoleLayout>`](../react/components/ConsoleLayout.d.ts):
+Wrap your whole router in [`<ConsoleLayout>`](../react/components/ConsoleLayout.tsx):
 a left sidebar built from a **grouped nav config**, a ⌘K command palette, an optional
 Light/Dark/Sepia theme switcher, and a user avatar with sign-out. Your routed content
 is the `children`.
@@ -100,9 +100,9 @@ at the root of the authenticated app.
 
 ## 2. CRUD list + detail
 
-A [`<DataGrid loadPage>`](../react/components/DataGrid.d.ts) list whose rows open a
-[`<Drawer>`](../react/components/Drawer.d.ts) holding a validated form. The form layer
-is [`useForm`](forms.md) + [`FormField`](../react/components/FormField.js): `useForm`
+A [`<DataGrid loadPage>`](../react/components/DataGrid.tsx) list whose rows open a
+[`<Drawer>`](../react/components/Drawer.tsx) holding a validated form. The form layer
+is [`useForm`](forms.md) + [`FormField`](../dist/react/index.js): `useForm`
 holds values/errors and hands you a `register(name)` spread plus a `handleSubmit`, and
 each `FormField` renders a labelled row with the matching inline error.
 
@@ -115,7 +115,7 @@ import {
   DataGrid, Drawer, useForm, FormField,
   Input, Select, Button, Toolbar,
 } from "@diametral/design-system/react";
-import { restLoadPage } from "@diametral/design-system/react/hooks/restLoadPage";
+import { restLoadPage } from "@diametral/design-system/react";
 
 const STATUS = [
   { value: "draft",    label: "Draft" },
@@ -239,11 +239,17 @@ Notes that keep this honest:
 
 ## 3. Dashboard
 
-A row of [`StatCard`](../react/components/StatCard.d.ts)s over a chart
-([`LineChart`](../react/components/LineChart.d.ts) /
-[`DonutChart`](../react/components/DonutChart.d.ts)). `StatCard` takes a `label`,
+A row of [`StatCard`](../react/components/StatCard.tsx)s over a chart
+([`LineChart`](../react/components/line-chart.tsx) /
+[`DonutChart`](../react/components/donut-chart.tsx)). `StatCard` takes a `label`,
 `value`, and a signed `delta` (`deltaDir` colors it and prepends ▲/▼); drop a
 `Sparkline` in as its `children` for an inline trend.
+
+The charts take a `config` — one entry per series or slice, keyed by the field name
+in each data row — and the rows themselves. That object is the whole naming and
+coloring system: an entry with a `color` gets it, an entry without takes the next
+slot of the `--ds-chart-*` ramp, and the tooltip and legend read their labels from
+the same place. `recharts` is an optional peer dependency; install it to use them.
 
 ```jsx
 import {
@@ -268,22 +274,37 @@ export function Dashboard() {
       <div style={{ display: "grid", gap: 16, gridTemplateColumns: "2fr 1fr", marginTop: 16 }}>
         <Card title="Revenue trend">
           <LineChart
-            height={220}
-            labels={["Jan", "Feb", "Mar", "Apr", "May", "Jun"]}
-            series={[
-              { name: "2026", data: [82, 91, 88, 104, 118, 128] },
-              { name: "2025", data: [70, 74, 77, 81, 86, 92] },
+            config={{
+              y2026: { label: "2026", color: "var(--ds-chart-1)" },
+              y2025: { label: "2025", color: "var(--ds-chart-2)" },
+            }}
+            data={[
+              { month: "Jan", y2026: 82,  y2025: 70 },
+              { month: "Feb", y2026: 91,  y2025: 74 },
+              { month: "Mar", y2026: 88,  y2025: 77 },
+              { month: "Apr", y2026: 104, y2025: 81 },
+              { month: "May", y2026: 118, y2025: 86 },
+              { month: "Jun", y2026: 128, y2025: 92 },
             ]}
+            xAxisKey="month"
           />
         </Card>
         <Card title="Revenue by segment">
           <DonutChart
-            centerLabel="€128k"
+            config={{
+              Enterprise: { label: "Enterprise" },
+              "Mid-market": { label: "Mid-market" },
+              SMB: { label: "SMB" },
+            }}
             data={[
-              { label: "Enterprise", value: 64 },
-              { label: "Mid-market", value: 41 },
-              { label: "SMB",        value: 23 },
+              { segment: "Enterprise",  k: 64 },
+              { segment: "Mid-market",  k: 41 },
+              { segment: "SMB",         k: 23 },
             ]}
+            valueKey="k"
+            nameKey="segment"
+            centerLabel="€128k"
+            centerCaption="Revenue"
           />
         </Card>
       </div>
@@ -293,8 +314,31 @@ export function Dashboard() {
 ```
 
 `StatCard` deltas are colored by `deltaDir`, not by parsing the string — pass
-`"up"`/`"down"` to match the sign of your change. Charts default the series colors from
-the shared palette, so a single-series `LineChart` needs only `data={[…]}`.
+`"up"`/`"down"` to match the sign of your change. A `config` entry may carry only a
+label, as the donut's three do here: the colors then come from the shared
+`--ds-chart-*` ramp in config order, which is what makes a chart on-brand by default.
+
+Height comes from the container, not a prop: `--ds-chart-height` retunes one chart
+(the axis charts default to 14rem, the round ones to 16rem; `FunnelChart`, `Treemap`
+and `ScatterChart` default to 16rem on their own roots, because each needs vertical
+range the axis charts do not).
+
+**Reaching past the six.** `1.0.0-beta.5` adds eight forms for the readings the
+common shapes cannot carry, all taking the same `config` + `data` contract:
+
+| reading | chart |
+| --- | --- |
+| a volume series and a rate series on one x axis | `ComboChart` — the dashboard shape `BarChart` and `LineChart` cannot share |
+| an actual against a **target** and qualitative bands | `BulletChart` — what `Meter`, `Gauge` and `Progress` cannot say |
+| where people drop out of an ordered sequence | `FunnelChart`, with the drop derived from raw counts |
+| signed deltas accumulating to a total | `WaterfallChart` — the bridge a bar and a line each tell half of |
+| a weighted hierarchy with too many parts for a pie | `Treemap` |
+| quantity against quantity | `ScatterChart`, with optional bubble sizing |
+| a few entities across many dimensions | `RadarChart` |
+| density across two axes, hundreds of cells | `Heatmap`, on the sequential `--ds-heat-*` ramp |
+
+`BulletChart` and `Heatmap` are CSS grid and divs, so they render from plain markup
+without `recharts` — the same way `Sparkline` and `Gauge` do.
 
 ---
 
@@ -304,13 +348,22 @@ Every async view should resolve to exactly one of four states, rendered in prior
 order so the user always sees the most specific signal first. The
 [data layer](data.md) gives you [`useResource`](../react/hooks/useResource.js) (track
 `{ data, error, loading, reload }`) and the trio
-[`Skeleton`](../react/components/Skeleton.d.ts) /
-[`EmptyState`](../react/components/EmptyState.d.ts) /
-[`Alert`](../react/components/Alert.d.ts).
+[`Skeleton`](../react/components/Skeleton.tsx) /
+[`Empty`](../react/components/empty.tsx) /
+[`Alert`](../react/components/Alert.tsx).
 
 ```jsx
-import { useResource } from "@diametral/design-system/react/hooks/useResource";
-import { Skeleton, EmptyState, Alert, Button } from "@diametral/design-system/react";
+import { useResource } from "@diametral/design-system/react";
+import {
+  Skeleton,
+  Empty,
+  EmptyHeader,
+  EmptyTitle,
+  EmptyDescription,
+  EmptyContent,
+  Alert,
+  Button,
+} from "@diametral/design-system/react";
 
 export function ProjectList({ query }) {
   const { data, error, loading, reload } = useResource(
@@ -330,11 +383,15 @@ export function ProjectList({ query }) {
 
   // 3. empty — friendly "nothing here yet"
   if (!data || data.length === 0) return (
-    <EmptyState
-      title="No projects yet"
-      description="Projects you create will show up here."
-      actions={<Button variant="primary">New project</Button>}
-    />
+    <Empty>
+      <EmptyHeader>
+        <EmptyTitle>No projects yet</EmptyTitle>
+        <EmptyDescription>Projects you create will show up here.</EmptyDescription>
+      </EmptyHeader>
+      <EmptyContent>
+        <Button variant="primary">New project</Button>
+      </EmptyContent>
+    </Empty>
   );
 
   // 4. data — the actual content
@@ -381,7 +438,7 @@ function Login({ onSignIn }) {
       <form onSubmit={submit} style={{ width: 360, maxWidth: "100%" }}>
         <Card>
           <div style={{ padding: "26px 24px" }}>
-            <Wordmark name="Diametral" />
+            <Wordmark />
             <h1 className="ds-title ds-title--lg" style={{ margin: "16px 0 4px" }}>Sign in</h1>
             <p style={{ color: "var(--ds-ink-soft)", margin: "0 0 20px" }}>Welcome back to the Console.</p>
             <FormField label="Email" htmlFor="email">

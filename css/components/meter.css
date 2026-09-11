@@ -1,0 +1,67 @@
+/* ============================================================================
+   Meter — .ds-meter
+   ----------------------------------------------------------------------------
+   A labelled 2px bar reporting a static measurement — disk used, quota spent,
+   a score. Not a Progress: nothing is advancing, so there is no indeterminate
+   state and no animation beyond the value transition.
+
+   The label/value row and the track share the root's flex-wrap, so a long
+   label pushes the bar onto its own line rather than crushing it.
+
+   Tone rides on the root as `--tone` and the internally-rendered indicator
+   reads it, because a caller composing `<Meter>` never gets a handle on the
+   indicator. Left unset the bar paints --ds-accent.
+
+   The six tone keys come from the source's `--ds-*-ink` family, which is the
+   text shade. A meter bar is a fill with nothing written on it, and only four
+   of the six -ink tokens exist here — so the tones read the `--ds-*-solid`
+   family instead, which is the one tuned for fills and which has all six.
+   ============================================================================ */
+.ds-meter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-space-3);
+}
+.ds-meter--tone-neutral  { --tone: var(--ds-neutral-solid); }
+.ds-meter--tone-success  { --tone: var(--ds-success-solid); }
+.ds-meter--tone-warning  { --tone: var(--ds-warning-solid); }
+.ds-meter--tone-danger   { --tone: var(--ds-danger-solid); }
+.ds-meter--tone-critical { --tone: var(--ds-critical-solid); }
+.ds-meter--tone-info     { --tone: var(--ds-info-solid); }
+
+.ds-meter-track {
+  position: relative;
+  display: flex;
+  height: 2px;
+  width: 100%;
+  align-items: center;
+  overflow-x: hidden;
+  border-radius: var(--ds-radius-none);
+  background: var(--ds-bg-alt);
+}
+
+.ds-meter-indicator {
+  height: 100%;
+  background: var(--tone, var(--ds-accent));
+  transition: width var(--ds-transition);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-meter-indicator { transition: none; }
+}
+
+.ds-meter-label {
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+  color: var(--ds-ink);
+}
+
+.ds-meter-value {
+  margin-inline-start: auto;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-base);
+  color: var(--ds-ink-soft);
+  font-variant-numeric: tabular-nums;
+}

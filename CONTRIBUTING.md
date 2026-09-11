@@ -11,8 +11,8 @@ complete only when it has all five of:
 2. **An `@import` line** in `css/diametral.css` so the bundle picks it up.
 3. **A docs entry** in [`docs/components.md`](docs/components.md) (purpose, canonical markup,
    variants, Web Component if any, link to the showcase page).
-4. **A showcase page** under `examples/` (e.g. `examples/components/tooltip.html`) that
-   renders the real component — the showcase consumes the system exactly as a user would.
+4. **A docs page** in [`site/`](site/) (a demo under `site/src/registry/demos/<slug>/`) that
+   renders the real component — the docs site consumes the system exactly as a user would.
 5. **A CHANGELOG entry** in [`CHANGELOG.md`](CHANGELOG.md).
 
 If any of the five is missing, the component is not finished. The showcase is not an
@@ -65,16 +65,12 @@ after `npm run build`, it does not belong in the consume path.
 
 ## Preview locally
 
-The showcase is static HTML and dogfoods the system. From the repo root:
+`site/` is the docs site and dogfoods the system:
 
 ```bash
-python3 -m http.server 8080
-# then open http://localhost:8080/examples/
+npm run build     # from the repo root — site/'s file:.. install needs dist/
+cd site && npm run dev
 ```
-
-It also works straight from the filesystem — open `examples/index.html` in a browser.
-`examples/kitchen-sink.html` renders every component on one page, which is the fastest way to
-eyeball a change across the whole system.
 
 ## Versioning
 

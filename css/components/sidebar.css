@@ -1,0 +1,691 @@
+/* From migration-source-v1's sidebar.css (batch 12, #45).
+   Net-new: no incumbent stylesheet exists — `VerticalNav`/`AppShell` don't
+   share this component's DOM shape (css-ledger's earlier call, batch 9's
+   corrections.md, was to cherry-pick two rules onto AppShell rather than port
+   this file; direction.md's reversal supersedes that, and batch 12 lands the
+   full `react/components/sidebar.tsx`, which needs this to render). */
+:root {
+  /* migration-source-v1's globals.css carries this exact bridge (`--sidebar:
+     var(--ds-bg-alt)`, …) but that file is never shipped — batch 9's codemod
+     inlines its other ~20 slots at each call site instead, deliberately
+     leaving `--sidebar-*` component-local (slot-mapping.json). Sidebar is the
+     first, and so far only, consumer, so the bridge is defined once here
+     rather than repeated at every `var(--sidebar-*)` use below. */
+  --sidebar: var(--ds-bg-alt);
+  --sidebar-foreground: var(--ds-ink);
+  --sidebar-primary: var(--ds-accent);
+  --sidebar-primary-foreground: var(--ds-on-accent);
+  --sidebar-accent: var(--ds-rule-soft);
+  --sidebar-accent-foreground: var(--ds-ink);
+  --sidebar-border: var(--ds-rule);
+  --sidebar-ring: var(--ds-focus-ring);
+}
+.ds-sidebar-wrapper {
+  display: flex;
+  width: 100%;
+}
+.ds-sidebar-wrapper:has([data-variant="inset"]) {
+  background-color: var(--sidebar);
+}
+
+/* w-(--sidebar-width), bg-sidebar and text-sidebar-foreground stay literal
+   Tailwind utilities on the mobile SheetContent (see sidebar.tsx) — they
+   dedupe via tailwind-merge against SheetContent's own literal
+   bg-popover/text-popover-foreground/data-[side]:w-3/4 defaults (see
+   sheet.css's note), which only works while both sides remain literal
+   classes. p-0 and the [&>button]:hidden arbitrary variant have no such
+   counterpart on SheetContent's defaults, so both are baked here instead. */
+.ds-sidebar-sheet-content {
+  padding: 0;
+}
+.ds-sidebar-sheet-content > button {
+  display: none;
+}
+
+.ds-sidebar-sheet-inner {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+}
+
+/* `w-(--sidebar-width)` stays a literal Tailwind utility on the component
+   itself (see sidebar.tsx) — the basic/nested/shell demos and the
+   playground all override it (w-52/w-56/w-60), relying on tailwind-merge
+   to dedupe against this exact literal class. */
+.ds-sidebar-static {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--sidebar);
+  color: var(--sidebar-foreground);
+}
+
+.ds-sidebar {
+  display: none;
+  color: var(--sidebar-foreground);
+}
+@media (width >= 48rem) {
+  .ds-sidebar {
+    display: block;
+  }
+}
+
+.ds-sidebar-gap {
+  position: relative;
+  width: var(--sidebar-width);
+  background-color: transparent;
+  transition-property: width;
+  transition-duration: 200ms;
+  transition-timing-function: linear;
+}
+.ds-sidebar[data-collapsible="offcanvas"] .ds-sidebar-gap {
+  width: 0;
+}
+.ds-sidebar[data-side="right"] .ds-sidebar-gap {
+  rotate: 180deg;
+}
+.ds-sidebar[data-collapsible="icon"] .ds-sidebar-gap {
+  width: var(--sidebar-width-icon);
+}
+.ds-sidebar[data-variant="floating"][data-collapsible="icon"] .ds-sidebar-gap,
+.ds-sidebar[data-variant="inset"][data-collapsible="icon"] .ds-sidebar-gap {
+  width: calc(var(--sidebar-width-icon) + var(--ds-space-4));
+}
+
+.ds-sidebar-container {
+  position: fixed;
+  inset-block: 0;
+  z-index: 10;
+  display: none;
+  height: 100svh;
+  width: var(--sidebar-width);
+  transition-property: left, right, width;
+  transition-duration: 200ms;
+  transition-timing-function: linear;
+}
+@media (width >= 48rem) {
+  .ds-sidebar-container {
+    display: flex;
+  }
+}
+.ds-sidebar-container[data-side="left"] {
+  left: 0;
+}
+.ds-sidebar-container[data-side="right"] {
+  right: 0;
+}
+.ds-sidebar[data-collapsible="offcanvas"]
+  .ds-sidebar-container[data-side="left"] {
+  left: calc(var(--sidebar-width) * -1);
+}
+.ds-sidebar[data-collapsible="offcanvas"]
+  .ds-sidebar-container[data-side="right"] {
+  right: calc(var(--sidebar-width) * -1);
+}
+.ds-sidebar[data-variant="floating"] .ds-sidebar-container,
+.ds-sidebar[data-variant="inset"] .ds-sidebar-container {
+  padding: 0.5rem;
+}
+.ds-sidebar[data-variant="floating"][data-collapsible="icon"]
+  .ds-sidebar-container,
+.ds-sidebar[data-variant="inset"][data-collapsible="icon"]
+  .ds-sidebar-container {
+  width: calc(var(--sidebar-width-icon) + var(--ds-space-4) + 2px);
+}
+.ds-sidebar[data-variant="sidebar"][data-collapsible="icon"]
+  .ds-sidebar-container {
+  width: var(--sidebar-width-icon);
+}
+.ds-sidebar[data-variant="sidebar"][data-side="left"] .ds-sidebar-container {
+  border-inline-end: 1px solid var(--sidebar-border);
+}
+.ds-sidebar[data-variant="sidebar"][data-side="right"] .ds-sidebar-container {
+  border-inline-start: 1px solid var(--sidebar-border);
+}
+
+.ds-sidebar-inner {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  background-color: var(--sidebar);
+}
+.ds-sidebar[data-variant="floating"] .ds-sidebar-inner {
+  border-radius: 0;
+  box-shadow:
+    0 1px 3px 0 rgb(0 0 0 / 0.1),
+    0 1px 2px -1px rgb(0 0 0 / 0.1);
+  outline: 1px solid var(--sidebar-border);
+  outline-offset: 0;
+}
+
+.ds-sidebar-rail {
+  position: absolute;
+  inset-block: 0;
+  z-index: 20;
+  display: none;
+  width: 1rem;
+  transition-property: all;
+  transition-timing-function: linear;
+  translate: -50% 0;
+}
+@media (width >= 40rem) {
+  .ds-sidebar-rail {
+    display: flex;
+  }
+}
+.ds-sidebar-rail::after {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 50%;
+  width: 2px;
+}
+.ds-sidebar-rail:hover::after {
+  background-color: var(--sidebar-border);
+}
+.ds-sidebar[data-side="left"] .ds-sidebar-rail {
+  right: -1rem;
+  cursor: w-resize;
+}
+.ds-sidebar[data-side="right"] .ds-sidebar-rail {
+  left: 0;
+  cursor: e-resize;
+}
+:where([dir="rtl"], [dir="rtl"] *).ds-sidebar[data-side="left"]
+  .ds-sidebar-rail {
+  cursor: e-resize;
+}
+:where([dir="rtl"], [dir="rtl"] *).ds-sidebar[data-side="right"]
+  .ds-sidebar-rail {
+  cursor: w-resize;
+}
+.ds-sidebar[data-side="left"][data-state="collapsed"] .ds-sidebar-rail {
+  cursor: e-resize;
+}
+.ds-sidebar[data-side="right"][data-state="collapsed"] .ds-sidebar-rail {
+  cursor: w-resize;
+}
+:where(
+    [dir="rtl"],
+    [dir="rtl"] *
+  ).ds-sidebar[data-side="left"][data-state="collapsed"]
+  .ds-sidebar-rail {
+  cursor: w-resize;
+}
+:where(
+    [dir="rtl"],
+    [dir="rtl"] *
+  ).ds-sidebar[data-side="right"][data-state="collapsed"]
+  .ds-sidebar-rail {
+  cursor: e-resize;
+}
+.ds-sidebar[data-collapsible="offcanvas"] .ds-sidebar-rail {
+  translate: 0 0;
+}
+.ds-sidebar[data-collapsible="offcanvas"] .ds-sidebar-rail::after {
+  inset-inline-start: 100%;
+}
+.ds-sidebar[data-collapsible="offcanvas"] .ds-sidebar-rail:hover {
+  background-color: var(--sidebar);
+}
+.ds-sidebar[data-side="left"][data-collapsible="offcanvas"] .ds-sidebar-rail {
+  inset-inline-end: -0.5rem;
+}
+.ds-sidebar[data-side="right"][data-collapsible="offcanvas"]
+  .ds-sidebar-rail {
+  inset-inline-start: -0.5rem;
+}
+
+.ds-sidebar-trigger-icon {
+  rotate: 0deg;
+}
+:where([dir="rtl"], [dir="rtl"] *) .ds-sidebar-trigger-icon {
+  rotate: 180deg;
+}
+
+.ds-sidebar-input {
+  height: 2.25rem;
+}
+
+.ds-sidebar-inset {
+  position: relative;
+  display: flex;
+  width: 100%;
+  flex: 1 1 auto;
+  flex-direction: column;
+  background-color: var(--ds-bg);
+}
+@media (width >= 48rem) {
+  .peer[data-variant="inset"] ~ .ds-sidebar-inset {
+    margin: 0.5rem;
+    margin-inline-start: 0;
+    border-radius: 0;
+    box-shadow:
+      0 1px 3px 0 rgb(0 0 0 / 0.1),
+      0 1px 2px -1px rgb(0 0 0 / 0.1);
+  }
+  .peer[data-variant="inset"][data-state="collapsed"] ~ .ds-sidebar-inset {
+    margin-inline-start: 0.5rem;
+  }
+}
+
+.ds-sidebar-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  --radius: 0;
+}
+
+.ds-sidebar-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+.ds-sidebar-content {
+  display: flex;
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow: auto;
+  --radius: 0;
+}
+.ds-sidebar[data-collapsible="icon"] .ds-sidebar-content {
+  overflow: hidden;
+}
+
+.ds-sidebar-group {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex-direction: column;
+  padding-inline: 0.5rem;
+  padding-block: 0.5rem 0;
+}
+
+.ds-sidebar-group-label {
+  display: flex;
+  height: 2rem;
+  flex-shrink: 0;
+  align-items: center;
+  padding-inline: 0.75rem;
+  font-size: 0.75rem;
+  line-height: calc(1 / 0.75);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: color-mix(in oklab, var(--sidebar-foreground) 70%, transparent);
+  text-transform: uppercase;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition-property: margin, opacity;
+  transition-duration: 200ms;
+  transition-timing-function: linear;
+}
+.ds-sidebar-group-label:focus-visible {
+  box-shadow: 0 0 0 2px var(--sidebar-ring);
+}
+.ds-sidebar-group-label > svg {
+  flex-shrink: 0;
+}
+.ds-sidebar-group-label > svg:not([class*="size-"]) {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+.ds-sidebar[data-collapsible="icon"] .ds-sidebar-group-label {
+  margin-top: -2rem;
+  opacity: 0;
+}
+
+.ds-sidebar-group-action {
+  position: absolute;
+  top: 0.875rem;
+  inset-inline-end: 0.75rem;
+  display: flex;
+  aspect-ratio: 1 / 1;
+  width: 1.25rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: var(--sidebar-foreground);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition-property: transform;
+}
+.ds-sidebar-group-action::after {
+  position: absolute;
+  inset: -0.5rem;
+}
+@media (width >= 48rem) {
+  .ds-sidebar-group-action::after {
+    display: none;
+  }
+}
+.ds-sidebar-group-action:hover {
+  background-color: var(--sidebar-accent);
+  color: var(--sidebar-accent-foreground);
+}
+.ds-sidebar-group-action:focus-visible {
+  box-shadow: 0 0 0 2px var(--sidebar-ring);
+}
+.ds-sidebar-group-action > svg {
+  flex-shrink: 0;
+}
+.ds-sidebar-group-action > svg:not([class*="size-"]) {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+.ds-sidebar[data-collapsible="icon"] .ds-sidebar-group-action {
+  display: none;
+}
+
+.ds-sidebar-group-content {
+  width: 100%;
+  font-size: 0.875rem;
+}
+
+.ds-sidebar-menu {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.ds-sidebar-menu-item {
+  position: relative;
+}
+
+.ds-sidebar-menu-button {
+  display: flex;
+  width: 100%;
+  height: 2.25rem;
+  align-items: center;
+  gap: 0.5rem;
+  overflow: hidden;
+  padding-inline: 0.75rem;
+  padding-block: 0.5rem;
+  text-align: start;
+  font-size: 0.875rem;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition-property: width, height, padding;
+}
+.ds-sidebar-menu-button:hover,
+.ds-sidebar-menu-button:active {
+  background-color: var(--sidebar-accent);
+  color: var(--sidebar-accent-foreground);
+}
+.ds-sidebar-menu-button:focus-visible {
+  box-shadow: 0 0 0 2px var(--sidebar-ring);
+}
+.ds-sidebar-menu-button:disabled,
+.ds-sidebar-menu-button[aria-disabled="true"] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.ds-sidebar-menu-button[data-open]:hover {
+  background-color: var(--sidebar-accent);
+  color: var(--sidebar-accent-foreground);
+}
+.ds-sidebar-menu-button[data-active] {
+  background-color: var(--sidebar-accent);
+  font-weight: 500;
+  color: var(--sidebar-accent-foreground);
+}
+.ds-sidebar-menu-button svg {
+  flex-shrink: 0;
+}
+.ds-sidebar-menu-button svg:not([class*="size-"]) {
+  width: 1rem;
+  height: 1rem;
+}
+.ds-sidebar-menu-button > span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ds-sidebar-menu-item:has([data-sidebar="menu-action"])
+  .ds-sidebar-menu-button {
+  padding-inline-end: 2rem;
+}
+.ds-sidebar[data-collapsible="icon"] .ds-sidebar-menu-button {
+  width: 2rem !important;
+  height: 2rem !important;
+  padding: 0.5rem !important;
+}
+.ds-sidebar-menu-button[data-size="sm"] {
+  height: 2rem;
+  font-size: 0.75rem;
+}
+.ds-sidebar-menu-button[data-size="lg"] {
+  height: 3.5rem;
+  padding-inline: 0.75rem;
+  font-size: 0.875rem;
+}
+.ds-sidebar[data-collapsible="icon"] .ds-sidebar-menu-button[data-size="lg"] {
+  padding: 0 !important;
+}
+.ds-sidebar-menu-button--outline {
+  background-color: var(--ds-bg);
+  box-shadow: 0 0 0 1px var(--sidebar-border);
+}
+.ds-sidebar-menu-button--outline:hover {
+  background-color: var(--sidebar-accent);
+  color: var(--sidebar-accent-foreground);
+  box-shadow: 0 0 0 1px var(--sidebar-accent);
+}
+
+.ds-sidebar-menu-action {
+  position: absolute;
+  top: 0.375rem;
+  inset-inline-end: 0.25rem;
+  display: flex;
+  aspect-ratio: 1 / 1;
+  width: 1.25rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: var(--sidebar-foreground);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition-property: transform;
+}
+.ds-sidebar-menu-action::after {
+  position: absolute;
+  inset: -0.5rem;
+}
+@media (width >= 48rem) {
+  .ds-sidebar-menu-action::after {
+    display: none;
+  }
+}
+.ds-sidebar-menu-action:hover {
+  background-color: var(--sidebar-accent);
+  color: var(--sidebar-accent-foreground);
+}
+.ds-sidebar-menu-action:focus-visible {
+  box-shadow: 0 0 0 2px var(--sidebar-ring);
+}
+.ds-sidebar-menu-action > svg {
+  flex-shrink: 0;
+}
+.ds-sidebar-menu-action > svg:not([class*="size-"]) {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+.ds-sidebar[data-collapsible="icon"] .ds-sidebar-menu-action {
+  display: none;
+}
+.ds-sidebar-menu-button:hover ~ .ds-sidebar-menu-action {
+  color: var(--sidebar-accent-foreground);
+}
+.ds-sidebar-menu-button[data-size="default"] ~ .ds-sidebar-menu-action {
+  top: 0.5rem;
+}
+.ds-sidebar-menu-button[data-size="lg"] ~ .ds-sidebar-menu-action {
+  top: 0.625rem;
+}
+.ds-sidebar-menu-button[data-size="sm"] ~ .ds-sidebar-menu-action {
+  top: 0.25rem;
+}
+@media (width >= 48rem) {
+  .ds-sidebar-menu-action--show-on-hover {
+    opacity: 0;
+  }
+  .ds-sidebar-menu-item:focus-within .ds-sidebar-menu-action--show-on-hover,
+  .ds-sidebar-menu-item:hover .ds-sidebar-menu-action--show-on-hover,
+  .ds-sidebar-menu-action--show-on-hover[aria-expanded="true"] {
+    opacity: 1;
+  }
+}
+.ds-sidebar-menu-button[data-active]
+  ~ .ds-sidebar-menu-action--show-on-hover {
+  color: var(--sidebar-accent-foreground);
+}
+
+.ds-sidebar-menu-badge {
+  pointer-events: none;
+  position: absolute;
+  inset-inline-end: 0.25rem;
+  display: flex;
+  height: 1.25rem;
+  min-width: 1.25rem;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 0.25rem;
+  font-size: 0.75rem;
+  line-height: calc(1 / 0.75);
+  font-weight: 500;
+  color: var(--sidebar-foreground);
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+}
+.ds-sidebar[data-collapsible="icon"] .ds-sidebar-menu-badge {
+  display: none;
+}
+.ds-sidebar-menu-button:hover ~ .ds-sidebar-menu-badge {
+  color: var(--sidebar-accent-foreground);
+}
+.ds-sidebar-menu-button[data-size="default"] ~ .ds-sidebar-menu-badge {
+  top: 0.375rem;
+}
+.ds-sidebar-menu-button[data-size="lg"] ~ .ds-sidebar-menu-badge {
+  top: 0.625rem;
+}
+.ds-sidebar-menu-button[data-size="sm"] ~ .ds-sidebar-menu-badge {
+  top: 0.25rem;
+}
+.ds-sidebar-menu-button[data-active] ~ .ds-sidebar-menu-badge {
+  color: var(--sidebar-accent-foreground);
+}
+
+.ds-sidebar-menu-skeleton {
+  display: flex;
+  height: 2rem;
+  align-items: center;
+  gap: 0.5rem;
+  padding-inline: 0.5rem;
+}
+.ds-sidebar-menu-skeleton-icon {
+  width: 0.875rem;
+  height: 0.875rem;
+  background-color: var(--sidebar-accent);
+}
+.ds-sidebar-menu-skeleton-text {
+  height: 1rem;
+  max-width: var(--skeleton-width);
+  flex: 1 1 auto;
+  background-color: var(--sidebar-accent);
+}
+
+.ds-sidebar-menu-sub {
+  margin-inline: 0.875rem;
+  display: flex;
+  min-width: 0;
+  translate: 1px 0;
+  flex-direction: column;
+  gap: 0.25rem;
+  border-inline-start: 1px solid var(--sidebar-border);
+  padding-inline: 0.625rem;
+  padding-block: 0.125rem;
+}
+:where([dir="rtl"], [dir="rtl"] *).ds-sidebar-menu-sub {
+  translate: -1px 0;
+}
+.ds-sidebar[data-collapsible="icon"] .ds-sidebar-menu-sub {
+  display: none;
+}
+
+.ds-sidebar-menu-sub-item {
+  position: relative;
+}
+
+.ds-sidebar-menu-sub-button {
+  display: flex;
+  height: 1.75rem;
+  min-width: 0;
+  translate: -1px 0;
+  align-items: center;
+  gap: 0.5rem;
+  overflow: hidden;
+  padding-inline: 0.75rem;
+  color: var(--sidebar-foreground);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+:where([dir="rtl"], [dir="rtl"] *).ds-sidebar-menu-sub-button {
+  translate: 1px 0;
+}
+.ds-sidebar[data-collapsible="icon"] .ds-sidebar-menu-sub-button {
+  display: none;
+}
+.ds-sidebar-menu-sub-button:hover,
+.ds-sidebar-menu-sub-button:active {
+  background-color: var(--sidebar-accent);
+  color: var(--sidebar-accent-foreground);
+}
+.ds-sidebar-menu-sub-button:focus-visible {
+  box-shadow: 0 0 0 2px var(--sidebar-ring);
+}
+.ds-sidebar-menu-sub-button:disabled,
+.ds-sidebar-menu-sub-button[aria-disabled="true"] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.ds-sidebar-menu-sub-button[data-size="md"] {
+  font-size: 0.875rem;
+}
+.ds-sidebar-menu-sub-button[data-size="sm"] {
+  font-size: 0.75rem;
+}
+.ds-sidebar-menu-sub-button[data-active] {
+  background-color: var(--sidebar-accent);
+  color: var(--sidebar-accent-foreground);
+}
+.ds-sidebar-menu-sub-button > span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ds-sidebar-menu-sub-button > svg {
+  flex-shrink: 0;
+  color: var(--sidebar-accent-foreground);
+}
+.ds-sidebar-menu-sub-button > svg:not([class*="size-"]) {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+/* w-auto and bg-sidebar-border stay literal Tailwind utilities on
+   SidebarSeparator (see sidebar.tsx) — they dedupe via tailwind-merge
+   against Separator's own literal bg-border/data-horizontal:w-full
+   defaults (see separator.css's note on Separator itself), which only
+   works while both sides remain literal classes. mx-2 has no such
+   counterpart on Separator's defaults, so it is baked here instead. */
+.ds-sidebar-separator {
+  margin-inline: 0.5rem;
+}

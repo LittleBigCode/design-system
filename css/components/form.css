@@ -1,0 +1,13 @@
+/* ============================================================================
+   Form — .ds-form
+   ----------------------------------------------------------------------------
+   The `<form>` root: a full-width column with generous air between fields.
+   The gap is the form's whole opinion — `.ds-field` owns the label-to-control
+   spacing inside a row, so this only spaces the rows apart.
+   ============================================================================ */
+.ds-form {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: var(--ds-space-5);
+}

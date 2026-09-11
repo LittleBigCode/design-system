@@ -89,6 +89,6 @@ are exported too, so custom markup can stay consistent.
 - **Dark mode**: some clients auto-invert. The layout sets `color-scheme: light`;
   test in the clients you care about.
 - **Preview** the templates live in the showcase:
-  [`examples/components/email.html`](../examples/components/email.html), or render
+  [`examples/css/email.html`](../examples/css/email.html), or render
   a builder to a string and open it in a browser. Test real delivery with a tool
   like Litmus / Email on Acid before shipping high-volume mail.

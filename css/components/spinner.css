@@ -1,32 +1,53 @@
 /* ============================================================================
    Spinner — .ds-spinner
    ----------------------------------------------------------------------------
-   A circular loading indicator: a 2px ruled ring whose top segment is the
-   accent color, rotating continuously. A spinner is a motion glyph, not a
-   surface, so border-radius:50% is the one sanctioned exception to the flat
-   parti pris. Honors prefers-reduced-motion.
+   Two renderings, one class, because this package has two kinds of consumer.
+
+   The React `Spinner` renders Phosphor's SpinnerIcon and this file only turns
+   it — that is the source's shape, and it is why there is no ring drawn on the
+   element itself.
+
+   But `.ds-spinner` is also written by hand into plain HTML (examples/, the
+   Streamlit and Keycloak surfaces), where there is no icon to spin. Dropping
+   0.11's CSS-only ruled ring would have left every one of those consumers with
+   an invisible rotating box, so the ring is PRESERVED for a non-<svg> element.
+   `:not(svg)` is what keeps the two apart; the rotation is shared.
+
+   The 50% radius is the one sanctioned exception to the flat parti pris: a
+   spinner is a motion glyph, not a surface.
    ============================================================================ */
 @keyframes ds-spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .ds-spinner {
+  width: 1rem;
+  height: 1rem;
+  animation: ds-spin 1s linear infinite;
+}
+
+/* Drawn ring — the buildless rendering, for markup with no icon in it. */
+.ds-spinner:not(svg) {
   display: inline-block;
+  box-sizing: border-box;
   width: 20px;
   height: 20px;
   border: 2px solid var(--ds-rule);
   border-top-color: var(--ds-accent);
-  border-radius: 50%; /* sanctioned exception: the spinner is a circle, not a box */
-  animation: ds-spin .7s linear infinite;
+  border-radius: 50%;
 }
 
 /* ---- Sizes --------------------------------------------------------------- */
-.ds-spinner--sm { width: 14px; height: 14px; border-width: 2px; }
-.ds-spinner--lg { width: 32px; height: 32px; border-width: 3px; }
+.ds-spinner--sm { width: 0.875rem; height: 0.875rem; }
+.ds-spinner--lg { width: 2rem; height: 2rem; }
+.ds-spinner--sm:not(svg) { width: 14px; height: 14px; border-width: 2px; }
+.ds-spinner--lg:not(svg) { width: 32px; height: 32px; border-width: 3px; }
 
 /* ---- Inline alignment (sits on the text baseline next to a label) -------- */
 .ds-spinner--inline { vertical-align: -0.2em; }
 
 @media (prefers-reduced-motion: reduce) {
-  .ds-spinner { animation-duration: 1.6s; }
+  .ds-spinner { animation-duration: 2.4s; }
 }
