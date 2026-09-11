@@ -40,12 +40,16 @@ jobs:
       # site/ is deliberately not a workspace member — its ~15 devDeps must
       # never reach the zero-dep package's resolution graph — so it installs
       # and builds on its own.
+      - name: Install site/
+        run: cd site && npm ci || npm i
+
+      # build-demo-markup.mjs (part of `npm run build`) launches headless
+      # Chromium to scrape rendered demo markup, not just the test suites.
+      - name: Install Chromium
+        run: cd site && npx playwright install --with-deps chromium
+
       - name: Build site/
-        run: |
-          set -euo pipefail
-          cd site
-          npm ci || npm i
-          npm run build
+        run: npm --prefix site run build
 
       - name: Assemble _site
         run: |

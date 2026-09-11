@@ -67,11 +67,14 @@ jobs:
       - name: Typecheck site/
         run: npm --prefix site run typecheck
 
-      - name: Build site/
-        run: npm --prefix site run build
-
+      # build-demo-markup.mjs (part of `npm run build`) launches headless
+      # Chromium to scrape rendered demo markup, not just the test suites
+      # below — this has to run before the build, not after it.
       - name: Install Chromium
         run: cd site && npx playwright install --with-deps chromium
+
+      - name: Build site/
+        run: npm --prefix site run build
 
       # Reports rather than blocks, for now. The violations it finds are in the
       # held components themselves — the picker `aria-allowed-attr` cluster, the
