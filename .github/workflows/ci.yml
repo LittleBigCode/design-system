@@ -43,7 +43,10 @@ jobs:
   # renders are release-gated by their own batch.
   site:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # Was 15: build + typecheck + Chromium + site build + a11y ran ~14m on
+    # their own; adding the regress suite below pushed a real run past 15 and
+    # GitHub cancelled it mid-suite, not a test failure.
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
 
