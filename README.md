@@ -116,7 +116,7 @@ A kit to stand up an app fast on top of the components:
 - **Designer handoff** — `npm run build` emits Tokens Studio tokens for Figma ([`docs/figma.md`](docs/figma.md)).
 - **AI assistants / Claude** — generate on-brand UI by giving Claude one reference file. See
   [**Use it with Claude**](#use-it-with-claude) below.
-- **Tested** — visual-regression + axe accessibility checks in CI (`npm run test:visual` / `npm run test:a11y`).
+- **Tested** — visual-regression + axe accessibility checks in CI (`cd site && npm run test:visual` / `npm run test:a11y`).
 
 ## Use it with Claude
 

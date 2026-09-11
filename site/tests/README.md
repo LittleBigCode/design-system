@@ -65,8 +65,8 @@ whose token colours clear 4.5:1 on the code-block background, or lighten the
 background. Fixing it should clear roughly three quarters of the failures without
 touching a component.
 
-`.github/workflows/a11y.yml` runs the suite with `continue-on-error` and uploads
-the report. **To arm the gate:** work the table down, then remove
+`.github/workflows/ci.yml`'s `site` job runs the suite with `continue-on-error` and
+uploads the report. **To arm the gate:** work the table down, then remove
 `continue-on-error` and mark the job required.
 
 ### Known limitation: run-to-run variance

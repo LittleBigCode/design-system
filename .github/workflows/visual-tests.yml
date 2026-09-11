@@ -1,11 +1,11 @@
 name: Visual regression tests
 
-# Two suites, one workflow:
+# site/tests/visual.spec.ts — full-page screenshot comparison over the React
+# docs app, the component library itself. The root's own copy of this suite
+# (tests/visual.spec.js, over the static examples/ pages) was retired along
+# with examples/ — site/ is now the only docs surface (direction.md decision 6).
 #
-#   tests/visual.spec.js       — the static examples/ pages (CSS + web components)
-#   site/tests/visual.spec.ts  — the React docs app (the component library itself)
-#
-# Baselines MUST be generated on Linux. Both configs set `snapshotPathTemplate`
+# Baselines MUST be generated on Linux. The config sets `snapshotPathTemplate`
 # without a platform key, so CI compares against exactly what is committed, and
 # sub-pixel font rendering differs enough between macOS and Linux to blow past
 # the 2% maxDiffPixelRatio. That is why generating them is a workflow input
@@ -13,12 +13,12 @@ name: Visual regression tests
 #
 # The absorption deliberately had no baselines until 1.0.0-beta.8: during the
 # migration the pixels change by design, so a committed baseline would have
-# flagged the work itself on every batch. The comparison steps therefore SKIP
-# when no baselines exist, and arm themselves the moment they land.
+# flagged the work itself on every batch. The comparison step therefore SKIPS
+# when no baselines exist, and arms itself the moment they land.
 #
 #   1. Run this workflow manually with `update_baselines: true`
 #   2. Download the `visual-baselines` artifact
-#   3. Commit it to tests/__screenshots__/ and site/tests/__screenshots__/
+#   3. Commit it to site/tests/__screenshots__/
 
 on:
   pull_request:
@@ -51,31 +51,21 @@ jobs:
       - name: Install site dependencies
         run: npm --prefix site ci || npm --prefix site i
 
-      # One install, not two: root and site/ both pin @playwright/test ^1.62
-      # now, so they resolve the same Chromium build.
       - name: Install Chromium
-        run: npx playwright install --with-deps chromium
+        run: cd site && npx playwright install --with-deps chromium
 
       # --- Are there baselines to compare against? -------------------------
       - name: Detect committed baselines
         id: baselines
         run: |
-          root=false; site=false
-          [ -d tests/__screenshots__ ] && [ -n "$(find tests/__screenshots__ -name '*.png' -print -quit)" ] && root=true
+          site=false
           [ -d site/tests/__screenshots__ ] && [ -n "$(find site/tests/__screenshots__ -name '*.png' -print -quit)" ] && site=true
-          echo "root=$root" >> "$GITHUB_OUTPUT"
           echo "site=$site" >> "$GITHUB_OUTPUT"
-          echo "root baselines: $root · site baselines: $site"
+          echo "site baselines: $site"
 
       # --- Generate ---------------------------------------------------------
-      - name: Generate baselines (examples/)
+      - name: Generate baselines
         if: inputs.update_baselines
-        run: npm run test:visual:update
-
-      - name: Generate baselines (docs app)
-        # `always()`-guarded on the input rather than on success: if one suite
-        # fails to generate, the other's baselines are still worth having.
-        if: ${{ inputs.update_baselines && !cancelled() }}
         run: npm --prefix site run test:visual:update
 
       - name: Upload generated baselines
@@ -83,27 +73,21 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: visual-baselines
-          path: |
-            tests/__screenshots__/
-            site/tests/__screenshots__/
+          path: site/tests/__screenshots__/
           retention-days: 14
           if-no-files-found: error
 
       # --- Compare ----------------------------------------------------------
-      # Skipped rather than failed while a suite has no baselines, so the gate
+      # Skipped rather than failed while the suite has no baselines, so the gate
       # arms itself instead of blocking every PR until someone generates them.
-      - name: Compare against baselines (examples/)
-        if: ${{ !inputs.update_baselines && steps.baselines.outputs.root == 'true' }}
-        run: npm run test:visual
-
-      - name: Compare against baselines (docs app)
+      - name: Compare against baselines
         if: ${{ !inputs.update_baselines && steps.baselines.outputs.site == 'true' }}
         run: npm --prefix site run test:visual
 
       - name: Note skipped comparison
-        if: ${{ !inputs.update_baselines && (steps.baselines.outputs.root != 'true' || steps.baselines.outputs.site != 'true') }}
+        if: ${{ !inputs.update_baselines && steps.baselines.outputs.site != 'true' }}
         run: |
-          echo "::notice title=Visual baselines missing::examples=${{ steps.baselines.outputs.root }} docs-app=${{ steps.baselines.outputs.site }} — re-run this workflow with update_baselines: true, then commit the artifact."
+          echo "::notice title=Visual baselines missing::re-run this workflow with update_baselines: true, then commit the artifact."
 
       # On failure, publish the report and diff images so the delta can be seen
       # from the run rather than reproduced locally.
@@ -113,8 +97,6 @@ jobs:
         with:
           name: playwright-report
           path: |
-            playwright-report/
-            test-results/
             site/playwright-report/
             site/test-results/
           retention-days: 14

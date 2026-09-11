@@ -97,6 +97,26 @@ jobs:
           retention-days: 14
           if-no-files-found: ignore
 
+      # Per-component behavior-regression specs. Same reporting posture as the
+      # a11y gate above: corrections.md records a pre-existing failure set
+      # (toggle focus-visible, autocomplete, phone-input, color-picker, ...)
+      # this isn't the place to chase, so report rather than block for now.
+      - name: Behavior regression suite
+        id: regress
+        continue-on-error: true
+        run: npm --prefix site run test:regress
+
+      - name: Upload the regression report
+        if: steps.regress.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-regress-report
+          path: |
+            site/playwright-report/
+            site/test-results/
+          retention-days: 14
+          if-no-files-found: ignore
+
   package:
     runs-on: ubuntu-latest
     timeout-minutes: 10
