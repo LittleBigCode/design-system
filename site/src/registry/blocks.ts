@@ -77,6 +77,7 @@ export const BLOCKS = [
     ["sidebar-01", "Flat — four rows, no groups. Right up to about six destinations."],
     ["sidebar-02", "Grouped and labelled, with a per-group action and a rule between."],
     ["sidebar-03", "Nested: collapsible parents over sub-rows, plus a count badge."],
+    ["sidebar-04", "Collapsible: a rail toggle drops it to a 3rem icon strip, off-canvas below 48rem."],
   ]],
   ["signup", "Sign up", "Creating an account.", [
     ["signup-01", "Name, email and password over a full-width create action."],
