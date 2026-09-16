@@ -62,6 +62,7 @@ export const BLOCKS = [
   ["login", "Login", "Signing an existing user in.", [
     ["login-01", "The card alone — drop it into a layout you already have."],
     ["login-02", "The whole screen: the same form centred on the brand background."],
+    ["login-03", "The whole screen, split: a brand panel beside the form, stacking to a header band on mobile."],
   ]],
   ["otp", "One-time code", "The second factor of a sign-in.", [
     ["otp-01", "Six OTP slots with the verify action disabled until the code is complete."],
