@@ -1,0 +1,17 @@
+{
+  /* The block variants (ADR 0003) are TSX at the repo root, not under site/, so
+     neither the package emit (tsconfig.build.json, react/ only) nor the docs
+     app's own `tsc -b` covers them — and `import.meta.glob` is invisible to
+     tsc, so nothing would catch a type error in one until it failed in a
+     browser. They are checked here, against the emitted `dist/react` types a
+     consumer resolves, which is also what makes the self-import in every block
+     resolve. Runs after build:react, which writes those types. */
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@diametral/design-system/react": ["./dist/react/index.d.ts"],
+      "@diametral/design-system/react/*": ["./dist/react/components/*"]
+    }
+  },
+  "include": ["blocks"]
+}

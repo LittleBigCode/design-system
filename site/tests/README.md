@@ -17,9 +17,15 @@ npm --prefix site run test:regress       # the per-component regression specs
 
 ## Route enumeration
 
-`harness.ts` derives routes from `src/registry/registry.ts`, so a component added
-to the registry is covered on the next run with no test edit. There is no
+`harness.ts` derives routes from `src/registry/registry.ts` and, since #55, from
+`src/registry/blocks.ts` too — so a component or a block category added to a
+registry is covered on the next run with no test edit. There is no
 hand-maintained page list to drift.
+
+Blocks enter as one route per *category* (`/blocks/<category>`). The category
+page stacks every variant, each in an iframe onto its bare
+`/blocks/<category>/<variant>/preview` route, and axe analyses same-origin
+frames — so the variants are covered through the page that shows them.
 
 The registry is filtered to what this package ships, so the suites cover exactly
 the landed components — 30 today. A batch that lands a component and un-filters
@@ -93,6 +99,10 @@ Deliberately not all 72 routes:
    `/docs/aspect-ratio` is not a brand regression.
 
 Add a route when it covers a visual property nothing else does.
+
+The block category pages are the exception to that rule, and join wholesale
+(#55): a block *is* a visual composition, so there is no "covers nothing else"
+filter to apply to one.
 
 ### Baselines must be generated on Linux
 

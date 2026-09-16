@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router"
 
-import { BlockPage } from "@/docs/blocks/block-page"
+import { BlockCategoryPage } from "@/docs/blocks/category-page"
+import { BlockPreview } from "@/docs/blocks/preview"
 import { BlocksIndex } from "@/docs/blocks"
 import { ComponentPage } from "@/docs/component-page"
 import { DocsLayout } from "@/docs/docs-layout"
@@ -9,8 +10,6 @@ import { FoundationsIndex } from "@/docs/foundations"
 import { Installation } from "@/docs/installation"
 import { KitchenSink } from "@/docs/kitchen-sink"
 import { Overview } from "@/docs/overview"
-import { TemplatePage } from "@/docs/templates/template-page"
-import { TemplatesIndex } from "@/docs/templates"
 import { Theming } from "@/docs/theming"
 
 export function App() {
@@ -28,10 +27,15 @@ export function App() {
           <Route path="foundations" element={<FoundationsIndex />} />
           <Route path="foundations/:slug" element={<FoundationPage />} />
           <Route path="blocks" element={<BlocksIndex />} />
-          <Route path="blocks/:slug" element={<BlockPage />} />
-          <Route path="templates" element={<TemplatesIndex />} />
-          <Route path="templates/:slug" element={<TemplatePage />} />
+          <Route path="blocks/:category" element={<BlockCategoryPage />} />
         </Route>
+        {/* Outside DocsLayout on purpose: the bare route is what the category
+            page's iframe loads and what build-demo-markup.mjs scrapes, so it
+            must carry no docs chrome. */}
+        <Route
+          path="blocks/:category/:variant/preview"
+          element={<BlockPreview />}
+        />
         {/* Deliberately NO catch-all redirect. A registry-derived route for a
             page that does not exist must 404 visibly — with `<Navigate to="/">`
             here it redirected silently and the gate passed green. */}

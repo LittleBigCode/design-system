@@ -9,6 +9,13 @@
    block inside `dist/diametral.css` flips the chrome with the components. */
 @import "tailwindcss";
 
+/* The block variants (ADR 0003) live at the repo root, outside this app's own
+   tree, so Tailwind's automatic source detection never sees them and any
+   utility used *only* by a block silently emits nothing — a `py-14` hero that
+   renders with no padding. Named explicitly, not as a wildcard, so the scan
+   stays scoped to the second demo root. */
+@source "../../../blocks";
+
 @theme inline {
   --color-background: var(--ds-bg);
   --color-foreground: var(--ds-ink);
