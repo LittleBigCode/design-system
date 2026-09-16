@@ -6,6 +6,7 @@
 
 import type { Page } from "@playwright/test"
 
+import { BLOCKS } from "../src/registry/blocks"
 import { COMPONENTS } from "../src/registry/registry"
 
 export type Route = { name: string; path: string }
@@ -32,9 +33,27 @@ export const COMPONENT_ROUTES: Route[] = COMPONENTS.map((c) => ({
   path: routePath(`/docs/${c.slug}`),
 }))
 
-export const PAGE_ROUTES: Route[] = [{ name: "overview", path: routePath("/") }]
+/**
+ * Every block category page, derived from the block registry the same way. The
+ * category page is the one that matters to the gates: it stacks every variant,
+ * and each variant's bare `/preview` route is loaded inside it as an iframe, so
+ * axe reaches the variants through it.
+ */
+export const BLOCK_ROUTES: Route[] = BLOCKS.map(([category]) => ({
+  name: `blocks/${category}`,
+  path: routePath(`/blocks/${category}`),
+}))
 
-export const ALL_ROUTES: Route[] = [...PAGE_ROUTES, ...COMPONENT_ROUTES]
+export const PAGE_ROUTES: Route[] = [
+  { name: "overview", path: routePath("/") },
+  { name: "blocks", path: routePath("/blocks") },
+]
+
+export const ALL_ROUTES: Route[] = [
+  ...PAGE_ROUTES,
+  ...COMPONENT_ROUTES,
+  ...BLOCK_ROUTES,
+]
 
 export type Theme = "light" | "dark"
 

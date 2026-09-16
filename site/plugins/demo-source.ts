@@ -35,6 +35,14 @@ const UI_COMPONENTS = path.resolve(
   import.meta.dirname,
   "../../react/components"
 )
+/**
+ * The second demo root (ADR 0003): block variants live at the repo root under
+ * `blocks/<category>/<category>-NN.tsx` because they ship in the package, not
+ * under `site/`. They are read exactly like a component demo — same key shape,
+ * same highlighted source, same scraped markup — so everything downstream of
+ * `sources` treats the two roots as one.
+ */
+const BLOCKS_DIR = path.resolve(import.meta.dirname, "../../blocks")
 
 /** `demos/button/button-variants.tsx` -> `button/button-variants` */
 function toKey(absolute: string, root: string) {
@@ -151,13 +159,20 @@ async function readMarkupManifest(): Promise<Record<string, string>> {
 }
 
 async function buildDemos() {
-  const [files, markup] = await Promise.all([
+  const [demoFiles, blockFiles, markup] = await Promise.all([
     listFiles(DEMOS_DIR).then((found) => found.sort()),
+    listFiles(BLOCKS_DIR).then((found) => found.sort()),
     readMarkupManifest(),
   ])
+  // Keys cannot collide: a demo is `<slug>/<demo-name>`, a block is
+  // `<category>/<category>-NN`, and no demo file is named after its folder.
+  const files = [
+    ...demoFiles.map((file) => [file, DEMOS_DIR] as const),
+    ...blockFiles.map((file) => [file, BLOCKS_DIR] as const),
+  ]
   const entries = await Promise.all(
-    files.map(async (file) => {
-      const key = toKey(file, DEMOS_DIR)
+    files.map(async ([file, root]) => {
+      const key = toKey(file, root)
       const code = (await fs.readFile(file, "utf8")).trimEnd()
       const rawMarkup = markup[key]
       return [
@@ -431,6 +446,7 @@ export function demoSource(): Plugin {
       const invalidate = (file: string) => {
         const watched =
           file.startsWith(DEMOS_DIR) ||
+          file.startsWith(BLOCKS_DIR) ||
           file.startsWith(PLAYGROUNDS_DIR) ||
           file === DECLARATIONS ||
           file === MARKUP_MANIFEST ||

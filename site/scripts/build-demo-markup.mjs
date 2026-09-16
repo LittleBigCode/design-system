@@ -38,12 +38,34 @@ import {
 const SITE_ROOT = path.resolve(import.meta.dirname, "..")
 const CSS_DIR = path.resolve(SITE_ROOT, "../css")
 const DEMOS_DIR = path.join(SITE_ROOT, "src/registry/demos")
+const BLOCKS_DIR = path.resolve(SITE_ROOT, "../blocks")
 const OUT_FILE = path.join(SITE_ROOT, "src/registry/demo-markup.json")
 
 /** Every top-level demo folder is a route (`/docs/<slug>`) — see demo-source.ts's landedSlugs(). */
 async function slugs() {
   const entries = await fs.readdir(DEMOS_DIR, { withFileTypes: true })
   return entries.filter((e) => e.isDirectory()).map((e) => e.name)
+}
+
+/**
+ * Block variants (ADR 0003) render one per bare route — `/blocks/<category>/
+ * <variant>/preview` — rather than several per page, because the category page
+ * shows them in iframes and `page.$` does not cross a frame boundary. Read off
+ * the filesystem, like the demo folders above, so a new variant is scraped with
+ * no edit here.
+ */
+async function blockRoutes() {
+  const categories = await fs.readdir(BLOCKS_DIR, { withFileTypes: true })
+  const routes = []
+  for (const category of categories) {
+    if (!category.isDirectory()) continue
+    const files = await fs.readdir(path.join(BLOCKS_DIR, category.name))
+    for (const file of files) {
+      if (!file.endsWith(".tsx")) continue
+      routes.push(`blocks/${category.name}/${file.slice(0, -4)}/preview`)
+    }
+  }
+  return routes.sort()
 }
 
 /**
@@ -240,8 +262,13 @@ async function main() {
   const allUnknownAttrs = new Map()
   const keep = await styledDataAttributes(CSS_DIR)
 
-  for (const slug of await slugs()) {
-    const url = new URL(`docs/${slug}`, base).href
+  const pages = [
+    ...(await slugs()).map((slug) => `docs/${slug}`),
+    ...(await blockRoutes()),
+  ]
+
+  for (const route of pages) {
+    const url = new URL(route, base).href
     await page.goto(url, { waitUntil: "networkidle" })
     const nodes = await page.$$("[data-demo-key]")
     for (const node of nodes) {

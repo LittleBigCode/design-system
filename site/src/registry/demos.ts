@@ -14,7 +14,18 @@ const modules = import.meta.glob<DemoModule>("./demos/**/*.tsx", {
   eager: true,
 })
 
+/**
+ * The second root (ADR 0003): block variants ship at the repo root rather than
+ * under `site/`, and the demo-source plugin globs them into the same
+ * `sources` map, so they join the same demo registry under the same keys.
+ */
+const blockModules = import.meta.glob<DemoModule>(
+  "../../../blocks/**/*.tsx",
+  { eager: true }
+)
+
 const KEY = /^\.\/demos\/(.*)\.tsx$/
+const BLOCK_KEY = /^\.\.\/\.\.\/\.\.\/blocks\/(.*)\.tsx$/
 
 export type Demo = {
   key: string
@@ -27,10 +38,17 @@ export type Demo = {
 }
 
 const demos = new Map<string, Demo>()
+/** Block keys, so `demoKeysFor` can stay a question about one component's
+ *  demos: `blocks/sidebar/` and `demos/sidebar/` share a first segment. */
+const blockKeys = new Set<string>()
 
-for (const [file, mod] of Object.entries(modules)) {
-  const key = KEY.exec(file)?.[1]
+for (const [file, mod] of [
+  ...Object.entries(modules),
+  ...Object.entries(blockModules),
+]) {
+  const key = (KEY.exec(file) ?? BLOCK_KEY.exec(file))?.[1]
   if (!key) continue
+  if (BLOCK_KEY.test(file)) blockKeys.add(key)
   const source = sources[key]
   if (!source) continue
   demos.set(key, {
@@ -48,5 +66,7 @@ export function getDemo(key: string): Demo | undefined {
 }
 
 export function demoKeysFor(slug: string): string[] {
-  return [...demos.keys()].filter((key) => key.startsWith(`${slug}/`)).sort()
+  return [...demos.keys()]
+    .filter((key) => key.startsWith(`${slug}/`) && !blockKeys.has(key))
+    .sort()
 }
