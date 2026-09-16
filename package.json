@@ -25,6 +25,7 @@
     "./dist/components/*.js"
   ],
   "files": [
+    "blocks",
     "css",
     "components",
     "tokens",
@@ -73,9 +74,10 @@
     "./assets/*": "./assets/*"
   },
   "scripts": {
-    "build": "npm run build:react && node scripts/build-tokens.mjs && node scripts/build-css.mjs && node scripts/build-components.mjs && node scripts/build-figma.mjs && node scripts/build-migration-guide.mjs && node scripts/build-components-md.mjs && node scripts/build-agent-index.mjs && npm run build:docs",
+    "build": "npm run build:react && node scripts/build-tokens.mjs && node scripts/build-css.mjs && node scripts/build-components.mjs && node scripts/build-figma.mjs && node scripts/build-migration-guide.mjs && node scripts/build-components-md.mjs && node scripts/build-agent-index.mjs && npm run build:blocks && npm run build:docs",
     "build:react": "tsc -p tsconfig.build.json",
     "build:docs": "tsc -p tsconfig.docs.json",
+    "build:blocks": "tsc -p tsconfig.blocks.json",
     "build:tokens": "node scripts/build-tokens.mjs",
     "build:figma": "node scripts/build-figma.mjs",
     "build:css": "node scripts/build-css.mjs",

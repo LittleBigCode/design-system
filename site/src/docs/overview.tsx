@@ -2,12 +2,7 @@ import { Link } from "react-router"
 
 import { Card, CardContent, CardTitle } from "@diametral/design-system/react"
 
-import {
-  BLOCKS,
-  FOUNDATIONS,
-  TEMPLATES,
-  type SectionItem,
-} from "@/docs/sections"
+import { BLOCKS, FOUNDATIONS, type SectionItem } from "@/docs/sections"
 import { COMPONENTS, componentsByCategory } from "@registry/registry"
 
 // The six the charter leads with, in the strip's order. The chip reads the
@@ -27,11 +22,10 @@ const REACT_EXPORTS = COMPONENTS.reduce(
   0
 )
 
-// Every page the site renders: the registry's component routes, the three
-// index lists, and the three standalone pages (this one, installation,
-// theming). Derived rather than typed in, so it cannot go stale.
-const PAGES =
-  3 + COMPONENTS.length + FOUNDATIONS.length + TEMPLATES.length + BLOCKS.length
+// Every page the site renders: the registry's component routes, the two index
+// lists, and the three standalone pages (this one, installation, theming).
+// Derived rather than typed in, so it cannot go stale.
+const PAGES = 3 + COMPONENTS.length + FOUNDATIONS.length + BLOCKS.length
 
 function CardGrid({
   base,
@@ -92,12 +86,12 @@ export function Overview() {
         <p className="mt-6 flex flex-wrap gap-3">
           {/* The 0.11 hero pointed its primary at examples/demo.html. That app
               is not part of the React site, and site/legacy/ is not copied into
-              the build, so the dashboard template is the live screen here. */}
+              the build, so the dashboard block is the live screen here. */}
           <Link
-            to="/templates/dashboard"
+            to="/blocks/dashboard"
             className="ds-button ds-button--primary ds-button--lg no-underline"
           >
-            ▸ Open the dashboard template
+            ▸ Open the dashboard block
           </Link>
           <Link
             to="/installation"
@@ -176,15 +170,11 @@ export function Overview() {
       </section>
 
       <section>
-        <h2 className="ds-title ds-title--lg mb-4">Templates</h2>
-        <CardGrid base="/templates" entries={TEMPLATES} />
-      </section>
-
-      <section>
         <h2 className="ds-title ds-title--lg">Blocks</h2>
         <p className="mt-2 mb-4 text-sm text-muted-foreground">
-          Composed, copy-paste sections — app chrome, auth, marketing and
-          data/detail — built from the components and the visible grid system.
+          Whole sections and screens — login, sidebar, hero, pricing,
+          dashboard — each one a React file under{" "}
+          <code className="font-mono text-xs">blocks/</code> in the package.
         </p>
         <CardGrid base="/blocks" entries={BLOCKS} />
       </section>

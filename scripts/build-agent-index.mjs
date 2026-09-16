@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Emits docs/agent-index.json: every shipped component, block and template,
+ * Emits docs/agent-index.json: every shipped component and block variant,
  * machine-readable, with each component's examples ordered richest-first.
  * `site/src/registry/demo-markup.json` already holds this shape but sits in
  * `site/`, unshipped — `docs/` is already in package.json's `files`.
@@ -15,9 +15,12 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { componentsBlock, parse, STR, unquote } from "./build-components-md.mjs";
 
 const REGISTRY = "site/src/registry/registry.ts";
-const SECTIONS = "site/src/docs/sections.ts";
+const BLOCK_REGISTRY = "site/src/registry/blocks.ts";
 const CSS_DIR = "css/components";
 const OUT = "docs/agent-index.json";
+const FOR_CLAUDE = "docs/for-claude.md";
+const BLOCKS_TABLE_START = "<!-- blocks-table:start -->";
+const BLOCKS_TABLE_END = "<!-- blocks-table:end -->";
 const SITE = "https://littlebigcode.github.io/design-system";
 
 /**
@@ -61,30 +64,20 @@ function examplesBySlug(block) {
   return bySlug;
 }
 
-/** `[slug, name, description]` rows from a `SectionItem[]` const in sections.ts. */
-function sectionRows(source, constName) {
-  const start = source.indexOf(`export const ${constName} = [`);
-  if (start < 0) throw new Error(`${SECTIONS}: no ${constName} array`);
+/**
+ * The block registry's rows. Evaluated rather than regex-scraped: blocks.ts is
+ * this repo's own file, its `BLOCKS` literal is plain nested arrays of strings
+ * once the `as const satisfies` tail is cut off, and a hand-rolled parser for a
+ * two-level tuple would be more code with more ways to silently drop a row.
+ */
+function blockRows() {
+  const source = readFileSync(BLOCK_REGISTRY, "utf8");
+  const start = source.indexOf("export const BLOCKS = [");
   const end = source.indexOf("] as const satisfies", start);
-  if (end < 0) throw new Error(`${SECTIONS}: ${constName} has no closing`);
-  const block = source.slice(start, end);
-
-  const ROW = new RegExp(String.raw`\[(${STR}),\s*(${STR}),\s*(${STR})\]`, "g");
-  const found = [...block.matchAll(ROW)].map((m) => ({
-    slug: unquote(m[1]),
-    name: unquote(m[2]),
-    description: unquote(m[3]),
-  }));
-
-  const declared = (block.match(/^\s*\[/gm) ?? []).length;
-  if (found.length !== declared) {
-    throw new Error(
-      `${SECTIONS}: parsed ${found.length} of ${declared} ${constName} rows. A ` +
-        `row does not follow the [slug, name, description] shape this script ` +
-        `matches on — fix the row or this parser, but do not leave one out.`
-    );
-  }
-  return found;
+  if (start < 0 || end < 0)
+    throw new Error(`${BLOCK_REGISTRY}: no BLOCKS array to read`);
+  const literal = source.slice(source.indexOf("[", start), end + 1);
+  return new Function(`return ${literal}`)();
 }
 
 const registrySrc = readFileSync(REGISTRY, "utf8");
@@ -105,20 +98,50 @@ const components = parse(block).map((c) => {
   };
 });
 
-const sectionsSrc = readFileSync(SECTIONS, "utf8");
-const blocks = sectionRows(sectionsSrc, "BLOCKS").map((b) => ({
-  ...b,
-  url: `${SITE}/blocks/${b.slug}`,
-}));
-const templates = sectionRows(sectionsSrc, "TEMPLATES").map((t) => ({
-  ...t,
-  url: `${SITE}/templates/${t.slug}`,
-}));
+/* One row per variant, not per category: the variant is what an agent copies,
+   and `path` is where it copies it from — a real file in the published package
+   (ADR 0003), not a docs-site route it cannot read from an npm install. */
+const blocks = blockRows().flatMap(([category, , , variants]) =>
+  variants.map(([slug, description]) => {
+    const path = `blocks/${category}/${slug}.tsx`;
+    if (!existsSync(path))
+      throw new Error(`${BLOCK_REGISTRY}: "${slug}" has no source at ${path}`);
+    return {
+      slug,
+      category,
+      description,
+      path,
+      url: `${SITE}/blocks/${category}/${slug}/preview`,
+    };
+  })
+);
 
 writeFileSync(
   OUT,
-  JSON.stringify({ generated: "npm run build", components, blocks, templates }, null, 2) + "\n"
+  JSON.stringify({ generated: "npm run build", components, blocks }, null, 2) + "\n"
 );
+
+/* docs/for-claude.md's blocks table used to be hand-kept, and carried a
+   ponytail note admitting the paths it pointed at were not in the package. Both
+   are gone: the table is written from the same rows as agent-index.json, and
+   the paths it names now ship. */
+const table = [
+  "| Building | Copy | Live |",
+  "|---|---|---|",
+  ...blocks.map(
+    (b) => `| ${b.description} | \`${b.path}\` | /blocks/${b.category} |`
+  ),
+].join("\n");
+const claude = readFileSync(FOR_CLAUDE, "utf8");
+const [head, rest] = claude.split(BLOCKS_TABLE_START);
+if (rest === undefined)
+  throw new Error(`${FOR_CLAUDE}: no ${BLOCKS_TABLE_START} marker`);
+const tail = rest.slice(rest.indexOf(BLOCKS_TABLE_END));
+writeFileSync(
+  FOR_CLAUDE,
+  `${head}${BLOCKS_TABLE_START}\n\n${table}\n\n${tail}`
+);
+
 console.log(
-  `build-agent-index: ${components.length} components, ${blocks.length} blocks, ${templates.length} templates -> ${OUT}`
+  `build-agent-index: ${components.length} components, ${blocks.length} blocks -> ${OUT}`
 );

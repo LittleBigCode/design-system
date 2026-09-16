@@ -27,8 +27,8 @@ import { Sidebar, DataTable } from "@diametral/design-system/react";
 - [Components](docs/components.md): full component catalogue.
 - [Foundations](docs/foundations.md): color, type, spacing, layout, borders, motion.
 - [Recipes](docs/recipes.md): whole screens in React — app shell, CRUD list+detail, dashboard, auth gate.
-- [Blocks & templates](https://littlebigcode.github.io/design-system/blocks): whole compositions — app chrome, auth, marketing, data+detail.
-- [Agent index](docs/agent-index.json): every component, its category, its CSS file, and its examples richest-first — machine-readable.
+- [Blocks](https://littlebigcode.github.io/design-system/blocks): 25 whole sections and screens — login, sidebar, hero, pricing, dashboard… Each one is a React file under `blocks/` in this package; copy it and own it.
+- [Agent index](docs/agent-index.json): every component, its category, its CSS file, and its examples richest-first, plus every block variant and the path to its source — machine-readable.
 
 ## Rules (must follow)
 - NO border-radius, NO box-shadow, NO gradients. Borders are 1px solid `var(--ds-rule)`.
@@ -36,7 +36,7 @@ import { Sidebar, DataTable } from "@diametral/design-system/react";
 - The accent `--ds-accent` is for emphasis only (links, key edges, the primary action is solid black `#161616`). It is themeable and has no fixed value — never hard-code it.
 - Headings use the title font; labels are uppercase, letter-spaced, faint.
 - Prefer semantic tokens (`--ds-ink`, `--ds-accent`, `--ds-rule`, …) over raw hex.
-- A primitive is a fallback. Before assembling a screen from primitives, check whether a block or template already contains it — copying that and changing the content is the correct move.
+- A primitive is a fallback. Before assembling a screen from primitives, check whether a block under `blocks/` already contains it — copying that file and changing the content is the correct move.
 
 ## Optional
 - [React components](docs/react.md), [Theming](docs/theming.md), [Emails](docs/emails.md).

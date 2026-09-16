@@ -17,6 +17,7 @@
 import { expect, test } from "@playwright/test"
 
 import {
+  BLOCK_ROUTES,
   expectTheme,
   pinTheme,
   routePath,
@@ -65,10 +66,14 @@ const RAW_ROUTES: Route[] = [
   { name: "calendar", path: "/docs/calendar" },
 ]
 
-const ROUTES: Route[] = RAW_ROUTES.map((route) => ({
-  ...route,
-  path: routePath(route.path),
-}))
+/* The block category pages join wholesale rather than one curated row at a
+   time: a block IS a visual composition, so there is no "covers nothing else"
+   filter to apply to one — and #55 is the first time blocks are gate-covered at
+   all. BLOCK_ROUTES already carries the base prefix. */
+const ROUTES: Route[] = [
+  ...RAW_ROUTES.map((route) => ({ ...route, path: routePath(route.path) })),
+  ...BLOCK_ROUTES,
+]
 
 // Neutralise anything that would make a screenshot flake: in-flight animation,
 // transitions, and the blinking caret. Injected after load so it wins on

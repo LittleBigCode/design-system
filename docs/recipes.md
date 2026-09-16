@@ -11,7 +11,7 @@ The system has three altitudes, and this page sits at the top of the stack:
 | Altitude | What it is | Where it lives |
 |---|---|---|
 | **Components** | One widget with a typed prop API — `Button`, `DataGrid`, `Drawer`, `StatCard`, `LineChart`. The atoms. | [components.md](components.md) · [react.md](react.md) · `examples/components/*` |
-| **Blocks** | A small composition that solves one sub-problem — a validated `FormField` row, a `PageHeader` with actions, a four-state data view. The molecules. | [forms.md](forms.md) · [data.md](data.md) |
+| **Blocks** | A composition between a component and a whole screen — a sign-in card, a sidebar, a pricing table. The molecules. Copy the file and own it. | `blocks/<category>/<category>-NN.tsx` · [agent-index.json](agent-index.json) |
 | **Recipes** | A *whole screen* assembled from blocks: an app shell, a CRUD list+detail, a dashboard, an auth gate. The organisms. | **this page** · the live [demo app](../examples/demo/app.js) |
 
 Components answer *"what does a `Drawer` accept?"*; recipes answer *"how do I build a
