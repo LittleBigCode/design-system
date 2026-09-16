@@ -3470,54 +3470,179 @@
   ],
   "blocks": [
     {
-      "slug": "nav-shell",
-      "name": "Nav shell",
-      "description": "Sidebar, grouped and nested nav, badges and an inset content area — the left edge of an application screen.",
-      "url": "https://littlebigcode.github.io/design-system/blocks/nav-shell"
+      "slug": "activity-01",
+      "category": "activity",
+      "description": "Five typed events with an icon indicator, a time and a detail line.",
+      "path": "blocks/activity/activity-01.tsx",
+      "url": "https://littlebigcode.github.io/design-system/blocks/activity/activity-01/preview"
     },
     {
-      "slug": "app-chrome",
-      "name": "App chrome",
-      "description": "Page header, toolbar, filter bar and stat band — the frame around an application screen.",
-      "url": "https://littlebigcode.github.io/design-system/blocks/app-chrome"
+      "slug": "app-shell-01",
+      "category": "app-shell",
+      "description": "Search header, badged menu with hover actions, account row in the footer.",
+      "path": "blocks/app-shell/app-shell-01.tsx",
+      "url": "https://littlebigcode.github.io/design-system/blocks/app-shell/app-shell-01/preview"
     },
     {
-      "slug": "auth",
-      "name": "Auth",
-      "description": "Sign in, sign up, forgot-password and two-factor cards.",
-      "url": "https://littlebigcode.github.io/design-system/blocks/auth"
+      "slug": "confirm-01",
+      "category": "confirm",
+      "description": "A danger-zone card whose button opens a two-action confirmation.",
+      "path": "blocks/confirm/confirm-01.tsx",
+      "url": "https://littlebigcode.github.io/design-system/blocks/confirm/confirm-01/preview"
     },
     {
-      "slug": "marketing",
-      "name": "Marketing",
-      "description": "Hero, feature grid, pricing, stat band and footer — built on the visible grid system.",
-      "url": "https://littlebigcode.github.io/design-system/blocks/marketing"
+      "slug": "dashboard-01",
+      "category": "dashboard",
+      "description": "Sidebar nav, page header, three KPI cards and a sparkline table.",
+      "path": "blocks/dashboard/dashboard-01.tsx",
+      "url": "https://littlebigcode.github.io/design-system/blocks/dashboard/dashboard-01/preview"
     },
     {
-      "slug": "data-detail",
-      "name": "Data & detail",
-      "description": "Detail layout, empty state, faceted filter, activity feed and a confirmation dialog.",
-      "url": "https://littlebigcode.github.io/design-system/blocks/data-detail"
-    }
-  ],
-  "templates": [
-    {
-      "slug": "dashboard",
-      "name": "Dashboard",
-      "description": "App bar, sidebar nav, KPI row and a chart panel — a full application screen.",
-      "url": "https://littlebigcode.github.io/design-system/templates/dashboard"
+      "slug": "detail-01",
+      "category": "detail",
+      "description": "A wide body card next to a 320px description-list sidebar.",
+      "path": "blocks/detail/detail-01.tsx",
+      "url": "https://littlebigcode.github.io/design-system/blocks/detail/detail-01/preview"
     },
     {
-      "slug": "login",
-      "name": "Login",
-      "description": "A standalone sign-in page, centered on the brand background.",
-      "url": "https://littlebigcode.github.io/design-system/templates/login"
+      "slug": "empty-01",
+      "category": "empty",
+      "description": "Icon, title, explanation and a single primary action, inside a card.",
+      "path": "blocks/empty/empty-01.tsx",
+      "url": "https://littlebigcode.github.io/design-system/blocks/empty/empty-01/preview"
     },
     {
-      "slug": "error-404",
-      "name": "404",
-      "description": "A standalone error page built from the empty-state pattern.",
-      "url": "https://littlebigcode.github.io/design-system/templates/error-404"
+      "slug": "error-01",
+      "category": "error",
+      "description": "404 — the empty-state pattern scaled up and centred on the page.",
+      "path": "blocks/error/error-01.tsx",
+      "url": "https://littlebigcode.github.io/design-system/blocks/error/error-01/preview"
+    },
+    {
+      "slug": "faceted-filter-01",
+      "category": "faceted-filter",
+      "description": "Checkbox statuses and tag disciplines beside an item list.",
+      "path": "blocks/faceted-filter/faceted-filter-01.tsx",
+      "url": "https://littlebigcode.github.io/design-system/blocks/faceted-filter/faceted-filter-01/preview"
+    },
+    {
+      "slug": "features-01",
+      "category": "features",
+      "description": "Three ruled columns, each led by a ticked grid label.",
+      "path": "blocks/features/features-01.tsx",
+      "url": "https://littlebigcode.github.io/design-system/blocks/features/features-01/preview"
+    },
+    {
+      "slug": "filter-bar-01",
+      "category": "filter-bar",
+      "description": "Removable tags and a result count on the left, selects and clear on the right.",
+      "path": "blocks/filter-bar/filter-bar-01.tsx",
+      "url": "https://littlebigcode.github.io/design-system/blocks/filter-bar/filter-bar-01/preview"
+    },
+    {
+      "slug": "footer-01",
+      "category": "footer",
+      "description": "A registration-marked CTA over an accent rule and four link columns.",
+      "path": "blocks/footer/footer-01.tsx",
+      "url": "https://littlebigcode.github.io/design-system/blocks/footer/footer-01/preview"
+    },
+    {
+      "slug": "forgot-password-01",
+      "category": "forgot-password",
+      "description": "One email field, a full-width send, and the way back to sign in.",
+      "path": "blocks/forgot-password/forgot-password-01.tsx",
+      "url": "https://littlebigcode.github.io/design-system/blocks/forgot-password/forgot-password-01/preview"
+    },
+    {
+      "slug": "hero-01",
+      "category": "hero",
+      "description": "A six-column gridlines band with a kicker, title, lede and two actions.",
+      "path": "blocks/hero/hero-01.tsx",
+      "url": "https://littlebigcode.github.io/design-system/blocks/hero/hero-01/preview"
+    },
+    {
+      "slug": "login-01",
+      "category": "login",
+      "description": "The card alone — drop it into a layout you already have.",
+      "path": "blocks/login/login-01.tsx",
+      "url": "https://littlebigcode.github.io/design-system/blocks/login/login-01/preview"
+    },
+    {
+      "slug": "login-02",
+      "category": "login",
+      "description": "The whole screen: the same form centred on the brand background.",
+      "path": "blocks/login/login-02.tsx",
+      "url": "https://littlebigcode.github.io/design-system/blocks/login/login-02/preview"
+    },
+    {
+      "slug": "otp-01",
+      "category": "otp",
+      "description": "Six OTP slots with the verify action disabled until the code is complete.",
+      "path": "blocks/otp/otp-01.tsx",
+      "url": "https://littlebigcode.github.io/design-system/blocks/otp/otp-01/preview"
+    },
+    {
+      "slug": "page-header-01",
+      "category": "page-header",
+      "description": "Breadcrumb, title with actions, and a tab strip flush to the rule.",
+      "path": "blocks/page-header/page-header-01.tsx",
+      "url": "https://littlebigcode.github.io/design-system/blocks/page-header/page-header-01/preview"
+    },
+    {
+      "slug": "pricing-01",
+      "category": "pricing",
+      "description": "Three columns with the middle one framed in accent and badged.",
+      "path": "blocks/pricing/pricing-01.tsx",
+      "url": "https://littlebigcode.github.io/design-system/blocks/pricing/pricing-01/preview"
+    },
+    {
+      "slug": "sidebar-01",
+      "category": "sidebar",
+      "description": "Flat — four rows, no groups. Right up to about six destinations.",
+      "path": "blocks/sidebar/sidebar-01.tsx",
+      "url": "https://littlebigcode.github.io/design-system/blocks/sidebar/sidebar-01/preview"
+    },
+    {
+      "slug": "sidebar-02",
+      "category": "sidebar",
+      "description": "Grouped and labelled, with a per-group action and a rule between.",
+      "path": "blocks/sidebar/sidebar-02.tsx",
+      "url": "https://littlebigcode.github.io/design-system/blocks/sidebar/sidebar-02/preview"
+    },
+    {
+      "slug": "sidebar-03",
+      "category": "sidebar",
+      "description": "Nested: collapsible parents over sub-rows, plus a count badge.",
+      "path": "blocks/sidebar/sidebar-03.tsx",
+      "url": "https://littlebigcode.github.io/design-system/blocks/sidebar/sidebar-03/preview"
+    },
+    {
+      "slug": "signup-01",
+      "category": "signup",
+      "description": "Name, email and password over a full-width create action.",
+      "path": "blocks/signup/signup-01.tsx",
+      "url": "https://littlebigcode.github.io/design-system/blocks/signup/signup-01/preview"
+    },
+    {
+      "slug": "stat-band-01",
+      "category": "stat-band",
+      "description": "Bare — four cells sitting directly under application chrome.",
+      "path": "blocks/stat-band/stat-band-01.tsx",
+      "url": "https://littlebigcode.github.io/design-system/blocks/stat-band/stat-band-01/preview"
+    },
+    {
+      "slug": "stat-band-02",
+      "category": "stat-band",
+      "description": "The marketing version: the same grid, framed and led by a kicker.",
+      "path": "blocks/stat-band/stat-band-02.tsx",
+      "url": "https://littlebigcode.github.io/design-system/blocks/stat-band/stat-band-02/preview"
+    },
+    {
+      "slug": "toolbar-01",
+      "category": "toolbar",
+      "description": "Search on the left, a separator, and three actions on the right.",
+      "path": "blocks/toolbar/toolbar-01.tsx",
+      "url": "https://littlebigcode.github.io/design-system/blocks/toolbar/toolbar-01/preview"
     }
   ]
 }

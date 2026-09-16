@@ -41,12 +41,7 @@ import {
 
 import { useTheme } from "@/components/theme-provider"
 import { DocsSearch } from "@/docs/docs-search"
-import {
-  BLOCKS,
-  FOUNDATIONS,
-  type SectionItem,
-  TEMPLATES,
-} from "@/docs/sections"
+import { BLOCKS, FOUNDATIONS, type SectionItem } from "@/docs/sections"
 import {
   CATEGORIES,
   COMPONENTS,
@@ -72,7 +67,7 @@ const CATEGORY_ICONS: Record<(typeof CATEGORIES)[number], Icon> = {
   Utilities: WrenchIcon,
 }
 
-// The three flat sections read their rows off the same arrays their index pages
+// The two flat sections read their rows off the same arrays their index pages
 // render from, imported rather than restated: a section that grows a page grows
 // its nav row in the same commit, and a slug can only be wrong in one place.
 type Section = {
@@ -85,11 +80,6 @@ const FOUNDATIONS_SECTION: Section = {
   label: "Foundations",
   base: "/foundations",
   items: FOUNDATIONS,
-}
-const TEMPLATES_SECTION: Section = {
-  label: "Templates",
-  base: "/templates",
-  items: TEMPLATES,
 }
 const BLOCKS_SECTION: Section = {
   label: "Blocks",
@@ -322,7 +312,6 @@ export function DocsLayout() {
             </CollapsibleContent>
           </Collapsible>
 
-          <NavSection section={TEMPLATES_SECTION} pathname={pathname} />
           <NavSection section={BLOCKS_SECTION} pathname={pathname} />
         </SidebarContent>
         <SidebarRail />

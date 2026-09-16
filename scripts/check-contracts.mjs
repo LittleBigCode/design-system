@@ -5,8 +5,8 @@
    guards a failure that is invisible in a diff and only shows up in a consumer's
    browser:
 
-     1. class-resolution — every `ds-*` class a binding renders resolves to a
-        selector defined in the shipped stylesheet. Without this, an absorbed
+     1. class-resolution — every `ds-*` class a binding or a block renders
+        resolves to a selector defined in the shipped stylesheet. Without this, an absorbed
         component renders `ds-foo__bar`, nothing defines it, and every non-React
         binding silently gets an unstyled element.
 
@@ -114,6 +114,10 @@ const STRING = /(["'`])((?:[^\\\n]|\\.)*?)\1/g;
 // In the working tree the React layer is TSX under react/; in an installed copy
 // it is the emit under dist/react/. Whichever is present gets checked.
 const sources = [
+  // blocks/ is shipped source a consumer copies verbatim (ADR 0003), so a
+  // `ds-*` class in a block that resolves to nothing is the same failure as one
+  // in a binding — and this is where the scraped HTML tab's classes come from.
+  ...walk(join(root, "blocks"), [".tsx"]),
   ...walk(join(root, "react"), [".jsx", ".tsx"]),
   ...walk(join(root, "dist", "react"), [".js"]),
   ...walk(join(root, "components"), [".js"]),

@@ -58,21 +58,46 @@ https://littlebigcode.github.io/design-system/docs/sidebar
 Do not assemble a screen out of the primitives below. Find the row that matches
 what you are building, read that source, and start from it.
 
-<!-- ponytail: the repo column points into site/, which is not in package.json `files` and so is absent from an npm install; the live column is the fallback until a generated index inlines these -->
+<!-- blocks-table:start -->
 
-| Building | Read first | Live |
+| Building | Copy | Live |
 |---|---|---|
-| App shell, sidebar nav | `site/src/docs/blocks/nav-shell.tsx`, `docs/recipes.md` §1, `site/src/docs/docs-layout.tsx` | /blocks/nav-shell |
-| Page header, toolbar, filter bar, stat band | `site/src/docs/blocks/app-chrome.tsx` | /blocks/app-chrome |
-| Sign in, sign up, 2FA, forgot password | `site/src/docs/blocks/auth.tsx` | /blocks/auth |
-| Hero, feature grid, pricing, footer | `site/src/docs/blocks/marketing.tsx` | /blocks/marketing |
-| Detail view, empty state, faceted filter, activity feed | `site/src/docs/blocks/data-detail.tsx` | /blocks/data-detail |
-| A whole screen — dashboard, login, 404 | `site/src/docs/templates/` | /templates/dashboard · /templates/login · /templates/error-404 |
-| React screen wiring (app shell, CRUD list+detail, dashboard, auth gate) | `docs/recipes.md` | — |
+| Five typed events with an icon indicator, a time and a detail line. | `blocks/activity/activity-01.tsx` | /blocks/activity |
+| Search header, badged menu with hover actions, account row in the footer. | `blocks/app-shell/app-shell-01.tsx` | /blocks/app-shell |
+| A danger-zone card whose button opens a two-action confirmation. | `blocks/confirm/confirm-01.tsx` | /blocks/confirm |
+| Sidebar nav, page header, three KPI cards and a sparkline table. | `blocks/dashboard/dashboard-01.tsx` | /blocks/dashboard |
+| A wide body card next to a 320px description-list sidebar. | `blocks/detail/detail-01.tsx` | /blocks/detail |
+| Icon, title, explanation and a single primary action, inside a card. | `blocks/empty/empty-01.tsx` | /blocks/empty |
+| 404 — the empty-state pattern scaled up and centred on the page. | `blocks/error/error-01.tsx` | /blocks/error |
+| Checkbox statuses and tag disciplines beside an item list. | `blocks/faceted-filter/faceted-filter-01.tsx` | /blocks/faceted-filter |
+| Three ruled columns, each led by a ticked grid label. | `blocks/features/features-01.tsx` | /blocks/features |
+| Removable tags and a result count on the left, selects and clear on the right. | `blocks/filter-bar/filter-bar-01.tsx` | /blocks/filter-bar |
+| A registration-marked CTA over an accent rule and four link columns. | `blocks/footer/footer-01.tsx` | /blocks/footer |
+| One email field, a full-width send, and the way back to sign in. | `blocks/forgot-password/forgot-password-01.tsx` | /blocks/forgot-password |
+| A six-column gridlines band with a kicker, title, lede and two actions. | `blocks/hero/hero-01.tsx` | /blocks/hero |
+| The card alone — drop it into a layout you already have. | `blocks/login/login-01.tsx` | /blocks/login |
+| The whole screen: the same form centred on the brand background. | `blocks/login/login-02.tsx` | /blocks/login |
+| Six OTP slots with the verify action disabled until the code is complete. | `blocks/otp/otp-01.tsx` | /blocks/otp |
+| Breadcrumb, title with actions, and a tab strip flush to the rule. | `blocks/page-header/page-header-01.tsx` | /blocks/page-header |
+| Three columns with the middle one framed in accent and badged. | `blocks/pricing/pricing-01.tsx` | /blocks/pricing |
+| Flat — four rows, no groups. Right up to about six destinations. | `blocks/sidebar/sidebar-01.tsx` | /blocks/sidebar |
+| Grouped and labelled, with a per-group action and a rule between. | `blocks/sidebar/sidebar-02.tsx` | /blocks/sidebar |
+| Nested: collapsible parents over sub-rows, plus a count badge. | `blocks/sidebar/sidebar-03.tsx` | /blocks/sidebar |
+| Name, email and password over a full-width create action. | `blocks/signup/signup-01.tsx` | /blocks/signup |
+| Bare — four cells sitting directly under application chrome. | `blocks/stat-band/stat-band-01.tsx` | /blocks/stat-band |
+| The marketing version: the same grid, framed and led by a kicker. | `blocks/stat-band/stat-band-02.tsx` | /blocks/stat-band |
+| Search on the left, a separator, and three actions on the right. | `blocks/toolbar/toolbar-01.tsx` | /blocks/toolbar |
 
-Repo paths are relative to the repository root. Installed from npm, `site/` is
-not present — use the live column, prefixed with
-https://littlebigcode.github.io/design-system.
+<!-- blocks-table:end -->
+
+React screen wiring — app shell, CRUD list+detail, dashboard, auth gate — is in
+`docs/recipes.md`.
+
+Every path in the table ships in the package: copy the file and own it. The
+table is written by `npm run build` from `site/src/registry/blocks.ts` — edit
+the registry, not this file. The same rows are in `docs/agent-index.json` under
+`blocks`.
+
 
 A primitive is a fallback. If a block already contains the thing you are
 building, copying it and changing the content is the correct move, not a
@@ -265,7 +290,7 @@ already obeyed by a file in this repo, named beside it.
   `.ds-gridlines` (set `--ds-grid-cols`) for a measured overlay, `.ds-marks` for
   registration ticks. — `site/src/docs/foundations/grid.tsx`.
 - A stat row is one `.ds-statgrid` of `.ds-statgrid__cell`s, never three
-  `.ds-card`s in a flex. — `site/src/docs/blocks/app-chrome.tsx`, "Stat band".
+  `.ds-card`s in a flex. — `blocks/stat-band/stat-band-01.tsx`.
 - A page header is one `.ds-page-header` carrying breadcrumb, heading, actions
   and tabs — not four stacked `div`s.
   — `app-chrome.tsx`, "Page header".
